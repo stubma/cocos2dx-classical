@@ -27,7 +27,7 @@
 #include "../Action/CCActionManager.h"
 #include <fstream>
 #include <iostream>
-
+#include "../Armature/utils/CCData.h"
 #include "WidgetReader/ButtonReader/ButtonReader.h"
 #include "WidgetReader/CheckBoxReader/CheckBoxReader.h"
 #include "WidgetReader/SliderReader/SliderReader.h"

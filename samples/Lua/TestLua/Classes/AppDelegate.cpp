@@ -3,7 +3,6 @@
 #include "AppDelegate.h"
 #include "CCLuaEngine.h"
 #include "SimpleAudioEngine.h"
-#include "Lua_extensions_CCB.h"
 
 using namespace CocosDenshion;
 
@@ -33,10 +32,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     // register lua engine
     CCLuaEngine* pEngine = CCLuaEngine::defaultEngine();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
-
-    CCLuaStack *pStack = pEngine->getLuaStack();
-    lua_State *tolua_s = pStack->getLuaState();
-    tolua_extensions_ccb_open(tolua_s);
     
     CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
     CCSize designSize = CCSizeMake(480, 320);

@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "CCTransformHelp.h"
 #include "CCUtilMath.h"
 #include "CCArmatureDefine.h"
-#include "CCBReader/CCData.h"
+#include "CCData.h"
 #include "../datas/CCDatas.h"
 #include <errno.h>
 #include <stack>
