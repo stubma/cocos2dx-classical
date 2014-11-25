@@ -230,8 +230,6 @@
 		378774AD187A9002002578C7 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3787748A187A9002002578C7 /* background.mp3 */; };
 		378774AE187A9002002578C7 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 3787748B187A9002002578C7 /* background.ogg */; };
 		378774AF187A9002002578C7 /* background.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3787748C187A9002002578C7 /* background.wav */; };
-		378774B1187A9002002578C7 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 3787748E187A9002002578C7 /* CocosBuilderExample.ccbproj */; };
-		378774B2187A9002002578C7 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 3787748F187A9002002578C7 /* CocosBuilderExample.ccbresourcelog */; };
 		378774B4187A9002002578C7 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 37877491187A9002002578C7 /* components */; };
 		378774B5187A9002002578C7 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 37877492187A9002002578C7 /* configs */; };
 		378774B7187A9002002578C7 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 37877494187A9002002578C7 /* effect1.raw */; };
@@ -912,8 +910,6 @@
 		3787748A187A9002002578C7 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
 		3787748B187A9002002578C7 /* background.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.ogg; sourceTree = "<group>"; };
 		3787748C187A9002002578C7 /* background.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = background.wav; sourceTree = "<group>"; };
-		3787748E187A9002002578C7 /* CocosBuilderExample.ccbproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CocosBuilderExample.ccbproj; sourceTree = "<group>"; };
-		3787748F187A9002002578C7 /* CocosBuilderExample.ccbresourcelog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CocosBuilderExample.ccbresourcelog; sourceTree = "<group>"; };
 		37877491187A9002002578C7 /* components */ = {isa = PBXFileReference; lastKnownFileType = folder; path = components; sourceTree = "<group>"; };
 		37877492187A9002002578C7 /* configs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = configs; sourceTree = "<group>"; };
 		37877494187A9002002578C7 /* effect1.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = effect1.raw; sourceTree = "<group>"; };
@@ -3278,8 +3274,6 @@
 				378774A6187A9002002578C7 /* spine */,
 				378774A7187A9002002578C7 /* TileMaps */,
 				378774A8187A9002002578C7 /* zwoptex */,
-				3787748E187A9002002578C7 /* CocosBuilderExample.ccbproj */,
-				3787748F187A9002002578C7 /* CocosBuilderExample.ccbresourcelog */,
 				378774A1187A9002002578C7 /* music.mid */,
 				3787748A187A9002002578C7 /* background.mp3 */,
 				3787748B187A9002002578C7 /* background.ogg */,
@@ -3390,7 +3384,6 @@
 				378774BF187A9002002578C7 /* Hello.png in Resources */,
 				378774BB187A9002002578C7 /* fileLookup.plist in Resources */,
 				378774C6187A9002002578C7 /* pew-pew-lei.wav in Resources */,
-				378774B1187A9002002578C7 /* CocosBuilderExample.ccbproj in Resources */,
 				378774B7187A9002002578C7 /* effect1.raw in Resources */,
 				378774BE187A9002002578C7 /* hd in Resources */,
 				378774BC187A9002002578C7 /* fonts in Resources */,
@@ -3398,7 +3391,6 @@
 				378774C5187A9002002578C7 /* Particles in Resources */,
 				378774CA187A9002002578C7 /* TileMaps in Resources */,
 				378774AF187A9002002578C7 /* background.wav in Resources */,
-				378774B2187A9002002578C7 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				378774B8187A9002002578C7 /* effect1.wav in Resources */,
 				378774B4187A9002002578C7 /* components in Resources */,
 				378774BD187A9002002578C7 /* fps_images.png in Resources */,
