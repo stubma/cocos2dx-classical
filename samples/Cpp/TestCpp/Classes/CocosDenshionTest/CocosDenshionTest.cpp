@@ -4,21 +4,21 @@
 
 // android effect only support ogg
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    #define EFFECT_FILE        "effect2.ogg"
+    #define EFFECT_FILE        "sound/effect2.ogg"
 #elif( CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-    #define EFFECT_FILE        "effect1.raw"
+    #define EFFECT_FILE        "sound/effect1.raw"
 #else
-    #define EFFECT_FILE        "effect1.wav"
+    #define EFFECT_FILE        "sound/effect1.wav"
 #endif // CC_PLATFORM_ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    #define MUSIC_FILE        "music.mid"
+    #define MUSIC_FILE        "sound/music.mid"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX )
-    #define MUSIC_FILE        "background.ogg"
+    #define MUSIC_FILE        "sound/background.ogg"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    #define MUSIC_FILE        "background.wav"
+    #define MUSIC_FILE        "sound/background.wav"
 #else
-    #define MUSIC_FILE        "background.mp3"
+    #define MUSIC_FILE        "sound/background.mp3"
 #endif // CC_PLATFORM_WIN32
 
 USING_NS_CC;

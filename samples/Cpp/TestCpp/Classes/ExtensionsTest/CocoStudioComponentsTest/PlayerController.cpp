@@ -50,7 +50,7 @@ void PlayerController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
     projectile->addComponent(com);
     com->move(location.x, location.y);
 
-    ((CCComAudio*)(m_pOwner->getComponent("Audio")))->playEffect("pew-pew-lei.wav");
+    ((CCComAudio*)(m_pOwner->getComponent("Audio")))->playEffect("sound/pew-pew-lei.wav");
 }
 
 PlayerController* PlayerController::create(void)

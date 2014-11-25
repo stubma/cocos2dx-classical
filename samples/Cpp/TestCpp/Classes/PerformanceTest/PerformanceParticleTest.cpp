@@ -95,7 +95,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     addChild(infoLabel, 1, kTagInfoLayer);
 
     // particles on stage
-    CCLabelAtlas *labelAtlas = CCLabelAtlas::create("0000", "fps_images.png", 12, 32, '.');
+    CCLabelAtlas *labelAtlas = CCLabelAtlas::create("0000", "Images/fps_images.png", 12, 32, '.');
     addChild(labelAtlas, 0, kTagLabelAtlas);
     labelAtlas->setPosition(ccp(s.width-66,50));
 
