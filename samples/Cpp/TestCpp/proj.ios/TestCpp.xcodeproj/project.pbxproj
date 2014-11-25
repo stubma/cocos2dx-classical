@@ -368,6 +368,7 @@
 		6442E66D17297DB40008499D /* TextureAtlasEncryptionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6442E66B17297DB40008499D /* TextureAtlasEncryptionTest.cpp */; };
 		9235B5151A21FD0F002D4C37 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9235B5141A21FD0F002D4C37 /* libcurl.a */; };
 		923BBB5A1A24D65C00E63041 /* sound in Resources */ = {isa = PBXBuildFile; fileRef = 923BBB591A24D65C00E63041 /* sound */; };
+		923BBB5C1A24D8A400E63041 /* Images.ios in Resources */ = {isa = PBXBuildFile; fileRef = 923BBB5B1A24D8A400E63041 /* Images.ios */; };
 		9252FCBA1A2354B200039D00 /* CCData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9252FCB81A2354B200039D00 /* CCData.cpp */; };
 		A01B534F17DE7F7900A3D114 /* PerformanceAllocTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A01B534D17DE7F7900A3D114 /* PerformanceAllocTest.cpp */; };
 		A059B9AD174D9B8E0078F84F /* ConfigurationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A059B9AB174D9B8E0078F84F /* ConfigurationTest.cpp */; };
@@ -1174,6 +1175,7 @@
 		6442E66C17297DB40008499D /* TextureAtlasEncryptionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureAtlasEncryptionTest.h; sourceTree = "<group>"; };
 		9235B5141A21FD0F002D4C37 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		923BBB591A24D65C00E63041 /* sound */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sound; sourceTree = "<group>"; };
+		923BBB5B1A24D8A400E63041 /* Images.ios */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images.ios; path = ../Resources.ios/Images.ios; sourceTree = "<group>"; };
 		9252FCB81A2354B200039D00 /* CCData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCData.cpp; sourceTree = "<group>"; };
 		9252FCB91A2354B200039D00 /* CCData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCData.h; sourceTree = "<group>"; };
 		A01B534D17DE7F7900A3D114 /* PerformanceAllocTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PerformanceAllocTest.cpp; path = ../../Classes/PerformanceTest/PerformanceAllocTest.cpp; sourceTree = "<group>"; };
@@ -3249,6 +3251,7 @@
 				37877499187A9002002578C7 /* fonts */,
 				3787749B187A9002002578C7 /* hd */,
 				3787749D187A9002002578C7 /* Images */,
+				923BBB5B1A24D8A400E63041 /* Images.ios */,
 				378774A0187A9002002578C7 /* Misc */,
 				378774A2187A9002002578C7 /* Particles */,
 				378774A5187A9002002578C7 /* Shaders */,
@@ -3359,6 +3362,7 @@
 				378774CA187A9002002578C7 /* TileMaps in Resources */,
 				378774B4187A9002002578C7 /* components in Resources */,
 				378774CB187A9002002578C7 /* zwoptex in Resources */,
+				923BBB5C1A24D8A400E63041 /* Images.ios in Resources */,
 				15A3D9961682F7F9002FB0C5 /* CMakeLists.txt in Resources */,
 				378774C9187A9002002578C7 /* spine in Resources */,
 				378774C3187A9002002578C7 /* Misc in Resources */,

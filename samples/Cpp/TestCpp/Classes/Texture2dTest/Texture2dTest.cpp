@@ -685,7 +685,7 @@ void TexturePVRRGBA4444GZ::onEnter()
     // android can not pack .gz file into apk file
     CCSprite *img = CCSprite::create("Images/test_image_rgba4444.pvr");
 #else
-    CCSprite *img = CCSprite::create("Images/test_image_rgba4444.pvr.gz");
+    CCSprite *img = CCSprite::create("Images.ios/test_image_rgba4444.pvr.gz");
 #endif
     img->setPosition(ccp( s.width/2.0f, s.height/2.0f));
     addChild(img);
@@ -1976,16 +1976,16 @@ void TextureMemoryAlloc::updateImage(cocos2d::CCObject *sender)
             break;
 #else
 		case 1:
-			file = "Images/test_1021x1024_rgba8888.pvr.gz";
+			file = "Images.ios/test_1021x1024_rgba8888.pvr.gz";
 			break;
 		case 2:
-			file = "Images/test_1021x1024_rgb888.pvr.gz";
+			file = "Images.ios/test_1021x1024_rgb888.pvr.gz";
 			break;
 		case 3:
-			file = "Images/test_1021x1024_rgba4444.pvr.gz";
+			file = "Images.ios/test_1021x1024_rgba4444.pvr.gz";
 			break;
 		case 4:
-			file = "Images/test_1021x1024_a8.pvr.gz";
+			file = "Images.ios/test_1021x1024_a8.pvr.gz";
 			break;
 #endif
 	}
