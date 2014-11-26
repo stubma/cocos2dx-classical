@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "CCSpriteFrameCache.h"
 #include "CCSpriteFrame.h"
 #include "CCSprite.h"
-#include "support/TransformUtils.h"
+#include "support/utils/TransformUtils.h"
 #include "platform/CCFileUtils.h"
 #include "cocoa/CCString.h"
 #include "cocoa/CCArray.h"

@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "cocoa/CCString.h"
 #include "CCNode.h"
 #include "support/CCPointExtension.h"
-#include "support/TransformUtils.h"
+#include "support/utils/TransformUtils.h"
 #include "CCCamera.h"
 #include "effects/CCGrid.h"
 #include "CCDirector.h"
