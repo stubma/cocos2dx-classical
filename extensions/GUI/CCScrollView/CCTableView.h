@@ -1,19 +1,18 @@
 /****************************************************************************
- Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2010 Sangwoo Im
-
- http://www.cocos2d-x.org
-
+ Author: Luma (stubma@gmail.com)
+ 
+ https://github.com/stubma/cocos2dx-better
+ 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
-
+ 
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
-
+ 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,32 +21,28 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#ifndef __CCTABLEVIEW_H__
-#define __CCTABLEVIEW_H__
+#ifndef __CCTableView__
+#define __CCTableView__
 
 #include "CCScrollView.h"
 #include "CCTableViewCell.h"
-
+#include "CCSorting.h"
 #include <set>
 #include <vector>
+#include "ccMacros.h"
+
+using namespace std;
 
 NS_CC_EXT_BEGIN
 
 class CCTableView;
-class CCArrayForObjectSorting;
-
-typedef enum {
-    kCCTableViewFillTopDown,
-    kCCTableViewFillBottomUp
-} CCTableViewVerticalFillOrder;
 
 /**
  * Sole purpose of this delegate is to single touch event in this version.
  * @js NA
  * @lua NA
  */
-class CC_EX_DLL CCTableViewDelegate : public CCScrollViewDelegate
+class CC_DLL CCTableViewDelegate : public CCScrollViewDelegate
 {
 public:
     /**
@@ -57,7 +52,7 @@ public:
      * @param cell  cell that is touched
      */
     virtual void tableCellTouched(CCTableView* table, CCTableViewCell* cell) = 0;
-
+    
     /**
      * Delegate to respond a table cell press event.
      *
@@ -65,7 +60,7 @@ public:
      * @param cell  cell that is pressed
      */
     virtual void tableCellHighlight(CCTableView* table, CCTableViewCell* cell){};
-
+    
     /**
      * Delegate to respond a table cell release event
      *
@@ -73,7 +68,7 @@ public:
      * @param cell  cell that is pressed
      */
     virtual void tableCellUnhighlight(CCTableView* table, CCTableViewCell* cell){};
-
+    
     /**
      * Delegate called when the cell is about to be recycled. Immediately
      * after this call the cell will be removed from the scene graph and
@@ -83,37 +78,25 @@ public:
      * @param cell  cell that is pressed
      */
     virtual void tableCellWillRecycle(CCTableView* table, CCTableViewCell* cell){};
-
 };
-
 
 /**
  * Data source that governs table backend data.
  * @lua NA
  */
-class CC_EX_DLL CCTableViewDataSource
+class CC_DLL CCTableViewDataSource
 {
 public:
     virtual ~CCTableViewDataSource() {}
-
+    
     /**
      * cell size for a given index
      *
      * @param idx the index of a cell to get a size
      * @return size of a cell at given index
      */
-    virtual CCSize tableCellSizeForIndex(CCTableView *table, unsigned int idx) {
-        return cellSizeForTable(table);
-    };
-    /**
-     * cell height for a given table.
-     *
-     * @param table table to hold the instances of Class
-     * @return cell size
-     */
-    virtual CCSize cellSizeForTable(CCTableView *table) {
-        return CCSizeZero;
-    };
+    virtual CCSize tableCellSizeForIndex(CCTableView *table, unsigned int idx) = 0;
+    
     /**
      * a cell instance at a given index
      *
@@ -121,23 +104,22 @@ public:
      * @return cell found at idx
      */
     virtual CCTableViewCell* tableCellAtIndex(CCTableView *table, unsigned int idx) = 0;
+    
     /**
      * Returns number of cells in a given table view.
      *
      * @return number of cells
      */
     virtual unsigned int numberOfCellsInTableView(CCTableView *table) = 0;
-
+    
 };
 
 
 /**
- * UITableView counterpart for cocos2d for iphone.
- *
- * this is a very basic, minimal implementation to bring UITableView-like component into cocos2d world.
- * @lua NA
+ * The code is copied from CCTableView for fix following:
+ * 1. change some method to virtual so that subclass can override it, such as CCTableView
  */
-class CC_EX_DLL CCTableView : public CCScrollView, public CCScrollViewDelegate
+class CC_DLL CCTableView : public CCScrollView, public CCScrollViewDelegate
 {
 public:
     /**
@@ -148,7 +130,7 @@ public:
      *  @js NA
      */
     virtual ~CCTableView();
-
+    
     /**
      * An intialized table view object
      *
@@ -166,7 +148,7 @@ public:
      * @return table view
      */
     static CCTableView* create(CCTableViewDataSource* dataSource, CCSize size, CCNode *container);
-
+    
     /**
      * data source
      * @js NA
@@ -179,14 +161,8 @@ public:
      */
     CCTableViewDelegate* getDelegate() { return m_pTableViewDelegate; }
     void setDelegate(CCTableViewDelegate* pDelegate) { m_pTableViewDelegate = pDelegate; }
-
-    /**
-     * determines how cell is ordered and filled in the view.
-     */
-    void setVerticalFillOrder(CCTableViewVerticalFillOrder order);
-    CCTableViewVerticalFillOrder getVerticalFillOrder();
-
-
+    
+    
     bool initWithViewSize(CCSize size, CCNode* container = NULL);
     /**
      * Updates the content of the cell at a given index.
@@ -215,8 +191,8 @@ public:
      *
      * @return free cell
      */
-    CCTableViewCell *dequeueCell();
-
+    CCTableViewCell *dequeueCell(const string& name = "");
+    
     /**
      * Returns an existing cell at a given index. Returns nil if a cell is nonexistent at the moment of query.
      *
@@ -224,34 +200,32 @@ public:
      * @return a cell at a given index
      */
     CCTableViewCell *cellAtIndex(unsigned int idx);
-
-
+    
+    
     virtual void scrollViewDidScroll(CCScrollView* view);
     virtual void scrollViewDidZoom(CCScrollView* view) {}
-
+    
     virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
-
+    
+    int getRealRows();
+    CCPoint getTouchPoint() { return m_tTouchPoint; }
+    
 protected:
-
+    
     CCTableViewCell *m_pTouchedCell;
-    /**
-     * vertical direction of cell filling
-     */
-    CCTableViewVerticalFillOrder m_eVordering;
-
+    
     /**
      * index set to query the indexes of the cells used.
      */
-    std::set<unsigned int>* m_pIndices;
-
-    /**
-     * vector with all cell positions
-     */
-    std::vector<float> m_vCellsPositions;
-    //NSMutableIndexSet *indices_;
+    set<unsigned int>* m_pIndices;
+    
+    vector<float> m_vCellsPositions; // relative to top
+    vector<float> m_hCellsPositions;
+    int m_viewRows; // for horizontal
+    
     /**
      * cells that are currently in the table
      */
@@ -268,21 +242,19 @@ protected:
      * weak link to the delegate object
      */
     CCTableViewDelegate* m_pTableViewDelegate;
-
+    
 	CCScrollViewDirection m_eOldDirection;
-
-    int __indexFromOffset(CCPoint offset);
-    unsigned int _indexFromOffset(CCPoint offset);
-    CCPoint __offsetFromIndex(unsigned int index);
-    CCPoint _offsetFromIndex(unsigned int index);
-
+    
+    virtual int _indexFromOffset(CCPoint offset);
+    virtual CCPoint _offsetFromIndex(unsigned int index);
+    
     void _moveCellOutOfSight(CCTableViewCell *cell);
     void _setIndexForCell(unsigned int index, CCTableViewCell *cell);
     void _addCellIfNecessary(CCTableViewCell * cell);
-
     void _updateCellPositions();
+    
 public:
-    void _updateContentSize();
+    virtual void _updateContentSize();
     
     enum TableViewScriptEventType
     {
@@ -297,9 +269,11 @@ public:
         kNumberOfCellsInTableView,
     };
     void unregisterAllScriptHandler();
+    
+    /// column count, by default it is 1
+    CC_SYNTHESIZE_SETTER(unsigned int, m_colCount, ColCount);
 };
-
 
 NS_CC_EXT_END
 
-#endif /* __CCTABLEVIEW_H__ */
+#endif /* __CCTableView__ */

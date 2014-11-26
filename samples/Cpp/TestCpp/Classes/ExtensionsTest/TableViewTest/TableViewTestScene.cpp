@@ -34,7 +34,6 @@ bool TableViewTestLayer::init()
 	tableView->setDirection(kCCScrollViewDirectionVertical);
 	tableView->setPosition(ccp(winSize.width-150,winSize.height/2-120));
 	tableView->setDelegate(this);
-	tableView->setVerticalFillOrder(kCCTableViewFillTopDown);
 	this->addChild(tableView);
 	tableView->reloadData();
 
