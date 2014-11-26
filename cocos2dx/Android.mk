@@ -61,7 +61,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
 	$(LOCAL_PATH)/include \
 	$(LOCAL_PATH)/kazmath/include \
 	$(LOCAL_PATH)/platform/android \
-    $(LOCAL_PATH)/platform/android/jni
+    $(LOCAL_PATH)/platform/android/jni \
+    $(LOCAL_PATH)/support/tinyxml2
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_C_INCLUDES)
 LOCAL_LDLIBS := -lGLESv2 -llog -lz
 LOCAL_EXPORT_LDLIBS := $(LOCAL_LDLIBS)

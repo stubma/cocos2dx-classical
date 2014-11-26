@@ -315,6 +315,8 @@
 		929F3A641A26163500DE78AC /* CCUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 929F3A621A26163500DE78AC /* CCUtils.h */; };
 		929F3A671A26182E00DE78AC /* TransformUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929F3A651A26182E00DE78AC /* TransformUtils.cpp */; };
 		929F3A681A26182E00DE78AC /* TransformUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 929F3A661A26182E00DE78AC /* TransformUtils.h */; };
+		929F3A6C1A26187B00DE78AC /* CCAndroidStringsParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929F3A6A1A26187B00DE78AC /* CCAndroidStringsParser.cpp */; };
+		929F3A6D1A26187B00DE78AC /* CCAndroidStringsParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 929F3A6B1A26187B00DE78AC /* CCAndroidStringsParser.h */; };
 		D43F7F8A15C7D8BA00D713FC /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */; };
 /* End PBXBuildFile section */
 
@@ -630,6 +632,8 @@
 		929F3A621A26163500DE78AC /* CCUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUtils.h; sourceTree = "<group>"; };
 		929F3A651A26182E00DE78AC /* TransformUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransformUtils.cpp; sourceTree = "<group>"; };
 		929F3A661A26182E00DE78AC /* TransformUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformUtils.h; sourceTree = "<group>"; };
+		929F3A6A1A26187B00DE78AC /* CCAndroidStringsParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAndroidStringsParser.cpp; sourceTree = "<group>"; };
+		929F3A6B1A26187B00DE78AC /* CCAndroidStringsParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAndroidStringsParser.h; sourceTree = "<group>"; };
 		D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouch.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1117,6 +1121,7 @@
 				1551A5F2158F2ADE00E66CFE /* CCVertex.cpp */,
 				1551A5F3158F2ADE00E66CFE /* CCVertex.h */,
 				929F3A601A26163500DE78AC /* utils */,
+				929F3A691A26187B00DE78AC /* locale */,
 				37EEEBF3175DDF3A003C1193 /* component */,
 				1551A5F4158F2ADE00E66CFE /* data_support */,
 				1551A5F9158F2ADE00E66CFE /* image_support */,
@@ -1301,6 +1306,15 @@
 			path = utils;
 			sourceTree = "<group>";
 		};
+		929F3A691A26187B00DE78AC /* locale */ = {
+			isa = PBXGroup;
+			children = (
+				929F3A6A1A26187B00DE78AC /* CCAndroidStringsParser.cpp */,
+				929F3A6B1A26187B00DE78AC /* CCAndroidStringsParser.h */,
+			);
+			path = locale;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1320,6 +1334,7 @@
 				1551A63B158F2ADE00E66CFE /* CCActionPageTurn3D.h in Headers */,
 				1551A63D158F2ADE00E66CFE /* CCActionProgressTimer.h in Headers */,
 				1551A63F158F2ADE00E66CFE /* CCActionTiledGrid.h in Headers */,
+				929F3A6D1A26187B00DE78AC /* CCAndroidStringsParser.h in Headers */,
 				1551A641158F2ADE00E66CFE /* CCActionTween.h in Headers */,
 				1551A643158F2ADE00E66CFE /* CCAtlasNode.h in Headers */,
 				1551A645158F2ADE00E66CFE /* CCNode.h in Headers */,
@@ -1552,6 +1567,7 @@
 				1551A644158F2ADE00E66CFE /* CCNode.cpp in Sources */,
 				1551A646158F2ADE00E66CFE /* CCCamera.cpp in Sources */,
 				1551A648158F2ADE00E66CFE /* CCConfiguration.cpp in Sources */,
+				929F3A6C1A26187B00DE78AC /* CCAndroidStringsParser.cpp in Sources */,
 				1551A64A158F2ADE00E66CFE /* CCDirector.cpp in Sources */,
 				1551A64E158F2ADE00E66CFE /* CCScheduler.cpp in Sources */,
 				1551A650158F2ADE00E66CFE /* CCAffineTransform.cpp in Sources */,
