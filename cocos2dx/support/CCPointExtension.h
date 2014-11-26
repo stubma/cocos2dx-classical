@@ -45,6 +45,8 @@ THE SOFTWARE.
 
 #include "cocoa/CCGeometry.h"
 #include <math.h>
+#include "ccTypes.h"
+#include "ccMacros.h"
 
 NS_CC_BEGIN
 
@@ -189,7 +191,6 @@ ccpLengthSQ(const CCPoint& v)
     return v.getLengthSq();
 }
 
-
 /** Calculates the square distance between two points (not calling sqrt() )
  @return float
  @since v1.1
@@ -200,6 +201,21 @@ ccpDistanceSQ(const CCPoint p1, const CCPoint p2)
     return (p1 - p2).getLengthSq();
 }
 
+/// quick method to create a CCPoint by degree
+static inline CCPoint ccpDegree(float d) {
+    float r = CC_DEGREES_TO_RADIANS(d);
+    return ccp(cosf(r), sinf(r));
+}
+
+/// quick method to create a CCPoint by radian
+static inline CCPoint ccpRadian(float r) {
+    return ccp(cosf(r), sinf(r));
+}
+
+/// convert ccPoint to CCPoint
+static inline CCPoint ccp2CCP(const ccPoint& p) {
+    return ccp(p.x, p.y);
+}
 
 /** Calculates distance between point an origin
  @return float

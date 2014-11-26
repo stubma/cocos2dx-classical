@@ -34,6 +34,12 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+// general function type
+typedef const char* (*CC_DECRYPT_FUNC)(const char* enc, int encLen, int* plainLen);
+typedef const char* (*CC_ENCRYPT_FUNC)(const char* plain, int plainLen, int* encLen);
+typedef const char* (*CC_MULTI_ENCRYPT_FUNC)(const char* enc, size_t encLen, size_t* plainLen, int algorithm);
+typedef const char* (*CC_MULTI_DECRYPT_FUNC)(const char* plain, size_t plainLen, size_t* encLen, int algorithm);
+
 /** RGB color composed of bytes 3 bytes
 @since v0.8
  */
@@ -59,6 +65,137 @@ static inline bool ccc3BEqual(const ccColor3B &col1, const ccColor3B &col2)
     return col1.r == col2.r && col1.g == col2.g && col1.b == col2.b;
 }
 
+/** RGBA color composed of 4 bytes
+@since v0.8
+*/
+typedef struct _ccColor4B
+{
+    GLubyte r;
+    GLubyte g;
+    GLubyte b;
+    GLubyte a;
+} ccColor4B;
+
+//! helper macro that creates an ccColor4B type
+static inline ccColor4B
+ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
+{
+    ccColor4B c = {r, g, b, o};
+    return c;
+}
+
+
+/** RGBA color composed of 4 floats
+@since v0.8
+*/
+typedef struct _ccColor4F {
+    GLfloat r;
+    GLfloat g;
+    GLfloat b;
+    GLfloat a;
+} ccColor4F;
+
+/// hsv color
+typedef struct ccColorHSV {
+    float h, s, v;
+} ccColorHSV;
+
+// create hsv color
+static inline ccColorHSV cchsv(const float h, const float s, const float v) {
+    ccColorHSV c = { h, s, v };
+    return c;
+}
+
+/** Returns a ccColor4F from a ccColor3B. Alpha will be 1.
+ @since v0.99.1
+ */
+static inline ccColor4F ccc4FFromccc3B(ccColor3B c)
+{
+    ccColor4F c4 = {c.r/255.f, c.g/255.f, c.b/255.f, 1.f};
+    return c4;
+}
+
+//! helper that creates a ccColor4f type
+static inline ccColor4F 
+ccc4f(const GLfloat r, const GLfloat g, const GLfloat b, const GLfloat a) {
+    ccColor4F c4 = {r, g, b, a};
+    return c4;
+}
+
+/** Returns a ccColor4F from a ccColor4B.
+ @since v0.99.1
+ */
+static inline ccColor4F ccc4FFromccc4B(ccColor4B c) {
+    ccColor4F c4 = {c.r/255.f, c.g/255.f, c.b/255.f, c.a/255.f};
+    return c4;
+}
+
+static inline ccColor4B ccc4BFromccc4F(ccColor4F c)
+{
+    ccColor4B ret = {(GLubyte)(c.r*255), (GLubyte)(c.g*255), (GLubyte)(c.b*255), (GLubyte)(c.a*255)};
+	return ret;
+}
+
+/** returns YES if both ccColor4F are equal. Otherwise it returns NO.
+ @since v0.99.1
+ */
+static inline bool ccc4FEqual(ccColor4F a, ccColor4F b)
+{
+    return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
+}
+
+/// convert int color 0xaarrggbb to ccColor4B
+static inline ccColor4B ccc4FromInt(int c) {
+    return ccc4((c >> 16) & 0xff,
+                (c >> 8) & 0xff,
+                c & 0xff,
+                (c >> 24) & 0xff);
+}
+
+/// convert int color 0xaarrggbb to ccColor3B, alpha is discarded
+static inline ccColor3B ccc3FromInt(int c) {
+    return ccc3((c >> 16) & 0xff,
+                (c >> 8) & 0xff,
+                c & 0xff);
+}
+
+/// convert ccColor4B to ccColor3B
+static inline ccColor3B ccc3FromCCC4(const ccColor4B& c4) {
+    return ccc3(c4.r, c4.g, c4.b);
+}
+
+/// convert int color 0xaarrggbb to ccColor4F
+static inline ccColor4F ccc4fFromInt(int c) {
+    return ccc4f(((c >> 16) & 0xff) / 255.0f,
+                 ((c >> 8) & 0xff) / 255.0f,
+                 (c & 0xff) / 255.0f,
+                 ((c >> 24) & 0xff) / 255.0f);
+}
+
+/// convert ccColor4B to int color 0xaarrggbb
+static inline int ccIntFromC4(const ccColor4B& c) {
+    return ((c.a & 0xff) << 24) |
+    ((c.r & 0xff) << 16) |
+    ((c.g & 0xff) << 8) |
+    (c.b & 0xff);
+}
+
+/// convert ccColor3B to int color 0xaarrggbb
+static inline int ccIntFromC3(const ccColor3B& c) {
+    return 0xff000000 |
+    ((c.r & 0xff) << 16) |
+    ((c.g & 0xff) << 8) |
+    (c.b & 0xff);
+}
+
+/// convert ccColor4F to int color 0xaarrggbb
+static inline int ccIntFromC4f(const ccColor4F& c) {
+    return (((int)(c.a * 255) & 0xff) << 24) |
+    (((int)(c.r * 255) & 0xff) << 16) |
+    (((int)(c.g * 255) & 0xff) << 8) |
+    ((int)(c.b * 255) & 0xff);
+}
+
 //ccColor3B predefined colors
 //! White color (255,255,255)
 static const ccColor3B ccWHITE={255,255,255};
@@ -79,91 +216,36 @@ static const ccColor3B ccORANGE={255,127,0};
 //! Gray Color (166,166,166)
 static const ccColor3B ccGRAY={166,166,166};
 
-/** RGBA color composed of 4 bytes
-@since v0.8
-*/
-typedef struct _ccColor4B
-{
-    GLubyte r;
-    GLubyte g;
-    GLubyte b;
-    GLubyte a;
-} ccColor4B;
-//! helper macro that creates an ccColor4B type
-static inline ccColor4B
-ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
-{
-    ccColor4B c = {r, g, b, o};
-    return c;
-}
-
-
-/** RGBA color composed of 4 floats
-@since v0.8
-*/
-typedef struct _ccColor4F {
-    GLfloat r;
-    GLfloat g;
-    GLfloat b;
-    GLfloat a;
-} ccColor4F;
-
-
-/** Returns a ccColor4F from a ccColor3B. Alpha will be 1.
- @since v0.99.1
- */
-static inline ccColor4F ccc4FFromccc3B(ccColor3B c)
-{
-    ccColor4F c4 = {c.r/255.f, c.g/255.f, c.b/255.f, 1.f};
-    return c4;
-}
-
-//! helper that creates a ccColor4f type
-static inline ccColor4F 
-ccc4f(const GLfloat r, const GLfloat g, const GLfloat b, const GLfloat a)
-{
-    ccColor4F c4 = {r, g, b, a};
-    return c4;
-}
-
-/** Returns a ccColor4F from a ccColor4B.
- @since v0.99.1
- */
-static inline ccColor4F ccc4FFromccc4B(ccColor4B c)
-{
-    ccColor4F c4 = {c.r/255.f, c.g/255.f, c.b/255.f, c.a/255.f};
-    return c4;
-}
-
-static inline ccColor4B ccc4BFromccc4F(ccColor4F c)
-{
-    ccColor4B ret = {(GLubyte)(c.r*255), (GLubyte)(c.g*255), (GLubyte)(c.b*255), (GLubyte)(c.a*255)};
-	return ret;
-}
-
-/** returns YES if both ccColor4F are equal. Otherwise it returns NO.
- @since v0.99.1
- */
-static inline bool ccc4FEqual(ccColor4F a, ccColor4F b)
-{
-    return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
-}
+// color constants
+static const ccColor4B cc4RED = { 255, 0, 0, 255 };
+static const ccColor4B cc4GREEN = { 0, 255, 0, 255 };
+static const ccColor4B cc4BLUE = { 0, 0, 255, 255 };
+static const ccColor4B cc4BLACK = { 0, 0, 0, 255 };
+static const ccColor4B cc4WHITE = { 255, 255, 255, 255 };
+static const ccColor4B cc4TRANSPARENT = { 0, 0, 0, 0 };
+static const ccColor4B cc4DIM = { 0, 0, 0, 127 };
+static const ccColor4B cc4YELLOW = { 255, 255, 0, 255 };
+static const ccColor4F cc4fRED = { 1, 0, 0, 1 };
+static const ccColor4F cc4fGREEN = { 0, 1, 0, 1 };
+static const ccColor4F cc4fBLUE = { 0, 0, 1, 1 };
+static const ccColor4F cc4fBLACK = { 0, 0, 0, 1 };
+static const ccColor4F cc4fWHITE = { 1, 1, 1, 1 };
+static const ccColor4F cc4fTRANSPARENT = { 0, 0, 0, 0 };
+static const ccColor4F cc4fDIM = { 0, 0, 0, 0.5f };
+static const ccColor4F cc4fYELLOW = { 1, 1, 0, 1 };
 
 /** A vertex composed of 2 floats: x, y
  @since v0.8
  */
-typedef struct _ccVertex2F
-{
+typedef struct _ccVertex2F {
     GLfloat x;
     GLfloat y;
 } ccVertex2F;
 
-static inline ccVertex2F vertex2(const float x, const float y)
-{
+static inline ccVertex2F vertex2(const float x, const float y) {
     ccVertex2F c = {x, y};
     return c;
 }
-
 
 /** A vertex composed of 2 floats: x, y
  @since v0.8
@@ -203,6 +285,86 @@ typedef struct _ccPointSprite
     ccColor4B    color;        // 4 bytes
     GLfloat        size;        // 4 bytes
 } ccPointSprite;
+
+/// aabb box
+typedef struct ccAABB {
+    CCPoint min, max;
+} ccAABB;
+
+/// create aabb
+static inline ccAABB ccaabb(const CCPoint min, const CCPoint max) {
+    ccAABB b = {
+        min,
+        max
+    };
+    return b;
+}
+
+/// position
+typedef struct ccPosition {
+    int x, y;
+} ccPosition;
+static const ccPosition ccposZero = { 0, 0 };
+static inline ccPosition ccpos(const int x, const int y) {
+    ccPosition p = {
+        x, y
+    };
+    return p;
+}
+
+// point struct
+typedef struct ccPoint { float x, y; } ccPoint;
+static const ccPoint ccpZero = { 0, 0 };
+static inline ccPoint ccpt(const float x, const float y) {
+    ccPoint p = { x, y };
+    return p;
+}
+static inline ccPoint ccptAdd(const ccPoint& p1, const ccPoint& p2) {
+    return ccpt(p1.x + p2.x, p1.y + p2.y);
+}
+static inline ccPoint ccptSub(const ccPoint& p1, const ccPoint& p2) {
+    return ccpt(p1.x - p2.x, p1.y - p2.y);
+}
+static inline float ccptLengthSQ(const ccPoint& p) {
+    return p.x * p.x + p.y * p.y;
+}
+static inline float ccptLength(const ccPoint& p) {
+    return sqrtf(ccptLengthSQ(p));
+}
+
+// rect struct
+typedef struct ccRect { float x, y, width, height; } ccRect;
+static const ccRect ccrZero = { 0, 0, 0, 0 };
+static inline ccRect ccr(const float x, const float y, const float w, const float h) {
+    ccRect r = { x, y, w, h };
+    return r;
+}
+static inline CCRect ccr2CCR(const ccRect& r) {
+    return CCRectMake(r.x, r.y, r.width, r.height);
+}
+
+// size struct
+typedef struct ccSize { float width, height; } ccSize;
+static const ccSize ccsZero = { 0, 0 };
+static inline ccSize ccsz(const float w, const float h) {
+    ccSize s = { w, h };
+    return s;
+}
+
+// insets
+typedef struct ccInsets {
+    float top;
+    float left;
+    float right;
+    float bottom;
+} ccInsets;
+static const ccInsets cciZero = { 0, 0, 0, 0 };
+static inline ccInsets cci(float t, float l, float r, float b) {
+    ccInsets i = {
+        t, l, r, b
+    };
+    return i;
+}
 
 //!    A 2D Quad. 4 * 2 floats
 typedef struct _ccQuad2 {
@@ -407,33 +569,60 @@ public:
  *  @js NA
  *  @lua NA
  */
-typedef struct _ccFontDefinition
-{
+typedef struct _ccFontDefinition {
 public:
-    
-    _ccFontDefinition():  m_alignment(kCCTextAlignmentCenter),
+    _ccFontDefinition() :
+    m_alignment(kCCTextAlignmentCenter),
     m_vertAlignment(kCCVerticalTextAlignmentTop),
-    m_fontFillColor(ccWHITE)
-    { m_dimensions = CCSizeMake(0,0); }
+    m_fontFillColor(ccWHITE) {
+        m_dimensions = CCSizeMake(0, 0);
+    }
     
     // font name
     std::string             m_fontName;
+    
     // font size
     int                     m_fontSize;
+    
     // horizontal alignment
     CCTextAlignment         m_alignment;
+    
     // vertical alignment
     CCVerticalTextAlignment m_vertAlignment;
+    
     // renering box
     CCSize                  m_dimensions;
+    
     // font color
     ccColor3B               m_fontFillColor;
+    
     // font shadow
     ccFontShadow            m_shadow;
+    
     // font stroke
     ccFontStroke            m_stroke;
-    
 } ccFontDefinition;
+
+// rich font definition, support shadow color
+struct ccRichFontDefinition : public ccFontDefinition {
+    // font shadow color
+    int m_shadowColor;
+    
+    // line spacing
+    float m_lineSpacing;
+    
+    // default image scale factor
+    float m_globalImageScaleFactor;
+    
+    // shown letter to index
+    int m_toCharIndex;
+    
+    // decrypt func for embedded image
+    CC_DECRYPT_FUNC decryptFunc;
+    
+    // elapsed time
+    float m_elapsed;
+};
 
 
 NS_CC_END
