@@ -195,6 +195,49 @@ public: virtual void set##funName(varType var)   \
     } \
 } 
 
+// nc means not const
+#define CC_SYNTHESIZE_PASS_BY_REF_NC(varType, varName, funName) \
+    protected: varType varName; \
+    public: virtual varType& get##funName(void) { return varName; } \
+    public: virtual void set##funName(const varType& var){ varName = var; }
+
+// setter is not implemented
+#define CC_SYNTHESIZE_PASS_BY_REF_SETTER(varType, varName, funName) \
+    protected: varType varName;\
+    public: virtual const varType& get##funName(void) const { return varName; } \
+    public: virtual void set##funName(const varType& var);
+
+// special macro for bool type
+#define CC_SYNTHESIZE_BOOL(varName, funName) \
+    protected: bool varName; \
+    public: virtual bool is##funName(void) const { return varName; } \
+    public: virtual void set##funName(bool var) { varName = var; } \
+    public: virtual void mark##funName() { varName = true; } \
+    public: virtual void clear##funName() { varName = false; }
+
+// readonly for bool type
+#define CC_SYNTHESIZE_READONLY_BOOL(varName, funName)\
+    protected: bool varName;\
+    public: virtual bool is##funName(void) const { return varName; }
+
+// special macro for bool type, custom setter
+#define CC_SYNTHESIZE_BOOL_SETTER(varName, funName) \
+    protected: bool varName; \
+    public: virtual bool is##funName(void) const { return varName; } \
+    public: virtual void set##funName(bool var);
+
+// macro for custom setter
+#define CC_SYNTHESIZE_SETTER(varType, varName, funName) \
+    protected: varType varName;\
+    public: virtual varType get##funName(void) const { return varName; } \
+    public: virtual void set##funName(varType var);
+
+// macro for custom getter
+#define CC_SYNTHESIZE_GETTER(varType, varName, funName) \
+    protected: varType varName;\
+    public: virtual varType get##funName(void) const; \
+    public: virtual void set##funName(varType var) { varName = var; }
+
 #define CC_SAFE_DELETE(p)            do { if(p) { delete (p); (p) = 0; } } while(0)
 #define CC_SAFE_DELETE_ARRAY(p)     do { if(p) { delete[] (p); (p) = 0; } } while(0)
 #define CC_SAFE_FREE(p)                do { if(p) { free(p); (p) = 0; } } while(0)

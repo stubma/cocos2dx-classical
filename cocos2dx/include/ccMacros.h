@@ -33,32 +33,64 @@ THE SOFTWARE.
 
 #include "platform/CCCommon.h"
 #include "CCStdC.h"
+#include "ccConfig.h"
 
 #ifndef CCAssert
-#if COCOS2D_DEBUG > 0
-extern bool CC_DLL cc_assert_script_compatible(const char *msg);
-#define CCAssert(cond, msg) do {                              \
-      if (!(cond)) {                                          \
-        if (!cc_assert_script_compatible(msg) && strlen(msg)) \
-          cocos2d::CCLog("Assert failed: %s", msg);           \
-        CC_ASSERT(cond);                                      \
-      } \
-    } while (0)
-#else
-#define CCAssert(cond, msg) ((void)(cond))
-#endif
+    #ifdef COCOS2D_DEBUG
+        extern bool CC_DLL cc_assert_script_compatible(const char *msg);
+        #define CCAssert(cond, msg) do {                              \
+              if (!(cond)) {                                          \
+                if (!cc_assert_script_compatible(msg) && strlen(msg)) \
+                  cocos2d::CCLog("Assert failed: %s", msg);           \
+                CC_ASSERT(cond);                                      \
+              } \
+            } while (0)
+    #else
+        #define CCAssert(cond, msg) ((void)(cond))
+    #endif
 #endif  // CCAssert
 
-#include "ccConfig.h"
+// map endian methods
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    #include <sys/stat.h>
+    #include <endian.h>
+    #include "JniHelper.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+    #include <CoreFoundation/CFByteOrder.h>
+    #define letoh64 CFSwapInt64LittleToHost
+    #define letoh32 CFSwapInt32LittleToHost
+    #define letoh16 CFSwapInt16LittleToHost
+    #define htole64 CFSwapInt64HostToLittle
+    #define htole32 CFSwapInt32HostToLittle
+    #define htole16 CFSwapInt16HostToLittle
+    #define betoh64	CFSwapInt64BigToHost
+    #define betoh32	CFSwapInt32BigToHost
+    #define betoh16 CFSwapInt16BigToHost
+    #define htobe64 CFSwapInt64HostToBig
+    #define htobe32 CFSwapInt32HostToBig
+    #define htobe16 CFSwapInt16HostToBig
+#endif
+
+// max int
+#define MAX_INT 0x7fffffff
+
+// path separator
+#define CC_PATH_SEPARATOR '/'
+
+// max float
+#define MAX_FLOAT 3.4028235E38f
+
+// sign
+#define SIGN(x) ((x) >= 0 ? 1 : -1)
 
 /** @def CC_SWAP
 simple macro that swaps 2 variables
 */
-#define CC_SWAP(x, y, type)    \
-{    type temp = (x);        \
-    x = y; y = temp;        \
-}
-
+#define CC_SWAP(x, y, type) \
+    { \
+        type temp = (x); \
+        x = y; y = temp; \
+    }
 
 /** @def CCRANDOM_MINUS1_1
  returns a random float between -1 and 1
@@ -69,6 +101,10 @@ simple macro that swaps 2 variables
  returns a random float between 0 and 1
  */
 #define CCRANDOM_0_1() ((float)rand()/RAND_MAX)
+
+// random to max, inclusive
+#define CCRANDOM_0_X_INT(x) ((int)(CCRANDOM_0_1() * (x) * 100) % ((x) + 1))
+#define CCRANDOM_X_Y_INT(x, y) (CCRANDOM_0_X_INT((y) - (x)) + (x))
 
 /** @def CC_DEGREES_TO_RADIANS
  converts degrees to radians
