@@ -29,6 +29,8 @@
 #include "base_nodes/CCNode.h"
 #include "CCSorting.h"
 
+using namespace std;
+
 NS_CC_EXT_BEGIN
 
 /**
@@ -51,8 +53,11 @@ public:
 
     void setObjectID(unsigned int uIdx);
     unsigned int getObjectID();
+    
 private:
     unsigned int m_uIdx;
+    
+    CC_SYNTHESIZE_PASS_BY_REF(string, m_name, Name);
 };
 
 NS_CC_EXT_END
