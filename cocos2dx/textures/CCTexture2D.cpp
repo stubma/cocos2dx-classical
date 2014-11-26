@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "platform/platform.h"
 #include "platform/CCImage.h"
 #include "CCGL.h"
-#include "support/ccUtils.h"
+#include "support/utils/CCUtils.h"
 #include "platform/CCPlatformMacros.h"
 #include "textures/CCTexturePVR.h"
 #include "textures/CCTextureETC.h"
@@ -764,7 +764,7 @@ void CCTexture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 
 void CCTexture2D::generateMipmap()
 {
-    CCAssert( m_uPixelsWide == ccNextPOT(m_uPixelsWide) && m_uPixelsHigh == ccNextPOT(m_uPixelsHigh), "Mipmap texture only works in POT textures");
+    CCAssert( m_uPixelsWide == CCUtils::nextPOT(m_uPixelsWide) && m_uPixelsHigh == CCUtils::nextPOT(m_uPixelsHigh), "Mipmap texture only works in POT textures");
     ccGLBindTexture2D( m_uName );
     glGenerateMipmap(GL_TEXTURE_2D);
     m_bHasMipmaps = true;
@@ -777,8 +777,8 @@ bool CCTexture2D::hasMipmaps()
 
 void CCTexture2D::setTexParameters(ccTexParams *texParams)
 {
-    CCAssert( (m_uPixelsWide == ccNextPOT(m_uPixelsWide) || texParams->wrapS == GL_CLAMP_TO_EDGE) &&
-        (m_uPixelsHigh == ccNextPOT(m_uPixelsHigh) || texParams->wrapT == GL_CLAMP_TO_EDGE),
+    CCAssert( (m_uPixelsWide == CCUtils::nextPOT(m_uPixelsWide) || texParams->wrapS == GL_CLAMP_TO_EDGE) &&
+        (m_uPixelsHigh == CCUtils::nextPOT(m_uPixelsHigh) || texParams->wrapT == GL_CLAMP_TO_EDGE),
         "GL_CLAMP_TO_EDGE should be used in NPOT dimensions");
 
     ccGLBindTexture2D( m_uName );

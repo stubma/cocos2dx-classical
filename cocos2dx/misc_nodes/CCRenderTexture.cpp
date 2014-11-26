@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "shaders/CCGLProgram.h"
 #include "shaders/ccGLStateCache.h"
 #include "CCConfiguration.h"
-#include "support/ccUtils.h"
+#include "support/utils/CCUtils.h"
 #include "textures/CCTextureCache.h"
 #include "platform/CCFileUtils.h"
 #include "CCGL.h"
@@ -272,8 +272,8 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         }
         else
         {
-            powW = ccNextPOT(w);
-            powH = ccNextPOT(h);
+            powW = CCUtils::nextPOT(w);
+            powH = CCUtils::nextPOT(h);
         }
 
         data = malloc((int)(powW * powH * 4));

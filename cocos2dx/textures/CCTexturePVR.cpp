@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "CCTexturePVR.h"
 #include "ccMacros.h"
 #include "CCConfiguration.h"
-#include "support/ccUtils.h"
+#include "support/utils/CCUtils.h"
 #include "CCStdC.h"
 #include "platform/CCFileUtils.h"
 #include "support/zip_support/ZipUtils.h"
@@ -286,7 +286,7 @@ bool CCTexturePVR::unpackPVRv2Data(unsigned char* data, unsigned int len)
     }
 
     if (! configuration->supportsNPOT() &&
-        (header->width != ccNextPOT(header->width) || header->height != ccNextPOT(header->height)))
+        (header->width != CCUtils::nextPOT(header->width) || header->height != CCUtils::nextPOT(header->height)))
     {
         CCLOG("cocos2d: ERROR: Loading an NPOT texture (%dx%d) but is not supported on this device", header->width, header->height);
         return false;
@@ -591,7 +591,7 @@ bool CCTexturePVR::createGLTexture()
 			glTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, format, type, data);
         }
         
-		if (i > 0 && (width != height || ccNextPOT(width) != width ))
+		if (i > 0 && (width != height || CCUtils::nextPOT(width) != width ))
         {
 			CCLOG("cocos2d: TexturePVR. WARNING. Mipmap level %u is not squared. Texture won't render correctly. width=%u != height=%u", i, width, height);
         }
