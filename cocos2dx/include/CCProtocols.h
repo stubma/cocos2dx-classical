@@ -206,6 +206,15 @@ public:
     virtual const char* getString(void) = 0;
 };
 
+/**
+ * CCNode that can be set a percentage between 0 and 100
+ */
+class CC_DLL CCMeasurableProtocol {
+public:
+    virtual float getPercentage() = 0;
+    virtual void setPercentage(float p) = 0;
+};
+
 /** 
  * OpenGL projection protocol 
  * @js NA

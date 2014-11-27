@@ -28,8 +28,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-#define kProgressTimerCast CCProgressTimer*
-
 // implementation of CCProgressTo
 
 CCProgressTo* CCProgressTo::create(float duration, float fPercent)
@@ -79,7 +77,9 @@ CCObject* CCProgressTo::copyWithZone(CCZone *pZone)
 void CCProgressTo::startWithTarget(CCNode *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
-    m_fFrom = ((kProgressTimerCast)(pTarget))->getPercentage();
+    CCMeasurableProtocol* p = dynamic_cast<CCMeasurableProtocol*>(pTarget);
+    CCAssert(p, "CCProgressTo only accepts a CCMeasurableProtocol");
+    m_fFrom = p->getPercentage();
 
     // XXX: Is this correct ?
     // Adding it to support CCRepeat
@@ -91,7 +91,7 @@ void CCProgressTo::startWithTarget(CCNode *pTarget)
 
 void CCProgressTo::update(float time)
 {
-    ((kProgressTimerCast)(m_pTarget))->setPercentage(m_fFrom + (m_fTo - m_fFrom) * time);
+    dynamic_cast<CCMeasurableProtocol*>(m_pTarget)->setPercentage(m_fFrom + (m_fTo - m_fFrom) * time);
 }
 
 // implementation of CCProgressFromTo
@@ -149,11 +149,13 @@ CCActionInterval* CCProgressFromTo::reverse(void)
 void CCProgressFromTo::startWithTarget(CCNode *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
+    CCMeasurableProtocol* p = dynamic_cast<CCMeasurableProtocol*>(pTarget);
+    CCAssert(p, "CCProgressFromTo only accepts a CCMeasurableProtocol");
 }
 
 void CCProgressFromTo::update(float time)
 {
-    ((kProgressTimerCast)(m_pTarget))->setPercentage(m_fFrom + (m_fTo - m_fFrom) * time);
+    dynamic_cast<CCMeasurableProtocol*>(m_pTarget)->setPercentage(m_fFrom + (m_fTo - m_fFrom) * time);
 }
 
 NS_CC_END

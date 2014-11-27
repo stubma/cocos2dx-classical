@@ -217,6 +217,14 @@ const CCRect& LoadingBar::getCapInsets()
 {
     return _capInsets;
 }
+    
+float LoadingBar::getPercentage() {
+    return getPercent();
+}
+
+void LoadingBar::setPercentage(float p) {
+    setPercent((int)p);
+}
 
 void LoadingBar::setPercent(int percent)
 {

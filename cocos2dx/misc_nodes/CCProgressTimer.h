@@ -53,7 +53,7 @@ typedef enum {
  The progress can be Radial, Horizontal or vertical.
  @since v0.99.1
  */
-class CC_DLL CCProgressTimer : public CCNodeRGBA
+class CC_DLL CCProgressTimer : public CCNodeRGBA, public CCMeasurableProtocol
 #ifdef EMSCRIPTEN
 , public CCGLBufferedNode
 #endif // EMSCRIPTEN
@@ -73,7 +73,7 @@ public:
     inline CCProgressTimerType getType(void) { return m_eType; }
 
     /** Percentages are from 0 to 100 */
-    inline float getPercentage(void) {return m_fPercentage; }
+    virtual float getPercentage(void) {return m_fPercentage; }
 
     /** The image to show the progress percentage, retain */
     inline CCSprite* getSprite(void) { return m_pSprite; }
@@ -81,7 +81,7 @@ public:
     /** Initializes a progress timer with the sprite as the shape the timer goes through */
     bool initWithSprite(CCSprite* sp);
 
-    void setPercentage(float fPercentage);
+    virtual void setPercentage(float fPercentage);
     void setSprite(CCSprite *pSprite);
     void setType(CCProgressTimerType type);
     /**

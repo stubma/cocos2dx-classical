@@ -40,7 +40,7 @@ typedef enum
 *   @js NA
 *   @lua NA
 */
-class CC_EX_DLL LoadingBar : public Widget
+class CC_EX_DLL LoadingBar : public Widget, public CCMeasurableProtocol
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -133,6 +133,11 @@ public:
      * Returns the "class name" of widget.
      */
     virtual std::string getDescription() const;
+    
+    // measurable protocol
+    virtual float getPercentage();
+    virtual void setPercentage(float p);
+    
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
