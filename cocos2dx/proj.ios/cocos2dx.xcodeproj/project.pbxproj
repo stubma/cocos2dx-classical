@@ -338,6 +338,8 @@
 		929D536B1A27582F00560A2E /* VectorImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53541A27582F00560A2E /* VectorImpl.h */; };
 		929D536C1A27582F00560A2E /* VelocityTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53551A27582F00560A2E /* VelocityTracker.cpp */; };
 		929D536D1A27582F00560A2E /* VelocityTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53561A27582F00560A2E /* VelocityTracker.h */; };
+		929D53711A2758D400560A2E /* entities.c in Sources */ = {isa = PBXBuildFile; fileRef = 929D536F1A2758D400560A2E /* entities.c */; };
+		929D53721A2758D400560A2E /* entities.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53701A2758D400560A2E /* entities.h */; };
 		929F3A631A26163500DE78AC /* CCUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929F3A611A26163500DE78AC /* CCUtils.cpp */; };
 		929F3A641A26163500DE78AC /* CCUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 929F3A621A26163500DE78AC /* CCUtils.h */; };
 		929F3A671A26182E00DE78AC /* TransformUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929F3A651A26182E00DE78AC /* TransformUtils.cpp */; };
@@ -686,6 +688,8 @@
 		929D53541A27582F00560A2E /* VectorImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VectorImpl.h; sourceTree = "<group>"; };
 		929D53551A27582F00560A2E /* VelocityTracker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VelocityTracker.cpp; sourceTree = "<group>"; };
 		929D53561A27582F00560A2E /* VelocityTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VelocityTracker.h; sourceTree = "<group>"; };
+		929D536F1A2758D400560A2E /* entities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = entities.c; sourceTree = "<group>"; };
+		929D53701A2758D400560A2E /* entities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = entities.h; sourceTree = "<group>"; };
 		929F3A611A26163500DE78AC /* CCUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUtils.cpp; sourceTree = "<group>"; };
 		929F3A621A26163500DE78AC /* CCUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUtils.h; sourceTree = "<group>"; };
 		929F3A651A26182E00DE78AC /* TransformUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransformUtils.cpp; sourceTree = "<group>"; };
@@ -1185,6 +1189,7 @@
 				1551A5F2158F2ADE00E66CFE /* CCVertex.cpp */,
 				1551A5F3158F2ADE00E66CFE /* CCVertex.h */,
 				929D533F1A27582F00560A2E /* aosp */,
+				929D536E1A2758D400560A2E /* entities */,
 				929F3A601A26163500DE78AC /* utils */,
 				929F3A691A26187B00DE78AC /* locale */,
 				37EEEBF3175DDF3A003C1193 /* component */,
@@ -1390,6 +1395,15 @@
 			path = aosp;
 			sourceTree = "<group>";
 		};
+		929D536E1A2758D400560A2E /* entities */ = {
+			isa = PBXGroup;
+			children = (
+				929D536F1A2758D400560A2E /* entities.c */,
+				929D53701A2758D400560A2E /* entities.h */,
+			);
+			path = entities;
+			sourceTree = "<group>";
+		};
 		929F3A601A26163500DE78AC /* utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -1568,6 +1582,7 @@
 				1551A848158F2ADF00E66CFE /* uthash.h in Headers */,
 				1551A849158F2ADF00E66CFE /* utlist.h in Headers */,
 				1551A84B158F2ADF00E66CFE /* TGAlib.h in Headers */,
+				929D53721A2758D400560A2E /* entities.h in Headers */,
 				1551A84F158F2ADF00E66CFE /* ioapi.h in Headers */,
 				1551A851158F2ADF00E66CFE /* unzip.h in Headers */,
 				929D53691A27582F00560A2E /* Vector.h in Headers */,
@@ -1728,6 +1743,7 @@
 				1551A6DB158F2ADE00E66CFE /* CCLabelTTF.cpp in Sources */,
 				1551A6DD158F2ADE00E66CFE /* CCLayer.cpp in Sources */,
 				1551A6DF158F2ADE00E66CFE /* CCScene.cpp in Sources */,
+				929D53711A2758D400560A2E /* entities.c in Sources */,
 				929D535F1A27582F00560A2E /* SharedBuffer.cpp in Sources */,
 				1551A6E1158F2ADE00E66CFE /* CCTransition.cpp in Sources */,
 				1551A6E3158F2ADE00E66CFE /* CCTransitionPageTurn.cpp in Sources */,

@@ -22,12 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "CCUtils.h"
-//#include "cocos2d-better.h"
-//#include "entities.h"
-//#include "CCLocale.h"
+#include "entities.h"
+#include "CCLocale.h"
 #include "ccMacros.h"
 //#include "CCImage_richlabel.h"
-//#include "CCPinyinUtils.h"
+#include "CCPinyinUtils.h"
 //#include "cocos-ext.h"
 
 //USING_NS_CC_EXT;

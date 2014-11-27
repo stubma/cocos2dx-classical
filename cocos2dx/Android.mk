@@ -64,6 +64,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
 	$(LOCAL_PATH)/platform/android \
     $(LOCAL_PATH)/platform/android/jni \
     $(LOCAL_PATH)/support/aosp \
+    $(LOCAL_PATH)/support/entities \
     $(LOCAL_PATH)/support/utils \
     $(LOCAL_PATH)/support/tinyxml2
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_C_INCLUDES)
