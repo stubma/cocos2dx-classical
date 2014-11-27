@@ -38,7 +38,6 @@
 #include "shaders/CCShaderCache.h"
 #include "shaders/CCGLProgram.h"
 #include "shaders/ccGLStateCache.h"
-#include "support/base64.h"
 #include "support/zip_support/ZipUtils.h"
 #include "platform/CCFileUtils.h"
 #include "kazmath/GL/matrix.h"

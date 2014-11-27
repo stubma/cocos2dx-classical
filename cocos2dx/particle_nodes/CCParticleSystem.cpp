@@ -46,7 +46,6 @@ THE SOFTWARE.
 #include "ccTypes.h"
 #include "textures/CCTextureCache.h"
 #include "textures/CCTextureAtlas.h"
-#include "support/base64.h"
 #include "support/CCPointExtension.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCImage.h"
@@ -54,6 +53,7 @@ THE SOFTWARE.
 #include "support/zip_support/ZipUtils.h"
 #include "CCDirector.h"
 #include "support/CCProfiling.h"
+#include "support/CCBase64.h"
 // opengl
 #include "CCGL.h"
 
@@ -356,11 +356,11 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary, const char *
                     const char *textureData = dictionary->valueForKey("textureImageData")->getCString();
                     CCAssert(textureData, "");
                     
-                    int dataLen = strlen(textureData);
+                    int dataLen = (int)strlen(textureData);
                     if(dataLen != 0)
                     {
                         // if it fails, try to get it from the base64-gzipped data    
-                        int decodeLen = base64Decode((unsigned char*)textureData, (unsigned int)dataLen, &buffer);
+                        int decodeLen = CCBase64::decode((unsigned char*)textureData, (unsigned int)dataLen, &buffer);
                         CCAssert( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
                         CC_BREAK_IF(!buffer);
                         

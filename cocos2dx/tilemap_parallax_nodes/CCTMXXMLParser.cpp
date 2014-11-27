@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "support/zip_support/ZipUtils.h"
 #include "support/CCPointExtension.h"
-#include "support/base64.h"
+#include "support/CCBase64.h"
 #include "platform/platform.h"
 
 using namespace std;
@@ -704,7 +704,7 @@ void CCTMXMapInfo::endElement(void *ctx, const char *name)
 
         std::string currentString = pTMXMapInfo->getCurrentString();
         unsigned char *buffer;
-        len = base64Decode((unsigned char*)currentString.c_str(), (unsigned int)currentString.length(), &buffer);
+        len = CCBase64::decode((unsigned char*)currentString.c_str(), (unsigned int)currentString.length(), &buffer);
         if( ! buffer ) 
         {
             CCLOG("cocos2d: TiledMap: decode data error");
