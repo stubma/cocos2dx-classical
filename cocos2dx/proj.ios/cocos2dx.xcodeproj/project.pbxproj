@@ -360,6 +360,11 @@
 		929D539B1A27595700560A2E /* yajl_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53871A27595700560A2E /* yajl_parser.h */; };
 		929D539C1A27595700560A2E /* yajl_tree.c in Sources */ = {isa = PBXBuildFile; fileRef = 929D53881A27595700560A2E /* yajl_tree.c */; };
 		929D539D1A27595700560A2E /* yajl_version.c in Sources */ = {isa = PBXBuildFile; fileRef = 929D53891A27595700560A2E /* yajl_version.c */; };
+		929D539F1A275AFE00560A2E /* CCUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 929D539E1A275AFE00560A2E /* CCUtils.mm */; };
+		929D53A31A275B7900560A2E /* CCUtilsIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53A21A275B7900560A2E /* CCUtilsIOS.h */; };
+		929D53A51A275BE600560A2E /* CCUtilsIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 929D53A41A275BE600560A2E /* CCUtilsIOS.mm */; };
+		929D53A91A275E5300560A2E /* CCMD5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53A71A275E5300560A2E /* CCMD5.cpp */; };
+		929D53AA1A275E5300560A2E /* CCMD5.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53A81A275E5300560A2E /* CCMD5.h */; };
 		929F3A631A26163500DE78AC /* CCUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929F3A611A26163500DE78AC /* CCUtils.cpp */; };
 		929F3A641A26163500DE78AC /* CCUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 929F3A621A26163500DE78AC /* CCUtils.h */; };
 		929F3A671A26182E00DE78AC /* TransformUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929F3A651A26182E00DE78AC /* TransformUtils.cpp */; };
@@ -730,6 +735,11 @@
 		929D53871A27595700560A2E /* yajl_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yajl_parser.h; sourceTree = "<group>"; };
 		929D53881A27595700560A2E /* yajl_tree.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yajl_tree.c; sourceTree = "<group>"; };
 		929D53891A27595700560A2E /* yajl_version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yajl_version.c; sourceTree = "<group>"; };
+		929D539E1A275AFE00560A2E /* CCUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCUtils.mm; sourceTree = "<group>"; };
+		929D53A21A275B7900560A2E /* CCUtilsIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUtilsIOS.h; sourceTree = "<group>"; };
+		929D53A41A275BE600560A2E /* CCUtilsIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCUtilsIOS.mm; sourceTree = "<group>"; };
+		929D53A71A275E5300560A2E /* CCMD5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMD5.cpp; sourceTree = "<group>"; };
+		929D53A81A275E5300560A2E /* CCMD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMD5.h; sourceTree = "<group>"; };
 		929F3A611A26163500DE78AC /* CCUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUtils.cpp; sourceTree = "<group>"; };
 		929F3A621A26163500DE78AC /* CCUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUtils.h; sourceTree = "<group>"; };
 		929F3A651A26182E00DE78AC /* TransformUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransformUtils.cpp; sourceTree = "<group>"; };
@@ -1101,9 +1111,9 @@
 				1551A475158F2ADE00E66CFE /* CCPlatformConfig.h */,
 				1551A476158F2ADE00E66CFE /* CCPlatformMacros.h */,
 				1551A47A158F2ADE00E66CFE /* CCThread.h */,
-				1551A47B158F2ADE00E66CFE /* ios */,
 				1551A4A4158F2ADE00E66CFE /* platform.cpp */,
 				1551A4A5158F2ADE00E66CFE /* platform.h */,
+				1551A47B158F2ADE00E66CFE /* ios */,
 				1A31912016C0DDE700207637 /* third_party */,
 			);
 			path = platform;
@@ -1137,6 +1147,9 @@
 				1551A48F158F2ADE00E66CFE /* CCPlatformDefine.h */,
 				1551A490158F2ADE00E66CFE /* CCStdC.h */,
 				1551A491158F2ADE00E66CFE /* CCThread.mm */,
+				929D539E1A275AFE00560A2E /* CCUtils.mm */,
+				929D53A21A275B7900560A2E /* CCUtilsIOS.h */,
+				929D53A41A275BE600560A2E /* CCUtilsIOS.mm */,
 				1551A492158F2ADE00E66CFE /* EAGLView.h */,
 				1551A493158F2ADE00E66CFE /* EAGLView.mm */,
 				1551A4A0158F2ADE00E66CFE /* OpenGL_Internal.h */,
@@ -1218,6 +1231,8 @@
 				929D53341A2755B300560A2E /* CCSAXParser.h */,
 				1551A5E8158F2ADE00E66CFE /* base64.cpp */,
 				1551A5E9158F2ADE00E66CFE /* base64.h */,
+				929D53A71A275E5300560A2E /* CCMD5.cpp */,
+				929D53A81A275E5300560A2E /* CCMD5.h */,
 				154269DA15B5653000712A7F /* CCNotificationCenter.cpp */,
 				154269DB15B5653000712A7F /* CCNotificationCenter.h */,
 				1551A5EA158F2ADE00E66CFE /* CCPointExtension.cpp */,
@@ -1578,6 +1593,7 @@
 				1551A6BC158F2ADE00E66CFE /* mat3.h in Headers */,
 				1551A6BD158F2ADE00E66CFE /* mat4.h in Headers */,
 				1551A6BE158F2ADE00E66CFE /* neon_matrix_impl.h in Headers */,
+				929D53AA1A275E5300560A2E /* CCMD5.h in Headers */,
 				1551A6BF158F2ADE00E66CFE /* plane.h in Headers */,
 				1551A6C0158F2ADE00E66CFE /* quaternion.h in Headers */,
 				929D536D1A27582F00560A2E /* VelocityTracker.h in Headers */,
@@ -1613,6 +1629,7 @@
 				929D533A1A27575400560A2E /* CCPinyinUtils.h in Headers */,
 				1551A719158F2ADE00E66CFE /* CCAccelerometerDelegate.h in Headers */,
 				1551A71A158F2ADE00E66CFE /* CCApplicationProtocol.h in Headers */,
+				929D53A31A275B7900560A2E /* CCUtilsIOS.h in Headers */,
 				1551A71B158F2ADE00E66CFE /* CCCommon.h in Headers */,
 				1551A71D158F2ADE00E66CFE /* CCEGLViewProtocol.h in Headers */,
 				929D538E1A27595700560A2E /* yajl_version.h in Headers */,
@@ -1800,6 +1817,7 @@
 				929D539D1A27595700560A2E /* yajl_version.c in Sources */,
 				1551A646158F2ADE00E66CFE /* CCCamera.cpp in Sources */,
 				1551A648158F2ADE00E66CFE /* CCConfiguration.cpp in Sources */,
+				929D539F1A275AFE00560A2E /* CCUtils.mm in Sources */,
 				929F3A6C1A26187B00DE78AC /* CCAndroidStringsParser.cpp in Sources */,
 				1551A64A158F2ADE00E66CFE /* CCDirector.cpp in Sources */,
 				929D53621A27582F00560A2E /* String8.cpp in Sources */,
@@ -1831,6 +1849,7 @@
 				1551A6CD158F2ADE00E66CFE /* quaternion.c in Sources */,
 				1551A6CE158F2ADE00E66CFE /* ray2.c in Sources */,
 				1551A6CF158F2ADE00E66CFE /* utility.c in Sources */,
+				929D53A91A275E5300560A2E /* CCMD5.cpp in Sources */,
 				1551A6D0158F2ADE00E66CFE /* vec2.c in Sources */,
 				929D538F1A27595700560A2E /* yajl.c in Sources */,
 				1551A6D1158F2ADE00E66CFE /* vec3.c in Sources */,
@@ -1885,6 +1904,7 @@
 				1551A829158F2ADF00E66CFE /* CCShaderCache.cpp in Sources */,
 				929D53351A2755B300560A2E /* CCSAXParser.cpp in Sources */,
 				929D53641A27582F00560A2E /* Timers.cpp in Sources */,
+				929D53A51A275BE600560A2E /* CCUtilsIOS.mm in Sources */,
 				1551A82C158F2ADF00E66CFE /* ccShaders.cpp in Sources */,
 				1551A82E158F2ADF00E66CFE /* CCAnimation.cpp in Sources */,
 				1551A830158F2ADF00E66CFE /* CCAnimationCache.cpp in Sources */,
