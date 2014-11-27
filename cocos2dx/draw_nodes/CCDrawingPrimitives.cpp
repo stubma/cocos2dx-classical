@@ -532,4 +532,123 @@ void ccDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a )
     s_tColor.a = a/255.0f;
 }
 
+void ccDrawSolidCircle( const CCPoint& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY) {
+    lazy_init();
+    
+    int additionalSegment = 1;
+    if (drawLineToCenter)
+        additionalSegment++;
+    
+    const float coef = 2.0f * (float)M_PI/segments;
+    
+    GLfloat *vertices = (GLfloat*)calloc( sizeof(GLfloat)*2*(segments+2), 1);
+    if( ! vertices )
+        return;
+    
+    for(unsigned int i = 0;i <= segments; i++) {
+        float rads = i*coef;
+        GLfloat j = radius * cosf(rads + angle) * scaleX + center.x;
+        GLfloat k = radius * sinf(rads + angle) * scaleY + center.y;
+        
+        vertices[i*2] = j;
+        vertices[i*2+1] = k;
+    }
+    vertices[(segments+1)*2] = center.x;
+    vertices[(segments+1)*2+1] = center.y;
+    
+    s_pShader->use();
+    s_pShader->setUniformsForBuiltins();
+    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
+    
+    ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
+    
+    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) segments+additionalSegment);
+    
+    free( vertices );
+    
+    CC_INCREMENT_GL_DRAWS(1);
+}
+
+void ccDrawSolidRoundRect(CCPoint origin, CCPoint destination, float cornerRadius, ccColor4B color) {
+    // ensure origin is left bottom
+    CCPoint bl = origin;
+    CCPoint tr = destination;
+    if(bl.x > tr.x) {
+        bl.x = MIN(origin.x, destination.x);
+        tr.x = MAX(origin.x, destination.x);
+    }
+    if(bl.y > tr.y) {
+        bl.y = MIN(origin.y, destination.y);
+        tr.y = MAX(origin.y, destination.y);
+    }
+    
+    // four center of corners
+    CCPoint tlCenter = ccp(bl.x + cornerRadius, tr.y - cornerRadius);
+    CCPoint trCenter = ccp(tr.x - cornerRadius, tr.y - cornerRadius);
+    CCPoint blCenter = ccp(bl.x + cornerRadius, bl.y + cornerRadius);
+    CCPoint brCenter = ccp(tr.x - cornerRadius, bl.y + cornerRadius);
+    
+    // populate vertices
+    CCPoint vertices[] = {
+        // left edge
+        ccp(bl.x, bl.y + cornerRadius),
+        ccp(bl.x, tr.y - cornerRadius),
+        
+        // top left corner
+        ccpAdd(tlCenter, ccpDegree(170) * cornerRadius),
+        ccpAdd(tlCenter, ccpDegree(160) * cornerRadius),
+        ccpAdd(tlCenter, ccpDegree(150) * cornerRadius),
+        ccpAdd(tlCenter, ccpDegree(140) * cornerRadius),
+        ccpAdd(tlCenter, ccpDegree(130) * cornerRadius),
+        ccpAdd(tlCenter, ccpDegree(120) * cornerRadius),
+        ccpAdd(tlCenter, ccpDegree(110) * cornerRadius),
+        ccpAdd(tlCenter, ccpDegree(100) * cornerRadius),
+        
+        // top edge
+        ccp(bl.x + cornerRadius, tr.y),
+        ccp(tr.x - cornerRadius, tr.y),
+        
+        // right top corner
+        ccpAdd(trCenter, ccpDegree(80) * cornerRadius),
+        ccpAdd(trCenter, ccpDegree(70) * cornerRadius),
+        ccpAdd(trCenter, ccpDegree(60) * cornerRadius),
+        ccpAdd(trCenter, ccpDegree(50) * cornerRadius),
+        ccpAdd(trCenter, ccpDegree(40) * cornerRadius),
+        ccpAdd(trCenter, ccpDegree(30) * cornerRadius),
+        ccpAdd(trCenter, ccpDegree(20) * cornerRadius),
+        ccpAdd(trCenter, ccpDegree(10) * cornerRadius),
+        
+        // right edge
+        ccp(tr.x, tr.y - cornerRadius),
+        ccp(tr.x, bl.y + cornerRadius),
+        
+        // bottom right corner
+        ccpAdd(brCenter, ccpDegree(-10) * cornerRadius),
+        ccpAdd(brCenter, ccpDegree(-20) * cornerRadius),
+        ccpAdd(brCenter, ccpDegree(-30) * cornerRadius),
+        ccpAdd(brCenter, ccpDegree(-40) * cornerRadius),
+        ccpAdd(brCenter, ccpDegree(-50) * cornerRadius),
+        ccpAdd(brCenter, ccpDegree(-60) * cornerRadius),
+        ccpAdd(brCenter, ccpDegree(-70) * cornerRadius),
+        ccpAdd(brCenter, ccpDegree(-80) * cornerRadius),
+        
+        // bottom edge
+        ccp(tr.x - cornerRadius, bl.y),
+        ccp(bl.x + cornerRadius, bl.y),
+        
+        // bottom left corner
+        ccpAdd(blCenter, ccpDegree(-100) * cornerRadius),
+        ccpAdd(blCenter, ccpDegree(-110) * cornerRadius),
+        ccpAdd(blCenter, ccpDegree(-120) * cornerRadius),
+        ccpAdd(blCenter, ccpDegree(-130) * cornerRadius),
+        ccpAdd(blCenter, ccpDegree(-140) * cornerRadius),
+        ccpAdd(blCenter, ccpDegree(-150) * cornerRadius),
+        ccpAdd(blCenter, ccpDegree(-160) * cornerRadius),
+        ccpAdd(blCenter, ccpDegree(-170) * cornerRadius)
+    };
+    
+    ccDrawSolidPoly(vertices, 40, ccc4FFromccc4B(color));
+}
+
 NS_CC_END

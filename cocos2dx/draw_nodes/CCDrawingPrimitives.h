@@ -152,6 +152,14 @@ void CC_DLL ccDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a );
  */
 void CC_DLL ccPointSize( GLfloat pointSize );
 
+/** draw a solid circle
+ */
+void CC_DLL ccDrawSolidCircle(const CCPoint& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY);
+
+/** draw a solid round rect
+ */
+void CC_DLL ccDrawSolidRoundRect(CCPoint origin, CCPoint destination, float cornerRadius, ccColor4B color);
+
 // end of global group
 /// @}
 
