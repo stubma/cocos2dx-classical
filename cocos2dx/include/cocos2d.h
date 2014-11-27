@@ -128,7 +128,6 @@ THE SOFTWARE.
 #include "platform/CCCommon.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCImage.h"
-#include "platform/CCSAXParser.h"
 #include "platform/CCThread.h"
 #include "platform/platform.h"
 #include "platform/CCPlatformConfig.h"
@@ -149,94 +148,6 @@ THE SOFTWARE.
     #include "platform/android/CCGL.h"
     #include "platform/android/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
-    #include "platform/blackberry/CCAccelerometer.h"
-    #include "platform/blackberry/CCApplication.h"
-    #include "platform/blackberry/CCEGLView.h"
-    #include "platform/blackberry/CCGL.h"
-    #include "platform/blackberry/CCStdC.h"
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	#include "platform/win32/CCAccelerometer.h"
-	#include "platform/win32/CCApplication.h"
-	#include "platform/win32/CCEGLView.h"
-	#include "platform/win32/CCGL.h"
-	#include "platform/win32/CCStdC.h"
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-	#include "platform/winrt/CCApplication.h"
-	#include "platform/winrt/CCEGLView.h"
-	#include "platform/winrt/CCGL.h"
-	#include "platform/winrt/CCStdC.h"
-	#include "platform/winrt/CCAccelerometer.h"
-	#include "platform/winrt/CCPrecompiledShaders.h"
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	#include "platform/winrt/CCApplication.h"
-	#include "platform/wp8/CCEGLView.h"
-	#include "platform/winrt/CCGL.h"
-	#include "platform/winrt/CCStdC.h"
-	#include "platform/winrt/CCAccelerometer.h"
-	#include "platform/winrt/CCPrecompiledShaders.h"
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-	#include "platform/mac/CCAccelerometer.h"
-	#include "platform/mac/CCApplication.h"
-	#include "platform/mac/CCEGLView.h"
-	#include "platform/mac/CCGL.h"
-	#include "platform/mac/CCStdC.h"
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-
-
-
-
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-	#include "platform/linux/CCAccelerometer.h"
-	#include "platform/linux/CCApplication.h"
-	#include "platform/linux/CCEGLView.h"
-	#include "platform/linux/CCGL.h"
-	#include "platform/linux/CCStdC.h"
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
-
-// MARMALADE CHANGE
-// Added for Marmalade support
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-	#include "platform/Marmalade/CCAccelerometer.h"
-	#include "platform/Marmalade/CCApplication.h"
-	#include "platform/Marmalade/CCEGLView.h"
-	#include "platform/Marmalade/CCGL.h"
-	#include "platform/Marmalade/CCStdC.h"
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_NACL)
-    #include "platform/nacl/CCAccelerometer.h"
-    #include "platform/nacl/CCApplication.h"
-    #include "platform/nacl/CCEGLView.h"
-    #include "platform/nacl/CCGL.h"
-    #include "platform/nacl/CCStdC.h"
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
-    #include "platform/emscripten/CCAccelerometer.h"
-    #include "platform/emscripten/CCApplication.h"
-    #include "platform/emscripten/CCEGLView.h"
-    #include "platform/emscripten/CCGL.h"
-    #include "platform/emscripten/CCStdC.h"
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
-    #include "platform/tizen/CCAccelerometer.h"
-    #include "platform/tizen/CCApplication.h"
-    #include "platform/tizen/CCEGLView.h"
-    #include "platform/tizen/CCGL.h"
-    #include "platform/tizen/CCStdC.h"
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
 
 // script_support
 #include "script_support/CCScriptSupport.h"
@@ -263,6 +174,7 @@ THE SOFTWARE.
 #include "support/user_default/CCUserDefault.h"
 #include "support/CCVertex.h"
 #include "support/tinyxml2/tinyxml2.h"
+#include "support/CCSAXParser.h"
 
 // text_input_node
 #include "text_input_node/CCIMEDelegate.h"

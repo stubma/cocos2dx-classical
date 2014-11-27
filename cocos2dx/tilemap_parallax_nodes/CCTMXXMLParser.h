@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "cocoa/CCArray.h"
 #include "cocoa/CCDictionary.h"
 #include "cocoa/CCGeometry.h"
-#include "platform/CCSAXParser.h"
+#include "support/CCSAXParser.h"
 
 #include <string>
 
