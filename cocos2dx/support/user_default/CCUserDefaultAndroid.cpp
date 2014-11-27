@@ -24,20 +24,22 @@ THE SOFTWARE.
 #include "CCUserDefault.h"
 #include "platform/CCPlatformConfig.h"
 #include "platform/CCCommon.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    #include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+    #include <jni.h>
+    #include "JniHelper.h"
+    #include "CCUtilsAndroid.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+    // root name of xml
+    #define USERDEFAULT_ROOT_NAME    "userDefaultRoot"
 
-// root name of xml
-#define USERDEFAULT_ROOT_NAME    "userDefaultRoot"
+    #define KEEP_COMPATABILITY
 
-#define KEEP_COMPATABILITY
+    #define XML_FILE_NAME "UserDefault.xml"
 
-#define XML_FILE_NAME "UserDefault.xml"
-
-#ifdef KEEP_COMPATABILITY
-#include "platform/CCFileUtils.h"
-#include "../tinyxml2/tinyxml2.h"
+    #ifdef KEEP_COMPATABILITY
+    #include "platform/CCFileUtils.h"
+    #include "../tinyxml2/tinyxml2.h"
 #endif
 
 using namespace std;
@@ -433,6 +435,53 @@ const string& CCUserDefault::getXMLFilePath()
 
 void CCUserDefault::flush()
 {
+}
+
+void CCUserDefault::purgeDefaultForKey(const std::string& key) {
+    // context
+    jobject ctx = CCUtilsAndroid::getContext();
+    
+    // preference
+    // cocos2d-x doesn't use default preference name, so we have to get pref name
+    JniMethodInfo t;
+    JniHelper::getMethodInfo(t,
+                             "android/content/Context",
+                             "getSharedPreferences",
+                             "(Ljava/lang/String;I)Landroid/content/SharedPreferences;");
+    jclass clazz = t.env->FindClass("org/cocos2dx/lib/Cocos2dxHelper");
+    jfieldID fid = t.env->GetStaticFieldID(clazz, "PREFS_NAME", "Ljava/lang/String;");
+    jstring pn = (jstring)t.env->GetStaticObjectField(clazz, fid);
+    jobject pref = t.env->CallObjectMethod(ctx, t.methodID, pn, 0);
+    
+    // editor
+    JniHelper::getMethodInfo(t,
+                             "android/content/SharedPreferences",
+                             "edit",
+                             "()Landroid/content/SharedPreferences$Editor;");
+    jobject edit = t.env->CallObjectMethod(pref, t.methodID);
+    
+    // remove
+    jstring jKey = t.env->NewStringUTF(key.c_str());
+    JniHelper::getMethodInfo(t,
+                             "android/content/SharedPreferences$Editor",
+                             "remove",
+                             "(Ljava/lang/String;)Landroid/content/SharedPreferences$Editor;");
+    t.env->CallObjectMethod(edit, t.methodID, jKey);
+    
+    // commit
+    JniHelper::getMethodInfo(t,
+                             "android/content/SharedPreferences$Editor",
+                             "commit",
+                             "()Z");
+    t.env->CallBooleanMethod(edit, t.methodID);
+    
+    // release
+    t.env->DeleteLocalRef(clazz);
+    t.env->DeleteLocalRef(pn);
+    t.env->DeleteLocalRef(jKey);
+    t.env->DeleteLocalRef(ctx);
+    t.env->DeleteLocalRef(pref);
+    t.env->DeleteLocalRef(edit);
 }
 
 NS_CC_END

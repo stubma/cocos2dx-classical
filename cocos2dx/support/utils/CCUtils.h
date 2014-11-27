@@ -457,9 +457,6 @@ public:
      */
     static int getCpuHz();
     
-    /// remove a default setting, CCUserDefault doesn't provide this feature
-    static void purgeDefaultForKey(const string& key);
-    
     /**
 	 * Calculate how many bytes of a utf-8 encoded character
 	 *

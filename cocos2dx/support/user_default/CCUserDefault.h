@@ -107,6 +107,9 @@ public:
      */
     void    flush();
 
+    /// remove a default setting, CCUserDefault doesn't provide this feature
+    void purgeDefaultForKey(const std::string& key);
+    
     static CCUserDefault* sharedUserDefault();
     static void purgeSharedUserDefault();
     const static std::string& getXMLFilePath();

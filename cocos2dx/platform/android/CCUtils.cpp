@@ -301,53 +301,6 @@ int CCUtils::getCpuHz() {
 	return t.env->CallStaticIntMethod(t.classID, t.methodID);
 }
 
-void CCUtils::purgeDefaultForKey(const string& key) {
-    // context
-    jobject ctx = CCUtilsAndroid::getContext();
-
-    // preference
-	// cocos2d-x doesn't use default preference name, so we have to get pref name
-	JniMethodInfo t;
-    JniHelper::getMethodInfo(t,
-							 "android/content/Context",
-							 "getSharedPreferences",
-							 "(Ljava/lang/String;I)Landroid/content/SharedPreferences;");
-	jclass clazz = t.env->FindClass("org/cocos2dx/lib/Cocos2dxHelper");
-	jfieldID fid = t.env->GetStaticFieldID(clazz, "PREFS_NAME", "Ljava/lang/String;");
-	jstring pn = (jstring)t.env->GetStaticObjectField(clazz, fid);
-	jobject pref = t.env->CallObjectMethod(ctx, t.methodID, pn, 0);
-
-    // editor
-    JniHelper::getMethodInfo(t,
-                             "android/content/SharedPreferences",
-                             "edit",
-                             "()Landroid/content/SharedPreferences$Editor;");
-    jobject edit = t.env->CallObjectMethod(pref, t.methodID);
-
-    // remove
-    jstring jKey = t.env->NewStringUTF(key.c_str());
-    JniHelper::getMethodInfo(t,
-                             "android/content/SharedPreferences$Editor",
-                             "remove",
-                             "(Ljava/lang/String;)Landroid/content/SharedPreferences$Editor;");
-    t.env->CallObjectMethod(edit, t.methodID, jKey);
-
-    // commit
-    JniHelper::getMethodInfo(t,
-                             "android/content/SharedPreferences$Editor",
-                             "commit",
-                             "()Z");
-    t.env->CallBooleanMethod(edit, t.methodID);
-
-    // release
-	t.env->DeleteLocalRef(clazz);
-	t.env->DeleteLocalRef(pn);
-    t.env->DeleteLocalRef(jKey);
-    t.env->DeleteLocalRef(ctx);
-    t.env->DeleteLocalRef(pref);
-    t.env->DeleteLocalRef(edit);
-}
-
 void CCUtils::openUrl(const string& url) {
     JniMethodInfo t;
     JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/CCUtils", "openUrl", "(Ljava/lang/String;)V");

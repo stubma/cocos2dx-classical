@@ -480,6 +480,10 @@ void CCUserDefault::flush()
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+void CCUserDefault::purgeDefaultForKey(const std::string& key) {
+    NSString* nsKey = [NSString stringWithCString:key.c_str() encoding:NSUTF8StringEncoding];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:nsKey];
+}
 
 NS_CC_END
 

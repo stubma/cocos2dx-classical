@@ -157,11 +157,6 @@ void CCUtils::showSystemConfirmDialog(const char* title, const char* msg, const 
 #endif
 }
 
-void CCUtils::purgeDefaultForKey(const string& key) {
-    NSString* nsKey = [NSString stringWithCString:key.c_str() encoding:NSUTF8StringEncoding];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:nsKey];
-}
-
 int CCUtils::getCpuHz() {
     // get hardward string
     size_t size = 100;
