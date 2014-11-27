@@ -340,6 +340,26 @@
 		929D536D1A27582F00560A2E /* VelocityTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53561A27582F00560A2E /* VelocityTracker.h */; };
 		929D53711A2758D400560A2E /* entities.c in Sources */ = {isa = PBXBuildFile; fileRef = 929D536F1A2758D400560A2E /* entities.c */; };
 		929D53721A2758D400560A2E /* entities.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53701A2758D400560A2E /* entities.h */; };
+		929D538A1A27595700560A2E /* yajl_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53751A27595700560A2E /* yajl_common.h */; };
+		929D538B1A27595700560A2E /* yajl_gen.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53761A27595700560A2E /* yajl_gen.h */; };
+		929D538C1A27595700560A2E /* yajl_parse.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53771A27595700560A2E /* yajl_parse.h */; };
+		929D538D1A27595700560A2E /* yajl_tree.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53781A27595700560A2E /* yajl_tree.h */; };
+		929D538E1A27595700560A2E /* yajl_version.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53791A27595700560A2E /* yajl_version.h */; };
+		929D538F1A27595700560A2E /* yajl.c in Sources */ = {isa = PBXBuildFile; fileRef = 929D537B1A27595700560A2E /* yajl.c */; };
+		929D53901A27595700560A2E /* yajl_alloc.c in Sources */ = {isa = PBXBuildFile; fileRef = 929D537C1A27595700560A2E /* yajl_alloc.c */; };
+		929D53911A27595700560A2E /* yajl_alloc.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D537D1A27595700560A2E /* yajl_alloc.h */; };
+		929D53921A27595700560A2E /* yajl_buf.c in Sources */ = {isa = PBXBuildFile; fileRef = 929D537E1A27595700560A2E /* yajl_buf.c */; };
+		929D53931A27595700560A2E /* yajl_buf.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D537F1A27595700560A2E /* yajl_buf.h */; };
+		929D53941A27595700560A2E /* yajl_bytestack.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53801A27595700560A2E /* yajl_bytestack.h */; };
+		929D53951A27595700560A2E /* yajl_encode.c in Sources */ = {isa = PBXBuildFile; fileRef = 929D53811A27595700560A2E /* yajl_encode.c */; };
+		929D53961A27595700560A2E /* yajl_encode.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53821A27595700560A2E /* yajl_encode.h */; };
+		929D53971A27595700560A2E /* yajl_gen.c in Sources */ = {isa = PBXBuildFile; fileRef = 929D53831A27595700560A2E /* yajl_gen.c */; };
+		929D53981A27595700560A2E /* yajl_lex.c in Sources */ = {isa = PBXBuildFile; fileRef = 929D53841A27595700560A2E /* yajl_lex.c */; };
+		929D53991A27595700560A2E /* yajl_lex.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53851A27595700560A2E /* yajl_lex.h */; };
+		929D539A1A27595700560A2E /* yajl_parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 929D53861A27595700560A2E /* yajl_parser.c */; };
+		929D539B1A27595700560A2E /* yajl_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53871A27595700560A2E /* yajl_parser.h */; };
+		929D539C1A27595700560A2E /* yajl_tree.c in Sources */ = {isa = PBXBuildFile; fileRef = 929D53881A27595700560A2E /* yajl_tree.c */; };
+		929D539D1A27595700560A2E /* yajl_version.c in Sources */ = {isa = PBXBuildFile; fileRef = 929D53891A27595700560A2E /* yajl_version.c */; };
 		929F3A631A26163500DE78AC /* CCUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929F3A611A26163500DE78AC /* CCUtils.cpp */; };
 		929F3A641A26163500DE78AC /* CCUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 929F3A621A26163500DE78AC /* CCUtils.h */; };
 		929F3A671A26182E00DE78AC /* TransformUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929F3A651A26182E00DE78AC /* TransformUtils.cpp */; };
@@ -690,6 +710,26 @@
 		929D53561A27582F00560A2E /* VelocityTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VelocityTracker.h; sourceTree = "<group>"; };
 		929D536F1A2758D400560A2E /* entities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = entities.c; sourceTree = "<group>"; };
 		929D53701A2758D400560A2E /* entities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = entities.h; sourceTree = "<group>"; };
+		929D53751A27595700560A2E /* yajl_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yajl_common.h; sourceTree = "<group>"; };
+		929D53761A27595700560A2E /* yajl_gen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yajl_gen.h; sourceTree = "<group>"; };
+		929D53771A27595700560A2E /* yajl_parse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yajl_parse.h; sourceTree = "<group>"; };
+		929D53781A27595700560A2E /* yajl_tree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yajl_tree.h; sourceTree = "<group>"; };
+		929D53791A27595700560A2E /* yajl_version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yajl_version.h; sourceTree = "<group>"; };
+		929D537B1A27595700560A2E /* yajl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yajl.c; sourceTree = "<group>"; };
+		929D537C1A27595700560A2E /* yajl_alloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yajl_alloc.c; sourceTree = "<group>"; };
+		929D537D1A27595700560A2E /* yajl_alloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yajl_alloc.h; sourceTree = "<group>"; };
+		929D537E1A27595700560A2E /* yajl_buf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yajl_buf.c; sourceTree = "<group>"; };
+		929D537F1A27595700560A2E /* yajl_buf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yajl_buf.h; sourceTree = "<group>"; };
+		929D53801A27595700560A2E /* yajl_bytestack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yajl_bytestack.h; sourceTree = "<group>"; };
+		929D53811A27595700560A2E /* yajl_encode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yajl_encode.c; sourceTree = "<group>"; };
+		929D53821A27595700560A2E /* yajl_encode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yajl_encode.h; sourceTree = "<group>"; };
+		929D53831A27595700560A2E /* yajl_gen.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yajl_gen.c; sourceTree = "<group>"; };
+		929D53841A27595700560A2E /* yajl_lex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yajl_lex.c; sourceTree = "<group>"; };
+		929D53851A27595700560A2E /* yajl_lex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yajl_lex.h; sourceTree = "<group>"; };
+		929D53861A27595700560A2E /* yajl_parser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yajl_parser.c; sourceTree = "<group>"; };
+		929D53871A27595700560A2E /* yajl_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yajl_parser.h; sourceTree = "<group>"; };
+		929D53881A27595700560A2E /* yajl_tree.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yajl_tree.c; sourceTree = "<group>"; };
+		929D53891A27595700560A2E /* yajl_version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yajl_version.c; sourceTree = "<group>"; };
 		929F3A611A26163500DE78AC /* CCUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUtils.cpp; sourceTree = "<group>"; };
 		929F3A621A26163500DE78AC /* CCUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUtils.h; sourceTree = "<group>"; };
 		929F3A651A26182E00DE78AC /* TransformUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransformUtils.cpp; sourceTree = "<group>"; };
@@ -1196,6 +1236,7 @@
 				1551A5F4158F2ADE00E66CFE /* data_support */,
 				1551A5F9158F2ADE00E66CFE /* image_support */,
 				469A7DF016C24787006FFCB2 /* tinyxml2 */,
+				929D53731A27595700560A2E /* yajl */,
 				46A393F116E5D01B00210B16 /* user_default */,
 				1551A5FE158F2ADE00E66CFE /* zip_support */,
 			);
@@ -1404,6 +1445,49 @@
 			path = entities;
 			sourceTree = "<group>";
 		};
+		929D53731A27595700560A2E /* yajl */ = {
+			isa = PBXGroup;
+			children = (
+				929D53741A27595700560A2E /* include */,
+				929D537A1A27595700560A2E /* src */,
+			);
+			path = yajl;
+			sourceTree = "<group>";
+		};
+		929D53741A27595700560A2E /* include */ = {
+			isa = PBXGroup;
+			children = (
+				929D53751A27595700560A2E /* yajl_common.h */,
+				929D53761A27595700560A2E /* yajl_gen.h */,
+				929D53771A27595700560A2E /* yajl_parse.h */,
+				929D53781A27595700560A2E /* yajl_tree.h */,
+				929D53791A27595700560A2E /* yajl_version.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		929D537A1A27595700560A2E /* src */ = {
+			isa = PBXGroup;
+			children = (
+				929D537B1A27595700560A2E /* yajl.c */,
+				929D537C1A27595700560A2E /* yajl_alloc.c */,
+				929D537D1A27595700560A2E /* yajl_alloc.h */,
+				929D537E1A27595700560A2E /* yajl_buf.c */,
+				929D537F1A27595700560A2E /* yajl_buf.h */,
+				929D53801A27595700560A2E /* yajl_bytestack.h */,
+				929D53811A27595700560A2E /* yajl_encode.c */,
+				929D53821A27595700560A2E /* yajl_encode.h */,
+				929D53831A27595700560A2E /* yajl_gen.c */,
+				929D53841A27595700560A2E /* yajl_lex.c */,
+				929D53851A27595700560A2E /* yajl_lex.h */,
+				929D53861A27595700560A2E /* yajl_parser.c */,
+				929D53871A27595700560A2E /* yajl_parser.h */,
+				929D53881A27595700560A2E /* yajl_tree.c */,
+				929D53891A27595700560A2E /* yajl_version.c */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		929F3A601A26163500DE78AC /* utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -1444,18 +1528,21 @@
 				1551A62F158F2ADE00E66CFE /* CCActionEase.h in Headers */,
 				1551A631158F2ADE00E66CFE /* CCActionGrid.h in Headers */,
 				1551A633158F2ADE00E66CFE /* CCActionGrid3D.h in Headers */,
+				929D538A1A27595700560A2E /* yajl_common.h in Headers */,
 				1551A635158F2ADE00E66CFE /* CCActionInstant.h in Headers */,
 				1551A637158F2ADE00E66CFE /* CCActionInterval.h in Headers */,
 				1551A639158F2ADE00E66CFE /* CCActionManager.h in Headers */,
 				929D53591A27582F00560A2E /* Atomic.h in Headers */,
 				1551A63B158F2ADE00E66CFE /* CCActionPageTurn3D.h in Headers */,
 				1551A63D158F2ADE00E66CFE /* CCActionProgressTimer.h in Headers */,
+				929D53941A27595700560A2E /* yajl_bytestack.h in Headers */,
 				929D535D1A27582F00560A2E /* Input.h in Headers */,
 				1551A63F158F2ADE00E66CFE /* CCActionTiledGrid.h in Headers */,
 				929F3A6D1A26187B00DE78AC /* CCAndroidStringsParser.h in Headers */,
 				1551A641158F2ADE00E66CFE /* CCActionTween.h in Headers */,
 				1551A643158F2ADE00E66CFE /* CCAtlasNode.h in Headers */,
 				1551A645158F2ADE00E66CFE /* CCNode.h in Headers */,
+				929D53931A27595700560A2E /* yajl_buf.h in Headers */,
 				1551A647158F2ADE00E66CFE /* CCCamera.h in Headers */,
 				1551A649158F2ADE00E66CFE /* CCConfiguration.h in Headers */,
 				1551A64B158F2ADE00E66CFE /* CCDirector.h in Headers */,
@@ -1474,12 +1561,14 @@
 				1551A667158F2ADE00E66CFE /* CCGrabber.h in Headers */,
 				1551A669158F2ADE00E66CFE /* CCGrid.h in Headers */,
 				1551A6B1158F2ADE00E66CFE /* ccConfig.h in Headers */,
+				929D53961A27595700560A2E /* yajl_encode.h in Headers */,
 				1551A6B2158F2ADE00E66CFE /* CCEventType.h in Headers */,
 				1551A6B3158F2ADE00E66CFE /* ccMacros.h in Headers */,
 				1551A6B4158F2ADE00E66CFE /* CCProtocols.h in Headers */,
 				1551A6B5158F2ADE00E66CFE /* ccTypes.h in Headers */,
 				1551A6B6158F2ADE00E66CFE /* cocos2d.h in Headers */,
 				929D533D1A2757A300560A2E /* ccGBKUnicodeTable.h in Headers */,
+				929D539B1A27595700560A2E /* yajl_parser.h in Headers */,
 				1551A6B8158F2ADE00E66CFE /* aabb.h in Headers */,
 				929D53661A27582F00560A2E /* TypeHelpers.h in Headers */,
 				1551A6B9158F2ADE00E66CFE /* mat4stack.h in Headers */,
@@ -1496,6 +1585,7 @@
 				1551A6C2158F2ADE00E66CFE /* utility.h in Headers */,
 				1551A6C3158F2ADE00E66CFE /* vec2.h in Headers */,
 				1551A6C4158F2ADE00E66CFE /* vec3.h in Headers */,
+				929D53991A27595700560A2E /* yajl_lex.h in Headers */,
 				1551A6C5158F2ADE00E66CFE /* vec4.h in Headers */,
 				1551A6D4158F2ADE00E66CFE /* CCKeypadDelegate.h in Headers */,
 				1551A6D6158F2ADE00E66CFE /* CCKeypadDispatcher.h in Headers */,
@@ -1507,6 +1597,7 @@
 				1551A6E2158F2ADE00E66CFE /* CCTransition.h in Headers */,
 				1551A6E4158F2ADE00E66CFE /* CCTransitionPageTurn.h in Headers */,
 				1551A6E6158F2ADE00E66CFE /* CCTransitionProgress.h in Headers */,
+				929D538D1A27595700560A2E /* yajl_tree.h in Headers */,
 				1551A6E8158F2ADE00E66CFE /* CCMenu.h in Headers */,
 				1551A6EA158F2ADE00E66CFE /* CCMenuItem.h in Headers */,
 				929D536B1A27582F00560A2E /* VectorImpl.h in Headers */,
@@ -1524,6 +1615,7 @@
 				1551A71A158F2ADE00E66CFE /* CCApplicationProtocol.h in Headers */,
 				1551A71B158F2ADE00E66CFE /* CCCommon.h in Headers */,
 				1551A71D158F2ADE00E66CFE /* CCEGLViewProtocol.h in Headers */,
+				929D538E1A27595700560A2E /* yajl_version.h in Headers */,
 				1551A720158F2ADE00E66CFE /* CCImage.h in Headers */,
 				1551A722158F2ADE00E66CFE /* CCPlatformConfig.h in Headers */,
 				1551A723158F2ADE00E66CFE /* CCPlatformMacros.h in Headers */,
@@ -1580,7 +1672,9 @@
 				1551A845158F2ADF00E66CFE /* CCVertex.h in Headers */,
 				1551A847158F2ADF00E66CFE /* ccCArray.h in Headers */,
 				1551A848158F2ADF00E66CFE /* uthash.h in Headers */,
+				929D538B1A27595700560A2E /* yajl_gen.h in Headers */,
 				1551A849158F2ADF00E66CFE /* utlist.h in Headers */,
+				929D538C1A27595700560A2E /* yajl_parse.h in Headers */,
 				1551A84B158F2ADF00E66CFE /* TGAlib.h in Headers */,
 				929D53721A2758D400560A2E /* entities.h in Headers */,
 				1551A84F158F2ADF00E66CFE /* ioapi.h in Headers */,
@@ -1612,6 +1706,7 @@
 				1A31963016C0DDE800207637 /* decode.h in Headers */,
 				1A31963116C0DDE800207637 /* encode.h in Headers */,
 				929F3A681A26182E00DE78AC /* TransformUtils.h in Headers */,
+				929D53911A27595700560A2E /* yajl_alloc.h in Headers */,
 				1A31963216C0DDE800207637 /* types.h in Headers */,
 				469A7DF416C24787006FFCB2 /* tinyxml2.h in Headers */,
 				1AA6226216CF6BDF0028C05E /* CCDevice.h in Headers */,
@@ -1693,6 +1788,7 @@
 				1551A630158F2ADE00E66CFE /* CCActionGrid.cpp in Sources */,
 				1551A632158F2ADE00E66CFE /* CCActionGrid3D.cpp in Sources */,
 				1551A634158F2ADE00E66CFE /* CCActionInstant.cpp in Sources */,
+				929D53981A27595700560A2E /* yajl_lex.c in Sources */,
 				1551A636158F2ADE00E66CFE /* CCActionInterval.cpp in Sources */,
 				1551A638158F2ADE00E66CFE /* CCActionManager.cpp in Sources */,
 				1551A63A158F2ADE00E66CFE /* CCActionPageTurn3D.cpp in Sources */,
@@ -1701,6 +1797,7 @@
 				1551A640158F2ADE00E66CFE /* CCActionTween.cpp in Sources */,
 				1551A642158F2ADE00E66CFE /* CCAtlasNode.cpp in Sources */,
 				1551A644158F2ADE00E66CFE /* CCNode.cpp in Sources */,
+				929D539D1A27595700560A2E /* yajl_version.c in Sources */,
 				1551A646158F2ADE00E66CFE /* CCCamera.cpp in Sources */,
 				1551A648158F2ADE00E66CFE /* CCConfiguration.cpp in Sources */,
 				929F3A6C1A26187B00DE78AC /* CCAndroidStringsParser.cpp in Sources */,
@@ -1719,7 +1816,9 @@
 				1551A661158F2ADE00E66CFE /* CCString.cpp in Sources */,
 				1551A663158F2ADE00E66CFE /* CCZone.cpp in Sources */,
 				1551A665158F2ADE00E66CFE /* cocos2d.cpp in Sources */,
+				929D53921A27595700560A2E /* yajl_buf.c in Sources */,
 				1551A666158F2ADE00E66CFE /* CCGrabber.cpp in Sources */,
+				929D53951A27595700560A2E /* yajl_encode.c in Sources */,
 				1551A668158F2ADE00E66CFE /* CCGrid.cpp in Sources */,
 				1551A6C6158F2ADE00E66CFE /* aabb.c in Sources */,
 				1551A6C7158F2ADE00E66CFE /* mat4stack.c in Sources */,
@@ -1733,6 +1832,7 @@
 				1551A6CE158F2ADE00E66CFE /* ray2.c in Sources */,
 				1551A6CF158F2ADE00E66CFE /* utility.c in Sources */,
 				1551A6D0158F2ADE00E66CFE /* vec2.c in Sources */,
+				929D538F1A27595700560A2E /* yajl.c in Sources */,
 				1551A6D1158F2ADE00E66CFE /* vec3.c in Sources */,
 				1551A6D2158F2ADE00E66CFE /* vec4.c in Sources */,
 				1551A6D3158F2ADE00E66CFE /* CCKeypadDelegate.cpp in Sources */,
@@ -1743,6 +1843,8 @@
 				1551A6DB158F2ADE00E66CFE /* CCLabelTTF.cpp in Sources */,
 				1551A6DD158F2ADE00E66CFE /* CCLayer.cpp in Sources */,
 				1551A6DF158F2ADE00E66CFE /* CCScene.cpp in Sources */,
+				929D53971A27595700560A2E /* yajl_gen.c in Sources */,
+				929D539A1A27595700560A2E /* yajl_parser.c in Sources */,
 				929D53711A2758D400560A2E /* entities.c in Sources */,
 				929D535F1A27582F00560A2E /* SharedBuffer.cpp in Sources */,
 				1551A6E1158F2ADE00E66CFE /* CCTransition.cpp in Sources */,
@@ -1755,6 +1857,7 @@
 				1551A6ED158F2ADE00E66CFE /* CCProgressTimer.cpp in Sources */,
 				1551A6EF158F2ADE00E66CFE /* CCRenderTexture.cpp in Sources */,
 				1551A6F1158F2ADE00E66CFE /* CCParticleBatchNode.cpp in Sources */,
+				929D53901A27595700560A2E /* yajl_alloc.c in Sources */,
 				1551A6F3158F2ADE00E66CFE /* CCParticleExamples.cpp in Sources */,
 				1551A6F5158F2ADE00E66CFE /* CCParticleSystem.cpp in Sources */,
 				1551A6F7158F2ADE00E66CFE /* CCParticleSystemQuad.cpp in Sources */,
@@ -1764,6 +1867,7 @@
 				1551A72B158F2ADE00E66CFE /* CCAccelerometer.mm in Sources */,
 				1551A72D158F2ADE00E66CFE /* CCApplication.mm in Sources */,
 				1551A72E158F2ADE00E66CFE /* CCCommon.mm in Sources */,
+				929D539C1A27595700560A2E /* yajl_tree.c in Sources */,
 				1551A730158F2ADE00E66CFE /* CCDirectorCaller.mm in Sources */,
 				1551A732158F2ADE00E66CFE /* CCEGLView.mm in Sources */,
 				1551A734158F2ADE00E66CFE /* CCES2Renderer.m in Sources */,
