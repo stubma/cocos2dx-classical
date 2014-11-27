@@ -311,6 +311,33 @@
 		4EF8999B16E207E70040A527 /* CCTMXXMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF8998F16E207E70040A527 /* CCTMXXMLParser.h */; };
 		929D53351A2755B300560A2E /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53331A2755B300560A2E /* CCSAXParser.cpp */; };
 		929D53361A2755B300560A2E /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53341A2755B300560A2E /* CCSAXParser.h */; };
+		929D53391A27575400560A2E /* CCPinyinUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53371A27575400560A2E /* CCPinyinUtils.cpp */; };
+		929D533A1A27575400560A2E /* CCPinyinUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53381A27575400560A2E /* CCPinyinUtils.h */; };
+		929D533D1A2757A300560A2E /* ccGBKUnicodeTable.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D533B1A2757A300560A2E /* ccGBKUnicodeTable.h */; };
+		929D533E1A2757A300560A2E /* ccUnicodeGBKTable.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D533C1A2757A300560A2E /* ccUnicodeGBKTable.h */; };
+		929D53571A27582F00560A2E /* android_input.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53401A27582F00560A2E /* android_input.h */; };
+		929D53581A27582F00560A2E /* Atomic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53411A27582F00560A2E /* Atomic.cpp */; };
+		929D53591A27582F00560A2E /* Atomic.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53421A27582F00560A2E /* Atomic.h */; };
+		929D535A1A27582F00560A2E /* BitSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53431A27582F00560A2E /* BitSet.h */; };
+		929D535B1A27582F00560A2E /* Errors.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53441A27582F00560A2E /* Errors.h */; };
+		929D535C1A27582F00560A2E /* Input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53451A27582F00560A2E /* Input.cpp */; };
+		929D535D1A27582F00560A2E /* Input.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53461A27582F00560A2E /* Input.h */; };
+		929D535E1A27582F00560A2E /* KeyedVector.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53471A27582F00560A2E /* KeyedVector.h */; };
+		929D535F1A27582F00560A2E /* SharedBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53481A27582F00560A2E /* SharedBuffer.cpp */; };
+		929D53601A27582F00560A2E /* SharedBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53491A27582F00560A2E /* SharedBuffer.h */; };
+		929D53611A27582F00560A2E /* SortedVector.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D534A1A27582F00560A2E /* SortedVector.h */; };
+		929D53621A27582F00560A2E /* String8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D534B1A27582F00560A2E /* String8.cpp */; };
+		929D53631A27582F00560A2E /* String8.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D534C1A27582F00560A2E /* String8.h */; };
+		929D53641A27582F00560A2E /* Timers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D534D1A27582F00560A2E /* Timers.cpp */; };
+		929D53651A27582F00560A2E /* Timers.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D534E1A27582F00560A2E /* Timers.h */; };
+		929D53661A27582F00560A2E /* TypeHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D534F1A27582F00560A2E /* TypeHelpers.h */; };
+		929D53671A27582F00560A2E /* Unicode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53501A27582F00560A2E /* Unicode.cpp */; };
+		929D53681A27582F00560A2E /* Unicode.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53511A27582F00560A2E /* Unicode.h */; };
+		929D53691A27582F00560A2E /* Vector.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53521A27582F00560A2E /* Vector.h */; };
+		929D536A1A27582F00560A2E /* VectorImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53531A27582F00560A2E /* VectorImpl.cpp */; };
+		929D536B1A27582F00560A2E /* VectorImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53541A27582F00560A2E /* VectorImpl.h */; };
+		929D536C1A27582F00560A2E /* VelocityTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53551A27582F00560A2E /* VelocityTracker.cpp */; };
+		929D536D1A27582F00560A2E /* VelocityTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53561A27582F00560A2E /* VelocityTracker.h */; };
 		929F3A631A26163500DE78AC /* CCUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929F3A611A26163500DE78AC /* CCUtils.cpp */; };
 		929F3A641A26163500DE78AC /* CCUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 929F3A621A26163500DE78AC /* CCUtils.h */; };
 		929F3A671A26182E00DE78AC /* TransformUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929F3A651A26182E00DE78AC /* TransformUtils.cpp */; };
@@ -632,6 +659,33 @@
 		4EF8998F16E207E70040A527 /* CCTMXXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXXMLParser.h; sourceTree = "<group>"; };
 		929D53331A2755B300560A2E /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
 		929D53341A2755B300560A2E /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
+		929D53371A27575400560A2E /* CCPinyinUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPinyinUtils.cpp; sourceTree = "<group>"; };
+		929D53381A27575400560A2E /* CCPinyinUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPinyinUtils.h; sourceTree = "<group>"; };
+		929D533B1A2757A300560A2E /* ccGBKUnicodeTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccGBKUnicodeTable.h; sourceTree = "<group>"; };
+		929D533C1A2757A300560A2E /* ccUnicodeGBKTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccUnicodeGBKTable.h; sourceTree = "<group>"; };
+		929D53401A27582F00560A2E /* android_input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = android_input.h; sourceTree = "<group>"; };
+		929D53411A27582F00560A2E /* Atomic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Atomic.cpp; sourceTree = "<group>"; };
+		929D53421A27582F00560A2E /* Atomic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Atomic.h; sourceTree = "<group>"; };
+		929D53431A27582F00560A2E /* BitSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitSet.h; sourceTree = "<group>"; };
+		929D53441A27582F00560A2E /* Errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Errors.h; sourceTree = "<group>"; };
+		929D53451A27582F00560A2E /* Input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Input.cpp; sourceTree = "<group>"; };
+		929D53461A27582F00560A2E /* Input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Input.h; sourceTree = "<group>"; };
+		929D53471A27582F00560A2E /* KeyedVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyedVector.h; sourceTree = "<group>"; };
+		929D53481A27582F00560A2E /* SharedBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SharedBuffer.cpp; sourceTree = "<group>"; };
+		929D53491A27582F00560A2E /* SharedBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedBuffer.h; sourceTree = "<group>"; };
+		929D534A1A27582F00560A2E /* SortedVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SortedVector.h; sourceTree = "<group>"; };
+		929D534B1A27582F00560A2E /* String8.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = String8.cpp; sourceTree = "<group>"; };
+		929D534C1A27582F00560A2E /* String8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = String8.h; sourceTree = "<group>"; };
+		929D534D1A27582F00560A2E /* Timers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Timers.cpp; sourceTree = "<group>"; };
+		929D534E1A27582F00560A2E /* Timers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timers.h; sourceTree = "<group>"; };
+		929D534F1A27582F00560A2E /* TypeHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypeHelpers.h; sourceTree = "<group>"; };
+		929D53501A27582F00560A2E /* Unicode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Unicode.cpp; sourceTree = "<group>"; };
+		929D53511A27582F00560A2E /* Unicode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Unicode.h; sourceTree = "<group>"; };
+		929D53521A27582F00560A2E /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
+		929D53531A27582F00560A2E /* VectorImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VectorImpl.cpp; sourceTree = "<group>"; };
+		929D53541A27582F00560A2E /* VectorImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VectorImpl.h; sourceTree = "<group>"; };
+		929D53551A27582F00560A2E /* VelocityTracker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VelocityTracker.cpp; sourceTree = "<group>"; };
+		929D53561A27582F00560A2E /* VelocityTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VelocityTracker.h; sourceTree = "<group>"; };
 		929F3A611A26163500DE78AC /* CCUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUtils.cpp; sourceTree = "<group>"; };
 		929F3A621A26163500DE78AC /* CCUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUtils.h; sourceTree = "<group>"; };
 		929F3A651A26182E00DE78AC /* TransformUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransformUtils.cpp; sourceTree = "<group>"; };
@@ -1130,6 +1184,7 @@
 				1A2802AF16DF1C5B00189CBF /* ccUTF8.h */,
 				1551A5F2158F2ADE00E66CFE /* CCVertex.cpp */,
 				1551A5F3158F2ADE00E66CFE /* CCVertex.h */,
+				929D533F1A27582F00560A2E /* aosp */,
 				929F3A601A26163500DE78AC /* utils */,
 				929F3A691A26187B00DE78AC /* locale */,
 				37EEEBF3175DDF3A003C1193 /* component */,
@@ -1305,9 +1360,43 @@
 			path = user_default;
 			sourceTree = "<group>";
 		};
+		929D533F1A27582F00560A2E /* aosp */ = {
+			isa = PBXGroup;
+			children = (
+				929D53401A27582F00560A2E /* android_input.h */,
+				929D53411A27582F00560A2E /* Atomic.cpp */,
+				929D53421A27582F00560A2E /* Atomic.h */,
+				929D53431A27582F00560A2E /* BitSet.h */,
+				929D53441A27582F00560A2E /* Errors.h */,
+				929D53451A27582F00560A2E /* Input.cpp */,
+				929D53461A27582F00560A2E /* Input.h */,
+				929D53471A27582F00560A2E /* KeyedVector.h */,
+				929D53481A27582F00560A2E /* SharedBuffer.cpp */,
+				929D53491A27582F00560A2E /* SharedBuffer.h */,
+				929D534A1A27582F00560A2E /* SortedVector.h */,
+				929D534B1A27582F00560A2E /* String8.cpp */,
+				929D534C1A27582F00560A2E /* String8.h */,
+				929D534D1A27582F00560A2E /* Timers.cpp */,
+				929D534E1A27582F00560A2E /* Timers.h */,
+				929D534F1A27582F00560A2E /* TypeHelpers.h */,
+				929D53501A27582F00560A2E /* Unicode.cpp */,
+				929D53511A27582F00560A2E /* Unicode.h */,
+				929D53521A27582F00560A2E /* Vector.h */,
+				929D53531A27582F00560A2E /* VectorImpl.cpp */,
+				929D53541A27582F00560A2E /* VectorImpl.h */,
+				929D53551A27582F00560A2E /* VelocityTracker.cpp */,
+				929D53561A27582F00560A2E /* VelocityTracker.h */,
+			);
+			path = aosp;
+			sourceTree = "<group>";
+		};
 		929F3A601A26163500DE78AC /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				929D533B1A2757A300560A2E /* ccGBKUnicodeTable.h */,
+				929D533C1A2757A300560A2E /* ccUnicodeGBKTable.h */,
+				929D53371A27575400560A2E /* CCPinyinUtils.cpp */,
+				929D53381A27575400560A2E /* CCPinyinUtils.h */,
 				929F3A651A26182E00DE78AC /* TransformUtils.cpp */,
 				929F3A661A26182E00DE78AC /* TransformUtils.h */,
 				929F3A611A26163500DE78AC /* CCUtils.cpp */,
@@ -1344,8 +1433,10 @@
 				1551A635158F2ADE00E66CFE /* CCActionInstant.h in Headers */,
 				1551A637158F2ADE00E66CFE /* CCActionInterval.h in Headers */,
 				1551A639158F2ADE00E66CFE /* CCActionManager.h in Headers */,
+				929D53591A27582F00560A2E /* Atomic.h in Headers */,
 				1551A63B158F2ADE00E66CFE /* CCActionPageTurn3D.h in Headers */,
 				1551A63D158F2ADE00E66CFE /* CCActionProgressTimer.h in Headers */,
+				929D535D1A27582F00560A2E /* Input.h in Headers */,
 				1551A63F158F2ADE00E66CFE /* CCActionTiledGrid.h in Headers */,
 				929F3A6D1A26187B00DE78AC /* CCAndroidStringsParser.h in Headers */,
 				1551A641158F2ADE00E66CFE /* CCActionTween.h in Headers */,
@@ -1374,7 +1465,9 @@
 				1551A6B4158F2ADE00E66CFE /* CCProtocols.h in Headers */,
 				1551A6B5158F2ADE00E66CFE /* ccTypes.h in Headers */,
 				1551A6B6158F2ADE00E66CFE /* cocos2d.h in Headers */,
+				929D533D1A2757A300560A2E /* ccGBKUnicodeTable.h in Headers */,
 				1551A6B8158F2ADE00E66CFE /* aabb.h in Headers */,
+				929D53661A27582F00560A2E /* TypeHelpers.h in Headers */,
 				1551A6B9158F2ADE00E66CFE /* mat4stack.h in Headers */,
 				1551A6BA158F2ADE00E66CFE /* matrix.h in Headers */,
 				1551A6BB158F2ADE00E66CFE /* kazmath.h in Headers */,
@@ -1384,6 +1477,7 @@
 				1551A6BE158F2ADE00E66CFE /* neon_matrix_impl.h in Headers */,
 				1551A6BF158F2ADE00E66CFE /* plane.h in Headers */,
 				1551A6C0158F2ADE00E66CFE /* quaternion.h in Headers */,
+				929D536D1A27582F00560A2E /* VelocityTracker.h in Headers */,
 				1551A6C1158F2ADE00E66CFE /* ray2.h in Headers */,
 				1551A6C2158F2ADE00E66CFE /* utility.h in Headers */,
 				1551A6C3158F2ADE00E66CFE /* vec2.h in Headers */,
@@ -1401,13 +1495,17 @@
 				1551A6E6158F2ADE00E66CFE /* CCTransitionProgress.h in Headers */,
 				1551A6E8158F2ADE00E66CFE /* CCMenu.h in Headers */,
 				1551A6EA158F2ADE00E66CFE /* CCMenuItem.h in Headers */,
+				929D536B1A27582F00560A2E /* VectorImpl.h in Headers */,
+				929D53631A27582F00560A2E /* String8.h in Headers */,
 				1551A6EC158F2ADE00E66CFE /* CCMotionStreak.h in Headers */,
 				1551A6EE158F2ADE00E66CFE /* CCProgressTimer.h in Headers */,
 				1551A6F0158F2ADE00E66CFE /* CCRenderTexture.h in Headers */,
 				1551A6F2158F2ADE00E66CFE /* CCParticleBatchNode.h in Headers */,
 				1551A6F4158F2ADE00E66CFE /* CCParticleExamples.h in Headers */,
+				929D53571A27582F00560A2E /* android_input.h in Headers */,
 				1551A6F6158F2ADE00E66CFE /* CCParticleSystem.h in Headers */,
 				1551A6F8158F2ADE00E66CFE /* CCParticleSystemQuad.h in Headers */,
+				929D533A1A27575400560A2E /* CCPinyinUtils.h in Headers */,
 				1551A719158F2ADE00E66CFE /* CCAccelerometerDelegate.h in Headers */,
 				1551A71A158F2ADE00E66CFE /* CCApplicationProtocol.h in Headers */,
 				1551A71B158F2ADE00E66CFE /* CCCommon.h in Headers */,
@@ -1415,11 +1513,14 @@
 				1551A720158F2ADE00E66CFE /* CCImage.h in Headers */,
 				1551A722158F2ADE00E66CFE /* CCPlatformConfig.h in Headers */,
 				1551A723158F2ADE00E66CFE /* CCPlatformMacros.h in Headers */,
+				929D53651A27582F00560A2E /* Timers.h in Headers */,
 				1551A727158F2ADE00E66CFE /* CCThread.h in Headers */,
+				929D53601A27582F00560A2E /* SharedBuffer.h in Headers */,
 				1551A728158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h in Headers */,
 				1551A72A158F2ADE00E66CFE /* CCAccelerometer.h in Headers */,
 				1551A72C158F2ADE00E66CFE /* CCApplication.h in Headers */,
 				1551A72F158F2ADE00E66CFE /* CCDirectorCaller.h in Headers */,
+				929D533E1A2757A300560A2E /* ccUnicodeGBKTable.h in Headers */,
 				929F3A771A2619AC00DE78AC /* CCLocale.h in Headers */,
 				1551A731158F2ADE00E66CFE /* CCEGLView.h in Headers */,
 				1551A733158F2ADE00E66CFE /* CCES2Renderer.h in Headers */,
@@ -1442,11 +1543,13 @@
 				1551A820158F2ADF00E66CFE /* ccShader_PositionTexture_frag.h in Headers */,
 				1551A821158F2ADF00E66CFE /* ccShader_PositionTexture_uColor_frag.h in Headers */,
 				1551A822158F2ADF00E66CFE /* ccShader_PositionTexture_uColor_vert.h in Headers */,
+				929D53681A27582F00560A2E /* Unicode.h in Headers */,
 				1551A823158F2ADF00E66CFE /* ccShader_PositionTexture_vert.h in Headers */,
 				1551A824158F2ADF00E66CFE /* ccShader_PositionTextureA8Color_frag.h in Headers */,
 				1551A825158F2ADF00E66CFE /* ccShader_PositionTextureA8Color_vert.h in Headers */,
 				1551A826158F2ADF00E66CFE /* ccShader_PositionTextureColor_frag.h in Headers */,
 				1551A827158F2ADF00E66CFE /* ccShader_PositionTextureColor_vert.h in Headers */,
+				929D535E1A27582F00560A2E /* KeyedVector.h in Headers */,
 				1551A828158F2ADF00E66CFE /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */,
 				1551A82A158F2ADF00E66CFE /* CCShaderCache.h in Headers */,
 				1551A82B158F2ADF00E66CFE /* ccShaderEx_SwitchMask_frag.h in Headers */,
@@ -1467,15 +1570,18 @@
 				1551A84B158F2ADF00E66CFE /* TGAlib.h in Headers */,
 				1551A84F158F2ADF00E66CFE /* ioapi.h in Headers */,
 				1551A851158F2ADF00E66CFE /* unzip.h in Headers */,
+				929D53691A27582F00560A2E /* Vector.h in Headers */,
 				929F3A711A26193200DE78AC /* CCLocalization.h in Headers */,
 				1551A853158F2ADF00E66CFE /* ZipUtils.h in Headers */,
 				1551A854158F2ADF00E66CFE /* CCIMEDelegate.h in Headers */,
 				1551A856158F2ADF00E66CFE /* CCIMEDispatcher.h in Headers */,
 				1551A858158F2ADF00E66CFE /* CCTextFieldTTF.h in Headers */,
 				1551A85A158F2ADF00E66CFE /* CCTexture2D.h in Headers */,
+				929D535B1A27582F00560A2E /* Errors.h in Headers */,
 				1551A85C158F2ADF00E66CFE /* CCTextureAtlas.h in Headers */,
 				1551A85E158F2ADF00E66CFE /* CCTextureCache.h in Headers */,
 				1551A860158F2ADF00E66CFE /* CCTexturePVR.h in Headers */,
+				929D53611A27582F00560A2E /* SortedVector.h in Headers */,
 				1551A86D158F2ADF00E66CFE /* CCTouch.h in Headers */,
 				1551A86E158F2ADF00E66CFE /* CCTouchDelegateProtocol.h in Headers */,
 				1551A870158F2ADF00E66CFE /* CCTouchDispatcher.h in Headers */,
@@ -1494,6 +1600,7 @@
 				1A31963216C0DDE800207637 /* types.h in Headers */,
 				469A7DF416C24787006FFCB2 /* tinyxml2.h in Headers */,
 				1AA6226216CF6BDF0028C05E /* CCDevice.h in Headers */,
+				929D535A1A27582F00560A2E /* BitSet.h in Headers */,
 				1A4646DA16DC8FB700DE131F /* ccFPSImages.h in Headers */,
 				1A2802B116DF1C5B00189CBF /* ccUTF8.h in Headers */,
 				4EF8999116E207E70040A527 /* CCParallaxNode.h in Headers */,
@@ -1583,6 +1690,7 @@
 				1551A648158F2ADE00E66CFE /* CCConfiguration.cpp in Sources */,
 				929F3A6C1A26187B00DE78AC /* CCAndroidStringsParser.cpp in Sources */,
 				1551A64A158F2ADE00E66CFE /* CCDirector.cpp in Sources */,
+				929D53621A27582F00560A2E /* String8.cpp in Sources */,
 				1551A64E158F2ADE00E66CFE /* CCScheduler.cpp in Sources */,
 				1551A650158F2ADE00E66CFE /* CCAffineTransform.cpp in Sources */,
 				1551A652158F2ADE00E66CFE /* CCArray.cpp in Sources */,
@@ -1590,6 +1698,7 @@
 				1551A656158F2ADE00E66CFE /* CCDictionary.cpp in Sources */,
 				1551A658158F2ADE00E66CFE /* CCGeometry.cpp in Sources */,
 				1551A65B158F2ADE00E66CFE /* CCNS.cpp in Sources */,
+				929D536C1A27582F00560A2E /* VelocityTracker.cpp in Sources */,
 				1551A65D158F2ADE00E66CFE /* CCObject.cpp in Sources */,
 				1551A65F158F2ADE00E66CFE /* CCSet.cpp in Sources */,
 				1551A661158F2ADE00E66CFE /* CCString.cpp in Sources */,
@@ -1599,6 +1708,7 @@
 				1551A668158F2ADE00E66CFE /* CCGrid.cpp in Sources */,
 				1551A6C6158F2ADE00E66CFE /* aabb.c in Sources */,
 				1551A6C7158F2ADE00E66CFE /* mat4stack.c in Sources */,
+				929D53581A27582F00560A2E /* Atomic.cpp in Sources */,
 				1551A6C8158F2ADE00E66CFE /* matrix.c in Sources */,
 				1551A6C9158F2ADE00E66CFE /* mat3.c in Sources */,
 				1551A6CA158F2ADE00E66CFE /* mat4.c in Sources */,
@@ -1613,13 +1723,16 @@
 				1551A6D3158F2ADE00E66CFE /* CCKeypadDelegate.cpp in Sources */,
 				1551A6D5158F2ADE00E66CFE /* CCKeypadDispatcher.cpp in Sources */,
 				1551A6D7158F2ADE00E66CFE /* CCLabelAtlas.cpp in Sources */,
+				929D53671A27582F00560A2E /* Unicode.cpp in Sources */,
 				1551A6D9158F2ADE00E66CFE /* CCLabelBMFont.cpp in Sources */,
 				1551A6DB158F2ADE00E66CFE /* CCLabelTTF.cpp in Sources */,
 				1551A6DD158F2ADE00E66CFE /* CCLayer.cpp in Sources */,
 				1551A6DF158F2ADE00E66CFE /* CCScene.cpp in Sources */,
+				929D535F1A27582F00560A2E /* SharedBuffer.cpp in Sources */,
 				1551A6E1158F2ADE00E66CFE /* CCTransition.cpp in Sources */,
 				1551A6E3158F2ADE00E66CFE /* CCTransitionPageTurn.cpp in Sources */,
 				1551A6E5158F2ADE00E66CFE /* CCTransitionProgress.cpp in Sources */,
+				929D536A1A27582F00560A2E /* VectorImpl.cpp in Sources */,
 				1551A6E7158F2ADE00E66CFE /* CCMenu.cpp in Sources */,
 				1551A6E9158F2ADE00E66CFE /* CCMenuItem.cpp in Sources */,
 				1551A6EB158F2ADE00E66CFE /* CCMotionStreak.cpp in Sources */,
@@ -1651,12 +1764,14 @@
 				1551A81A158F2ADF00E66CFE /* ccGLStateCache.cpp in Sources */,
 				1551A829158F2ADF00E66CFE /* CCShaderCache.cpp in Sources */,
 				929D53351A2755B300560A2E /* CCSAXParser.cpp in Sources */,
+				929D53641A27582F00560A2E /* Timers.cpp in Sources */,
 				1551A82C158F2ADF00E66CFE /* ccShaders.cpp in Sources */,
 				1551A82E158F2ADF00E66CFE /* CCAnimation.cpp in Sources */,
 				1551A830158F2ADF00E66CFE /* CCAnimationCache.cpp in Sources */,
 				1551A832158F2ADF00E66CFE /* CCSprite.cpp in Sources */,
 				1551A834158F2ADF00E66CFE /* CCSpriteBatchNode.cpp in Sources */,
 				1551A836158F2ADF00E66CFE /* CCSpriteFrame.cpp in Sources */,
+				929D535C1A27582F00560A2E /* Input.cpp in Sources */,
 				1551A838158F2ADF00E66CFE /* CCSpriteFrameCache.cpp in Sources */,
 				1551A83A158F2ADF00E66CFE /* base64.cpp in Sources */,
 				1551A83C158F2ADF00E66CFE /* CCPointExtension.cpp in Sources */,
@@ -1692,6 +1807,7 @@
 				4EF8999416E207E70040A527 /* CCTMXLayer.cpp in Sources */,
 				929F3A791A2619D000DE78AC /* CCLocale.mm in Sources */,
 				4EF8999616E207E70040A527 /* CCTMXObjectGroup.cpp in Sources */,
+				929D53391A27575400560A2E /* CCPinyinUtils.cpp in Sources */,
 				4EF8999816E207E70040A527 /* CCTMXTiledMap.cpp in Sources */,
 				4EF8999A16E207E70040A527 /* CCTMXXMLParser.cpp in Sources */,
 				46A393F616E5D01B00210B16 /* CCUserDefault.cpp in Sources */,
