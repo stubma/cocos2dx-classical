@@ -28,7 +28,11 @@
 #include "../../Layouts/UILayout.h"
 #include "UIScrollInterface.h"
 
+using namespace std;
+
 NS_CC_BEGIN
+
+class CCVelocityTracker;
 
 namespace ui {
 
@@ -44,11 +48,23 @@ typedef enum {
     PAGEVIEW_TOUCHLEFT,
     PAGEVIEW_TOUCHRIGHT
 }PVTouchDir;
-
-class CC_EX_DLL PageView : public Layout , public UIScrollInterface
-{
     
-    DECLARE_CLASS_GUI_INFO
+class PageView;
+    
+class PageViewDataSource {
+public:
+    virtual int pageViewItemCount(PageView* pv) = 0;
+    virtual Widget* pageItemAtIndex(PageView* pv, int index) = 0;
+    virtual void pageItemDidRecycled(PageView* pv, Widget* item) = 0;
+};
+
+class PageView : public Layout , public UIScrollInterface
+{
+private:
+    CCVelocityTracker* m_tracker;
+    CCDictionary m_cycledPages;
+    Widget* m_dstPage;
+    int m_dstIndex;
     
 public:
     /**
@@ -66,53 +82,21 @@ public:
      */
     static PageView* create();
     
-    /**
-     * Add a widget to a page of pageview.
-     *
-     * @param widget    widget to be added to pageview.
-     *
-     * @param pageIdx   index of page.
-     *
-     * @param forceCreate   if force create and there is no page exsit, pageview would create a default page for adding widget.
-     */
-    void addWidgetToPage(Widget* widget, int pageIdx, bool forceCreate);
+    // reload, and set current page index to specified one
+    void reloadData(int wantedPageIndex);
+    void reloadData();
     
-    /**
-     * Push back a page to pageview.
-     *
-     * @param page    page to be added to pageview.
-     */
-    void addPage(Layout* page);
-    
-    /**
-     * Inert a page to pageview.
-     *
-     * @param page    page to be added to pageview.
-     */
-    void insertPage(Layout* page, int idx);
-    
-    /**
-     * Remove a page of pageview.
-     *
-     * @param page    page which will be removed.
-     */
-    void removePage(Layout* page);
-
-    /**
-     * Remove a page at index of pageview.
-     *
-     * @param index    index of page.
-     */
-    void removePageAtIndex(int index);
-    
-    void removeAllPages();
+    // reuse item
+    void enqueuePageItem(Widget* item, const string& itemId);
+    Widget* dequeuePageItem(const string& itemId);
+    void recyclePage(Widget* page);
     
     /**
      * scroll pageview to index.
      *
      * @param idx    index of page.
      */
-    void scrollToPage(int idx);
+    void scrollToPage(int idx, bool animation = true);
     
     /**
      * Gets current page index.
@@ -121,23 +105,17 @@ public:
      */
     int getCurPageIndex() const;
     
-    CCArray* getPages();
-    
-    Layout* getPage(int index);
-    
     // event
     void addEventListenerPageView(CCObject *target, SEL_PageViewEvent selector);
 
-    
-
-    
     virtual bool onTouchBegan(CCTouch *touch, CCEvent *unusedEvent);
     virtual void onTouchMoved(CCTouch *touch, CCEvent *unusedEvent);
     virtual void onTouchEnded(CCTouch *touch, CCEvent *unusedEvent);
     virtual void onTouchCancelled(CCTouch *touch, CCEvent *unusedEvent);
     
-    //override "update" method of widget.
+    // override "update" method of widget.
     virtual void update(float dt);
+    
     /**
      * Sets LayoutType.
      *
@@ -145,7 +123,7 @@ public:
      *
      * @param LayoutType
      */
-    virtual void setLayoutType(LayoutType type){};
+    virtual void setLayoutType(LayoutType type) {}
     
     /**
      * Gets LayoutType.
@@ -154,7 +132,7 @@ public:
      *
      * @return LayoutType
      */
-    virtual LayoutType getLayoutType() const {return LAYOUT_ABSOLUTE;};
+    virtual LayoutType getLayoutType() const { return LAYOUT_ABSOLUTE; }
     
     /**
      * Returns the "class name" of widget.
@@ -162,47 +140,38 @@ public:
     virtual std::string getDescription() const;
 
     virtual void onEnter();
+    
 protected:
-    virtual void addChild(CCNode * child);
-    virtual void addChild(CCNode * child, int zOrder);
-    virtual void addChild(CCNode* child, int zOrder, int tag);
-    virtual void removeChild(CCNode* widget);
-    virtual void removeChild(CCNode* widget, bool cleanup);
-    virtual void removeAllChildren();
-    virtual void removeAllChildrenWithCleanup(bool cleanup);
-    virtual CCArray* getChildren(){return Widget::getChildren();};
-    virtual unsigned int getChildrenCount() const {return Widget::getChildrenCount();};
-    virtual CCNode * getChildByTag(int tag) {return Widget::getChildByTag(tag);};
-    virtual Widget* getChildByName(const char* name) {return Widget::getChildByName(name);};
+    /**
+     * Push back a page to pageview.
+     *
+     * @param page    page to be added to pageview.
+     */
+    void addPage(Widget* page, int index);
+    
     virtual bool init();
-    Layout* createPage();
     float getPositionXByIndex(int idx);
-    void updateBoundaryPages();
     virtual void handlePressLogic(const CCPoint &touchPoint);
     virtual void handleMoveLogic(const CCPoint &touchPoint);
     virtual void handleReleaseLogic(const CCPoint &touchPoint);
     virtual void interceptTouchEvent(int handleState, Widget* sender, const CCPoint &touchPoint);
     virtual void checkChildInfo(int handleState, Widget* sender, const CCPoint &touchPoint);
-    virtual bool scrollPages(float touchOffset);
     void movePages(float offset);
+    void movePage(Widget* page, float offset);
     void pageTurningEvent();
     void updateChildrenSize();
-    void updateChildrenPosition();
     virtual void onSizeChanged();
     virtual Widget* createCloneInstance();
     virtual void copySpecialProperties(Widget* model);
     virtual void copyClonedWidgetChildren(Widget* model);
-    virtual void setClippingEnabled(bool enabled) {Layout::setClippingEnabled(enabled);};
     virtual void doLayout() {if (!_doLayoutDirty){return;} _doLayoutDirty = false;};
+    
 protected:
     int _curPageIdx;
-    CCArray* _pages;
     PVTouchDir _touchMoveDir;
     float _touchStartLocation;
     float _touchMoveStartLocation;
     CCPoint _movePagePoint;
-    Widget* _leftChild;
-    Widget* _rightChild;
     float _leftBoundary;
     float _rightBoundary;
     bool _isAutoScrolling;
@@ -213,6 +182,10 @@ protected:
     CCObject* _pageViewEventListener;
     SEL_PageViewEvent _pageViewEventSelector;
 
+    CC_SYNTHESIZE(PageViewDataSource*, m_dataSource, DataSource);
+    CC_SYNTHESIZE(Widget*, _leftChild, LeftChild);
+    CC_SYNTHESIZE(Widget*, _rightChild, RightChild);
+    CC_SYNTHESIZE(Widget*, m_curPage, CurPage);
 };
 
 }

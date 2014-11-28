@@ -23,16 +23,18 @@
  ****************************************************************************/
 
 #include "UIPageView.h"
+#include "support/ui_support/CCVelocityTracker.h"
 
 NS_CC_BEGIN
 
 namespace ui {
-    
-IMPLEMENT_CLASS_GUI_INFO(PageView)
 
 PageView::PageView():
 _curPageIdx(0),
-_pages(NULL),
+m_tracker(NULL),
+m_dataSource(NULL),
+m_curPage(NULL),
+m_dstPage(NULL),
 _touchMoveDir(PAGEVIEW_TOUCHLEFT),
 _touchStartLocation(0.0f),
 _touchMoveStartLocation(0.0f),
@@ -53,8 +55,8 @@ _pageViewEventSelector(NULL)
 
 PageView::~PageView()
 {
-    _pages->removeAllObjects();
-    CC_SAFE_RELEASE(_pages);
+    // release others
+    CC_SAFE_RELEASE(m_tracker);
     _pageViewEventListener = NULL;
     _pageViewEventSelector = NULL;
 }
@@ -81,64 +83,67 @@ bool PageView::init()
 {
     if (Layout::init())
     {
-        _pages = CCArray::create();
-        CC_SAFE_RETAIN(_pages);
         setClippingEnabled(true);
         setTouchEnabled(true);
         return true;
     }
     return false;
 }
-
-void PageView::addWidgetToPage(Widget *widget, int pageIdx, bool forceCreate)
-{
-    if (!widget)
-    {
-        return;
+    
+void PageView::recyclePage(Widget* page) {
+    if(page) {
+        enqueuePageItem(page, page->getName());
+        page->removeFromParent();
+        if(m_dataSource)
+            m_dataSource->pageItemDidRecycled(this, page);
+        page = NULL;
     }
-    if (pageIdx < 0)
-    {
-        return;
-    }
-    int pageCount = _pages->count();
-    if (pageIdx < 0 || pageIdx >= pageCount)
-    {
-        if (forceCreate)
-        {
-            if (pageIdx > pageCount)
-            {
-                CCLOG("pageIdx is %d, it will be added as page id [%d]",pageIdx,pageCount);
-            }
-            Layout* newPage = createPage();
-            newPage->addChild(widget);
-            addPage(newPage);
+}
+    
+void PageView::reloadData() {
+    // recycle pages
+    recyclePage(m_curPage);
+    if(m_dstPage != _rightChild && m_dstPage != _leftChild && m_dstPage != m_curPage)
+        recyclePage(m_dstPage);
+    recyclePage(_leftChild);
+    recyclePage(_rightChild);
+    m_curPage = NULL;
+    _leftChild = NULL;
+    _rightChild = NULL;
+    m_dstPage = NULL;
+    
+    // recreate current page
+    if(m_dataSource) {
+        m_curPage = m_dataSource->pageItemAtIndex(this, _curPageIdx);
+        addPage(m_curPage, 0);
+        if(_curPageIdx > 0) {
+            _leftChild = m_dataSource->pageItemAtIndex(this, _curPageIdx - 1);
+            addPage(_leftChild, -1);
+        }
+        if(_curPageIdx < m_dataSource->pageViewItemCount(this) - 1) {
+            _rightChild = m_dataSource->pageItemAtIndex(this, _curPageIdx + 1);
+            addPage(_rightChild, 1);
         }
     }
-    else
-    {
-        Layout * page = static_cast<Layout*>(_pages->objectAtIndex(pageIdx));
-        page->addChild(widget);
-    }
+    
+    // trigger a page turn event for every reload
+    m_dstIndex = _curPageIdx;
+    m_dstPage = m_curPage;
+    pageTurningEvent();
+}
+    
+void PageView::reloadData(int wantedPageIndex) {
+    _curPageIdx = wantedPageIndex;
+    reloadData();
 }
 
-Layout* PageView::createPage()
-{
-    Layout* newPage = Layout::create();
-    newPage->setSize(getSize());
-    return newPage;
-}
-
-void PageView::addPage(Layout* page)
+void PageView::addPage(Widget* page, int index)
 {
     if (!page)
     {
         return;
     }
     if (page->getWidgetType() != WidgetTypeContainer)
-    {
-        return;
-    }
-    if (_pages->containsObject(page))
     {
         return;
     }
@@ -149,128 +154,13 @@ void PageView::addPage(Layout* page)
         CCLOG("page size does not match pageview size, it will be force sized!");
         page->setSize(pvSize);
     }
-    page->setPosition(CCPoint(getPositionXByIndex(_pages->count()), 0));
-    _pages->addObject(page);
+    page->setPosition(CCPoint(getPositionXByIndex(index), 0));
     addChild(page);
-    updateBoundaryPages();
 }
 
-void PageView::insertPage(Layout* page, int idx)
-{
-    if (idx < 0)
-    {
-        return;
-    }
-    if (!page)
-    {
-        return;
-    }
-    if (page->getWidgetType() != WidgetTypeContainer)
-    {
-        return;
-    }
-    if (_pages->containsObject(page))
-    {
-        return;
-    }
-    
-    int pageCount = _pages->count();
-    if (idx >= pageCount)
-    {
-        addPage(page);
-    }
-    else
-    {
-        _pages->insertObject(page, idx);
-        page->setPosition(CCPoint(getPositionXByIndex(idx), 0));
-        addChild(page);
-        CCSize pSize = page->getSize();
-        CCSize pvSize = getSize();
-        if (!pSize.equals(pvSize))
-        {
-            CCLOG("page size does not match pageview size, it will be force sized!");
-            page->setSize(pvSize);
-        }
-        int length = _pages->count();
-        for (int i=(idx+1); i<length; i++){
-            Widget* behindPage = static_cast<Widget*>(_pages->objectAtIndex(i));
-            CCPoint formerPos = behindPage->getPosition();
-            behindPage->setPosition(CCPoint(formerPos.x+getSize().width, 0));
-        }
-        updateBoundaryPages();
-    }
-}
-
-void PageView::removePage(Layout* page)
-{
-    if (!page)
-    {
-        return;
-    }
-    removeChild(page);
-    updateChildrenPosition();
-    updateBoundaryPages();
-}
-
-void PageView::removePageAtIndex(int index)
-{
-    if (index < 0 || index >= (int)(_pages->count()))
-    {
-        return;
-    }
-    Layout* page = static_cast<Layout*>(_pages->objectAtIndex(index));
-    removePage(page);
-}
-    
-void PageView::removeAllPages()
-{
-    removeAllChildren();
-}
-
-void PageView::updateBoundaryPages()
-{
-    if (_pages->count() <= 0)
-    {
-        _leftChild = NULL;
-        _rightChild = NULL;
-        return;
-    }
-    _leftChild = static_cast<Widget*>(_pages->objectAtIndex(0));
-    _rightChild = static_cast<Widget*>(_pages->objectAtIndex(_pages->count()-1));
-}
-
-float PageView::getPositionXByIndex(int idx)
-{
-    return (getSize().width*(idx-_curPageIdx));
-}
-    
-void PageView::addChild(CCNode *child)
-{
-    Layout::addChild(child);
-}
-
-void PageView::addChild(CCNode * child, int zOrder)
-{
-    Layout::addChild(child, zOrder);
-}
-
-void PageView::addChild(CCNode *child, int zOrder, int tag)
-{
-    Layout::addChild(child, zOrder, tag);
-}
-    
-void PageView::removeChild(CCNode *widget)
-{
-    removeChild(widget, true);
-}
-
-void PageView::removeChild(CCNode *child, bool cleanup)
-{
-    if (_pages->containsObject(child))
-    {
-        _pages->removeObject(child);
-    }
-    Layout::removeChild(child, cleanup);
+float PageView::getPositionXByIndex(int idx) {
+    float cx = m_curPage ? m_curPage->getPositionX() : 0;
+    return cx + getSize().width * idx;
 }
 
 void PageView::onSizeChanged()
@@ -278,117 +168,91 @@ void PageView::onSizeChanged()
     Layout::onSizeChanged();
     _rightBoundary = getSize().width;
     updateChildrenSize();
-    updateChildrenPosition();
 }
 
 void PageView::updateChildrenSize()
 {
-    if (!_pages)
-    {
-        return;
-    }
     CCSize selfSize = getSize();
-    ccArray* arrayPages = _pages->data;
-    int length = arrayPages->num;
-    for (int i=0; i<length; i++)
-    {
-        Layout* page = static_cast<Layout*>(arrayPages->arr[i]);
-        page->setSize(selfSize);
-    }
+    if(m_curPage)
+        m_curPage->setSize(selfSize);
+    if(_leftChild)
+        _leftChild->setSize(selfSize);
+    if(_rightChild)
+        _rightChild->setSize(selfSize);
 }
 
-void PageView::updateChildrenPosition()
+void PageView::scrollToPage(int idx, bool animation)
 {
-    if (!_pages)
-    {
+    // index validating
+    int count = m_dataSource ? m_dataSource->pageViewItemCount(this) : 0;
+    if (idx < 0 || idx >= count) {
         return;
     }
-    int pageCount = _pages->count();
-    if (pageCount <= 0)
-    {
-        _curPageIdx = 0;
-        return;
+    
+    // if in auto scrolling, immediately finish it
+    if(_isAutoScrolling) {
+        update(1);
     }
-    if (_curPageIdx >= pageCount)
-    {
-        _curPageIdx = pageCount-1;
+    
+    // calculate distance
+    m_dstIndex = idx;
+    int delta = idx - _curPageIdx;
+    _autoScrollDistance = -MIN(MAX(delta, -2), 2) * getSize().width;
+    _autoScrollDistance -= m_curPage->getPositionX();
+    
+    // create page if needed
+    if(abs(delta) > 1) {
+        Widget* page = m_dataSource->pageItemAtIndex(this, idx);
+        addPage(page, MIN(MAX(delta, -2), 2));
+        m_dstPage = page;
+    } else if(abs(delta) > 0) {
+        m_dstPage = delta > 0 ? _rightChild : _leftChild;
+    } else {
+        m_dstPage = m_curPage;
     }
-    float pageWidth = getSize().width;
-    for (int i=0; i<pageCount; i++)
-    {
-        Layout* page = static_cast<Layout*>(_pages->objectAtIndex(i));
-        page->setPosition(CCPoint((i-_curPageIdx)*pageWidth, 0));
+    
+    // scroll
+    if(animation) {
+        _autoScrollSpeed = fabs(_autoScrollDistance) / 0.2f;
+        _autoScrollDir = _autoScrollDistance > 0 ? 1 : 0;
+        _isAutoScrolling = true;
+    } else {
+        movePages(_autoScrollDistance);
+        pageTurningEvent();
     }
 }
 
-void PageView::removeAllChildren()
-{
-    removeAllChildrenWithCleanup(true);
-}
-
-void PageView::removeAllChildrenWithCleanup(bool cleanup)
-{
-    _pages->removeAllObjects();
-    Layout::removeAllChildrenWithCleanup(cleanup);
-}
-
-void PageView::scrollToPage(int idx)
-{
-    if (idx < 0 || idx >= (int)(_pages->count()))
-    {
-        return;
-    }
-    _curPageIdx = idx;
-    Widget* curPage = static_cast<Widget*>(_pages->objectAtIndex(idx));
-    _autoScrollDistance = -(curPage->getPosition().x);
-    _autoScrollSpeed = fabs(_autoScrollDistance)/0.2f;
-    _autoScrollDir = _autoScrollDistance > 0 ? 1 : 0;
-    _isAutoScrolling = true;
-}
-
-void PageView::update(float dt)
-{
-    if (_isAutoScrolling)
-    {
-        switch (_autoScrollDir)
-        {
+void PageView::update(float dt) {
+    if (_isAutoScrolling) {
+        switch (_autoScrollDir) {
             case 0:
             {
-                float step = _autoScrollSpeed*dt;
-                if (_autoScrollDistance + step >= 0.0f)
-                {
+                float step = _autoScrollSpeed * dt;
+                if (_autoScrollDistance + step >= 0.0f) {
                     step = -_autoScrollDistance;
                     _autoScrollDistance = 0.0f;
                     _isAutoScrolling = false;
-                }
-                else
-                {
+                } else {
                     _autoScrollDistance += step;
                 }
-                scrollPages(-step);
-                if (!_isAutoScrolling)
-                {
+                movePages(-step);
+                if (!_isAutoScrolling) {
                     pageTurningEvent();
                 }
                 break;
             }
-                break;
             case 1:
             {
-                float step = _autoScrollSpeed*dt;
-                if (_autoScrollDistance - step <= 0.0f)
-                {
+                float step = _autoScrollSpeed * dt;
+                if (_autoScrollDistance - step <= 0.0f) {
                     step = _autoScrollDistance;
                     _autoScrollDistance = 0.0f;
                     _isAutoScrolling = false;
-                }
-                else
-                {
+                } else {
                     _autoScrollDistance -= step;
                 }
-                scrollPages(step);
-                if (!_isAutoScrolling)
-                {
+                movePages(step);
+                if (!_isAutoScrolling) {
                     pageTurningEvent();
                 }
                 break;
@@ -399,176 +263,144 @@ void PageView::update(float dt)
     }
 }
 
-bool PageView::onTouchBegan(CCTouch *touch, CCEvent *unusedEvent)
-{
+bool PageView::onTouchBegan(CCTouch *touch, CCEvent *unusedEvent) {
+    // don't handle touch when scrolling
+    if(_isAutoScrolling)
+        return false;
+    
+    // add touch began to tracker
+    if(!m_tracker) {
+        m_tracker = CCVelocityTracker::create();
+        CC_SAFE_RETAIN(m_tracker);
+    }
+    m_tracker->addTouchBegan(touch);
+    
     bool pass = Layout::onTouchBegan(touch, unusedEvent);
-    if (_hitted)
-    {
+    if (_hitted) {
         handlePressLogic(touch->getLocation());
     }
     return pass;
 }
 
-void PageView::onTouchMoved(CCTouch *touch, CCEvent *unusedEvent)
-{
+void PageView::onTouchMoved(CCTouch *touch, CCEvent *unusedEvent) {
+    // add touch move to tracker
+    if(m_tracker) {
+        m_tracker->addTouchMoved(touch);
+    }
+    
     _touchMovePos = touch->getLocation();
     handleMoveLogic(_touchMovePos);
     Widget* widgetParent = getWidgetParent();
-    if (widgetParent)
-    {
+    if (widgetParent) {
         widgetParent->checkChildInfo(1,this,_touchMovePos);
     }
     moveEvent();
 }
 
-void PageView::onTouchEnded(CCTouch *touch, CCEvent *unusedEvent)
-{
+void PageView::onTouchEnded(CCTouch *touch, CCEvent *unusedEvent) {
     Layout::onTouchEnded(touch, unusedEvent);
     handleReleaseLogic(_touchEndPos);
 }
     
-void PageView::onTouchCancelled(CCTouch *touch, CCEvent *unusedEvent)
-{
+void PageView::onTouchCancelled(CCTouch *touch, CCEvent *unusedEvent) {
     Layout::onTouchCancelled(touch, unusedEvent);
     handleReleaseLogic(touch->getLocation());
 }
-
-void PageView::movePages(float offset)
-{
-    ccArray* arrayPages = _pages->data;
-    int length = arrayPages->num;
-    for (int i=0; i<length; i++)
-    {
-        Layout* page = static_cast<Layout*>(arrayPages->arr[i]);
-        _movePagePoint.x = page->getPosition().x + offset;
-        _movePagePoint.y = page->getPosition().y;
-        page->setPosition(_movePagePoint);
+    
+void PageView::movePage(Widget* page, float offset) {
+    if(page) {
+        CCPoint p = page->getPosition();
+        p.x += offset;
+        page->setPosition(p);
     }
 }
 
-bool PageView::scrollPages(float touchOffset)
-{
-    if (_pages->count() <= 0)
-    {
-        return false;
-    }
-    
-    if (!_leftChild || !_rightChild)
-    {
-        return false;
-    }
-    
-    float realOffset = touchOffset;
-    
-    switch (_touchMoveDir)
-    {
-        case PAGEVIEW_TOUCHLEFT: // left
-            if (_rightChild->getRightInParent() + touchOffset <= _rightBoundary)
-            {
-                realOffset = _rightBoundary - _rightChild->getRightInParent();
-                movePages(realOffset);
-                return false;
-            }
-            break;
-            
-        case PAGEVIEW_TOUCHRIGHT: // right
-            if (_leftChild->getLeftInParent() + touchOffset >= _leftBoundary)
-            {
-                realOffset = _leftBoundary - _leftChild->getLeftInParent();
-                movePages(realOffset);
-                return false;
-            }
-            break;
-        default:
-            break;
-    }
-    
-    movePages(realOffset);
-    return true;
+void PageView::movePages(float offset) {
+    movePage(m_curPage, offset);
+    movePage(_leftChild, offset);
+    movePage(_rightChild, offset);
+    if(m_dstPage != _leftChild && m_dstPage != _rightChild && m_dstPage != m_curPage)
+        movePage(m_dstPage, offset);
 }
 
-void PageView::handlePressLogic(const CCPoint &touchPoint)
-{
+void PageView::handlePressLogic(const CCPoint &touchPoint) {
     CCPoint nsp = convertToNodeSpace(touchPoint);
     _touchMoveStartLocation = nsp.x;
     _touchStartLocation = nsp.x;
 }
 
-void PageView::handleMoveLogic(const CCPoint &touchPoint)
-{
+void PageView::handleMoveLogic(const CCPoint &touchPoint) {
     CCPoint nsp = convertToNodeSpace(touchPoint);
     float offset = 0.0;
     float moveX = nsp.x;
     offset = moveX - _touchMoveStartLocation;
     _touchMoveStartLocation = moveX;
-    if (offset < 0)
-    {
+    if (offset < 0) {
         _touchMoveDir = PAGEVIEW_TOUCHLEFT;
-    }
-    else if (offset > 0)
-    {
+    } else if (offset > 0) {
         _touchMoveDir = PAGEVIEW_TOUCHRIGHT;
     }
-    scrollPages(offset);
+    movePages(offset);
 }
 
-void PageView::handleReleaseLogic(const CCPoint &touchPoint)
-{
-    if (_pages->count() <= 0)
-    {
-        return;
+void PageView::handleReleaseLogic(const CCPoint &touchPoint) {
+    // get velocity
+    float xVelocity = 0;
+    if (m_tracker) {
+        m_tracker->computeCurrentVelocity(1000);
+        xVelocity = m_tracker->getXVelocity();
+        CC_SAFE_RELEASE_NULL(m_tracker);
     }
-    Widget* curPage = static_cast<Widget*>(_pages->objectAtIndex(_curPageIdx));
-    if (curPage)
-    {
-        CCPoint curPagePos = curPage->getPosition();
-        int pageCount = _pages->count();
-        float curPageLocation = curPagePos.x;
-        float pageWidth = getSize().width;
-        float boundary = pageWidth/2.0f;
-        if (curPageLocation <= -boundary)
-        {
-            if (_curPageIdx >= pageCount-1)
-            {
-                scrollPages(-curPageLocation);
-            }
-            else
-            {
-                scrollToPage(_curPageIdx+1);
-            }
+    
+    // scroll to other page or back to current page
+    CCPoint curPagePos = m_curPage->getPosition();
+    int pageCount = m_dataSource ? m_dataSource->pageViewItemCount(this) : 0;
+    float curPageLocation = curPagePos.x;
+    float pageWidth = getSize().width;
+    float boundary = pageWidth / 8.0f;
+    if (xVelocity <= -500.0f || curPageLocation <= -boundary) {
+        if (_curPageIdx >= pageCount - 1) {
+            movePages(-curPageLocation);
+        } else {
+            scrollToPage(_curPageIdx + 1);
         }
-        else if (curPageLocation >= boundary)
-        {
-            if (_curPageIdx <= 0)
-            {
-                scrollPages(-curPageLocation);
-            }
-            else
-            {
-                scrollToPage(_curPageIdx-1);
-            }
+    } else if (xVelocity >= 500.0f || curPageLocation >= boundary) {
+        if (_curPageIdx <= 0) {
+            movePages(-curPageLocation);
+        } else {
+            scrollToPage(_curPageIdx - 1);
         }
-        else
-        {
-            scrollToPage(_curPageIdx);
-        }
+    } else {
+        scrollToPage(_curPageIdx);
     }
 }
 
-void PageView::checkChildInfo(int handleState,Widget* sender, const CCPoint &touchPoint)
-{
+void PageView::checkChildInfo(int handleState,Widget* sender, const CCPoint &touchPoint) {
     interceptTouchEvent(handleState, sender, touchPoint);
 }
 
-void PageView::interceptTouchEvent(int handleState, Widget *sender, const CCPoint &touchPoint)
-{
-    switch (handleState)
-    {
+void PageView::interceptTouchEvent(int handleState, Widget *sender, const CCPoint &touchPoint) {
+    if(_isAutoScrolling)
+        return;
+    
+    switch (handleState) {
         case 0:
+            // add touch began to tracker
+            if(!m_tracker) {
+                m_tracker = CCVelocityTracker::create();
+                CC_SAFE_RETAIN(m_tracker);
+            }
+            m_tracker->addTouchBegan(touchPoint);
+            
             handlePressLogic(touchPoint);
             break;
         case 1:
         {
+            // add touch move to tracker
+            if(m_tracker) {
+                m_tracker->addTouchMoved(touchPoint);
+            }
+            
             float offset = 0;
             offset = fabs(sender->getTouchStartPos().x - touchPoint.x);
             if (offset > _childFocusCancelOffset)
@@ -576,21 +408,71 @@ void PageView::interceptTouchEvent(int handleState, Widget *sender, const CCPoin
                 sender->setFocused(false);
                 handleMoveLogic(touchPoint);
             }
-        }
+            
             break;
+        }
         case 2:
             handleReleaseLogic(touchPoint);
             break;
-            handleReleaseLogic(touchPoint);
         case 3:
+            handleReleaseLogic(touchPoint);
             break;
     }
 }
 
-void PageView::pageTurningEvent()
-{
-    if (_pageViewEventListener && _pageViewEventSelector)
-    {
+void PageView::pageTurningEvent() {
+    // clear flag and dest page
+    if(m_dstPage == _leftChild) {
+        recyclePage(_rightChild);
+        _rightChild = m_curPage;
+        m_curPage = _leftChild;
+        _leftChild = m_dstIndex > 0 ? m_dataSource->pageItemAtIndex(this, m_dstIndex - 1) : NULL;
+        if(_leftChild)
+            addPage(_leftChild, -1);
+    } else if(m_dstPage == _rightChild) {
+        recyclePage(_leftChild);
+        _leftChild = m_curPage;
+        m_curPage = _rightChild;
+        _rightChild = (m_dstIndex < m_dataSource->pageViewItemCount(this) - 1) ? m_dataSource->pageItemAtIndex(this, m_dstIndex + 1) : NULL;
+        if(_rightChild)
+            addPage(_rightChild, 1);
+    } else if(m_dstPage != m_curPage) {
+        int delta = m_dstIndex - _curPageIdx;
+        if(delta == 2) {
+            recyclePage(_leftChild);
+            recyclePage(m_curPage);
+            _leftChild = _rightChild;
+            m_curPage = m_dstPage;
+            _rightChild = (m_dstIndex < m_dataSource->pageViewItemCount(this) - 1) ? m_dataSource->pageItemAtIndex(this, m_dstIndex + 1) : NULL;
+            if(_rightChild)
+                addPage(_rightChild, 1);
+        } else if(delta == -2) {
+            recyclePage(_rightChild);
+            recyclePage(m_curPage);
+            _rightChild = _leftChild;
+            m_curPage = m_dstPage;
+            _leftChild = m_dstIndex > 0 ? m_dataSource->pageItemAtIndex(this, m_dstIndex - 1) : NULL;
+            if(_leftChild)
+                addPage(_leftChild, -1);
+        } else {
+            recyclePage(_leftChild);
+            recyclePage(m_curPage);
+            recyclePage(_rightChild);
+            m_curPage = m_dstPage;
+            _leftChild = m_dstIndex > 0 ? m_dataSource->pageItemAtIndex(this, m_dstIndex - 1) : NULL;
+            if(_leftChild)
+                addPage(_leftChild, -1);
+            _rightChild = (m_dstIndex < m_dataSource->pageViewItemCount(this) - 1) ? m_dataSource->pageItemAtIndex(this, m_dstIndex + 1) : NULL;
+            if(_rightChild)
+                addPage(_rightChild, 1);
+        }
+    }
+    _isAutoScrolling = false;
+    _curPageIdx = m_dstIndex;
+    m_dstPage = NULL;
+    
+    // notify event
+    if (_pageViewEventListener && _pageViewEventSelector) {
         (_pageViewEventListener->*_pageViewEventSelector)(this, PAGEVIEW_EVENT_TURNING);
     }
 }
@@ -606,20 +488,6 @@ int PageView::getCurPageIndex() const
     return _curPageIdx;
 }
 
-CCArray* PageView::getPages()
-{
-    return _pages;
-}
-    
-Layout* PageView::getPage(int index)
-{
-    if (index < 0 || index >= (int)(_pages->count()))
-    {
-        return NULL;
-    }
-    return static_cast<Layout*>(_pages->objectAtIndex(index));
-}
-
 std::string PageView::getDescription() const
 {
     return "PageView";
@@ -632,12 +500,17 @@ Widget* PageView::createCloneInstance()
 
 void PageView::copyClonedWidgetChildren(Widget* model)
 {
-    ccArray* arrayModelPages = static_cast<PageView*>(model)->getPages()->data;
-    int length = arrayModelPages->num;
-    for (int i=0; i<length; i++)
-    {
-        Layout* page = static_cast<Layout*>(arrayModelPages->arr[i]);
-        addPage(dynamic_cast<Layout*>(page->clone()));
+    PageView* pv = dynamic_cast<PageView*>(model);
+    if(pv) {
+        if(pv->getCurPage()) {
+            addPage(pv->getCurPage()->clone(), 0);
+        }
+        if(pv->getLeftChild()) {
+            addPage(pv->getLeftChild()->clone(), -1);
+        }
+        if(pv->getRightChild()) {
+            addPage(pv->getRightChild()->clone(), 1);
+        }
     }
 }
 
@@ -650,6 +523,34 @@ void PageView::copySpecialProperties(Widget *widget)
     }
 }
 
+void PageView::enqueuePageItem(Widget* item, const string& itemId) {
+    CCArray* items = (CCArray*)m_cycledPages.objectForKey(itemId);
+    if(!items) {
+        items = CCArray::create();
+        m_cycledPages.setObject(items, itemId);
+    }
+    items->addObject(item);
+}
+
+Widget* PageView::dequeuePageItem(const string& itemId) {
+    CCArray* items = (CCArray*)m_cycledPages.objectForKey(itemId);
+    if(items) {
+        if(items->count() > 0) {
+            Layout* item = (Layout*)items->lastObject();
+            CC_SAFE_RETAIN(item);
+            items->removeLastObject();
+            item->setPosition(CCPointZero);
+            item->setScale(1);
+            item->setOpacity(255);
+            item->setRotation(0);
+            item->autorelease();
+            return item;
+        }
+    }
+    
+    return NULL;
+}
+    
 }
 
 NS_CC_END

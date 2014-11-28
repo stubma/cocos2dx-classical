@@ -1227,7 +1227,10 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const 
             PageView* pageView = dynamic_cast<PageView*>(widget);
             if (pageView)
             {
-                pageView->addPage(static_cast<Layout*>(child));
+                // XXX commented by Luma
+                // PageView is modified to create page dynamically, so it doesn't support
+                // add page in cocostudio any more
+//                pageView->addPage(static_cast<Layout*>(child));
             }
             else
             {
@@ -2347,7 +2350,10 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* pC
                         PageView* pageView = dynamic_cast<PageView*>(widget);
                         if (pageView)
                         {
-                            pageView->addPage(static_cast<Layout*>(child));
+                            // XXX commented by Luma
+                            // PageView is modified to create page dynamically, so it doesn't support
+                            // add page in cocostudio any more
+//                            pageView->addPage(static_cast<Layout*>(child));
                         }
                         else
                         {
