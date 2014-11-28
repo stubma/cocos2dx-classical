@@ -658,6 +658,12 @@ public:
      * @param A user assigned CCObject
      */
     virtual void setScriptObjectDict(cocos2d::CCDictionary* scriptObjectDict);
+    
+    void pushDownEvent();
+    void moveEvent();
+    void releaseUpEvent();
+    void cancelUpEvent();
+    
 protected:
     //call back function called when size changed.
     virtual void onSizeChanged();
@@ -676,10 +682,7 @@ protected:
     
     //call back function called widget's state changed to dark.
     virtual void onPressStateChangedToDisabled();
-    void pushDownEvent();
-    void moveEvent();
-    void releaseUpEvent();
-    void cancelUpEvent();
+
     void updateAnchorPoint();
     virtual void updateTextureColor(){};
     virtual void updateTextureOpacity(){};
