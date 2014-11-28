@@ -23,4 +23,13 @@
 
 这些年, 已经填过的坑
 ===
-目前项目处于初始, 初步成型后会更新填坑列表. 如果你有什么值得骄傲的填过的大坑, 请发来.
+* 修正对CocoStudio Mac 1.0.0.0 beta的支持问题, 但是由于Mac下的CocoStudio 1.0.0.0 beta没有动画编辑功能, 需要使用骨骼动画的还是需要使用Windows版本编辑. 但是至少在Mac下终于有一个可用的界面编辑器了, 之前的cocos2d-x v2版本存在若干解析问题, 导致虽然有Mac版却无法用.
+* 修正UILabel的内存泄露
+* UIPageView重新实现, 使用datasource动态创建内容, 解决了page比较多时的性能问题. 注: 不再支持从CocoStudio中添加page
+* CCTableView重新实现, 支持多列
+* CCProgressTo, CCProgressFromTo支持UILoadingBar
+* CCLabelBMFont添加了setLineKerning, 可以调整行间距
+* CCScrollView添加方法可以设置min/max scale
+* 持续更新中...
+
+已陆续合并若干cocos2dx-better代码, 新类不一一列举.
