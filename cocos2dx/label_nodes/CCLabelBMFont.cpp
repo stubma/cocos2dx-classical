@@ -545,6 +545,7 @@ CCLabelBMFont::CCLabelBMFont()
 , m_bCascadeColorEnabled(true)
 , m_bCascadeOpacityEnabled(true)
 , m_bIsOpacityModifyRGB(false)
+, m_lineKerning(0)
 {
 
 }
@@ -604,7 +605,7 @@ void CCLabelBMFont::createFontChars()
     }
 
     totalHeight = m_pConfiguration->m_nCommonHeight * quantityOfLines;
-    nextFontPositionY = 0-(m_pConfiguration->m_nCommonHeight - m_pConfiguration->m_nCommonHeight * quantityOfLines);
+    nextFontPositionY = totalHeight - m_pConfiguration->m_nCommonHeight;
     
     CCRect rect;
     ccBMFontDef fontDef;
@@ -617,6 +618,7 @@ void CCLabelBMFont::createFontChars()
         {
             nextFontPositionX = 0;
             nextFontPositionY -= m_pConfiguration->m_nCommonHeight;
+            nextFontPositionY += m_lineKerning;
             continue;
         }
         
@@ -723,6 +725,11 @@ void CCLabelBMFont::createFontChars()
     tmpSize.height = totalHeight;
 
     this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(tmpSize));
+}
+
+void CCLabelBMFont::setLineKerning(float k) {
+    m_lineKerning = k;
+    createFontChars();
 }
 
 //LabelBMFont - CCLabelProtocol protocol

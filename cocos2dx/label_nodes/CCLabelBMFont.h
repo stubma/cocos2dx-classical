@@ -125,6 +125,7 @@ public://@public
     
     // Character Set defines the letters that actually exist in the font
     std::set<unsigned int> *m_pCharacterSet;
+    
 public:
     CCBMFontConfiguration();
     /**
@@ -148,6 +149,7 @@ public:
     inline void setAtlasName(const char* atlasName) { m_sAtlasName = atlasName; }
     
     std::set<unsigned int>* getCharacterSet() const;
+    
 private:
     std::set<unsigned int>* parseConfigFile(const char *controlFile);
     void parseCharacterDefinition(std::string line, ccBMFontDef *characterDefinition);
@@ -256,6 +258,7 @@ public:
     virtual bool isCascadeColorEnabled();
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
 
+    void setLineKerning(float k);
     void setFntFile(const char* fntFile);
     const char* getFntFile();
 	CCBMFontConfiguration* getConfiguration() const;
@@ -272,6 +275,9 @@ protected:
     virtual void setString(unsigned short *newString, bool needUpdateLabel);
     // string to render
     unsigned short* m_sString;
+    
+    // vertical line kerning
+    float m_lineKerning;
     
     // name of fntFile
     std::string m_sFntFile;
