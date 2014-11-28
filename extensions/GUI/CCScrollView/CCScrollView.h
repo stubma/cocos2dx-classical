@@ -344,6 +344,10 @@ public:
     void registerScriptHandler(int nFunID,int nScriptEventType);
     void unregisterScriptHandler(int nScriptEventType);
     int  getScriptHandler(int nScriptEventType);
+    
+    void setMinScale(float s) { m_fMinScale = s; }
+    void setMaxScale(float s) { m_fMaxScale = s; }
+    
 private:
     std::map<int,int> m_mapScriptHandler;
 };
