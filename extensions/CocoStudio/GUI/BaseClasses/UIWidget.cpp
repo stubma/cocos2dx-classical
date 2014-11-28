@@ -347,7 +347,7 @@ void Widget::removeNodeByTag(int tag)
     
     if (node == NULL)
     {
-        CCLOG("cocos2d: removeNodeByTag(tag = %d): child not found!", tag);
+//        CCLOG("cocos2d: removeNodeByTag(tag = %d): child not found!", tag);
     }
     else
     {
