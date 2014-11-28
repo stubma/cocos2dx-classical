@@ -344,6 +344,9 @@ public:
     virtual std::string getDescription() const;
     
     virtual void onEnter();
+    
+    CCPoint getTouchEndPoint() { return _touchEndedPoint; }
+    
 protected:
     virtual bool init();
     virtual void initRenderer();
