@@ -72,13 +72,12 @@ void LabelBMFont::setFntFile(const char *fileName)
     }
     _fntFileName = fileName;
     
-    if (_labelBMFontRenderer)
-    {
-        CCNode::removeChild(_labelBMFontRenderer, true);
-        initRenderer();
+    if(_labelBMFontRenderer) {
+        _labelBMFontRenderer->removeFromParent();
+        _labelBMFontRenderer = NULL;
     }
-    
-    _labelBMFontRenderer->initWithString("", fileName);
+    _labelBMFontRenderer = cocos2d::CCLabelBMFont::create("", fileName);
+    CCNodeRGBA::addChild(_labelBMFontRenderer, LABELBMFONT_RENDERER_Z, -1);
     
     updateAnchorPoint();
     labelBMFontScaleChangedWithSize();

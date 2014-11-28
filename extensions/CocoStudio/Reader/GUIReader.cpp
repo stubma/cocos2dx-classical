@@ -321,7 +321,7 @@ std::string  WidgetPropertiesReader::getWidgetReaderClassName(const std::string&
 {
     // create widget reader to parse properties of widget
     std::string readerName = classname;
-    if (readerName == "Panel")
+    if (readerName == "Panel" || readerName == "Node")
     {
         readerName = "Layout";
     }
@@ -341,7 +341,7 @@ std::string  WidgetPropertiesReader::getWidgetReaderClassName(const std::string&
 std::string WidgetPropertiesReader::getGUIClassName(const std::string &name)
 {
     std::string convertedClassName = name;
-    if (name == "Panel")
+    if (name == "Panel" || name == "Node")
     {
         convertedClassName = "Layout";
     }
@@ -1138,6 +1138,12 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::V
 {
     m_strFilePath = fullPath;
     
+    // XXX: modified by Luma to make Mac CocoStudio json loadable
+    // get version
+    const char* fileVersion = DICTOOL->getStringValue_json(data, "version");
+    int versionInt = GUIReader::shareReader()->getVersionInteger(fileVersion);
+    bool isMac = versionInt >= 1000 && versionInt < 1201;
+    
     int texturesCount = DICTOOL->getArrayCount_json(data, "textures");
     
     for (int i=0; i<texturesCount; i++)
@@ -1158,7 +1164,7 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::V
     {
         GUIReader::shareReader()->storeFileDesignSize(fileName, CCSizeMake(fileDesignWidth, fileDesignHeight));
     }
-    const rapidjson::Value& widgetTree = DICTOOL->getSubDictionary_json(data, "widgetTree");
+    const rapidjson::Value& widgetTree = DICTOOL->getSubDictionary_json(data, isMac ? "nodeTree" : "widgetTree");
     cocos2d::ui::Widget* widget = widgetFromJsonDictionary(widgetTree);
     
     /* *********temp********* */
@@ -1668,8 +1674,12 @@ void WidgetPropertiesReader0300::setPropsForLabelFromJsonDictionary(cocos2d::ui:
     cocos2d::ui::Label* label = (cocos2d::ui::Label*)widget;
     bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
     label->setTouchScaleChangeEnabled(touchScaleChangeAble);
+    
+    // XXX modified by Luma
+    // mac cocostudio will return NULL if text is not set, so need perform null check for mac cocostudio compatibility
     const char* text = DICTOOL->getStringValue_json(options, "text");
-    label->setText(text);
+    label->setText(text ? text : "");
+    
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
     if (fs)
     {

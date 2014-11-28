@@ -144,7 +144,7 @@ ui::Widget* ObjectFactory::createGUI(std::string name)
 {
     CCObject* object = NULL;
     
-    if (name == "Panel")
+    if (name == "Panel" || name == "Node")
     {
         name = "Layout";
     }
