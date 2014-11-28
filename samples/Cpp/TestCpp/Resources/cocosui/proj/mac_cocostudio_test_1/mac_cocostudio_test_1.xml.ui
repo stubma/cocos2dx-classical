@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UIProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectDir>/Users/maruojie/Projects/SGLink/client/cocostudio/mac_cocostudio_test_1</ProjectDir>
+  <Version>1.0.0.0</Version>
+  <Resources>/Users/maruojie/Projects/SGLink/client/cocostudio/mac_cocostudio_test_1/Resources</Resources>
+  <Name>mac_cocostudio_test_1</Name>
+  <JsonFileName>mac_cocostudio_test_1.json</JsonFileName>
+  <JsonFolder>/Users/maruojie/Projects/SGLink/client/cocostudio/mac_cocostudio_test_1/Json</JsonFolder>
+  <JsonList>
+    <string>mac_cocostudio_test_1_1.json</string>
+  </JsonList>
+  <filePath>/Users/maruojie/Projects/SGLink/client/cocostudio/mac_cocostudio_test_1/mac_cocostudio_test_1.xml.ui</filePath>
+  <ProjectType>UIProject</ProjectType>
+  <ResRelativePath />
+  <imageFileList />
+  <imagePngList />
+  <JsonSuffix>.json</JsonSuffix>
+  <CurrentUIJson>mac_cocostudio_test_1_1.json</CurrentUIJson>
+  <CanvasSize>
+    <Width>480</Width>
+    <Height>320</Height>
+  </CanvasSize>
+</UIProject>

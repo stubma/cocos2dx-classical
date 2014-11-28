@@ -5,7 +5,7 @@
 #include "CocosGUIScene.h"
 #include "GUIEditorTest.h"
 #include "CustomGUIScene.h"
-
+#include "MacGUIEditorTestScene.h"
 
 enum
 {
@@ -18,6 +18,7 @@ enum
     TEST_GUI_WIDGET_DYNAMIC_CREATE,
     TEST_GUI_WIDGET_CREATE_FROM_EDITOR,
     TEST_CUSTOM_GUI,
+    TEST_MAC_COCOSTUDIO,
     TEST_MAX_COUNT,
 };
 
@@ -26,6 +27,7 @@ static const std::string testsName[TEST_MAX_COUNT] =
     "GUI Dynamic Create Test",
     "GUI Editor Test",
     "Custom GUI Test",
+    "Mac CocoStudio Test"
 };
 
 ////////////////////////////////////////////////////////
@@ -77,6 +79,13 @@ void CocoStudioGUIMainLayer::menuCallback(CCObject *pSender)
             pScene->release();
         }
             break;
+        case TEST_MAC_COCOSTUDIO:
+        {
+            MacGUIEditorTestScene* pScene = new MacGUIEditorTestScene();
+            pScene->runThisTest();
+            pScene->release();
+            break;
+        }
          
 //            /*
         case TEST_GUI_WIDGET_CREATE_FROM_EDITOR:

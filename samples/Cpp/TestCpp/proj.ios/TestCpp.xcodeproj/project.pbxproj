@@ -370,6 +370,8 @@
 		923BBB5A1A24D65C00E63041 /* sound in Resources */ = {isa = PBXBuildFile; fileRef = 923BBB591A24D65C00E63041 /* sound */; };
 		923BBB5C1A24D8A400E63041 /* Images.ios in Resources */ = {isa = PBXBuildFile; fileRef = 923BBB5B1A24D8A400E63041 /* Images.ios */; };
 		9252FCBA1A2354B200039D00 /* CCData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9252FCB81A2354B200039D00 /* CCData.cpp */; };
+		9258E85E1A28BDBF001DCEEF /* MacGUIEditorTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9258E85C1A28BDBF001DCEEF /* MacGUIEditorTestScene.cpp */; };
+		9258E8601A28C1F0001DCEEF /* cocosui in Resources */ = {isa = PBXBuildFile; fileRef = 9258E85F1A28C1F0001DCEEF /* cocosui */; };
 		A01B534F17DE7F7900A3D114 /* PerformanceAllocTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A01B534D17DE7F7900A3D114 /* PerformanceAllocTest.cpp */; };
 		A059B9AD174D9B8E0078F84F /* ConfigurationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A059B9AB174D9B8E0078F84F /* ConfigurationTest.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
@@ -1178,6 +1180,9 @@
 		923BBB5B1A24D8A400E63041 /* Images.ios */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images.ios; path = ../Resources.ios/Images.ios; sourceTree = "<group>"; };
 		9252FCB81A2354B200039D00 /* CCData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCData.cpp; sourceTree = "<group>"; };
 		9252FCB91A2354B200039D00 /* CCData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCData.h; sourceTree = "<group>"; };
+		9258E85C1A28BDBF001DCEEF /* MacGUIEditorTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MacGUIEditorTestScene.cpp; sourceTree = "<group>"; };
+		9258E85D1A28BDBF001DCEEF /* MacGUIEditorTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacGUIEditorTestScene.h; sourceTree = "<group>"; };
+		9258E85F1A28C1F0001DCEEF /* cocosui */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cocosui; sourceTree = "<group>"; };
 		A01B534D17DE7F7900A3D114 /* PerformanceAllocTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PerformanceAllocTest.cpp; path = ../../Classes/PerformanceTest/PerformanceAllocTest.cpp; sourceTree = "<group>"; };
 		A01B534E17DE7F7900A3D114 /* PerformanceAllocTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PerformanceAllocTest.h; path = ../../Classes/PerformanceTest/PerformanceAllocTest.h; sourceTree = "<group>"; };
 		A059B9AB174D9B8E0078F84F /* ConfigurationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigurationTest.cpp; sourceTree = "<group>"; };
@@ -3008,6 +3013,8 @@
 				50F853FE18C581FB0019FBFB /* CocosGUIScene.h */,
 				50FCEB5918C6F174004AD434 /* CustomGUIScene.cpp */,
 				50FCEB5A18C6F174004AD434 /* CustomGUIScene.h */,
+				9258E85C1A28BDBF001DCEEF /* MacGUIEditorTestScene.cpp */,
+				9258E85D1A28BDBF001DCEEF /* MacGUIEditorTestScene.h */,
 				50F8540118C581FB0019FBFB /* CustomTest */,
 				50F8540518C581FB0019FBFB /* CustomWidget */,
 				50F8540E18C581FB0019FBFB /* GUIEditorTest.cpp */,
@@ -3247,6 +3254,7 @@
 				37877486187A9002002578C7 /* animations */,
 				37877491187A9002002578C7 /* components */,
 				37877492187A9002002578C7 /* configs */,
+				9258E85F1A28C1F0001DCEEF /* cocosui */,
 				37877497187A9002002578C7 /* extensions */,
 				37877499187A9002002578C7 /* fonts */,
 				3787749B187A9002002578C7 /* hd */,
@@ -3364,6 +3372,7 @@
 				378774CB187A9002002578C7 /* zwoptex in Resources */,
 				923BBB5C1A24D8A400E63041 /* Images.ios in Resources */,
 				15A3D9961682F7F9002FB0C5 /* CMakeLists.txt in Resources */,
+				9258E8601A28C1F0001DCEEF /* cocosui in Resources */,
 				378774C9187A9002002578C7 /* spine in Resources */,
 				378774C3187A9002002578C7 /* Misc in Resources */,
 				378774B5187A9002002578C7 /* configs in Resources */,
@@ -3572,6 +3581,7 @@
 				15A3D9AD1682F7F9002FB0C5 /* cpSpaceHash.c in Sources */,
 				9252FCBA1A2354B200039D00 /* CCData.cpp in Sources */,
 				15A3D9AE1682F7F9002FB0C5 /* cpSpaceQuery.c in Sources */,
+				9258E85E1A28BDBF001DCEEF /* MacGUIEditorTestScene.cpp in Sources */,
 				15A3D9AF1682F7F9002FB0C5 /* cpSpaceStep.c in Sources */,
 				15A3D9B01682F7F9002FB0C5 /* cpSpatialIndex.c in Sources */,
 				15A3D9B11682F7F9002FB0C5 /* cpSweep1D.c in Sources */,
