@@ -76,7 +76,9 @@ LOCAL_WHOLE_STATIC_LIBRARIES := cocos_libpng_static \
 	cocos_jpeg_static \
 	cocos_libxml2_static \
 	cocos_libtiff_static \
-	cocos_libwebp_static
+	cocos_libwebp_static \
+    cocosdenshion_static \
+    cocos_extension_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS := -Wno-psabi -DUSE_FILE32API
@@ -84,6 +86,8 @@ LOCAL_EXPORT_CFLAGS := -Wno-psabi -DUSE_FILE32API
 
 # compile
 include $(BUILD_STATIC_LIBRARY)
+$(call import-module,CocosDenshion/android)
+$(call import-module,extensions)
 $(call import-module,libjpeg)
 $(call import-module,libpng)
 $(call import-module,libtiff)

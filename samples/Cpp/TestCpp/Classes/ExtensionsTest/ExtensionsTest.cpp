@@ -2,9 +2,6 @@
 #include "../testResource.h"
 #include "NotificationCenterTest/NotificationCenterTest.h"
 #include "ControlExtensionTest/CCControlSceneManager.h"
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
-#include "NetworkTest/HttpClientTest.h"
-#endif
 #include "TableViewTest/TableViewTestScene.h"
 #include "CocoStudioArmatureTest/ArmatureScene.h"
 #include "CocoStudioComponentsTest/ComponentsTestScene.h"
@@ -26,7 +23,6 @@ enum
 {
     TEST_NOTIFICATIONCENTER = 0,
     TEST_CCCONTROLBUTTON,
-    TEST_HTTPCLIENT,
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     TEST_EDITBOX,
 #endif
@@ -43,9 +39,6 @@ static const std::string testsName[TEST_MAX_COUNT] =
 {
     "NotificationCenterTest",
     "CCControlButtonTest",
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
-    "HttpClientTest",
-#endif
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)  || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     "EditBoxTest",
 #endif
@@ -108,13 +101,6 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
         }
         break;
         break;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE && CC_TARGET_PLATFORM != CC_PLATFORM_NACL && CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN && CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-    case TEST_HTTPCLIENT:
-        {
-            runHttpClientTest();
-        }
-        break;
-#endif
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)  || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     case TEST_EDITBOX:
         {

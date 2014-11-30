@@ -55,7 +55,6 @@
 #include "ChipmunkTest/ChipmunkTest.h"
 #endif
 #include "FileUtilsTest/FileUtilsTest.h"
-#include "SpineTest/SpineTest.h"
 #include "TexturePackerEncryptionTest/TextureAtlasEncryptionTest.h"
 #include "DataVisitorTest/DataVisitorTest.h"
 #include "ConfigurationTest/ConfigurationTest.h"
@@ -114,7 +113,6 @@ enum
     TEST_CLIPPINGNODE,
 #endif
     TEST_FILEUTILS,
-    TEST_SPINE,
     TEST_TEXTUREPACKER_ENCRYPTION,
     TEST_DATAVISTOR,
 	TEST_CONFIGURATION,
@@ -179,7 +177,6 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "ClippingNodeTest",
 #endif
     "FileUtilsTest",
-    "SpineTest",
     "TexturePackerEncryption",
     "DataVistorTest",
 	"ConfigurationTest"
