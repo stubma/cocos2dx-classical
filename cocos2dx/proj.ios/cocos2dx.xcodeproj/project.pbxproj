@@ -313,6 +313,8 @@
 		9211100D1A2B45AB003FE653 /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 921110091A2B45AB003FE653 /* CCProfiling.h */; };
 		921110101A2B4856003FE653 /* CCPointList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9211100E1A2B4856003FE653 /* CCPointList.cpp */; };
 		921110111A2B4856003FE653 /* CCPointList.h in Headers */ = {isa = PBXBuildFile; fileRef = 9211100F1A2B4856003FE653 /* CCPointList.h */; };
+		921110131A2B4A1B003FE653 /* CCUUID.h in Headers */ = {isa = PBXBuildFile; fileRef = 921110121A2B4A1B003FE653 /* CCUUID.h */; };
+		921110151A2B4A22003FE653 /* CCUUID.mm in Sources */ = {isa = PBXBuildFile; fileRef = 921110141A2B4A22003FE653 /* CCUUID.mm */; };
 		9258E85A1A28B3E7001DCEEF /* CCVelocityTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9258E8581A28B3E7001DCEEF /* CCVelocityTracker.cpp */; };
 		9258E85B1A28B3E7001DCEEF /* CCVelocityTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 9258E8591A28B3E7001DCEEF /* CCVelocityTracker.h */; };
 		929D53351A2755B300560A2E /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53331A2755B300560A2E /* CCSAXParser.cpp */; };
@@ -698,6 +700,8 @@
 		921110091A2B45AB003FE653 /* CCProfiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProfiling.h; sourceTree = "<group>"; };
 		9211100E1A2B4856003FE653 /* CCPointList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPointList.cpp; sourceTree = "<group>"; };
 		9211100F1A2B4856003FE653 /* CCPointList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPointList.h; sourceTree = "<group>"; };
+		921110121A2B4A1B003FE653 /* CCUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUUID.h; sourceTree = "<group>"; };
+		921110141A2B4A22003FE653 /* CCUUID.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCUUID.mm; sourceTree = "<group>"; };
 		9258E8581A28B3E7001DCEEF /* CCVelocityTracker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCVelocityTracker.cpp; sourceTree = "<group>"; };
 		9258E8591A28B3E7001DCEEF /* CCVelocityTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVelocityTracker.h; sourceTree = "<group>"; };
 		929D53331A2755B300560A2E /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
@@ -1131,6 +1135,7 @@
 				1551A475158F2ADE00E66CFE /* CCPlatformConfig.h */,
 				1551A476158F2ADE00E66CFE /* CCPlatformMacros.h */,
 				1551A47A158F2ADE00E66CFE /* CCThread.h */,
+				921110121A2B4A1B003FE653 /* CCUUID.h */,
 				1551A4A4158F2ADE00E66CFE /* platform.cpp */,
 				1551A4A5158F2ADE00E66CFE /* platform.h */,
 				1551A47B158F2ADE00E66CFE /* ios */,
@@ -1142,6 +1147,7 @@
 		1551A47B158F2ADE00E66CFE /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				921110141A2B4A22003FE653 /* CCUUID.mm */,
 				929F3A781A2619D000DE78AC /* CCLocale.mm */,
 				1551A47C158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h */,
 				1551A47D158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm */,
@@ -1637,6 +1643,7 @@
 				1551A6B9158F2ADE00E66CFE /* mat4stack.h in Headers */,
 				1551A6BA158F2ADE00E66CFE /* matrix.h in Headers */,
 				1551A6BB158F2ADE00E66CFE /* kazmath.h in Headers */,
+				921110131A2B4A1B003FE653 /* CCUUID.h in Headers */,
 				929F3A641A26163500DE78AC /* CCUtils.h in Headers */,
 				1551A6BC158F2ADE00E66CFE /* mat3.h in Headers */,
 				1551A6BD158F2ADE00E66CFE /* mat4.h in Headers */,
@@ -1885,6 +1892,7 @@
 				1551A65D158F2ADE00E66CFE /* CCObject.cpp in Sources */,
 				1551A65F158F2ADE00E66CFE /* CCSet.cpp in Sources */,
 				1551A661158F2ADE00E66CFE /* CCString.cpp in Sources */,
+				921110151A2B4A22003FE653 /* CCUUID.mm in Sources */,
 				1551A663158F2ADE00E66CFE /* CCZone.cpp in Sources */,
 				1551A665158F2ADE00E66CFE /* cocos2d.cpp in Sources */,
 				929D53921A27595700560A2E /* yajl_buf.c in Sources */,
