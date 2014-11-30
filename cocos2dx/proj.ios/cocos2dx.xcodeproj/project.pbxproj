@@ -311,6 +311,8 @@
 		9211100B1A2B45AB003FE653 /* CCMemory.h in Headers */ = {isa = PBXBuildFile; fileRef = 921110071A2B45AB003FE653 /* CCMemory.h */; };
 		9211100C1A2B45AB003FE653 /* CCProfiling.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 921110081A2B45AB003FE653 /* CCProfiling.cpp */; };
 		9211100D1A2B45AB003FE653 /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 921110091A2B45AB003FE653 /* CCProfiling.h */; };
+		921110101A2B4856003FE653 /* CCPointList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9211100E1A2B4856003FE653 /* CCPointList.cpp */; };
+		921110111A2B4856003FE653 /* CCPointList.h in Headers */ = {isa = PBXBuildFile; fileRef = 9211100F1A2B4856003FE653 /* CCPointList.h */; };
 		9258E85A1A28B3E7001DCEEF /* CCVelocityTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9258E8581A28B3E7001DCEEF /* CCVelocityTracker.cpp */; };
 		9258E85B1A28B3E7001DCEEF /* CCVelocityTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 9258E8591A28B3E7001DCEEF /* CCVelocityTracker.h */; };
 		929D53351A2755B300560A2E /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53331A2755B300560A2E /* CCSAXParser.cpp */; };
@@ -694,6 +696,8 @@
 		921110071A2B45AB003FE653 /* CCMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMemory.h; sourceTree = "<group>"; };
 		921110081A2B45AB003FE653 /* CCProfiling.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProfiling.cpp; sourceTree = "<group>"; };
 		921110091A2B45AB003FE653 /* CCProfiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProfiling.h; sourceTree = "<group>"; };
+		9211100E1A2B4856003FE653 /* CCPointList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPointList.cpp; sourceTree = "<group>"; };
+		9211100F1A2B4856003FE653 /* CCPointList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPointList.h; sourceTree = "<group>"; };
 		9258E8581A28B3E7001DCEEF /* CCVelocityTracker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCVelocityTracker.cpp; sourceTree = "<group>"; };
 		9258E8591A28B3E7001DCEEF /* CCVelocityTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVelocityTracker.h; sourceTree = "<group>"; };
 		929D53331A2755B300560A2E /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
@@ -1279,6 +1283,8 @@
 			children = (
 				1551A5F5158F2ADE00E66CFE /* ccCArray.cpp */,
 				1551A5F6158F2ADE00E66CFE /* ccCArray.h */,
+				9211100E1A2B4856003FE653 /* CCPointList.cpp */,
+				9211100F1A2B4856003FE653 /* CCPointList.h */,
 				1551A5F7158F2ADE00E66CFE /* uthash.h */,
 				1551A5F8158F2ADE00E66CFE /* utlist.h */,
 			);
@@ -1754,6 +1760,7 @@
 				1551A86E158F2ADF00E66CFE /* CCTouchDelegateProtocol.h in Headers */,
 				1551A870158F2ADF00E66CFE /* CCTouchDispatcher.h in Headers */,
 				1551A872158F2ADF00E66CFE /* CCTouchHandler.h in Headers */,
+				921110111A2B4856003FE653 /* CCPointList.h in Headers */,
 				1551A874158F2B4700E66CFE /* cocos2dx-Prefix.pch in Headers */,
 				154269DD15B5653000712A7F /* CCNotificationCenter.h in Headers */,
 				2628297A15EC7064002C4240 /* ccTypeInfo.h in Headers */,
@@ -1874,6 +1881,7 @@
 				1551A658158F2ADE00E66CFE /* CCGeometry.cpp in Sources */,
 				1551A65B158F2ADE00E66CFE /* CCNS.cpp in Sources */,
 				929D536C1A27582F00560A2E /* VelocityTracker.cpp in Sources */,
+				921110101A2B4856003FE653 /* CCPointList.cpp in Sources */,
 				1551A65D158F2ADE00E66CFE /* CCObject.cpp in Sources */,
 				1551A65F158F2ADE00E66CFE /* CCSet.cpp in Sources */,
 				1551A661158F2ADE00E66CFE /* CCString.cpp in Sources */,

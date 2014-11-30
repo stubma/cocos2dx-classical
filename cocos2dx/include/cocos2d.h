@@ -184,6 +184,7 @@ THE SOFTWARE.
 #include "support/utils/CCPinyinUtils.h"
 #include "support/ui_support/CCScroller.h"
 #include "support/ui_support/CCVelocityTracker.h"
+#include "support/data_support/CCPointList.h"
 
 // text_input_node
 #include "text_input_node/CCIMEDelegate.h"
