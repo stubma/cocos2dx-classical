@@ -132,6 +132,8 @@ THE SOFTWARE.
 #include "platform/platform.h"
 #include "platform/CCPlatformConfig.h"
 #include "platform/CCPlatformMacros.h"
+#include "platform/CCUUID.h"
+#include "platform/CCLocale.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "platform/ios/CCAccelerometer.h"
