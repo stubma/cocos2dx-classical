@@ -172,9 +172,17 @@ THE SOFTWARE.
 #include "support/CCPointExtension.h"
 #include "support/CCProfiling.h"
 #include "support/user_default/CCUserDefault.h"
+#include "support/user_default/CCSecureUserDefault.h"
 #include "support/CCVertex.h"
 #include "support/tinyxml2/tinyxml2.h"
 #include "support/CCSAXParser.h"
+#include "support/CCBase64.h"
+#include "support/CCMD5.h"
+#include "support/locale/CCLocalization.h"
+#include "support/utils/CCUtils.h"
+#include "support/utils/CCPinyinUtils.h"
+#include "support/ui_support/CCScroller.h"
+#include "support/ui_support/CCVelocityTracker.h"
 
 // text_input_node
 #include "text_input_node/CCIMEDelegate.h"
