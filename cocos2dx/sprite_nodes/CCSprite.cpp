@@ -42,7 +42,7 @@ THE SOFTWARE.
 #include "textures/CCTexture2D.h"
 #include "cocoa/CCAffineTransform.h"
 #include "support/utils/TransformUtils.h"
-#include "support/CCProfiling.h"
+#include "support/profile/CCProfiling.h"
 #include "platform/CCImage.h"
 // external
 #include "kazmath/GL/matrix.h"

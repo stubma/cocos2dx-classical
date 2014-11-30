@@ -221,8 +221,6 @@
 		1551A839158F2ADF00E66CFE /* CCSpriteFrameCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A5E6158F2ADE00E66CFE /* CCSpriteFrameCache.h */; };
 		1551A83C158F2ADF00E66CFE /* CCPointExtension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A5EA158F2ADE00E66CFE /* CCPointExtension.cpp */; };
 		1551A83D158F2ADF00E66CFE /* CCPointExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A5EB158F2ADE00E66CFE /* CCPointExtension.h */; };
-		1551A83E158F2ADF00E66CFE /* CCProfiling.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A5EC158F2ADE00E66CFE /* CCProfiling.cpp */; };
-		1551A83F158F2ADF00E66CFE /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A5ED158F2ADE00E66CFE /* CCProfiling.h */; };
 		1551A844158F2ADF00E66CFE /* CCVertex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A5F2158F2ADE00E66CFE /* CCVertex.cpp */; };
 		1551A845158F2ADF00E66CFE /* CCVertex.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A5F3158F2ADE00E66CFE /* CCVertex.h */; };
 		1551A846158F2ADF00E66CFE /* ccCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1551A5F5158F2ADE00E66CFE /* ccCArray.cpp */; };
@@ -309,6 +307,10 @@
 		4EF8999B16E207E70040A527 /* CCTMXXMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF8998F16E207E70040A527 /* CCTMXXMLParser.h */; };
 		921110031A2B3FA8003FE653 /* CCScroller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 921110011A2B3FA8003FE653 /* CCScroller.cpp */; };
 		921110041A2B3FA8003FE653 /* CCScroller.h in Headers */ = {isa = PBXBuildFile; fileRef = 921110021A2B3FA8003FE653 /* CCScroller.h */; };
+		9211100A1A2B45AB003FE653 /* CCMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 921110061A2B45AB003FE653 /* CCMemory.cpp */; };
+		9211100B1A2B45AB003FE653 /* CCMemory.h in Headers */ = {isa = PBXBuildFile; fileRef = 921110071A2B45AB003FE653 /* CCMemory.h */; };
+		9211100C1A2B45AB003FE653 /* CCProfiling.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 921110081A2B45AB003FE653 /* CCProfiling.cpp */; };
+		9211100D1A2B45AB003FE653 /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 921110091A2B45AB003FE653 /* CCProfiling.h */; };
 		9258E85A1A28B3E7001DCEEF /* CCVelocityTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9258E8581A28B3E7001DCEEF /* CCVelocityTracker.cpp */; };
 		9258E85B1A28B3E7001DCEEF /* CCVelocityTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 9258E8591A28B3E7001DCEEF /* CCVelocityTracker.h */; };
 		929D53351A2755B300560A2E /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53331A2755B300560A2E /* CCSAXParser.cpp */; };
@@ -602,8 +604,6 @@
 		1551A5E6158F2ADE00E66CFE /* CCSpriteFrameCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrameCache.h; sourceTree = "<group>"; };
 		1551A5EA158F2ADE00E66CFE /* CCPointExtension.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPointExtension.cpp; sourceTree = "<group>"; };
 		1551A5EB158F2ADE00E66CFE /* CCPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPointExtension.h; sourceTree = "<group>"; };
-		1551A5EC158F2ADE00E66CFE /* CCProfiling.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProfiling.cpp; sourceTree = "<group>"; };
-		1551A5ED158F2ADE00E66CFE /* CCProfiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProfiling.h; sourceTree = "<group>"; };
 		1551A5F2158F2ADE00E66CFE /* CCVertex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCVertex.cpp; sourceTree = "<group>"; };
 		1551A5F3158F2ADE00E66CFE /* CCVertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertex.h; sourceTree = "<group>"; };
 		1551A5F5158F2ADE00E66CFE /* ccCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ccCArray.cpp; sourceTree = "<group>"; };
@@ -690,6 +690,10 @@
 		4EF8998F16E207E70040A527 /* CCTMXXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXXMLParser.h; sourceTree = "<group>"; };
 		921110011A2B3FA8003FE653 /* CCScroller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScroller.cpp; sourceTree = "<group>"; };
 		921110021A2B3FA8003FE653 /* CCScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScroller.h; sourceTree = "<group>"; };
+		921110061A2B45AB003FE653 /* CCMemory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMemory.cpp; sourceTree = "<group>"; };
+		921110071A2B45AB003FE653 /* CCMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMemory.h; sourceTree = "<group>"; };
+		921110081A2B45AB003FE653 /* CCProfiling.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProfiling.cpp; sourceTree = "<group>"; };
+		921110091A2B45AB003FE653 /* CCProfiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProfiling.h; sourceTree = "<group>"; };
 		9258E8581A28B3E7001DCEEF /* CCVelocityTracker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCVelocityTracker.cpp; sourceTree = "<group>"; };
 		9258E8591A28B3E7001DCEEF /* CCVelocityTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVelocityTracker.h; sourceTree = "<group>"; };
 		929D53331A2755B300560A2E /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
@@ -1249,8 +1253,6 @@
 				154269DB15B5653000712A7F /* CCNotificationCenter.h */,
 				1551A5EA158F2ADE00E66CFE /* CCPointExtension.cpp */,
 				1551A5EB158F2ADE00E66CFE /* CCPointExtension.h */,
-				1551A5EC158F2ADE00E66CFE /* CCProfiling.cpp */,
-				1551A5ED158F2ADE00E66CFE /* CCProfiling.h */,
 				1A2802AE16DF1C5B00189CBF /* ccUTF8.cpp */,
 				1A2802AF16DF1C5B00189CBF /* ccUTF8.h */,
 				1551A5F2158F2ADE00E66CFE /* CCVertex.cpp */,
@@ -1260,6 +1262,7 @@
 				9258E8571A28B3E7001DCEEF /* ui_support */,
 				929F3A601A26163500DE78AC /* utils */,
 				929F3A691A26187B00DE78AC /* locale */,
+				921110051A2B45AB003FE653 /* profile */,
 				37EEEBF3175DDF3A003C1193 /* component */,
 				1551A5F4158F2ADE00E66CFE /* data_support */,
 				1551A5F9158F2ADE00E66CFE /* image_support */,
@@ -1434,6 +1437,17 @@
 				46A393F516E5D01B00210B16 /* CCUserDefaultAndroid.cpp */,
 			);
 			path = user_default;
+			sourceTree = "<group>";
+		};
+		921110051A2B45AB003FE653 /* profile */ = {
+			isa = PBXGroup;
+			children = (
+				921110061A2B45AB003FE653 /* CCMemory.cpp */,
+				921110071A2B45AB003FE653 /* CCMemory.h */,
+				921110081A2B45AB003FE653 /* CCProfiling.cpp */,
+				921110091A2B45AB003FE653 /* CCProfiling.h */,
+			);
+			path = profile;
 			sourceTree = "<group>";
 		};
 		9258E8571A28B3E7001DCEEF /* ui_support */ = {
@@ -1685,6 +1699,7 @@
 				1551A74B158F2ADE00E66CFE /* OpenGL_Internal.h in Headers */,
 				1551A74C158F2ADE00E66CFE /* AccelerometerSimulation.h in Headers */,
 				1551A74F158F2ADE00E66CFE /* platform.h in Headers */,
+				9211100D1A2B45AB003FE653 /* CCProfiling.h in Headers */,
 				1551A817158F2ADF00E66CFE /* CCScriptSupport.h in Headers */,
 				1551A819158F2ADF00E66CFE /* CCGLProgram.h in Headers */,
 				1551A81B158F2ADF00E66CFE /* ccGLStateCache.h in Headers */,
@@ -1713,7 +1728,6 @@
 				1551A837158F2ADF00E66CFE /* CCSpriteFrame.h in Headers */,
 				1551A839158F2ADF00E66CFE /* CCSpriteFrameCache.h in Headers */,
 				1551A83D158F2ADF00E66CFE /* CCPointExtension.h in Headers */,
-				1551A83F158F2ADF00E66CFE /* CCProfiling.h in Headers */,
 				1551A845158F2ADF00E66CFE /* CCVertex.h in Headers */,
 				1551A847158F2ADF00E66CFE /* ccCArray.h in Headers */,
 				1551A848158F2ADF00E66CFE /* uthash.h in Headers */,
@@ -1749,6 +1763,7 @@
 				1AC6CE8116B9075B00330EFD /* CCFileUtilsIOS.h in Headers */,
 				1AC6CE8916B910CD00330EFD /* CCFileUtils.h in Headers */,
 				1A31963016C0DDE800207637 /* decode.h in Headers */,
+				9211100B1A2B45AB003FE653 /* CCMemory.h in Headers */,
 				1A31963116C0DDE800207637 /* encode.h in Headers */,
 				929F3A681A26182E00DE78AC /* TransformUtils.h in Headers */,
 				929D53911A27595700560A2E /* yajl_alloc.h in Headers */,
@@ -1881,6 +1896,7 @@
 				1551A6CF158F2ADE00E66CFE /* utility.c in Sources */,
 				929D53A91A275E5300560A2E /* CCMD5.cpp in Sources */,
 				1551A6D0158F2ADE00E66CFE /* vec2.c in Sources */,
+				9211100A1A2B45AB003FE653 /* CCMemory.cpp in Sources */,
 				929D538F1A27595700560A2E /* yajl.c in Sources */,
 				1551A6D1158F2ADE00E66CFE /* vec3.c in Sources */,
 				1551A6D2158F2ADE00E66CFE /* vec4.c in Sources */,
@@ -1946,11 +1962,11 @@
 				929D535C1A27582F00560A2E /* Input.cpp in Sources */,
 				1551A838158F2ADF00E66CFE /* CCSpriteFrameCache.cpp in Sources */,
 				1551A83C158F2ADF00E66CFE /* CCPointExtension.cpp in Sources */,
-				1551A83E158F2ADF00E66CFE /* CCProfiling.cpp in Sources */,
 				1551A844158F2ADF00E66CFE /* CCVertex.cpp in Sources */,
 				929F3A671A26182E00DE78AC /* TransformUtils.cpp in Sources */,
 				1551A846158F2ADF00E66CFE /* ccCArray.cpp in Sources */,
 				1551A84A158F2ADF00E66CFE /* TGAlib.cpp in Sources */,
+				9211100C1A2B45AB003FE653 /* CCProfiling.cpp in Sources */,
 				1551A84E158F2ADF00E66CFE /* ioapi.cpp in Sources */,
 				1551A850158F2ADF00E66CFE /* unzip.cpp in Sources */,
 				1551A852158F2ADF00E66CFE /* ZipUtils.cpp in Sources */,

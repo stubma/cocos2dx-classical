@@ -41,7 +41,7 @@
 #include "support/zip_support/ZipUtils.h"
 #include "platform/CCFileUtils.h"
 #include "kazmath/GL/matrix.h"
-#include "support/CCProfiling.h"
+#include "support/profile/CCProfiling.h"
 
 NS_CC_BEGIN
 

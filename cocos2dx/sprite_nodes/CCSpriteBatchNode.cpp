@@ -36,7 +36,7 @@ THE SOFTWARE.
 #include "shaders/ccGLStateCache.h"
 #include "CCDirector.h"
 #include "support/utils/TransformUtils.h"
-#include "support/CCProfiling.h"
+#include "support/profile/CCProfiling.h"
 // external
 #include "kazmath/GL/matrix.h"
 

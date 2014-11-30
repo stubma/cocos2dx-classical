@@ -52,7 +52,7 @@ THE SOFTWARE.
 #include "platform/platform.h"
 #include "support/zip_support/ZipUtils.h"
 #include "CCDirector.h"
-#include "support/CCProfiling.h"
+#include "support/profile/CCProfiling.h"
 #include "support/CCBase64.h"
 // opengl
 #include "CCGL.h"

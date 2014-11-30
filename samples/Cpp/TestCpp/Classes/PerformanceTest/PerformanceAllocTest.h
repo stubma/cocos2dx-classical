@@ -7,7 +7,7 @@
 #include <string>
 
 #include "PerformanceTest.h"
-#include "support/CCProfiling.h"
+#include "support/profile/CCProfiling.h"
 
 
 class AllocBasicLayer : public PerformBasicLayer
