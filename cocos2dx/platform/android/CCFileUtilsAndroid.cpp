@@ -21,6 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
 #include "CCFileUtilsAndroid.h"
 #include "support/zip_support/ZipUtils.h"
 #include "platform/CCCommon.h"
@@ -195,3 +197,5 @@ string CCFileUtilsAndroid::getWritablePath()
 }
 
 NS_CC_END
+
+#endif // #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID

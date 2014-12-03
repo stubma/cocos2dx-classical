@@ -134,6 +134,10 @@ THE SOFTWARE.
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCUUID.h"
 #include "platform/CCLocale.h"
+#include "platform/CCAssetInputStream.h"
+#include "platform/CCAssetOutputStream.h"
+#include "platform/CCMemoryInputStream.h"
+#include "platform/CCMemoryOutputStream.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "platform/ios/CCAccelerometer.h"

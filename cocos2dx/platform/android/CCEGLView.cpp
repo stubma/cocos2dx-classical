@@ -21,6 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
 #include "CCEGLView.h"
 #include "cocoa/CCSet.h"
 #include "CCDirector.h"
@@ -92,3 +94,4 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
 
 NS_CC_END
 
+#endif // #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID

@@ -1,10 +1,4 @@
-//
-//  CCUtilsAndroid.h
-//  cocos2dx
-//
-//  Created by maruojie on 14/11/27.
-//  Copyright (c) 2014年 cocos2d-x. All rights reserved.
-//
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #include "CCUtilsAndroid.h"
 #include "ccTypes.h"
@@ -184,3 +178,5 @@ void CCUtilsAndroid::sendBroadcast(jobject intent) {
 }
 
 NS_CC_END
+
+#endif // #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID

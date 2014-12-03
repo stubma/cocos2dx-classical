@@ -1,3 +1,5 @@
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
 #include "platform/CCDevice.h"
 #include "jni/DPIJni.h"
 
@@ -14,3 +16,5 @@ int CCDevice::getDPI()
 }
 
 NS_CC_END
+
+#endif // #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID

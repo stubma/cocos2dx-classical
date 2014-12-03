@@ -21,6 +21,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
 #ifndef __CC_FILEUTILS_ANDROID_H__
 #define __CC_FILEUTILS_ANDROID_H__
 
@@ -69,3 +71,4 @@ NS_CC_END
 
 #endif    // __CC_FILEUTILS_ANDROID_H__
 
+#endif // #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID

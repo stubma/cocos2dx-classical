@@ -21,8 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-//#define COCOS2D_DEBUG 1
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #define __CC_PLATFORM_IMAGE_CPP__
 #include "platform/CCImageCommon_cpp.h"
@@ -278,3 +277,5 @@ extern "C"
         }
     }
 };
+
+#endif // #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID

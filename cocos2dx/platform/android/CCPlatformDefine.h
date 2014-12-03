@@ -1,3 +1,5 @@
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
 #ifndef __CCPLATFORMDEFINE_H__
 #define __CCPLATFORMDEFINE_H__
 
@@ -35,3 +37,5 @@
 #endif
 
 #endif /* __CCPLATFORMDEFINE_H__*/
+
+#endif // #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
