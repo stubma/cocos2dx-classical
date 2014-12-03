@@ -627,6 +627,8 @@
 		929F3A711A26193200DE78AC /* CCLocalization.h in Headers */ = {isa = PBXBuildFile; fileRef = 929F3A6F1A26193200DE78AC /* CCLocalization.h */; };
 		929F3A771A2619AC00DE78AC /* CCLocale.h in Headers */ = {isa = PBXBuildFile; fileRef = 929F3A761A2619AC00DE78AC /* CCLocale.h */; };
 		929F3A791A2619D000DE78AC /* CCLocale.mm in Sources */ = {isa = PBXBuildFile; fileRef = 929F3A781A2619D000DE78AC /* CCLocale.mm */; };
+		92D6833C1A2F669600CD9F2A /* CCGradientSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D6833A1A2F669600CD9F2A /* CCGradientSprite.cpp */; };
+		92D6833D1A2F669600CD9F2A /* CCGradientSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D6833B1A2F669600CD9F2A /* CCGradientSprite.h */; };
 		D43F7F8A15C7D8BA00D713FC /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */; };
 /* End PBXBuildFile section */
 
@@ -1264,6 +1266,8 @@
 		929F3A6F1A26193200DE78AC /* CCLocalization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLocalization.h; sourceTree = "<group>"; };
 		929F3A761A2619AC00DE78AC /* CCLocale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLocale.h; sourceTree = "<group>"; };
 		929F3A781A2619D000DE78AC /* CCLocale.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCLocale.mm; sourceTree = "<group>"; };
+		92D6833A1A2F669600CD9F2A /* CCGradientSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGradientSprite.cpp; sourceTree = "<group>"; };
+		92D6833B1A2F669600CD9F2A /* CCGradientSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGradientSprite.h; sourceTree = "<group>"; };
 		D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouch.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1747,6 +1751,8 @@
 				1551A5DE158F2ADE00E66CFE /* CCAnimationCache.h */,
 				1551A5DF158F2ADE00E66CFE /* CCSprite.cpp */,
 				1551A5E0158F2ADE00E66CFE /* CCSprite.h */,
+				92D6833A1A2F669600CD9F2A /* CCGradientSprite.cpp */,
+				92D6833B1A2F669600CD9F2A /* CCGradientSprite.h */,
 				1551A5E1158F2ADE00E66CFE /* CCSpriteBatchNode.cpp */,
 				1551A5E2158F2ADE00E66CFE /* CCSpriteBatchNode.h */,
 				1551A5E3158F2ADE00E66CFE /* CCSpriteFrame.cpp */,
@@ -2801,6 +2807,7 @@
 				924308431A2F5FBE00BE2476 /* CCAssetOutputStream.h in Headers */,
 				9211120F1A2B4D89003FE653 /* PageViewReader.h in Headers */,
 				921111B11A2B4D89003FE653 /* CCTweenFunction.h in Headers */,
+				92D6833D1A2F669600CD9F2A /* CCGradientSprite.h in Headers */,
 				921111A31A2B4D89003FE653 /* CCColliderDetector.h in Headers */,
 				921111F21A2B4D89003FE653 /* strfunc.h in Headers */,
 				921111E71A2B4D89003FE653 /* UISlider.h in Headers */,
@@ -3257,6 +3264,7 @@
 				1551A738158F2ADE00E66CFE /* CCImage.mm in Sources */,
 				1551A739158F2ADE00E66CFE /* CCLock.cpp in Sources */,
 				1551A73D158F2ADE00E66CFE /* CCThread.mm in Sources */,
+				92D6833C1A2F669600CD9F2A /* CCGradientSprite.cpp in Sources */,
 				929F3A631A26163500DE78AC /* CCUtils.cpp in Sources */,
 				921112081A2B4D89003FE653 /* LayoutReader.cpp in Sources */,
 				1551A73F158F2ADE00E66CFE /* EAGLView.mm in Sources */,
