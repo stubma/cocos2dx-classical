@@ -475,7 +475,7 @@ public:
     
     /**
      * Measure a rich string size without creating a OpenGL texture. Measured size
-     * will be same as content size of rich label node. However, it may not exactly same 
+     * will be same as content size of rich label node. However, it may not exactly same
      * as content size if content scale factor is not 1, but the deviation will be less than 1
      * pixel
      *
@@ -488,18 +488,18 @@ public:
      * @param strokeSize border line width, optional
      * @param lineSpacing line spacing, optional
      * @param globalImageScaleFactor global image scale factor which applies to all images in this rich label, default is 1
-	 * @param decryptFunc if label has embedded images and they are encrypted, you must provide a decrypt function
+     * @param decryptFunc if label has embedded images and they are encrypted, you must provide a decrypt function
      */
-    static CCSize measureRichString(const char* pText,
-                                    const char* pFontName = NULL,
-                                    int nSize = 0,
-                                    int maxWidth = 0,
-                                    float shadowOffsetX = 0,
-                                    float shadowOffsetY = 0,
-                                    float strokeSize = 0,
-                                    float lineSpacing = 0,
-                                    float globalImageScaleFactor = 1,
-									CC_DECRYPT_FUNC decryptFunc = NULL);
+    static CCSize measureString(const char* pText,
+                                const char* pFontName = NULL,
+                                int nSize = 0,
+                                int maxWidth = 0,
+                                float shadowOffsetX = 0,
+                                float shadowOffsetY = 0,
+                                float strokeSize = 0,
+                                float lineSpacing = 0,
+                                float globalImageScaleFactor = 1,
+                                CC_DECRYPT_FUNC decryptFunc = NULL);
 	
 	/**
 	 * capture screen and save it to a image file. The file type will auto determined by extension, and 

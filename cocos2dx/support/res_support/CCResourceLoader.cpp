@@ -33,6 +33,132 @@ NS_CC_BEGIN
 
 static CCArray sActiveLoaders;
 
+void CCResourceLoader::ZwoptexAnimLoadTask2::load() {
+    if(!CCAnimationCache::sharedAnimationCache()->animationByName(name.c_str())) {
+        CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+        CCArray* array = CCArray::create();
+        int size = frames.size();
+        for(int i = 0; i < size; i++) {
+            CCSpriteFrame* sf = cache->spriteFrameByName(frames.at(i).c_str());
+            float& delay = durations.at(i);
+            CCAnimationFrame* af = new CCAnimationFrame();
+            af->initWithSpriteFrame(sf, delay, NULL);
+            af->autorelease();
+            array->addObject(af);
+        }
+        CCAnimation* anim = CCAnimation::create(array, 1);
+        anim->setRestoreOriginalFrame(restoreOriginalFrame);
+        CCAnimationCache::sharedAnimationCache()->addAnimation(anim, name.c_str());
+    }
+}
+
+void CCResourceLoader::ZwoptexAnimLoadTask::load() {
+    if(!CCAnimationCache::sharedAnimationCache()->animationByName(name.c_str())) {
+        CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+        CCArray* array = CCArray::create();
+        for(StringList::iterator iter = frames.begin(); iter != frames.end(); iter++) {
+            CCSpriteFrame* f = cache->spriteFrameByName(iter->c_str());
+            array->addObject(f);
+        }
+        CCAnimation* anim = CCAnimation::createWithSpriteFrames(array, unitDelay);
+        anim->setRestoreOriginalFrame(restoreOriginalFrame);
+        CCAnimationCache::sharedAnimationCache()->addAnimation(anim, name.c_str());
+    }
+}
+
+void CCResourceLoader::ZwoptexLoadTask::load() {
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name.c_str());
+}
+
+void CCResourceLoader::EncryptedZwoptexLoadTask::load() {
+    // load encryptd data
+    unsigned long len;
+    char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(texName.c_str(), "rb", &len);
+    
+    // create texture
+    int decLen;
+    const char* dec = NULL;
+    if(func) {
+        dec = (*func)(data, len, &decLen);
+    } else {
+        dec = data;
+        decLen = (int)len;
+    }
+    CCImage* image = new CCImage();
+    image->initWithImageData((void*)dec, decLen);
+    image->autorelease();
+    CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addUIImage(image, texName.c_str());
+    
+    // free
+    if(dec != data)
+        free((void*)dec);
+    free(data);
+    
+    // add zwoptex
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name.c_str(), tex);
+}
+
+void CCResourceLoader::ImageLoadTask::load() {
+    CCTextureCache::sharedTextureCache()->addImage(name.c_str());
+}
+
+void CCResourceLoader::EncryptedImageLoadTask::load() {
+    // load encryptd data
+    unsigned long len;
+    char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(name.c_str(), "rb", &len);
+    
+    // create texture
+    int decLen;
+    const char* dec = NULL;
+    if(func) {
+        dec = (*func)(data, len, &decLen);
+    } else {
+        dec = data;
+        decLen = (int)len;
+    }
+    CCImage* image = new CCImage();
+    image->initWithImageData((void*)dec, decLen);
+    image->autorelease();
+    CCTextureCache::sharedTextureCache()->addUIImage(image, name.c_str());
+    
+    // free
+    if(dec != data)
+        free((void*)dec);
+    free(data);
+}
+
+void CCResourceLoader::BMFontLoadTask::load() {
+    CCBMFontConfiguration* conf = FNTConfigLoadFile(name.c_str());
+    CCTextureCache::sharedTextureCache()->addImage(conf->getAtlasName());
+}
+
+void CCResourceLoader::EncryptedBMFontLoadTask::load() {
+    CCBMFontConfiguration* conf = FNTConfigLoadFile(name.c_str());
+    
+    // load encryptd data
+    unsigned long len;
+    char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(conf->getAtlasName(), "rb", &len);
+    
+    // create texture
+    int decLen;
+    const char* dec = NULL;
+    if(func) {
+        dec = (*func)(data, len, &decLen);
+    } else {
+        dec = data;
+        decLen = (int)len;
+    }
+    CCImage* image = new CCImage();
+    image->initWithImageData((void*)dec, decLen);
+    image->autorelease();
+    CCTextureCache::sharedTextureCache()->addUIImage(image, conf->getAtlasName());
+    
+    // free
+    if(dec != data)
+        free((void*)dec);
+    free(data);
+}
+
 void CCResourceLoader::CDMusicTask::load() {
 	SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(name.c_str());
 }

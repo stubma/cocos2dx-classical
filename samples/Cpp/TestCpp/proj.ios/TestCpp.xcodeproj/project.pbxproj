@@ -243,6 +243,7 @@
 		9235B5151A21FD0F002D4C37 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9235B5141A21FD0F002D4C37 /* libcurl.a */; };
 		923BBB5A1A24D65C00E63041 /* sound in Resources */ = {isa = PBXBuildFile; fileRef = 923BBB591A24D65C00E63041 /* sound */; };
 		923BBB5C1A24D8A400E63041 /* Images.ios in Resources */ = {isa = PBXBuildFile; fileRef = 923BBB5B1A24D8A400E63041 /* Images.ios */; };
+		9242C2581A30790E00E1E944 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9242C2571A30790D00E1E944 /* CoreText.framework */; };
 		9258E85E1A28BDBF001DCEEF /* MacGUIEditorTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9258E85C1A28BDBF001DCEEF /* MacGUIEditorTestScene.cpp */; };
 		9258E8601A28C1F0001DCEEF /* cocosui in Resources */ = {isa = PBXBuildFile; fileRef = 9258E85F1A28C1F0001DCEEF /* cocosui */; };
 		A01B534F17DE7F7900A3D114 /* PerformanceAllocTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A01B534D17DE7F7900A3D114 /* PerformanceAllocTest.cpp */; };
@@ -771,6 +772,7 @@
 		9235B5141A21FD0F002D4C37 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		923BBB591A24D65C00E63041 /* sound */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sound; sourceTree = "<group>"; };
 		923BBB5B1A24D8A400E63041 /* Images.ios */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images.ios; path = ../Resources.ios/Images.ios; sourceTree = "<group>"; };
+		9242C2571A30790D00E1E944 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		9258E85C1A28BDBF001DCEEF /* MacGUIEditorTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MacGUIEditorTestScene.cpp; sourceTree = "<group>"; };
 		9258E85D1A28BDBF001DCEEF /* MacGUIEditorTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacGUIEditorTestScene.h; sourceTree = "<group>"; };
 		9258E85F1A28C1F0001DCEEF /* cocosui */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cocosui; sourceTree = "<group>"; };
@@ -795,6 +797,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9242C2581A30790E00E1E944 /* CoreText.framework in Frameworks */,
 				15A3DA6A1682F886002FB0C5 /* libcocos2dx.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
@@ -1819,6 +1822,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9242C2571A30790D00E1E944 /* CoreText.framework */,
 				15A3D87E1682F7B3002FB0C5 /* cocos2dx.xcodeproj */,
 				9235B5141A21FD0F002D4C37 /* libcurl.a */,
 				BF170DB212928DE900B8313A /* libxml2.dylib */,

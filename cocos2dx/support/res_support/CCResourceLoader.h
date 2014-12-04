@@ -27,10 +27,14 @@
 #include "CCResourceLoaderListener.h"
 #include "support/locale/CCLocalization.h"
 #include "ccTypes.h"
+#include <vector>
 
 using namespace std;
 
 NS_CC_BEGIN
+
+class CCImage;
+class CCCallFunc;
 
 /**
  * A self-retain class for resource loading. It schedule resource loading in OpenGL thread in
@@ -123,10 +127,7 @@ private:
         
         virtual ~BMFontLoadTask() {}
         
-        virtual void load() {
-            CCBMFontConfiguration* conf = FNTConfigLoadFile(name.c_str());
-            CCTextureCache::sharedTextureCache()->addImage(conf->getAtlasName());
-        }
+        virtual void load();
     };
     
     /// bitmap font load task, image is encrypted
@@ -139,32 +140,7 @@ private:
         
         virtual ~EncryptedBMFontLoadTask() {}
         
-        virtual void load() {
-            CCBMFontConfiguration* conf = FNTConfigLoadFile(name.c_str());
-
-            // load encryptd data
-            unsigned long len;
-            char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(conf->getAtlasName(), "rb", &len);
-            
-            // create texture
-            int decLen;
-            const char* dec = NULL;
-            if(func) {
-                dec = (*func)(data, len, &decLen);
-            } else {
-                dec = data;
-                decLen = (int)len;
-            }
-            CCImage* image = new CCImage();
-            image->initWithImageData((void*)dec, decLen);
-            image->autorelease();
-            CCTextureCache::sharedTextureCache()->addUIImage(image, conf->getAtlasName());
-            
-            // free
-            if(dec != data)
-                free((void*)dec);
-            free(data);
-        }
+        virtual void load();
     };
     
     /// image load parameter
@@ -174,9 +150,7 @@ private:
         
         virtual ~ImageLoadTask() {}
         
-        virtual void load() {
-            CCTextureCache::sharedTextureCache()->addImage(name.c_str());
-        }
+        virtual void load();
     };
 	
 	/// encrypted image load parameter
@@ -189,30 +163,7 @@ private:
         
         virtual ~EncryptedImageLoadTask() {}
         
-        virtual void load() {
-			// load encryptd data
-            unsigned long len;
-            char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(name.c_str(), "rb", &len);
-            
-            // create texture
-            int decLen;
-            const char* dec = NULL;
-            if(func) {
-                dec = (*func)(data, len, &decLen);
-            } else {
-                dec = data;
-                decLen = (int)len;
-            }
-            CCImage* image = new CCImage();
-            image->initWithImageData((void*)dec, decLen);
-            image->autorelease();
-            CCTextureCache::sharedTextureCache()->addUIImage(image, name.c_str());
-            
-            // free
-            if(dec != data)
-                free((void*)dec);
-            free(data);
-        }
+        virtual void load();
     };
     
     /// zwoptex load parameter
@@ -222,9 +173,7 @@ private:
         
         virtual ~ZwoptexLoadTask() {}
         
-        virtual void load() {
-            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name.c_str());
-        }
+        virtual void load();
     };
 	
     /// encrypted zwoptex load task
@@ -240,33 +189,7 @@ private:
         
         virtual ~EncryptedZwoptexLoadTask() {}
         
-        virtual void load() {
-            // load encryptd data
-            unsigned long len;
-            char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(texName.c_str(), "rb", &len);
-            
-            // create texture
-            int decLen;
-            const char* dec = NULL;
-            if(func) {
-                dec = (*func)(data, len, &decLen);
-            } else {
-                dec = data;
-                decLen = (int)len;
-            }
-            CCImage* image = new CCImage();
-            image->initWithImageData((void*)dec, decLen);
-            image->autorelease();
-            CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addUIImage(image, texName.c_str());
-            
-            // free
-            if(dec != data)
-                free((void*)dec);
-            free(data);
-            
-            // add zwoptex
-            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name.c_str(), tex);
-        }
+        virtual void load();
     };
 	    
     /// zwoptex animation load parameter
@@ -291,19 +214,7 @@ private:
         
         virtual ~ZwoptexAnimLoadTask() {}
         
-        virtual void load() {
-			if(!CCAnimationCache::sharedAnimationCache()->animationByName(name.c_str())) {
-				CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-				CCArray* array = CCArray::create();
-				for(StringList::iterator iter = frames.begin(); iter != frames.end(); iter++) {
-					CCSpriteFrame* f = cache->spriteFrameByName(iter->c_str());
-					array->addObject(f);
-				}
-				CCAnimation* anim = CCAnimation::createWithSpriteFrames(array, unitDelay);
-				anim->setRestoreOriginalFrame(restoreOriginalFrame);
-				CCAnimationCache::sharedAnimationCache()->addAnimation(anim, name.c_str());
-			}
-        }
+        virtual void load();
     };
     
     /// zwoptex animation load parameter
@@ -324,29 +235,12 @@ private:
         string name;
         
         ZwoptexAnimLoadTask2() :
-                restoreOriginalFrame(false) {
+        restoreOriginalFrame(false) {
 		}
         
         virtual ~ZwoptexAnimLoadTask2() {}
         
-        virtual void load() {
-            if(!CCAnimationCache::sharedAnimationCache()->animationByName(name.c_str())) {
-                CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-                CCArray* array = CCArray::create();
-                int size = frames.size();
-				for(int i = 0; i < size; i++) {
-					CCSpriteFrame* sf = cache->spriteFrameByName(frames.at(i).c_str());
-                    float& delay = durations.at(i);
-                    CCAnimationFrame* af = new CCAnimationFrame();
-                    af->initWithSpriteFrame(sf, delay, NULL);
-                    af->autorelease();
-					array->addObject(af);
-				}
-                CCAnimation* anim = CCAnimation::create(array, 1);
-				anim->setRestoreOriginalFrame(restoreOriginalFrame);
-                CCAnimationCache::sharedAnimationCache()->addAnimation(anim, name.c_str());
-            }
-        }
+        virtual void load();
     };
     
     struct ArmatureTask : public LoadTask {

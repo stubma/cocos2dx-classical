@@ -25,7 +25,7 @@
 #include "entities.h"
 #include "CCLocale.h"
 #include "ccMacros.h"
-//#include "CCImage_richlabel.h"
+#include "platform/CCImage.h"
 #include "CCPinyinUtils.h"
 //#include "cocos-ext.h"
 
@@ -1053,27 +1053,27 @@ int CCUtils::strlen8(const char* s) {
 	return count;
 }
 
-//CCSize CCUtils::measureRichString(const char* pText,
-//                                  const char* pFontName,
-//                                  int nSize,
-//                                  int maxWidth,
-//                                  float shadowOffsetX,
-//                                  float shadowOffsetY,
-//                                  float strokeSize,
-//                                  float lineSpacing,
-//                                  float globalImageScaleFactor,
-//								  CC_DECRYPT_FUNC decryptFunc) {
-//    return CCImage_richlabel::measureRichString(pText,
-//                                                pFontName,
-//                                                nSize,
-//                                                maxWidth,
-//                                                shadowOffsetX,
-//                                                shadowOffsetY,
-//                                                strokeSize,
-//                                                lineSpacing,
-//                                                globalImageScaleFactor,
-//												decryptFunc);
-//}
+CCSize CCUtils::measureString(const char* pText,
+                              const char* pFontName,
+                              int nSize,
+                              int maxWidth,
+                              float shadowOffsetX,
+                              float shadowOffsetY,
+                              float strokeSize,
+                              float lineSpacing,
+                              float globalImageScaleFactor,
+                              CC_DECRYPT_FUNC decryptFunc) {
+    return CCImage::measureString(pText,
+                                  pFontName,
+                                  nSize,
+                                  maxWidth,
+                                  shadowOffsetX,
+                                  shadowOffsetY,
+                                  strokeSize,
+                                  lineSpacing,
+                                  globalImageScaleFactor,
+                                  decryptFunc);
+}
 
 string CCUtils::makeScreenshot(CCNode* root, const string& path, bool needStencil) {
 	// check extension

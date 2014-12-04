@@ -574,7 +574,14 @@ public:
     _ccFontDefinition() :
     m_alignment(kCCTextAlignmentCenter),
     m_vertAlignment(kCCVerticalTextAlignmentTop),
-    m_fontFillColor(ccWHITE) {
+    m_fontFillColor(ccWHITE),
+    decryptFunc(NULL),
+    m_globalImageScaleFactor(1),
+    m_lineSpacing(0),
+    m_shadowColor(0),
+    m_toCharIndex(0),
+    m_elapsed(0),
+    m_dimensions(CCSizeZero) {
         m_dimensions = CCSizeMake(0, 0);
     }
     
@@ -601,10 +608,7 @@ public:
     
     // font stroke
     ccFontStroke            m_stroke;
-} ccFontDefinition;
-
-// rich font definition, support shadow color
-struct ccRichFontDefinition : public ccFontDefinition {
+    
     // font shadow color
     int m_shadowColor;
     
@@ -622,8 +626,7 @@ struct ccRichFontDefinition : public ccFontDefinition {
     
     // elapsed time
     float m_elapsed;
-};
-
+} ccFontDefinition;
 
 NS_CC_END
 

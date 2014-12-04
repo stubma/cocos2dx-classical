@@ -30,13 +30,15 @@ THE SOFTWARE.
 #include "cocoa/CCObject.h"
 #include "cocoa/CCGeometry.h"
 #include "ccTypes.h"
+#include "platform/CCImage.h"
+#include <vector>
 #ifdef EMSCRIPTEN
 #include "base_nodes/CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
 
-NS_CC_BEGIN
+using namespace std;
 
-class CCImage;
+NS_CC_BEGIN
 
 /**
  * @addtogroup textures
@@ -297,6 +299,21 @@ private:
 
     /** shader program used by drawAtPoint and drawInRect */
     CC_PROPERTY(CCGLProgram*, m_pShaderProgram, ShaderProgram);
+    
+    /// shadow and stroke padding value
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CCPoint, m_shadowStrokePadding, ShadowStrokePadding);
+    
+    /// link meta list
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(LinkMetaList, m_linkMetas, LinkMetas);
+    
+    /// image meta list
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(vector<CCRect>, m_imageRects, ImageRects);
+    
+    /// length of unstyled string
+    CC_SYNTHESIZE(int, m_realLength, RealLength);
+    
+    /// true means this label has continuous effect, so we need pass elapsed time to update it
+    CC_SYNTHESIZE_BOOL(m_needTime, NeedTime);
 };
 
 // end of textures group

@@ -26,6 +26,29 @@ THE SOFTWARE.
 #define __CC_IMAGE_H__
 
 #include "cocoa/CCObject.h"
+#include <vector>
+#include "ccTypes.h"
+#include "ccMacros.h"
+
+using namespace std;
+
+/**
+ * Meta info of a link area, only used for link tag
+ */
+typedef struct LinkMeta {
+    int normalBgColor;
+    int selectedBgColor;
+    
+    // the tag of link, multiple link can have same tag (in line break situation)
+    int tag;
+    
+    // link rect area
+    float x;
+    float y;
+    float width;
+    float height;
+} LinkMeta;
+typedef vector<LinkMeta> LinkMetaList;
 
 NS_CC_BEGIN
 
@@ -126,35 +149,53 @@ public:
         const char *    pFontName = 0,
         int             nSize = 0);
     
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        /**
-         * @js NA
-         * @lua NA
-         */
-        bool initWithStringShadowStroke(
-                                            const char *    pText,
-                                            int             nWidth      = 0,
-                                            int             nHeight     = 0,
-                                            ETextAlign      eAlignMask  = kAlignCenter,
-                                            const char *    pFontName   = 0,
-                                            int             nSize       = 0,
-                                            float           textTintR   = 1,
-                                            float           textTintG   = 1,
-                                            float           textTintB   = 1,
-                                            bool shadow                 = false,
-                                            float shadowOffsetX         = 0.0,
-                                            float shadowOffsetY         = 0.0,
-                                            float shadowOpacity         = 0.0,
-                                            float shadowBlur            = 0.0,
-                                            bool  stroke                =  false,
-                                            float strokeR               = 1,
-                                            float strokeG               = 1,
-                                            float strokeB               = 1,
-                                            float strokeSize            = 1
-                                        
-                                        );
+    /**
+     * Measure a rich string size without creating a OpenGL texture. Measured size
+     * will be exactly same as content size of rich label node. Well, it may not exactly same
+     * as content size if content scale factor is not 1, but the deviation will be less than 1
+     * pixel
+     */
+    static CCSize measureString(const char* pText,
+                                const char* pFontName = NULL,
+                                int nSize = 0,
+                                int maxWidth = 0,
+                                float shadowOffsetX = 0,
+                                float shadowOffsetY = 0,
+                                float strokeSize = 0,
+                                float lineSpacing = 0,
+                                float globalImageScaleFactor = 1,
+                                CC_DECRYPT_FUNC decryptFunc = NULL);
     
-    #endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    /**
+     * @js NA
+     * @lua NA
+     */
+    bool initWithStringShadowStroke(const char *    pText,
+                                    int             nWidth      = 0,
+                                    int             nHeight     = 0,
+                                    ETextAlign      eAlignMask  = kAlignCenter,
+                                    const char *    pFontName   = 0,
+                                    int             nSize       = 0,
+                                    float           textTintR   = 1,
+                                    float           textTintG   = 1,
+                                    float           textTintB   = 1,
+                                    bool shadow                 = false,
+                                    float shadowOffsetX         = 0.0,
+                                    float shadowOffsetY         = 0.0,
+                                    int   shadowColor           = 0,
+                                    float shadowBlur            = 0.0,
+                                    bool  stroke                = false,
+                                    float strokeR               = 1,
+                                    float strokeG               = 1,
+                                    float strokeB               = 1,
+                                    float strokeSize            = 1,
+                                    float lineSpacing           = 0,
+                                    float globalImageScaleFactor = 1,
+                                    int toCharIndex = -1,
+                                    float elapsedTime = 0,
+                                    CC_DECRYPT_FUNC decryptFunc = NULL);
+#endif
     
 
     unsigned char *   getData()               { return m_pData; }
@@ -176,6 +217,21 @@ public:
     CC_SYNTHESIZE_READONLY(unsigned short,   m_nHeight,      Height);
     CC_SYNTHESIZE_READONLY(int,     m_nBitsPerComponent,   BitsPerComponent);
 
+    /// shadow and stroke padding value
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CCPoint, m_shadowStrokePadding, ShadowStrokePadding);
+    
+    /// link meta list
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(LinkMetaList, m_linkMetas, LinkMetas);
+    
+    /// image meta list
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(vector<CCRect>, m_imageRects, ImageRects);
+    
+    /// length of unstyled string
+    CC_SYNTHESIZE(int, m_realLength, RealLength);
+    
+    /// true means this label has continuous effect, so we need pass elapsed time to update it
+    CC_SYNTHESIZE_BOOL(m_needTime, NeedTime);
+    
 protected:
     bool _initWithJpgData(void *pData, int nDatalen);
     bool _initWithPngData(void *pData, int nDatalen);

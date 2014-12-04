@@ -543,6 +543,7 @@
 		9211124E1A2B4D89003FE653 /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 921111381A2B4D89003FE653 /* LocalStorage.cpp */; };
 		9211124F1A2B4D89003FE653 /* LocalStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 921111391A2B4D89003FE653 /* LocalStorage.h */; };
 		921112501A2B4D89003FE653 /* LocalStorageAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9211113A1A2B4D89003FE653 /* LocalStorageAndroid.cpp */; };
+		9242C2551A3078FB00E1E944 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9242C2541A3078FB00E1E944 /* CoreText.framework */; };
 		924308401A2F5FBE00BE2476 /* CCAssetInputStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 924308381A2F5FBE00BE2476 /* CCAssetInputStream.cpp */; };
 		924308411A2F5FBE00BE2476 /* CCAssetInputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 924308391A2F5FBE00BE2476 /* CCAssetInputStream.h */; };
 		924308421A2F5FBE00BE2476 /* CCAssetOutputStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9243083A1A2F5FBE00BE2476 /* CCAssetOutputStream.cpp */; };
@@ -629,6 +630,11 @@
 		929F3A791A2619D000DE78AC /* CCLocale.mm in Sources */ = {isa = PBXBuildFile; fileRef = 929F3A781A2619D000DE78AC /* CCLocale.mm */; };
 		92D6833C1A2F669600CD9F2A /* CCGradientSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D6833A1A2F669600CD9F2A /* CCGradientSprite.cpp */; };
 		92D6833D1A2F669600CD9F2A /* CCGradientSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D6833B1A2F669600CD9F2A /* CCGradientSprite.h */; };
+		92D683441A2F695900CD9F2A /* CCMenuItemColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D683421A2F695900CD9F2A /* CCMenuItemColor.cpp */; };
+		92D683451A2F695900CD9F2A /* CCMenuItemColor.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D683431A2F695900CD9F2A /* CCMenuItemColor.h */; };
+		92D683471A2F697E00CD9F2A /* CCMenuItemColorStateListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D683461A2F697E00CD9F2A /* CCMenuItemColorStateListener.h */; };
+		92D6834A1A2F69E700CD9F2A /* CCLabelTTFLinkStateSynchronizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D683481A2F69E700CD9F2A /* CCLabelTTFLinkStateSynchronizer.cpp */; };
+		92D6834B1A2F69E700CD9F2A /* CCLabelTTFLinkStateSynchronizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D683491A2F69E700CD9F2A /* CCLabelTTFLinkStateSynchronizer.h */; };
 		D43F7F8A15C7D8BA00D713FC /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */; };
 /* End PBXBuildFile section */
 
@@ -1182,6 +1188,7 @@
 		921111381A2B4D89003FE653 /* LocalStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorage.cpp; sourceTree = "<group>"; };
 		921111391A2B4D89003FE653 /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
 		9211113A1A2B4D89003FE653 /* LocalStorageAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorageAndroid.cpp; sourceTree = "<group>"; };
+		9242C2541A3078FB00E1E944 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		924308381A2F5FBE00BE2476 /* CCAssetInputStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAssetInputStream.cpp; sourceTree = "<group>"; };
 		924308391A2F5FBE00BE2476 /* CCAssetInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAssetInputStream.h; sourceTree = "<group>"; };
 		9243083A1A2F5FBE00BE2476 /* CCAssetOutputStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAssetOutputStream.cpp; sourceTree = "<group>"; };
@@ -1268,6 +1275,11 @@
 		929F3A781A2619D000DE78AC /* CCLocale.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCLocale.mm; sourceTree = "<group>"; };
 		92D6833A1A2F669600CD9F2A /* CCGradientSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGradientSprite.cpp; sourceTree = "<group>"; };
 		92D6833B1A2F669600CD9F2A /* CCGradientSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGradientSprite.h; sourceTree = "<group>"; };
+		92D683421A2F695900CD9F2A /* CCMenuItemColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMenuItemColor.cpp; sourceTree = "<group>"; };
+		92D683431A2F695900CD9F2A /* CCMenuItemColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMenuItemColor.h; sourceTree = "<group>"; };
+		92D683461A2F697E00CD9F2A /* CCMenuItemColorStateListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMenuItemColorStateListener.h; sourceTree = "<group>"; };
+		92D683481A2F69E700CD9F2A /* CCLabelTTFLinkStateSynchronizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelTTFLinkStateSynchronizer.cpp; sourceTree = "<group>"; };
+		92D683491A2F69E700CD9F2A /* CCLabelTTFLinkStateSynchronizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelTTFLinkStateSynchronizer.h; sourceTree = "<group>"; };
 		D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouch.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1276,6 +1288,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9242C2551A3078FB00E1E944 /* CoreText.framework in Frameworks */,
 				921110261A2B4CA8003FE653 /* libCocosDenshion.a in Frameworks */,
 				1551A343158F2AB200E66CFE /* Foundation.framework in Frameworks */,
 				1A3199AE16C0E3A200207637 /* libwebp.a in Frameworks */,
@@ -1307,6 +1320,7 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9242C2541A3078FB00E1E944 /* CoreText.framework */,
 				921110201A2B4CA0003FE653 /* CocosDenshion.xcodeproj */,
 				1A3199AD16C0E3A200207637 /* libwebp.a */,
 				1551A342158F2AB200E66CFE /* Foundation.framework */,
@@ -1547,6 +1561,8 @@
 		1551A418158F2ADE00E66CFE /* label_nodes */ = {
 			isa = PBXGroup;
 			children = (
+				92D683481A2F69E700CD9F2A /* CCLabelTTFLinkStateSynchronizer.cpp */,
+				92D683491A2F69E700CD9F2A /* CCLabelTTFLinkStateSynchronizer.h */,
 				1551A419158F2ADE00E66CFE /* CCLabelAtlas.cpp */,
 				1551A41A158F2ADE00E66CFE /* CCLabelAtlas.h */,
 				1551A41B158F2ADE00E66CFE /* CCLabelBMFont.cpp */,
@@ -1577,6 +1593,9 @@
 		1551A42A158F2ADE00E66CFE /* menu_nodes */ = {
 			isa = PBXGroup;
 			children = (
+				92D683461A2F697E00CD9F2A /* CCMenuItemColorStateListener.h */,
+				92D683421A2F695900CD9F2A /* CCMenuItemColor.cpp */,
+				92D683431A2F695900CD9F2A /* CCMenuItemColor.h */,
 				1551A42B158F2ADE00E66CFE /* CCMenu.cpp */,
 				1551A42C158F2ADE00E66CFE /* CCMenu.h */,
 				1551A42D158F2ADE00E66CFE /* CCMenuItem.cpp */,
@@ -2806,6 +2825,7 @@
 				9211117F1A2B4D89003FE653 /* CCActionObject.h in Headers */,
 				924308431A2F5FBE00BE2476 /* CCAssetOutputStream.h in Headers */,
 				9211120F1A2B4D89003FE653 /* PageViewReader.h in Headers */,
+				92D683451A2F695900CD9F2A /* CCMenuItemColor.h in Headers */,
 				921111B11A2B4D89003FE653 /* CCTweenFunction.h in Headers */,
 				92D6833D1A2F669600CD9F2A /* CCGradientSprite.h in Headers */,
 				921111A31A2B4D89003FE653 /* CCColliderDetector.h in Headers */,
@@ -2917,6 +2937,7 @@
 				921112411A2B4D89003FE653 /* CCEditBoxImplIOS.h in Headers */,
 				1551A82F158F2ADF00E66CFE /* CCAnimation.h in Headers */,
 				9211120D1A2B4D89003FE653 /* LoadingBarReader.h in Headers */,
+				92D6834B1A2F69E700CD9F2A /* CCLabelTTFLinkStateSynchronizer.h in Headers */,
 				9211121E1A2B4D89003FE653 /* TriggerMng.h in Headers */,
 				921110171A2B4AC6003FE653 /* CCCalendar.h in Headers */,
 				921111CE1A2B4D89003FE653 /* CompatibleClasses.h in Headers */,
@@ -2965,6 +2986,7 @@
 				1551A860158F2ADF00E66CFE /* CCTexturePVR.h in Headers */,
 				921111C41A2B4D89003FE653 /* UILayoutDefine.h in Headers */,
 				921111C01A2B4D89003FE653 /* UIWidget.h in Headers */,
+				92D683471A2F697E00CD9F2A /* CCMenuItemColorStateListener.h in Headers */,
 				921112291A2B4D89003FE653 /* CCControlExtensions.h in Headers */,
 				929D53611A27582F00560A2E /* SortedVector.h in Headers */,
 				921112051A2B4D89003FE653 /* LabelBMFontReader.h in Headers */,
@@ -3294,9 +3316,11 @@
 				9211124C1A2B4D89003FE653 /* CCTableViewCell.cpp in Sources */,
 				921112141A2B4D89003FE653 /* TextFieldReader.cpp in Sources */,
 				921111A41A2B4D89003FE653 /* CCArmatureDataManager.cpp in Sources */,
+				92D683441A2F695900CD9F2A /* CCMenuItemColor.cpp in Sources */,
 				921110031A2B3FA8003FE653 /* CCScroller.cpp in Sources */,
 				1551A830158F2ADF00E66CFE /* CCAnimationCache.cpp in Sources */,
 				1551A832158F2ADF00E66CFE /* CCSprite.cpp in Sources */,
+				92D6834A1A2F69E700CD9F2A /* CCLabelTTFLinkStateSynchronizer.cpp in Sources */,
 				921112501A2B4D89003FE653 /* LocalStorageAndroid.cpp in Sources */,
 				1551A834158F2ADF00E66CFE /* CCSpriteBatchNode.cpp in Sources */,
 				1551A836158F2ADF00E66CFE /* CCSpriteFrame.cpp in Sources */,

@@ -32,12 +32,7 @@ THE SOFTWARE.
 #include "cocoa/CCDictionary.h"
 #include "textures/CCTexture2D.h"
 #include <string>
-
-
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    #include "platform/CCImage.h"
-    #include <list>
-#endif
+#include <list>
 
 NS_CC_BEGIN
 
@@ -209,8 +204,7 @@ public:
     ~VolatileTexture();
 
     static void addImageTexture(CCTexture2D *tt, const char* imageFileName, CCImage::EImageFormat format);
-    static void addStringTexture(CCTexture2D *tt, const char* text, const CCSize& dimensions, CCTextAlignment alignment, 
-                                 CCVerticalTextAlignment vAlignment, const char *fontName, float fontSize);
+    static void addStringTexture(CCTexture2D *tt, const char* text, const ccFontDefinition& fontDef);
     static void addDataTexture(CCTexture2D *tt, void* data, CCTexture2DPixelFormat pixelFormat, const CCSize& contentSize);
     static void addCCImage(CCTexture2D *tt, CCImage *image);
 
@@ -228,6 +222,9 @@ private:
     static VolatileTexture* findVolotileTexture(CCTexture2D *tt);
 
 protected:
+    /// font definition for label
+    ccFontDefinition m_fontDef;
+    
     CCTexture2D *texture;
     
     CCImage *uiImage;
@@ -243,11 +240,7 @@ protected:
 
     ccTexParams     m_texParams;
     CCSize          m_size;
-    CCTextAlignment m_alignment;
-    CCVerticalTextAlignment m_vAlignment;
-    std::string     m_strFontName;
     std::string     m_strText;
-    float           m_fFontSize;
 };
 
 #endif

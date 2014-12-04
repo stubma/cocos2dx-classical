@@ -71,6 +71,7 @@ CCTexture2D::CCTexture2D()
 , m_bHasPremultipliedAlpha(false)
 , m_bHasMipmaps(false)
 , m_pShaderProgram(NULL)
+, m_shadowStrokePadding(CCPointZero)
 {
 }
 
@@ -441,32 +442,27 @@ bool CCTexture2D::initWithString(const char *text, const char *fontName, float f
 
 bool CCTexture2D::initWithString(const char *text, const char *fontName, float fontSize, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment)
 {
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
+    ccFontDefinition tempDef;
     
-        ccFontDefinition tempDef;
-        
-        tempDef.m_shadow.m_shadowEnabled = false;
-        tempDef.m_stroke.m_strokeEnabled = false;
-       
-        
-        tempDef.m_fontName      = std::string(fontName);
-        tempDef.m_fontSize      = fontSize;
-        tempDef.m_dimensions    = dimensions;
-        tempDef.m_alignment     = hAlignment;
-        tempDef.m_vertAlignment = vAlignment;
-        tempDef.m_fontFillColor = ccWHITE;
-    
-        return initWithString(text, &tempDef);
-    
-    
-    #else
-    
-    
+    tempDef.m_shadow.m_shadowEnabled = false;
+    tempDef.m_stroke.m_strokeEnabled = false;
+    tempDef.m_fontName      = std::string(fontName);
+    tempDef.m_fontSize      = fontSize;
+    tempDef.m_dimensions    = dimensions;
+    tempDef.m_alignment     = hAlignment;
+    tempDef.m_vertAlignment = vAlignment;
+    tempDef.m_fontFillColor = ccWHITE;
+    tempDef.m_shadowColor = 0;
+    tempDef.decryptFunc = NULL;
+
+    return initWithString(text, &tempDef);
+#else
     #if CC_ENABLE_CACHE_TEXTURE_DATA
         // cache the texture data
         VolatileTexture::addStringTexture(this, text, dimensions, hAlignment, vAlignment, fontName, fontSize);
     #endif
-        
         bool bRet = false;
         CCImage::ETextAlign eAlign;
         
@@ -503,121 +499,123 @@ bool CCTexture2D::initWithString(const char *text, const char *fontName, float f
     
     
         return bRet;
-    
-    
-    #endif
-    
+#endif
 }
 
 bool CCTexture2D::initWithString(const char *text, ccFontDefinition *textDefinition)
 {
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #if CC_ENABLE_CACHE_TEXTURE_DATA
         // cache the texture data
-        VolatileTexture::addStringTexture(this, text, textDefinition->m_dimensions, textDefinition->m_alignment, textDefinition->m_vertAlignment, textDefinition->m_fontName.c_str(), textDefinition->m_fontSize);
+        VolatileTexture::addStringTexture(this, text, *textDefinition);
     #endif
-        
-        bool bRet = false;
-        CCImage::ETextAlign eAlign;
-        
-        if (kCCVerticalTextAlignmentTop == textDefinition->m_vertAlignment)
-        {
-            eAlign = (kCCTextAlignmentCenter == textDefinition->m_alignment) ? CCImage::kAlignTop
-            : (kCCTextAlignmentLeft == textDefinition->m_alignment) ? CCImage::kAlignTopLeft : CCImage::kAlignTopRight;
-        }
-        else if (kCCVerticalTextAlignmentCenter == textDefinition->m_vertAlignment)
-        {
-            eAlign = (kCCTextAlignmentCenter == textDefinition->m_alignment) ? CCImage::kAlignCenter
-            : (kCCTextAlignmentLeft == textDefinition->m_alignment) ? CCImage::kAlignLeft : CCImage::kAlignRight;
-        }
-        else if (kCCVerticalTextAlignmentBottom == textDefinition->m_vertAlignment)
-        {
-            eAlign = (kCCTextAlignmentCenter == textDefinition->m_alignment) ? CCImage::kAlignBottom
-            : (kCCTextAlignmentLeft == textDefinition->m_alignment) ? CCImage::kAlignBottomLeft : CCImage::kAlignBottomRight;
-        }
-        else
-        {
-            CCAssert(false, "Not supported alignment format!");
-            return false;
-        }
-        
-        // handle shadow parameters
-        bool  shadowEnabled =  false;
-        float shadowDX      = 0.0f;
-        float shadowDY      = 0.0f;
-        float shadowBlur    = 0.0f;
-        float shadowOpacity = 0.0f;
-        
-        if ( textDefinition->m_shadow.m_shadowEnabled )
-        {
-            shadowEnabled =  true;
-            shadowDX      = textDefinition->m_shadow.m_shadowOffset.width;
-            shadowDY      = textDefinition->m_shadow.m_shadowOffset.height;
-            shadowBlur    = textDefinition->m_shadow.m_shadowBlur;
-            shadowOpacity = textDefinition->m_shadow.m_shadowOpacity;
-        }
-        
-        // handle stroke parameters
-        bool strokeEnabled = false;
-        float strokeColorR = 0.0f;
-        float strokeColorG = 0.0f;
-        float strokeColorB = 0.0f;
-        float strokeSize   = 0.0f;
-        
-        if ( textDefinition->m_stroke.m_strokeEnabled )
-        {
-            strokeEnabled = true;
-            strokeColorR = textDefinition->m_stroke.m_strokeColor.r / 255.0f;
-            strokeColorG = textDefinition->m_stroke.m_strokeColor.g / 255.0f;
-            strokeColorB = textDefinition->m_stroke.m_strokeColor.b / 255.0f;
-            strokeSize   = textDefinition->m_stroke.m_strokeSize;
-        }
-        
-        CCImage* pImage = new CCImage();
-        do
-        {
-            CC_BREAK_IF(NULL == pImage);
-            
-            bRet = pImage->initWithStringShadowStroke(text,
-                                                      (int)textDefinition->m_dimensions.width,
-                                                      (int)textDefinition->m_dimensions.height,
-                                                      eAlign,
-                                                      textDefinition->m_fontName.c_str(),
-                                                      textDefinition->m_fontSize,
-                                                      textDefinition->m_fontFillColor.r / 255.0f,
-                                                      textDefinition->m_fontFillColor.g / 255.0f,
-                                                      textDefinition->m_fontFillColor.b / 255.0f,
-                                                      shadowEnabled,
-                                                      shadowDX,
-                                                      shadowDY,
-                                                      shadowOpacity,
-                                                      shadowBlur,
-                                                      strokeEnabled,
-                                                      strokeColorR,
-                                                      strokeColorG,
-                                                      strokeColorB,
-                                                      strokeSize);
-            
-            
-            CC_BREAK_IF(!bRet);
-            bRet = initWithImage(pImage);
-            
-        } while (0);
-        
-        CC_SAFE_RELEASE(pImage);
-        
-        return bRet;
     
+    bool bRet = false;
+    CCImage::ETextAlign eAlign;
     
-    #else
-    
-        CCAssert(false, "Currently only supported on iOS and Android!");
+    if (kCCVerticalTextAlignmentTop == textDefinition->m_vertAlignment)
+    {
+        eAlign = (kCCTextAlignmentCenter == textDefinition->m_alignment) ? CCImage::kAlignTop
+        : (kCCTextAlignmentLeft == textDefinition->m_alignment) ? CCImage::kAlignTopLeft : CCImage::kAlignTopRight;
+    }
+    else if (kCCVerticalTextAlignmentCenter == textDefinition->m_vertAlignment)
+    {
+        eAlign = (kCCTextAlignmentCenter == textDefinition->m_alignment) ? CCImage::kAlignCenter
+        : (kCCTextAlignmentLeft == textDefinition->m_alignment) ? CCImage::kAlignLeft : CCImage::kAlignRight;
+    }
+    else if (kCCVerticalTextAlignmentBottom == textDefinition->m_vertAlignment)
+    {
+        eAlign = (kCCTextAlignmentCenter == textDefinition->m_alignment) ? CCImage::kAlignBottom
+        : (kCCTextAlignmentLeft == textDefinition->m_alignment) ? CCImage::kAlignBottomLeft : CCImage::kAlignBottomRight;
+    }
+    else
+    {
+        CCAssert(false, "Not supported alignment format!");
         return false;
+    }
     
-    #endif
+    // handle shadow parameters
+    bool  shadowEnabled =  false;
+    float shadowDX      = 0.0;
+    float shadowDY      = 0.0;
+    float shadowBlur    = 0.0;
+    int shadowColor     = 0;
+    
+    if ( textDefinition->m_shadow.m_shadowEnabled )
+    {
+        shadowEnabled =  true;
+        shadowDX      = textDefinition->m_shadow.m_shadowOffset.width;
+        shadowDY      = textDefinition->m_shadow.m_shadowOffset.height;
+        shadowBlur    = textDefinition->m_shadow.m_shadowBlur;
+        shadowColor   = textDefinition->m_shadowColor;
+    }
+    
+    // handle stroke parameters
+    bool strokeEnabled = false;
+    float strokeColorR = 0.0;
+    float strokeColorG = 0.0;
+    float strokeColorB = 0.0;
+    float strokeSize   = 0.0;
+    
+    if ( textDefinition->m_stroke.m_strokeEnabled )
+    {
+        strokeEnabled = true;
+        strokeColorR = textDefinition->m_stroke.m_strokeColor.r / 255.0f;
+        strokeColorG = textDefinition->m_stroke.m_strokeColor.g / 255.0f;
+        strokeColorB = textDefinition->m_stroke.m_strokeColor.b / 255.0f;
+        strokeSize   = textDefinition->m_stroke.m_strokeSize;
+    }
+    
+    CCImage* pImage = new CCImage();
+    do
+    {
+        CC_BREAK_IF(NULL == pImage);
+        
+        bRet = pImage->initWithStringShadowStroke(text,
+                                                  (int)textDefinition->m_dimensions.width,
+                                                  (int)textDefinition->m_dimensions.height,
+                                                  eAlign,
+                                                  textDefinition->m_fontName.c_str(),
+                                                  textDefinition->m_fontSize,
+                                                  textDefinition->m_fontFillColor.r / 255.0f,
+                                                  textDefinition->m_fontFillColor.g / 255.0f,
+                                                  textDefinition->m_fontFillColor.b / 255.0f,
+                                                  shadowEnabled,
+                                                  shadowDX,
+                                                  shadowDY,
+                                                  shadowColor,
+                                                  shadowBlur,
+                                                  strokeEnabled,
+                                                  strokeColorR,
+                                                  strokeColorG,
+                                                  strokeColorB,
+                                                  strokeSize,
+                                                  textDefinition->m_lineSpacing,
+                                                  textDefinition->m_globalImageScaleFactor,
+                                                  textDefinition->m_toCharIndex,
+                                                  textDefinition->m_elapsed,
+                                                  textDefinition->decryptFunc);
+        
+        
+        CC_BREAK_IF(!bRet);
+        bRet = initWithImage(pImage);
+        
+        // save info needed by rich label
+        m_shadowStrokePadding = pImage->getShadowStrokePadding();
+        m_linkMetas = pImage->getLinkMetas();
+        m_imageRects = pImage->getImageRects();
+        m_realLength = pImage->getRealLength();
+        m_needTime = pImage->isNeedTime();
+    } while (0);
+    
+    CC_SAFE_RELEASE(pImage);
+    
+    return bRet;
+#else
+    CCAssert(false, "Currently only supported on iOS and Android!");
+    return false;
+#endif
 }
-
 
 // implementation CCTexture2D (Drawing)
 
