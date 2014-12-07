@@ -77,17 +77,17 @@ CCArmature *CCArmature::create(const char *name, CCBone *parentBone)
     return NULL;
 }
 
-CCArmature::CCArmature()
-    : m_pArmatureData(NULL)
-    , m_pBatchNode(NULL)
-    , m_pAtlas(NULL)
-    , m_pParentBone(NULL)
-    , m_bArmatureTransformDirty(true)
-    , m_pBoneDic(NULL)
-    , m_pTopBoneList(NULL)
-    , m_pAnimation(NULL)
-    , m_pTextureAtlasDic(NULL)
-{
+CCArmature::CCArmature() :
+m_pArmatureData(NULL),
+m_pBatchNode(NULL),
+m_pAtlas(NULL),
+m_pParentBone(NULL),
+m_bArmatureTransformDirty(true),
+m_pBoneDic(NULL),
+m_pTopBoneList(NULL),
+m_pAnimation(NULL),
+m_pTextureAtlasDic(NULL),
+m_preDrawFunction(NULL) {
 }
 
 
@@ -105,6 +105,7 @@ CCArmature::~CCArmature(void)
     }
     CC_SAFE_DELETE(m_pAnimation);
     CC_SAFE_RELEASE_NULL(m_pTextureAtlasDic);
+    CC_SAFE_RELEASE(m_preDrawFunction);
 }
 
 
@@ -466,6 +467,9 @@ void CCArmature::update(float dt)
 
 void CCArmature::draw()
 {
+    if(m_preDrawFunction)
+        m_preDrawFunction->execute();
+    
     if (m_pParentBone == NULL && m_pBatchNode == NULL)
     {
         CC_NODE_DRAW_SETUP();
