@@ -26,7 +26,7 @@
 #include "CCAssetOutputStream_ios.h"
 #include <stdio.h>
 #include <errno.h>
-#include "CCUtils.h"
+#include "support/utils/CCUtils.h"
 
 NS_CC_BEGIN
 

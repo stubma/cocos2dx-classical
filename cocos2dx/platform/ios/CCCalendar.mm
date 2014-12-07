@@ -24,7 +24,7 @@
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 #include "CCCalendar.h"
-#include "CCUtils.h"
+#include "support/utils/CCUtils.h"
 #import <Foundation/Foundation.h>
 
 NS_CC_BEGIN

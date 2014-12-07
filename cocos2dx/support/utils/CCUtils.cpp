@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "CCUtils.h"
+#include "support/utils/CCUtils.h"
 #include "entities.h"
 #include "CCLocale.h"
 #include "ccMacros.h"

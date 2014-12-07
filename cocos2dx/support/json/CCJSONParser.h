@@ -21,21 +21,27 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef __CCUtilsIOS__
-#define __CCUtilsIOS__
+#ifndef __CCJSONParser_h__
+#define __CCJSONParser_h__
 
-#include "ccTypes.h"
-#import <UIKit/UIKit.h>
-#include "support/utils/CCUtils.h"
+#include "cocos2d.h"
+
+using namespace std;
 
 NS_CC_BEGIN
 
-class CCUtilsIOS : public CCUtils {
+/**
+ * JSON parser
+ */
+class CC_DLL CCJSONParser {
 public:
-    /// find view controller which contains given view
-    static UIViewController* findViewController(UIView* view);
+	/// parse json from a memory json string
+	static CCObject* load(const char* json, size_t length);
+
+	/// parse json file in file system or assets
+	static CCObject* load(const string& path);
 };
 
 NS_CC_END
 
-#endif
+#endif // __CCJSONParser_h__

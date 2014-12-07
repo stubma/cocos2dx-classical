@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "CCScroller.h"
-#include "CCUtils.h"
+#include "support/utils/CCUtils.h"
 
 NS_CC_BEGIN
 

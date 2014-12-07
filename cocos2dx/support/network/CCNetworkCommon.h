@@ -21,21 +21,38 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef __CCUtilsIOS__
-#define __CCUtilsIOS__
+#ifndef __CCNetworkCommon_h__
+#define __CCNetworkCommon_h__
 
-#include "ccTypes.h"
-#import <UIKit/UIKit.h>
-#include "support/utils/CCUtils.h"
+// type
+#if !defined(__GNUC__)
+typedef signed __int64 int64;
+typedef signed __int32 int32;
+typedef signed __int16 int16;
+typedef signed __int8 int8;
+typedef unsigned __int64 uint64;
+typedef unsigned __int32 uint32;
+typedef unsigned __int16 uint16;
+typedef unsigned __int8 uint8;
+typedef float Real;
+#else
+typedef int64_t int64;
+typedef int32_t int32;
+typedef int16_t int16;
+typedef int8_t int8;
+typedef uint64_t uint64;
+typedef uint32_t uint32;
+typedef uint16_t uint16;
+typedef uint8_t uint8;
+typedef uint32_t DWORD;
+typedef float Real;
+#endif // #if !defined(__GNUC__)
 
-NS_CC_BEGIN
+#define kCCSocketMaxPacketSize (16 * 1024)
+#define kCCSocketDefaultTimeout 30
+#define kCCSocketInputBufferDefaultSize (64 * 1024)
+#define kCCSocketOutputBufferDefaultSize (8 * 1024)
+#define kCCSocketError -1
+#define kCCSocketInvalid -1
 
-class CCUtilsIOS : public CCUtils {
-public:
-    /// find view controller which contains given view
-    static UIViewController* findViewController(UIView* view);
-};
-
-NS_CC_END
-
-#endif
+#endif // __CCNetworkCommon_h__

@@ -23,7 +23,7 @@
  ****************************************************************************/
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#import "CCUtils.h"
+#import "support/utils/CCUtils.h"
 #import "sys/utsname.h"
 #include <net/if.h>
 #include <net/if_dl.h>

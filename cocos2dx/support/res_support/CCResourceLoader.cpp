@@ -24,7 +24,7 @@
 #include "CCResourceLoader.h"
 #include "SimpleAudioEngine.h"
 #include "CCArmatureDataManager.h"
-#include "CCUtils.h"
+#include "support/utils/CCUtils.h"
 
 using namespace CocosDenshion;
 USING_NS_CC_EXT;

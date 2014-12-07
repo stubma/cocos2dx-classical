@@ -21,21 +21,46 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef __CCUtilsIOS__
-#define __CCUtilsIOS__
+#ifndef __CCJSONValue_h__
+#define __CCJSONValue_h__
 
-#include "ccTypes.h"
-#import <UIKit/UIKit.h>
-#include "support/utils/CCUtils.h"
+#include "CCJSONObject.h"
+#include "CCJSONArray.h"
 
 NS_CC_BEGIN
 
-class CCUtilsIOS : public CCUtils {
+/**
+ * @class CCJSONValue
+ *
+ * help class of json value casting
+ */
+class CC_DLL CCJSONValue {
 public:
-    /// find view controller which contains given view
-    static UIViewController* findViewController(UIView* view);
+	/// cast value to boolean
+	static bool castToBool(CCJSONObject::KeyValue& kv);
+
+	/// cast value to integer
+	static int castToInt(CCJSONObject::KeyValue& kv);
+
+	/// cast value to long
+	static long castToLong(CCJSONObject::KeyValue& kv);
+
+	/// cast value to float
+	static float castToFloat(CCJSONObject::KeyValue& kv);
+
+	/// cast value to double
+	static double castToDouble(CCJSONObject::KeyValue& kv);
+
+	/// cast value to json object
+	static CCJSONObject* castToObject(CCJSONObject::KeyValue& kv);
+
+	/// cast value to json array
+	static CCJSONArray* castToArray(CCJSONObject::KeyValue& kv);
+
+	/// cast value to string value
+	static const char* castToString(CCJSONObject::KeyValue& kv);
 };
 
 NS_CC_END
 
-#endif
+#endif // __CCJSONValue_h__

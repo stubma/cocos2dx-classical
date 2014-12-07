@@ -23,7 +23,7 @@
  ****************************************************************************/
 #include "CCVelocityTracker.h"
 #include "VelocityTracker.h"
-#include "CCUtils.h"
+#include "support/utils/CCUtils.h"
 #include "ccMacros.h"
 
 using namespace android;

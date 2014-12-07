@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "CCLocalization.h"
-#include "CCUtils.h"
+#include "support/utils/CCUtils.h"
 #include "CCAndroidStringsParser.h"
 #include "CCLocale.h"
 
