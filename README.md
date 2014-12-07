@@ -23,6 +23,7 @@
 
 这些年, 已经填过的坑
 ===
+* 合并了cocos2dx-better的CCRichLabelTTF相关代码到CCLabelTTF
 * 修正对CocoStudio Mac 1.0.0.0 beta的支持问题, 但是由于Mac下的CocoStudio 1.0.0.0 beta没有动画编辑功能, 需要使用骨骼动画的还是需要使用Windows版本编辑. 但是至少在Mac下终于有一个可用的界面编辑器了, 之前的cocos2d-x v2版本存在若干解析问题, 导致虽然有Mac版却无法用.
 * 修正UILabel的内存泄露
 * UIPageView重新实现, 使用datasource动态创建内容, 解决了page比较多时的性能问题. 注: 不再支持从CocoStudio中添加page
