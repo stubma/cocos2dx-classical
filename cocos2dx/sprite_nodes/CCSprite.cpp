@@ -295,15 +295,18 @@ CCSprite* CCSprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
 }
 */
 
-CCSprite::CCSprite(void)
-: m_bShouldBeHidden(false),
-m_pobTexture(NULL)
+CCSprite::CCSprite(void) :
+m_bShouldBeHidden(false),
+m_pobTexture(NULL),
+m_shouldUpdateBlendFunc(true),
+m_preDrawFunction(NULL)
 {
 }
 
 CCSprite::~CCSprite(void)
 {
     CC_SAFE_RELEASE(m_pobTexture);
+    CC_SAFE_RELEASE(m_preDrawFunction);
 }
 
 void CCSprite::setTextureRect(const CCRect& rect)
@@ -551,6 +554,10 @@ void CCSprite::draw(void)
 
     CCAssert(!m_pobBatchNode, "If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
 
+    // pre draw
+    if(m_preDrawFunction)
+        m_preDrawFunction->execute();
+    
     CC_NODE_DRAW_SETUP();
 
     ccGLBlendFunc( m_sBlendFunc.src, m_sBlendFunc.dst );
@@ -1117,7 +1124,8 @@ void CCSprite::setTexture(CCTexture2D *texture)
         CC_SAFE_RETAIN(texture);
         CC_SAFE_RELEASE(m_pobTexture);
         m_pobTexture = texture;
-        updateBlendFunc();
+        if(m_shouldUpdateBlendFunc)
+            updateBlendFunc();
     }
 }
 

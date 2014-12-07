@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "ccTypes.h"
 #include "cocoa/CCDictionary.h"
 #include <string>
+#include "actions/CCActionInstant.h"
 #ifdef EMSCRIPTEN
 #include "base_nodes/CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
@@ -549,6 +550,12 @@ protected:
     // image is flipped
     bool m_bFlipX;                              /// Whether the sprite is flipped horizaontally or not.
     bool m_bFlipY;                              /// Whether the sprite is flipped vertically or not.
+    
+    /// true means don't update blend function
+    CC_SYNTHESIZE_BOOL(m_shouldUpdateBlendFunc, ShouldUpdateBlendFunc);
+    
+    /// predraw function
+    CC_SYNTHESIZE_RETAIN(CCCallFuncO*, m_preDrawFunction, PreDrawFunction);
 };
 
 
