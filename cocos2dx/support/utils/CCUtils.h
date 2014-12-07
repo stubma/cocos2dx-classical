@@ -479,7 +479,7 @@ public:
      * as content size if content scale factor is not 1, but the deviation will be less than 1
      * pixel
      *
-     * @param pText rich text string supported by CCRichLabelTTF
+     * @param pText rich text string supported by CCLabelTTF
      * @param pFontName font name, optional. If NULL, use default font
      * @param nSize font size, optional. If zero, use default size
      * @param maxWidth max line width, or zero if single line text. optional

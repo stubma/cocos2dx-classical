@@ -30,7 +30,7 @@ NS_CC_BEGIN
 
 /**
  * A interface to listen state change event of CCMenuItemColor. Actually this
- * class is created for CCRichLabelTTF link implementation. In very rare situation
+ * class is created for CCLabelTTF link implementation. In very rare situation
  * you want to use it, so it is internal.
  */
 class CCMenuItemColorStateListener {
