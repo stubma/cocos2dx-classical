@@ -365,28 +365,35 @@ protected:
     virtual void updateColor();
 };
 
-
-/** @brief CCMultipleLayer is a CCLayer with the ability to multiplex it's children.
-Features:
-- It supports one or more children
-- Only one children will be active a time
-*/
-class CC_DLL CCLayerMultiplex : public CCLayer
-{
+/**
+ * This class is a new implementation for CCLayerMultiplex and it use setVisible
+ * to control sub layer visibility. Original class use addChild/removeChild and that
+ * is defective because sub layer may lose onExit event. Maybe you don't think losing
+ * onExit matters but in some situation it causes memory leak.
+ *
+ * \note
+ * Sometimes I find defect in cocos2d-x and want to create a new class to workaround it,
+ * so I will choose CB prefix instead of CC. I use Ex suffix before but I don't like it anymore.
+ * CB stands cocos2dx-better.
+ */
+class CC_DLL CCLayerMultiplex : public CCLayer {
 protected:
     unsigned int m_nEnabledLayer;
     CCArray*     m_pLayers;
+    
 public:
     /**
      * @js ctor
      * @lua NA
      */
     CCLayerMultiplex();
+    
     /**
      * @js NA
      * @lua NA
      */
     virtual ~CCLayerMultiplex();
+    
     /**
      * @js NA
      */
@@ -397,42 +404,43 @@ public:
      * @js NA
      */
     static CCLayerMultiplex* createWithArray(CCArray* arrayOfLayers);
-
-    /** creates a CCLayerMultiplex with one or more layers using a variable argument list. 
+    
+    /** creates a CCLayerMultiplex with one or more layers using a variable argument list.
      * @lua NA
      */
-    static CCLayerMultiplex * create(CCLayer* layer, ... );
-
+    static CCLayerMultiplex* create(CCLayer* layer, ... );
+    
     /**
      * lua script can not init with undetermined number of variables
      * so add these functions to be used with lua.
      */
-    static CCLayerMultiplex * createWithLayer(CCLayer* layer);
-
+    static CCLayerMultiplex* createWithLayer(CCLayer* layer);
+    
     void addLayer(CCLayer* layer);
-
-    /** initializes a MultiplexLayer with one or more layers using a variable argument list. 
+    
+    /** initializes a MultiplexLayer with one or more layers using a variable argument list.
      *  @js NA
      *  @lua NA
      */
     bool initWithLayers(CCLayer* layer, va_list params);
-    /** switches to a certain layer indexed by n. 
-    The current (old) layer will be removed from it's parent with 'cleanup:YES'.
-    */
-
+    
     /** initializes a CCMultiplexLayer with an array of layers
      *  @since v2.1
      *  @lua NA
      */
     bool initWithArray(CCArray* arrayOfLayers);
-
+    
+    /** switches to a certain layer indexed by n.
+     The current (old) layer will be removed from it's parent with 'cleanup:YES'.
+     */
     void switchTo(unsigned int n);
-    /** release the current layer and switches to another layer indexed by n.
-    The current (old) layer will be removed from it's parent with 'cleanup:YES'.
-    */
-    void switchToAndReleaseMe(unsigned int n);
+    
+    /// get layer at specified index
+    CCLayer* layerAt(int n);
+    
+    // get visible layer index
+    int getEnabledLayer() { return m_nEnabledLayer;	}
 };
-
 
 // end of layer group
 /// @}
