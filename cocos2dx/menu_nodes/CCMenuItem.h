@@ -276,6 +276,28 @@ class CC_DLL CCMenuItemSprite : public CCMenuItem
     CC_PROPERTY(CCNode*, m_pSelectedImage, SelectedImage);
     /** the image used when the item is disabled */
     CC_PROPERTY(CCNode*, m_pDisabledImage, DisabledImage);
+    
+private:
+    /// old color
+    ccColor3B m_oldColor;
+    
+    /// is focus?
+    bool m_focus;
+    
+    /// focus image
+    CCNode* m_focusImage;
+    
+    /// selector of selected event
+    CCObject* m_selectedEventTarget;
+    SEL_MenuHandler m_selectedEventSelector;
+    
+    /// selector of unselected event
+    CCObject* m_unselectedEventTarget;
+    SEL_MenuHandler m_unselectedEventSelector;
+    
+    /// true means focus image can be displayed with normal, selected and disable image
+    CC_SYNTHESIZE_BOOL(m_focusIsAttachment, FocusIsAttachment);
+    
 public:
     /**
      *  @js ctor
@@ -284,7 +306,23 @@ public:
     :m_pNormalImage(NULL)
     ,m_pSelectedImage(NULL)
     ,m_pDisabledImage(NULL)
+    ,m_focus(false)
+    ,m_focusIsAttachment(false)
+    ,m_focusImage(NULL)
+    ,m_selectedEventTarget(NULL)
+    ,m_selectedEventSelector(NULL)
+    ,m_unselectedEventTarget(NULL)
+    ,m_unselectedEventSelector(NULL)
     {}
+    
+    /**
+     * create a menu item
+     *
+     * @param sprite normal state
+     * @param target target
+     * @param selector selector
+     */
+    static CCMenuItemSprite* create(CCNode* sprite, CCObject* target, SEL_MenuHandler selector);
 
     /** creates a menu item with a normal, selected and disabled image*/
     static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite = NULL);
@@ -297,6 +335,19 @@ public:
      */
     static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
 
+    /**
+     * create a menu item
+     *
+     * @param normalImage normal state
+     * @param selectedImage selected state
+     * @param disabledImage disabled state
+     * @param focusImage focus state
+     * @param target target
+     * @param selector selector
+     */
+    static CCMenuItemSprite* create(CCNode* normalImage, CCNode* selectedImage, CCNode* disabledImage,
+                                    CCNode* focusImage, CCObject* target, SEL_MenuHandler selector);
+    
     /** initializes a menu item with a normal, selected  and disabled image with target/selector */
     bool initWithNormalSprite(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCObject* target, SEL_MenuHandler selector);
     
@@ -306,6 +357,27 @@ public:
     virtual void selected();
     virtual void unselected();
     virtual void setEnabled(bool bEnabled);
+    
+    /// set focus
+    void setFocus(bool flag);
+    
+    /// is focus
+    bool isFocus() { return m_focus; }
+    
+    /// set focus image
+    void setFocusImage(CCNode* focusImage);
+    
+    /// get focus image
+    CCNode* getFocusImage() { return m_focusImage; }
+    
+    /// make every state image center aligned
+    void centerAlignImages();
+    
+    /// set target selector of selected event
+    void setSelectedEvent(CCObject* target, SEL_MenuHandler selector);
+    
+    /// set target selector of unselected event
+    void setUnselectedEvent(CCObject* target, SEL_MenuHandler selector);
     
 protected:
     virtual void updateImagesVisibility();

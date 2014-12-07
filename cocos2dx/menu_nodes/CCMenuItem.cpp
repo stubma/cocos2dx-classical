@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "script_support/CCScriptSupport.h"
 #include <stdarg.h>
 #include <cstring>
+#include "support/utils/CCUtils.h"
 
 NS_CC_BEGIN
     
@@ -487,6 +488,13 @@ void CCMenuItemSprite::setDisabledImage(CCNode* pImage)
 //CCMenuItemSprite
 //
 
+CCMenuItemSprite* CCMenuItemSprite::create(CCNode* sprite, CCObject* target, SEL_MenuHandler selector) {
+    CCMenuItemSprite* pRet = new CCMenuItemSprite();
+    pRet->initWithNormalSprite(sprite, NULL, NULL, target, selector);
+    pRet->autorelease();
+    return pRet;
+}
+
 CCMenuItemSprite * CCMenuItemSprite::create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite)
 {
     return CCMenuItemSprite::create(normalSprite, selectedSprite, disabledSprite, NULL, NULL);
@@ -501,6 +509,15 @@ CCMenuItemSprite * CCMenuItemSprite::create(CCNode *normalSprite, CCNode *select
 {
     CCMenuItemSprite *pRet = new CCMenuItemSprite();
     pRet->initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, target, selector); 
+    pRet->autorelease();
+    return pRet;
+}
+
+CCMenuItemSprite* CCMenuItemSprite::create(CCNode* normalImage, CCNode* selectedImage, CCNode* disabledImage,
+                                           CCNode* focusImage, CCObject* target, SEL_MenuHandler selector) {
+    CCMenuItemSprite* pRet = new CCMenuItemSprite();
+    pRet->initWithNormalSprite(normalImage, selectedImage, disabledImage, target, selector);
+    pRet->setFocusImage(focusImage);
     pRet->autorelease();
     return pRet;
 }
@@ -523,13 +540,69 @@ bool CCMenuItemSprite::initWithNormalSprite(CCNode* normalSprite, CCNode* select
     return true;
 }
 
+void CCMenuItemSprite::setSelectedEvent(CCObject* target, SEL_MenuHandler selector) {
+    m_selectedEventTarget = target;
+    m_selectedEventSelector = selector;
+}
+
+void CCMenuItemSprite::setUnselectedEvent(CCObject* target, SEL_MenuHandler selector) {
+    m_unselectedEventTarget = target;
+    m_unselectedEventSelector = selector;
+}
+
+void CCMenuItemSprite::centerAlignImages() {
+    CCSize s = CCSizeZero;
+    if(m_pNormalImage) {
+        CCSize _s = m_pNormalImage->getContentSize();
+        s.width = MAX(s.width, _s.width);
+        s.height = MAX(s.height, _s.height);
+    }
+    if(m_pSelectedImage) {
+        CCSize _s = m_pSelectedImage->getContentSize();
+        s.width = MAX(s.width, _s.width);
+        s.height = MAX(s.height, _s.height);
+    }
+    if(m_focusImage) {
+        CCSize _s = m_focusImage->getContentSize();
+        s.width = MAX(s.width, _s.width);
+        s.height = MAX(s.height, _s.height);
+    }
+    if(m_pDisabledImage) {
+        CCSize _s = m_pDisabledImage->getContentSize();
+        s.width = MAX(s.width, _s.width);
+        s.height = MAX(s.height, _s.height);
+    }
+    setContentSize(s);
+    
+    if(m_pNormalImage) {
+        CCSize _s = m_pNormalImage->getContentSize();
+        m_pNormalImage->setPosition(ccp((s.width - _s.width) / 2,
+                                        (s.height - _s.height) / 2));
+    }
+    if(m_pSelectedImage) {
+        CCSize _s = m_pSelectedImage->getContentSize();
+        m_pSelectedImage->setPosition(ccp((s.width - _s.width) / 2,
+                                          (s.height - _s.height) / 2));
+    }
+    if(m_focusImage) {
+        CCSize _s = m_focusImage->getContentSize();
+        m_focusImage->setPosition(ccp((s.width - _s.width) / 2,
+                                      (s.height - _s.height) / 2));
+    }
+    if(m_pDisabledImage) {
+        CCSize _s = m_pDisabledImage->getContentSize();
+        m_pDisabledImage->setPosition(ccp((s.width - _s.width) / 2,
+                                          (s.height - _s.height) / 2));
+    }
+}
+
 /**
  @since v0.99.5
  */
 void CCMenuItemSprite::selected()
 {
     CCMenuItem::selected();
-
+    updateImagesVisibility();
     if (m_pNormalImage)
     {
         if (m_pDisabledImage)
@@ -547,24 +620,35 @@ void CCMenuItemSprite::selected()
             m_pNormalImage->setVisible(true);
         }
     }
+    
+    // set a darker color
+    if(!getSelectedImage()) {
+        m_oldColor = getColor();
+        ccColorHSV hsv = CCUtils::ccc32hsv(m_oldColor);
+        hsv.v = MAX(0, hsv.v - 0.2f);
+        ccColor3B c = CCUtils::hsv2ccc3(hsv);
+        setColor(c);
+    }
+    
+    // event
+    if (m_selectedEventTarget && m_selectedEventSelector) {
+        (m_selectedEventTarget->*m_selectedEventSelector)(this);
+    }
 }
 
 void CCMenuItemSprite::unselected()
 {
     CCMenuItem::unselected();
-    if (m_pNormalImage)
-    {
-        m_pNormalImage->setVisible(true);
-
-        if (m_pSelectedImage)
-        {
-            m_pSelectedImage->setVisible(false);
-        }
-
-        if (m_pDisabledImage)
-        {
-            m_pDisabledImage->setVisible(false);
-        }
+    updateImagesVisibility();
+    
+    // restore old color
+    if(!getSelectedImage()) {
+        setColor(m_oldColor);
+    }
+    
+    // event
+    if (m_unselectedEventTarget && m_unselectedEventSelector) {
+        (m_unselectedEventTarget->*m_unselectedEventSelector)(this);
     }
 }
 
@@ -580,26 +664,54 @@ void CCMenuItemSprite::setEnabled(bool bEnabled)
 // Helper 
 void CCMenuItemSprite::updateImagesVisibility()
 {
-    if (m_bEnabled)
-    {
-        if (m_pNormalImage)   m_pNormalImage->setVisible(true);
-        if (m_pSelectedImage) m_pSelectedImage->setVisible(false);
-        if (m_pDisabledImage) m_pDisabledImage->setVisible(false);
+    if (m_pNormalImage)
+        m_pNormalImage->setVisible(false);
+    if (m_pSelectedImage)
+        m_pSelectedImage->setVisible(false);
+    if (m_pDisabledImage)
+        m_pDisabledImage->setVisible(false);
+    if (m_focusImage)
+        m_focusImage->setVisible(false);
+    
+    if(m_focusImage) {
+        if(m_focusIsAttachment) {
+            m_focusImage->setVisible(m_focus || isSelected());
+        } else {
+            m_focusImage->setVisible(m_focus);
+        }
     }
-    else
-    {
-        if (m_pDisabledImage)
-        {
-            if (m_pNormalImage)   m_pNormalImage->setVisible(false);
-            if (m_pSelectedImage) m_pSelectedImage->setVisible(false);
-            if (m_pDisabledImage) m_pDisabledImage->setVisible(true);
+    
+    if (m_bEnabled) {
+        if (m_pNormalImage)
+            m_pNormalImage->setVisible(true);
+    } else {
+        if (m_pDisabledImage) {
+            m_pDisabledImage->setVisible(true);
+        } else {
+            if (m_pNormalImage)
+                m_pNormalImage->setVisible(true);
         }
-        else
-        {
-            if (m_pNormalImage)   m_pNormalImage->setVisible(true);
-            if (m_pSelectedImage) m_pSelectedImage->setVisible(false);
-            if (m_pDisabledImage) m_pDisabledImage->setVisible(false);
+    }
+}
+
+void CCMenuItemSprite::setFocus(bool flag) {
+    m_focus = flag;
+    updateImagesVisibility();
+}
+
+void CCMenuItemSprite::setFocusImage(CCNode* focusImage) {
+    if (focusImage != m_focusImage) {
+        if (focusImage) {
+            addChild(focusImage, 0);
+            focusImage->setAnchorPoint(ccp(0, 0));
         }
+        
+        if (m_focusImage) {
+            removeChild(m_focusImage, true);
+        }
+        
+        m_focusImage = focusImage;
+        updateImagesVisibility();
     }
 }
 
