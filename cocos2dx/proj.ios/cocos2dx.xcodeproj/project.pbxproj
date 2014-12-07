@@ -558,6 +558,10 @@
 		924308501A2F5FEC00BE2476 /* CCAssetOutputStream_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9243084C1A2F5FEC00BE2476 /* CCAssetOutputStream_ios.mm */; };
 		9258E85A1A28B3E7001DCEEF /* CCVelocityTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9258E8581A28B3E7001DCEEF /* CCVelocityTracker.cpp */; };
 		9258E85B1A28B3E7001DCEEF /* CCVelocityTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 9258E8591A28B3E7001DCEEF /* CCVelocityTracker.h */; };
+		928F64441A33E59F00178235 /* CCImagePicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 928F64421A33E59F00178235 /* CCImagePicker.h */; };
+		928F64451A33E59F00178235 /* CCImagePickerCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = 928F64431A33E59F00178235 /* CCImagePickerCallback.h */; };
+		928F64481A33E5CF00178235 /* CCImagePicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 928F64471A33E5CF00178235 /* CCImagePicker.cpp */; };
+		928F644A1A33E5EA00178235 /* CCImagePicker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 928F64491A33E5EA00178235 /* CCImagePicker.mm */; };
 		929D53351A2755B300560A2E /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53331A2755B300560A2E /* CCSAXParser.cpp */; };
 		929D53361A2755B300560A2E /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53341A2755B300560A2E /* CCSAXParser.h */; };
 		929D53391A27575400560A2E /* CCPinyinUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53371A27575400560A2E /* CCPinyinUtils.cpp */; };
@@ -1203,6 +1207,10 @@
 		9243084C1A2F5FEC00BE2476 /* CCAssetOutputStream_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCAssetOutputStream_ios.mm; sourceTree = "<group>"; };
 		9258E8581A28B3E7001DCEEF /* CCVelocityTracker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCVelocityTracker.cpp; sourceTree = "<group>"; };
 		9258E8591A28B3E7001DCEEF /* CCVelocityTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVelocityTracker.h; sourceTree = "<group>"; };
+		928F64421A33E59F00178235 /* CCImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCImagePicker.h; sourceTree = "<group>"; };
+		928F64431A33E59F00178235 /* CCImagePickerCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCImagePickerCallback.h; sourceTree = "<group>"; };
+		928F64471A33E5CF00178235 /* CCImagePicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCImagePicker.cpp; sourceTree = "<group>"; };
+		928F64491A33E5EA00178235 /* CCImagePicker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCImagePicker.mm; sourceTree = "<group>"; };
 		929D53331A2755B300560A2E /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
 		929D53341A2755B300560A2E /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
 		929D53371A27575400560A2E /* CCPinyinUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPinyinUtils.cpp; sourceTree = "<group>"; };
@@ -1654,6 +1662,9 @@
 				1551A470158F2ADE00E66CFE /* CCEGLViewProtocol.h */,
 				1AC6CE8616B910CD00330EFD /* CCFileUtils.cpp */,
 				1AC6CE8716B910CD00330EFD /* CCFileUtils.h */,
+				928F64421A33E59F00178235 /* CCImagePicker.h */,
+				928F64471A33E5CF00178235 /* CCImagePicker.cpp */,
+				928F64431A33E59F00178235 /* CCImagePickerCallback.h */,
 				1551A473158F2ADE00E66CFE /* CCImage.h */,
 				1A3187F316C0B30600207637 /* CCImageCommonWebp.cpp */,
 				929F3A761A2619AC00DE78AC /* CCLocale.h */,
@@ -1672,6 +1683,7 @@
 		1551A47B158F2ADE00E66CFE /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				928F64491A33E5EA00178235 /* CCImagePicker.mm */,
 				924308491A2F5FEC00BE2476 /* CCAssetInputStream_ios.h */,
 				9243084A1A2F5FEC00BE2476 /* CCAssetInputStream_ios.mm */,
 				9243084B1A2F5FEC00BE2476 /* CCAssetOutputStream_ios.h */,
@@ -2842,6 +2854,7 @@
 				929D538D1A27595700560A2E /* yajl_tree.h in Headers */,
 				1551A6E8158F2ADE00E66CFE /* CCMenu.h in Headers */,
 				1551A6EA158F2ADE00E66CFE /* CCMenuItem.h in Headers */,
+				928F64441A33E59F00178235 /* CCImagePicker.h in Headers */,
 				929D53B21A2760AB00560A2E /* CCBase64.h in Headers */,
 				929D536B1A27582F00560A2E /* VectorImpl.h in Headers */,
 				929D53631A27582F00560A2E /* String8.h in Headers */,
@@ -2995,6 +3008,7 @@
 				1551A86E158F2ADF00E66CFE /* CCTouchDelegateProtocol.h in Headers */,
 				1551A870158F2ADF00E66CFE /* CCTouchDispatcher.h in Headers */,
 				921111F41A2B4D89003FE653 /* rapidjson.h in Headers */,
+				928F64451A33E59F00178235 /* CCImagePickerCallback.h in Headers */,
 				1551A872158F2ADF00E66CFE /* CCTouchHandler.h in Headers */,
 				921110111A2B4856003FE653 /* CCPointList.h in Headers */,
 				1551A874158F2B4700E66CFE /* cocos2dx-Prefix.pch in Headers */,
@@ -3238,6 +3252,7 @@
 				921111BD1A2B4D89003FE653 /* CCInputDelegate.cpp in Sources */,
 				9258E85A1A28B3E7001DCEEF /* CCVelocityTracker.cpp in Sources */,
 				1551A6E1158F2ADE00E66CFE /* CCTransition.cpp in Sources */,
+				928F644A1A33E5EA00178235 /* CCImagePicker.mm in Sources */,
 				9211122A1A2B4D89003FE653 /* CCControlHuePicker.cpp in Sources */,
 				1551A6E3158F2ADE00E66CFE /* CCTransitionPageTurn.cpp in Sources */,
 				1551A6E5158F2ADE00E66CFE /* CCTransitionProgress.cpp in Sources */,
@@ -3362,6 +3377,7 @@
 				1A3187F416C0B30600207637 /* CCImageCommonWebp.cpp in Sources */,
 				469A7DF316C24787006FFCB2 /* tinyxml2.cpp in Sources */,
 				1AA6226016CF6BD00028C05E /* CCDevice.mm in Sources */,
+				928F64481A33E5CF00178235 /* CCImagePicker.cpp in Sources */,
 				921112191A2B4D89003FE653 /* ObjectFactory.cpp in Sources */,
 				921111E41A2B4D89003FE653 /* UIRichText.cpp in Sources */,
 				1A4646DC16DC901A00DE131F /* ccFPSImages.c in Sources */,
