@@ -195,6 +195,9 @@ THE SOFTWARE.
 #include "support/ui_support/CCVelocityTracker.h"
 #include "support/data_support/CCPointList.h"
 #include "support/json/CCJSONValue.h"
+#include "support/db/CCDatabase.h"
+#include "support/db/CCResultSet.h"
+#include "support/db/CCStatement.h"
 
 // text_input_node
 #include "text_input_node/CCIMEDelegate.h"

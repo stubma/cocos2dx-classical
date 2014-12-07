@@ -77,6 +77,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES := cocos_libpng_static \
 	cocos_libxml2_static \
 	cocos_libtiff_static \
 	cocos_libwebp_static \
+    cocos_sqlite3_static \
     cocosdenshion_static \
     cocos_extension_static
 
@@ -92,3 +93,4 @@ $(call import-module,libjpeg)
 $(call import-module,libpng)
 $(call import-module,libtiff)
 $(call import-module,libwebp)
+$(call import-module,sqlite3)
