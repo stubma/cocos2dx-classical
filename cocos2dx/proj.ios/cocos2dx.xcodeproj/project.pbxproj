@@ -605,6 +605,8 @@
 		928F64F31A341F4D00178235 /* CCTreeFadeIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 928F64EF1A341F4D00178235 /* CCTreeFadeIn.h */; };
 		928F64F41A341F4D00178235 /* CCTreeFadeOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 928F64F01A341F4D00178235 /* CCTreeFadeOut.cpp */; };
 		928F64F51A341F4D00178235 /* CCTreeFadeOut.h in Headers */ = {isa = PBXBuildFile; fileRef = 928F64F11A341F4D00178235 /* CCTreeFadeOut.h */; };
+		928F64F81A342D6C00178235 /* CCToast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 928F64F61A342D6C00178235 /* CCToast.cpp */; };
+		928F64F91A342D6C00178235 /* CCToast.h in Headers */ = {isa = PBXBuildFile; fileRef = 928F64F71A342D6C00178235 /* CCToast.h */; };
 		929D53351A2755B300560A2E /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53331A2755B300560A2E /* CCSAXParser.cpp */; };
 		929D53361A2755B300560A2E /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53341A2755B300560A2E /* CCSAXParser.h */; };
 		929D53391A27575400560A2E /* CCPinyinUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53371A27575400560A2E /* CCPinyinUtils.cpp */; };
@@ -1297,6 +1299,8 @@
 		928F64EF1A341F4D00178235 /* CCTreeFadeIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTreeFadeIn.h; sourceTree = "<group>"; };
 		928F64F01A341F4D00178235 /* CCTreeFadeOut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTreeFadeOut.cpp; sourceTree = "<group>"; };
 		928F64F11A341F4D00178235 /* CCTreeFadeOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTreeFadeOut.h; sourceTree = "<group>"; };
+		928F64F61A342D6C00178235 /* CCToast.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCToast.cpp; sourceTree = "<group>"; };
+		928F64F71A342D6C00178235 /* CCToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCToast.h; sourceTree = "<group>"; };
 		929D53331A2755B300560A2E /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
 		929D53341A2755B300560A2E /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
 		929D53371A27575400560A2E /* CCPinyinUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPinyinUtils.cpp; sourceTree = "<group>"; };
@@ -1707,6 +1711,8 @@
 		1551A42F158F2ADE00E66CFE /* misc_nodes */ = {
 			isa = PBXGroup;
 			children = (
+				928F64F61A342D6C00178235 /* CCToast.cpp */,
+				928F64F71A342D6C00178235 /* CCToast.h */,
 				1551A430158F2ADE00E66CFE /* CCMotionStreak.cpp */,
 				1551A431158F2ADE00E66CFE /* CCMotionStreak.h */,
 				1551A432158F2ADE00E66CFE /* CCProgressTimer.cpp */,
@@ -3216,6 +3222,7 @@
 				921111E91A2B4D89003FE653 /* UITextField.h in Headers */,
 				921111D31A2B4D89003FE653 /* UIScrollInterface.h in Headers */,
 				4EF8999316E207E70040A527 /* CCTileMapAtlas.h in Headers */,
+				928F64F91A342D6C00178235 /* CCToast.h in Headers */,
 				921112371A2B4D89003FE653 /* CCControlUtils.h in Headers */,
 				921111E31A2B4D89003FE653 /* UILoadingBar.h in Headers */,
 				921111961A2B4D89003FE653 /* CCDatas.h in Headers */,
@@ -3586,6 +3593,7 @@
 				921111B61A2B4D89003FE653 /* CCComAudio.cpp in Sources */,
 				9211123F1A2B4D89003FE653 /* CCEditBoxImplAndroid.cpp in Sources */,
 				921112161A2B4D89003FE653 /* WidgetReader.cpp in Sources */,
+				928F64F81A342D6C00178235 /* CCToast.cpp in Sources */,
 				4EF8999616E207E70040A527 /* CCTMXObjectGroup.cpp in Sources */,
 				9211120E1A2B4D89003FE653 /* PageViewReader.cpp in Sources */,
 				929D53391A27575400560A2E /* CCPinyinUtils.cpp in Sources */,
