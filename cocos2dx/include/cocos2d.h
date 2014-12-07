@@ -51,6 +51,8 @@ THE SOFTWARE.
 #include "actions/CCActionInstant.h"
 #include "actions/CCActionTween.h"
 #include "actions/CCActionCatmullRom.h"
+#include "actions/CCTreeFadeIn.h"
+#include "actions/CCTreeFadeOut.h"
 
 // base_nodes
 #include "base_nodes/CCNode.h"
