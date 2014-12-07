@@ -50,7 +50,9 @@ bool CCControlSliderTest::init()
         addChild(m_pDisplayValueLabel);
 
         // Add the slider
-        CCControlSlider *slider = CCControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
+        CCControlSlider *slider = CCControlSlider::create(CCSprite::create("extensions/sliderTrack.png"),
+                                                          CCSprite::create("extensions/sliderProgress.png"),
+                                                          CCSprite::create("extensions/sliderThumb.png"));
         slider->setAnchorPoint(ccp(0.5f, 1.0f));
         slider->setMinimumValue(0.0f); // Sets the min value of range
         slider->setMaximumValue(5.0f); // Sets the max value of range
@@ -60,7 +62,9 @@ bool CCControlSliderTest::init()
         // When the value of the slider will change, the given selector will be call
         slider->addTargetWithActionForControlEvents(this, cccontrol_selector(CCControlSliderTest::valueChanged), CCControlEventValueChanged);
 
-		CCControlSlider *restrictSlider = CCControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
+		CCControlSlider *restrictSlider = CCControlSlider::create(CCSprite::create("extensions/sliderTrack.png"),
+                                                                  CCSprite::create("extensions/sliderProgress.png"),
+                                                                  CCSprite::create("extensions/sliderThumb.png"));
         restrictSlider->setAnchorPoint(ccp(0.5f, 1.0f));
         restrictSlider->setMinimumValue(0.0f); // Sets the min value of range
         restrictSlider->setMaximumValue(5.0f); // Sets the max value of range

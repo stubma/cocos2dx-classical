@@ -887,7 +887,9 @@ void SchedulerDelayAndRepeat::update(float dt)
 
 CCControlSlider* SchedulerTimeScale::sliderCtl()
 {
-    CCControlSlider * slider = CCControlSlider::create("extensions/sliderTrack2.png","extensions/sliderProgress2.png" ,"extensions/sliderThumb.png");
+    CCControlSlider * slider = CCControlSlider::create(CCSprite::create("extensions/sliderTrack2.png"),
+                                                       CCSprite::create("extensions/sliderProgress2.png"),
+                                                       CCSprite::create("extensions/sliderThumb.png"));
 
     slider->addTargetWithActionForControlEvents(this, cccontrol_selector(SchedulerTimeScale::sliderAction), CCControlEventValueChanged);
 
@@ -975,7 +977,9 @@ std::string SchedulerTimeScale::subtitle()
 CCControlSlider *TwoSchedulers::sliderCtl()
 {
    // CGRect frame = CGRectMake(12.0f, 12.0f, 120.0f, 7.0f);
-    CCControlSlider *slider = CCControlSlider::create("extensions/sliderTrack2.png","extensions/sliderProgress2.png" ,"extensions/sliderThumb.png");
+    CCControlSlider *slider = CCControlSlider::create(CCSprite::create("extensions/sliderTrack2.png"),
+                                                      CCSprite::create("extensions/sliderProgress2.png"),
+                                                      CCSprite::create("extensions/sliderThumb.png"));
         //[[UISlider alloc] initWithFrame:frame];
     slider->addTargetWithActionForControlEvents(this, cccontrol_selector(TwoSchedulers::sliderAction), CCControlEventValueChanged);
 

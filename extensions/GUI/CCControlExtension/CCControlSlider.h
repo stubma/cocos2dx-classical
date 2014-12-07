@@ -40,74 +40,71 @@ NS_CC_EXT_BEGIN
  * @{
  * @addtogroup control_extension
  * @{
+ *
+ * A slider control whose value can vary between min and max value. The value
+ * can be changed in consecutive or discrete mode.
+ *
+ * \par
+ * Slider is composited by background, thumb, and progress. The progress is optional.
+ * If progress is present, it must have same size of background
+ *
+ * \note
+ * There is CCControlSlider in cocos2d-x extensions, but it doesn't support consecutive
+ * mode. I copied its code and enhanced it for a better slider.
  */
-
-class CC_EX_DLL CCControlSlider: public CCControl
-{
-    //maunally put in the setters
-    /** Contains the receiver¡¯s current value. */
-    CC_SYNTHESIZE_READONLY(float, m_value, Value);
-    virtual void setValue(float val);
-    /** Contains the minimum value of the receiver. 
-    * The default value of this property is 0.0. */
-    CC_SYNTHESIZE_READONLY(float, m_minimumValue, MinimumValue);
-    virtual void setMinimumValue(float val);
-    /** Contains the maximum value of the receiver. 
-    * The default value of this property is 1.0. */
-    CC_SYNTHESIZE_READONLY(float, m_maximumValue, MaximumValue);
-    virtual void setMaximumValue(float val);
-    virtual void setEnabled(bool enabled);
-    virtual bool isTouchInside(CCTouch * touch);
-    CCPoint locationFromTouch(CCTouch* touch);
-
-    CC_SYNTHESIZE(float, m_minimumAllowedValue, MinimumAllowedValue);
-    CC_SYNTHESIZE(float, m_maximumAllowedValue, MaximumAllowedValue);
-
-    // maybe this should be read-only
-    CC_SYNTHESIZE_RETAIN(CCSprite*, m_thumbSprite, ThumbSprite);
-    CC_SYNTHESIZE_RETAIN(CCSprite*, m_progressSprite, ProgressSprite);
-    CC_SYNTHESIZE_RETAIN(CCSprite*, m_backgroundSprite, BackgroundSprite);
-
-public:
-    CCControlSlider();
-    virtual ~CCControlSlider();
-
-    /** 
-    * Initializes a slider with a background sprite, a progress bar and a thumb
-    * item.
-    *
-    * @param backgroundSprite  CCSprite, that is used as a background.
-    * @param progressSprite    CCSprite, that is used as a progress bar.
-    * @param thumbItem         CCSprite, that is used as a thumb.
-    */
-    virtual bool initWithSprites(CCSprite * backgroundSprite, CCSprite* progressSprite, CCSprite* thumbSprite);
-
-    /** 
-    * Creates slider with a background filename, a progress filename and a 
-    * thumb image filename.
-    */
-    static CCControlSlider* create(const char* bgFile, const char* progressFile, const char* thumbFile);
-
-    /** 
-    * Creates a slider with a given background sprite and a progress bar and a
-    * thumb item.
-    *
-    * @see initWithBackgroundSprite:progressSprite:thumbMenuItem:
-    */
-    static CCControlSlider* create(CCSprite * backgroundSprite, CCSprite* pogressSprite, CCSprite* thumbSprite);
-
-    virtual void needsLayout();
+class CC_EX_DLL CCControlSlider : public CCControl {
 protected:
+    CCControlSlider();
+    
+    /// init slider
+    virtual bool initWithSprites(CCSprite* bg, CCSprite* thumb, CCSprite* progress);
+    
+    /// update thumb and progress when value is changed
+    void updateSpritesForValueChange();
+    
+    /// update layout
+    void updateLayout();
+    
+    /// is touch in slider bounding box
+    bool isTouchInside(CCTouch* touch);
+    
+    /// touch location in self space
+    CCPoint locationFromTouch(CCTouch* touch);
+    
+    // event method
     void sliderBegan(CCPoint location);
     void sliderMoved(CCPoint location);
     void sliderEnded(CCPoint location);
-
-    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
-    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
-    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
-
-/** Returns the value for the given location. */
+    
+    /// Returns the value for the given location
     float valueForLocation(CCPoint location);
+    
+public:
+    virtual ~CCControlSlider();
+    static CCControlSlider* create(CCSprite* bg, CCSprite* thumb, CCSprite* progress = NULL);
+    
+    // override
+    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);
+    virtual void ccTouchMoved(CCTouch* pTouch, CCEvent* pEvent);
+    virtual void ccTouchEnded(CCTouch* pTouch, CCEvent* pEvent);
+    virtual void ccTouchCancelled(CCTouch* pTouch, CCEvent* pEvent);
+    virtual void needsLayout() { updateSpritesForValueChange(); }
+    
+    // values
+    CC_SYNTHESIZE_SETTER(float, m_value, Value);
+    CC_SYNTHESIZE_READONLY(int, m_intValue, IntValue);
+    CC_SYNTHESIZE_SETTER(float, m_minimumValue, MinimumValue);
+    CC_SYNTHESIZE_SETTER(float, m_maximumValue, MaximumValue);
+    CC_SYNTHESIZE(float, m_minimumAllowedValue, MinimumAllowedValue);
+    CC_SYNTHESIZE(float, m_maximumAllowedValue, MaximumAllowedValue);
+    
+    // discrete mode
+    CC_SYNTHESIZE_BOOL(m_discreteMode, DiscreteMode);
+    
+    // components
+    CC_SYNTHESIZE_SETTER(CCSprite*, m_thumbSprite, ThumbSprite);
+    CC_SYNTHESIZE_SETTER(CCSprite*, m_progressSprite, ProgressSprite);
+    CC_SYNTHESIZE_SETTER(CCSprite*, m_backgroundSprite, BackgroundSprite);
 };
 
 // end of GUI group

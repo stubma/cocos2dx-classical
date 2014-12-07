@@ -649,7 +649,9 @@ CCControlSlider* ShaderBlur::createSliderCtl()
 {
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
 
-    CCControlSlider *slider = CCControlSlider::create("extensions/sliderTrack.png","extensions/sliderProgress.png" ,"extensions/sliderThumb.png");
+    CCControlSlider *slider = CCControlSlider::create(CCSprite::create("extensions/sliderTrack.png"),
+                                                      CCSprite::create("extensions/sliderProgress.png"),
+                                                      CCSprite::create("extensions/sliderThumb.png"));
     slider->setAnchorPoint(ccp(0.5f, 1.0f));
     slider->setMinimumValue(0.0f); // Sets the min value of range
     slider->setMaximumValue(3.0f); // Sets the max value of range
