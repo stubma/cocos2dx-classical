@@ -599,6 +599,12 @@
 		928F64E51A341C8F00178235 /* CCLayerClip.h in Headers */ = {isa = PBXBuildFile; fileRef = 928F64E31A341C8F00178235 /* CCLayerClip.h */; };
 		928F64E81A341E1E00178235 /* CCTiledSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 928F64E61A341E1E00178235 /* CCTiledSprite.cpp */; };
 		928F64E91A341E1E00178235 /* CCTiledSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 928F64E71A341E1E00178235 /* CCTiledSprite.h */; };
+		928F64EC1A341F1600178235 /* CCScrollBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 928F64EA1A341F1600178235 /* CCScrollBar.cpp */; };
+		928F64ED1A341F1600178235 /* CCScrollBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 928F64EB1A341F1600178235 /* CCScrollBar.h */; };
+		928F64F21A341F4D00178235 /* CCTreeFadeIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 928F64EE1A341F4D00178235 /* CCTreeFadeIn.cpp */; };
+		928F64F31A341F4D00178235 /* CCTreeFadeIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 928F64EF1A341F4D00178235 /* CCTreeFadeIn.h */; };
+		928F64F41A341F4D00178235 /* CCTreeFadeOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 928F64F01A341F4D00178235 /* CCTreeFadeOut.cpp */; };
+		928F64F51A341F4D00178235 /* CCTreeFadeOut.h in Headers */ = {isa = PBXBuildFile; fileRef = 928F64F11A341F4D00178235 /* CCTreeFadeOut.h */; };
 		929D53351A2755B300560A2E /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53331A2755B300560A2E /* CCSAXParser.cpp */; };
 		929D53361A2755B300560A2E /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53341A2755B300560A2E /* CCSAXParser.h */; };
 		929D53391A27575400560A2E /* CCPinyinUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53371A27575400560A2E /* CCPinyinUtils.cpp */; };
@@ -1285,6 +1291,12 @@
 		928F64E31A341C8F00178235 /* CCLayerClip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayerClip.h; sourceTree = "<group>"; };
 		928F64E61A341E1E00178235 /* CCTiledSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTiledSprite.cpp; sourceTree = "<group>"; };
 		928F64E71A341E1E00178235 /* CCTiledSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTiledSprite.h; sourceTree = "<group>"; };
+		928F64EA1A341F1600178235 /* CCScrollBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScrollBar.cpp; sourceTree = "<group>"; };
+		928F64EB1A341F1600178235 /* CCScrollBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScrollBar.h; sourceTree = "<group>"; };
+		928F64EE1A341F4D00178235 /* CCTreeFadeIn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTreeFadeIn.cpp; sourceTree = "<group>"; };
+		928F64EF1A341F4D00178235 /* CCTreeFadeIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTreeFadeIn.h; sourceTree = "<group>"; };
+		928F64F01A341F4D00178235 /* CCTreeFadeOut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTreeFadeOut.cpp; sourceTree = "<group>"; };
+		928F64F11A341F4D00178235 /* CCTreeFadeOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTreeFadeOut.h; sourceTree = "<group>"; };
 		929D53331A2755B300560A2E /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
 		929D53341A2755B300560A2E /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
 		929D53371A27575400560A2E /* CCPinyinUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPinyinUtils.cpp; sourceTree = "<group>"; };
@@ -1454,6 +1466,10 @@
 		1551A354158F2ADE00E66CFE /* actions */ = {
 			isa = PBXGroup;
 			children = (
+				928F64EE1A341F4D00178235 /* CCTreeFadeIn.cpp */,
+				928F64EF1A341F4D00178235 /* CCTreeFadeIn.h */,
+				928F64F01A341F4D00178235 /* CCTreeFadeOut.cpp */,
+				928F64F11A341F4D00178235 /* CCTreeFadeOut.h */,
 				1551A355158F2ADE00E66CFE /* CCAction.cpp */,
 				1551A356158F2ADE00E66CFE /* CCAction.h */,
 				1551A357158F2ADE00E66CFE /* CCActionCamera.cpp */,
@@ -2675,6 +2691,8 @@
 		9258E8571A28B3E7001DCEEF /* ui_support */ = {
 			isa = PBXGroup;
 			children = (
+				928F64EA1A341F1600178235 /* CCScrollBar.cpp */,
+				928F64EB1A341F1600178235 /* CCScrollBar.h */,
 				921110011A2B3FA8003FE653 /* CCScroller.cpp */,
 				921110021A2B3FA8003FE653 /* CCScroller.h */,
 				9258E8581A28B3E7001DCEEF /* CCVelocityTracker.cpp */,
@@ -2958,6 +2976,7 @@
 				921111F11A2B4D89003FE653 /* stack.h in Headers */,
 				921111D91A2B4D89003FE653 /* UICheckBox.h in Headers */,
 				1551A6C4158F2ADE00E66CFE /* vec3.h in Headers */,
+				928F64ED1A341F1600178235 /* CCScrollBar.h in Headers */,
 				921111891A2B4D89003FE653 /* CCTimeLine.h in Headers */,
 				929D53991A27595700560A2E /* yajl_lex.h in Headers */,
 				9211123D1A2B4D89003FE653 /* CCEditBox.h in Headers */,
@@ -3037,6 +3056,7 @@
 				929D533E1A2757A300560A2E /* ccUnicodeGBKTable.h in Headers */,
 				921111DD1A2B4D89003FE653 /* UILabel.h in Headers */,
 				929F3A771A2619AC00DE78AC /* CCLocale.h in Headers */,
+				928F64F51A341F4D00178235 /* CCTreeFadeOut.h in Headers */,
 				1551A731158F2ADE00E66CFE /* CCEGLView.h in Headers */,
 				1551A733158F2ADE00E66CFE /* CCES2Renderer.h in Headers */,
 				1551A735158F2ADE00E66CFE /* CCESRenderer.h in Headers */,
@@ -3180,6 +3200,7 @@
 				928F64CE1A33EF7600178235 /* CCJSONArray.h in Headers */,
 				9211121C1A2B4D89003FE653 /* TriggerBase.h in Headers */,
 				921111851A2B4D89003FE653 /* CCFrame.h in Headers */,
+				928F64F31A341F4D00178235 /* CCTreeFadeIn.h in Headers */,
 				1A31963216C0DDE800207637 /* types.h in Headers */,
 				469A7DF416C24787006FFCB2 /* tinyxml2.h in Headers */,
 				9211118C1A2B4D89003FE653 /* CCArmatureAnimation.h in Headers */,
@@ -3352,6 +3373,7 @@
 				1551A65B158F2ADE00E66CFE /* CCNS.cpp in Sources */,
 				929D536C1A27582F00560A2E /* VelocityTracker.cpp in Sources */,
 				921110101A2B4856003FE653 /* CCPointList.cpp in Sources */,
+				928F64F21A341F4D00178235 /* CCTreeFadeIn.cpp in Sources */,
 				9211119F1A2B4D89003FE653 /* CCSkin.cpp in Sources */,
 				1551A65D158F2ADE00E66CFE /* CCObject.cpp in Sources */,
 				921112451A2B4D89003FE653 /* CCEditBoxImplNone.cpp in Sources */,
@@ -3408,6 +3430,7 @@
 				1551A6DB158F2ADE00E66CFE /* CCLabelTTF.cpp in Sources */,
 				1551A6DD158F2ADE00E66CFE /* CCLayer.cpp in Sources */,
 				1551A6DF158F2ADE00E66CFE /* CCScene.cpp in Sources */,
+				928F64F41A341F4D00178235 /* CCTreeFadeOut.cpp in Sources */,
 				929D53971A27595700560A2E /* yajl_gen.c in Sources */,
 				929D539A1A27595700560A2E /* yajl_parser.c in Sources */,
 				929D53711A2758D400560A2E /* entities.c in Sources */,
@@ -3465,6 +3488,7 @@
 				1551A734158F2ADE00E66CFE /* CCES2Renderer.m in Sources */,
 				921111B41A2B4D89003FE653 /* CCComAttribute.cpp in Sources */,
 				1551A736158F2ADE00E66CFE /* CCFileUtilsIOS.mm in Sources */,
+				928F64EC1A341F1600178235 /* CCScrollBar.cpp in Sources */,
 				1551A738158F2ADE00E66CFE /* CCImage.mm in Sources */,
 				1551A739158F2ADE00E66CFE /* CCLock.cpp in Sources */,
 				1551A73D158F2ADE00E66CFE /* CCThread.mm in Sources */,

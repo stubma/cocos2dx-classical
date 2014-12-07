@@ -27,10 +27,10 @@
 #include "ccMacros.h"
 #include "platform/CCImage.h"
 #include "CCPinyinUtils.h"
-//#include "cocos-ext.h"
+#include "cocos-ext.h"
 
-//USING_NS_CC_EXT;
-//using namespace cocos2d::gui;
+USING_NS_CC_EXT;
+using namespace cocos2d::ui;
 
 NS_CC_BEGIN
 
@@ -956,36 +956,36 @@ string CCUtils::arrayToString(const CCArray& array) {
     return ret;
 }
 
-//void CCUtils::setOpacityRecursively(CCNode* node, int o) {
-//	CCRGBAProtocol* p = dynamic_cast<CCRGBAProtocol*>(node);
-//	if(p) {
-//		p->setOpacity(o);
-//	}
-//	
-//	CCArray* children = node->getChildren();
-//    int cc = node->getChildrenCount();
-//    for(int i = 0; i < cc; i++) {
-//        CCNode* child = (CCNode*)children->objectAtIndex(i);        
-//        setOpacityRecursively(child, o);
-//    }
-//    
-//    Widget* w = dynamic_cast<Widget*>(node);
-//    if(w) {
-//        if(w->getVirtualRenderer()) {
-//            CCRGBAProtocol* p = dynamic_cast<CCRGBAProtocol*>(w->getVirtualRenderer());
-//            if(p) {
-//                p->setOpacity(o);
-//            }
-//        }
-//        
-//        CCArray* children = w->getNodes();
-//        int cc = children->count();
-//        for(int i = 0; i < cc; i++) {
-//            CCNode* child = (CCNode*)children->objectAtIndex(i);
-//            setOpacityRecursively(child, o);
-//        }
-//    }
-//}
+void CCUtils::setOpacityRecursively(CCNode* node, int o) {
+	CCRGBAProtocol* p = dynamic_cast<CCRGBAProtocol*>(node);
+	if(p) {
+		p->setOpacity(o);
+	}
+	
+	CCArray* children = node->getChildren();
+    int cc = node->getChildrenCount();
+    for(int i = 0; i < cc; i++) {
+        CCNode* child = (CCNode*)children->objectAtIndex(i);        
+        setOpacityRecursively(child, o);
+    }
+    
+    Widget* w = dynamic_cast<Widget*>(node);
+    if(w) {
+        if(w->getVirtualRenderer()) {
+            CCRGBAProtocol* p = dynamic_cast<CCRGBAProtocol*>(w->getVirtualRenderer());
+            if(p) {
+                p->setOpacity(o);
+            }
+        }
+        
+        CCArray* children = w->getNodes();
+        int cc = children->count();
+        for(int i = 0; i < cc; i++) {
+            CCNode* child = (CCNode*)children->objectAtIndex(i);
+            setOpacityRecursively(child, o);
+        }
+    }
+}
 
 CCArray* CCUtils::getChildrenByTag(CCNode* parent, int tag) {
 	CCArray* ret = CCArray::create();
