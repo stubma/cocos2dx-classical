@@ -34,3 +34,42 @@
 * 持续更新中...
 
 已陆续合并若干cocos2dx-better代码, 新类不一一列举.
+
+How to use CCImagePicker
+==========================
+There is a CCImagePicker merged from cocos2dx-better, it can take image from camera or album and return it in any size. It is very handy, but you need more setup before using it. In iOS, just use it. In Android, don't forget to config something:
+* register activities in AndroidManifest.xml, below is an example, you can change some attribute if you like, such as screenOrientation.
+
+```
+<activity
+    android:name="org.cocos2dx.lib.cropimage.CropImage"
+    android:configChanges="keyboardHidden|orientation"
+    android:screenOrientation="portrait"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+</activity>
+<activity
+    android:name="org.cocos2dx.lib.ImagePickerActivity"
+    android:configChanges="keyboardHidden|orientation"
+    android:screenOrientation="portrait"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+</activity>
+```
+
+* add necessary permission
+
+```
+<uses-permission android:name="android.permission.CAMERA" />
+```
+
+* add feature declaration
+
+```
+<uses-feature
+    android:name="android.hardware.camera"
+    android:required="false" />
+<uses-feature
+    android:name="android.hardware.camera.front"
+    android:required="false" />
+```
+
+And that is it! No more settings needed.
