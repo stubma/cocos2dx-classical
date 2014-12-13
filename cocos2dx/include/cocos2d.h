@@ -60,6 +60,8 @@ THE SOFTWARE.
 #include "actions/CCCurl.h"
 #include "actions/CCFlash.h"
 #include "actions/CCShine.h"
+#include "actions/ccShake.h"
+#include "actions/CCMissile.h"
 
 // base_nodes
 #include "base_nodes/CCNode.h"
