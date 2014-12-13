@@ -55,6 +55,11 @@ THE SOFTWARE.
 #include "actions/CCTreeFadeOut.h"
 #include "actions/CCClipIn.h"
 #include "actions/CCClipOut.h"
+#include "actions/CCBlur.h"
+#include "actions/CCCount.h"
+#include "actions/CCCurl.h"
+#include "actions/CCFlash.h"
+#include "actions/CCShine.h"
 
 // base_nodes
 #include "base_nodes/CCNode.h"

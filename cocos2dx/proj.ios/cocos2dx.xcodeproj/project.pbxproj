@@ -766,6 +766,16 @@
 		92A7AFDF1A3C6DE0001C830B /* CCClipIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A7AFDB1A3C6DE0001C830B /* CCClipIn.h */; };
 		92A7AFE01A3C6DE0001C830B /* CCClipOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92A7AFDC1A3C6DE0001C830B /* CCClipOut.cpp */; };
 		92A7AFE11A3C6DE0001C830B /* CCClipOut.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A7AFDD1A3C6DE0001C830B /* CCClipOut.h */; };
+		92A7AFE41A3C7059001C830B /* CCBlur.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92A7AFE21A3C7059001C830B /* CCBlur.cpp */; };
+		92A7AFE51A3C7059001C830B /* CCBlur.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A7AFE31A3C7059001C830B /* CCBlur.h */; };
+		92A7AFE81A3C709B001C830B /* CCCount.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92A7AFE61A3C709B001C830B /* CCCount.cpp */; };
+		92A7AFE91A3C709B001C830B /* CCCount.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A7AFE71A3C709B001C830B /* CCCount.h */; };
+		92A7AFEC1A3C713A001C830B /* CCCurl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92A7AFEA1A3C713A001C830B /* CCCurl.cpp */; };
+		92A7AFED1A3C713A001C830B /* CCCurl.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A7AFEB1A3C713A001C830B /* CCCurl.h */; };
+		92A7AFF01A3C71A9001C830B /* CCFlash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92A7AFEE1A3C71A9001C830B /* CCFlash.cpp */; };
+		92A7AFF11A3C71A9001C830B /* CCFlash.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A7AFEF1A3C71A9001C830B /* CCFlash.h */; };
+		92A7AFF41A3C720C001C830B /* CCShine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92A7AFF21A3C720C001C830B /* CCShine.cpp */; };
+		92A7AFF51A3C720C001C830B /* CCShine.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A7AFF31A3C720C001C830B /* CCShine.h */; };
 		92D6833C1A2F669600CD9F2A /* CCGradientSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D6833A1A2F669600CD9F2A /* CCGradientSprite.cpp */; };
 		92D6833D1A2F669600CD9F2A /* CCGradientSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D6833B1A2F669600CD9F2A /* CCGradientSprite.h */; };
 		92D683441A2F695900CD9F2A /* CCMenuItemColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D683421A2F695900CD9F2A /* CCMenuItemColor.cpp */; };
@@ -1549,6 +1559,16 @@
 		92A7AFDB1A3C6DE0001C830B /* CCClipIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCClipIn.h; sourceTree = "<group>"; };
 		92A7AFDC1A3C6DE0001C830B /* CCClipOut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCClipOut.cpp; sourceTree = "<group>"; };
 		92A7AFDD1A3C6DE0001C830B /* CCClipOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCClipOut.h; sourceTree = "<group>"; };
+		92A7AFE21A3C7059001C830B /* CCBlur.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBlur.cpp; sourceTree = "<group>"; };
+		92A7AFE31A3C7059001C830B /* CCBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBlur.h; sourceTree = "<group>"; };
+		92A7AFE61A3C709B001C830B /* CCCount.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCount.cpp; sourceTree = "<group>"; };
+		92A7AFE71A3C709B001C830B /* CCCount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCount.h; sourceTree = "<group>"; };
+		92A7AFEA1A3C713A001C830B /* CCCurl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCurl.cpp; sourceTree = "<group>"; };
+		92A7AFEB1A3C713A001C830B /* CCCurl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCurl.h; sourceTree = "<group>"; };
+		92A7AFEE1A3C71A9001C830B /* CCFlash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFlash.cpp; sourceTree = "<group>"; };
+		92A7AFEF1A3C71A9001C830B /* CCFlash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFlash.h; sourceTree = "<group>"; };
+		92A7AFF21A3C720C001C830B /* CCShine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCShine.cpp; sourceTree = "<group>"; };
+		92A7AFF31A3C720C001C830B /* CCShine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCShine.h; sourceTree = "<group>"; };
 		92D6833A1A2F669600CD9F2A /* CCGradientSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGradientSprite.cpp; sourceTree = "<group>"; };
 		92D6833B1A2F669600CD9F2A /* CCGradientSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGradientSprite.h; sourceTree = "<group>"; };
 		92D683421A2F695900CD9F2A /* CCMenuItemColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMenuItemColor.cpp; sourceTree = "<group>"; };
@@ -1649,10 +1669,20 @@
 		1551A354158F2ADE00E66CFE /* actions */ = {
 			isa = PBXGroup;
 			children = (
+				92A7AFE21A3C7059001C830B /* CCBlur.cpp */,
+				92A7AFE31A3C7059001C830B /* CCBlur.h */,
 				92A7AFDA1A3C6DE0001C830B /* CCClipIn.cpp */,
 				92A7AFDB1A3C6DE0001C830B /* CCClipIn.h */,
 				92A7AFDC1A3C6DE0001C830B /* CCClipOut.cpp */,
 				92A7AFDD1A3C6DE0001C830B /* CCClipOut.h */,
+				92A7AFE61A3C709B001C830B /* CCCount.cpp */,
+				92A7AFE71A3C709B001C830B /* CCCount.h */,
+				92A7AFEA1A3C713A001C830B /* CCCurl.cpp */,
+				92A7AFEB1A3C713A001C830B /* CCCurl.h */,
+				92A7AFEE1A3C71A9001C830B /* CCFlash.cpp */,
+				92A7AFEF1A3C71A9001C830B /* CCFlash.h */,
+				92A7AFF21A3C720C001C830B /* CCShine.cpp */,
+				92A7AFF31A3C720C001C830B /* CCShine.h */,
 				928F64EE1A341F4D00178235 /* CCTreeFadeIn.cpp */,
 				928F64EF1A341F4D00178235 /* CCTreeFadeIn.h */,
 				928F64F01A341F4D00178235 /* CCTreeFadeOut.cpp */,
@@ -3229,6 +3259,7 @@
 				921112221A2B4D89003FE653 /* ExtensionMacros.h in Headers */,
 				92A7AFC41A3C456F001C830B /* ccShader_PositionColorLengthTexture_frag.h in Headers */,
 				1551A6B6158F2ADE00E66CFE /* cocos2d.h in Headers */,
+				92A7AFE91A3C709B001C830B /* CCCount.h in Headers */,
 				929D533D1A2757A300560A2E /* ccGBKUnicodeTable.h in Headers */,
 				929D539B1A27595700560A2E /* yajl_parser.h in Headers */,
 				1551A6B8158F2ADE00E66CFE /* aabb.h in Headers */,
@@ -3297,6 +3328,7 @@
 				921111A31A2B4D89003FE653 /* CCColliderDetector.h in Headers */,
 				92A7AF8E1A3C4038001C830B /* CCSPXManager.h in Headers */,
 				921111F21A2B4D89003FE653 /* strfunc.h in Headers */,
+				92A7AFF11A3C71A9001C830B /* CCFlash.h in Headers */,
 				921111E71A2B4D89003FE653 /* UISlider.h in Headers */,
 				921111F01A2B4D89003FE653 /* pow10.h in Headers */,
 				1551A6DC158F2ADE00E66CFE /* CCLabelTTF.h in Headers */,
@@ -3371,6 +3403,7 @@
 				92A7AFD91A3C46DB001C830B /* ccShader_matrix_vert.h in Headers */,
 				1551A733158F2ADE00E66CFE /* CCES2Renderer.h in Headers */,
 				92A7AFCD1A3C456F001C830B /* ccShader_PositionTextureColor_vert.h in Headers */,
+				92A7AFE51A3C7059001C830B /* CCBlur.h in Headers */,
 				92A7AFB51A3C456F001C830B /* CCGLProgram.h in Headers */,
 				1551A735158F2ADE00E66CFE /* CCESRenderer.h in Headers */,
 				921112491A2B4D89003FE653 /* CCSorting.h in Headers */,
@@ -3424,6 +3457,7 @@
 				921112411A2B4D89003FE653 /* CCEditBoxImplIOS.h in Headers */,
 				1551A82F158F2ADF00E66CFE /* CCAnimation.h in Headers */,
 				9211120D1A2B4D89003FE653 /* LoadingBarReader.h in Headers */,
+				92A7AFED1A3C713A001C830B /* CCCurl.h in Headers */,
 				92D6834B1A2F69E700CD9F2A /* CCLabelTTFLinkStateSynchronizer.h in Headers */,
 				9211121E1A2B4D89003FE653 /* TriggerMng.h in Headers */,
 				921110171A2B4AC6003FE653 /* CCCalendar.h in Headers */,
@@ -3439,6 +3473,7 @@
 				1551A837158F2ADF00E66CFE /* CCSpriteFrame.h in Headers */,
 				92A7AF721A3C4038001C830B /* CCMWManager.h in Headers */,
 				92A7AF811A3C4038001C830B /* CCSPX3Sprite.h in Headers */,
+				92A7AFF51A3C720C001C830B /* CCShine.h in Headers */,
 				92A7AFBF1A3C456F001C830B /* ccShader_lighting_vert.h in Headers */,
 				1551A839158F2ADF00E66CFE /* CCSpriteFrameCache.h in Headers */,
 				1551A83D158F2ADF00E66CFE /* CCPointExtension.h in Headers */,
@@ -3734,6 +3769,7 @@
 				921111C11A2B4D89003FE653 /* UILayout.cpp in Sources */,
 				921111D41A2B4D89003FE653 /* UIScrollView.cpp in Sources */,
 				1551A661158F2ADE00E66CFE /* CCString.cpp in Sources */,
+				92A7AFEC1A3C713A001C830B /* CCCurl.cpp in Sources */,
 				928F64D31A33EF7600178235 /* CCJSONValue.cpp in Sources */,
 				921110151A2B4A22003FE653 /* CCUUID.mm in Sources */,
 				1551A663158F2ADE00E66CFE /* CCZone.cpp in Sources */,
@@ -3878,6 +3914,7 @@
 				929D53A51A275BE600560A2E /* CCUtilsIOS.mm in Sources */,
 				921112021A2B4D89003FE653 /* LabelAtlasReader.cpp in Sources */,
 				92A7AF7C1A3C4038001C830B /* CCSPX3Loader.cpp in Sources */,
+				92A7AFF01A3C71A9001C830B /* CCFlash.cpp in Sources */,
 				1551A82E158F2ADF00E66CFE /* CCAnimation.cpp in Sources */,
 				9211124C1A2B4D89003FE653 /* CCTableViewCell.cpp in Sources */,
 				921112141A2B4D89003FE653 /* TextFieldReader.cpp in Sources */,
@@ -3911,6 +3948,7 @@
 				921111EA1A2B4D89003FE653 /* CocoLoader.cpp in Sources */,
 				1551A852158F2ADF00E66CFE /* ZipUtils.cpp in Sources */,
 				1551A855158F2ADF00E66CFE /* CCIMEDispatcher.cpp in Sources */,
+				92A7AFE41A3C7059001C830B /* CCBlur.cpp in Sources */,
 				1551A857158F2ADF00E66CFE /* CCTextFieldTTF.cpp in Sources */,
 				92A7AF651A3C4038001C830B /* CCAuroraFileData.cpp in Sources */,
 				921111CC1A2B4D89003FE653 /* UITouchGroup.cpp in Sources */,
@@ -3940,6 +3978,7 @@
 				92A7AF5C1A3C4038001C830B /* CCArcticFileData.cpp in Sources */,
 				928F64481A33E5CF00178235 /* CCImagePicker.cpp in Sources */,
 				921112191A2B4D89003FE653 /* ObjectFactory.cpp in Sources */,
+				92A7AFE81A3C709B001C830B /* CCCount.cpp in Sources */,
 				92A7AFD41A3C456F001C830B /* CCShaders.cpp in Sources */,
 				921111E41A2B4D89003FE653 /* UIRichText.cpp in Sources */,
 				1A4646DC16DC901A00DE131F /* ccFPSImages.c in Sources */,
@@ -3954,6 +3993,7 @@
 				921112161A2B4D89003FE653 /* WidgetReader.cpp in Sources */,
 				928F64F81A342D6C00178235 /* CCToast.cpp in Sources */,
 				92A7AF801A3C4038001C830B /* CCSPX3Sprite.cpp in Sources */,
+				92A7AFF41A3C720C001C830B /* CCShine.cpp in Sources */,
 				4EF8999616E207E70040A527 /* CCTMXObjectGroup.cpp in Sources */,
 				9211120E1A2B4D89003FE653 /* PageViewReader.cpp in Sources */,
 				929D53391A27575400560A2E /* CCPinyinUtils.cpp in Sources */,
