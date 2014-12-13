@@ -762,6 +762,10 @@
 		92A7AFD51A3C456F001C830B /* CCShaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A7AFB31A3C456F001C830B /* CCShaders.h */; };
 		92A7AFD81A3C46DB001C830B /* ccShader_matrix_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A7AFD61A3C46DB001C830B /* ccShader_matrix_frag.h */; };
 		92A7AFD91A3C46DB001C830B /* ccShader_matrix_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A7AFD71A3C46DB001C830B /* ccShader_matrix_vert.h */; };
+		92A7AFDE1A3C6DE0001C830B /* CCClipIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92A7AFDA1A3C6DE0001C830B /* CCClipIn.cpp */; };
+		92A7AFDF1A3C6DE0001C830B /* CCClipIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A7AFDB1A3C6DE0001C830B /* CCClipIn.h */; };
+		92A7AFE01A3C6DE0001C830B /* CCClipOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92A7AFDC1A3C6DE0001C830B /* CCClipOut.cpp */; };
+		92A7AFE11A3C6DE0001C830B /* CCClipOut.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A7AFDD1A3C6DE0001C830B /* CCClipOut.h */; };
 		92D6833C1A2F669600CD9F2A /* CCGradientSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D6833A1A2F669600CD9F2A /* CCGradientSprite.cpp */; };
 		92D6833D1A2F669600CD9F2A /* CCGradientSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D6833B1A2F669600CD9F2A /* CCGradientSprite.h */; };
 		92D683441A2F695900CD9F2A /* CCMenuItemColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D683421A2F695900CD9F2A /* CCMenuItemColor.cpp */; };
@@ -1541,6 +1545,10 @@
 		92A7AFB31A3C456F001C830B /* CCShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCShaders.h; sourceTree = "<group>"; };
 		92A7AFD61A3C46DB001C830B /* ccShader_matrix_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_matrix_frag.h; sourceTree = "<group>"; };
 		92A7AFD71A3C46DB001C830B /* ccShader_matrix_vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_matrix_vert.h; sourceTree = "<group>"; };
+		92A7AFDA1A3C6DE0001C830B /* CCClipIn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCClipIn.cpp; sourceTree = "<group>"; };
+		92A7AFDB1A3C6DE0001C830B /* CCClipIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCClipIn.h; sourceTree = "<group>"; };
+		92A7AFDC1A3C6DE0001C830B /* CCClipOut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCClipOut.cpp; sourceTree = "<group>"; };
+		92A7AFDD1A3C6DE0001C830B /* CCClipOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCClipOut.h; sourceTree = "<group>"; };
 		92D6833A1A2F669600CD9F2A /* CCGradientSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGradientSprite.cpp; sourceTree = "<group>"; };
 		92D6833B1A2F669600CD9F2A /* CCGradientSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGradientSprite.h; sourceTree = "<group>"; };
 		92D683421A2F695900CD9F2A /* CCMenuItemColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMenuItemColor.cpp; sourceTree = "<group>"; };
@@ -1641,6 +1649,10 @@
 		1551A354158F2ADE00E66CFE /* actions */ = {
 			isa = PBXGroup;
 			children = (
+				92A7AFDA1A3C6DE0001C830B /* CCClipIn.cpp */,
+				92A7AFDB1A3C6DE0001C830B /* CCClipIn.h */,
+				92A7AFDC1A3C6DE0001C830B /* CCClipOut.cpp */,
+				92A7AFDD1A3C6DE0001C830B /* CCClipOut.h */,
 				928F64EE1A341F4D00178235 /* CCTreeFadeIn.cpp */,
 				928F64EF1A341F4D00178235 /* CCTreeFadeIn.h */,
 				928F64F01A341F4D00178235 /* CCTreeFadeOut.cpp */,
@@ -3157,6 +3169,7 @@
 				929D53591A27582F00560A2E /* Atomic.h in Headers */,
 				921111E11A2B4D89003FE653 /* UILabelBMFont.h in Headers */,
 				1551A63B158F2ADE00E66CFE /* CCActionPageTurn3D.h in Headers */,
+				92A7AFDF1A3C6DE0001C830B /* CCClipIn.h in Headers */,
 				921112241A2B4D89003FE653 /* CCControl.h in Headers */,
 				921111A51A2B4D89003FE653 /* CCArmatureDataManager.h in Headers */,
 				92A7AF791A3C4038001C830B /* CCSPX3FileData.h in Headers */,
@@ -3165,6 +3178,7 @@
 				929D535D1A27582F00560A2E /* Input.h in Headers */,
 				1551A63F158F2ADE00E66CFE /* CCActionTiledGrid.h in Headers */,
 				921112031A2B4D89003FE653 /* LabelAtlasReader.h in Headers */,
+				92A7AFE11A3C6DE0001C830B /* CCClipOut.h in Headers */,
 				921111921A2B4D89003FE653 /* CCArmature.h in Headers */,
 				92A7AFCE1A3C456F001C830B /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */,
 				929F3A6D1A26187B00DE78AC /* CCAndroidStringsParser.h in Headers */,
@@ -3736,6 +3750,7 @@
 				921110191A2B4B98003FE653 /* CCCalendar.mm in Sources */,
 				1551A6C6158F2ADE00E66CFE /* aabb.c in Sources */,
 				921111E21A2B4D89003FE653 /* UILoadingBar.cpp in Sources */,
+				92A7AFE01A3C6DE0001C830B /* CCClipOut.cpp in Sources */,
 				1551A6C7158F2ADE00E66CFE /* mat4stack.c in Sources */,
 				929D53581A27582F00560A2E /* Atomic.cpp in Sources */,
 				1551A6C8158F2ADE00E66CFE /* matrix.c in Sources */,
@@ -3965,6 +3980,7 @@
 				921112361A2B4D89003FE653 /* CCControlUtils.cpp in Sources */,
 				4698CFA9174CBB700066A57B /* CCTextureETC.cpp in Sources */,
 				37EEEBF8175DDF3A003C1193 /* CCComponent.cpp in Sources */,
+				92A7AFDE1A3C6DE0001C830B /* CCClipIn.cpp in Sources */,
 				921112421A2B4D89003FE653 /* CCEditBoxImplIOS.mm in Sources */,
 				921111AA1A2B4D89003FE653 /* CCDataReaderHelper.cpp in Sources */,
 				37EEEBFA175DDF3A003C1193 /* CCComponentContainer.cpp in Sources */,

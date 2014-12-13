@@ -53,6 +53,8 @@ THE SOFTWARE.
 #include "actions/CCActionCatmullRom.h"
 #include "actions/CCTreeFadeIn.h"
 #include "actions/CCTreeFadeOut.h"
+#include "actions/CCClipIn.h"
+#include "actions/CCClipOut.h"
 
 // base_nodes
 #include "base_nodes/CCNode.h"
