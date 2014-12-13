@@ -166,7 +166,6 @@ THE SOFTWARE.
 #include "shaders/CCGLProgram.h"
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CCShaderCache.h"
-#include "shaders/ccShaders.h"
 
 // sprite_nodes
 #include "sprite_nodes/CCAnimation.h"
