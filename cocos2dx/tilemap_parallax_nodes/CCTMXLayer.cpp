@@ -299,7 +299,7 @@ void CCTMXLayer::setupTileSprite(CCSprite* sprite, ccPosition pos, int gid) {
 							spritePos.y + sprite->getContentSize().height / 2));
     sprite->setVertexZ(getVertexZAt(pos.x, pos.y));
 	sprite->setColor(getColor());
-    sprite->setOpacity(getOpacity());
+    sprite->setOpacity(m_layerInfo->getAlpha());
 	
     //issue 1264, flip can be undone as well
     sprite->setFlipX(false);
@@ -429,6 +429,16 @@ void CCTMXLayer::setupTiles() {
 			}
 		}
 	}
+    
+    // set program to batch node
+    if(getShaderProgram()) {
+        int c = m_mapInfo->getTileSets().count();
+        for(int i = 0; i < c; i++) {
+            if(m_batchNodes[i]) {
+                m_batchNodes[i]->setShaderProgram(getShaderProgram());
+            }
+        }
+    }
 }
 
 void CCTMXLayer::setAntiAliasTexParameters() {
@@ -735,7 +745,7 @@ CCSprite* CCTMXLayer::tileAt(int x, int y) {
 								  origin.y + tile->getContentSize().height / 2));
             tile->setVertexZ(getVertexZAt(x, y));
 			tile->setColor(getColor());
-            tile->setOpacity(getOpacity());
+            tile->setOpacity(m_layerInfo->getAlpha());
 			
             int index = m_atlasInfos[z].atlasIndex;
             bn->addSpriteWithoutQuad(tile, index, z);
