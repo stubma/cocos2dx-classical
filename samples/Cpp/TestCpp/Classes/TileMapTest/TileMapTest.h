@@ -252,13 +252,6 @@ public:
     void flipIt(float dt);
 };
 
-class TMXOrthoFromXMLTest : public TileDemo 
-{
-public:
-    TMXOrthoFromXMLTest();
-    virtual std::string title();
-};
-
 class TMXBug987 : public TileDemo
 {
 public:

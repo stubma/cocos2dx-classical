@@ -1,729 +1,749 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2009-2010 Ricardo Quesada
-Copyright (c) 2011      Zynga Inc.
-
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
+ Author: Luma (stubma@gmail.com)
+ 
+ https://github.com/stubma/cocos2dx-better
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 #include "CCTMXLayer.h"
-#include "CCTMXXMLParser.h"
-#include "CCTMXTiledMap.h"
-#include "sprite_nodes/CCSprite.h"
-#include "textures/CCTextureCache.h"
-#include "shaders/CCShaderCache.h"
-#include "shaders/CCGLProgram.h"
+#include "CCTMXMapInfo.h"
+#include "CCTMXLayerInfo.h"
+#include "CCTMXTileSetInfo.h"
+#include "CCSpriteBatchNode.h"
 #include "support/CCPointExtension.h"
-#include "support/data_support/ccCArray.h"
-#include "CCDirector.h"
+#include "shaders/CCShaderCache.h"
 
 NS_CC_BEGIN
 
-
-// CCTMXLayer - init & alloc & dealloc
-
-CCTMXLayer * CCTMXLayer::create(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo)
-{
-    CCTMXLayer *pRet = new CCTMXLayer();
-    if (pRet->initWithTilesetInfo(tilesetInfo, layerInfo, mapInfo))
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    return NULL;
-}
-bool CCTMXLayer::initWithTilesetInfo(CCTMXTilesetInfo *tilesetInfo, CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo)
-{    
-    // XXX: is 35% a good estimate ?
-    CCSize size = layerInfo->m_tLayerSize;
-    float totalNumberOfTiles = size.width * size.height;
-    float capacity = totalNumberOfTiles * 0.35f + 1; // 35 percent is occupied ?
-
-    CCTexture2D *texture = NULL;
-    if( tilesetInfo )
-    {
-        texture = CCTextureCache::sharedTextureCache()->addImage(tilesetInfo->m_sSourceImage.c_str());
-    }
-
-    if (CCSpriteBatchNode::initWithTexture(texture, (unsigned int)capacity))
-    {
-        // layerInfo
-        m_sLayerName = layerInfo->m_sName;
-        m_tLayerSize = size;
-        m_pTiles = layerInfo->m_pTiles;
-        m_uMinGID = layerInfo->m_uMinGID;
-        m_uMaxGID = layerInfo->m_uMaxGID;
-        m_cOpacity = layerInfo->m_cOpacity;
-        setProperties(CCDictionary::createWithDictionary(layerInfo->getProperties()));
-        m_fContentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor(); 
-
-        // tilesetInfo
-        m_pTileSet = tilesetInfo;
-        CC_SAFE_RETAIN(m_pTileSet);
-
-        // mapInfo
-        m_tMapTileSize = mapInfo->getTileSize();
-        m_uLayerOrientation = mapInfo->getOrientation();
-
-        // offset (after layer orientation is set);
-        CCPoint offset = this->calculateLayerOffset(layerInfo->m_tOffset);
-        this->setPosition(CC_POINT_PIXELS_TO_POINTS(offset));
-
-        m_pAtlasIndexArray = ccCArrayNew((unsigned int)totalNumberOfTiles);
-
-        this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(CCSizeMake(m_tLayerSize.width * m_tMapTileSize.width, m_tLayerSize.height * m_tMapTileSize.height)));
-
-        m_bUseAutomaticVertexZ = false;
-        m_nVertexZvalue = 0;
-        
-        return true;
-    }
-    return false;
-}
-
-CCTMXLayer::CCTMXLayer()
-:m_tLayerSize(CCSizeZero)
-,m_tMapTileSize(CCSizeZero)
-,m_pTiles(NULL)
-,m_pTileSet(NULL)
-,m_pProperties(NULL)
-,m_sLayerName("")
-,m_pReusedTile(NULL)
-,m_pAtlasIndexArray(NULL)    
-{}
-
-CCTMXLayer::~CCTMXLayer()
-{
-    CC_SAFE_RELEASE(m_pTileSet);
-    CC_SAFE_RELEASE(m_pReusedTile);
-    CC_SAFE_RELEASE(m_pProperties);
-
-    if (m_pAtlasIndexArray)
-    {
-        ccCArrayFree(m_pAtlasIndexArray);
-        m_pAtlasIndexArray = NULL;
-    }
-
-    CC_SAFE_DELETE_ARRAY(m_pTiles);
+CCTMXLayer::CCTMXLayer(int layerIndex, CCTMXMapInfo* mapInfo) :
+m_mapInfo(mapInfo),
+m_layerInfo(NULL),
+m_reusedTile(NULL),
+m_tileWidth(mapInfo->getTileWidth()),
+m_tileHeight(mapInfo->getTileHeight()),
+m_batchNodes(NULL),
+m_tiles(NULL),
+m_atlasInfos(NULL),
+m_useAutomaticVertexZ(false),
+m_minGid(MAX_INT),
+m_maxGid(0),
+m_vertexZ(0),
+m_alphaFuncValue(0) {
+	// retain map info
+	CC_SAFE_RETAIN(mapInfo);
+	
+    // get layer info
+	m_layerInfo = (CCTMXLayerInfo*)mapInfo->getLayers().objectAtIndex(layerIndex);
+	CC_SAFE_RETAIN(m_layerInfo);
+	
+    // init layer members
+    m_layerWidth = m_layerInfo->getLayerWidth();
+    m_layerHeight = m_layerInfo->getLayerHeight();
+    m_tiles = m_layerInfo->getTiles();
+    setOpacity(m_layerInfo->getAlpha());
+    
+    // allocate memory for atlas indices
+    size_t size = m_layerInfo->getLayerWidth() * m_layerInfo->getLayerHeight() * sizeof(TileSetAtlasInfo);
+    m_atlasInfos = (TileSetAtlasInfo*)malloc(size);
+    memset(m_atlasInfos, 0xff, size);
+	
+	// memory for batch node array
+	m_batchNodes = (CCSpriteBatchNode**)calloc(mapInfo->getTileSets().count(), sizeof(CCSpriteBatchNode*));
+	
+	// set anchor percent
+	setAnchorPoint(CCPointZero);
+	ignoreAnchorPointForPosition(false);
+	
+	// set content size
+	switch(m_mapInfo->getOrientation()) {
+		case kCCTMXOrientationIsometric:
+		case kCCTMXOrientationOrthogonal:
+			setContentSize(CCSizeMake(m_layerWidth * m_tileWidth, m_layerHeight * m_tileHeight));
+			break;
+		case kCCTMXOrientationHexagonal:
+			setContentSize(CCSizeMake(m_layerWidth * m_tileWidth * 3 / 4 + m_tileWidth / 4,
+									  m_layerHeight * m_tileHeight + (m_layerWidth > 1 ? (m_tileHeight / 2) : 0)));
+			break;
+	}
+	
+	// set visible or not
+	setVisible(m_layerInfo->isVisible());
+	
+	// set position
+	CCPoint offset = calculateLayerOffset(m_layerInfo->getOffsetX(), m_layerInfo->getOffsetY());
+	setPosition(offset.x, offset.y);
+	
+	// setup tiles
+	setupTiles();
 }
 
-CCTMXTilesetInfo * CCTMXLayer::getTileSet()
-{
-    return m_pTileSet;
+CCTMXLayer::~CCTMXLayer() {
+	CC_SAFE_RELEASE(m_mapInfo);
+	CC_SAFE_RELEASE(m_layerInfo);
+	CC_SAFE_RELEASE(m_reusedTile);
+	CC_SAFE_FREE(m_batchNodes);
+	CC_SAFE_FREE(m_atlasInfos);
 }
 
-void CCTMXLayer::setTileSet(CCTMXTilesetInfo* var)
-{
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(m_pTileSet);
-    m_pTileSet = var;
+CCTMXLayer* CCTMXLayer::create(int layerIndex, CCTMXMapInfo* mapInfo) {
+	CCTMXLayer* l = new CCTMXLayer(layerIndex, mapInfo);
+	if(l->init()) {
+		return (CCTMXLayer*)l->autorelease();
+	}
+	l->release();
+	return NULL;
 }
 
-void CCTMXLayer::releaseMap()
-{
-    if (m_pTiles)
-    {
-        delete [] m_pTiles;
-        m_pTiles = NULL;
-    }
-
-    if (m_pAtlasIndexArray)
-    {
-        ccCArrayFree(m_pAtlasIndexArray);
-        m_pAtlasIndexArray = NULL;
-    }
+CCPoint CCTMXLayer::getPositionForOrthoAt(int posX, int posY) {
+	float x = posX * m_tileWidth;
+	float y = (m_layerHeight - posY - 1) * m_tileHeight;
+	return ccp(x, y);
 }
 
-// CCTMXLayer - setup Tiles
-void CCTMXLayer::setupTiles()
-{    
-    // Optimization: quick hack that sets the image size on the tileset
-    m_pTileSet->m_tImageSize = m_pobTextureAtlas->getTexture()->getContentSizeInPixels();
-
-    // By default all the tiles are aliased
-    // pros:
-    //  - easier to render
-    // cons:
-    //  - difficult to scale / rotate / etc.
-    m_pobTextureAtlas->getTexture()->setAliasTexParameters();
-
-    //CFByteOrder o = CFByteOrderGetCurrent();
-
-    // Parse cocos2d properties
-    this->parseInternalProperties();
-
-    for (unsigned int y=0; y < m_tLayerSize.height; y++) 
-    {
-        for (unsigned int x=0; x < m_tLayerSize.width; x++) 
-        {
-            unsigned int pos = (unsigned int)(x + m_tLayerSize.width * y);
-            unsigned int gid = m_pTiles[ pos ];
-
-            // gid are stored in little endian.
-            // if host is big endian, then swap
-            //if( o == CFByteOrderBigEndian )
-            //    gid = CFSwapInt32( gid );
-            /* We support little endian.*/
-
-            // XXX: gid == 0 --> empty tile
-            if (gid != 0) 
-            {
-                this->appendTileForGID(gid, ccp(x, y));
-
-                // Optimization: update min and max GID rendered by the layer
-                m_uMinGID = MIN(gid, m_uMinGID);
-                m_uMaxGID = MAX(gid, m_uMaxGID);
-            }
-        }
-    }
-
-    CCAssert( m_uMaxGID >= m_pTileSet->m_uFirstGid &&
-        m_uMinGID >= m_pTileSet->m_uFirstGid, "TMX: Only 1 tileset per layer is supported");    
+CCPoint CCTMXLayer::getPositionForIsoAt(int posX, int posY) {
+	float x = m_tileWidth / 2 * (m_layerWidth + posX - posY - 1);
+	float y = m_tileHeight / 2 * (m_layerHeight * 2 - posX - posY - 2);
+	return ccp(x, y);
 }
 
-// CCTMXLayer - Properties
-CCString* CCTMXLayer::propertyNamed(const char *propertyName)
-{
-    return (CCString*)m_pProperties->objectForKey(propertyName);
+CCPoint CCTMXLayer::getPositionForHexAt(int posX, int posY) {
+	float diffY = 0;
+	if(posX % 2 == 0)
+		diffY = m_tileHeight / 2;
+	
+	float x = posX * m_tileWidth * 3 / 4;
+	float y = (m_layerHeight - posY - 1) * m_tileHeight + diffY;
+	return ccp(x, y);
 }
 
-void CCTMXLayer::parseInternalProperties()
-{
-    // if cc_vertex=automatic, then tiles will be rendered using vertexz
-
-    CCString *vertexz = propertyNamed("cc_vertexz");
-    if (vertexz) 
-    {
-        // If "automatic" is on, then parse the "cc_alpha_func" too
-        if (vertexz->m_sString == "automatic")
-        {
-            m_bUseAutomaticVertexZ = true;
-            CCString *alphaFuncVal = propertyNamed("cc_alpha_func");
-            float alphaFuncValue = 0.0f;
-            if (alphaFuncVal != NULL)
-            {
-                alphaFuncValue = alphaFuncVal->floatValue();
-            }
-            setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest));
-
-            GLint alphaValueLocation = glGetUniformLocation(getShaderProgram()->getProgram(), kCCUniformAlphaTestValue);
-
-            // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-            getShaderProgram()->setUniformLocationWith1f(alphaValueLocation, alphaFuncValue);
-        }
-        else
-        {
-            m_nVertexZvalue = vertexz->intValue();
-        }
-    }
+CCPoint CCTMXLayer::getPositionAt(CCPoint loc) {
+    return getPositionAt(loc.x, loc.y);
 }
 
-void CCTMXLayer::setupTileSprite(CCSprite* sprite, CCPoint pos, unsigned int gid)
-{
-    sprite->setPosition(positionAt(pos));
-    sprite->setVertexZ((float)vertexZForPos(pos));
-    sprite->setAnchorPoint(CCPointZero);
-    sprite->setOpacity(m_cOpacity);
+CCPoint CCTMXLayer::getPositionAt(int x, int y) {
+	switch(m_mapInfo->getOrientation()) {
+		case kCCTMXOrientationOrthogonal:
+			return getPositionForOrthoAt(x, y);
+		case kCCTMXOrientationIsometric:
+			return getPositionForIsoAt(x, y);
+		case kCCTMXOrientationHexagonal:
+			return getPositionForHexAt(x, y);
+		default:
+			return CCPointZero;
+	}
+}
 
+ccPosition CCTMXLayer::getTileCoordinateAt(float x, float y) {
+	ccPosition d = ccpos(-1, -1);
+	if(x < 0 || y < 0)
+		return d;
+	
+	switch(m_mapInfo->getOrientation()) {
+		case kCCTMXOrientationOrthogonal:
+		{
+			d.x = x / m_tileWidth;
+			d.y = m_layerHeight - (int)(y / m_tileHeight) - 1;
+			break;
+		}
+		case kCCTMXOrientationIsometric:
+		{
+			// convert position relative to left-bottom to a position relative to top rhombus
+			CCPoint top = getPositionForIsoAt(0, 0);
+			top.x += m_tileWidth / 2;
+			top.y += m_tileHeight;
+			x -= top.x;
+			y = top.y - y;
+			
+			// map converted position to tile coordinate
+			d.x = (int)((m_tileWidth * y + m_tileHeight * x) / m_tileWidth / m_tileHeight);
+			d.y = (int)((m_tileWidth * y - m_tileHeight * x) / m_tileWidth / m_tileHeight);
+			break;
+		}
+		case kCCTMXOrientationHexagonal:
+		{
+			// convert position relative to left-bottom to a position to top-left
+			CCPoint top = getPositionForHexAt(0, 0);
+			float newY = top.y + m_tileHeight - y;
+			
+			// map converted position to tile coordinate
+			float xBelt = x / (m_tileWidth * 3 / 4);
+			float yEvenBelt = newY / m_tileHeight;
+			float yOddBelt = (newY - m_tileHeight / 2) / m_tileHeight;
+			bool intermediate = fmod(x, m_tileWidth * 3 / 4) < m_tileWidth / 4;
+			if(intermediate) {
+				// get possible candidates, two
+				int posX2 = (int)xBelt;
+				int posX1 = posX2 - 1;
+				int posY1, posY2;
+				if(posX2 % 2 == 0) {
+					posY1 = (int)yOddBelt;
+					posY2 = (int)yEvenBelt;
+				} else {
+					posY1 = (int)yEvenBelt;
+					posY2 = (int)yOddBelt;
+				}
+				
+				// get center of two candidates
+				CCPoint pos1 = getPositionForHexAt(posX1, posY1);
+				CCPoint pos2 = getPositionForHexAt(posX2, posY2);
+				pos1.x += m_tileWidth / 2;
+				pos1.y += m_tileHeight / 2;
+				pos2.x += m_tileWidth / 2;
+				pos2.y += m_tileHeight / 2;
+				
+				// choose the one whose center is nearest to touch position
+				CCPoint touch = ccp(x, y);
+				float distance1 = ccpLength(ccpSub(pos1, touch));
+				float distance2 = ccpLength(ccpSub(pos2, touch));
+				if(distance1 < distance2) {
+					d.x = posX1;
+					d.y = posY1;
+				} else {
+					d.x = posX2;
+					d.y = posY2;
+				}
+			} else {
+				d.x = (int)xBelt;
+				if(d.x % 2 == 0)
+					d.y = (int)yEvenBelt;
+				else
+					d.y = (int)yOddBelt;
+			}
+			break;
+		}
+	}
+	
+	if(d.x < 0 || d.x >= m_layerWidth)
+		d.x = -1;
+	if(d.y < 0 || d.y >= m_layerHeight)
+		d.y = -1;
+	return d;
+}
+
+float CCTMXLayer::getVertexZAt(CCPoint loc) {
+    return getVertexZAt(loc.x, loc.y);
+}
+
+float CCTMXLayer::getVertexZAt(int x, int y) {
+	float ret = 0;
+	int maxVal = 0;
+	if(m_useAutomaticVertexZ) {
+		switch(m_mapInfo->getOrientation()) {
+			case kCCTMXOrientationIsometric:
+				maxVal = m_layerWidth + m_layerHeight;
+				ret = -(maxVal - (x + y));
+				break;
+			case kCCTMXOrientationOrthogonal:
+				ret = -(m_layerHeight - y);
+				break;
+			case kCCTMXOrientationHexagonal:
+				// TODO TMX Hexagonal zOrder not supported
+				break;
+			default:
+				CCLOGWARN("TMX invalid value");
+				break;
+		}
+	} else {
+		ret = m_vertexZ;
+	}
+	
+	return ret;
+}
+
+void CCTMXLayer::setTileColorAt(ccColor4B c, CCPoint loc) {
+    setTileColorAt(c, loc.x, loc.y);
+}
+
+void CCTMXLayer::setTileColorAt(ccColor4B c, int x, int y) {
+	// get gid
+	int gid = getGidAt(x, y);
+	if(gid <= 0)
+		return;
+	
+	// get tileset index and rect
+	int tilesetIndex = m_mapInfo->getTileSetIndex(gid);
+	CCTMXTileSetInfo* tileset = (CCTMXTileSetInfo*)m_mapInfo->getTileSets().objectAtIndex(tilesetIndex);
+	CCRect rect = tileset->getRect(gid);
+	CCSpriteBatchNode* bn = m_batchNodes[tilesetIndex];
+	
+	// get sprite
+	CCSprite* tile = reusedTile(rect, bn);
+	setupTileSprite(tile, ccpos(x, y), gid);
+	tile->setColor(ccc3(c.r, c.g, c.b));
+	tile->setOpacity(c.a);
+	
+	// update
+	int z = x + y * m_layerWidth;
+	bn->updateQuadFromSprite(tile, m_atlasInfos[z].atlasIndex);
+}
+
+void CCTMXLayer::setupTileSprite(CCSprite* sprite, ccPosition pos, int gid) {
+	CCPoint spritePos = getPositionAt(pos.x, pos.y);
+    sprite->setPosition(ccp(spritePos.x + sprite->getContentSize().width / 2,
+							spritePos.y + sprite->getContentSize().height / 2));
+    sprite->setVertexZ(getVertexZAt(pos.x, pos.y));
+	sprite->setColor(getColor());
+    sprite->setOpacity(getOpacity());
+	
     //issue 1264, flip can be undone as well
     sprite->setFlipX(false);
     sprite->setFlipY(false);
     sprite->setRotation(0.0f);
-    sprite->setAnchorPoint(ccp(0,0));
-
+	
     // Rotation in tiled is achieved using 3 flipped states, flipping across the horizontal, vertical, and diagonal axes of the tiles.
-    if (gid & kCCTMXTileDiagonalFlag)
-    {
-        // put the anchor in the middle for ease of rotation.
-        sprite->setAnchorPoint(ccp(0.5f,0.5f));
-        sprite->setPosition(ccp(positionAt(pos).x + sprite->getContentSize().height/2,
-           positionAt(pos).y + sprite->getContentSize().width/2 ) );
-
-        unsigned int flag = gid & (kCCTMXTileHorizontalFlag | kCCTMXTileVerticalFlag );
-
+    if(gid & kCCTMXTileFlagFlipDiagonal) {
+		// get flag
+        int flag = gid & (kCCTMXTileFlagFlipH | kCCTMXTileFlagFlipV);
+		
         // handle the 4 diagonally flipped states.
-        if (flag == kCCTMXTileHorizontalFlag)
-        {
+        if (flag == kCCTMXTileFlagFlipH) {
             sprite->setRotation(90.0f);
-        }
-        else if (flag == kCCTMXTileVerticalFlag)
-        {
+        } else if(flag == kCCTMXTileFlagFlipV) {
             sprite->setRotation(270.0f);
-        }
-        else if (flag == (kCCTMXTileVerticalFlag | kCCTMXTileHorizontalFlag) )
-        {
+        } else if (flag == (kCCTMXTileFlagFlipV | kCCTMXTileFlagFlipH)) {
             sprite->setRotation(90.0f);
             sprite->setFlipX(true);
-        }
-        else
-        {
+        } else {
             sprite->setRotation(270.0f);
             sprite->setFlipX(true);
         }
-    }
-    else
-    {
-        if (gid & kCCTMXTileHorizontalFlag)
-        {
+    } else {
+        if(gid & kCCTMXTileFlagFlipH) {
             sprite->setFlipX(true);
         }
-
-        if (gid & kCCTMXTileVerticalFlag)
-        {
+        if(gid & kCCTMXTileFlagFlipV) {
             sprite->setFlipY(true);
         }
     }
 }
 
-CCSprite* CCTMXLayer::reusedTileWithRect(CCRect rect)
-{
-    if (! m_pReusedTile) 
-    {
-        m_pReusedTile = new CCSprite();
-        m_pReusedTile->initWithTexture(m_pobTextureAtlas->getTexture(), rect, false);
-        m_pReusedTile->setBatchNode(this);
+void CCTMXLayer::appendTileForGid(int tilesetIndex, int gid, int x, int y) {
+	// get next index
+	CCSpriteBatchNode* bn = m_batchNodes[tilesetIndex];
+    CCTextureAtlas* atlas = bn->getTextureAtlas();
+	int index = atlas->getTotalQuads();
+	
+	// save atlas index
+	int z = x + y * m_layerWidth;
+	m_atlasInfos[z].atlasIndex = index;
+    m_atlasInfos[z].tilesetIndex = tilesetIndex;
+	
+	// get tileset and rect of gid
+	CCTMXTileSetInfo* tileset = (CCTMXTileSetInfo*)m_mapInfo->getTileSets().objectAtIndex(tilesetIndex);
+	CCRect rect = tileset->getRect(gid);
+	
+	// create sprite
+	CCSprite* tile = reusedTile(rect, bn);
+	
+	// setup tile
+	setupTileSprite(tile, ccpos(x, y), gid);
+	
+	// insert
+    bn->insertQuadFromSprite(tile, index);
+}
+
+void CCTMXLayer::parseInternalProperties() {
+	string vertexz = getProperty("cc_vertexz");
+    if(!vertexz.empty()) {
+        // If "automatic" is on, then parse the "cc_alpha_func" too
+        if (vertexz == "automatic") {
+            m_useAutomaticVertexZ = true;
+            string alphaFuncVal = getProperty("cc_alpha_func");
+            float alphaFuncValue = 0.0f;
+            if(!alphaFuncVal.empty()) {
+				alphaFuncValue = atof(alphaFuncVal.c_str());
+            }
+            setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest));
+			
+            GLint alphaValueLocation = glGetUniformLocation(getShaderProgram()->getProgram(), kCCUniformAlphaTestValue);
+			
+            // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
+            getShaderProgram()->setUniformLocationWith1f(alphaValueLocation, alphaFuncValue);
+        } else {
+			m_vertexZ = atof(vertexz.c_str());
+        }
     }
-    else
-    {
+}
+
+CCPoint CCTMXLayer::calculateLayerOffset(float x, float y) {
+	CCPoint ret = CCPointZero;
+	switch(m_mapInfo->getOrientation()) {
+		case kCCTMXOrientationOrthogonal:
+			ret.x = x * m_tileWidth;
+			ret.y = y * m_tileHeight;
+			break;
+		case kCCTMXOrientationIsometric:
+			ret.x = (m_tileWidth / 2) * (x - y);
+			ret.y = (m_tileHeight / 2) * (-x - y);
+			break;
+		case kCCTMXOrientationHexagonal:
+			// TODO offset for hexagonal map not implemented yet
+			break;
+	}
+	return ret;
+}
+
+void CCTMXLayer::setupTiles() {
+	// Parse cocos2d properties
+	parseInternalProperties();
+	
+	// add tiles coordinates
+	for(int y = 0; y < m_layerHeight; y++) {
+		for(int x = 0; x < m_layerWidth; x++) {
+			int pos = x + m_layerWidth * y;
+			int gid = m_tiles[pos];
+			
+			// gid == 0 -> empty tile
+			if(gid != 0) {
+                // find tileset index
+                int tilesetIndex = m_mapInfo->getTileSetIndex(gid);
+                
+                // if corresponded batch not is not created, create it and add it
+                if(m_batchNodes[tilesetIndex] == NULL) {
+                    CCTMXTileSetInfo* tileset = (CCTMXTileSetInfo*)m_mapInfo->getTileSets().objectAtIndex(tilesetIndex);
+                    CCSpriteBatchNode* bn = CCSpriteBatchNode::createWithTexture(tileset->getTexture());
+                    m_batchNodes[tilesetIndex] = bn;
+                    addChild(bn, tilesetIndex);
+                }
+                
+                // append tile
+				appendTileForGid(tilesetIndex, gid, x, y);
+				m_minGid = MIN(m_minGid, gid);
+				m_maxGid = MAX(m_maxGid, gid);
+			}
+		}
+	}
+}
+
+void CCTMXLayer::setAntiAliasTexParameters() {
+    int c = m_mapInfo->getTileSets().count();
+    for(int i = 0; i < c; i++) {
+        if(m_batchNodes[i]) {
+            m_batchNodes[i]->getTexture()->setAntiAliasTexParameters();
+        }
+    }
+}
+
+string CCTMXLayer::getProperty(const string& key) {
+	return m_layerInfo->getProperty(key);
+}
+
+int CCTMXLayer::getGidAt(CCPoint loc) {
+    return getGidAt(loc.x, loc.y);
+}
+
+int CCTMXLayer::getGidAt(int x, int y) {
+	if(x < 0 || x >= m_layerWidth || y < 0 || y >= m_layerHeight)
+		return 0;
+	
+	int pos = x + m_layerWidth * y;
+	return m_tiles[pos];
+}
+
+const int* CCTMXLayer::getGids() {
+	return m_tiles;
+}
+
+const int* CCTMXLayer::copyGids() {
+	int totalNumberOfTiles = m_layerWidth * m_layerHeight;
+	int* ret = (int*)malloc(totalNumberOfTiles * sizeof(int));
+	memcpy(ret, m_tiles, totalNumberOfTiles * sizeof(int));
+	return ret;
+}
+
+void CCTMXLayer::decreaseIndexIfMoreThan(int tilesetIndex, int index) {
+	for(int x = 0; x < m_layerWidth; x++) {
+		for(int y = 0; y < m_layerHeight; y++) {
+			int z = x + y * m_layerWidth;
+			if(m_atlasInfos[z].tilesetIndex == tilesetIndex && m_atlasInfos[z].atlasIndex > index) {
+				m_atlasInfos[z].atlasIndex--;
+			}
+		}
+	}
+}
+
+void CCTMXLayer::increaseIndexIfEqualOrMoreThan(int tilesetIndex, int index) {
+	for(int x = 0; x < m_layerWidth; x++) {
+		for(int y = 0; y < m_layerHeight; y++) {
+			int z = x + y * m_layerWidth;
+			if(m_atlasInfos[z].tilesetIndex == tilesetIndex && m_atlasInfos[z].atlasIndex >= index) {
+				m_atlasInfos[z].atlasIndex++;
+			}
+		}
+	}
+}
+
+void CCTMXLayer::removeTile(CCSprite* sprite) {
+	// basic validation
+	if(!sprite)
+		return;
+	
+	// get z
+	int z = sprite->getTag();
+	if(z < 0 || z >= m_layerWidth * m_layerHeight)
+		return;
+	
+    // get batch node atlas
+    CCSpriteBatchNode* bn = m_batchNodes[m_atlasInfos[z].tilesetIndex];
+	
+    // remove this sprite from batch node
+    bn->removeChild(sprite, true);
+	
+    // adjust atlas indices
+    decreaseIndexIfMoreThan(m_atlasInfos[z].tilesetIndex, m_atlasInfos[z].atlasIndex);
+    m_atlasInfos[z].tilesetIndex = -1;
+    m_atlasInfos[z].atlasIndex = -1;
+	
+    // remove gid
+    m_tiles[z] = 0;
+}
+
+void CCTMXLayer::removeTileAt(CCPoint loc) {
+    removeTileAt(loc.x, loc.y);
+}
+
+void CCTMXLayer::removeTileAt(int x, int y) {
+	// basic validation
+	if(x < 0 || x >= m_layerWidth || y < 0 || y >= m_layerHeight)
+		return;
+	
+	// find index
+	int z = x + y * m_layerWidth;
+	int index = m_atlasInfos[z].atlasIndex;
+	if(index < 0)
+		return;
+    
+    // get batch node atlas
+    CCSpriteBatchNode* bn = m_batchNodes[m_atlasInfos[z].tilesetIndex];
+    CCTextureAtlas* atlas = bn->getTextureAtlas();
+	
+	// has sprite?
+	CCSprite* sprite = (CCSprite*)bn->getChildByTag(z);
+	if(sprite == NULL) {
+		// remove quadratic
+		atlas->removeQuadAtIndex(index);
+	} else {
+        // remove this sprite from batch node
+        bn->removeChild(sprite, true);
+	}
+    
+    // adjust atlas indices
+    decreaseIndexIfMoreThan(m_atlasInfos[z].tilesetIndex, index);
+    m_atlasInfos[z].tilesetIndex = -1;
+    m_atlasInfos[z].atlasIndex = -1;
+    
+    // remove gid
+    m_tiles[z] = 0;
+}
+
+CCSprite* CCTMXLayer::reusedTile(CCRect rect, CCSpriteBatchNode* bn) {
+    if(!m_reusedTile) {
+        m_reusedTile = new CCSprite();
+        m_reusedTile->initWithTexture(bn->getTextureAtlas()->getTexture(), rect, false);
+        m_reusedTile->setBatchNode(bn);
+    } else {
         // XXX HACK: Needed because if "batch node" is nil,
 		// then the Sprite'squad will be reset
-        m_pReusedTile->setBatchNode(NULL);
+        m_reusedTile->setBatchNode(NULL);
         
 		// Re-init the sprite
-        m_pReusedTile->setTextureRect(rect, false, rect.size);
+        m_reusedTile->setTextureRect(rect, false, rect.size);
         
 		// restore the batch node
-        m_pReusedTile->setBatchNode(this);
+        m_reusedTile->setBatchNode(bn);
     }
-
-    return m_pReusedTile;
+	
+    return m_reusedTile;
 }
 
-// CCTMXLayer - obtaining tiles/gids
-CCSprite * CCTMXLayer::tileAt(const CCPoint& pos)
-{
-    CCAssert(pos.x < m_tLayerSize.width && pos.y < m_tLayerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
-    CCAssert(m_pTiles && m_pAtlasIndexArray, "TMXLayer: the tiles map has been released");
-
-    CCSprite *tile = NULL;
-    unsigned int gid = this->tileGIDAt(pos);
-
-    // if GID == 0, then no tile is present
-    if (gid) 
-    {
-        int z = (int)(pos.x + pos.y * m_tLayerSize.width);
-        tile = (CCSprite*) this->getChildByTag(z);
-
-        // tile not created yet. create it
-        if (! tile) 
-        {
-            CCRect rect = m_pTileSet->rectForGID(gid);
-            rect = CC_RECT_PIXELS_TO_POINTS(rect);
-
-            tile = new CCSprite();
-            tile->initWithTexture(this->getTexture(), rect);
-            tile->setBatchNode(this);
-            tile->setPosition(positionAt(pos));
-            tile->setVertexZ((float)vertexZForPos(pos));
-            tile->setAnchorPoint(CCPointZero);
-            tile->setOpacity(m_cOpacity);
-
-            unsigned int indexForZ = atlasIndexForExistantZ(z);
-            this->addSpriteWithoutQuad(tile, indexForZ, z);
-            tile->release();
-        }
+void CCTMXLayer::setTileAt(int tilesetIndex, int gid, int x, int y, int z) {
+    // get tileset
+    CCTMXTileSetInfo* tileset = (CCTMXTileSetInfo*)m_mapInfo->getTileSets().objectAtIndex(tilesetIndex);
+    CCRect rect = tileset->getRect(gid);
+	
+    // if coorespond batch not is not created, create it and add it
+    if(m_batchNodes[tilesetIndex] == NULL) {
+        CCSpriteBatchNode* bn = CCSpriteBatchNode::createWithTexture(tileset->getTexture());
+        m_batchNodes[tilesetIndex] = bn;
+        addChild(bn, tilesetIndex);
     }
     
-    return tile;
-}
-
-unsigned int CCTMXLayer::tileGIDAt(const CCPoint& pos)
-{
-    return tileGIDAt(pos, NULL);
-}
-
-unsigned int CCTMXLayer::tileGIDAt(const CCPoint& pos, ccTMXTileFlags* flags)
-{
-    CCAssert(pos.x < m_tLayerSize.width && pos.y < m_tLayerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
-    CCAssert(m_pTiles && m_pAtlasIndexArray, "TMXLayer: the tiles map has been released");
-
-    int idx = (int)(pos.x + pos.y * m_tLayerSize.width);
-    // Bits on the far end of the 32-bit global tile ID are used for tile flags
-    unsigned int tile = m_pTiles[idx];
-
-    // issue1264, flipped tiles can be changed dynamically
-    if (flags) 
-    {
-        *flags = (ccTMXTileFlags)(tile & kCCFlipedAll);
-    }
+    // get atlas and tileset
+	CCSpriteBatchNode* bn = m_batchNodes[tilesetIndex];
+    CCTextureAtlas* atlas = bn->getTextureAtlas();
+    int index = atlas->getTotalQuads();
+	
+	// create and setup tile
+	CCSprite* tile = reusedTile(rect, bn);
+	setupTileSprite(tile, ccpos(x, y), gid);
+	
+	// insert
+    bn->insertQuadFromSprite(tile, index);
+	
+	// adjust index
+	increaseIndexIfEqualOrMoreThan(tilesetIndex, index);
+	
+	// save atlas indices
+    m_atlasInfos[z].atlasIndex = index;
+    m_atlasInfos[z].tilesetIndex = tilesetIndex;
     
-    return (tile & kCCFlippedMask);
+    // insert gid
+    m_tiles[z] = gid;
+	
+	// update possible children
+	CCObject* pObject = NULL;
+	CCARRAY_FOREACH(bn->getChildren(), pObject) {
+		CCSprite* pChild = (CCSprite*) pObject;
+		if(pChild && pChild != tile) {
+			unsigned int ai = pChild->getAtlasIndex();
+			if(ai >= index) {
+				pChild->setAtlasIndex(ai + 1);
+			}
+		}
+	}
 }
 
-// CCTMXLayer - adding helper methods
-CCSprite * CCTMXLayer::insertTileForGID(unsigned int gid, const CCPoint& pos)
-{
-    CCRect rect = m_pTileSet->rectForGID(gid);
-    rect = CC_RECT_PIXELS_TO_POINTS(rect);
-
-    intptr_t z = (intptr_t)(pos.x + pos.y * m_tLayerSize.width);
-
-    CCSprite *tile = reusedTileWithRect(rect);
-
-    setupTileSprite(tile, pos, gid);
-
-    // get atlas index
-    unsigned int indexForZ = atlasIndexForNewZ(z);
-
-    // Optimization: add the quad without adding a child
-    this->insertQuadFromSprite(tile, indexForZ);
-
-    // insert it into the local atlasindex array
-    ccCArrayInsertValueAtIndex(m_pAtlasIndexArray, (void*)z, indexForZ);
-
-    // update possible children
-    if (m_pChildren && m_pChildren->count()>0)
-    {
-        CCObject* pObject = NULL;
-        CCARRAY_FOREACH(m_pChildren, pObject)
-        {
-            CCSprite* pChild = (CCSprite*) pObject;
-            if (pChild)
-            {
-                unsigned int ai = pChild->getAtlasIndex();
-                if ( ai >= indexForZ )
-                {
-                    pChild->setAtlasIndex(ai+1);
-                }
-            }
-        }
-    }
-    m_pTiles[z] = gid;
-    return tile;
-}
-CCSprite * CCTMXLayer::updateTileForGID(unsigned int gid, const CCPoint& pos)    
-{
-    CCRect rect = m_pTileSet->rectForGID(gid);
-    rect = CCRectMake(rect.origin.x / m_fContentScaleFactor, rect.origin.y / m_fContentScaleFactor, rect.size.width/ m_fContentScaleFactor, rect.size.height/ m_fContentScaleFactor);
-    int z = (int)(pos.x + pos.y * m_tLayerSize.width);
-
-    CCSprite *tile = reusedTileWithRect(rect);
-
-    setupTileSprite(tile ,pos ,gid);
-
-    // get atlas index
-    unsigned int indexForZ = atlasIndexForExistantZ(z);
-    tile->setAtlasIndex(indexForZ);
-    tile->setDirty(true);
-    tile->updateTransform();
-    m_pTiles[z] = gid;
-
-    return tile;
+void CCTMXLayer::setTileAt(int gid, CCPoint loc) {
+    setTileAt(gid, loc.x, loc.y);
 }
 
-// used only when parsing the map. useless after the map was parsed
-// since lot's of assumptions are no longer true
-CCSprite * CCTMXLayer::appendTileForGID(unsigned int gid, const CCPoint& pos)
-{
-    CCRect rect = m_pTileSet->rectForGID(gid);
-    rect = CC_RECT_PIXELS_TO_POINTS(rect);
-
-    intptr_t z = (intptr_t)(pos.x + pos.y * m_tLayerSize.width);
-
-    CCSprite *tile = reusedTileWithRect(rect);
-
-    setupTileSprite(tile ,pos ,gid);
-
-    // optimization:
-    // The difference between appendTileForGID and insertTileforGID is that append is faster, since
-    // it appends the tile at the end of the texture atlas
-    unsigned int indexForZ = m_pAtlasIndexArray->num;
-
-    // don't add it using the "standard" way.
-    insertQuadFromSprite(tile, indexForZ);
-
-    // append should be after addQuadFromSprite since it modifies the quantity values
-    ccCArrayInsertValueAtIndex(m_pAtlasIndexArray, (void*)z, indexForZ);
-
-    return tile;
-}
-
-// CCTMXLayer - atlasIndex and Z
-static inline int compareInts(const void * a, const void * b)
-{
-    return ((*(int*)a) - (*(int*)b));
-}
-unsigned int CCTMXLayer::atlasIndexForExistantZ(unsigned int z)
-{
-    int key=z;
-    int *item = (int*)bsearch((void*)&key, (void*)&m_pAtlasIndexArray->arr[0], m_pAtlasIndexArray->num, sizeof(void*), compareInts);
-
-    CCAssert(item, "TMX atlas index not found. Shall not happen");
-
-    int index = ((size_t)item - (size_t)m_pAtlasIndexArray->arr) / sizeof(void*);
-    return index;
-}
-unsigned int CCTMXLayer::atlasIndexForNewZ(int z)
-{
-    // XXX: This can be improved with a sort of binary search
-    unsigned int i=0;
-    for (i=0; i< m_pAtlasIndexArray->num ; i++) 
-    {
-        int val = (size_t) m_pAtlasIndexArray->arr[i];
-        if (z < val)
-        {
-            break;
-        }
-    } 
-    
-    return i;
-}
-
-// CCTMXLayer - adding / remove tiles
-void CCTMXLayer::setTileGID(unsigned int gid, const CCPoint& pos)
-{
-    setTileGID(gid, pos, (ccTMXTileFlags)0);
-}
-
-void CCTMXLayer::setTileGID(unsigned int gid, const CCPoint& pos, ccTMXTileFlags flags)
-{
-    CCAssert(pos.x < m_tLayerSize.width && pos.y < m_tLayerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
-    CCAssert(m_pTiles && m_pAtlasIndexArray, "TMXLayer: the tiles map has been released");
-    CCAssert(gid == 0 || gid >= m_pTileSet->m_uFirstGid, "TMXLayer: invalid gid" );
-
-    ccTMXTileFlags currentFlags;
-    unsigned int currentGID = tileGIDAt(pos, &currentFlags);
-
-    if (currentGID != gid || currentFlags != flags) 
-    {
-        unsigned gidAndFlags = gid | flags;
-
-        // setting gid=0 is equal to remove the tile
-        if (gid == 0)
-        {
-            removeTileAt(pos);
-        }
-        // empty tile. create a new one
-        else if (currentGID == 0)
-        {
-            insertTileForGID(gidAndFlags, pos);
-        }
-        // modifying an existing tile with a non-empty tile
-        else 
-        {
-            unsigned int z = (unsigned int)(pos.x + pos.y * m_tLayerSize.width);
-            CCSprite *sprite = (CCSprite*)getChildByTag(z);
-            if (sprite)
-            {
-                CCRect rect = m_pTileSet->rectForGID(gid);
-                rect = CC_RECT_PIXELS_TO_POINTS(rect);
-
-                sprite->setTextureRect(rect, false, rect.size);
-                if (flags) 
-                {
-                    setupTileSprite(sprite, sprite->getPosition(), gidAndFlags);
-                }
-                m_pTiles[z] = gidAndFlags;
-            } 
-            else 
-            {
-                updateTileForGID(gidAndFlags, pos);
-            }
-        }
-    }
-}
-void CCTMXLayer::addChild(CCNode * child, int zOrder, int tag)
-{
-    CC_UNUSED_PARAM(child);
-    CC_UNUSED_PARAM(zOrder);
-    CC_UNUSED_PARAM(tag);
-    CCAssert(0, "addChild: is not supported on CCTMXLayer. Instead use setTileGID:at:/tileAt:");
-}
-void CCTMXLayer::removeChild(CCNode* node, bool cleanup)
-{
-    CCSprite *sprite = (CCSprite*)node;
-    // allows removing nil objects
-    if (! sprite)
-    {
+void CCTMXLayer::setTileAt(int gid, int x, int y) {
+	// basic validation
+	if(x < 0 || x >= m_layerWidth || y < 0 || y >= m_layerHeight)
+		return;
+	
+    // decide tileset index
+    int tilesetIndex = m_mapInfo->getTileSetIndex(gid);
+    if(tilesetIndex < 0)
         return;
-    }
-
-    CCAssert(m_pChildren->containsObject(sprite), "Tile does not belong to TMXLayer");
-
-    unsigned int atlasIndex = sprite->getAtlasIndex();
-    unsigned int zz = (size_t)m_pAtlasIndexArray->arr[atlasIndex];
-    m_pTiles[zz] = 0;
-    ccCArrayRemoveValueAtIndex(m_pAtlasIndexArray, atlasIndex);
-    CCSpriteBatchNode::removeChild(sprite, cleanup);
-}
-void CCTMXLayer::removeTileAt(const CCPoint& pos)
-{
-    CCAssert(pos.x < m_tLayerSize.width && pos.y < m_tLayerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
-    CCAssert(m_pTiles && m_pAtlasIndexArray, "TMXLayer: the tiles map has been released");
-
-    unsigned int gid = tileGIDAt(pos);
-
-    if (gid) 
-    {
-        unsigned int z = (unsigned int)(pos.x + pos.y * m_tLayerSize.width);
-        unsigned int atlasIndex = atlasIndexForExistantZ(z);
-
-        // remove tile from GID map
-        m_pTiles[z] = 0;
-
-        // remove tile from atlas position array
-        ccCArrayRemoveValueAtIndex(m_pAtlasIndexArray, atlasIndex);
-
-        // remove it from sprites and/or texture atlas
-        CCSprite *sprite = (CCSprite*)getChildByTag(z);
-        if (sprite)
-        {
-            CCSpriteBatchNode::removeChild(sprite, true);
-        }
-        else 
-        {
-            m_pobTextureAtlas->removeQuadAtIndex(atlasIndex);
-
-            // update possible children
-            if (m_pChildren && m_pChildren->count()>0)
-            {
-                CCObject* pObject = NULL;
-                CCARRAY_FOREACH(m_pChildren, pObject)
-                {
-                    CCSprite* pChild = (CCSprite*) pObject;
-                    if (pChild)
-                    {
-                        unsigned int ai = pChild->getAtlasIndex();
-                        if ( ai >= atlasIndex )
-                        {
-                            pChild->setAtlasIndex(ai-1);
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-//CCTMXLayer - obtaining positions, offset
-CCPoint CCTMXLayer::calculateLayerOffset(const CCPoint& pos)
-{
-    CCPoint ret = CCPointZero;
-    switch (m_uLayerOrientation) 
-    {
-    case CCTMXOrientationOrtho:
-        ret = ccp( pos.x * m_tMapTileSize.width, -pos.y *m_tMapTileSize.height);
-        break;
-    case CCTMXOrientationIso:
-        ret = ccp((m_tMapTileSize.width /2) * (pos.x - pos.y),
-                  (m_tMapTileSize.height /2 ) * (-pos.x - pos.y));
-        break;
-    case CCTMXOrientationHex:
-        CCAssert(pos.equals(CCPointZero), "offset for hexagonal map not implemented yet");
-        break;
-    }
-    return ret;    
-}
-CCPoint CCTMXLayer::positionAt(const CCPoint& pos)
-{
-    CCPoint ret = CCPointZero;
-    switch (m_uLayerOrientation)
-    {
-    case CCTMXOrientationOrtho:
-        ret = positionForOrthoAt(pos);
-        break;
-    case CCTMXOrientationIso:
-        ret = positionForIsoAt(pos);
-        break;
-    case CCTMXOrientationHex:
-        ret = positionForHexAt(pos);
-        break;
-    }
-    ret = CC_POINT_PIXELS_TO_POINTS( ret );
-    return ret;
-}
-CCPoint CCTMXLayer::positionForOrthoAt(const CCPoint& pos)
-{
-    CCPoint xy = CCPointMake(pos.x * m_tMapTileSize.width,
-                            (m_tLayerSize.height - pos.y - 1) * m_tMapTileSize.height);
-    return xy;
-}
-CCPoint CCTMXLayer::positionForIsoAt(const CCPoint& pos)
-{
-    CCPoint xy = CCPointMake(m_tMapTileSize.width /2 * (m_tLayerSize.width + pos.x - pos.y - 1),
-                             m_tMapTileSize.height /2 * ((m_tLayerSize.height * 2 - pos.x - pos.y) - 2));
-    return xy;
-}
-CCPoint CCTMXLayer::positionForHexAt(const CCPoint& pos)
-{
-    float diffY = 0;
-    if ((int)pos.x % 2 == 1)
-    {
-        diffY = -m_tMapTileSize.height/2 ;
-    }
-
-    CCPoint xy = CCPointMake(pos.x * m_tMapTileSize.width*3/4,
-                            (m_tLayerSize.height - pos.y - 1) * m_tMapTileSize.height + diffY);
-    return xy;
-}
-int CCTMXLayer::vertexZForPos(const CCPoint& pos)
-{
-    int ret = 0;
-    unsigned int maxVal = 0;
-    if (m_bUseAutomaticVertexZ)
-    {
-        switch (m_uLayerOrientation) 
-        {
-        case CCTMXOrientationIso:
-            maxVal = (unsigned int)(m_tLayerSize.width + m_tLayerSize.height);
-            ret = (int)(-(maxVal - (pos.x + pos.y)));
-            break;
-        case CCTMXOrientationOrtho:
-            ret = (int)(-(m_tLayerSize.height-pos.y));
-            break;
-        case CCTMXOrientationHex:
-            CCAssert(0, "TMX Hexa zOrder not supported");
-            break;
-        default:
-            CCAssert(0, "TMX invalid value");
-            break;
-        }
-    } 
-    else
-    {
-        ret = m_nVertexZvalue;
-    }
     
-    return ret;
+    // if same tileset, and index is not zero, just update it
+    // if same tileset, but index is zero, set it
+    // if not same tileset, first remove it and then set it
+    int z = x + y * m_layerWidth;
+    int index = m_atlasInfos[z].atlasIndex;
+    if(m_atlasInfos[z].tilesetIndex == tilesetIndex) {
+        if(index >= 0) {
+            updateTileAt(gid, x, y);
+        } else {
+            setTileAt(tilesetIndex, gid, x, y, z);
+        }
+    } else {
+        // first remove it
+        if(index >= 0)
+            removeTileAt(x, y);
+        
+        // then set it
+        setTileAt(tilesetIndex, gid, x, y, z);
+    }
 }
 
-CCDictionary * CCTMXLayer::getProperties()
-{
-    return m_pProperties;
+void CCTMXLayer::updateTileAt(int gid, CCPoint loc) {
+    updateTileAt(gid, loc.x, loc.y);
 }
-void CCTMXLayer::setProperties(CCDictionary* var)
-{
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(m_pProperties);
-    m_pProperties = var;
+
+void CCTMXLayer::updateTileAt(int gid, int x, int y) {
+	// basic validation
+	if(x < 0 || x >= m_layerWidth || y < 0 || y >= m_layerHeight)
+		return;
+	
+    // decide tileset index
+    int tilesetIndex = m_mapInfo->getTileSetIndex(gid);
+    
+    // if same tileset, but index less than zero, just set it
+    // if same tileset, but index >= 0, just update
+    // if not same tileset, remove it and then set it
+    int z = x + y * m_layerWidth;
+	int index = m_atlasInfos[z].atlasIndex;
+    if(m_atlasInfos[z].tilesetIndex == tilesetIndex) {
+        if(index < 0) {
+            setTileAt(tilesetIndex, gid, x, y, z);
+        } else {
+			CCSpriteBatchNode* bn = m_batchNodes[tilesetIndex];
+			CCTMXTileSetInfo* tileset = (CCTMXTileSetInfo*)m_mapInfo->getTileSets().objectAtIndex(tilesetIndex);
+			CCRect rect = tileset->getRect(gid);
+			
+			// create and setup tile
+			CCSprite* tile = reusedTile(rect, bn);
+			setupTileSprite(tile, ccpos(x, y), gid);
+
+			// update
+			int index = m_atlasInfos[z].atlasIndex;
+			tile->setAtlasIndex(index);
+			tile->setDirty(true);
+			tile->updateTransform();
+			
+            // save gid
+            m_tiles[z] = gid;
+        }
+    } else {
+        // first remove it
+        if(index >= 0)
+            removeTileAt(x, y);
+        
+        // then set it
+        setTileAt(tilesetIndex, gid, x, y, z);
+    }
+}
+
+CCSprite* CCTMXLayer::tileAt(CCPoint loc) {
+    return tileAt(loc.x, loc.y);
+}
+
+CCSprite* CCTMXLayer::tileAt(int x, int y) {
+	// get gid
+	int gid = getGidAt(x, y);
+	CCSprite* tile = NULL;
+	
+	// if gid is zero, no tile at that location
+	if(gid != 0) {
+        // decide tileset index
+        int tilesetIndex = m_mapInfo->getTileSetIndex(gid);
+        
+        // get batch node and tileset
+        CCSpriteBatchNode* bn = m_batchNodes[tilesetIndex];
+        CCTMXTileSetInfo* tileset = (CCTMXTileSetInfo*)m_mapInfo->getTileSets().objectAtIndex(tilesetIndex);
+        CCRect rect = tileset->getRect(gid);
+		
+		// first check this child exist or not
+		int z = x + y * m_layerWidth;
+		tile = (CCSprite*)bn->getChildByTag(z);
+		
+		// if not exist, create a new
+		if(!tile) {
+			CCPoint origin = getPositionAt(x, y);
+			tile = new CCSprite();
+            tile->initWithTexture(bn->getTextureAtlas()->getTexture(), rect);
+            tile->setBatchNode(bn);
+            tile->setPosition(ccp(origin.x + tile->getContentSize().width / 2,
+								  origin.y + tile->getContentSize().height / 2));
+            tile->setVertexZ(getVertexZAt(x, y));
+			tile->setColor(getColor());
+            tile->setOpacity(getOpacity());
+			
+            int index = m_atlasInfos[z].atlasIndex;
+            bn->addSpriteWithoutQuad(tile, index, z);
+            tile->release();
+		}
+	}
+	
+	return tile;
 }
 
 NS_CC_END
-

@@ -1,289 +1,213 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2009-2010 Ricardo Quesada
-Copyright (c) 2011      Zynga Inc.
-
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
+ Author: Luma (stubma@gmail.com)
+ 
+ https://github.com/stubma/cocos2dx-better
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 #include "CCTMXTiledMap.h"
-#include "CCTMXXMLParser.h"
+#include "CCTMXObjectGroup.h"
 #include "CCTMXLayer.h"
-#include "sprite_nodes/CCSprite.h"
+#include "CCTMXLayerInfo.h"
+#include "CCTMXLoader.h"
+#include "CCTMXTileSetInfo.h"
+#include "CCTMXObjectDebugRenderer.h"
+#include "textures/CCTextureCache.h"
 #include "support/CCPointExtension.h"
 
 NS_CC_BEGIN
 
-// implementation CCTMXTiledMap
+#define TAG_OBJECT_LAYER 0x7f7f7f7f
 
-CCTMXTiledMap * CCTMXTiledMap::create(const char *tmxFile)
-{
-    CCTMXTiledMap *pRet = new CCTMXTiledMap();
-    if (pRet->initWithTMXFile(tmxFile))
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+CCTMXTiledMap::~CCTMXTiledMap() {
+	CC_SAFE_RELEASE(m_mapInfo);
 }
 
-CCTMXTiledMap* CCTMXTiledMap::createWithXML(const char* tmxString, const char* resourcePath)
-{
-    CCTMXTiledMap *pRet = new CCTMXTiledMap();
-    if (pRet->initWithXML(tmxString, resourcePath))
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+CCTMXTiledMap::CCTMXTiledMap() :
+m_mapWidth(0),
+m_mapHeight(0),
+m_tileWidth(0),
+m_tileHeight(0),
+m_debugDrawObjects(false),
+m_mapInfo(NULL) {
 }
 
-bool CCTMXTiledMap::initWithTMXFile(const char *tmxFile)
-{
-    CCAssert(tmxFile != NULL && strlen(tmxFile)>0, "TMXTiledMap: tmx file should not bi NULL");
+CCTMXTiledMap* CCTMXTiledMap::create(const string& file) {
+	CCTMXTiledMap* tmx = new CCTMXTiledMap();
+	if(tmx->initWithXMLFile(file)) {
+		return (CCTMXTiledMap*)tmx->autorelease();
+	}
+	
+	tmx->release();
+	return NULL;
+}
+
+bool CCTMXTiledMap::initWithXMLFile(const string& file) {
+	if(!CCNodeRGBA::init())
+		return false;
+	
+	// set anchor
+	setAnchorPoint(CCPointZero);
+	ignoreAnchorPointForPosition(false);
+	
+	// map info
+	m_mapInfo = CCTMXLoader::create()->load(file);
+	CC_SAFE_RETAIN(m_mapInfo);
+	
+	// save info
+	m_tileWidth = m_mapInfo->getTileWidth();
+	m_tileHeight = m_mapInfo->getTileHeight();
+	m_mapWidth = m_mapInfo->getMapWidth();
+	m_mapHeight = m_mapInfo->getMapHeight();
     
-    setContentSize(CCSizeZero);
-
-    CCTMXMapInfo *mapInfo = CCTMXMapInfo::formatWithTMXFile(tmxFile);
-
-    if (! mapInfo)
-    {
-        return false;
-    }
-    CCAssert( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
-    buildWithMapInfo(mapInfo);
-
-    return true;
+    // append texture to tileset and set tileset size
+	CCObject* obj;
+	CCARRAY_FOREACH(&m_mapInfo->getTileSets(), obj) {
+		CCTMXTileSetInfo* tileset = (CCTMXTileSetInfo*)obj;
+		CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage(tileset->getSourceImagePath().c_str());
+		tileset->setTexture(tex);
+		tileset->setImageHeight(tex->getContentSize().height);
+		tileset->setImageWidth(tex->getContentSize().width);
+	}
+	
+	// create tmx layer
+	int idx = 0;
+	CCARRAY_FOREACH(&m_mapInfo->getLayers(), obj) {
+		CCTMXLayer* layer = CCTMXLayer::create(idx, m_mapInfo);
+		if(!layer)
+			continue;
+		
+		// add
+		addChild(layer, idx, idx);
+		idx++;
+		
+		// set map size
+		CCSize size = getContentSize();
+		CCSize layerSize = layer->getContentSize();
+		size.width = MAX(size.width, layerSize.width);
+		size.height = MAX(size.height, layerSize.height);
+		setContentSize(size);
+	}
+	
+	return true;
 }
 
-bool CCTMXTiledMap::initWithXML(const char* tmxString, const char* resourcePath)
-{
-    setContentSize(CCSizeZero);
-
-    CCTMXMapInfo *mapInfo = CCTMXMapInfo::formatWithXML(tmxString, resourcePath);
-
-    CCAssert( mapInfo->getTilesets()->count() != 0, "TMXTiledMap: Map not found. Please check the filename.");
-    buildWithMapInfo(mapInfo);
-
-    return true;
+CCTMXLayer* CCTMXTiledMap::getLayer(const string& name) {
+	CCArray* children = getChildren();
+	int cc = getChildrenCount();
+	for(int i = 0; i < cc; i++) {
+		CCNode* child = (CCNode*)children->objectAtIndex(i);
+		CCTMXLayer* layer = dynamic_cast<CCTMXLayer*>(child);
+		if(layer != NULL) {
+			if(layer->getLayerInfo()->getName() == name)
+				return layer;
+		}
+	}
+	return NULL;
 }
 
-CCTMXTiledMap::CCTMXTiledMap()
-    :m_tMapSize(CCSizeZero)
-    ,m_tTileSize(CCSizeZero)        
-    ,m_pObjectGroups(NULL)
-    ,m_pProperties(NULL)
-    ,m_pTileProperties(NULL)
-{
-}
-CCTMXTiledMap::~CCTMXTiledMap()
-{
-    CC_SAFE_RELEASE(m_pProperties);
-    CC_SAFE_RELEASE(m_pObjectGroups);
-    CC_SAFE_RELEASE(m_pTileProperties);
-}
-
-CCArray* CCTMXTiledMap::getObjectGroups()
-{
-    return m_pObjectGroups;
+CCTMXLayer* CCTMXTiledMap::getLayerAt(int index) {
+	CCArray* children = getChildren();
+	int cc = getChildrenCount();
+	for(int i = 0; i < cc; i++) {
+		CCNode* child = (CCNode*)children->objectAtIndex(i);
+		CCTMXLayer* layer = dynamic_cast<CCTMXLayer*>(child);
+		if(layer != NULL) {
+			index--;
+			if(index < 0)
+				return layer;
+		}
+	}
+	return NULL;
 }
 
-void CCTMXTiledMap::setObjectGroups(CCArray* var)
-{
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(m_pObjectGroups);
-    m_pObjectGroups = var;
+CCTMXObjectGroup* CCTMXTiledMap::getObjectGroup(const string& name) {
+	CCObject* obj;
+	CCARRAY_FOREACH(&m_mapInfo->getObjectGroups(), obj) {
+		CCTMXObjectGroup* og = (CCTMXObjectGroup*)obj;
+		if(og->getName() == name) {
+			return og;
+		}
+	}
+	return NULL;
 }
 
-CCDictionary * CCTMXTiledMap::getProperties()
-{
-    return m_pProperties;
+string CCTMXTiledMap::getProperty(const string& name) {
+	return m_mapInfo->getProperty(name);
 }
 
-void CCTMXTiledMap::setProperties(CCDictionary* var)
-{
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(m_pProperties);
-    m_pProperties = var;
+CCDictionary* CCTMXTiledMap::getTileProperties(int gid) {
+    return m_mapInfo->getTileProperties(gid);
 }
 
-// private
-CCTMXLayer * CCTMXTiledMap::parseLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo)
-{
-    CCTMXTilesetInfo *tileset = tilesetForLayer(layerInfo, mapInfo);
-    CCTMXLayer *layer = CCTMXLayer::create(tileset, layerInfo, mapInfo);
-
-    // tell the layerinfo to release the ownership of the tiles map.
-    layerInfo->m_bOwnTiles = false;
-    layer->setupTiles();
-
-    return layer;
+string CCTMXTiledMap::getTileProperty(int gid, const string& name) {
+	return m_mapInfo->getTileProperty(gid, name);
 }
 
-CCTMXTilesetInfo * CCTMXTiledMap::tilesetForLayer(CCTMXLayerInfo *layerInfo, CCTMXMapInfo *mapInfo)
-{
-    CCSize size = layerInfo->m_tLayerSize;
-    CCArray* tilesets = mapInfo->getTilesets();
-    if (tilesets && tilesets->count()>0)
-    {
-        CCTMXTilesetInfo* tileset = NULL;
-        CCObject* pObj = NULL;
-        CCARRAY_FOREACH_REVERSE(tilesets, pObj)
-        {
-            tileset = (CCTMXTilesetInfo*)pObj;
-            if (tileset)
-            {
-                for( unsigned int y=0; y < size.height; y++ )
-                {
-                    for( unsigned int x=0; x < size.width; x++ ) 
-                    {
-                        unsigned int pos = (unsigned int)(x + size.width * y);
-                        unsigned int gid = layerInfo->m_pTiles[ pos ];
-
-                        // gid are stored in little endian.
-                        // if host is big endian, then swap
-                        //if( o == CFByteOrderBigEndian )
-                        //    gid = CFSwapInt32( gid );
-                        /* We support little endian.*/
-
-                        // XXX: gid == 0 --> empty tile
-                        if( gid != 0 ) 
-                        {
-                            // Optimization: quick return
-                            // if the layer is invalid (more than 1 tileset per layer) an CCAssert will be thrown later
-                            if( (gid & kCCFlippedMask) >= tileset->m_uFirstGid )
-                                return tileset;
-                        }
-                    }
-                }        
-            }
-        }
-    }
-
-    // If all the tiles are 0, return empty tileset
-    CCLOG("cocos2d: Warning: TMX Layer '%s' has no tiles", layerInfo->m_sName.c_str());
-    return NULL;
+void CCTMXTiledMap::setDebugDrawObjects(bool flag) {
+	if(m_debugDrawObjects != flag) {
+		m_debugDrawObjects = flag;
+		
+		// add object layer or remove it
+		if(m_debugDrawObjects) {
+			CCTMXObjectDebugRenderer* r = CCTMXObjectDebugRenderer::create(this);
+			addChild(r, TAG_OBJECT_LAYER, MAX_INT);
+		} else {
+			removeChildByTag(TAG_OBJECT_LAYER);
+		}
+	}
 }
 
-void CCTMXTiledMap::buildWithMapInfo(CCTMXMapInfo* mapInfo)
-{
-    m_tMapSize = mapInfo->getMapSize();
-    m_tTileSize = mapInfo->getTileSize();
-    m_nMapOrientation = mapInfo->getOrientation();
-
-    CC_SAFE_RELEASE(m_pObjectGroups);
-    m_pObjectGroups = mapInfo->getObjectGroups();
-    CC_SAFE_RETAIN(m_pObjectGroups);
-
-    CC_SAFE_RELEASE(m_pProperties);
-    m_pProperties = mapInfo->getProperties();
-    CC_SAFE_RETAIN(m_pProperties);
-
-    CC_SAFE_RELEASE(m_pTileProperties);
-    m_pTileProperties = mapInfo->getTileProperties();
-    CC_SAFE_RETAIN(m_pTileProperties);
-
-    int idx=0;
-
-    CCArray* layers = mapInfo->getLayers();
-    if (layers && layers->count()>0)
-    {
-        CCTMXLayerInfo* layerInfo = NULL;
-        CCObject* pObj = NULL;
-        CCARRAY_FOREACH(layers, pObj)
-        {
-            layerInfo = (CCTMXLayerInfo*)pObj;
-            if (layerInfo && layerInfo->m_bVisible)
-            {
-                CCTMXLayer *child = parseLayer(layerInfo, mapInfo);
-                addChild((CCNode*)child, idx, idx);
-
-                // update content size with the max size
-                const CCSize& childSize = child->getContentSize();
-                CCSize currentSize = this->getContentSize();
-                currentSize.width = MAX( currentSize.width, childSize.width );
-                currentSize.height = MAX( currentSize.height, childSize.height );
-                this->setContentSize(currentSize);
-
-                idx++;
-            }
-        }
-    }
+CCPoint CCTMXTiledMap::nodeToTMXSpace(CCPoint p) {
+	switch(m_mapInfo->getOrientation()) {
+		case kCCTMXOrientationOrthogonal:
+		case kCCTMXOrientationHexagonal:
+			// ortho and hex is simple, just convert origin
+			return ccp(p.x, getContentSize().height - p.y);
+		case kCCTMXOrientationIsometric:
+		{
+			// iso map origin is at top vertex of (0, 0) tile, and x&y axis follows edges of that tile
+			float x = m_mapHeight * m_tileHeight - p.y - (m_mapWidth * m_tileWidth / 4 - p.x / 2);
+			float y = m_mapHeight * m_tileHeight - p.y + (m_mapWidth * m_tileWidth / 4 - p.x / 2);
+			return ccp(x, y);
+		}
+		default:
+			return p;
+	}
 }
 
-// public
-CCTMXLayer * CCTMXTiledMap::layerNamed(const char *layerName)
-{
-    CCAssert(layerName != NULL && strlen(layerName) > 0, "Invalid layer name!");
-    CCObject* pObj = NULL;
-    CCARRAY_FOREACH(m_pChildren, pObj) 
-    {
-        CCTMXLayer* layer = dynamic_cast<CCTMXLayer*>(pObj);
-        if(layer)
-        {
-            if(0 == strcmp(layer->getLayerName(), layerName))
-            {
-                return layer;
-            }
-        }
-    }
-
-    // layer not found
-    return NULL;
+CCPoint CCTMXTiledMap::tmxToNodeSpace(CCPoint p) {
+	switch(m_mapInfo->getOrientation()) {
+		case kCCTMXOrientationOrthogonal:
+		case kCCTMXOrientationHexagonal:
+			// ortho and hex is simple, just convert origin
+			return ccp(p.x, getContentSize().height - p.y);
+		case kCCTMXOrientationIsometric:
+		{
+			// iso map origin is at top vertex of (0, 0) tile, and x&y axis follows edges of that tile
+			float x = m_mapWidth * m_tileWidth / 2 + p.x - p.y;
+			float y = (m_mapHeight * m_tileHeight * 2 - p.x - p.y) / 2;
+			return ccp(x, y);
+		}
+		default:
+			return p;
+	}
 }
-
-CCTMXObjectGroup * CCTMXTiledMap::objectGroupNamed(const char *groupName)
-{
-    CCAssert(groupName != NULL && strlen(groupName) > 0, "Invalid group name!");
-
-    std::string sGroupName = groupName;
-    if (m_pObjectGroups && m_pObjectGroups->count()>0)
-    {
-        CCTMXObjectGroup* objectGroup = NULL;
-        CCObject* pObj = NULL;
-        CCARRAY_FOREACH(m_pObjectGroups, pObj)
-        {
-            objectGroup = (CCTMXObjectGroup*)(pObj);
-            if (objectGroup && objectGroup->getGroupName() == sGroupName)
-            {
-                return objectGroup;
-            }
-        }
-    }
-
-    // objectGroup not found
-    return NULL;
-}
-
-CCString* CCTMXTiledMap::propertyNamed(const char *propertyName)
-{
-    return (CCString*)m_pProperties->objectForKey(propertyName);
-}
-
-CCDictionary* CCTMXTiledMap::propertiesForGID(int GID)
-{
-    return (CCDictionary*)m_pTileProperties->objectForKey(GID);
-}
-        
 
 NS_CC_END
-

@@ -21,65 +21,42 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "CCTMXObjectGroup.h"
+#include "CCTMXTileSetInfo.h"
+#include "CCTMXMapInfo.h"
 
 NS_CC_BEGIN
 
-CCTMXObjectGroup::CCTMXObjectGroup() :
-m_offsetX(0),
-m_offsetY(0),
-m_color(0xffffffff),
-m_opacity(1) {
+CCTMXTileSetInfo::CCTMXTileSetInfo() :
+m_texture(NULL),
+m_imageHeight(0),
+m_imageWidth(0),
+m_spacing(0),
+m_margin(0),
+m_tileHeight(0),
+m_tileWidth(0),
+m_firstGid(0) {
 }
 
-CCTMXObjectGroup::~CCTMXObjectGroup() {
+CCTMXTileSetInfo::~CCTMXTileSetInfo() {
 }
 
-CCTMXObjectGroup* CCTMXObjectGroup::create() {
-	CCTMXObjectGroup* g = new CCTMXObjectGroup();
-	return (CCTMXObjectGroup*)g->autorelease();
+CCTMXTileSetInfo* CCTMXTileSetInfo::create() {
+	CCTMXTileSetInfo* t = new CCTMXTileSetInfo();
+	return (CCTMXTileSetInfo*)t->autorelease();
 }
 
-void CCTMXObjectGroup::addProperty(const string& key, const string& value) {
-	if(!m_properties.objectForKey(key)) {
-		m_properties.setObject(CCString::create(value), key);
-	}
-}
-
-string CCTMXObjectGroup::getProperty(const string& name) {
-	CCString* p = (CCString*)m_properties.objectForKey(name);
-	if(p)
-		return p->getCString();
-	else
-		return "";
-}
-
-CCTMXObject* CCTMXObjectGroup::newObject() {
-	CCTMXObject* to = CCTMXObject::create();
-	m_objects.addObject(to);
-    return to;
-}
-
-CCTMXObject* CCTMXObjectGroup::getObject(const string& name) {
-	CCObject* obj;
-	CCARRAY_FOREACH(&m_objects, obj) {
-		CCTMXObject* to = (CCTMXObject*)obj;
-		if(to->getName() == name)
-			return to;
-	}
+CCRect CCTMXTileSetInfo::getRect(int gid) {
+	CCRect rect = CCRectZero;
+	rect.size.width = m_tileWidth;
+	rect.size.height = m_tileHeight;
 	
-	return NULL;
-}
-
-CCTMXObject* CCTMXObjectGroup::getObjectAt(int index) {
-	if(index < 0 || index >= m_objects.count())
-		return NULL;
-	else
-		return (CCTMXObject*)m_objects.objectAtIndex(index);
-}
-
-void CCTMXObjectGroup::setOpacity(float opacity) {
-	m_opacity = MIN(1, MAX(0, opacity));
+	gid &= kCCTMXTileFlagFlipMask;
+	gid -= m_firstGid;
+	int maxX = (int)((m_imageWidth - m_margin * 2 + m_spacing) / (m_tileWidth + m_spacing));
+	rect.origin.x = (gid % maxX) * (m_tileWidth + m_spacing) + m_margin;
+	rect.origin.y = (gid / maxX) * (m_tileHeight + m_spacing) + m_margin;
+	
+	return rect;
 }
 
 NS_CC_END

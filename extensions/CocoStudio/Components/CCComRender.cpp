@@ -155,7 +155,7 @@ bool CCComRender::serialize(void* r)
 			}
 			else if(strcmp(pClassName, "CCTMXTiledMap") == 0 && strFilePath.find(".tmx") != strFilePath.npos)
 			{
-				m_pRender = CCTMXTiledMap::create(strFilePath.c_str());
+				m_pRender = CCTMXTiledMap::create(strFilePath);
 				m_pRender->retain();
 
                 bRet = true;

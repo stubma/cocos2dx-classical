@@ -21,65 +21,41 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "CCTMXObjectGroup.h"
+#include "CCTMXLayerInfo.h"
 
 NS_CC_BEGIN
 
-CCTMXObjectGroup::CCTMXObjectGroup() :
+CCTMXLayerInfo::CCTMXLayerInfo() :
+m_tiles(NULL),
+m_layerHeight(0),
+m_layerWidth(0),
+m_alpha(255),
+m_visible(true),
 m_offsetX(0),
-m_offsetY(0),
-m_color(0xffffffff),
-m_opacity(1) {
+m_offsetY(0) {
 }
 
-CCTMXObjectGroup::~CCTMXObjectGroup() {
+CCTMXLayerInfo::~CCTMXLayerInfo() {
+	CC_SAFE_FREE(m_tiles);
 }
 
-CCTMXObjectGroup* CCTMXObjectGroup::create() {
-	CCTMXObjectGroup* g = new CCTMXObjectGroup();
-	return (CCTMXObjectGroup*)g->autorelease();
+CCTMXLayerInfo* CCTMXLayerInfo::create() {
+	CCTMXLayerInfo* li = new CCTMXLayerInfo();
+	return (CCTMXLayerInfo*)li->autorelease();
 }
 
-void CCTMXObjectGroup::addProperty(const string& key, const string& value) {
+void CCTMXLayerInfo::addProperty(const string& key, const string& value) {
 	if(!m_properties.objectForKey(key)) {
 		m_properties.setObject(CCString::create(value), key);
 	}
 }
 
-string CCTMXObjectGroup::getProperty(const string& name) {
-	CCString* p = (CCString*)m_properties.objectForKey(name);
+string CCTMXLayerInfo::getProperty(const string& key) {
+	CCString* p = (CCString*)m_properties.objectForKey(key);
 	if(p)
 		return p->getCString();
 	else
 		return "";
-}
-
-CCTMXObject* CCTMXObjectGroup::newObject() {
-	CCTMXObject* to = CCTMXObject::create();
-	m_objects.addObject(to);
-    return to;
-}
-
-CCTMXObject* CCTMXObjectGroup::getObject(const string& name) {
-	CCObject* obj;
-	CCARRAY_FOREACH(&m_objects, obj) {
-		CCTMXObject* to = (CCTMXObject*)obj;
-		if(to->getName() == name)
-			return to;
-	}
-	
-	return NULL;
-}
-
-CCTMXObject* CCTMXObjectGroup::getObjectAt(int index) {
-	if(index < 0 || index >= m_objects.count())
-		return NULL;
-	else
-		return (CCTMXObject*)m_objects.objectAtIndex(index);
-}
-
-void CCTMXObjectGroup::setOpacity(float opacity) {
-	m_opacity = MIN(1, MAX(0, opacity));
 }
 
 NS_CC_END

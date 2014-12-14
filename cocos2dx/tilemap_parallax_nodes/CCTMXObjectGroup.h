@@ -1,84 +1,119 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2010      Neophit
-Copyright (c) 2010      Ricardo Quesada
-Copyright (c) 2011      Zynga Inc.
+ Author: Luma (stubma@gmail.com)
+ 
+ https://github.com/stubma/cocos2dx-better
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+#ifndef __CCTMXObjectGroup_h__
+#define __CCTMXObjectGroup_h__
 
-http://www.cocos2d-x.org
+#include "CCTMXObject.h"
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
-#ifndef __CCTMX_OBJECT_GROUP_H__
-#define __CCTMX_OBJECT_GROUP_H__
-
-#include "cocoa/CCGeometry.h"
-#include "cocoa/CCString.h"
-#include "cocoa/CCArray.h"
-#include "cocoa/CCDictionary.h"
+using namespace std;
 
 NS_CC_BEGIN
 
 /**
- * @addtogroup tilemap_parallax_nodes
- * @{
+ * Object group in TMX map, also known as object layer
+ *
+ * \note
+ * This is a re-implementation for TMX map. Cocos2d-x TMX support is defective, so I write my own.
+ * To avoid name conflict, I use CB prefix which stands for cocos2dx-better
  */
-
-/** @brief CCTMXObjectGroup represents the TMX object group.
-@since v0.99.0
-*/
-class CC_DLL CCTMXObjectGroup : public CCObject
-{
-    /** offset position of child objects */
-    CC_SYNTHESIZE_PASS_BY_REF(CCPoint, m_tPositionOffset, PositionOffset);
-    /** list of properties stored in a dictionary */
-    CC_PROPERTY(CCDictionary*, m_pProperties, Properties);
-    /** array of the objects */
-    CC_PROPERTY(CCArray*, m_pObjects, Objects);
+class CC_DLL CCTMXObjectGroup : public CCObject {
+protected:
+	CCTMXObjectGroup();
+	
 public:
-    /**
-     * @js ctor
-     */
-    CCTMXObjectGroup();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~CCTMXObjectGroup();
-
-    inline const char* getGroupName(){ return m_sGroupName.c_str(); }
-    inline void setGroupName(const char *groupName){ m_sGroupName = groupName; }
-
-    /** return the value for the specific property name */
-    CCString *propertyNamed(const char* propertyName);
-
-    /** return the dictionary for the specific object name.
-    It will return the 1st object found on the array for the given name.
-    */
-    CCDictionary* objectNamed(const char *objectName);
-protected:    
-    /** name of the group */
-    std::string m_sGroupName;
+	virtual ~CCTMXObjectGroup();
+	static CCTMXObjectGroup* create();
+	
+	/**
+	 * Add property to object group
+	 *
+	 * @param key property name
+	 * @param value property value
+	 */
+	void addProperty(const string& key, const string& value);
+	
+	/**
+	 * Query property of object group
+	 *
+	 * @param name property name
+	 * @return property value, or NULL if not found
+	 */
+	string getProperty(const string& name);
+	
+	/**
+	 * Create a new CCTMXObject
+	 *
+	 * @return CCTMXObject instance, which is already added into object array
+	 */
+	CCTMXObject* newObject();
+	
+	/**
+	 * Get object by name
+	 *
+	 * @param name object name
+	 * @return CCTMXObject instance, or NULL if not found
+	 */
+	CCTMXObject* getObject(const string& name);
+	
+	/**
+	 * Get object at specified index. If an object doesn't have a name, we can get it
+	 * by index. The index increases from zero and follow the order object appears in TMX file
+	 *
+	 * @param index index of object
+	 * @return CCTMXObject instance, or NULL if index is invalid
+	 */
+	CCTMXObject* getObjectAt(int index);
+	
+	/**
+	 * Get object count in object group
+	 *
+	 * @return object count
+	 */
+	int getObjectCount() { return m_objects.count(); }
+	
+	/// name
+	CC_SYNTHESIZE(string, m_name, Name);
+	
+	/// x offset of object group
+	CC_SYNTHESIZE(float, m_offsetX, OffsetX);
+	
+	/// y offset of object group
+	CC_SYNTHESIZE(float, m_offsetY, OffsetY);
+	
+	/// object list, every object is a CCTMXObject instance
+	CC_SYNTHESIZE_PASS_BY_REF(CCArray, m_objects, Objects);
+	
+	/// property dict
+	CC_SYNTHESIZE_PASS_BY_REF_NC(CCDictionary, m_properties, Properties);
+	
+	/// color of object group, in argb8888 format, but alpha is always 0xff
+	CC_SYNTHESIZE(int, m_color, Color);
+	
+	/// opacity of object group, from 0 to 1
+	CC_SYNTHESIZE_SETTER(float, m_opacity, Opacity);
 };
-
-// end of tilemap_parallax_nodes group
-/// @}
 
 NS_CC_END
 
-#endif //__CCTMX_OBJECT_GROUP_H__
+#endif // __CCTMXObjectGroup_h__

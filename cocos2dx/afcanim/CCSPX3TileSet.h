@@ -24,7 +24,8 @@
 #ifndef __CCSPX3TileSet_h__
 #define __CCSPX3TileSet_h__
 
-#include "cocos2d.h"
+#include "ccTypes.h"
+#include "ccMacros.h"
 #include "CCSPX3Constants.h"
 
 NS_CC_BEGIN

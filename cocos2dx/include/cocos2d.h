@@ -226,7 +226,7 @@ THE SOFTWARE.
 #include "tilemap_parallax_nodes/CCTMXLayer.h"
 #include "tilemap_parallax_nodes/CCTMXObjectGroup.h"
 #include "tilemap_parallax_nodes/CCTMXTiledMap.h"
-#include "tilemap_parallax_nodes/CCTMXXMLParser.h"
+#include "tilemap_parallax_nodes/CCTMXLoader.h"
 #include "tilemap_parallax_nodes/CCTileMapAtlas.h"
 
 // touch_dispatcher
