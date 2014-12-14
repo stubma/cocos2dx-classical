@@ -62,6 +62,7 @@ THE SOFTWARE.
 #include "actions/CCShine.h"
 #include "actions/ccShake.h"
 #include "actions/CCMissile.h"
+#include "actions/CCTrailMoveTo.h"
 
 // base_nodes
 #include "base_nodes/CCNode.h"

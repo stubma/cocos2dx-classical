@@ -780,6 +780,8 @@
 		92A7AFFB1A3C7377001C830B /* CCMissile.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A7AFF71A3C7377001C830B /* CCMissile.h */; };
 		92A7AFFC1A3C7377001C830B /* CCShake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92A7AFF81A3C7377001C830B /* CCShake.cpp */; };
 		92A7AFFD1A3C7377001C830B /* CCShake.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A7AFF91A3C7377001C830B /* CCShake.h */; };
+		92B915391A3D443900622FDA /* CCTrailMoveTo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92B915371A3D443900622FDA /* CCTrailMoveTo.cpp */; };
+		92B9153A1A3D443900622FDA /* CCTrailMoveTo.h in Headers */ = {isa = PBXBuildFile; fileRef = 92B915381A3D443900622FDA /* CCTrailMoveTo.h */; };
 		92D6833C1A2F669600CD9F2A /* CCGradientSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D6833A1A2F669600CD9F2A /* CCGradientSprite.cpp */; };
 		92D6833D1A2F669600CD9F2A /* CCGradientSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D6833B1A2F669600CD9F2A /* CCGradientSprite.h */; };
 		92D683441A2F695900CD9F2A /* CCMenuItemColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D683421A2F695900CD9F2A /* CCMenuItemColor.cpp */; };
@@ -1577,6 +1579,8 @@
 		92A7AFF71A3C7377001C830B /* CCMissile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMissile.h; sourceTree = "<group>"; };
 		92A7AFF81A3C7377001C830B /* CCShake.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCShake.cpp; sourceTree = "<group>"; };
 		92A7AFF91A3C7377001C830B /* CCShake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCShake.h; sourceTree = "<group>"; };
+		92B915371A3D443900622FDA /* CCTrailMoveTo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTrailMoveTo.cpp; sourceTree = "<group>"; };
+		92B915381A3D443900622FDA /* CCTrailMoveTo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTrailMoveTo.h; sourceTree = "<group>"; };
 		92D6833A1A2F669600CD9F2A /* CCGradientSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGradientSprite.cpp; sourceTree = "<group>"; };
 		92D6833B1A2F669600CD9F2A /* CCGradientSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGradientSprite.h; sourceTree = "<group>"; };
 		92D683421A2F695900CD9F2A /* CCMenuItemColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMenuItemColor.cpp; sourceTree = "<group>"; };
@@ -1695,6 +1699,8 @@
 				92A7AFF91A3C7377001C830B /* CCShake.h */,
 				92A7AFF21A3C720C001C830B /* CCShine.cpp */,
 				92A7AFF31A3C720C001C830B /* CCShine.h */,
+				92B915371A3D443900622FDA /* CCTrailMoveTo.cpp */,
+				92B915381A3D443900622FDA /* CCTrailMoveTo.h */,
 				928F64EE1A341F4D00178235 /* CCTreeFadeIn.cpp */,
 				928F64EF1A341F4D00178235 /* CCTreeFadeIn.h */,
 				928F64F01A341F4D00178235 /* CCTreeFadeOut.cpp */,
@@ -3514,6 +3520,7 @@
 				921112201A2B4D89003FE653 /* TriggerObj.h in Headers */,
 				1551A84F158F2ADF00E66CFE /* ioapi.h in Headers */,
 				1551A851158F2ADF00E66CFE /* unzip.h in Headers */,
+				92B9153A1A3D443900622FDA /* CCTrailMoveTo.h in Headers */,
 				929D53691A27582F00560A2E /* Vector.h in Headers */,
 				929F3A711A26193200DE78AC /* CCLocalization.h in Headers */,
 				1551A853158F2ADF00E66CFE /* ZipUtils.h in Headers */,
@@ -3703,6 +3710,7 @@
 				921111841A2B4D89003FE653 /* CCFrame.cpp in Sources */,
 				92A7AF551A3C4038001C830B /* CCAFCFileData.cpp in Sources */,
 				1551A62A158F2ADE00E66CFE /* CCActionCamera.cpp in Sources */,
+				92B915391A3D443900622FDA /* CCTrailMoveTo.cpp in Sources */,
 				924308501A2F5FEC00BE2476 /* CCAssetOutputStream_ios.mm in Sources */,
 				1551A62C158F2ADE00E66CFE /* CCActionCatmullRom.cpp in Sources */,
 				92A7AF621A3C4038001C830B /* CCArcticSprite.cpp in Sources */,
