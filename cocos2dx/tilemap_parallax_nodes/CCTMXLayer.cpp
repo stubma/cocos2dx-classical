@@ -25,7 +25,7 @@
 #include "CCTMXMapInfo.h"
 #include "CCTMXLayerInfo.h"
 #include "CCTMXTileSetInfo.h"
-#include "CCSpriteBatchNode.h"
+#include "sprite_nodes/CCSpriteBatchNode.h"
 #include "support/CCPointExtension.h"
 #include "shaders/CCShaderCache.h"
 

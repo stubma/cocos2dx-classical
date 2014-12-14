@@ -25,7 +25,7 @@
 #define __CCTMXObjectDebugRenderer_h__
 
 #include "base_nodes/CCNode.h"
-#include "CCPointList.h"
+#include "support/data_support/CCPointList.h"
 
 NS_CC_BEGIN
 
