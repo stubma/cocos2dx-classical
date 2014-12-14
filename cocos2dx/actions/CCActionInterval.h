@@ -494,7 +494,7 @@ class CC_DLL CCJumpBy : public CCActionInterval
 {
 public:
     /** initializes the action */
-    bool initWithDuration(float duration, const CCPoint& position, float height, unsigned int jumps);
+    bool initWithDuration(float duration, const CCPoint& position, float height, unsigned int jumps, bool autoHeadOn, float initAngle);
     /**
      *  @js NA
      *  @lua NA
@@ -506,13 +506,15 @@ public:
 
 public:
     /** creates the action */
-    static CCJumpBy* create(float duration, const CCPoint& position, float height, unsigned int jumps);
+    static CCJumpBy* create(float duration, const CCPoint& position, float height, unsigned int jumps, bool autoHeadOn = false, float initAngle = 0);
 protected:
     CCPoint         m_startPosition;
     CCPoint         m_delta;
     float           m_height;
     unsigned int    m_nJumps;
     CCPoint         m_previousPos;
+    bool m_autoHeadOn;
+    float m_initAngle;
 };
 
 /** @brief Moves a CCNode object to a parabolic position simulating a jump movement by modifying it's position attribute.
@@ -529,7 +531,7 @@ public:
 
 public:
     /** creates the action */
-    static CCJumpTo* create(float duration, const CCPoint& position, float height, int jumps);
+    static CCJumpTo* create(float duration, const CCPoint& position, float height, int jumps, bool autoHeadOn = false, float initAngle = 0);
 };
 
 /** @typedef bezier configuration structure

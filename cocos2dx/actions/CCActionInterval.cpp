@@ -1311,23 +1311,25 @@ CCActionInterval* CCSkewBy::reverse()
 // JumpBy
 //
 
-CCJumpBy* CCJumpBy::create(float duration, const CCPoint& position, float height, unsigned int jumps)
+CCJumpBy* CCJumpBy::create(float duration, const CCPoint& position, float height, unsigned int jumps, bool autoHeadOn, float initAngle)
 {
     CCJumpBy *pJumpBy = new CCJumpBy();
-    pJumpBy->initWithDuration(duration, position, height, jumps);
+    pJumpBy->initWithDuration(duration, position, height, jumps, autoHeadOn, initAngle);
     pJumpBy->autorelease();
 
     return pJumpBy;
 }
 
-bool CCJumpBy::initWithDuration(float duration, const CCPoint& position, float height, unsigned int jumps)
+bool CCJumpBy::initWithDuration(float duration, const CCPoint& position, float height, unsigned int jumps, bool autoHeadOn, float initAngle)
 {
     if (CCActionInterval::initWithDuration(duration))
     {
         m_delta = position;
         m_height = height;
         m_nJumps = jumps;
-
+        m_autoHeadOn = autoHeadOn;
+        m_initAngle = initAngle;
+        
         return true;
     }
 
@@ -1351,7 +1353,7 @@ CCObject* CCJumpBy::copyWithZone(CCZone *pZone)
 
     CCActionInterval::copyWithZone(pZone);
 
-    pCopy->initWithDuration(m_fDuration, m_delta, m_height, m_nJumps);
+    pCopy->initWithDuration(m_fDuration, m_delta, m_height, m_nJumps, m_autoHeadOn, m_initAngle);
     
     CC_SAFE_DELETE(pNewZone);
     return pCopy;
@@ -1373,9 +1375,8 @@ void CCJumpBy::update(float t)
         y += m_delta.y * t;
 
         float x = m_delta.x * t;
-#if CC_ENABLE_STACKABLE_ACTIONS
         CCPoint currentPos = m_pTarget->getPosition();
-
+#if CC_ENABLE_STACKABLE_ACTIONS
         CCPoint diff = ccpSub( currentPos, m_previousPos );
         m_startPosition = ccpAdd( diff, m_startPosition);
 
@@ -1386,23 +1387,32 @@ void CCJumpBy::update(float t)
 #else
         m_pTarget->setPosition(ccpAdd( m_startPosition, ccp(x,y)));
 #endif // !CC_ENABLE_STACKABLE_ACTIONS
+        
+        // auto head on
+        if(m_autoHeadOn) {
+            CCPoint v = ccpSub(m_pTarget->getPosition(), currentPos);
+            float r = ccpToAngle(v);
+            float d = -CC_RADIANS_TO_DEGREES(r);
+            d += m_initAngle;
+            m_pTarget->setRotation(d);
+        }
     }
 }
 
 CCActionInterval* CCJumpBy::reverse(void)
 {
     return CCJumpBy::create(m_fDuration, ccp(-m_delta.x, -m_delta.y),
-        m_height, m_nJumps);
+        m_height, m_nJumps, m_autoHeadOn, 180 - m_initAngle);
 }
 
 //
 // JumpTo
 //
 
-CCJumpTo* CCJumpTo::create(float duration, const CCPoint& position, float height, int jumps)
+CCJumpTo* CCJumpTo::create(float duration, const CCPoint& position, float height, int jumps, bool autoHeadOn, float initAngle)
 {
     CCJumpTo *pJumpTo = new CCJumpTo();
-    pJumpTo->initWithDuration(duration, position, height, jumps);
+    pJumpTo->initWithDuration(duration, position, height, jumps, autoHeadOn, initAngle);
     pJumpTo->autorelease();
 
     return pJumpTo;
@@ -1425,7 +1435,7 @@ CCObject* CCJumpTo::copyWithZone(CCZone* pZone)
 
     CCJumpBy::copyWithZone(pZone);
 
-    pCopy->initWithDuration(m_fDuration, m_delta, m_height, m_nJumps);
+    pCopy->initWithDuration(m_fDuration, m_delta, m_height, m_nJumps, m_autoHeadOn, m_initAngle);
     
     CC_SAFE_DELETE(pNewZone);
     return pCopy;
