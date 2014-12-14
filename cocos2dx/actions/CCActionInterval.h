@@ -395,7 +395,7 @@ class CC_DLL CCMoveBy : public CCActionInterval
 {
 public:
     /** initializes the action */
-    bool initWithDuration(float duration, const CCPoint& deltaPosition);
+    bool initWithDuration(float duration, const CCPoint& deltaPosition, bool autoHeadOn, float initAngle);
     /**
      *  @js NA
      *  @lua NA
@@ -407,11 +407,13 @@ public:
 
 public:
     /** creates the action */
-    static CCMoveBy* create(float duration, const CCPoint& deltaPosition);
+    static CCMoveBy* create(float duration, const CCPoint& deltaPosition, bool autoHeadOn = false, float initAngle = 0);
 protected:
     CCPoint m_positionDelta;
     CCPoint m_startPosition;
     CCPoint m_previousPosition;
+    bool m_autoHeadOn;
+    float m_initAngle;
 };
 
 /** Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
@@ -423,7 +425,7 @@ class CC_DLL CCMoveTo : public CCMoveBy
 {
 public:
     /** initializes the action */
-    bool initWithDuration(float duration, const CCPoint& position);
+    bool initWithDuration(float duration, const CCPoint& position, bool autoHeadOn, float initAngle);
     /**
      *  @js NA
      *  @lua NA
@@ -433,7 +435,7 @@ public:
 
 public:
     /** creates the action */
-    static CCMoveTo* create(float duration, const CCPoint& position);
+    static CCMoveTo* create(float duration, const CCPoint& position, bool autoHeadOn = false, float initAngle = 0);
 protected:
     CCPoint m_endPosition;
 };

@@ -1005,20 +1005,22 @@ CCActionInterval* CCRotateBy::reverse(void)
 // MoveBy
 //
 
-CCMoveBy* CCMoveBy::create(float duration, const CCPoint& deltaPosition)
+CCMoveBy* CCMoveBy::create(float duration, const CCPoint& deltaPosition, bool autoHeadOn, float initAngle)
 {
     CCMoveBy *pRet = new CCMoveBy();
-    pRet->initWithDuration(duration, deltaPosition);
+    pRet->initWithDuration(duration, deltaPosition, autoHeadOn, initAngle);
     pRet->autorelease();
 
     return pRet;
 }
 
-bool CCMoveBy::initWithDuration(float duration, const CCPoint& deltaPosition)
+bool CCMoveBy::initWithDuration(float duration, const CCPoint& deltaPosition, bool autoHeadOn, float initAngle)
 {
     if (CCActionInterval::initWithDuration(duration))
     {
         m_positionDelta = deltaPosition;
+        m_autoHeadOn = autoHeadOn;
+        m_initAngle = initAngle;
         return true;
     }
 
@@ -1042,7 +1044,7 @@ CCObject* CCMoveBy::copyWithZone(CCZone *pZone)
 
     CCActionInterval::copyWithZone(pZone);
 
-    pCopy->initWithDuration(m_fDuration, m_positionDelta);
+    pCopy->initWithDuration(m_fDuration, m_positionDelta, m_autoHeadOn, m_initAngle);
 
     CC_SAFE_DELETE(pNewZone);
     return pCopy;
@@ -1056,7 +1058,7 @@ void CCMoveBy::startWithTarget(CCNode *pTarget)
 
 CCActionInterval* CCMoveBy::reverse(void)
 {
-    return CCMoveBy::create(m_fDuration, ccp( -m_positionDelta.x, -m_positionDelta.y));
+    return CCMoveBy::create(m_fDuration, ccp( -m_positionDelta.x, -m_positionDelta.y), m_autoHeadOn, 180 - m_initAngle);
 }
 
 
@@ -1064,8 +1066,8 @@ void CCMoveBy::update(float t)
 {
     if (m_pTarget)
     {
-#if CC_ENABLE_STACKABLE_ACTIONS
         CCPoint currentPos = m_pTarget->getPosition();
+#if CC_ENABLE_STACKABLE_ACTIONS
         CCPoint diff = ccpSub(currentPos, m_previousPosition);
         m_startPosition = ccpAdd( m_startPosition, diff);
         CCPoint newPos =  ccpAdd( m_startPosition, ccpMult(m_positionDelta, t) );
@@ -1074,6 +1076,15 @@ void CCMoveBy::update(float t)
 #else
         m_pTarget->setPosition(ccpAdd( m_startPosition, ccpMult(m_positionDelta, t)));
 #endif // CC_ENABLE_STACKABLE_ACTIONS
+        
+        // auto head on
+        if(m_autoHeadOn) {
+            CCPoint v = ccpSub(m_pTarget->getPosition(), currentPos);
+            float r = ccpToAngle(v);
+            float d = -CC_RADIANS_TO_DEGREES(r);
+            d += m_initAngle;
+            m_pTarget->setRotation(d);
+        }
     }
 }
 
@@ -1081,20 +1092,22 @@ void CCMoveBy::update(float t)
 // MoveTo
 //
 
-CCMoveTo* CCMoveTo::create(float duration, const CCPoint& position)
+CCMoveTo* CCMoveTo::create(float duration, const CCPoint& position, bool autoHeadOn, float initAngle)
 {
     CCMoveTo *pRet = new CCMoveTo();
-    pRet->initWithDuration(duration, position);
+    pRet->initWithDuration(duration, position, autoHeadOn, initAngle);
     pRet->autorelease();
 
     return pRet;
 }
 
-bool CCMoveTo::initWithDuration(float duration, const CCPoint& position)
+bool CCMoveTo::initWithDuration(float duration, const CCPoint& position, bool autoHeadOn, float initAngle)
 {
     if (CCActionInterval::initWithDuration(duration))
     {
         m_endPosition = position;
+        m_autoHeadOn = autoHeadOn;
+        m_initAngle = initAngle;
         return true;
     }
 
@@ -1118,7 +1131,7 @@ CCObject* CCMoveTo::copyWithZone(CCZone *pZone)
 
     CCMoveBy::copyWithZone(pZone);
 
-    pCopy->initWithDuration(m_fDuration, m_endPosition);
+    pCopy->initWithDuration(m_fDuration, m_endPosition, m_autoHeadOn, m_initAngle);
     
     CC_SAFE_DELETE(pNewZone);
     return pCopy;
