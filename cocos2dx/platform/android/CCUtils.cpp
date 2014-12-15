@@ -31,6 +31,7 @@
 #include "ccTypes.h"
 #include "ccMacros.h"
 #include "CCUtilsAndroid.h"
+#include <unistd.h>
 
 NS_CC_BEGIN
 
