@@ -34,6 +34,8 @@
 * CCLabelBMFont添加了setLineKerning, 可以调整行间距
 * CCScrollView添加方法可以设置min/max scale
 * 重新实现CCLayerMultiplex以避免某些情况下发生的内存泄露
+* CCLayer添加is/setSwallowTouch方法
+* CCSpriteBatchNode的insertQuadFromSprite, updateQuadFromSprite, addSpriteWithoutQuad改为public
 * 持续更新中...
 
 已陆续合并若干cocos2dx-better代码, 新类不一一列举.
