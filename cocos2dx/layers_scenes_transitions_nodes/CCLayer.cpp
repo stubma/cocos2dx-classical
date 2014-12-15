@@ -121,7 +121,7 @@ void CCLayer::registerWithTouchDispatcher()
         if( m_eTouchMode == kCCTouchesAllAtOnce ) {
             pDispatcher->addStandardDelegate(this, 0);
         } else {
-            pDispatcher->addTargetedDelegate(this, m_nTouchPriority, true);
+            pDispatcher->addTargetedDelegate(this, m_nTouchPriority, m_bSwallowTouch);
         }
     }
 }
@@ -186,6 +186,20 @@ void CCLayer::setTouchMode(ccTouchesMode mode)
 			setTouchEnabled(true);
 		}
     }
+}
+
+void CCLayer::setSwallowTouch(bool flag) {
+    if (m_bSwallowTouch != flag) {
+        m_bSwallowTouch = flag;
+        if(m_bTouchEnabled) {
+            setTouchEnabled(false);
+            setTouchEnabled(true);
+        }
+    }
+}
+
+bool CCLayer::isSwallowTouch() {
+    return m_bSwallowTouch;
 }
 
 void CCLayer::setTouchPriority(int priority)

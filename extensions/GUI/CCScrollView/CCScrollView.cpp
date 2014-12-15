@@ -56,7 +56,7 @@ CCScrollView::CCScrollView()
 , m_fMinScale(0.0f)
 , m_fMaxScale(0.0f)
 {
-
+    setSwallowTouch(false);
 }
 
 CCScrollView::~CCScrollView()
@@ -135,7 +135,7 @@ bool CCScrollView::init()
 
 void CCScrollView::registerWithTouchDispatcher()
 {
-    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, CCLayer::getTouchPriority(), false);
+    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, CCLayer::getTouchPriority(), m_bSwallowTouch);
 }
 
 bool CCScrollView::isNodeVisible(CCNode* node)

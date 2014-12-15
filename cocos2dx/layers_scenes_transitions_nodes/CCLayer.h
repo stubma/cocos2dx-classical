@@ -142,7 +142,10 @@ public:
     /** priority of the touch events. Default is 0 */
     virtual void setTouchPriority(int priority);
     virtual int getTouchPriority();
-
+    
+    virtual void setSwallowTouch(bool flag);
+    virtual bool isSwallowTouch();
+    
     /** whether or not it will receive Accelerometer events
     You can enable / disable accelerometer events with this property.
     @since v0.8.1
@@ -173,6 +176,7 @@ protected:
     bool m_bTouchEnabled;
     bool m_bAccelerometerEnabled;
     bool m_bKeypadEnabled;
+    bool m_bSwallowTouch;
     
 private:
     // Script touch events handler
