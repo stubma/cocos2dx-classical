@@ -29,6 +29,9 @@
 #include "curl/curl.h"
 #include <pthread.h>
 #include "support/data_support/CCData.h"
+#include "CCDirector.h"
+#include "support/CCNotificationCenter.h"
+#include "CCScheduler.h"
 
 using namespace std;
 

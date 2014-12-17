@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UIButton.h"
+#include "Button.h"
 #include "../../../GUI/CCControlExtension/CCScale9Sprite.h"
 
 NS_CC_BEGIN

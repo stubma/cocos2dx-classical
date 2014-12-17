@@ -24,6 +24,7 @@
 #include "CCUDPSocket.h"
 #include "CCPacket.h"
 #include "CCUDPSocketHub.h"
+#include "platform/CCThread.h"
 
 NS_CC_BEGIN
 

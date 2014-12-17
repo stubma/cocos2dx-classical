@@ -1,7 +1,7 @@
 
 
 #include "LabelAtlasReader.h"
-#include "../../../GUI/UIWidgets/UILabelAtlas.h"
+#include "../../../GUI/UIWidgets/LabelAtlas.h"
 
 NS_CC_EXT_BEGIN
 

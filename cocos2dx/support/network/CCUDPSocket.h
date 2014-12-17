@@ -24,7 +24,8 @@
 #ifndef __CCUDPSocket_h__
 #define __CCUDPSocket_h__
 
-#include "cocos2d.h"
+#include "ccTypes.h"
+#include "ccMacros.h"
 #include "CCByteBuffer.h"
 #include <sys/socket.h>
 #include <fcntl.h>
@@ -32,7 +33,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <pthread.h>
-#include "ccMacros.h"
+#include "cocoa/CCArray.h"
 
 using namespace std;
 

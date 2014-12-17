@@ -1,7 +1,7 @@
 
 
 #include "TextFieldReader.h"
-#include "../../../GUI/UIWidgets/UITextField.h"
+#include "../../../GUI/UIWidgets/TextField.h"
 
 NS_CC_EXT_BEGIN
 

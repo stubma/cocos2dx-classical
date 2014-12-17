@@ -28,6 +28,8 @@
 #import "EAGLView.h"
 #include "support/utils/CCUtils.h"
 #import "CCUtilsIOS.h"
+#include "platform/CCFileUtils.h"
+#include "cocoa/CCString.h"
 
 USING_NS_CC;
 

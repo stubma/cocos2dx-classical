@@ -1,7 +1,7 @@
 
 
 #include "PageViewReader.h"
-#include "../../../GUI/UIWidgets/ScrollWidget/UIPageView.h"
+#include "../../../GUI/UIWidgets/ScrollWidget/PageView.h"
 
 NS_CC_EXT_BEGIN
 

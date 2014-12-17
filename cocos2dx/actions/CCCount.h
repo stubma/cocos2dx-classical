@@ -33,7 +33,7 @@ NS_CC_BEGIN
 /**
  * increase or decrease a number label from a number to another.
  * the action target must implements CCLabelProtocol or CocoStudio labels, such as
- * UILabel and UILabelBMFont
+ * Label and LabelBMFont
  */
 class CC_DLL CCCount : public CCActionInterval {
 private:

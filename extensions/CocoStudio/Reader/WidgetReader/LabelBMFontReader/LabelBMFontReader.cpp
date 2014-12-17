@@ -1,7 +1,7 @@
 
 
 #include "LabelBMFontReader.h"
-#include "../../../GUI/UIWidgets/UILabelBMFont.h"
+#include "../../../GUI/UIWidgets/LabelBMFont.h"
 
 NS_CC_EXT_BEGIN
 

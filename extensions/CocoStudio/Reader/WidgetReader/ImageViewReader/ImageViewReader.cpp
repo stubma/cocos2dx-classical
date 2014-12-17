@@ -1,7 +1,7 @@
 
 
 #include "ImageViewReader.h"
-#include "../../../GUI/UIWidgets/UIImageView.h"
+#include "../../../GUI/UIWidgets/ImageView.h"
 
 NS_CC_EXT_BEGIN
 

@@ -23,6 +23,7 @@
  ****************************************************************************/
 #include "CCScroller.h"
 #include "support/utils/CCUtils.h"
+#include "CCDirector.h"
 
 NS_CC_BEGIN
 

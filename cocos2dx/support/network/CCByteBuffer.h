@@ -24,8 +24,12 @@
 #ifndef __CCByteBuffer_h__
 #define __CCByteBuffer_h__
 
-#include "cocos2d.h"
+#include "ccTypes.h"
+#include "ccMacros.h"
 #include "CCNetworkCommon.h"
+#include <vector>
+#include <list>
+#include <map>
 
 using namespace std;
 

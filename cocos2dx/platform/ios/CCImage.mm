@@ -37,6 +37,10 @@ THE SOFTWARE.
 #endif
 #import <CoreText/CoreText.h>
 #include <math.h>
+#include "CCDirector.h"
+#include "sprite_nodes/CCSpriteFrame.h"
+#include "sprite_nodes/CCSpriteFrameCache.h"
+#include "textures/CCTextureCache.h"
 
 NS_CC_BEGIN
 

@@ -1,7 +1,7 @@
 
 
 #include "ScrollViewReader.h"
-#include "../../../GUI/UIWidgets/ScrollWidget/UIScrollView.h"
+#include "../../../GUI/UIWidgets/ScrollWidget/ScrollView.h"
 
 NS_CC_EXT_BEGIN
 

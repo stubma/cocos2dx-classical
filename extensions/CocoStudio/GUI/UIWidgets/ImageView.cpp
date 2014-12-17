@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UIImageView.h"
+#include "ImageView.h"
 #include "../../../GUI/CCControlExtension/CCScale9Sprite.h"
 
 NS_CC_BEGIN

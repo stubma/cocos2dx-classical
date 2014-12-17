@@ -24,15 +24,16 @@
 #ifndef __CCTCPSocket_h__
 #define __CCTCPSocket_h__
 
-#include "cocos2d.h"
+#include "ccTypes.h"
+#include "ccMacros.h"
 #include "CCByteBuffer.h"
 #include <sys/socket.h>
 #include <fcntl.h>
 #include <errno.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include "ccMacros.h"
 #include <pthread.h>
+#include "cocoa/CCArray.h"
 
 using namespace std;
 

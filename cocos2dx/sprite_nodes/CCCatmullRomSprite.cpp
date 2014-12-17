@@ -25,6 +25,10 @@
 #include "textures/CCTextureAtlas.h"
 #include "support/utils/CCUtils.h"
 #include "ccMacros.h"
+#include "CCPointExtension.h"
+#include "shaders/CCShaderCache.h"
+#include "sprite_nodes/CCSpriteFrameCache.h"
+#include "sprite_nodes/CCSpriteBatchNode.h"
 
 NS_CC_BEGIN
 

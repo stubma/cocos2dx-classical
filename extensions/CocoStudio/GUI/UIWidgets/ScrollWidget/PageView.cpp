@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UIPageView.h"
+#include "PageView.h"
 #include "support/ui_support/CCVelocityTracker.h"
 
 NS_CC_BEGIN

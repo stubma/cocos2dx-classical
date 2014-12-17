@@ -107,7 +107,7 @@ public:
 
 
     /**
-     * Sets a new content offset. It ignores max/min offset. It just sets what's given. (just like UIKit's UIScrollView)
+     * Sets a new content offset. It ignores max/min offset. It just sets what's given. (just like UIKit's ScrollView)
      *
      * @param offset new offset
      * @param If YES, the view scrolls to the new offset
@@ -115,7 +115,7 @@ public:
     void setContentOffset(CCPoint offset, bool animated = false);
     CCPoint getContentOffset();
     /**
-     * Sets a new content offset. It ignores max/min offset. It just sets what's given. (just like UIKit's UIScrollView)
+     * Sets a new content offset. It ignores max/min offset. It just sets what's given. (just like UIKit's ScrollView)
      * You can override the animation duration with this method.
      *
      * @param offset new offset
@@ -214,6 +214,9 @@ public:
     virtual void addChild(CCNode * child, int zOrder);
     virtual void addChild(CCNode * child);
     void setTouchEnabled(bool e);
+    
+    CCPoint getTouchPoint() { return m_tTouchPoint; }
+    
 private:
     /**
      * Relocates the container at the proper offset, in bounds of max/min offsets.

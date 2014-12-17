@@ -22,6 +22,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "CCUDPSocketHub.h"
+#include "support/CCNotificationCenter.h"
+#include "CCDirector.h"
+#include "CCScheduler.h"
 
 NS_CC_BEGIN
 

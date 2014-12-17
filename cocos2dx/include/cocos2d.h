@@ -60,9 +60,11 @@ THE SOFTWARE.
 #include "actions/CCCurl.h"
 #include "actions/CCFlash.h"
 #include "actions/CCShine.h"
-#include "actions/ccShake.h"
+#include "actions/CCShake.h"
 #include "actions/CCMissile.h"
 #include "actions/CCTrailMoveTo.h"
+#include "actions/CCCallFuncT.h"
+#include "actions/CCCallFuncNT.h"
 
 // base_nodes
 #include "base_nodes/CCNode.h"
@@ -130,6 +132,7 @@ THE SOFTWARE.
 #include "misc_nodes/CCMotionStreak.h"
 #include "misc_nodes/CCProgressTimer.h"
 #include "misc_nodes/CCRenderTexture.h"
+#include "misc_nodes/CCProgressHUD.h"
 
 // particle_nodes
 #include "particle_nodes/CCParticleBatchNode.h"
@@ -152,6 +155,7 @@ THE SOFTWARE.
 #include "platform/CCAssetOutputStream.h"
 #include "platform/CCMemoryInputStream.h"
 #include "platform/CCMemoryOutputStream.h"
+#include "platform/CCCalendar.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "platform/ios/CCAccelerometer.h"
@@ -176,6 +180,7 @@ THE SOFTWARE.
 #include "shaders/CCGLProgram.h"
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CCShaderCache.h"
+#include "shaders/CCShaders.h"
 
 // sprite_nodes
 #include "sprite_nodes/CCAnimation.h"
@@ -185,6 +190,7 @@ THE SOFTWARE.
 #include "sprite_nodes/CCSpriteFrame.h"
 #include "sprite_nodes/CCSpriteFrameCache.h"
 #include "sprite_nodes/CCGradientSprite.h"
+#include "sprite_nodes/CCTiledSprite.h"
 
 // support
 #include "support/ccUTF8.h"
@@ -209,6 +215,8 @@ THE SOFTWARE.
 #include "support/db/CCDatabase.h"
 #include "support/db/CCResultSet.h"
 #include "support/db/CCStatement.h"
+#include "support/res_support/CCResourceLoader.h"
+#include "support/network/CCFileDownloader.h"
 
 // text_input_node
 #include "text_input_node/CCIMEDelegate.h"

@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UIScrollView.h"
+#include "ScrollView.h"
 
 NS_CC_BEGIN
 

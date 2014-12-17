@@ -1,7 +1,7 @@
 
 
 #include "ButtonReader.h"
-#include "../../../GUI/UIWidgets/UIButton.h"
+#include "../../../GUI/UIWidgets/Button.h"
 
 NS_CC_EXT_BEGIN
 

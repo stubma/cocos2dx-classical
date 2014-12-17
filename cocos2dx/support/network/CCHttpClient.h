@@ -24,7 +24,8 @@
 #ifndef __CCHttpClient__
 #define __CCHttpClient__
 
-#include "cocos2d.h"
+#include "ccTypes.h"
+#include "ccMacros.h"
 #include "CCHttpRequest.h"
 #include "CCHttpResponse.h"
 #include <pthread.h>

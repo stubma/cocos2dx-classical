@@ -211,7 +211,6 @@ public:
     virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
     
     int getRealRows();
-    CCPoint getTouchPoint() { return m_tTouchPoint; }
     
 protected:
     

@@ -24,9 +24,11 @@
 #ifndef __CCUtils_h__
 #define __CCUtils_h__
 
-#include "cocos2d.h"
 #include <string>
 #include "ccTypes.h"
+#include "cocoa/CCArray.h"
+#include "sprite_nodes/CCSpriteFrame.h"
+#include "layers_scenes_transitions_nodes/CCScene.h"
 
 using namespace std;
 

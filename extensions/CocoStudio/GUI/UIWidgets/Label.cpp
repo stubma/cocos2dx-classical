@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UILabel.h"
+#include "Label.h"
 
 NS_CC_BEGIN
 

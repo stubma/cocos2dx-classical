@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UILabelBMFont.h"
+#include "LabelBMFont.h"
 
 NS_CC_BEGIN
 

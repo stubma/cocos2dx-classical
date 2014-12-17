@@ -24,8 +24,7 @@
 #ifndef __CCHttpRequest__
 #define __CCHttpRequest__
 
-#include "cocos2d.h"
-#include "ccMacros.h"
+#include "ccTypes.h"
 #include "support/data_support/CCData.h"
 #include "support/utils/CCUtils.h"
 

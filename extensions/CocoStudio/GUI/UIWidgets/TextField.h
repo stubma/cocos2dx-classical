@@ -97,7 +97,7 @@ typedef enum
 typedef void (CCObject::*SEL_TextFieldEvent)(CCObject*, TextFiledEventType);
 #define textfieldeventselector(_SELECTOR) (SEL_TextFieldEvent)(&_SELECTOR)
 
-/** class UITextField : public Widget
+/** class TextField : public Widget
 *   @js NA
 *   @lua NA
 */

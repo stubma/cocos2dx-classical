@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UILabelAtlas.h"
+#include "LabelAtlas.h"
 
 NS_CC_BEGIN
 

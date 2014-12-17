@@ -1,7 +1,7 @@
 
 
 #include "SliderReader.h"
-#include "../../../GUI/UIWidgets/UISlider.h"
+#include "../../../GUI/UIWidgets/Slider.h"
 
 NS_CC_EXT_BEGIN
 

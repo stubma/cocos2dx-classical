@@ -96,7 +96,7 @@ bool CCScrollBar::initWithTrackAndThumb(CCScale9Sprite* track, CCScale9Sprite* t
 	return true;
 }
 
-void CCScrollBar::attachToUIScrollView(ScrollView* scrollView, ccInsets insets, bool horizontal) {
+void CCScrollBar::attachToScrollView(ScrollView* scrollView, ccInsets insets, bool horizontal) {
 	// save flag
 	m_horizontal = horizontal;
 	
@@ -167,10 +167,10 @@ void CCScrollBar::attachToUIScrollView(ScrollView* scrollView, ccInsets insets, 
 	}
 	
 	// sync thumb position
-	syncThumbPositionSizeForUIScrollView(scrollView);
+	syncThumbPositionSizeForScrollView(scrollView);
 	
 	// listen to scrollview scrolling event
-	scrollView->addEventListenerScrollView(this, scrollvieweventselector(CCScrollBar::onUIScrollViewEvent));
+	scrollView->addEventListenerScrollView(this, scrollvieweventselector(CCScrollBar::onScrollViewEvent));
     
     // init fade out
     if(m_initFadeOut) {
@@ -302,7 +302,7 @@ void CCScrollBar::syncThumbPositionSizeForCCScrollView(CCScrollView* scrollView)
 	}
 }
 
-void CCScrollBar::syncThumbPositionSizeForUIScrollView(ScrollView* scrollView) {
+void CCScrollBar::syncThumbPositionSizeForScrollView(ScrollView* scrollView) {
 	CCSize svSize = scrollView->getSize();
 	CCSize innerSize = scrollView->getInnerContainerSize();
 	CCSize sbSize = getContentSize();
@@ -329,10 +329,10 @@ void CCScrollBar::syncThumbPositionSizeForUIScrollView(ScrollView* scrollView) {
 	}
 }
 
-void CCScrollBar::onUIScrollViewEvent(CCObject* sender, ScrollviewEventType e) {
+void CCScrollBar::onScrollViewEvent(CCObject* sender, ScrollviewEventType e) {
 	if(e == SCROLLVIEW_EVENT_SCROLLING) {
 		ScrollView* scrollView = (ScrollView*)sender;
-		syncThumbPositionSizeForUIScrollView(scrollView);
+		syncThumbPositionSizeForScrollView(scrollView);
         
         // reset timer to fade out
         stopActionByTag(TAG_FADE_OUT);

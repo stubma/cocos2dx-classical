@@ -71,14 +71,14 @@ public:
     virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
     
     /**
-     * Add a widget to UILayer, for drawing.
+     * Add a widget to TouchGroup, for drawing.
      *
      * @param widget.
      */
     void addWidget(Widget* widget);
     
     /**
-     * Remove a widget from UILayer.
+     * Remove a widget from TouchGroup.
      *
      * @param widget.
      *
@@ -101,14 +101,14 @@ public:
     Widget* getWidgetByName(const char* name);
     
     /**
-     * Remove and clean up all of UILayer's widget.
+     * Remove and clean up all of TouchGroup's widget.
      */
     virtual void clear();
     
     /**
-     * Gets root widget of UILayer.
+     * Gets root widget of TouchGroup.
      *
-     * @return UIRootWidget, "UIRootWidget" is the root widget of UILayer.
+     * @return UIRootWidget, "UIRootWidget" is the root widget of TouchGroup.
      */
     Widget* getRootWidget();
 protected:

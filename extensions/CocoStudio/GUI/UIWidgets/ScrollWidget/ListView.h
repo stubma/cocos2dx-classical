@@ -26,7 +26,7 @@
 #ifndef __UILISTVIEW_H__
 #define __UILISTVIEW_H__
 
-#include "UIScrollView.h"
+#include "ScrollView.h"
 
 NS_CC_BEGIN
 

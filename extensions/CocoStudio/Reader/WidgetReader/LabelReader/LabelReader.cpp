@@ -1,7 +1,7 @@
 
 
 #include "LabelReader.h"
-#include "../../../GUI/UIWidgets/UILabel.h"
+#include "../../../GUI/UIWidgets/Label.h"
 
 #include <algorithm>    // std::transform
 

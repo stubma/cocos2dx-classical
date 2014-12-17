@@ -24,10 +24,10 @@
 #ifndef __CCFileDownloader__
 #define __CCFileDownloader__
 
-#include "cocos2d.h"
-#include "CCHttpClient.h"
+#include "ccTypes.h"
 #include "ccMacros.h"
-#include "CCAssetOutputStream.h"
+#include "support/network/CCHttpClient.h"
+#include "platform/CCAssetOutputStream.h"
 
 using namespace std;
 

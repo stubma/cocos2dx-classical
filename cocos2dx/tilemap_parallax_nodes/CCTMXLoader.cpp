@@ -30,6 +30,8 @@
 #include "CCUtils.h"
 #include "CCBase64.h"
 #include "support/zip_support/ZipUtils.h"
+#include "platform/CCFileUtils.h"
+#include "CCDirector.h"
 
 NS_CC_BEGIN
 

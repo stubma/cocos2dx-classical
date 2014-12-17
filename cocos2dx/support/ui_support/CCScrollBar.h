@@ -34,7 +34,7 @@ using namespace cocos2d::ui;
 NS_CC_BEGIN
 
 /**
- * A scroll bar can be used with CCScrollView or UIScrollView(CocoStudio ScrollView)
+ * A scroll bar can be used with CCScrollView or ScrollView(CocoStudio ScrollView)
  */
 class CC_DLL CCScrollBar : public CCLayer, public CCScrollViewDelegate {
 private:
@@ -57,13 +57,13 @@ protected:
 	CCScrollBar();
 	
 	/// sync thumb position
-	void syncThumbPositionSizeForUIScrollView(ScrollView* scrollView);
+	void syncThumbPositionSizeForScrollView(ScrollView* scrollView);
 	
 	/// sync thumb position for CCScrollView
 	void syncThumbPositionSizeForCCScrollView(CCScrollView* scrollView);
 	
-	/// UIScrollView event handler
-	void onUIScrollViewEvent(CCObject* sender, ScrollviewEventType e);
+	/// ScrollView event handler
+	void onScrollViewEvent(CCObject* sender, ScrollviewEventType e);
 	
 public:
 	virtual ~CCScrollBar();
@@ -80,7 +80,7 @@ public:
 	virtual bool initWithTrackAndFixedThumb(CCScale9Sprite* track, CCSprite* thumb);
 	
 	/// attach scrollbar to CocoStudio ScrollView
-	void attachToUIScrollView(ScrollView* scrollView, ccInsets insets = cciZero, bool horizontal = false);
+	void attachToScrollView(ScrollView* scrollView, ccInsets insets = cciZero, bool horizontal = false);
 	
 	/// attach scrollbar to CCScrollView
 	void attachToCCScrollView(CCScrollView* scrollView, ccInsets insets = cciZero, bool horizontal = false);

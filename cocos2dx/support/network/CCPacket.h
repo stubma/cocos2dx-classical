@@ -24,7 +24,7 @@
 #ifndef __CCPacket__
 #define __CCPacket__
 
-#include "cocos2d.h"
+#include "ccTypes.h"
 #include "ccMacros.h"
 #include "support/json/CCJSONObject.h"
 

@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UIListView.h"
+#include "ListView.h"
 #include "../../System/UIHelper.h"
 #include "../../../../GUI/CCControlExtension/CCScale9Sprite.h"
 

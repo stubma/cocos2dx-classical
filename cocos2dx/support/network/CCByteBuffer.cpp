@@ -22,6 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "CCByteBuffer.h"
+#include "cocoa/CCString.h"
 
 NS_CC_BEGIN
 

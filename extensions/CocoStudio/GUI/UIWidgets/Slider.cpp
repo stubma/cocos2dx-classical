@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UISlider.h"
+#include "Slider.h"
 #include "../../../GUI/CCControlExtension/CCScale9Sprite.h"
 
 NS_CC_BEGIN

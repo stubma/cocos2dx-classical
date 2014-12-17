@@ -24,11 +24,11 @@
 #ifndef __CCUDPSocketHub_h__
 #define __CCUDPSocketHub_h__
 
-#include "cocos2d.h"
+#include "ccTypes.h"
+#include "ccMacros.h"
 #include "CCUDPSocket.h"
 #include "CCByteBuffer.h"
 #include "CCPacket.h"
-#include "ccTypes.h"
 #include <pthread.h>
 
 NS_CC_BEGIN
