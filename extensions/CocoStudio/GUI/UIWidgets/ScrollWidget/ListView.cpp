@@ -251,17 +251,17 @@ void ListView::remedyLayoutParameter(Widget *item)
     
 }
 
-void ListView::pushBackDefaultItem()
-{
+Widget* ListView::pushBackDefaultItem() {
     if (!_model)
     {
-        return;
+        return NULL;
     }
     Widget* newItem = _model->clone();
     _items->addObject(newItem);
     remedyLayoutParameter(newItem);
     addChild(newItem);
     _refreshViewDirty = true;
+    return newItem;
 }
 
 void ListView::insertDefaultItem(int index)

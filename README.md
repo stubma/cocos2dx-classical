@@ -24,6 +24,7 @@
 这些年, 已经填过的坑
 ===
 
+* 修正工程的64位编译设置
 * 合并了cocos2dx-better的CCRichLabelTTF相关代码到CCLabelTTF
 * 修正对CocoStudio Mac 1.0.0.0 beta的支持问题, 但是由于Mac下的CocoStudio 1.0.0.0 beta没有动画编辑功能, 需要使用骨骼动画的还是需要使用Windows版本编辑. 但是至少在Mac下终于有一个可用的界面编辑器了, 之前的cocos2d-x v2版本存在若干解析问题, 导致虽然有Mac版却无法用
 * 重新实现TMX地图, 支持一个层有多张贴图的情况
@@ -36,6 +37,8 @@
 * 重新实现CCLayerMultiplex以避免某些情况下发生的内存泄露
 * CCLayer添加is/setSwallowTouch方法
 * CCSpriteBatchNode的insertQuadFromSprite, updateQuadFromSprite, addSpriteWithoutQuad改为public
+* ListView的pushBackDefaultItem返回新item
+* 去掉了CocoStudio类的UI前缀
 * 持续更新中...
 
 已陆续合并若干cocos2dx-better代码, 新类不一一列举.
