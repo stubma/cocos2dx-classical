@@ -39,9 +39,8 @@
 * CCLayer添加is/setSwallowTouch方法
 * CCSpriteBatchNode的insertQuadFromSprite, updateQuadFromSprite, addSpriteWithoutQuad改为public
 * ListView的pushBackDefaultItem返回新item
-* 持续更新中...
 
-已陆续合并若干cocos2dx-better代码, 新类不一一列举.
+cocos2dx-better的代码已经合并完成, 有一部分代码我感觉写的用处不大就没有合并了, 不过只是一小部分, 95%的cocos2dx-better代码已经合并.
 
 How to use CCImagePicker
 ==========================
