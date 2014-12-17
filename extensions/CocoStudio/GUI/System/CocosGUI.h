@@ -26,14 +26,14 @@
 #define __COCOSGUI_H__
 
 
-#include "../BaseClasses/UIWidget.h"
-#include "../Layouts/UILayout.h"
+#include "../BaseClasses/Widget.h"
+#include "../Layouts/Layout.h"
 #include "../UIWidgets/Button.h"
-#include "../UIWidgets/UICheckBox.h"
+#include "../UIWidgets/CheckBox.h"
 #include "../UIWidgets/ImageView.h"
 #include "../UIWidgets/Label.h"
 #include "../UIWidgets/LabelAtlas.h"
-#include "../UIWidgets/UILoadingBar.h"
+#include "../UIWidgets/LoadingBar.h"
 #include "../UIWidgets/ScrollWidget/ScrollView.h"
 #include "../UIWidgets/Slider.h"
 #include "../UIWidgets/TextField.h"
@@ -43,12 +43,10 @@
 #include "UIHelper.h"
 #include "../../Reader/GUIReader.h"
 #include "UITouchGroup.h"
-#include "../UIWidgets/Compatible/CompatibleClasses.h"
-#include "../UIWidgets/UIRichText.h"
 
 //NS_CC_EXT_BEGIN
 
-CC_EX_DLL const char* CocosGUIVersion();
+const char* CocosGUIVersion();
 
 //NS_CC_EXT_END
 

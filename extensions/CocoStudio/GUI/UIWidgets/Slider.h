@@ -25,7 +25,7 @@
 #ifndef __UISLIDER_H__
 #define __UISLIDER_H__
 
-#include "../BaseClasses/UIWidget.h"
+#include "../BaseClasses/Widget.h"
 
 NS_CC_BEGIN
 
@@ -43,11 +43,8 @@ typedef void (CCObject::*SEL_SlidPercentChangedEvent)(CCObject*,SliderEventType)
 *   @js NA
 *   @lua NA
 */
-class CC_EX_DLL Slider : public Widget
+class Slider : public Widget
 {
-    
-    DECLARE_CLASS_GUI_INFO
-    
 public:
     /**
      * Default constructor
@@ -80,15 +77,13 @@ public:
      */
     void setScale9Enabled(bool able);
     
-    bool isScale9Enabled();
-    
     /**
      * Sets capinsets for slider, if slider is using scale9 renderer.
      *
      * @param capInsets    capinsets for slider
      */
     void setCapInsets(const CCRect &capInsets);
-
+    
     /**
      * Sets capinsets for slider, if slider is using scale9 renderer.
      *
@@ -96,16 +91,12 @@ public:
      */
     void setCapInsetsBarRenderer(const CCRect &capInsets);
     
-    const CCRect& getCapInsetBarRenderer();
-    
     /**
      * Sets capinsets for slider, if slider is using scale9 renderer.
      *
      * @param capInsets    capinsets for slider
      */
     void setCapInsetProgressBarRebderer(const CCRect &capInsets);
-    
-    const CCRect& getCapInsetProgressBarRebderer();
     
     /**
      * Load textures for slider ball.
@@ -195,7 +186,6 @@ public:
     virtual std::string getDescription() const;
 
 protected:
-    virtual bool init();
     virtual void initRenderer();
     float getPercentWithBallPos(float location);
     void percentChangedEvent();
@@ -203,9 +193,6 @@ protected:
     virtual void onPressStateChangedToPressed();
     virtual void onPressStateChangedToDisabled();
     virtual void onSizeChanged();
-    virtual void updateTextureColor();
-    virtual void updateTextureOpacity();
-    virtual void updateTextureRGBA();
     void barRendererScaleChangedWithSize();
     void progressBarRendererScaleChangedWithSize();
     virtual Widget* createCloneInstance();

@@ -198,9 +198,11 @@ bool CCColliderDetector::init(CCBone *bone)
 
 void CCColliderDetector::addContourData(CCContourData *contourData)
 {
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     ColliderBody *colliderBody = new ColliderBody(contourData);
     m_pColliderBodyList->addObject(colliderBody);
     colliderBody->release();
+#endif
 
 #if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     CCArray *calculatedVertexList = colliderBody->getCalculatedVertexList();

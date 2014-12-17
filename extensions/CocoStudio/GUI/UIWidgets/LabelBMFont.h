@@ -25,7 +25,7 @@
 #ifndef __UILABELBMFONT_H__
 #define __UILABELBMFONT_H__
 
-#include "../BaseClasses/UIWidget.h"
+#include "../BaseClasses/Widget.h"
 
 NS_CC_BEGIN
 
@@ -35,10 +35,8 @@ namespace ui {
 *   @js NA
 *   @lua NA
 */    
-class CC_EX_DLL LabelBMFont : public Widget
+class LabelBMFont : public Widget
 {
-    DECLARE_CLASS_GUI_INFO
-    
 public:
     /**
      * Default constructor
@@ -73,9 +71,6 @@ public:
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
-    virtual void updateTextureColor();
-    virtual void updateTextureOpacity();
-    virtual void updateTextureRGBA();
     void labelBMFontScaleChangedWithSize();
     virtual Widget* createCloneInstance();
     virtual void copySpecialProperties(Widget* model);

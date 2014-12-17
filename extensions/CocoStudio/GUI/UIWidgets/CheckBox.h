@@ -25,7 +25,7 @@
 #ifndef __UICHECKBOX_H__
 #define __UICHECKBOX_H__
 
-#include "../BaseClasses/UIWidget.h"
+#include "../BaseClasses/Widget.h"
 
 NS_CC_BEGIN
 
@@ -44,10 +44,8 @@ typedef void (CCObject::*SEL_SelectedStateEvent)(CCObject*,CheckBoxEventType);
 *   @js NA
 *   @lua NA
 */
-class CC_EX_DLL CheckBox : public Widget
+class CheckBox : public Widget
 {
-    DECLARE_CLASS_GUI_INFO
-    
 public:
     /**
      * Default constructor
@@ -144,6 +142,18 @@ public:
     //add a call back function would called when checkbox is selected or unselected.
     void addEventListenerCheckBox(CCObject* target,SEL_SelectedStateEvent selector);
     
+    //override "setFlipX" method of widget.
+    virtual void setFlipX(bool flipX);
+    
+    //override "setFlipY" method of widget.
+    virtual void setFlipY(bool flipY);
+    
+    //override "isFlipX" method of widget.
+    virtual bool isFlipX();
+    
+    //override "isFlipY" method of widget.
+    virtual bool isFlipY();
+    
     //override "onTouchEnded" method of widget.
     virtual void onTouchEnded(CCTouch *touch, CCEvent *unused_event);
     
@@ -167,11 +177,6 @@ protected:
     void selectedEvent();
     void unSelectedEvent();
     virtual void onSizeChanged();
-    virtual void updateTextureColor();
-    virtual void updateTextureOpacity();
-    virtual void updateTextureRGBA();
-    virtual void updateFlippedX();
-    virtual void updateFlippedY();
     void backGroundTextureScaleChangedWithSize();
     void backGroundSelectedTextureScaleChangedWithSize();
     void frontCrossTextureScaleChangedWithSize();

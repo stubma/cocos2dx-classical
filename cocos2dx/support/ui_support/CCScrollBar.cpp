@@ -203,7 +203,7 @@ void CCScrollBar::attachToCCScrollView(CCScrollView* scrollView, ccInsets insets
 		setAnchorPoint(ccp(0, 0.5f));
 		setPosition(ccp(svOrigin.x + svSize.width / 2, svOrigin.y + insets.bottom));
 		setRotation(-90);
-        UIWidget* svpWidght = dynamic_cast<UIWidget*>(svParent);
+        Widget* svpWidght = dynamic_cast<Widget*>(svParent);
         if(svpWidght)
             svpWidght->addNode(this, MAX_INT);
         else
@@ -220,7 +220,7 @@ void CCScrollBar::attachToCCScrollView(CCScrollView* scrollView, ccInsets insets
 		setContentSize(sbSize);
 		setAnchorPoint(ccp(1, 0.5f));
 		setPosition(ccp(svOrigin.x + svSize.width - insets.right, svOrigin.y + svSize.height / 2));
-        UIWidget* svpWidght = dynamic_cast<UIWidget*>(svParent);
+        Widget* svpWidght = dynamic_cast<Widget*>(svParent);
         if(svpWidght)
             svpWidght->addNode(this, MAX_INT);
         else

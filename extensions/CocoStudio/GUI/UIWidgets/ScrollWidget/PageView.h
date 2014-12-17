@@ -25,7 +25,7 @@
 #ifndef __UIPAGEVIEW_H__
 #define __UIPAGEVIEW_H__
 
-#include "../../Layouts/UILayout.h"
+#include "../../Layouts/Layout.h"
 #include "UIScrollInterface.h"
 
 using namespace std;

@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UILayoutParameter.h"
-#include "UILayout.h"
+#include "LayoutParameter.h"
+#include "Layout.h"
 
 NS_CC_BEGIN
 
@@ -56,23 +56,6 @@ LayoutParameterType LayoutParameter::getLayoutType() const
 {
     return _layoutParameterType;
 }
-    
-LayoutParameter* LayoutParameter::clone()
-{
-    LayoutParameter* clonedParameter = createCloneInstance();
-    clonedParameter->copyProperties(this);
-    return clonedParameter;
-}
-    
-LayoutParameter* LayoutParameter::createCloneInstance()
-{
-    return LayoutParameter::create();
-}
-    
-void LayoutParameter::copyProperties(LayoutParameter *model)
-{
-    _margin = model->_margin;
-}
 
 LinearLayoutParameter* LinearLayoutParameter::create()
 {
@@ -94,21 +77,6 @@ void LinearLayoutParameter::setGravity(LinearGravity gravity)
 LinearGravity LinearLayoutParameter::getGravity() const
 {
     return _linearGravity;
-}
-    
-LayoutParameter* LinearLayoutParameter::createCloneInstance()
-{
-    return LinearLayoutParameter::create();
-}
-
-void LinearLayoutParameter::copyProperties(LayoutParameter *model)
-{
-    LayoutParameter::copyProperties(model);
-    LinearLayoutParameter* parameter = dynamic_cast<LinearLayoutParameter*>(model);
-    if (parameter)
-    {
-        setGravity(parameter->_linearGravity);
-    }
 }
 
 RelativeLayoutParameter* RelativeLayoutParameter::create()
@@ -151,23 +119,6 @@ void RelativeLayoutParameter::setRelativeName(const char* name)
 const char* RelativeLayoutParameter::getRelativeName() const
 {
     return _relativeLayoutName.c_str();
-}
-    
-LayoutParameter* RelativeLayoutParameter::createCloneInstance()
-{
-    return RelativeLayoutParameter::create();
-}
-
-void RelativeLayoutParameter::copyProperties(LayoutParameter *model)
-{
-    LayoutParameter::copyProperties(model);
-    RelativeLayoutParameter* parameter = dynamic_cast<RelativeLayoutParameter*>(model);
-    if (parameter)
-    {
-        setAlign(parameter->_relativeAlign);
-        setRelativeName(parameter->_relativeLayoutName.c_str());
-        setRelativeToWidgetName(parameter->_relativeWidgetName.c_str());
-    }
 }
 
 }

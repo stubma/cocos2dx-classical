@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UIWidget.h"
-#include "../Layouts/UILayout.h"
+#include "Widget.h"
+#include "../Layouts/Layout.h"
 #include "../System/UIHelper.h"
 
 NS_CC_BEGIN
@@ -57,12 +57,7 @@ _reorderWidgetChildDirty(true),
 _hitted(false),
 _widgetChildren(NULL),
 _layoutParameterDictionary(NULL),
-_nodes(NULL),
-_color(ccWHITE),
-_opacity(255),
-_flippedX(false),
-_flippedY(false),
-_scriptObjectDict(NULL)
+_nodes(NULL)
 {
     
 }
@@ -77,7 +72,6 @@ Widget::~Widget()
     CC_SAFE_RELEASE(_layoutParameterDictionary);
     _nodes->removeAllObjects();
     CC_SAFE_RELEASE(_nodes);
-    CC_SAFE_RELEASE_NULL(_scriptObjectDict);
 }
 
 Widget* Widget::create()
@@ -94,7 +88,7 @@ Widget* Widget::create()
 
 bool Widget::init()
 {
-    if (CCNode::init())
+    if (CCNodeRGBA::init())
     {
         _widgetChildren = CCArray::create();
         CC_SAFE_RETAIN(_widgetChildren);
@@ -103,6 +97,8 @@ bool Widget::init()
         _nodes = CCArray::create();
         CC_SAFE_RETAIN(_nodes);
         initRenderer();
+        setCascadeColorEnabled(true);
+        setCascadeOpacityEnabled(true);
         setBright(true);
         ignoreContentAdaptWithSize(true);
         setAnchorPoint(CCPoint(0.5f, 0.5f));
@@ -114,44 +110,44 @@ bool Widget::init()
 void Widget::onEnter()
 {
     updateSizeAndPosition();
-    CCNode::onEnter();
+    CCNodeRGBA::onEnter();
 }
 
 void Widget::onExit()
 {
     unscheduleUpdate();
-    CCNode::onExit();
+    CCNodeRGBA::onExit();
 }
     
 void Widget::visit()
 {
     if (_enabled)
     {
-        CCNode::visit();
+        CCNodeRGBA::visit();
     }    
 }
 
 void Widget::addChild(CCNode *child)
 {
-    addChild(child, child->getZOrder(), child->getTag());
+    CCNodeRGBA::addChild(child);
 }
 
 void Widget::addChild(CCNode * child, int zOrder)
 {
-    addChild(child, zOrder, child->getTag());
+    CCNodeRGBA::addChild(child, zOrder);
 }
     
 void Widget::addChild(CCNode* child, int zOrder, int tag)
 {
     CCAssert(dynamic_cast<Widget*>(child) != NULL, "Widget only supports Widgets as children");
-    CCNode::addChild(child, zOrder, tag);
+    CCNodeRGBA::addChild(child, zOrder, tag);
     _widgetChildren->addObject(child);
 }
     
 void Widget::sortAllChildren()
 {
     _reorderWidgetChildDirty = m_bReorderChildDirty;
-    CCNode::sortAllChildren();
+    CCNodeRGBA::sortAllChildren();
     if( _reorderWidgetChildDirty )
     {
         int i,j,length = _widgetChildren->data->num;
@@ -218,17 +214,12 @@ void Widget::removeFromParent()
 
 void Widget::removeFromParentAndCleanup(bool cleanup)
 {
-    CCNode::removeFromParentAndCleanup(cleanup);
-}
-    
-void Widget::removeChild(CCNode *child)
-{
-    removeChild(child, true);
+    CCNodeRGBA::removeFromParentAndCleanup(cleanup);
 }
 
 void Widget::removeChild(CCNode *child, bool cleanup)
 {
-    CCNode::removeChild(child, cleanup);
+    CCNodeRGBA::removeChild(child, cleanup);
     _widgetChildren->removeObject(child);
 }
 
@@ -260,7 +251,7 @@ void Widget::removeAllChildrenWithCleanup(bool cleanup)
         CCObject* child;
         CCARRAY_FOREACH(_widgetChildren, child)
         {
-            CCNode::removeChild((CCNode*)child, cleanup);
+            CCNodeRGBA::removeChild((CCNode*)child, cleanup);
         }
     }
     _widgetChildren->removeAllObjects();
@@ -307,7 +298,7 @@ void Widget::addNode(CCNode * node, int zOrder)
 void Widget::addNode(CCNode* node, int zOrder, int tag)
 {
     CCAssert(dynamic_cast<Widget*>(node) == NULL, "Widget only supports Nodes as renderer");
-    CCNode::addChild(node, zOrder, tag);
+    CCNodeRGBA::addChild(node, zOrder, tag);
     _nodes->addObject(node);
 }
     
@@ -335,7 +326,7 @@ CCArray* Widget::getNodes()
     
 void Widget::removeNode(CCNode* node)
 {
-    CCNode::removeChild(node);
+    CCNodeRGBA::removeChild(node);
     _nodes->removeObject(node);
 }
     
@@ -347,6 +338,8 @@ void Widget::removeNodeByTag(int tag)
     
     if (node == NULL)
     {
+        // XXX: commented by Luma
+        // it is too anonying, comment it
 //        CCLOG("cocos2d: removeNodeByTag(tag = %d): child not found!", tag);
     }
     else
@@ -363,7 +356,7 @@ void Widget::removeAllNodes()
         CCARRAY_FOREACH(_nodes, renderer)
         {
             CCNode* pNode = (CCNode*) renderer;
-            CCNode::removeChild(pNode);
+            CCNodeRGBA::removeChild(pNode);
         }
         _nodes->removeAllObjects();
     }
@@ -437,21 +430,6 @@ void Widget::setSizePercent(const CCPoint &percent)
 
 void Widget::updateSizeAndPosition()
 {
-    Widget* widgetParent = getWidgetParent();
-    CCSize pSize;
-    if (widgetParent)
-    {
-        pSize = widgetParent->getLayoutSize();
-    }
-    else
-    {
-        pSize = m_pParent->getContentSize();
-    }
-    updateSizeAndPosition(pSize);
-}
-    
-void Widget::updateSizeAndPosition(const cocos2d::CCSize &parentSize)
-{
     switch (_sizeType)
     {
         case SIZE_ABSOLUTE:
@@ -464,33 +442,70 @@ void Widget::updateSizeAndPosition(const cocos2d::CCSize &parentSize)
             {
                 _size = _customSize;
             }
-            float spx = 0.0f;
-            float spy = 0.0f;
-            if (parentSize.width > 0.0f)
+            Widget* widgetParent = getWidgetParent();
+            if (widgetParent)
             {
-                spx = _customSize.width / parentSize.width;
+                CCSize pSize = widgetParent->getSize();
+                float spx = 0.0f;
+                float spy = 0.0f;
+                if (pSize.width > 0.0f)
+                {
+                    spx = _customSize.width / pSize.width;
+                }
+                if (pSize.height > 0.0f)
+                {
+                    spy = _customSize.height / pSize.height;
+                }
+                _sizePercent = CCPoint(spx, spy);
             }
-            if (parentSize.height > 0.0f)
+            else
             {
-                spy = _customSize.height / parentSize.height;
+                CCSize pSize = m_pParent->getContentSize();
+                float spx = 0.0f;
+                float spy = 0.0f;
+                if (pSize.width > 0.0f)
+                {
+                    spx = _customSize.width / pSize.width;
+                }
+                if (pSize.height > 0.0f)
+                {
+                    spy = _customSize.height / pSize.height;
+                }
+                _sizePercent = CCPoint(spx, spy);
             }
-            _sizePercent = CCPoint(spx, spy);
             break;
         }
         case SIZE_PERCENT:
         {
-            CCSize cSize = CCSize(parentSize.width * _sizePercent.x , parentSize.height * _sizePercent.y);
-            if (_ignoreSize)
+            Widget* widgetParent = getWidgetParent();
+            if (widgetParent)
             {
-                _size = getContentSize();
+                CCSize cSize = CCSize(widgetParent->getSize().width * _sizePercent.x , widgetParent->getSize().height * _sizePercent.y);
+                if (_ignoreSize)
+                {
+                    _size = getContentSize();
+                }
+                else
+                {
+                    _size = cSize;
+                }
+                _customSize = cSize;
             }
             else
             {
-                _size = cSize;
+                CCSize cSize = CCSize(m_pParent->getContentSize().width * _sizePercent.x , m_pParent->getContentSize().height * _sizePercent.y);
+                if (_ignoreSize)
+                {
+                    _size = getContentSize();
+                }
+                else
+                {
+                    _size = cSize;
+                }
+                _customSize = cSize;
             }
-            _customSize = cSize;
-            break;
         }
+            break;
         default:
             break;
     }
@@ -500,19 +515,46 @@ void Widget::updateSizeAndPosition(const cocos2d::CCSize &parentSize)
     {
         case POSITION_ABSOLUTE:
         {
-            if (parentSize.width <= 0.0f || parentSize.height <= 0.0f)
+            Widget* widgetParent = getWidgetParent();
+            if (widgetParent)
             {
-                _positionPercent = CCPointZero;
+                CCSize pSize = widgetParent->getSize();
+                if (pSize.width <= 0.0f || pSize.height <= 0.0f)
+                {
+                    _positionPercent = CCPointZero;
+                }
+                else
+                {
+                    _positionPercent = CCPoint(absPos.x / pSize.width, absPos.y / pSize.height);
+                }
             }
             else
             {
-                _positionPercent = CCPoint(absPos.x / parentSize.width, absPos.y / parentSize.height);
+                CCSize pSize = m_pParent->getContentSize();
+                if (pSize.width <= 0.0f || pSize.height <= 0.0f)
+                {
+                    _positionPercent = CCPointZero;
+                }
+                else
+                {
+                    _positionPercent = CCPoint(absPos.x / pSize.width, absPos.y / pSize.height);
+                }
             }
             break;
         }
         case POSITION_PERCENT:
         {
-            absPos = CCPoint(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
+            Widget* widgetParent = getWidgetParent();
+            if (widgetParent)
+            {
+                CCSize parentSize = widgetParent->getSize();
+                absPos = CCPoint(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
+            }
+            else
+            {
+                CCSize parentSize = m_pParent->getContentSize();
+                absPos = CCPoint(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
+            }
             break;
         }
         default:
@@ -533,10 +575,6 @@ SizeType Widget::getSizeType() const
 
 void Widget::ignoreContentAdaptWithSize(bool ignore)
 {
-    if (_ignoreSize == ignore)
-    {
-        return;
-    }
     _ignoreSize = ignore;
     if (_ignoreSize)
     {
@@ -558,11 +596,6 @@ bool Widget::isIgnoreContentAdaptWithSize() const
 const CCSize& Widget::getSize() const
 {
     return _size;
-}
-    
-const CCSize& Widget::getCustomSize() const
-{
-    return _customSize;
 }
 
 const CCPoint& Widget::getSizePercent() const
@@ -876,7 +909,7 @@ void Widget::setPosition(const CCPoint &pos)
             }
         }
     }
-    CCNode::setPosition(pos);
+    CCNodeRGBA::setPosition(pos);
 }
 
 void Widget::setPositionPercent(const CCPoint &percent)
@@ -1052,13 +1085,8 @@ void Widget::copyProperties(Widget *widget)
     setFlipY(widget->isFlipY());
     setColor(widget->getColor());
     setOpacity(widget->getOpacity());
-    CCDictElement* parameterElement = NULL;
-    CCDictionary* layoutParameterDic = widget->_layoutParameterDictionary;
-    CCDICT_FOREACH(layoutParameterDic, parameterElement)
-    {
-        LayoutParameter* parameter = (LayoutParameter*)parameterElement->getObject();
-        setLayoutParameter(parameter->clone());
-    }
+    setCascadeOpacityEnabled(widget->isCascadeOpacityEnabled());
+    setCascadeColorEnabled(widget->isCascadeColorEnabled());
     onSizeChanged();
 }
 
@@ -1071,70 +1099,6 @@ void Widget::setActionTag(int tag)
 int Widget::getActionTag()
 {
 	return _actionTag;
-}
-    
-void Widget::setColor(const ccColor3B& color)
-{
-    _color = color;
-    updateTextureColor();
-}
-
-void Widget::setOpacity(GLubyte opacity)
-{
-    _opacity = opacity;
-    updateTextureOpacity();
-}
-    
-void Widget::setFlipX(bool flipX)
-{
-    _flippedX = flipX;
-    updateFlippedX();
-}
-    
-void Widget::setFlipY(bool flipY)
-{
-    _flippedY = flipY;
-    updateFlippedY();
-}
-    
-void Widget::updateColorToRenderer(CCNode* renderer)
-{
-    CCRGBAProtocol* rgbap = dynamic_cast<CCRGBAProtocol*>(renderer);
-    if (rgbap)
-    {
-        rgbap->setColor(_color);
-    }
-}
-    
-void Widget::updateOpacityToRenderer(CCNode* renderer)
-{
-    CCRGBAProtocol* rgbap = dynamic_cast<CCRGBAProtocol*>(renderer);
-    if (rgbap)
-    {
-        rgbap->setOpacity(_opacity);
-    }
-}
-    
-void Widget::updateRGBAToRenderer(CCNode* renderer)
-{
-    CCRGBAProtocol* rgbap = dynamic_cast<CCRGBAProtocol*>(renderer);
-    if (rgbap)
-    {
-        rgbap->setColor(_color);
-        rgbap->setOpacity(_opacity);
-    }
-}
-    
-void Widget::setScriptObjectDict(cocos2d::CCDictionary* scriptObjectDict)
-{
-    CC_SAFE_RETAIN(scriptObjectDict);
-    CC_SAFE_RELEASE(_scriptObjectDict);
-    _scriptObjectDict = scriptObjectDict;
-}
-    
-cocos2d::CCDictionary* Widget::getScriptObjectDict() const
-{
-    return _scriptObjectDict;
 }
     
 }

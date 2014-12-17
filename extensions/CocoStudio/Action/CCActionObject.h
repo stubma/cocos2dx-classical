@@ -31,15 +31,12 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-class CocoLoader;
-struct stExpCocoNode;
-
 class ActionNode;
 /**
 *   @js NA
 *   @lua NA
 */
-class CC_EX_DLL ActionObject:public CCObject
+class ActionObject:public CCObject
 {
 public:
 
@@ -163,15 +160,10 @@ public:
 
 	/*init properties with a json dictionary*/
 	void initWithDictionary(const rapidjson::Value& dic,CCObject* root);
-    void initWithBinary(CocoLoader* pCocoLoader, stExpCocoNode*	pCocoNode, CCObject* root);
 
 	void simulationActionUpdate(float dt);
 
 protected:
-    int valueToInt(std::string& value);
-    bool valueToBool(std::string& value);
-    float valueToFloat(std::string& value);
-    
 	CCArray* m_ActionNodeList;/*actionnode*/
 	std::string m_name;
 	bool m_loop;

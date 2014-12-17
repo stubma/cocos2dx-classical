@@ -28,14 +28,13 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
 #include "../Json/DictionaryHelper.h"
-#include "../Json/CocoLoader.h"
 #include "../Armature/CCArmature.h"
 
 NS_CC_EXT_BEGIN
 
 class TriggerObj;
 
-class CC_EX_DLL ArmatureMovementDispatcher : public CCObject
+class ArmatureMovementDispatcher : public CCObject
 {
 public:
 	ArmatureMovementDispatcher(void);
@@ -48,7 +47,7 @@ public:
 
 };
 
-class CC_EX_DLL TriggerMng
+class TriggerMng
 {
 public:
 	TriggerMng(void);
@@ -61,8 +60,6 @@ public:
     
 public:
 	void parse(const rapidjson::Value &root);
-	void parse(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode);
-
 	void removeAll(void);
 	CCArray* get(unsigned int event) const;
 	TriggerObj* getTriggerObj(unsigned int id) const;
@@ -77,7 +74,6 @@ public:
 	void removeAllArmatureMovementCallBack();
 private:
     void alloc(void);
-	void buildJson(rapidjson::Document &document, cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode);
 private:
     CCDictionary *_eventTriggers;
     static TriggerMng *_sharedTriggerMng;

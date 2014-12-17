@@ -32,7 +32,7 @@ NS_CC_EXT_BEGIN
 /**
  *  @lua NA
  */
-class CC_EX_DLL CCInputDelegate : public CCTouchDelegate, public CCAccelerometerDelegate, public CCKeypadDelegate
+class CCInputDelegate : public CCTouchDelegate, public CCAccelerometerDelegate, public CCKeypadDelegate
 {
 protected:
     CCInputDelegate(void);

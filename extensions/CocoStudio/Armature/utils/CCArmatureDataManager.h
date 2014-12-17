@@ -43,7 +43,7 @@ struct CCRelativeData
  *	@brief	format and manage armature configuration and armature animation
  *  @lua NA
  */
-class  CC_EX_DLL CCArmatureDataManager : public CCObject
+class  CCArmatureDataManager : public CCObject
 {
 public:
     /**

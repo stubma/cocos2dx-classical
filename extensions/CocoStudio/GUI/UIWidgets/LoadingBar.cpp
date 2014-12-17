@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UILoadingBar.h"
+#include "LoadingBar.h"
 #include "../../../GUI/CCControlExtension/CCScale9Sprite.h"
 
 NS_CC_BEGIN
@@ -30,8 +30,6 @@ NS_CC_BEGIN
 namespace ui {
     
 static const int BAR_RENDERER_Z = (-1);
-    
-IMPLEMENT_CLASS_GUI_INFO(LoadingBar)
     
 LoadingBar::LoadingBar():
 _barType(LoadingBarTypeLeft),
@@ -67,7 +65,7 @@ LoadingBar* LoadingBar::create()
 void LoadingBar::initRenderer()
 {
     _barRenderer = CCSprite::create();
-    CCNode::addChild(_barRenderer, BAR_RENDERER_Z, -1);
+    CCNodeRGBA::addChild(_barRenderer, BAR_RENDERER_Z, -1);
     _barRenderer->setAnchorPoint(CCPoint(0.0,0.5));
 }
 
@@ -142,7 +140,8 @@ void LoadingBar::loadTexture(const char* texture,TextureResType texType)
         default:
             break;
     }
-    updateRGBAToRenderer(_barRenderer);
+    updateDisplayedColor(getColor());
+    updateDisplayedOpacity(getOpacity());
     _barRendererTextureSize = _barRenderer->getContentSize();
     
     switch (_barType)
@@ -164,6 +163,14 @@ void LoadingBar::loadTexture(const char* texture,TextureResType texType)
     }
     barRendererScaleChangedWithSize();
 }
+    
+float LoadingBar::getPercentage() {
+    return getPercent();
+}
+    
+void LoadingBar::setPercentage(float p) {
+    setPercent((int)p);
+}
 
 void LoadingBar::setScale9Enabled(bool enabled)
 {
@@ -172,7 +179,7 @@ void LoadingBar::setScale9Enabled(bool enabled)
         return;
     }
     _scale9Enabled = enabled;
-    CCNode::removeChild(_barRenderer, true);
+    CCNodeRGBA::removeChild(_barRenderer, true);
     _barRenderer = NULL;
     if (_scale9Enabled)
     {
@@ -183,7 +190,7 @@ void LoadingBar::setScale9Enabled(bool enabled)
         _barRenderer = CCSprite::create();
     }
     loadTexture(_textureFile.c_str(),_renderBarTexType);
-    CCNode::addChild(_barRenderer, BAR_RENDERER_Z, -1);
+    CCNodeRGBA::addChild(_barRenderer, BAR_RENDERER_Z, -1);
     if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;
@@ -195,12 +202,6 @@ void LoadingBar::setScale9Enabled(bool enabled)
         ignoreContentAdaptWithSize(_prevIgnoreSize);
     }
     setCapInsets(_capInsets);
-    setPercent(_percent);
-}
-    
-bool LoadingBar::isScale9Enabled()
-{
-    return _scale9Enabled;
 }
 
 void LoadingBar::setCapInsets(const CCRect &capInsets)
@@ -211,19 +212,6 @@ void LoadingBar::setCapInsets(const CCRect &capInsets)
         return;
     }
     static_cast<extension::CCScale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
-}
-    
-const CCRect& LoadingBar::getCapInsets()
-{
-    return _capInsets;
-}
-    
-float LoadingBar::getPercentage() {
-    return getPercent();
-}
-
-void LoadingBar::setPercentage(float p) {
-    setPercent((int)p);
 }
 
 void LoadingBar::setPercent(int percent)
@@ -333,21 +321,6 @@ void LoadingBar::setScale9Scale()
     static_cast<extension::CCScale9Sprite*>(_barRenderer)->setPreferredSize(CCSize(width, _size.height));
 }
 
-void LoadingBar::updateTextureColor()
-{
-    updateColorToRenderer(_barRenderer);
-}
-
-void LoadingBar::updateTextureOpacity()
-{
-    updateOpacityToRenderer(_barRenderer);
-}
-
-void LoadingBar::updateTextureRGBA()
-{
-    updateRGBAToRenderer(_barRenderer);
-}
-
 std::string LoadingBar::getDescription() const
 {
     return "LoadingBar";
@@ -368,7 +341,6 @@ void LoadingBar::copySpecialProperties(Widget *widget)
         loadTexture(loadingBar->_textureFile.c_str(), loadingBar->_renderBarTexType);
         setCapInsets(loadingBar->_capInsets);
         setPercent(loadingBar->_percent);
-        setDirection(loadingBar->_barType);
     }
 }
 

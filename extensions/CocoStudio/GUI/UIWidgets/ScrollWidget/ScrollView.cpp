@@ -27,41 +27,6 @@
 NS_CC_BEGIN
 
 namespace ui {
-    
-ScrollInnerContainer::ScrollInnerContainer()
-{
-    
-}
-    
-ScrollInnerContainer::~ScrollInnerContainer()
-{
-    
-}
-    
-ScrollInnerContainer* ScrollInnerContainer::create()
-{
-    ScrollInnerContainer* widget = new ScrollInnerContainer();
-    if (widget && widget->init())
-    {
-        widget->autorelease();
-        return widget;
-    }
-    CC_SAFE_DELETE(widget);
-    return NULL;
-}
-    
-const CCSize& ScrollInnerContainer::getLayoutSize()
-{
-    Widget* parent = getWidgetParent();
-    if (parent)
-    {
-        return parent->getSize();
-    }
-    else
-    {
-        return _size;
-    }
-}
 
 static const float AUTOSCROLLMAXSPEED = 1000.0f;
 
@@ -69,8 +34,6 @@ const CCPoint SCROLLDIR_UP = CCPoint(0.0f, 1.0f);
 const CCPoint SCROLLDIR_DOWN = CCPoint(0.0f, -1.0f);
 const CCPoint SCROLLDIR_LEFT = CCPoint(-1.0f, 0.0f);
 const CCPoint SCROLLDIR_RIGHT = CCPoint(1.0f, 0.0f);
-    
-IMPLEMENT_CLASS_GUI_INFO(ScrollView)
 
 ScrollView::ScrollView():
 _innerContainer(NULL),
@@ -152,7 +115,7 @@ bool ScrollView::init()
 void ScrollView::initRenderer()
 {
     Layout::initRenderer();
-    _innerContainer = ScrollInnerContainer::create();
+    _innerContainer = Layout::create();
     Layout::addChild(_innerContainer,1,1);
 }
 
@@ -258,37 +221,32 @@ const CCSize& ScrollView::getInnerContainerSize() const
     
 void ScrollView::addChild(CCNode *child)
 {
-    addChild(child, child->getZOrder(), child->getTag());
+    Layout::addChild(child);
 }
 
 void ScrollView::addChild(CCNode * child, int zOrder)
 {
-    addChild(child, zOrder, child->getTag());
+    Layout::addChild(child, zOrder);
 }
 
 void ScrollView::addChild(CCNode *child, int zOrder, int tag)
 {
     return _innerContainer->addChild(child, zOrder, tag);
 }
-    
-void ScrollView::removeChild(CCNode *child)
-{
-    removeChild(child, true);
-}
-    
-void ScrollView::removeChild(CCNode* child, bool cleanup)
-{
-    _innerContainer->removeChild(child, cleanup);
-}
-    
+
 void ScrollView::removeAllChildren()
 {
     removeAllChildrenWithCleanup(true);
 }
-
+    
 void ScrollView::removeAllChildrenWithCleanup(bool cleanup)
 {
     _innerContainer->removeAllChildrenWithCleanup(cleanup);
+}
+
+void ScrollView::removeChild(CCNode* child, bool cleanup)
+{
+	return _innerContainer->removeChild(child, cleanup);
 }
 
 CCArray* ScrollView::getChildren()
@@ -309,46 +267,6 @@ CCNode* ScrollView::getChildByTag(int tag)
 Widget* ScrollView::getChildByName(const char *name)
 {
     return _innerContainer->getChildByName(name);
-}
-    
-void ScrollView::addNode(CCNode* node)
-{
-    Layout::addNode(node);
-}
-
-void ScrollView::addNode(CCNode * node, int zOrder)
-{
-    Layout::addNode(node, zOrder);
-}
-
-void ScrollView::addNode(CCNode* node, int zOrder, int tag)
-{
-    _innerContainer->addNode(node, zOrder, tag);
-}
-
-CCNode* ScrollView::getNodeByTag(int tag)
-{
-    return _innerContainer->getNodeByTag(tag);
-}
-    
-void ScrollView::removeNodeByTag(int tag)
-{
-    _innerContainer->removeNodeByTag(tag);
-}
-
-CCArray* ScrollView::getNodes()
-{
-    return _innerContainer->getNodes();
-}
-
-void ScrollView::removeNode(CCNode* node)
-{
-    _innerContainer->removeNode(node);
-}
-
-void ScrollView::removeAllNodes()
-{
-    _innerContainer->removeAllNodes();
 }
 
 void ScrollView::moveChildren(float offsetX, float offsetY)

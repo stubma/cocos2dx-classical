@@ -61,7 +61,7 @@ NS_CC_EXT_BEGIN
  * The base node include a lot of attributes.
  * @lua NA
  */
-class  CC_EX_DLL CCBaseData : public CCObject
+class  CCBaseData : public CCObject
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(CCBaseData)
@@ -129,7 +129,7 @@ enum DisplayType
 *   @js NA
 *   @lua NA
 */
-class  CC_EX_DLL CCDisplayData : public CCObject
+class  CCDisplayData : public CCObject
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(CCDisplayData)
@@ -150,7 +150,7 @@ public:
 *   @js NA
 *   @lua NA
 */
-class  CC_EX_DLL CCSpriteDisplayData : public CCDisplayData
+class  CCSpriteDisplayData : public CCDisplayData
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(CCSpriteDisplayData)
@@ -167,7 +167,7 @@ public:
 *   @js NA
 *   @lua NA
 */
-class  CC_EX_DLL CCArmatureDisplayData  : public CCDisplayData
+class  CCArmatureDisplayData  : public CCDisplayData
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(CCArmatureDisplayData)
@@ -180,7 +180,7 @@ public:
 *   @js NA
 *   @lua NA
 */
-class  CC_EX_DLL CCParticleDisplayData : public CCDisplayData
+class  CCParticleDisplayData : public CCDisplayData
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(CCParticleDisplayData)
@@ -199,7 +199,7 @@ public:
 * @js NA
 * @lua NA
 */
-class  CC_EX_DLL CCBoneData : public CCBaseData
+class  CCBoneData : public CCBaseData
 {
 public:
     CC_CREATE_NO_PARAM(CCBoneData)
@@ -226,7 +226,7 @@ public:
 * @js NA
 * @lua NA
 */
-class  CC_EX_DLL CCArmatureData : public CCObject
+class  CCArmatureData : public CCObject
 {
 public:
     CC_CREATE_NO_PARAM(CCArmatureData)
@@ -265,7 +265,7 @@ enum CCBlendType
 * @js NA
 * @lua NA
 */
-class  CC_EX_DLL CCFrameData : public CCBaseData
+class  CCFrameData : public CCBaseData
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(CCFrameData)
@@ -305,7 +305,7 @@ public:
 * @js NA
 * @lua NA
 */
-class  CC_EX_DLL CCMovementBoneData : public CCObject
+class  CCMovementBoneData : public CCObject
 {
 public:
     CC_CREATE_NO_PARAM(CCMovementBoneData)
@@ -330,7 +330,7 @@ public:
 * @js NA
 * @lua NA
 */
-class  CC_EX_DLL CCMovementData : public CCObject
+class  CCMovementData : public CCObject
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(CCMovementData)
@@ -385,7 +385,7 @@ public:
 *  @js NA
 *  @lua NA
 */
-class  CC_EX_DLL CCAnimationData : public CCObject
+class  CCAnimationData : public CCObject
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(CCAnimationData)
@@ -403,7 +403,7 @@ public:
 };
 
 
-struct CC_EX_DLL CCContourVertex2 : public CCObject
+struct CCContourVertex2 : public CCObject
 {
     CCContourVertex2(float xx, float yy)
     {
@@ -420,7 +420,7 @@ struct CC_EX_DLL CCContourVertex2 : public CCObject
 * @js NA
 * @lua NA
 */
-class  CC_EX_DLL CCContourData : public CCObject
+class  CCContourData : public CCObject
 {
 public:
     CC_CREATE_NO_PARAM(CCContourData)
@@ -442,7 +442,7 @@ public:
 * @js NA
 * @lua NA
 */
-class  CC_EX_DLL CCTextureData : public CCObject
+class  CCTextureData : public CCObject
 {
 public:
     CC_CREATE_NO_PARAM(CCTextureData)

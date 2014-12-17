@@ -25,7 +25,7 @@
 #ifndef __UILABELATLAS_H__
 #define __UILABELATLAS_H__
 
-#include "../BaseClasses/UIWidget.h"
+#include "../BaseClasses/Widget.h"
 
 NS_CC_BEGIN
 
@@ -35,7 +35,7 @@ namespace ui {
  *   @js NA
  *   @lua NA
  */
-class CC_EX_DLL UICCLabelAtlas : public CCLabelAtlas
+class UICCLabelAtlas : public CCLabelAtlas
 {
 public:
     /**
@@ -61,10 +61,8 @@ public:
  *   @js NA
  *   @lua NA
  */
-class CC_EX_DLL LabelAtlas : public Widget
+class LabelAtlas : public Widget
 {
-    DECLARE_CLASS_GUI_INFO
-    
 public:
     /**
      * Default constructor
@@ -107,14 +105,11 @@ public:
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
-    virtual void updateTextureColor();
-    virtual void updateTextureOpacity();
-    virtual void updateTextureRGBA();
     void labelAtlasScaleChangedWithSize();
     virtual Widget* createCloneInstance();
     virtual void copySpecialProperties(Widget* model);
 protected:
-    UICCLabelAtlas* _labelAtlasRenderer;
+    UICCLabelAtlas* _laberAtlasRenderer;
     std::string _stringValue;
     std::string _charMapFileName;
     int _itemWidth;

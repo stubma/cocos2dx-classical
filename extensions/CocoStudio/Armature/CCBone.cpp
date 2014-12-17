@@ -384,7 +384,7 @@ CCTween *CCBone::getTween()
 
 void CCBone::setBlendFunc(const ccBlendFunc& blendFunc)
 {
-    if (m_sBlendFunc.src != blendFunc.src || m_sBlendFunc.dst != blendFunc.dst)
+    if (m_sBlendFunc.src != blendFunc.src && m_sBlendFunc.dst != blendFunc.dst)
     {
         m_sBlendFunc = blendFunc;
         m_bBlendDirty = true;
@@ -456,6 +456,7 @@ void CCBone::changeDisplayWithName(const char *name, bool force)
 
 CCArray *CCBone::getColliderBodyList()
 {
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     if (CCDecorativeDisplay *decoDisplay = m_pDisplayManager->getCurrentDecorativeDisplay())
     {
         if (CCColliderDetector *detector = decoDisplay->getColliderDetector())
@@ -463,6 +464,7 @@ CCArray *CCBone::getColliderBodyList()
             return detector->getColliderBodyList();
         }
     }
+#endif
     return NULL;
 }
 

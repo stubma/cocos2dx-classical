@@ -24,6 +24,7 @@
 
 #include "UITouchGroup.h"
 #include "UIHelper.h"
+#include "PageView.h"
 
 NS_CC_BEGIN
 

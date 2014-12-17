@@ -28,13 +28,12 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
 #include "../Json/DictionaryHelper.h"
-#include "../Json/CocoLoader.h"
 #include <vector>
 
 NS_CC_EXT_BEGIN
 
 
-class CC_EX_DLL BaseTriggerCondition : public CCObject
+class BaseTriggerCondition : public CCObject
 {
 protected:
     BaseTriggerCondition(void);
@@ -43,11 +42,10 @@ public:
     virtual bool init();
     virtual bool detect();
 	virtual void serialize(const rapidjson::Value &val);
-	virtual void serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode);
     virtual void removeAll();
 };
 
-class CC_EX_DLL BaseTriggerAction : public CCObject
+class BaseTriggerAction : public CCObject
 {
 protected:
     BaseTriggerAction(void);
@@ -56,12 +54,11 @@ public:
     virtual bool init();
     virtual void done();
 	virtual void serialize(const rapidjson::Value &val);
-	virtual void serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode);
     virtual void removeAll();
 };
 
 
-class CC_EX_DLL TriggerObj : public CCObject
+class TriggerObj : public CCObject
 {
 public:
     TriggerObj(void);
@@ -73,7 +70,6 @@ public:
     virtual void done();
     virtual void removeAll();
     virtual void serialize(const rapidjson::Value &val);
-	virtual void serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode);
 	unsigned int getId();
 	void setEnable(bool bEnable);
 	std::vector<int>& getEvents();

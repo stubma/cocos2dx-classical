@@ -25,7 +25,7 @@
 #ifndef __UIIMAGEVIEW_H__
 #define __UIIMAGEVIEW_H__
 
-#include "../BaseClasses/UIWidget.h"
+#include "../BaseClasses/Widget.h"
 
 NS_CC_BEGIN
 
@@ -35,10 +35,8 @@ namespace ui {
 *   @js NA
 *   @lua NA
 */
-class CC_EX_DLL ImageView : public Widget
+class ImageView : public Widget
 {
-    DECLARE_CLASS_GUI_INFO
-    
 public:
     /**
      * Default constructor
@@ -77,8 +75,6 @@ public:
      */
     void setScale9Enabled(bool able);
     
-    bool isScale9Enabled();
-    
     /**
      * Sets capinsets for imageview, if imageview is using scale9 renderer.
      *
@@ -86,7 +82,17 @@ public:
      */
     void setCapInsets(const CCRect &capInsets);
     
-    const CCRect& getCapInsets();
+    //override "setFlipX" method of widget.
+    virtual void setFlipX(bool flipX);
+    
+    //override "setFlipY" method of widget.
+    virtual void setFlipY(bool flipY);
+    
+    //override "isFlipX" method of widget.
+    virtual bool isFlipX();
+    
+    //override "isFlipY" method of widget.
+    virtual bool isFlipY();
     
     //override "setAnchorPoint" method of widget.
     virtual void setAnchorPoint(const CCPoint &pt);
@@ -104,11 +110,6 @@ public:
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
-    virtual void updateTextureColor();
-    virtual void updateTextureOpacity();
-    virtual void updateTextureRGBA();
-    virtual void updateFlippedX();
-    virtual void updateFlippedY();
     void imageTextureScaleChangedWithSize();
     virtual Widget* createCloneInstance();
     virtual void copySpecialProperties(Widget* model);

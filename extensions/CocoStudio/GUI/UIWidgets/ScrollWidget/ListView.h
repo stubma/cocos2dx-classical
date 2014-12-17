@@ -45,17 +45,14 @@ typedef enum
     
 typedef enum
 {
-    LISTVIEW_ONSELECTEDITEM_START,
-    LISTVIEW_ONSELECTEDITEM_END
+    LISTVIEW_ONSELECTEDITEM
 }ListViewEventType;
 
 typedef void (CCObject::*SEL_ListViewEvent)(CCObject*,ListViewEventType);
 #define listvieweventselector(_SELECTOR) (SEL_ListViewEvent)(&_SELECTOR)
 
-class CC_EX_DLL ListView : public ScrollView
+class ListView : public ScrollView
 {
-    
-    DECLARE_CLASS_GUI_INFO
     
 public:
     
@@ -153,8 +150,6 @@ public:
      */
     void setItemsMargin(float margin);
     
-    float getItemsMargin();
-    
     virtual void sortAllChildren();
     
     int getCurSelectedIndex() const;
@@ -173,16 +168,15 @@ public:
     virtual std::string getDescription() const;
     
     void requestRefreshView();
-    
     void refreshView();
+    
 protected:
     virtual void addChild(CCNode* child) {ScrollView::addChild(child);};
     virtual void addChild(CCNode * child, int zOrder) {ScrollView::addChild(child, zOrder);};
     virtual void addChild(CCNode* child, int zOrder, int tag) {ScrollView::addChild(child, zOrder, tag);};
-    virtual void removeChild(CCNode* widget) {ScrollView::removeChild(widget);};
-    virtual void removeChild(CCNode* widget, bool cleanup) {ScrollView::removeChild(widget, cleanup);};
+    virtual void removeChild(CCNode* widget, bool cleanup = true) {ScrollView::removeChild(widget, cleanup);};
     
-    virtual void removeAllChildren() {ScrollView::removeAllChildren();};
+    virtual void removeAllChildren() {removeAllChildrenWithCleanup(true);};
     virtual void removeAllChildrenWithCleanup(bool cleanup) {ScrollView::removeAllChildrenWithCleanup(cleanup);};
     virtual CCArray* getChildren() {return ScrollView::getChildren();};
     virtual unsigned int getChildrenCount() const {return ScrollView::getChildrenCount();};
@@ -195,8 +189,9 @@ protected:
     virtual Widget* createCloneInstance();
     virtual void copySpecialProperties(Widget* model);
     virtual void copyClonedWidgetChildren(Widget* model);
-    void selectedItemEvent(int state);
+    void selectedItemEvent();
     virtual void interceptTouchEvent(int handleState,Widget* sender,const CCPoint &touchPoint);
+    
 protected:
     
     Widget* _model;

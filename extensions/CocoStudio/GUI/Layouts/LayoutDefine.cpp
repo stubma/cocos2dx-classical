@@ -1,6 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies
+ Copyright (c) 2013 cocos2d-x.org
  
  http://www.cocos2d-x.org
  
@@ -22,17 +21,44 @@ Copyright (c) 2013-2014 Chukong Technologies
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef __CC_TIMELINE_MACROS_H__
-#define __CC_TIMELINE_MACROS_H__
+#include "LayoutDefine.h"
 
-#ifdef __cplusplus
-#define NS_TIMELINE_BEGIN                     namespace cocostudio { namespace timeline{
-#define NS_TIMELINE_END                       }}
-#define USING_NS_TIMELINE                     using namespace cocostudio::timeline;
-#else
-#define NS_TIMELINE_BEGIN 
-#define NS_TIMELINE_END 
-#define USING_NS_TIMELINE 
-#endif 
+NS_CC_BEGIN
 
-#endif
+namespace ui {
+
+
+Margin::Margin(void) : left(0), top(0), right(0), bottom(0)
+{
+}
+
+Margin::Margin(float l, float t, float r, float b) : left(l), top(t), right(r), bottom(b)
+{
+}
+
+Margin::Margin(const Margin& other) : left(other.left), top(other.top), right(other.right), bottom(other.bottom)
+{
+}
+
+Margin& Margin::operator= (const Margin& other)
+{
+    setMargin(other.left, other.top, other.right, other.bottom);
+    return *this;
+}
+
+void Margin::setMargin(float l, float t, float r, float b)
+{
+    left = l;
+    top = t;
+    right = r;
+    bottom = b;
+}
+
+bool Margin::equals(const Margin &target) const
+{
+    return (left == target.left && top == target.top && right == target.right && bottom == target.bottom);
+}
+
+}
+
+NS_CC_END

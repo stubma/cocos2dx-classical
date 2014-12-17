@@ -25,22 +25,12 @@
 #ifndef __UISCROLLVIEW_H__
 #define __UISCROLLVIEW_H__
 
-#include "../../Layouts/UILayout.h"
+#include "../../Layouts/Layout.h"
 #include "UIScrollInterface.h"
 
 NS_CC_BEGIN
 
 namespace ui {
-    
-class CC_EX_DLL ScrollInnerContainer : public Layout
-{
-public:
-    ScrollInnerContainer();
-    virtual ~ScrollInnerContainer();
-    static ScrollInnerContainer* create();
-    virtual const CCSize& getLayoutSize();
-protected:
-};
 
 enum SCROLLVIEW_DIR
 {
@@ -67,11 +57,8 @@ typedef void (CCObject::*SEL_ScrollViewEvent)(CCObject*, ScrollviewEventType);
 #define scrollvieweventselector(_SELECTOR) (SEL_ScrollViewEvent)(&_SELECTOR)
 
 
-class CC_EX_DLL ScrollView : public Layout , public UIScrollInterface
+class ScrollView : public Layout , public UIScrollInterface
 {
-    
-    DECLARE_CLASS_GUI_INFO
-    
 public:
     /**
      * Default constructor
@@ -274,10 +261,8 @@ public:
     
     virtual void removeAllChildrenWithCleanup(bool cleanup);
     
-    virtual void removeChild(CCNode* child);
-    
     //override "removeChild" method of widget.
-	virtual void removeChild(CCNode* child, bool cleaup);
+	virtual void removeChild(CCNode* child, bool cleaup = true);
     
     //override "getChildren" method of widget.
     virtual CCArray* getChildren();
@@ -287,23 +272,6 @@ public:
     virtual CCNode * getChildByTag(int tag);
     
     virtual Widget* getChildByName(const char* name);
-    
-    virtual void addNode(CCNode* node);
-    
-    virtual void addNode(CCNode * node, int zOrder);
-    
-    virtual void addNode(CCNode* node, int zOrder, int tag);
-    
-    virtual CCNode * getNodeByTag(int tag);
-    
-    virtual void removeNodeByTag(int tag);
-    
-    virtual CCArray* getNodes();
-    
-    virtual void removeNode(CCNode* node);
-        
-    virtual void removeAllNodes();
-
     
     virtual bool onTouchBegan(CCTouch *touch, CCEvent *unusedEvent);
     virtual void onTouchMoved(CCTouch *touch, CCEvent *unusedEvent);
@@ -344,9 +312,6 @@ public:
     virtual std::string getDescription() const;
     
     virtual void onEnter();
-    
-    CCPoint getTouchEndPoint() { return _touchEndedPoint; }
-    
 protected:
     virtual bool init();
     virtual void initRenderer();
@@ -387,8 +352,12 @@ protected:
     virtual void copyClonedWidgetChildren(Widget* model);
     virtual void setClippingEnabled(bool able) {Layout::setClippingEnabled(able);};
     virtual void doLayout();
+    
+public:
+    CCPoint getTouchEndPoint() { return _touchEndedPoint; }
+    
 protected:
-    ScrollInnerContainer* _innerContainer;
+    Layout* _innerContainer;
     
     SCROLLVIEW_DIR _direction;
 

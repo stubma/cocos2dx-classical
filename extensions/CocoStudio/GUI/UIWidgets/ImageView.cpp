@@ -34,8 +34,6 @@ namespace ui {
 #define STATIC_CAST_SCALE9SPRITE static_cast<extension::CCScale9Sprite*>(_imageRenderer)
     
 static const int IMAGE_RENDERER_Z = (-1);
-    
-    IMPLEMENT_CLASS_GUI_INFO(ImageView)
 
 ImageView::ImageView():
 _scale9Enabled(false),
@@ -69,7 +67,7 @@ ImageView* ImageView::create()
 void ImageView::initRenderer()
 {
     _imageRenderer = CCSprite::create();
-    CCNode::addChild(_imageRenderer, IMAGE_RENDERER_Z, -1);
+    CCNodeRGBA::addChild(_imageRenderer, IMAGE_RENDERER_Z, -1);
 }
 
 void ImageView::loadTexture(const char *fileName, TextureResType texType)
@@ -87,12 +85,16 @@ void ImageView::loadTexture(const char *fileName, TextureResType texType)
             {
                 extension::CCScale9Sprite* imageRendererScale9 = STATIC_CAST_SCALE9SPRITE;
                 imageRendererScale9->initWithFile(fileName);
+                imageRendererScale9->setColor(getColor());
+                imageRendererScale9->setOpacity(getOpacity());
                 imageRendererScale9->setCapInsets(_capInsets);
             }
             else
             {
                 CCSprite* imageRenderer = STATIC_CAST_CCSPRITE;
                 imageRenderer->initWithFile(fileName);
+                imageRenderer->setColor(getColor());
+                imageRenderer->setOpacity(getOpacity());
             }
             break;
         case UI_TEX_TYPE_PLIST:
@@ -100,23 +102,26 @@ void ImageView::loadTexture(const char *fileName, TextureResType texType)
             {
                 extension::CCScale9Sprite* imageRendererScale9 = STATIC_CAST_SCALE9SPRITE;
                 imageRendererScale9->initWithSpriteFrameName(fileName);
+                imageRendererScale9->setColor(getColor());
+                imageRendererScale9->setOpacity(getOpacity());
                 imageRendererScale9->setCapInsets(_capInsets);
             }
             else
             {
                 CCSprite* imageRenderer = STATIC_CAST_CCSPRITE;
                 imageRenderer->initWithSpriteFrameName(fileName);
+                imageRenderer->setColor(getColor());
+                imageRenderer->setOpacity(getOpacity());
             }
             break;
         default:
             break;
     }
     _imageTextureSize = _imageRenderer->getContentSize();
-    imageTextureScaleChangedWithSize();
+    updateDisplayedColor(getColor());
+    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
-    updateFlippedX();
-    updateFlippedY();
-    updateRGBAToRenderer(_imageRenderer);
+    imageTextureScaleChangedWithSize();
 }
 
 void ImageView::setTextureRect(const CCRect &rect)
@@ -129,30 +134,50 @@ void ImageView::setTextureRect(const CCRect &rect)
         STATIC_CAST_CCSPRITE->setTextureRect(rect);
     }
 }
-    
-void ImageView::updateFlippedX()
+
+void ImageView::setFlipX(bool flipX)
 {
     if (_scale9Enabled)
     {
-        int flip = _flippedX ? -1 : 1;
-        STATIC_CAST_SCALE9SPRITE->setScaleX(flip);
     }
     else
     {
-        STATIC_CAST_CCSPRITE->setFlipX(_flippedX);
+        STATIC_CAST_CCSPRITE->setFlipX(flipX);
     }
 }
-    
-void ImageView::updateFlippedY()
+
+void ImageView::setFlipY(bool flipY)
 {
     if (_scale9Enabled)
     {
-        int flip = _flippedY ? -1 : 1;
-        STATIC_CAST_SCALE9SPRITE->setScaleY(flip);
     }
     else
     {
-        STATIC_CAST_CCSPRITE->setFlipY(_flippedY);
+        STATIC_CAST_CCSPRITE->setFlipY(flipY);
+    }
+}
+
+bool ImageView::isFlipX()
+{
+    if (_scale9Enabled)
+    {
+        return false;
+    }
+    else
+    {
+        return STATIC_CAST_CCSPRITE->isFlipX();
+    }
+}
+
+bool ImageView::isFlipY()
+{
+    if (_scale9Enabled)
+    {
+        return false;
+    }
+    else
+    {
+        return STATIC_CAST_CCSPRITE->isFlipY();
     }
 }
 
@@ -165,7 +190,7 @@ void ImageView::setScale9Enabled(bool able)
     
     
     _scale9Enabled = able;
-    CCNode::removeChild(_imageRenderer, true);
+    CCNodeRGBA::removeChild(_imageRenderer, true);
     _imageRenderer = NULL;
     if (_scale9Enabled)
     {
@@ -176,7 +201,7 @@ void ImageView::setScale9Enabled(bool able)
         _imageRenderer = CCSprite::create();
     }
     loadTexture(_textureFile.c_str(),_imageTexType);
-    CCNode::addChild(_imageRenderer, IMAGE_RENDERER_Z, -1);
+    CCNodeRGBA::addChild(_imageRenderer, IMAGE_RENDERER_Z, -1);
     if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;
@@ -188,11 +213,6 @@ void ImageView::setScale9Enabled(bool able)
         ignoreContentAdaptWithSize(_prevIgnoreSize);
     }
     setCapInsets(_capInsets);
-}
-    
-bool ImageView::isScale9Enabled()
-{
-    return _scale9Enabled;
 }
 
 void ImageView::ignoreContentAdaptWithSize(bool ignore)
@@ -212,11 +232,6 @@ void ImageView::setCapInsets(const CCRect &capInsets)
         return;
     }
     STATIC_CAST_SCALE9SPRITE->setCapInsets(capInsets);
-}
-    
-const CCRect& ImageView::getCapInsets()
-{
-    return _capInsets;
 }
 
 void ImageView::setAnchorPoint(const CCPoint &pt)
@@ -271,21 +286,6 @@ void ImageView::imageTextureScaleChangedWithSize()
             _imageRenderer->setScaleY(scaleY);
         }
     }
-}
-    
-void ImageView::updateTextureColor()
-{
-    updateColorToRenderer(_imageRenderer);
-}
-
-void ImageView::updateTextureOpacity()
-{
-    updateOpacityToRenderer(_imageRenderer);
-}
-
-void ImageView::updateTextureRGBA()
-{
-    updateRGBAToRenderer(_imageRenderer);
 }
 
 std::string ImageView::getDescription() const

@@ -25,7 +25,7 @@
 #ifndef __LAYOUTPARMETER_H__
 #define __LAYOUTPARMETER_H__
 
-#include "UILayoutDefine.h"
+#include "LayoutDefine.h"
 
 NS_CC_BEGIN
 
@@ -41,7 +41,7 @@ typedef enum
 *   @js NA
 *   @lua NA
 */
-class CC_EX_DLL LayoutParameter : public CCObject
+class LayoutParameter : public CCObject
 {
 public:
     /**
@@ -86,10 +86,6 @@ public:
      * @return LayoutParameterType
      */
     LayoutParameterType getLayoutType() const;
-    
-    LayoutParameter* clone();
-    virtual LayoutParameter* createCloneInstance();
-    virtual void copyProperties(LayoutParameter* model);
 protected:
     Margin _margin;
     LayoutParameterType _layoutParameterType;
@@ -98,7 +94,7 @@ protected:
 *   @js NA
 *   @lua NA
 */
-class CC_EX_DLL LinearLayoutParameter : public LayoutParameter
+class LinearLayoutParameter : public LayoutParameter
 {
 public:
     /**
@@ -134,8 +130,6 @@ public:
      * @return LinearGravity
      */
     LinearGravity getGravity() const;
-    virtual LayoutParameter* createCloneInstance();
-    virtual void copyProperties(LayoutParameter* model);
 protected:
     LinearGravity _linearGravity;
 };
@@ -144,7 +138,7 @@ protected:
 *   @lua NA
 */
 
-class CC_EX_DLL RelativeLayoutParameter : public LayoutParameter
+class RelativeLayoutParameter : public LayoutParameter
 {
 public:
     /**
@@ -208,9 +202,6 @@ public:
      * @return name
      */
     const char* getRelativeName() const;
-    
-    virtual LayoutParameter* createCloneInstance();
-    virtual void copyProperties(LayoutParameter* model);
 protected:
     RelativeAlign _relativeAlign;
     std::string _relativeWidgetName;

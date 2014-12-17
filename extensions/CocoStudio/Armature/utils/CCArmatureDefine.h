@@ -29,7 +29,6 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
 
-
 #define VERSION_COMBINED 0.30f
 #define VERSION_CHANGE_ROTATION_RANGE 1.0f
 #define VERSION_COLOR_READING 1.1f
@@ -39,7 +38,7 @@ THE SOFTWARE.
 #endif // !AUTO_ADD_SPRITE_FRAME_NAME_PREFIX
 
 
-#define PHYSICS_TYPE 3
+#define PHYSICS_TYPE 4
 
 #if PHYSICS_TYPE == 1
 #define ENABLE_PHYSICS_BOX2D_DETECT 1
@@ -65,7 +64,7 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-CC_EX_DLL const char *armatureVersion();
+const char *armatureVersion();
 
 NS_CC_EXT_END
 

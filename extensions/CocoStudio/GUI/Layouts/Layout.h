@@ -25,7 +25,7 @@
 #ifndef __LAYOUT_H__
 #define __LAYOUT_H__
 
-#include "../BaseClasses/UIWidget.h"
+#include "../BaseClasses/Widget.h"
 
 NS_CC_BEGIN
 
@@ -55,11 +55,8 @@ typedef enum {
  *  @js NA
  *  @lua NA
  */
-class CC_EX_DLL Layout : public Widget
+class Layout : public Widget
 {
-    
-    DECLARE_CLASS_GUI_INFO
-    
 public:
     /**
      * Default constructor
@@ -94,16 +91,12 @@ public:
      */
     void setBackGroundImageCapInsets(const CCRect& capInsets);
     
-    const CCRect& getBackGroundImageCapInsets();
-    
     /**
      * Sets Color Type for layout.
      *
      * @param type   @see LayoutBackGroundColorType.
      */
     void setBackGroundColorType(LayoutBackGroundColorType type);
-    
-    LayoutBackGroundColorType getBackGroundColorType();
     
     /**
      * Sets background iamge use scale9 renderer.
@@ -112,16 +105,12 @@ public:
      */
     void setBackGroundImageScale9Enabled(bool enabled);
     
-    bool isBackGroundImageScale9Enabled();
-    
     /**
      * Sets background color for layout, if color type is LAYOUT_COLOR_SOLID
      *
      * @param color
      */
     void setBackGroundColor(const ccColor3B &color);
-    
-    const ccColor3B& getBackGroundColor();
     
     /**
      * Sets background color for layout, if color type is LAYOUT_COLOR_GRADIENT
@@ -132,18 +121,12 @@ public:
      */
     void setBackGroundColor(const ccColor3B &startColor, const ccColor3B &endColor);
     
-    const ccColor3B& getBackGroundStartColor();
-    
-    const ccColor3B& getBackGroundEndColor();
-    
     /**
      * Sets background opacity layout.
      *
      * @param opacity
      */
-    void setBackGroundColorOpacity(GLubyte opacity);
-    
-    GLubyte getBackGroundColorOpacity();
+    void setBackGroundColorOpacity(int opacity);
     
     /**
      * Sets background color vector for layout, if color type is LAYOUT_COLOR_GRADIENT
@@ -151,16 +134,6 @@ public:
      * @param vector
      */
     void setBackGroundColorVector(const CCPoint &vector);
-    
-    const CCPoint& getBackGroundColorVector();
-    
-    void setBackGroundImageColor(const ccColor3B& color);
-    
-    void setBackGroundImageOpacity(GLubyte opacity);
-    
-    const ccColor3B& getBackGroundImageColor();
-    
-    GLubyte getBackGroundImageOpacity();
     
     /**
      * Remove the background image of layout.
@@ -184,8 +157,6 @@ public:
     virtual void setClippingEnabled(bool enabled);
     
     void setClippingType(LayoutClippingType type);
-    
-    LayoutClippingType getClippingType();
     
     /**
      * Gets if layout is clipping enabled.
@@ -238,14 +209,6 @@ public:
      */
     virtual void addChild(CCNode* child, int zOrder, int tag);
     
-    virtual void removeChild(CCNode* child);
-    
-    virtual void removeChild(CCNode* widget, bool cleanup);
-    
-    virtual void removeAllChildren();
-    
-    virtual void removeAllChildrenWithCleanup(bool cleanup);
-    
     virtual void visit();
     
     virtual void sortAllChildren();
@@ -277,9 +240,6 @@ protected:
     void setStencilClippingSize(const CCSize& size);
     const CCRect& getClippingRect();
     virtual void doLayout();
-    void updateBackGroundImageColor();
-    void updateBackGroundImageOpacity();
-    void updateBackGroundImageRGBA();
 protected:
     bool _clippingEnabled;
     
@@ -296,7 +256,7 @@ protected:
     ccColor3B _gStartColor;
     ccColor3B _gEndColor;
     CCPoint _alongVector;
-    GLubyte _cOpacity;
+    int _cOpacity;
     CCSize _backGroundImageTextureSize;
     LayoutType _layoutType;
     LayoutClippingType _clippingType;
@@ -306,9 +266,6 @@ protected:
     CCRect _clippingRect;
     Layout* _clippingParent;
     bool _doLayoutDirty;
-    bool _clippingRectDirty;
-    ccColor3B _backGroundImageColor;
-    GLubyte _backGroundImageOpacity;
 };
     
 }

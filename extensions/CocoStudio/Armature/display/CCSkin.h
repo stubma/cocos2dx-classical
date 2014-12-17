@@ -32,7 +32,7 @@ NS_CC_EXT_BEGIN
 /**
  *  @lua NA
  */
-class CC_EX_DLL CCSkin : public CCSprite
+class CCSkin : public CCSprite
 {
 public:
     static CCSkin *create();

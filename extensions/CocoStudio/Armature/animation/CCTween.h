@@ -37,7 +37,7 @@ class CCArmatureAnimation;
 *   @js  NA
 *   @lua NA
 */
-class  CC_EX_DLL CCTween : public CCProcessBase
+class  CCTween : public CCProcessBase
 {
 public:
     /**
