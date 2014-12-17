@@ -42,7 +42,7 @@
 #include "../UIWidgets/ScrollWidget/PageView.h"
 #include "UIHelper.h"
 #include "../../Reader/GUIReader.h"
-#include "UITouchGroup.h"
+#include "TouchGroup.h"
 
 //NS_CC_EXT_BEGIN
 

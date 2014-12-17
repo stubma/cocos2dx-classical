@@ -22,9 +22,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UITouchGroup.h"
+#include "TouchGroup.h"
 #include "UIHelper.h"
-#include "PageView.h"
+#include "CocoStudio/GUI/UIWidgets/ScrollWidget/PageView.h"
 
 NS_CC_BEGIN
 

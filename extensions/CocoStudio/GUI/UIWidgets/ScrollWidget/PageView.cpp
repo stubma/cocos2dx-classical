@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "PageView.h"
-#include "CCVelocityTracker.h"
+#include "support/ui_support/CCVelocityTracker.h"
 
 NS_CC_BEGIN
 

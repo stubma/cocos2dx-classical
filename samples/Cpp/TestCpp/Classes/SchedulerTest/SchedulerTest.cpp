@@ -980,7 +980,7 @@ CCControlSlider *TwoSchedulers::sliderCtl()
     CCControlSlider *slider = CCControlSlider::create(CCSprite::create("extensions/sliderTrack2.png"),
                                                       CCSprite::create("extensions/sliderProgress2.png"),
                                                       CCSprite::create("extensions/sliderThumb.png"));
-        //[[UISlider alloc] initWithFrame:frame];
+        //[[Slider alloc] initWithFrame:frame];
     slider->addTargetWithActionForControlEvents(this, cccontrol_selector(TwoSchedulers::sliderAction), CCControlEventValueChanged);
 
     // in case the parent view draws with a custom color or gradient, use a transparent color

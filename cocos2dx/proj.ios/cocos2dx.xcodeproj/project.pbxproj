@@ -757,8 +757,8 @@
 		92C6143B1A41A88F00550090 /* CocosGUI.h in Headers */ = {isa = PBXBuildFile; fileRef = 92C613B51A41A88F00550090 /* CocosGUI.h */; };
 		92C6143C1A41A88F00550090 /* UIHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92C613B61A41A88F00550090 /* UIHelper.cpp */; };
 		92C6143D1A41A88F00550090 /* UIHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 92C613B71A41A88F00550090 /* UIHelper.h */; };
-		92C6143E1A41A88F00550090 /* UITouchGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92C613B81A41A88F00550090 /* UITouchGroup.cpp */; };
-		92C6143F1A41A88F00550090 /* UITouchGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 92C613B91A41A88F00550090 /* UITouchGroup.h */; };
+		92C6143E1A41A88F00550090 /* TouchGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92C613B81A41A88F00550090 /* TouchGroup.cpp */; };
+		92C6143F1A41A88F00550090 /* TouchGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 92C613B91A41A88F00550090 /* TouchGroup.h */; };
 		92C614411A41A88F00550090 /* ListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92C613BE1A41A88F00550090 /* ListView.cpp */; };
 		92C614421A41A88F00550090 /* ListView.h in Headers */ = {isa = PBXBuildFile; fileRef = 92C613BF1A41A88F00550090 /* ListView.h */; };
 		92C614431A41A88F00550090 /* PageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92C613C01A41A88F00550090 /* PageView.cpp */; };
@@ -1584,8 +1584,8 @@
 		92C613B51A41A88F00550090 /* CocosGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosGUI.h; sourceTree = "<group>"; };
 		92C613B61A41A88F00550090 /* UIHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIHelper.cpp; sourceTree = "<group>"; };
 		92C613B71A41A88F00550090 /* UIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIHelper.h; sourceTree = "<group>"; };
-		92C613B81A41A88F00550090 /* UITouchGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITouchGroup.cpp; sourceTree = "<group>"; };
-		92C613B91A41A88F00550090 /* UITouchGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITouchGroup.h; sourceTree = "<group>"; };
+		92C613B81A41A88F00550090 /* TouchGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TouchGroup.cpp; sourceTree = "<group>"; };
+		92C613B91A41A88F00550090 /* TouchGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchGroup.h; sourceTree = "<group>"; };
 		92C613BE1A41A88F00550090 /* ListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ListView.cpp; sourceTree = "<group>"; };
 		92C613BF1A41A88F00550090 /* ListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListView.h; sourceTree = "<group>"; };
 		92C613C01A41A88F00550090 /* PageView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PageView.cpp; sourceTree = "<group>"; };
@@ -3075,8 +3075,8 @@
 				92C613B51A41A88F00550090 /* CocosGUI.h */,
 				92C613B61A41A88F00550090 /* UIHelper.cpp */,
 				92C613B71A41A88F00550090 /* UIHelper.h */,
-				92C613B81A41A88F00550090 /* UITouchGroup.cpp */,
-				92C613B91A41A88F00550090 /* UITouchGroup.h */,
+				92C613B81A41A88F00550090 /* TouchGroup.cpp */,
+				92C613B91A41A88F00550090 /* TouchGroup.h */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -3507,7 +3507,7 @@
 				1551A847158F2ADF00E66CFE /* ccCArray.h in Headers */,
 				1551A848158F2ADF00E66CFE /* uthash.h in Headers */,
 				929D538B1A27595700560A2E /* yajl_gen.h in Headers */,
-				92C6143F1A41A88F00550090 /* UITouchGroup.h in Headers */,
+				92C6143F1A41A88F00550090 /* TouchGroup.h in Headers */,
 				92C6144D1A41A88F00550090 /* ImageView.h in Headers */,
 				1551A849158F2ADF00E66CFE /* utlist.h in Headers */,
 				928F65011A342FB000178235 /* CCCatmullRomSprite.h in Headers */,
@@ -3904,7 +3904,7 @@
 				1551A71C158F2ADE00E66CFE /* CCEGLViewProtocol.cpp in Sources */,
 				929F3A701A26193200DE78AC /* CCLocalization.cpp in Sources */,
 				1551A729158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm in Sources */,
-				92C6143E1A41A88F00550090 /* UITouchGroup.cpp in Sources */,
+				92C6143E1A41A88F00550090 /* TouchGroup.cpp in Sources */,
 				92A7AF891A3C4038001C830B /* CCSPXFrame.cpp in Sources */,
 				1551A72B158F2ADE00E66CFE /* CCAccelerometer.mm in Sources */,
 				1551A72D158F2ADE00E66CFE /* CCApplication.mm in Sources */,

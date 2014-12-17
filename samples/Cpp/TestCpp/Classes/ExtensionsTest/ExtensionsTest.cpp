@@ -3,11 +3,6 @@
 #include "NotificationCenterTest/NotificationCenterTest.h"
 #include "ControlExtensionTest/CCControlSceneManager.h"
 #include "TableViewTest/TableViewTestScene.h"
-#include "CocoStudioArmatureTest/ArmatureScene.h"
-#include "CocoStudioComponentsTest/ComponentsTestScene.h"
-#include "CocoStudioSceneTest/SceneEditorTest.h"
-#include "CocoStudioGUITest/CocoStudioGUITest.h"
-#include "CocoStudioActionTimelineTest/ActionTimelineTestScene.h"
  
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #include "EditBoxTest/EditBoxTest.h"
@@ -27,11 +22,6 @@ enum
     TEST_EDITBOX,
 #endif
 	TEST_TABLEVIEW,
-	TEST_COMPONENTS,
-	TEST_ARMATURE,
-    TEST_SCENEEDITOR,
-    TEST_COCOSGUI,
-    TEST_ACTIONTIMELINE,
     TEST_MAX_COUNT,
 };
 
@@ -42,12 +32,7 @@ static const std::string testsName[TEST_MAX_COUNT] =
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)  || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     "EditBoxTest",
 #endif
-	"TableViewTest",
-    "CocoStudioComponentsTest",
-	"CocoStudioArmatureTest",
-    "CocoStudioSceneTest",
-    "CocoStudioGUITest",
-    "CocoStudioActionTimelineTest"
+	"TableViewTest"
 };
 
 ////////////////////////////////////////////////////////
@@ -113,44 +98,6 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
 			runTableViewTest();
 		}
 		break;
-    case TEST_COMPONENTS:
-        {
-            runComponentsTestLayerTest();
-        }
-        break;
-	case TEST_ARMATURE:
-		{
-			ArmatureTestScene *pScene = new ArmatureTestScene();
-			if (pScene)
-			{
-				pScene->runThisTest();
-				pScene->release();
-			}
-		}
-		break;
-    case TEST_SCENEEDITOR:
-       {
-            SceneEditorTestScene *pScene = new SceneEditorTestScene();
-            if (NULL != pScene)
-            {
-                pScene->runThisTest();
-                pScene->release();
-            }
-       }
-            break;
-        case TEST_COCOSGUI:
-        {
-            CocoStudioGUITestScene* pScene = new CocoStudioGUITestScene();
-            pScene->runThisTest();
-            pScene->release();
-		}
-            break;
-        case TEST_ACTIONTIMELINE:
-            {
-                TimelineTestScene* pScene = new TimelineTestScene();
-                pScene->runThisTest();
-                pScene->release();
-            }
     default:
         break;
     }
