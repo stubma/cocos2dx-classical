@@ -4119,16 +4119,8 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../../scripting/javascript/spidermonkey-android/lib/armeabi",
-					"$(PROJECT_DIR)/../../scripting/javascript/spidermonkey-android/lib/armeabi-v7a",
-					"$(PROJECT_DIR)/../../scripting/javascript/spidermonkey-android/lib/x86",
-					"$(PROJECT_DIR)/../../scripting/javascript/spidermonkey-ios/lib",
-					"$(PROJECT_DIR)/../../scripting/lua/luajit/android/armeabi",
-					"$(PROJECT_DIR)/../../scripting/lua/luajit/android/armeabi-v7a",
-					"$(PROJECT_DIR)/../../scripting/lua/luajit/android/x86",
-					"$(PROJECT_DIR)/../../scripting/lua/luajit/ios",
 					"$(PROJECT_DIR)/../platform/third_party/ios/libraries",
-					"/Users/maruojie/Projects/cocos2dx-classical/cocos2dx/platform/third_party/ios/libraries",
+					"$(PROJECT_DIR)/../../scripting/lua/luajit/prebuilt/ios",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4157,16 +4149,8 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../../scripting/javascript/spidermonkey-android/lib/armeabi",
-					"$(PROJECT_DIR)/../../scripting/javascript/spidermonkey-android/lib/armeabi-v7a",
-					"$(PROJECT_DIR)/../../scripting/javascript/spidermonkey-android/lib/x86",
-					"$(PROJECT_DIR)/../../scripting/javascript/spidermonkey-ios/lib",
-					"$(PROJECT_DIR)/../../scripting/lua/luajit/android/armeabi",
-					"$(PROJECT_DIR)/../../scripting/lua/luajit/android/armeabi-v7a",
-					"$(PROJECT_DIR)/../../scripting/lua/luajit/android/x86",
-					"$(PROJECT_DIR)/../../scripting/lua/luajit/ios",
 					"$(PROJECT_DIR)/../platform/third_party/ios/libraries",
-					"/Users/maruojie/Projects/cocos2dx-classical/cocos2dx/platform/third_party/ios/libraries",
+					"$(PROJECT_DIR)/../../scripting/lua/luajit/prebuilt/ios",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
