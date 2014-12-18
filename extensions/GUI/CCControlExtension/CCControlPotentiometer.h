@@ -39,7 +39,7 @@ NS_CC_EXT_BEGIN
  */
 
 /** @class CCControlPotentiometer Potentiometer control for Cocos2D. */
-class CC_EX_DLL CCControlPotentiometer : public CCControl
+class CC_DLL CCControlPotentiometer : public CCControl
 {
 public:
     CCControlPotentiometer();

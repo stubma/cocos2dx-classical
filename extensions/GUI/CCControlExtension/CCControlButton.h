@@ -50,7 +50,7 @@ NS_CC_EXT_BEGIN
  */
 
 /** @class CCControlButton Button control for Cocos2D. */
-class CC_EX_DLL CCControlButton : public CCControl
+class CC_DLL CCControlButton : public CCControl
 {        
 public:
     CCControlButton();

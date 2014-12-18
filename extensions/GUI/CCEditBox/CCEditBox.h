@@ -131,7 +131,7 @@ class CCEditBoxImpl;
  *  @js NA
  *  @lua NA
  */
-class CC_EX_DLL CCEditBoxDelegate 
+class CC_DLL CCEditBoxDelegate 
 {
 public:
     virtual ~CCEditBoxDelegate() {};
@@ -171,7 +171,7 @@ public:
  * 
  */
  
-class CC_EX_DLL CCEditBox
+class CC_DLL CCEditBox
 : public CCControlButton
 , public CCIMEDelegate
 {

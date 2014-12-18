@@ -291,7 +291,6 @@
 		9211102C1A2B4D1B003FE653 /* CCResourceLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 921110291A2B4D1B003FE653 /* CCResourceLoader.h */; };
 		9211102D1A2B4D1B003FE653 /* CCResourceLoaderListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 9211102A1A2B4D1B003FE653 /* CCResourceLoaderListener.h */; };
 		921111731A2B4D89003FE653 /* cocos-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 921110331A2B4D89003FE653 /* cocos-ext.h */; };
-		921112211A2B4D89003FE653 /* ExtensionExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 921111061A2B4D89003FE653 /* ExtensionExport.h */; };
 		921112221A2B4D89003FE653 /* ExtensionMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 921111071A2B4D89003FE653 /* ExtensionMacros.h */; };
 		921112231A2B4D89003FE653 /* CCControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9211110A1A2B4D89003FE653 /* CCControl.cpp */; };
 		921112241A2B4D89003FE653 /* CCControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 9211110B1A2B4D89003FE653 /* CCControl.h */; };
@@ -1118,7 +1117,6 @@
 		921110291A2B4D1B003FE653 /* CCResourceLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCResourceLoader.h; sourceTree = "<group>"; };
 		9211102A1A2B4D1B003FE653 /* CCResourceLoaderListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCResourceLoaderListener.h; sourceTree = "<group>"; };
 		921110331A2B4D89003FE653 /* cocos-ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "cocos-ext.h"; sourceTree = "<group>"; };
-		921111061A2B4D89003FE653 /* ExtensionExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionExport.h; sourceTree = "<group>"; };
 		921111071A2B4D89003FE653 /* ExtensionMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionMacros.h; sourceTree = "<group>"; };
 		9211110A1A2B4D89003FE653 /* CCControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControl.cpp; sourceTree = "<group>"; };
 		9211110B1A2B4D89003FE653 /* CCControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControl.h; sourceTree = "<group>"; };
@@ -2411,7 +2409,6 @@
 			isa = PBXGroup;
 			children = (
 				921110331A2B4D89003FE653 /* cocos-ext.h */,
-				921111061A2B4D89003FE653 /* ExtensionExport.h */,
 				921111071A2B4D89003FE653 /* ExtensionMacros.h */,
 				92C613601A41A88F00550090 /* CocoStudio */,
 				921111081A2B4D89003FE653 /* GUI */,
@@ -3298,7 +3295,6 @@
 				92A7AFC21A3C456F001C830B /* ccShader_PositionColor_frag.h in Headers */,
 				1551A6BB158F2ADE00E66CFE /* kazmath.h in Headers */,
 				921110131A2B4A1B003FE653 /* CCUUID.h in Headers */,
-				921112211A2B4D89003FE653 /* ExtensionExport.h in Headers */,
 				92C612A21A41A3DC00550090 /* lstring.h in Headers */,
 				929F3A641A26163500DE78AC /* CCUtils.h in Headers */,
 				92C614201A41A88F00550090 /* CCSpriteFrameCacheHelper.h in Headers */,

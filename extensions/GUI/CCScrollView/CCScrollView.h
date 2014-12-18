@@ -48,7 +48,7 @@ class CCScrollView;
  *  @js NA
  *  @lua NA
  */
-class CC_EX_DLL CCScrollViewDelegate
+class CC_DLL CCScrollViewDelegate
 {
 public:
     virtual ~CCScrollViewDelegate() {}
@@ -62,7 +62,7 @@ public:
  * It provides scroll view functionalities to cocos2d projects natively.
  * @lua NA
  */
-class CC_EX_DLL CCScrollView : public CCLayer
+class CC_DLL CCScrollView : public CCLayer
 {
 public:
     /**

@@ -34,7 +34,7 @@ NS_CC_EXT_BEGIN
  *  @js NA
  *  @lua NA
  */
-class CC_EX_DLL CCSortableObject
+class CC_DLL CCSortableObject
 {
 public:
     virtual ~CCSortableObject() {}
@@ -45,7 +45,7 @@ public:
  *  @js NA
  *  @lua NA
  */
-class CC_EX_DLL CCArrayForObjectSorting : public CCArray
+class CC_DLL CCArrayForObjectSorting : public CCArray
 {
 public:
     CCArrayForObjectSorting() : CCArray() {}

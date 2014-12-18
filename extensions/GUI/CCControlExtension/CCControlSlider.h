@@ -52,7 +52,7 @@ NS_CC_EXT_BEGIN
  * There is CCControlSlider in cocos2d-x extensions, but it doesn't support consecutive
  * mode. I copied its code and enhanced it for a better slider.
  */
-class CC_EX_DLL CCControlSlider : public CCControl {
+class CC_DLL CCControlSlider : public CCControl {
 protected:
     CCControlSlider();
     
