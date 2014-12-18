@@ -335,9 +335,6 @@
 		9211124B1A2B4D89003FE653 /* CCTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 921111341A2B4D89003FE653 /* CCTableView.h */; };
 		9211124C1A2B4D89003FE653 /* CCTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 921111351A2B4D89003FE653 /* CCTableViewCell.cpp */; };
 		9211124D1A2B4D89003FE653 /* CCTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 921111361A2B4D89003FE653 /* CCTableViewCell.h */; };
-		9211124E1A2B4D89003FE653 /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 921111381A2B4D89003FE653 /* LocalStorage.cpp */; };
-		9211124F1A2B4D89003FE653 /* LocalStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 921111391A2B4D89003FE653 /* LocalStorage.h */; };
-		921112501A2B4D89003FE653 /* LocalStorageAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9211113A1A2B4D89003FE653 /* LocalStorageAndroid.cpp */; };
 		9242C2551A3078FB00E1E944 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9242C2541A3078FB00E1E944 /* CoreText.framework */; };
 		924308401A2F5FBE00BE2476 /* CCAssetInputStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 924308381A2F5FBE00BE2476 /* CCAssetInputStream.cpp */; };
 		924308411A2F5FBE00BE2476 /* CCAssetInputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 924308391A2F5FBE00BE2476 /* CCAssetInputStream.h */; };
@@ -1161,9 +1158,6 @@
 		921111341A2B4D89003FE653 /* CCTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTableView.h; sourceTree = "<group>"; };
 		921111351A2B4D89003FE653 /* CCTableViewCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTableViewCell.cpp; sourceTree = "<group>"; };
 		921111361A2B4D89003FE653 /* CCTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTableViewCell.h; sourceTree = "<group>"; };
-		921111381A2B4D89003FE653 /* LocalStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorage.cpp; sourceTree = "<group>"; };
-		921111391A2B4D89003FE653 /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
-		9211113A1A2B4D89003FE653 /* LocalStorageAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorageAndroid.cpp; sourceTree = "<group>"; };
 		9242C2541A3078FB00E1E944 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		924308381A2F5FBE00BE2476 /* CCAssetInputStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAssetInputStream.cpp; sourceTree = "<group>"; };
 		924308391A2F5FBE00BE2476 /* CCAssetInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAssetInputStream.h; sourceTree = "<group>"; };
@@ -2412,7 +2406,6 @@
 				921111071A2B4D89003FE653 /* ExtensionMacros.h */,
 				92C613601A41A88F00550090 /* CocoStudio */,
 				921111081A2B4D89003FE653 /* GUI */,
-				921111371A2B4D89003FE653 /* LocalStorage */,
 			);
 			name = extensions;
 			path = ../../extensions;
@@ -2490,16 +2483,6 @@
 				921111361A2B4D89003FE653 /* CCTableViewCell.h */,
 			);
 			path = CCScrollView;
-			sourceTree = "<group>";
-		};
-		921111371A2B4D89003FE653 /* LocalStorage */ = {
-			isa = PBXGroup;
-			children = (
-				921111381A2B4D89003FE653 /* LocalStorage.cpp */,
-				921111391A2B4D89003FE653 /* LocalStorage.h */,
-				9211113A1A2B4D89003FE653 /* LocalStorageAndroid.cpp */,
-			);
-			path = LocalStorage;
 			sourceTree = "<group>";
 		};
 		9258E8571A28B3E7001DCEEF /* ui_support */ = {
@@ -3330,7 +3313,6 @@
 				1551A6D8158F2ADE00E66CFE /* CCLabelAtlas.h in Headers */,
 				92C612AC1A41A3DC00550090 /* lualib.h in Headers */,
 				1551A6DA158F2ADE00E66CFE /* CCLabelBMFont.h in Headers */,
-				9211124F1A2B4D89003FE653 /* LocalStorage.h in Headers */,
 				928F64BD1A33EE6900178235 /* CCTCPSocket.h in Headers */,
 				92A7AF5D1A3C4038001C830B /* CCArcticFileData.h in Headers */,
 				92A7AF741A3C4038001C830B /* CCMWSprite.h in Headers */,
@@ -3960,7 +3942,6 @@
 				1551A830158F2ADF00E66CFE /* CCAnimationCache.cpp in Sources */,
 				1551A832158F2ADF00E66CFE /* CCSprite.cpp in Sources */,
 				92D6834A1A2F69E700CD9F2A /* CCLabelTTFLinkStateSynchronizer.cpp in Sources */,
-				921112501A2B4D89003FE653 /* LocalStorageAndroid.cpp in Sources */,
 				1551A834158F2ADF00E66CFE /* CCSpriteBatchNode.cpp in Sources */,
 				1551A836158F2ADF00E66CFE /* CCSpriteFrame.cpp in Sources */,
 				929D535C1A27582F00560A2E /* Input.cpp in Sources */,
@@ -3974,7 +3955,6 @@
 				92C6145A1A41A88F00550090 /* DictionaryHelper.cpp in Sources */,
 				929F3A671A26182E00DE78AC /* TransformUtils.cpp in Sources */,
 				92A7AF571A3C4038001C830B /* CCAFCFrame.cpp in Sources */,
-				9211124E1A2B4D89003FE653 /* LocalStorage.cpp in Sources */,
 				1551A846158F2ADF00E66CFE /* ccCArray.cpp in Sources */,
 				1551A84A158F2ADF00E66CFE /* TGAlib.cpp in Sources */,
 				9211100C1A2B45AB003FE653 /* CCProfiling.cpp in Sources */,
