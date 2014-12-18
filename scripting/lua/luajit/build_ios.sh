@@ -5,21 +5,19 @@ STRIP="xcrun -sdk iphoneos strip"
 
 SRCDIR=$DIR/src
 DESTDIR=$DIR/prebuilt/ios
-IXCODE=`xcode-select -print-path`
-ISDK=$IXCODE/Platforms/iPhoneOS.platform/Developer
-ISDKVER=iPhoneOS8.1.sdk
-ISDKP=$ISDK/usr/bin/
+SDK_PARAM=`xcodebuild -showsdks | awk '/^$/{p=0};p; /iOS SDKs:/{p=1}' | tail -1 | cut -f3`
+SYSROOT=`xcodebuild -version $SDK_PARAM Path`
 
 rm "$DESTDIR"/*.a
 cd $SRCDIR
 
 make clean
-ISDKF="-arch armv7 -isysroot $ISDK/SDKs/$ISDKVER"
+ISDKF="-arch armv7 -isysroot $SYSROOT"
 make HOST_CC="gcc -m32 -arch i386" TARGET_FLAGS="$ISDKF" TARGET_SYS=iOS
 mv "$SRCDIR"/src/libluajit.a "$DESTDIR"/libluajit-armv7.a
 
 make clean
-ISDKF="-arch armv7s -isysroot $ISDK/SDKs/$ISDKVER"
+ISDKF="-arch armv7s -isysroot $SYSROOT"
 make HOST_CC="gcc -m32 -arch i386" TARGET_FLAGS="$ISDKF" TARGET_SYS=iOS
 mv "$SRCDIR"/src/libluajit.a "$DESTDIR"/libluajit-armv7s.a
 
