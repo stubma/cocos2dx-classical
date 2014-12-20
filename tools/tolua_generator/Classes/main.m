@@ -95,8 +95,6 @@ int main(int argc, const char * argv[]) {
         // Parse the file to AST, registering our consumer as the AST consumer.
         ParseAST(*prep, &consumer, compiler.getASTContext());
         
-        compiler.getDiagnosticClient().EndSourceFile();
-        
         // At this point the rewriter's buffer should be full with the rewritten
         // file contents.
         const RewriteBuffer* rewriteBuf = rewriter.getRewriteBufferFor(srcMgr.getMainFileID());
