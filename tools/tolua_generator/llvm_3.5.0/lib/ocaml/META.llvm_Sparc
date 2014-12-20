@@ -1,0 +1,8 @@
+name = "llvm_Sparc"
+version = "3.5.0"
+description = "Sparc Backend for LLVM"
+requires = "llvm"
+archive(byte) = "llvm_Sparc.cma"
+archive(native) = "llvm_Sparc.cmxa"
+directory = "."
+linkopts = "-ccopt -lstdc++"

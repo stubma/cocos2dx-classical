@@ -1,0 +1,8 @@
+name = "llvm_MSP430"
+version = "3.5.0"
+description = "MSP430 Backend for LLVM"
+requires = "llvm"
+archive(byte) = "llvm_MSP430.cma"
+archive(native) = "llvm_MSP430.cmxa"
+directory = "."
+linkopts = "-ccopt -lstdc++"

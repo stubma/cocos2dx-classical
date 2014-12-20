@@ -1,0 +1,8 @@
+name = "llvm_R600"
+version = "3.5.0"
+description = "R600 Backend for LLVM"
+requires = "llvm"
+archive(byte) = "llvm_R600.cma"
+archive(native) = "llvm_R600.cmxa"
+directory = "."
+linkopts = "-ccopt -lstdc++"

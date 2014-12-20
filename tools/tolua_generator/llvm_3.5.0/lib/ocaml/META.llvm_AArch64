@@ -1,0 +1,8 @@
+name = "llvm_AArch64"
+version = "3.5.0"
+description = "AArch64 Backend for LLVM"
+requires = "llvm"
+archive(byte) = "llvm_AArch64.cma"
+archive(native) = "llvm_AArch64.cmxa"
+directory = "."
+linkopts = "-ccopt -lstdc++"

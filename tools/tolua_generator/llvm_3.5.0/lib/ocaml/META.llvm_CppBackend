@@ -1,0 +1,8 @@
+name = "llvm_CppBackend"
+version = "3.5.0"
+description = "CppBackend Backend for LLVM"
+requires = "llvm"
+archive(byte) = "llvm_CppBackend.cma"
+archive(native) = "llvm_CppBackend.cmxa"
+directory = "."
+linkopts = "-ccopt -lstdc++"

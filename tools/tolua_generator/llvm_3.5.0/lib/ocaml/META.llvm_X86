@@ -1,0 +1,8 @@
+name = "llvm_X86"
+version = "3.5.0"
+description = "X86 Backend for LLVM"
+requires = "llvm"
+archive(byte) = "llvm_X86.cma"
+archive(native) = "llvm_X86.cmxa"
+directory = "."
+linkopts = "-ccopt -lstdc++"

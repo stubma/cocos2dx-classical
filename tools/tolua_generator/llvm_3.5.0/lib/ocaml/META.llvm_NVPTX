@@ -1,0 +1,8 @@
+name = "llvm_NVPTX"
+version = "3.5.0"
+description = "NVPTX Backend for LLVM"
+requires = "llvm"
+archive(byte) = "llvm_NVPTX.cma"
+archive(native) = "llvm_NVPTX.cmxa"
+directory = "."
+linkopts = "-ccopt -lstdc++"

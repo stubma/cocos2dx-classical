@@ -1,0 +1,8 @@
+name = "llvm_Mips"
+version = "3.5.0"
+description = "Mips Backend for LLVM"
+requires = "llvm"
+archive(byte) = "llvm_Mips.cma"
+archive(native) = "llvm_Mips.cmxa"
+directory = "."
+linkopts = "-ccopt -lstdc++"
