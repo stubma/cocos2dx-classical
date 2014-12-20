@@ -10,7 +10,7 @@
 #include <cstdio>
 #include <string>
 #include <sstream>
-
+#include <iostream>
 #include "clang/AST/ASTConsumer.h"
 #include "clang/AST/RecursiveASTVisitor.h"
 #include "clang/Basic/Diagnostic.h"
@@ -51,9 +51,9 @@ int main(int argc, const char * argv[]) {
         LangOptions& langOpt = compiler.getLangOpts();
         
         // Initialize target info with the default triple for our platform.
-        TargetOptions to;
-        to.Triple = llvm::sys::getDefaultTargetTriple();
-        shared_ptr<TargetOptions> spTO(&to);
+        TargetOptions* to = new TargetOptions();
+        to->Triple = llvm::sys::getDefaultTargetTriple();
+        shared_ptr<TargetOptions> spTO(to);
         TargetInfo* ti = TargetInfo::CreateTargetInfo(diagEngine, spTO);
         compiler.setTarget(ti);
         
@@ -66,42 +66,42 @@ int main(int argc, const char * argv[]) {
         SourceManager& srcMgr = compiler.getSourceManager();
         
         // header search options
-        HeaderSearchOptions hsOpt;
-        hsOpt.AddPath("/Users/maruojie/Projects/cocos2dx-classical/cocos2dx", frontend::Angled, false, false);
-        hsOpt.AddPath("/Users/maruojie/Projects/cocos2dx-classical/cocos2dx/include", frontend::Angled, false, false);
-        IntrusiveRefCntPtr<HeaderSearchOptions> hsoPtr(&hsOpt);
+        HeaderSearchOptions* hsOpt = new HeaderSearchOptions();
+        hsOpt->AddPath("/Users/maruojie/Projects/cocos2dx-classical/cocos2dx", frontend::Angled, false, false);
+        hsOpt->AddPath("/Users/maruojie/Projects/cocos2dx-classical/cocos2dx/include", frontend::Angled, false, false);
+        IntrusiveRefCntPtr<HeaderSearchOptions> hsoPtr(hsOpt);
         HeaderSearch hs(hsoPtr, srcMgr, diagEngine, langOpt, ti);
-        ApplyHeaderSearchOptions(hs, hsOpt, langOpt, ti->getTriple());
+        ApplyHeaderSearchOptions(hs, *hsOpt, langOpt, ti->getTriple());
         
         // create preprocessor and set to compiler
-        PreprocessorOptions prepOpt;
-        IntrusiveRefCntPtr<PreprocessorOptions> poPtr(&prepOpt);
-        Preprocessor prep(poPtr, diagEngine, langOpt, srcMgr, hs, compiler);
-        compiler.setPreprocessor(&prep);
-        
-        // create ast context
-        compiler.createASTContext();
-        
-        // A Rewriter helps us manage the code rewriting task.
-        Rewriter rewriter;
-        rewriter.setSourceMgr(srcMgr, langOpt);
+        PreprocessorOptions* prepOpt = new PreprocessorOptions();
+        IntrusiveRefCntPtr<PreprocessorOptions> poPtr(prepOpt);
+        Preprocessor* prep = new Preprocessor(poPtr, diagEngine, langOpt, srcMgr, hs, compiler);
+        compiler.setPreprocessor(prep);
         
         // Set the main file handled by the source manager to the input file.
         const FileEntry* FileIn = fileMgr.getFile(argv[1]);
         srcMgr.setMainFileID(srcMgr.createFileID(FileIn, SourceLocation(), SrcMgr::C_User));
-        compiler.getDiagnosticClient().BeginSourceFile(langOpt, &prep);
         
-        // Create an AST consumer instance which is going to get called by
-        // ParseAST.
+        // create ast context
+        compiler.createASTContext();
+        compiler.getDiagnosticClient().BeginSourceFile(langOpt, prep);
+        
+        // Create an AST consumer instance which is going to get called by ParseAST.
+        Rewriter rewriter;
+        rewriter.setSourceMgr(srcMgr, langOpt);
         MyASTConsumer consumer(rewriter);
         
         // Parse the file to AST, registering our consumer as the AST consumer.
-        ParseAST(compiler.getPreprocessor(), &consumer, compiler.getASTContext());
+        ParseAST(*prep, &consumer, compiler.getASTContext());
+        
+        compiler.getDiagnosticClient().EndSourceFile();
         
         // At this point the rewriter's buffer should be full with the rewritten
         // file contents.
         const RewriteBuffer* rewriteBuf = rewriter.getRewriteBufferFor(srcMgr.getMainFileID());
-        llvm::outs() << string(rewriteBuf->begin(), rewriteBuf->end());
+        if(rewriteBuf)
+            llvm::outs() << string(rewriteBuf->begin(), rewriteBuf->end());
     }
     return 0;
 }

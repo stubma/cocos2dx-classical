@@ -34,11 +34,11 @@ using namespace std;
 
 class MyASTConsumer : public ASTConsumer {
 private:
-    MyASTVisitor Visitor;
+    MyASTVisitor m_visitor;
     
 public:
-    MyASTConsumer(Rewriter& R)
-    : Visitor(R) {
+    MyASTConsumer(Rewriter& r)
+    : m_visitor(r) {
     }
     
     // Override the method that gets called for each parsed top-level
@@ -47,7 +47,7 @@ public:
         for (DeclGroupRef::iterator b = DR.begin(), e = DR.end();
              b != e; ++b)
             // Traverse the declaration using our AST visitor.
-            Visitor.TraverseDecl(*b);
+            m_visitor.TraverseDecl(*b);
         return true;
     }
 };

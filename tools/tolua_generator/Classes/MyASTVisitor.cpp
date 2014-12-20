@@ -14,15 +14,15 @@ bool MyASTVisitor::VisitStmt(Stmt* s) {
         IfStmt *IfStatement = cast<IfStmt>(s);
         Stmt *Then = IfStatement->getThen();
         
-        TheRewriter.InsertText(Then->getLocStart(),
+        m_rewriter.InsertText(Then->getLocStart(),
                                "// the 'if' part\n",
                                true, true);
         
         Stmt *Else = IfStatement->getElse();
         if (Else)
-            TheRewriter.InsertText(Else->getLocStart(),
-                                   "// the 'else' part\n",
-                                   true, true);
+            m_rewriter.InsertText(Else->getLocStart(),
+                                  "// the 'else' part\n",
+                                  true, true);
     }
     
     return true;
@@ -46,13 +46,13 @@ bool MyASTVisitor::VisitFunctionDecl(FunctionDecl* f) {
         SSBefore << "// Begin function " << FuncName << " returning "
         << TypeStr << "\n";
         SourceLocation ST = f->getSourceRange().getBegin();
-        TheRewriter.InsertText(ST, SSBefore.str(), true, true);
+        m_rewriter.InsertText(ST, SSBefore.str(), true, true);
         
         // And after
         stringstream SSAfter;
         SSAfter << "\n// End function " << FuncName << "\n";
         ST = FuncBody->getLocEnd().getLocWithOffset(1);
-        TheRewriter.InsertText(ST, SSAfter.str(), true, true);
+        m_rewriter.InsertText(ST, SSAfter.str(), true, true);
     }
     
     return true;

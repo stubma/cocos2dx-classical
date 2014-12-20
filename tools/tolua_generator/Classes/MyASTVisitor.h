@@ -34,11 +34,11 @@ using namespace std;
 
 class MyASTVisitor : public RecursiveASTVisitor<MyASTVisitor> {
 private:
-    Rewriter& TheRewriter;
+    Rewriter& m_rewriter;
     
 public:
-    MyASTVisitor(Rewriter& R)
-    : TheRewriter(R) {
+    MyASTVisitor(Rewriter& r)
+    : m_rewriter(r) {
     }
     
     bool VisitStmt(Stmt* s);
