@@ -88,7 +88,7 @@
  - Each node has a camera. By default it points to the center of the CCNode.
  */
 
-class CCNode : public CCScriptEventDispatcher
+class CCNode : public CCObject
 {
     /// @{
     /// @name Constructor, Distructor and Initializers
@@ -511,7 +511,6 @@ class CCNode : public CCScriptEventDispatcher
      * If the node orphan, then nothing happens.
      * @see removeFromParentAndCleanup(bool)
      */
-    void removeSelf();
     void removeFromParent();
     /**
      * Removes this node itself from its parent node.
@@ -719,13 +718,6 @@ class CCNode : public CCScriptEventDispatcher
      */
     CCRect boundingBox(void);
     CCRect boundingBox @ getBoundingBox(void);
-
-    /**
-     * This boundingBox will calculate all children's boundingBox every time
-     */
-    CCRect getCascadeBoundingBox(void);
-    void setCascadeBoundingBox(CCRect boundingBox);
-    void resetCascadeBoundingBox(void);
 
     /// @{
     /// @name Actions

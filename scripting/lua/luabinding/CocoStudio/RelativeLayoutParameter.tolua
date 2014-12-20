@@ -1,0 +1,12 @@
+class RelativeLayoutParameter : public LayoutParameter
+{
+    RelativeLayoutParameter();
+    virtual ~RelativeLayoutParameter();
+    static RelativeLayoutParameter* create();
+    void setAlign(RelativeAlign align);
+    RelativeAlign getAlign() const;
+    void setRelativeToWidgetName(const char* name);
+    const char* getRelativeToWidgetName() const;
+    void setRelativeName(const char* name);
+    const char* getRelativeName() const;
+};

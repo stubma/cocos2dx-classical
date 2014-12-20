@@ -87,6 +87,16 @@ function write(a)
     end
 end
 
+function get_property_methods_hook(ptype, name)
+    name = name:gsub("^m_(.-)", "%1")
+    name = name:gsub("^%l", string.upper)  
+    if ptype == "default" then
+        return "get" .. name, "set" .. name  
+    elseif ptype == "bool" then  
+        return "is" .. name, "set" .. name  
+    end  
+end  
+
 function post_output_hook(package)
     local result = table.concat(toWrite)
     local function replace(pattern, replacement)
@@ -150,32 +160,30 @@ using namespace cocos2d::ui;
 using namespace cocos2d::extension;
 using namespace CocosDenshion;]])
 
-      replace([[/* Exported function */
+    replace([[/* Exported function */
 TOLUA_API int  tolua_CocoStudio_open (lua_State* tolua_S);]], [[]])
 
-      replace([[*((LUA_FUNCTION*)]], [[(]])
+    replace([[*((LUA_FUNCTION*)]], [[(]])
 
-      replace([[(tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCTextAlignment",0,&tolua_err))]],[[!tolua_isnumber(tolua_S,2,0,&tolua_err)]])
+    replace([[(tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCTextAlignment",0,&tolua_err))]],[[!tolua_isnumber(tolua_S,2,0,&tolua_err)]])
 
-      replace([[CCTextAlignment alignment = *((CCTextAlignment*)  tolua_tousertype(tolua_S,2,0));]],[[CCTextAlignment alignment = ((CCTextAlignment) (int)  tolua_tonumber(tolua_S,2,0));]])
+    replace([[CCTextAlignment alignment = *((CCTextAlignment*)  tolua_tousertype(tolua_S,2,0));]],[[CCTextAlignment alignment = ((CCTextAlignment) (int)  tolua_tonumber(tolua_S,2,0));]])
 
-      replace([[toluafix_pushusertype_ccobject(tolua_S,(void*)tolua_ret]],
+    replace([[toluafix_pushusertype_ccobject(tolua_S,(void*)tolua_ret]],
         [[int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret]])
 
-      replace('\t', '    ')
-
-      replace([[static int tolua_collect_CCPoint (lua_State* tolua_S)
+    replace([[static int tolua_collect_CCPoint (lua_State* tolua_S)
 {
  CCPoint* self = (CCPoint*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }]],[[]])
 
-    replace([[static int tolua_collect_UIRelativeAlign (lua_State* tolua_S)
+    replace([[static int tolua_collect_RelativeAlign (lua_State* tolua_S)
 {
- UIRelativeAlign* self = (UIRelativeAlign*) tolua_tousertype(tolua_S,1,0);
+ RelativeAlign* self = (RelativeAlign*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }]],[[]])
@@ -331,6 +339,18 @@ TOLUA_API int  tolua_CocoStudio_open (lua_State* tolua_S);]], [[]])
         [[tolua_usertype%(tolua_S,"([%a%d]+)"%);]],
         [[tolua_usertype(tolua_S,"%1");
  toluafix_add_type_mapping(CLASS_HASH_CODE(typeid(%1)), "%1");]])
+
+    result = string.gsub(result, 
+        [[toluafix_pushusertype_ccobject%(tolua_S,%(void%*%)&(.-),(.-)%);]],
+        [[int nID = (int)%1.m_uID;
+    int* pLuaID = &%1.m_nLuaID;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)&%1,%2);]])
+    
+    result = string.gsub(result, 
+        [[toluafix_pushusertype_ccobject%(tolua_S,%(void%*%)(.-),(.-)%);]],
+        [[int nID = (%1) ? (int)%1->m_uID : -1;
+    int* pLuaID = (%1) ? &(%1)->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)%1,%2);]])
 
     WRITE(result)
 end

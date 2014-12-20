@@ -178,34 +178,74 @@ class CCFileUtils
     void addSearchResolutionsOrder(const char* order);
 
     /**
-     * Set search root path.
-     */
-    void setSearchRootPath(const char* path);
+    *  Sets the array of search paths.
+    *
+    *  You can use this array to modify the search path of the resources.
+    *  If you want to use "themes" or search resources in the "cache", you can do it easily by adding new entries in this array.
+    *
+    *  @note This method could access relative path and absolute path.
+    *        If the relative path was passed to the vector, CCFileUtils will add the default resource directory before the relative path.
+    *        For instance:
+    *        	On Android, the default resource root path is "assets/".
+    *        	If "/mnt/sdcard/" and "resources-large" were set to the search paths vector,
+    *        	"resources-large" will be converted to "assets/resources-large" since it was a relative path.
+    *
+    *  @param searchPaths The array contains search paths.
+    *  @see fullPathForFilename(const char*)
+    *  @since v2.1
+    *  @js NA
+    *  @lua NA
+    */
+    virtual void setSearchPaths(const std::vector<std::string>& searchPaths);
 
     /**
-      * Add search path.
-      *
-      * @since v2.1
-      */
-    void addSearchPath(const char* path);
+    *  Gets the array that contains the search order of the resources.
+    *
+    *  @see setSearchResolutionsOrder(const std::vector<std::string>&), fullPathForFilename(const char*).
+    *  @since v2.1
+    *  @js NA
+    *  @lua NA
+    */
+    virtual const std::vector<std::string>& getSearchResolutionsOrder();
+
+    /**
+    * Adds a path to search paths.
+    *
+    * @since v2.2
+    */
+    virtual void addSearchPath(const char* path);
+
+    /**
+    * Removes a path from search paths.
+    *
+    * @since v2.2
+    * @lua NA
+    */
+    virtual void removeSearchPath(const char *path);
+
+    /**
+    * Removes all paths.
+    *
+    * @since v2.2
+    * @lua NA
+    */
+    void removeAllPaths();
+
+    /**
+    *  Gets the array of search paths.
+    *
+    *  @return The array of search paths.
+    *  @see fullPathForFilename(const char*).
+    *  @js NA
+    *  @lua NA
+    */
+    virtual const std::vector<std::string>& getSearchPaths();
 
     /**
      *  Gets the writable path.
      *  @return  The path that can be write/read a file in
      */
     std::string getWritablePath();
-
-    /**
-     *  Gets the cache path.
-     *  @return  The the cache path
-     */
-    std::string getCachePath();
-
-    /**
-     *  Set writable/cache path (for debug).
-     */
-    void setWritablePath(const char *writablePath);
-    void setCachePath(const char *cachePath);
 
     /**
      *  Checks whether a file exists.

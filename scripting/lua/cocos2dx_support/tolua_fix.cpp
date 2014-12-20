@@ -1,9 +1,18 @@
 
 #include "tolua_fix.h"
 #include <stdlib.h>
+#include <map>
+#include <typeinfo>
+#include "cocoa/CCObject.h"
+#include "platform/platform.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+    
 static int s_function_ref_id = 0;
-
+static std::map<unsigned int, char*> hash_type_mapping;
+    
 TOLUA_API void toluafix_open(lua_State* L)
 {
     lua_pushstring(L, TOLUA_REFID_PTR_MAPPING);
@@ -18,21 +27,31 @@ TOLUA_API void toluafix_open(lua_State* L)
     lua_newtable(L);
     lua_rawset(L, LUA_REGISTRYINDEX);
 }
+    
+TOLUA_API void toluafix_add_type_mapping(unsigned int type, const char *clsName) {
+    if (hash_type_mapping.find(type) == hash_type_mapping.end()) {
+        hash_type_mapping[type] = strdup(clsName);
+    }
+}
 
-TOLUA_API int toluafix_pushusertype_ccobject(lua_State* L,
+TOLUA_API int toluafix_pushusertype_ccobject(lua_State *L,
                                              int refid,
-                                             int* p_refid,
-                                             void* ptr,
-                                             const char* type)
-{
-    if (ptr == NULL || p_refid == NULL)
-    {
+                                             int *p_refid,
+                                             void *vptr,
+                                             const char *vtype) {
+    if (vptr == NULL || p_refid == NULL) {
         lua_pushnil(L);
         return -1;
     }
     
-    if (*p_refid == 0)
-    {
+    cocos2d::CCObject *ptr = static_cast<cocos2d::CCObject*>(vptr);
+    unsigned int hash = cocos2d::CLASS_HASH_CODE(typeid(*ptr));
+    char* type = hash_type_mapping[hash];
+    if (type == NULL) {
+        // CCLOG("[TOLUA] Unable to find type map for object %s:%p,", vtype, vptr);
+    }
+    
+    if (*p_refid == 0) {
         *p_refid = refid;
         
         lua_pushstring(L, TOLUA_REFID_PTR_MAPPING);
@@ -46,17 +65,17 @@ TOLUA_API int toluafix_pushusertype_ccobject(lua_State* L,
         lua_pushstring(L, TOLUA_REFID_TYPE_MAPPING);
         lua_rawget(L, LUA_REGISTRYINDEX);                           /* stack: refid_type */
         lua_pushinteger(L, refid);                                  /* stack: refid_type refid */
-        lua_pushstring(L, type);                                    /* stack: refid_type refid type */
+        lua_pushstring(L, type ? type : vtype);                     /* stack: refid_type refid type */
         lua_rawset(L, -3);                /* refid_type[refid] = type, stack: refid_type */
         lua_pop(L, 1);                                              /* stack: - */
         
         //printf("[LUA] push CCObject OK - refid: %d, ptr: %x, type: %s\n", *p_refid, (int)ptr, type);
     }
     
-    tolua_pushusertype_and_addtoroot(L, ptr, type);
+    tolua_pushusertype_and_addtoroot(L, ptr, type ? type : vtype);
     return 0;
 }
-
+    
 TOLUA_API int toluafix_remove_ccobject_by_refid(lua_State* L, int refid)
 {
 	void* ptr = NULL;
@@ -248,3 +267,7 @@ TOLUA_API void toluafix_stack_dump(lua_State* L, const char* label)
     }
     printf("\n");
 }
+
+#ifdef __cplusplus
+}
+#endif

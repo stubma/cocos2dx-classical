@@ -29,33 +29,31 @@ class CCPointArray : public CCObject
     /** creates and initializes a Points array with capacity */
     static CCPointArray* create(unsigned int capacity);
 
-    /** appends a point */
-    void add(CCPoint point);
+    /** appends a control point */
+    void addControlPoint(CCPoint controlPoint);
 
-    /** inserts a point at index */
-    void insert(CCPoint point, unsigned int index);
+    /** inserts a controlPoint at index */
+    void insertControlPoint(CCPoint &controlPoint, unsigned int index);
 
-    /** replaces an existing point at index */
-    void replace(CCPoint point, unsigned int index);
+    /** replaces an existing controlPoint at index */
+    void replaceControlPoint(CCPoint &controlPoint, unsigned int index);
 
-    /** get the value of a point at a given index */
-    CCPoint get(unsigned int index);
+    /** get the value of a controlPoint at a given index */
+    CCPoint getControlPointAtIndex(unsigned int index);
 
-    /** deletes a point at a given index */
-    void remove(unsigned int index);
+    /** deletes a control point at a given index */
+    void removeControlPointAtIndex(unsigned int index);
 
-    /** deletes all points */
-    void removeAll(void);
-
-    /** returns the number of objects of the point array */
-    unsigned int count(void);
+    /** returns the number of objects of the control point array */
+    unsigned int count();
 
     /** returns a new copy of the array reversed. User is responsible for releasing this copy */
-    CCPointArray* reverse(void);
+    CCPointArray* reverse();
 
-    /** reverse the current point array inline, without generating a new one */
-    void reverseInline(void);
+    /** reverse the current control point array inline, without generating a new one */
+    void reverseInline();
 
-    /** returns a array of points, User must delete [] this array */
-    CCPoint *fetchPoints(void);
+    const std::vector<CCPoint*>* getControlPoints();
+
+    void setControlPoints(std::vector<CCPoint*> *controlPoints);
 };

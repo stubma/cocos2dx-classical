@@ -185,8 +185,8 @@ protected:
     SEL_PageViewEvent _pageViewEventSelector;
 
     CC_SYNTHESIZE(PageViewDataSource*, m_dataSource, DataSource);
-    CC_SYNTHESIZE(Widget*, _leftChild, LeftChild);
-    CC_SYNTHESIZE(Widget*, _rightChild, RightChild);
+    CC_SYNTHESIZE(Widget*, m_leftChild, LeftChild);
+    CC_SYNTHESIZE(Widget*, m_rightChild, RightChild);
     CC_SYNTHESIZE(Widget*, m_curPage, CurPage);
 };
 

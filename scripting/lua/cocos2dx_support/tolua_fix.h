@@ -5,8 +5,7 @@
 #include "tolua++.h"
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
     
 #define TOLUA_REFID_PTR_MAPPING "toluafix_refid_ptr_mapping"
@@ -14,11 +13,11 @@ extern "C"
 #define TOLUA_REFID_FUNCTION_MAPPING "toluafix_refid_function_mapping"
     
 TOLUA_API void toluafix_open(lua_State* L);
-TOLUA_API int toluafix_pushusertype_ccobject(lua_State* L,
-                                             int uid,
-                                             int* p_refid,
-                                             void* ptr,
-                                             const char* type);
+TOLUA_API int toluafix_pushusertype_ccobject(lua_State *L,
+                                             int refid,
+                                             int *p_refid,
+                                             void *vptr,
+                                             const char *vtype);
 TOLUA_API int toluafix_remove_ccobject_by_refid(lua_State* L, int refid);
 TOLUA_API int toluafix_ref_function(lua_State* L, int lo, int def);
 TOLUA_API void toluafix_get_function_by_refid(lua_State* L, int refid);
@@ -27,7 +26,8 @@ TOLUA_API int toluafix_isfunction(lua_State* L, int lo, const char* type, int de
 TOLUA_API int toluafix_totable(lua_State* L, int lo, int def);
 TOLUA_API int toluafix_istable(lua_State* L, int lo, const char* type, int def, tolua_Error* err);
 TOLUA_API void toluafix_stack_dump(lua_State* L, const char* label);
-    
+TOLUA_API void toluafix_add_type_mapping(unsigned int type, const char* clsName);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

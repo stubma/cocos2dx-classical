@@ -56,6 +56,16 @@ NS_CC_BEGIN
 class CCFreeTypeFont;
 #endif
 
+typedef enum
+{
+    kFmtJpg = 0,
+    kFmtPng,
+    kFmtTiff,
+    kFmtWebp,
+    kFmtRawData,
+    kFmtUnKnown
+}EImageFormat;
+
 /**
  * @addtogroup platform
  * @{
@@ -73,16 +83,6 @@ public:
      * @lua NA
      */
     ~CCImage();
-
-    typedef enum
-    {
-        kFmtJpg = 0,
-        kFmtPng,
-        kFmtTiff,
-        kFmtWebp,
-        kFmtRawData,
-        kFmtUnKnown
-    }EImageFormat;
 
     typedef enum
     {
