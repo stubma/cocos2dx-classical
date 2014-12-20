@@ -25,7 +25,7 @@
 #ifndef __UILOADINGBAR_H__
 #define __UILOADINGBAR_H__
 
-#include "../BaseClasses/Widget.h"
+#include "../BaseClasses/UIWidget.h"
 
 NS_CC_BEGIN
 
@@ -40,8 +40,11 @@ typedef enum
 *   @js NA
 *   @lua NA
 */
-class LoadingBar : public Widget, public CCMeasurableProtocol
+class CC_DLL LoadingBar : public Widget, public CCMeasurableProtocol
 {
+    
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     /**
      * Default constructor
@@ -57,10 +60,6 @@ public:
      * Allocates and initializes.
      */
     static LoadingBar* create();
-    
-    // measurable protocol
-    virtual float getPercentage();
-    virtual void setPercentage(float p);
     
     /**
      * Changes the progress direction of loadingbar.
@@ -110,12 +109,16 @@ public:
      */
     void setScale9Enabled(bool enabled);
     
+    bool isScale9Enabled();
+    
     /**
      * Sets capinsets for loadingbar, if loadingbar is using scale9 renderer.
      *
      * @param capInsets    capinsets for loadingbar
      */
     void setCapInsets(const CCRect &capInsets);
+    
+    const CCRect& getCapInsets();
     
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore);
@@ -130,9 +133,17 @@ public:
      * Returns the "class name" of widget.
      */
     virtual std::string getDescription() const;
+    
+    // measurable protocol
+    virtual float getPercentage();
+    virtual void setPercentage(float p);
+    
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
+    virtual void updateTextureColor();
+    virtual void updateTextureOpacity();
+    virtual void updateTextureRGBA();
     void setScale9Scale();
     void barRendererScaleChangedWithSize();
     virtual Widget* createCloneInstance();

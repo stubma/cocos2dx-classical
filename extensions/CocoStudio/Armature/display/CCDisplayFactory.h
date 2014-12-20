@@ -38,7 +38,7 @@ class CCDisplayData;
  *  @js NA
  *  @lua NA
  */
-class CCDisplayFactory
+class CC_DLL CCDisplayFactory
 {
 public:
     static void addDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay, CCDisplayData *displayData);

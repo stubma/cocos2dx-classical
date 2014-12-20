@@ -49,7 +49,7 @@ typedef void (CCObject::*SEL_FrameEventCallFunc)(CCBone *, const char *, int, in
 #define movementEvent_selector(_SELECTOR) (SEL_MovementEventCallFunc)(&_SELECTOR)
 #define frameEvent_selector(_SELECTOR) (SEL_FrameEventCallFunc)(&_SELECTOR)
 
-struct CCFrameEvent
+struct CC_DLL CCFrameEvent
 {
     CCBone *bone;
     const char *frameEventName;
@@ -57,7 +57,7 @@ struct CCFrameEvent
     int currentFrameIndex;
 };
 
-struct CCMovementEvent
+struct CC_DLL CCMovementEvent
 {
     CCArmature *armature;
     MovementEventType movementType;
@@ -67,7 +67,7 @@ struct CCMovementEvent
 /**
  *  @lua NA
  */
-class  CCArmatureAnimation : public CCProcessBase
+class  CC_DLL CCArmatureAnimation : public CCProcessBase
 {
 public:
     /**
@@ -236,6 +236,23 @@ public:
      * @param A user assigned CCObject
      */
     virtual void setUserObject(CCObject *pUserObject);
+    
+    /**
+     * Returns a user assigned CCDictionary
+     *
+     * @return A user assigned CCDictionary
+     */
+    cocos2d::CCDictionary * getScriptObjectDict();
+    /**
+     * Returns a user assigned CCObject
+     *
+     * The ScriptObjectDict will be retained once in this method,
+     * and the previous ScriptObjectDict (if existed) will be relese.
+     * The ScriptObjectDict will be released in destructure.
+     *
+     * @param A user assigned CCObject
+     */
+    void setScriptObjectDict(cocos2d::CCDictionary* pScriptObjectDict);
 protected:
 
     /**
@@ -296,6 +313,7 @@ protected:
 	int m_iMovementListDurationTo;
 
     CCObject *m_pUserObject;
+    cocos2d::CCDictionary* m_pScriptObjectDict;
 protected:
     /**
      * MovementEvent CallFunc.

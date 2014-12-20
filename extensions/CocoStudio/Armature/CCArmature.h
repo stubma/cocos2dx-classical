@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "CCBone.h"
 #include "display/CCBatchNode.h"
 #include "animation/CCArmatureAnimation.h"
+#include "actions/CCActionInstant.h"
 
 class b2Body;
 struct cpBody;
@@ -38,7 +39,7 @@ NS_CC_EXT_BEGIN
 /**
  *  @lua NA
  */
-class  CCArmature : public CCNodeRGBA, public CCBlendProtocol
+class  CC_DLL CCArmature : public CCNodeRGBA, public CCBlendProtocol
 {
 
 public:

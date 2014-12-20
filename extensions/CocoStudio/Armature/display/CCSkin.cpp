@@ -98,7 +98,7 @@ bool CCSkin::initWithSpriteFrameName(const char *pszSpriteFrameName)
     }
     else
     {
-//        CCLOG("Cann't find CCSpriteFrame with %s. Please check your .plist file", pszSpriteFrameName);
+        CCLOG("Cann't find CCSpriteFrame with %s. Please check your .plist file", pszSpriteFrameName);
         ret = false;
     }
 

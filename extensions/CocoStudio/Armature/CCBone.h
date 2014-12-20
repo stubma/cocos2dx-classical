@@ -37,7 +37,7 @@ class CCArmature;
 /**
  * @lua NA
  */
-class CCBone : public CCNodeRGBA
+class CC_DLL CCBone : public CCNodeRGBA
 {
 public:
     /**

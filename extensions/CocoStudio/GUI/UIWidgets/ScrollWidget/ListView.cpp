@@ -29,6 +29,8 @@
 NS_CC_BEGIN
 
 namespace ui {
+    
+IMPLEMENT_CLASS_GUI_INFO(ListView)
 
 ListView::ListView():
 _model(NULL),
@@ -249,8 +251,7 @@ void ListView::remedyLayoutParameter(Widget *item)
     
 }
 
-Widget* ListView::pushBackDefaultItem()
-{
+Widget* ListView::pushBackDefaultItem() {
     if (!_model)
     {
         return NULL;
@@ -357,6 +358,11 @@ void ListView::setItemsMargin(float margin)
     _itemsMargin = margin;
     _refreshViewDirty = true;
 }
+    
+float ListView::getItemsMargin()
+{
+    return _itemsMargin;
+}
 
 void ListView::setDirection(SCROLLVIEW_DIR dir)
 {
@@ -411,11 +417,19 @@ void ListView::addEventListenerListView(CCObject *target, SEL_ListViewEvent sele
     _listViewEventSelector = selector;
 }
     
-void ListView::selectedItemEvent()
+void ListView::selectedItemEvent(int state)
 {
     if (_listViewEventListener && _listViewEventSelector)
     {
-        (_listViewEventListener->*_listViewEventSelector)(this, LISTVIEW_ONSELECTEDITEM);
+        switch (state)
+        {
+            case 0:
+                (_listViewEventListener->*_listViewEventSelector)(this, LISTVIEW_ONSELECTEDITEM_START);
+                break;
+            default:
+                (_listViewEventListener->*_listViewEventSelector)(this, LISTVIEW_ONSELECTEDITEM_END);
+                break;
+        }
     }
 }
     
@@ -434,7 +448,7 @@ void ListView::interceptTouchEvent(int handleState, Widget *sender, const CCPoin
             }
             parent = dynamic_cast<Widget*>(parent->getParent());
         }
-        selectedItemEvent();
+        selectedItemEvent(handleState);
     }
 }
     

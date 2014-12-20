@@ -34,7 +34,7 @@ namespace ui {
 *   @js NA
 *   @lua NA
 */
-class Margin
+class CC_DLL Margin
 {
 public:
     float left;

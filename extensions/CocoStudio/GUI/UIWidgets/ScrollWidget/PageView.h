@@ -60,6 +60,8 @@ public:
 
 class PageView : public Layout , public UIScrollInterface
 {
+    DECLARE_CLASS_GUI_INFO
+    
 private:
     CCVelocityTracker* m_tracker;
     CCDictionary m_cycledPages;

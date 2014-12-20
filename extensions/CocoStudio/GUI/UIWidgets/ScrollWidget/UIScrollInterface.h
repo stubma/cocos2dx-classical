@@ -25,13 +25,13 @@
 #ifndef __UISCROLLDELEGATE_H__
 #define __UISCROLLDELEGATE_H__
 
-#include "../../BaseClasses/Widget.h"
+#include "../../BaseClasses/UIWidget.h"
 
 NS_CC_BEGIN
 
 namespace ui {
 
-class UIScrollInterface
+class CC_DLL UIScrollInterface
 {
 public:
     virtual ~UIScrollInterface() {}

@@ -24,7 +24,6 @@
 
 #include "TouchGroup.h"
 #include "UIHelper.h"
-#include "CocoStudio/GUI/UIWidgets/ScrollWidget/PageView.h"
 
 NS_CC_BEGIN
 

@@ -30,6 +30,9 @@ namespace ui {
     
 static const int LABELBMFONT_RENDERER_Z = (-1);
     
+    
+IMPLEMENT_CLASS_GUI_INFO(LabelBMFont)
+    
 LabelBMFont::LabelBMFont():
 _labelBMFontRenderer(NULL),
 _fntFileHasInit(false),
@@ -58,32 +61,32 @@ LabelBMFont* LabelBMFont::create()
 void LabelBMFont::initRenderer()
 {
     _labelBMFontRenderer = cocos2d::CCLabelBMFont::create();
-    CCNodeRGBA::addChild(_labelBMFontRenderer, LABELBMFONT_RENDERER_Z, -1);
+    CCNode::addChild(_labelBMFontRenderer, LABELBMFONT_RENDERER_Z, -1);
 }
 
 void LabelBMFont::setFntFile(const char *fileName)
 {
-    // XXX: modified by Luma
-    // fix memory leak, recreation of renderer is buggy, even in latest cocos2d-x code
-    // so, must remove it first and re-create it
     if (!fileName || strcmp(fileName, "") == 0)
     {
         return;
     }
     _fntFileName = fileName;
+    
     if(_labelBMFontRenderer) {
         _labelBMFontRenderer->removeFromParent();
         _labelBMFontRenderer = NULL;
     }
     _labelBMFontRenderer = cocos2d::CCLabelBMFont::create("", fileName);
     CCNodeRGBA::addChild(_labelBMFontRenderer, LABELBMFONT_RENDERER_Z, -1);
+    
     updateAnchorPoint();
     labelBMFontScaleChangedWithSize();
     _fntFileHasInit = true;
     setText(_stringValue.c_str());
 }
 
-void LabelBMFont::setText(const char* value) {
+void LabelBMFont::setText(const char* value)
+{
     if (!value)
 	{
 		return;
@@ -144,6 +147,21 @@ void LabelBMFont::labelBMFontScaleChangedWithSize()
         _labelBMFontRenderer->setScaleX(scaleX);
         _labelBMFontRenderer->setScaleY(scaleY);
     }
+}
+    
+void LabelBMFont::updateTextureColor()
+{
+    updateColorToRenderer(_labelBMFontRenderer);
+}
+
+void LabelBMFont::updateTextureOpacity()
+{
+    updateOpacityToRenderer(_labelBMFontRenderer);
+}
+
+void LabelBMFont::updateTextureRGBA()
+{
+    updateRGBAToRenderer(_labelBMFontRenderer);
 }
 
 std::string LabelBMFont::getDescription() const

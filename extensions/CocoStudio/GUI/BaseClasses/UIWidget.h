@@ -28,6 +28,7 @@
 #include "cocos2d.h"
 #include "../Layouts/LayoutDefine.h"
 #include "../Layouts/LayoutParameter.h"
+#include "../System/GUIDefine.h"
 
 NS_CC_BEGIN
 
@@ -78,7 +79,7 @@ typedef void (CCObject::*SEL_TouchEvent)(CCObject*,TouchEventType);
 *   @js NA
 *   @lua NA
 */
-class Widget : public CCNodeRGBA
+class CC_DLL Widget : public CCNodeRGBA
 {
 public:    
     /**
@@ -275,13 +276,15 @@ public:
      */
     virtual void removeFromParentAndCleanup(bool cleanup);
     
+    virtual void removeChild(CCNode* child);
+    
     /**
      * Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
      *
      * @param child     The child node which will be removed.
      * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
      */
-    virtual void removeChild(CCNode* child, bool cleanup = true);
+    virtual void removeChild(CCNode* child, bool cleanup);
     
     /**
      * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
@@ -392,7 +395,7 @@ public:
      *
      * @param bFlipX true if the widget should be flipped horizaontally, false otherwise.
      */
-    virtual void setFlipX(bool flipX){};
+    virtual void setFlipX(bool flipX);
     
     /**
      * Returns the flag which indicates whether the widget is flipped horizontally or not.
@@ -404,14 +407,14 @@ public:
      *
      * @return true if the widget is flipped horizaontally, false otherwise.
      */
-    virtual bool isFlipX(){return false;};
+    virtual bool isFlipX(){return _flippedX;};
     
     /**
      * Sets whether the widget should be flipped vertically or not.
      *
      * @param bFlipY true if the widget should be flipped vertically, flase otherwise.
      */
-    virtual void setFlipY(bool flipY){};
+    virtual void setFlipY(bool flipY);
     
     /**
      * Return the flag which indicates whether the widget is flipped vertically or not.
@@ -423,7 +426,15 @@ public:
      *
      * @return true if the widget is flipped vertically, flase otherwise.
      */
-    virtual bool isFlipY(){return false;};
+    virtual bool isFlipY(){return _flippedY;};
+    
+    virtual void setColor(const ccColor3B& color);
+    
+    virtual void setOpacity(GLubyte opacity);
+    
+    const ccColor3B& getColor(){return _color;};
+
+    GLubyte getOpacity(){return _opacity;};
     
     /**
      * A call back function when widget lost of focus.
@@ -529,12 +540,16 @@ public:
      */
     const CCSize& getSize() const;
     
+    virtual const CCSize& getLayoutSize() {return _size;};
+    
     /**
      * Returns size percent of widget
      *
      * @return size percent
      */
     const CCPoint& getSizePercent() const;
+    
+    const CCSize& getCustomSize() const;
     
     /**
      * Checks a point if is in widget's space
@@ -621,9 +636,28 @@ public:
     
     void updateSizeAndPosition();
     
+    void updateSizeAndPosition(const CCSize& parentSize);
+    
     /*temp action*/
     void setActionTag(int tag);
 	int getActionTag();
+    
+    /**
+     * Returns a user assigned CCDictionary
+     *
+     * @return A user assigned CCDictionary
+     */
+    virtual cocos2d::CCDictionary* getScriptObjectDict() const;
+    /**
+     * Returns a user assigned CCDictionary
+     *
+     * The scriptObjectDict will be retained once in this method,
+     * and the previous scriptObjectDict (if existed) will be relese.
+     * The scriptObjectDict will be released in destructure.
+     *
+     * @param A user assigned CCObject
+     */
+    virtual void setScriptObjectDict(cocos2d::CCDictionary* scriptObjectDict);
     
     void pushDownEvent();
     void moveEvent();
@@ -650,6 +684,14 @@ protected:
     virtual void onPressStateChangedToDisabled();
 
     void updateAnchorPoint();
+    virtual void updateTextureColor(){};
+    virtual void updateTextureOpacity(){};
+    virtual void updateTextureRGBA(){};
+    virtual void updateFlippedX(){};
+    virtual void updateFlippedY(){};
+    void updateColorToRenderer(CCNode* renderer);
+    void updateOpacityToRenderer(CCNode* renderer);
+    void updateRGBAToRenderer(CCNode* renderer);
     void copyProperties(Widget* model);
     virtual Widget* createCloneInstance();
     virtual void copySpecialProperties(Widget* model);
@@ -689,10 +731,22 @@ protected:
     
     CCArray* _nodes;
     
+    ccColor3B _color;
+    GLubyte _opacity;
+    
+    bool _flippedX;
+    bool _flippedY;
+    
+    cocos2d::CCDictionary* _scriptObjectDict;
+    
     friend class TouchGroup;
 };
 }
 
+namespace gui = ui;
+
 NS_CC_END
+
+
 
 #endif /* defined(__Widget__) */

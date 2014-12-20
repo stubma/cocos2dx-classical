@@ -77,18 +77,17 @@ CCArmature *CCArmature::create(const char *name, CCBone *parentBone)
     return NULL;
 }
 
-CCArmature::CCArmature()
-: m_pArmatureData(NULL)
-, m_pBatchNode(NULL)
-, m_pAtlas(NULL)
-, m_pParentBone(NULL)
-, m_bArmatureTransformDirty(true)
-, m_pBoneDic(NULL)
-, m_pTopBoneList(NULL)
-, m_pAnimation(NULL)
-, m_pTextureAtlasDic(NULL)
-, m_preDrawFunction(NULL)
-{
+CCArmature::CCArmature() :
+m_pArmatureData(NULL),
+m_pBatchNode(NULL),
+m_pAtlas(NULL),
+m_pParentBone(NULL),
+m_bArmatureTransformDirty(true),
+m_pBoneDic(NULL),
+m_pTopBoneList(NULL),
+m_pAnimation(NULL),
+m_pTextureAtlasDic(NULL),
+m_preDrawFunction(NULL) {
 }
 
 
@@ -494,7 +493,10 @@ void CCArmature::draw()
                 CCSkin *skin = (CCSkin *)node;
 
                 CCTextureAtlas *textureAtlas = skin->getTextureAtlas();
-                bool blendDirty = bone->isBlendDirty();
+
+                ccBlendFunc func = bone->getBlendFunc();
+                bool blendDirty = func.src != CC_BLEND_SRC || func.dst != CC_BLEND_DST;
+
                 if(m_pAtlas != textureAtlas || blendDirty)
                 {
                     if (m_pAtlas)
@@ -512,14 +514,12 @@ void CCArmature::draw()
 
                 if (blendDirty)
                 {
-                    ccBlendFunc func = bone->getBlendFunc();
                     ccGLBlendFunc(func.src, func.dst);
 
                     m_pAtlas->drawQuads();
                     m_pAtlas->removeAllQuads();
 
                     ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
-                    bone->setBlendDirty(false);
                 }
             }
             break;
@@ -621,6 +621,8 @@ CCRect CCArmature::boundingBox()
         if (CCBone *bone = dynamic_cast<CCBone *>(object))
         {
             CCRect r = bone->getDisplayManager()->getBoundingBox();
+            if (r.size.width == 0 || r.size.height == 0) 
+                continue;
 
             if(first)
             {
