@@ -12,7 +12,7 @@
 #include <cstdio>
 #include <string>
 #include <sstream>
-
+#include <iostream>
 #include "clang/AST/ASTConsumer.h"
 #include "clang/AST/RecursiveASTVisitor.h"
 #include "clang/Basic/Diagnostic.h"
@@ -42,7 +42,7 @@ public:
     }
     
     bool VisitStmt(Stmt* s);
-    
+    bool VisitType(Type* T);
     bool VisitFunctionDecl(FunctionDecl* f);
 };
 

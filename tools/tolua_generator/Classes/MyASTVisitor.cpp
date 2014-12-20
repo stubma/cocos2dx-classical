@@ -28,6 +28,10 @@ bool MyASTVisitor::VisitStmt(Stmt* s) {
     return true;
 }
 
+bool MyASTVisitor::VisitType(Type* T) {
+    return true;
+}
+
 bool MyASTVisitor::VisitFunctionDecl(FunctionDecl* f) {
     // Only function definitions (with bodies), not declarations.
     if (f->hasBody()) {

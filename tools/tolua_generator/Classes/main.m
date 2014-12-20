@@ -49,6 +49,7 @@ int main(int argc, const char * argv[]) {
         compiler.createDiagnostics(NULL, false);
         DiagnosticsEngine& diagEngine = compiler.getDiagnostics();
         LangOptions& langOpt = compiler.getLangOpts();
+        langOpt.CPlusPlus = 1;
         
         // Initialize target info with the default triple for our platform.
         TargetOptions* to = new TargetOptions();

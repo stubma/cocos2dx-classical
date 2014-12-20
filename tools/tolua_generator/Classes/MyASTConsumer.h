@@ -14,6 +14,7 @@
 #include <sstream>
 
 #include "clang/AST/ASTConsumer.h"
+#include "clang/AST/ASTContext.h"
 #include "clang/AST/RecursiveASTVisitor.h"
 #include "clang/Basic/Diagnostic.h"
 #include "clang/Basic/FileManager.h"
@@ -49,6 +50,12 @@ public:
             // Traverse the declaration using our AST visitor.
             m_visitor.TraverseDecl(*b);
         return true;
+    }
+    
+    virtual void HandleTranslationUnit(ASTContext& Ctx) {
+        /* we can use ASTContext to get the TranslationUnitDecl, which is
+         a single Decl that collectively represents the entire source file */
+        m_visitor.TraverseDecl(Ctx.getTranslationUnitDecl());
     }
 };
 
