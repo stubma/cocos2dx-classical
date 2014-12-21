@@ -2,15 +2,30 @@
 typedef int beta;
 #endif
 
-void globalaaa(int b) {
+int gLandable = 0;
+static int sStaticLand;
+
+enum {
+	AAAA,
+	BBBB,
+	CCCC
+} kCCNumberLike;
+
+void globalbbb(float b) {
 
 }
+
+static void globalaaa(int b) {
+
+}
+
+extern void globalccc(std::string c);
 
 class  CCDrawNode : public CCNode
 {
 public:
     static CCDrawNode* create();
-    virtual ~CCDrawNode() {}  ;
+    virtual ~CCDrawNode() {}  
 
     //virtual bool init();
 	virtual void draw(int (*pf)(void*)) = 0;
@@ -23,6 +38,8 @@ public:
 
     }
 
+    std::string m_cancellable;
+
 protected:
 	void drawNode() { 
 		#ifdef DEBUG
@@ -32,4 +49,6 @@ protected:
 	} ; 
 
     CC_SYNTHESIZE_BOOL(m_cancellable, Cancellable);
+
+    int m_villan;
 };

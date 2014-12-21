@@ -42,6 +42,8 @@ private:
     
 private:
     SourceLocation findLastRParenForPureVirtual(CXXMethodDecl* decl);
+    void removeFunctionBody(FunctionDecl* decl);
+    void removeFunction(FunctionDecl* decl);
     void debugOutputLoc(SourceLocation& loc);
     
 public:
@@ -56,8 +58,9 @@ public:
     bool VisitDecl(Decl* decl);
     bool VisitFunctionDecl(FunctionDecl* decl);
     bool VisitCXXMethodDecl(CXXMethodDecl* decl);
-    bool VisitCXXDestructorDecl(CXXDestructorDecl* decl);
     bool VisitAccessSpecDecl(AccessSpecDecl* decl);
+    bool VisitFieldDecl(FieldDecl* decl);
+    bool VisitVarDecl(VarDecl* decl);
 };
 
 #endif /* defined(__tolua_generator__MyASTVisitor__) */
