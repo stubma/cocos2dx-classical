@@ -53,8 +53,8 @@ public:
         m_ctx = ctx;
     }
     
-    bool VisitType(Type* T);
-    bool VisitCXXRecordDecl(CXXRecordDecl* decl);
+    bool VisitDecl(Decl* decl);
+    bool VisitFunctionDecl(FunctionDecl* decl);
     bool VisitCXXMethodDecl(CXXMethodDecl* decl);
     bool VisitCXXDestructorDecl(CXXDestructorDecl* decl);
     bool VisitAccessSpecDecl(AccessSpecDecl* decl);

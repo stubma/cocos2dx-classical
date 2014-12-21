@@ -36,79 +36,107 @@
 using namespace clang;
 using namespace std;
 
-static void preprocessSource(const char* path) {
+static void preprocessSource(NSString* path) {
+    NSString* fileContent = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     
+}
+
+static void processSource(NSString* path) {
+    // CompilerInstance will hold the instance of the Clang compiler for us,
+    // managing the various objects needed to run the compiler.
+    CompilerInstance compiler;
+    compiler.createDiagnostics(NULL, false);
+    DiagnosticsEngine& diagEngine = compiler.getDiagnostics();
+    LangOptions& langOpt = compiler.getLangOpts();
+    langOpt.CPlusPlus = 1;
+    
+    // Initialize target info with the default triple for our platform.
+    TargetOptions* to = new TargetOptions();
+    to->Triple = llvm::sys::getDefaultTargetTriple();
+    shared_ptr<TargetOptions> spTO(to);
+    TargetInfo* ti = TargetInfo::CreateTargetInfo(diagEngine, spTO);
+    compiler.setTarget(ti);
+    
+    // file manager
+    compiler.createFileManager();
+    FileManager& fileMgr = compiler.getFileManager();
+    
+    // source manager
+    compiler.createSourceManager(fileMgr);
+    SourceManager& srcMgr = compiler.getSourceManager();
+    
+    // header search options
+    HeaderSearchOptions* hsOpt = new HeaderSearchOptions("/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk");
+    IntrusiveRefCntPtr<HeaderSearchOptions> hsoPtr(hsOpt);
+    HeaderSearch hs(hsoPtr, srcMgr, diagEngine, langOpt, ti);
+    ApplyHeaderSearchOptions(hs, *hsOpt, langOpt, ti->getTriple());
+    
+    // create preprocessor and set to compiler
+    PreprocessorOptions* prepOpt = new PreprocessorOptions();
+    IntrusiveRefCntPtr<PreprocessorOptions> poPtr(prepOpt);
+    Preprocessor* prep = new Preprocessor(poPtr, diagEngine, langOpt, srcMgr, hs, compiler);
+    compiler.setPreprocessor(prep);
+    
+    // Set the main file handled by the source manager to the input file.
+    const FileEntry* FileIn = fileMgr.getFile([path cStringUsingEncoding:NSUTF8StringEncoding]);
+    srcMgr.setMainFileID(srcMgr.createFileID(FileIn, SourceLocation(), SrcMgr::C_User));
+    
+    // create ast context
+    compiler.createASTContext();
+    diagEngine.setClient(new IgnoringDiagConsumer());
+    compiler.getDiagnosticClient().BeginSourceFile(langOpt, prep);
+    
+    // Create an AST consumer instance which is going to get called by ParseAST.
+    Rewriter rewriter;
+    rewriter.setSourceMgr(srcMgr, langOpt);
+    MyASTConsumer consumer(rewriter);
+    
+    // Parse the file to AST, registering our consumer as the AST consumer.
+    ParseAST(*prep, &consumer, compiler.getASTContext());
+    
+    // At this point the rewriter's buffer should be full with the rewritten
+    // file contents.
+    const RewriteBuffer* rewriteBuf = rewriter.getRewriteBufferFor(srcMgr.getMainFileID());
+    if(rewriteBuf)
+        llvm::outs() << string(rewriteBuf->begin(), rewriteBuf->end());
 }
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         if (argc != 2) {
-            llvm::errs() << "Usage: rewritersample <filename>\n";
+            NSLog(@"Usage: rewritersample <filename>\n");
             return 1;
         }
         
-        // preprocess source file, to remove something
-        preprocessSource(argv[1]);
-        
-        // CompilerInstance will hold the instance of the Clang compiler for us,
-        // managing the various objects needed to run the compiler.
-        CompilerInstance compiler;
-        compiler.createDiagnostics(NULL, false);
-        DiagnosticsEngine& diagEngine = compiler.getDiagnostics();
-        LangOptions& langOpt = compiler.getLangOpts();
-        langOpt.CPlusPlus = 1;
-        
-        // Initialize target info with the default triple for our platform.
-        TargetOptions* to = new TargetOptions();
-        to->Triple = llvm::sys::getDefaultTargetTriple();
-        shared_ptr<TargetOptions> spTO(to);
-        TargetInfo* ti = TargetInfo::CreateTargetInfo(diagEngine, spTO);
-        compiler.setTarget(ti);
-        
-        // file manager
-        compiler.createFileManager();
-        FileManager& fileMgr = compiler.getFileManager();
-        
-        // source manager
-        compiler.createSourceManager(fileMgr);
-        SourceManager& srcMgr = compiler.getSourceManager();
-        
-        // header search options
-        HeaderSearchOptions* hsOpt = new HeaderSearchOptions("/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk");
-        hsOpt->AddPath("/Users/maruojie/Projects/cocos2dx-classical/cocos2dx", frontend::Angled, false, true);
-        hsOpt->AddPath("/Users/maruojie/Projects/cocos2dx-classical/cocos2dx/include", frontend::Angled, false, true);
-        IntrusiveRefCntPtr<HeaderSearchOptions> hsoPtr(hsOpt);
-        HeaderSearch hs(hsoPtr, srcMgr, diagEngine, langOpt, ti);
-        ApplyHeaderSearchOptions(hs, *hsOpt, langOpt, ti->getTriple());
-        
-        // create preprocessor and set to compiler
-        PreprocessorOptions* prepOpt = new PreprocessorOptions();
-        IntrusiveRefCntPtr<PreprocessorOptions> poPtr(prepOpt);
-        Preprocessor* prep = new Preprocessor(poPtr, diagEngine, langOpt, srcMgr, hs, compiler);
-        compiler.setPreprocessor(prep);
-        
-        // Set the main file handled by the source manager to the input file.
-        const FileEntry* FileIn = fileMgr.getFile(argv[1]);
-        srcMgr.setMainFileID(srcMgr.createFileID(FileIn, SourceLocation(), SrcMgr::C_User));
-        
-        // create ast context
-        compiler.createASTContext();
-        diagEngine.setClient(new IgnoringDiagConsumer());
-        compiler.getDiagnosticClient().BeginSourceFile(langOpt, prep);
-        
-        // Create an AST consumer instance which is going to get called by ParseAST.
-        Rewriter rewriter;
-        rewriter.setSourceMgr(srcMgr, langOpt);
-        MyASTConsumer consumer(rewriter);
-        
-        // Parse the file to AST, registering our consumer as the AST consumer.
-        ParseAST(*prep, &consumer, compiler.getASTContext());
-        
-        // At this point the rewriter's buffer should be full with the rewritten
-        // file contents.
-        const RewriteBuffer* rewriteBuf = rewriter.getRewriteBufferFor(srcMgr.getMainFileID());
-        if(rewriteBuf)
-            llvm::outs() << string(rewriteBuf->begin(), rewriteBuf->end());
+        // check path is folder or file, if file, process it
+        // if folder, process files in it and in its sub folders
+        // source file will be preprocessed because we need remove something and I don't how to do it with clang
+        NSString* path = [NSString stringWithUTF8String:argv[1]];
+        path = [path stringByExpandingTildeInPath];
+        NSFileManager* fm = [NSFileManager defaultManager];
+        BOOL dir;
+        if([fm fileExistsAtPath:path isDirectory:&dir]) {
+            if(dir) {
+                // find all header files, and process them
+                NSArray* subpaths = [fm subpathsOfDirectoryAtPath:path error:nil];
+                for(NSString* subpath in subpaths) {
+                    NSString* subFullPath = [path stringByAppendingPathComponent:subpath];
+                    [fm fileExistsAtPath:subFullPath isDirectory:&dir];
+                    if(!dir) {
+                        NSString* ext = [subpath pathExtension];
+                        if([@"h" isEqualToString:ext]) {
+                            preprocessSource(subFullPath);
+                            processSource(subFullPath);
+                        }
+                    }
+                }
+            } else {
+                preprocessSource(path);
+                processSource(path);
+            }
+        } else {
+            NSLog(@"No file or directory found in %@", path);
+        }
     }
     return 0;
 }

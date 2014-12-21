@@ -8,10 +8,6 @@
 
 #include "MyASTVisitor.h"
 
-bool MyASTVisitor::VisitType(Type* T) {
-    return true;
-}
-
 void MyASTVisitor::debugOutputLoc(SourceLocation& loc) {
     SourceManager& srcMgr = m_ctx->getSourceManager();
     cout << "loc: " << srcMgr.getExpansionLineNumber(loc) << "," << srcMgr.getExpansionColumnNumber(loc) << endl;
@@ -28,37 +24,50 @@ SourceLocation MyASTVisitor::findLastRParenForPureVirtual(CXXMethodDecl* decl) {
     return SourceLocation();
 }
 
-bool MyASTVisitor::VisitCXXRecordDecl(CXXRecordDecl* decl) {
-    decl->dump();
-    return true;
-}
-
-bool MyASTVisitor::VisitCXXMethodDecl(CXXMethodDecl* decl) {
+bool MyASTVisitor::VisitFunctionDecl(FunctionDecl* decl) {
     // remove block comment
     const RawComment* rc = m_ctx->getRawCommentForAnyRedecl(decl);
     if(rc) {
         m_rewriter.RemoveText(rc->getSourceRange());
     }
     
+    // if not cpp method
+    if(!isa<CXXMethodDecl>(decl)) {
+        // remove body
+        if (decl->hasBody()) {
+            Stmt* funcBody = decl->getBody();
+            m_rewriter.InsertText(funcBody->getLocEnd().getLocWithOffset(1), ";");
+            m_rewriter.RemoveText(funcBody->getSourceRange());
+        }
+    }
+    
+    return true;
+}
+
+bool MyASTVisitor::VisitDecl(Decl* decl) {
+    decl->dump();
+    return true;
+}
+
+bool MyASTVisitor::VisitCXXMethodDecl(CXXMethodDecl* decl) {
     // if not public, remove
     AccessSpecifier as = decl->getAccess();
     if(as != AS_public) {
         SourceLocation endLoc = Lexer::findLocationAfterToken(decl->getLocEnd(), tok::semi, m_ctx->getSourceManager(), m_ctx->getLangOpts(), false);
         m_rewriter.RemoveText(SourceRange(decl->getLocStart(), endLoc));
-        return true;
-    }
-    
-    // remove body
-    if (decl->hasBody() && !isa<CXXDestructorDecl>(decl)) {
-        Stmt* funcBody = decl->getBody();
-        m_rewriter.InsertText(funcBody->getLocEnd().getLocWithOffset(1), ";");
-        m_rewriter.RemoveText(funcBody->getSourceRange());
-    }
-    
-    // remove pure virtual = 0
-    if(decl->isVirtual() && decl->isPure()) {
-        SourceLocation rpLoc = findLastRParenForPureVirtual(decl);
-        m_rewriter.RemoveText(SourceRange(rpLoc.getLocWithOffset(1), decl->getLocEnd()));
+    } else { // so it is public
+        // remove body
+        if (decl->hasBody()) {
+            Stmt* funcBody = decl->getBody();
+            m_rewriter.InsertText(funcBody->getLocEnd().getLocWithOffset(1), ";");
+            m_rewriter.RemoveText(funcBody->getSourceRange());
+        }
+        
+        // remove pure virtual = 0
+        if(decl->isVirtual() && decl->isPure()) {
+            SourceLocation rpLoc = findLastRParenForPureVirtual(decl);
+            m_rewriter.RemoveText(SourceRange(rpLoc.getLocWithOffset(1), decl->getLocEnd()));
+        }
     }
     
     return true;

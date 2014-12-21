@@ -2,11 +2,15 @@
 typedef int beta;
 #endif
 
+void globalaaa(int b) {
+
+}
+
 class  CCDrawNode : public CCNode
 {
 public:
     static CCDrawNode* create();
-    virtual ~CCDrawNode()   ;
+    virtual ~CCDrawNode() {}  ;
 
     //virtual bool init();
 	virtual void draw(int (*pf)(void*)) = 0;
