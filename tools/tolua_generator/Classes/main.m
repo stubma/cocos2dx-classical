@@ -67,7 +67,7 @@ int main(int argc, const char * argv[]) {
         SourceManager& srcMgr = compiler.getSourceManager();
         
         // header search options
-        HeaderSearchOptions* hsOpt = new HeaderSearchOptions();
+        HeaderSearchOptions* hsOpt = new HeaderSearchOptions("/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk");
         hsOpt->AddPath("/Users/maruojie/Projects/cocos2dx-classical/cocos2dx", frontend::Angled, false, false);
         hsOpt->AddPath("/Users/maruojie/Projects/cocos2dx-classical/cocos2dx/include", frontend::Angled, false, false);
         IntrusiveRefCntPtr<HeaderSearchOptions> hsoPtr(hsOpt);

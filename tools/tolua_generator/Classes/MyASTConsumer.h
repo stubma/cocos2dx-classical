@@ -42,16 +42,6 @@ public:
     : m_visitor(r) {
     }
     
-    // Override the method that gets called for each parsed top-level
-    // declaration.
-    virtual bool HandleTopLevelDecl(DeclGroupRef DR) {
-        for (DeclGroupRef::iterator b = DR.begin(), e = DR.end();
-             b != e; ++b)
-            // Traverse the declaration using our AST visitor.
-            m_visitor.TraverseDecl(*b);
-        return true;
-    }
-    
     virtual void HandleTranslationUnit(ASTContext& Ctx) {
         /* we can use ASTContext to get the TranslationUnitDecl, which is
          a single Decl that collectively represents the entire source file */
