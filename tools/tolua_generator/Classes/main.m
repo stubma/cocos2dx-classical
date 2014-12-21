@@ -66,7 +66,7 @@ static void processSource(NSString* path) {
     SourceManager& srcMgr = compiler.getSourceManager();
     
     // header search options
-    HeaderSearchOptions* hsOpt = new HeaderSearchOptions("/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk");
+    HeaderSearchOptions* hsOpt = new HeaderSearchOptions();
     IntrusiveRefCntPtr<HeaderSearchOptions> hsoPtr(hsOpt);
     HeaderSearch hs(hsoPtr, srcMgr, diagEngine, langOpt, ti);
     ApplyHeaderSearchOptions(hs, *hsOpt, langOpt, ti->getTriple());
