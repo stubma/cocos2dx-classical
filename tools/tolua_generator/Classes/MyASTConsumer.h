@@ -16,6 +16,7 @@
 #include "clang/AST/ASTConsumer.h"
 #include "clang/AST/ASTContext.h"
 #include "clang/AST/RecursiveASTVisitor.h"
+#include "clang/AST/RawCommentList.h"
 #include "clang/Basic/Diagnostic.h"
 #include "clang/Basic/FileManager.h"
 #include "clang/Basic/SourceManager.h"
@@ -36,10 +37,17 @@ using namespace std;
 class MyASTConsumer : public ASTConsumer {
 private:
     MyASTVisitor m_visitor;
+    ASTContext* m_ctx;
     
 public:
-    MyASTConsumer(Rewriter& r)
-    : m_visitor(r) {
+    MyASTConsumer(Rewriter& r) :
+    m_visitor(r),
+    m_ctx(NULL) {
+    }
+    
+    virtual void Initialize(ASTContext &Context) {
+        m_ctx = &Context;
+        m_visitor.Initialize(m_ctx);
     }
     
     virtual void HandleTranslationUnit(ASTContext& Ctx) {

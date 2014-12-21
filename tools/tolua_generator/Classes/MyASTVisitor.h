@@ -14,7 +14,9 @@
 #include <sstream>
 #include <iostream>
 #include "clang/AST/ASTConsumer.h"
+#include "clang/AST/ASTContext.h"
 #include "clang/AST/RecursiveASTVisitor.h"
+#include "clang/AST/Comment.h"
 #include "clang/Basic/Diagnostic.h"
 #include "clang/Basic/FileManager.h"
 #include "clang/Basic/SourceManager.h"
@@ -22,6 +24,7 @@
 #include "clang/Basic/TargetInfo.h"
 #include "clang/Frontend/CompilerInstance.h"
 #include "clang/Lex/Preprocessor.h"
+#include "clang/Lex/Lexer.h"
 #include "clang/Parse/ParseAST.h"
 #include "clang/Rewrite/Core/Rewriter.h"
 #include "clang/Rewrite/FrontEnd/Rewriters.h"
@@ -35,15 +38,26 @@ using namespace std;
 class MyASTVisitor : public RecursiveASTVisitor<MyASTVisitor> {
 private:
     Rewriter& m_rewriter;
+    ASTContext* m_ctx;
+    
+private:
+    SourceLocation findLastRParenForPureVirtual(CXXMethodDecl* decl);
+    void debugOutputLoc(SourceLocation& loc);
     
 public:
     MyASTVisitor(Rewriter& r)
     : m_rewriter(r) {
     }
     
-    bool VisitStmt(Stmt* s);
+    void Initialize(ASTContext* ctx) {
+        m_ctx = ctx;
+    }
+    
     bool VisitType(Type* T);
-    bool VisitFunctionDecl(FunctionDecl* f);
+    bool VisitCXXRecordDecl(CXXRecordDecl* decl);
+    bool VisitCXXMethodDecl(CXXMethodDecl* decl);
+    bool VisitCXXDestructorDecl(CXXDestructorDecl* decl);
+    bool VisitAccessSpecDecl(AccessSpecDecl* decl);
 };
 
 #endif /* defined(__tolua_generator__MyASTVisitor__) */

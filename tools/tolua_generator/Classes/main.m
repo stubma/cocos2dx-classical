@@ -36,12 +36,19 @@
 using namespace clang;
 using namespace std;
 
+static void preprocessSource(const char* path) {
+    
+}
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         if (argc != 2) {
             llvm::errs() << "Usage: rewritersample <filename>\n";
             return 1;
         }
+        
+        // preprocess source file, to remove something
+        preprocessSource(argv[1]);
         
         // CompilerInstance will hold the instance of the Clang compiler for us,
         // managing the various objects needed to run the compiler.
@@ -68,8 +75,8 @@ int main(int argc, const char * argv[]) {
         
         // header search options
         HeaderSearchOptions* hsOpt = new HeaderSearchOptions("/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk");
-        hsOpt->AddPath("/Users/maruojie/Projects/cocos2dx-classical/cocos2dx", frontend::Angled, false, false);
-        hsOpt->AddPath("/Users/maruojie/Projects/cocos2dx-classical/cocos2dx/include", frontend::Angled, false, false);
+        hsOpt->AddPath("/Users/maruojie/Projects/cocos2dx-classical/cocos2dx", frontend::Angled, false, true);
+        hsOpt->AddPath("/Users/maruojie/Projects/cocos2dx-classical/cocos2dx/include", frontend::Angled, false, true);
         IntrusiveRefCntPtr<HeaderSearchOptions> hsoPtr(hsOpt);
         HeaderSearch hs(hsoPtr, srcMgr, diagEngine, langOpt, ti);
         ApplyHeaderSearchOptions(hs, *hsOpt, langOpt, ti->getTriple());
@@ -86,6 +93,7 @@ int main(int argc, const char * argv[]) {
         
         // create ast context
         compiler.createASTContext();
+        diagEngine.setClient(new IgnoringDiagConsumer());
         compiler.getDiagnosticClient().BeginSourceFile(langOpt, prep);
         
         // Create an AST consumer instance which is going to get called by ParseAST.

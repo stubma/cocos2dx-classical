@@ -8,56 +8,69 @@
 
 #include "MyASTVisitor.h"
 
-bool MyASTVisitor::VisitStmt(Stmt* s) {
-    // Only care about If statements.
-    if (isa<IfStmt>(s)) {
-        IfStmt *IfStatement = cast<IfStmt>(s);
-        Stmt *Then = IfStatement->getThen();
-        
-        m_rewriter.InsertText(Then->getLocStart(),
-                               "// the 'if' part\n",
-                               true, true);
-        
-        Stmt *Else = IfStatement->getElse();
-        if (Else)
-            m_rewriter.InsertText(Else->getLocStart(),
-                                  "// the 'else' part\n",
-                                  true, true);
-    }
-    
-    return true;
-}
-
 bool MyASTVisitor::VisitType(Type* T) {
     return true;
 }
 
-bool MyASTVisitor::VisitFunctionDecl(FunctionDecl* f) {
-    // Only function definitions (with bodies), not declarations.
-    if (f->hasBody()) {
-        Stmt *FuncBody = f->getBody();
-        
-        // Type name as string
-        QualType QT = f->getReturnType();
-        string TypeStr = QT.getAsString();
-        
-        // Function name
-        DeclarationName DeclName = f->getNameInfo().getName();
-        string FuncName = DeclName.getAsString();
-        
-        // Add comment before
-        stringstream SSBefore;
-        SSBefore << "// Begin function " << FuncName << " returning "
-        << TypeStr << "\n";
-        SourceLocation ST = f->getSourceRange().getBegin();
-        m_rewriter.InsertText(ST, SSBefore.str(), true, true);
-        
-        // And after
-        stringstream SSAfter;
-        SSAfter << "\n// End function " << FuncName << "\n";
-        ST = FuncBody->getLocEnd().getLocWithOffset(1);
-        m_rewriter.InsertText(ST, SSAfter.str(), true, true);
+void MyASTVisitor::debugOutputLoc(SourceLocation& loc) {
+    SourceManager& srcMgr = m_ctx->getSourceManager();
+    cout << "loc: " << srcMgr.getExpansionLineNumber(loc) << "," << srcMgr.getExpansionColumnNumber(loc) << endl;
+}
+
+SourceLocation MyASTVisitor::findLastRParenForPureVirtual(CXXMethodDecl* decl) {
+    SourceManager& sm = m_ctx->getSourceManager();
+    for(int i = 0; i >= -INT32_MAX; i--) {
+        const char* buf = sm.getCharacterData(decl->getLocEnd().getLocWithOffset(i));
+        if(buf[0] == ')') {
+            return decl->getLocEnd().getLocWithOffset(i);
+        }
+    }
+    return SourceLocation();
+}
+
+bool MyASTVisitor::VisitCXXRecordDecl(CXXRecordDecl* decl) {
+    decl->dump();
+    return true;
+}
+
+bool MyASTVisitor::VisitCXXMethodDecl(CXXMethodDecl* decl) {
+    // remove block comment
+    const RawComment* rc = m_ctx->getRawCommentForAnyRedecl(decl);
+    if(rc) {
+        m_rewriter.RemoveText(rc->getSourceRange());
     }
     
+    // if not public, remove
+    AccessSpecifier as = decl->getAccess();
+    if(as != AS_public) {
+        SourceLocation endLoc = Lexer::findLocationAfterToken(decl->getLocEnd(), tok::semi, m_ctx->getSourceManager(), m_ctx->getLangOpts(), false);
+        m_rewriter.RemoveText(SourceRange(decl->getLocStart(), endLoc));
+        return true;
+    }
+    
+    // remove body
+    if (decl->hasBody() && !isa<CXXDestructorDecl>(decl)) {
+        Stmt* funcBody = decl->getBody();
+        m_rewriter.InsertText(funcBody->getLocEnd().getLocWithOffset(1), ";");
+        m_rewriter.RemoveText(funcBody->getSourceRange());
+    }
+    
+    // remove pure virtual = 0
+    if(decl->isVirtual() && decl->isPure()) {
+        SourceLocation rpLoc = findLastRParenForPureVirtual(decl);
+        m_rewriter.RemoveText(SourceRange(rpLoc.getLocWithOffset(1), decl->getLocEnd()));
+    }
+    
+    return true;
+}
+
+bool MyASTVisitor::VisitCXXDestructorDecl(CXXDestructorDecl* decl) {
+    SourceLocation endLoc = Lexer::findLocationAfterToken(decl->getLocEnd(), tok::semi, m_ctx->getSourceManager(), m_ctx->getLangOpts(), false);
+    m_rewriter.RemoveText(SourceRange(decl->getLocStart(), endLoc));
+    return true;
+}
+
+bool MyASTVisitor::VisitAccessSpecDecl(AccessSpecDecl* decl) {
+    m_rewriter.RemoveText(decl->getSourceRange());
     return true;
 }
