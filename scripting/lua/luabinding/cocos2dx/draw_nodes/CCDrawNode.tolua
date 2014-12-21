@@ -28,44 +28,59 @@
  */
 
 
+
+
+
+
+
 /** CCDrawNode
  Node that draws dots, segments and polygons.
  Faster than the "drawing primitives" since they it draws everything in one single batch.
-
+ 
  @since v2.1
  @lua NA
  */
-class CCDrawNode : public CCNode
+class  CCDrawNode : public CCNode
 {
+
+    
+    
+    
+    
+    
+    
+    
+    
+
     static CCDrawNode* create();
-
-    /** draw a dot at a position, with a given radius and color */
-    void drawDot(CCPoint pos, float radius, ccColor4F color);
-
-    /** draw a segment with a radius and color */
-    void drawSegment(CCPoint from, CCPoint to, float radius, ccColor4F color);
-
-    /** draw a polygon with a fill color and line color
-     * @code
-     * when this funciton bound to js,the input params are changed
-     * js:var drawPolygon(var verts, var fillColor,var borderWidth,var borderColor)
-     * @endcode
-     */
-    void drawPolygon(CCPoint *verts, unsigned int count, ccColor4F fillColor, float borderWidth, ccColor4F borderColor);
-
-    /** Clear the geometry in the node's buffer. */
+    
+    
+    virtual bool init();
+    virtual void draw();
+    
+    
+    void drawDot(const CCPoint &pos, float radius, const ccColor4F &color);
+    
+    
+    void drawSegment(const CCPoint &from, const CCPoint &to, float radius, const ccColor4F &color);
+    
+    
+    void drawPolygon(CCPoint *verts, unsigned int count, const ccColor4F &fillColor, float borderWidth, const ccColor4F &borderColor);
+    
+    
     void clear();
+    
+    ccBlendFunc getBlendFunc() const;
+    
+    void setBlendFunc(const ccBlendFunc &blendFunc);
+    
+    CCDrawNode();
 
-    /**
-     * @js NA
-     */
-    ccBlendFunc getBlendFunc();
+    
+    void listenBackToForeground(CCObject *obj);
 
-    /**
-     * @code
-     * when this function bound to js ,the input param is change
-     * js:var setBlendFunc(var src,var dst)
-     * @endcode
-     */
-    void setBlendFunc(ccBlendFunc blendFunc);
+    
+    
 };
+
+

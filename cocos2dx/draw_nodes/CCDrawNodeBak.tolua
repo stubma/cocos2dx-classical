@@ -32,7 +32,7 @@
 
 
 
-namespace ccc {
+
 
 
 /** CCDrawNode
@@ -44,61 +44,47 @@ namespace ccc {
  */
 class  CCDrawNode : public CCNode
 {
-protected:
-    unsigned int    m_uBufferCapacity;
-    GLsizei         m_nBufferCount;
-    ccV2F_C4B_T2F   *m_pBuffer;
+
     
-    ccBlendFunc     m_sBlendFunc;
     
-    bool            m_bDirty;
     
-public:
+    
+    
+    
+    
+    
+
     static CCDrawNode* create();
-    virtual ~CCDrawNode();
+    
     
     virtual bool init();
     virtual void draw();
     
-    /** draw a dot at a position, with a given radius and color */
+    
     void drawDot(const CCPoint &pos, float radius, const ccColor4F &color);
     
-    /** draw a segment with a radius and color */
+    
     void drawSegment(const CCPoint &from, const CCPoint &to, float radius, const ccColor4F &color);
     
-    /** draw a polygon with a fill color and line color 
-     * @code
-     * when this funciton bound to js,the input params are changed
-     * js:var drawPolygon(var verts, var fillColor,var borderWidth,var borderColor)
-     * @endcode
-     */
+    
     void drawPolygon(CCPoint *verts, unsigned int count, const ccColor4F &fillColor, float borderWidth, const ccColor4F &borderColor);
     
-    /** Clear the geometry in the node's buffer. */
+    
     void clear();
-    /**
-     * @js NA
-     */
+    
     ccBlendFunc getBlendFunc() const;
-    /**
-     * @code
-     * when this function bound to js ,the input param is change
-     * js:var setBlendFunc(var src,var dst)
-     * @endcode
-     */
+    
     void setBlendFunc(const ccBlendFunc &blendFunc);
     
     CCDrawNode();
 
-    /** listen the event that coming to foreground on Android  
-     * @js NA
-     */
+    
     void listenBackToForeground(CCObject *obj);
-private:
-    void ensureCapacity(unsigned int count);
-    void render();
+
+    
+    
 };
 
-}
+
 
 

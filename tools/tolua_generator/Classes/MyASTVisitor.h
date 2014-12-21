@@ -55,12 +55,13 @@ public:
         m_ctx = ctx;
     }
     
-    bool VisitDecl(Decl* decl);
+    bool VisitTranslationUnitDecl(TranslationUnitDecl* decl);
     bool VisitFunctionDecl(FunctionDecl* decl);
     bool VisitCXXMethodDecl(CXXMethodDecl* decl);
     bool VisitAccessSpecDecl(AccessSpecDecl* decl);
     bool VisitFieldDecl(FieldDecl* decl);
     bool VisitVarDecl(VarDecl* decl);
+    bool VisitNamespaceDecl(NamespaceDecl* decl);
 };
 
 #endif /* defined(__tolua_generator__MyASTVisitor__) */

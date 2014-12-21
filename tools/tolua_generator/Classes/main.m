@@ -39,6 +39,113 @@ using namespace std;
 static void preprocessSource(NSString* path) {
     NSString* fileContent = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     
+    // remove CC_DLL, CC_EX_DLL
+    fileContent = [fileContent stringByReplacingOccurrencesOfString:@"CC_DLL" withString:@""];
+    fileContent = [fileContent stringByReplacingOccurrencesOfString:@"CC_EX_DLL" withString:@""];
+    
+    // remove namespace macros
+    fileContent = [fileContent stringByReplacingOccurrencesOfString:@"NS_CC_BEGIN" withString:@""];
+    fileContent = [fileContent stringByReplacingOccurrencesOfString:@"NS_CC_END" withString:@""];
+    fileContent = [fileContent stringByReplacingOccurrencesOfString:@"NS_CC_EXT_BEGIN" withString:@""];
+    fileContent = [fileContent stringByReplacingOccurrencesOfString:@"NS_CC_EXT_END" withString:@""];
+    fileContent = [fileContent stringByReplacingOccurrencesOfString:@"NS_TIMELINE_BEGIN" withString:@""];
+    fileContent = [fileContent stringByReplacingOccurrencesOfString:@"NS_TIMELINE_END" withString:@""];
+    NSRegularExpression* regExp = [NSRegularExpression regularExpressionWithPattern:@"USING_NS_CC(\\s*);"
+                                                                            options:0
+                                                                              error:nil];
+    fileContent = [regExp stringByReplacingMatchesInString:fileContent
+                                                   options:0
+                                                     range:NSMakeRange(0, [fileContent length])
+                                              withTemplate:@""];
+    
+    // remove #include
+    regExp = [NSRegularExpression regularExpressionWithPattern:@"#include (.*)"
+                                                       options:0
+                                                         error:nil];
+    fileContent = [regExp stringByReplacingMatchesInString:fileContent
+                                                   options:0
+                                                     range:NSMakeRange(0, [fileContent length])
+                                              withTemplate:@""];
+    
+    // remove first #ifndef xxx and related
+    regExp = [NSRegularExpression regularExpressionWithPattern:@"#ifndef(\\s+)__(.*)__"
+                                                       options:0
+                                                         error:nil];
+    NSTextCheckingResult* firstMatch = [regExp firstMatchInString:fileContent
+                                                          options:0
+                                                            range:NSMakeRange(0, [fileContent length])];
+    if([firstMatch range].location == NSNotFound) {
+        NSLog(@"!!!!!!!! file %@ doesn't have proper exclusive directive, fix it!!!!!!!!", path);
+    } else {
+        NSString* macro = [fileContent substringWithRange:[firstMatch rangeAtIndex:2]];
+        
+        // remove ifndef
+        NSString* pattern = [NSString stringWithFormat:@"#ifndef(\\s+)__%@__", macro];
+        regExp = [NSRegularExpression regularExpressionWithPattern:pattern
+                                                           options:0
+                                                             error:nil];
+        fileContent = [regExp stringByReplacingMatchesInString:fileContent
+                                                       options:0
+                                                         range:NSMakeRange(0, [fileContent length])
+                                                  withTemplate:@""];
+        
+        // remove define
+        pattern = [NSString stringWithFormat:@"#define(\\s+)__%@__", macro];
+        regExp = [NSRegularExpression regularExpressionWithPattern:pattern
+                                                           options:0
+                                                             error:nil];
+        firstMatch = [regExp firstMatchInString:fileContent
+                                        options:0
+                                          range:NSMakeRange(0, [fileContent length])];
+        if([firstMatch range].location == NSNotFound) {
+            NSLog(@"!!!!!!!! file %@ doesn't have proper exclusive directive, fix it!!!!!!!!", path);
+        } else {
+            fileContent = [regExp stringByReplacingMatchesInString:fileContent
+                                                           options:0
+                                                             range:NSMakeRange(0, [fileContent length])
+                                                      withTemplate:@""];
+        }
+        
+        // remove endif
+        pattern = [NSString stringWithFormat:@"#endif(\\s+)//(\\s+)__%@__", macro];
+        regExp = [NSRegularExpression regularExpressionWithPattern:pattern
+                                                           options:0
+                                                             error:nil];
+        firstMatch = [regExp firstMatchInString:fileContent
+                                        options:0
+                                          range:NSMakeRange(0, [fileContent length])];
+        if([firstMatch range].location == NSNotFound) {
+            NSLog(@"!!!!!!!! file %@ doesn't have proper exclusive directive, fix it!!!!!!!!", path);
+        } else {
+            fileContent = [regExp stringByReplacingMatchesInString:fileContent
+                                                           options:0
+                                                             range:NSMakeRange(0, [fileContent length])
+                                                      withTemplate:@""];
+        }
+    }
+    
+    // remove #define
+    regExp = [NSRegularExpression regularExpressionWithPattern:@"#define (.*)"
+                                                       options:0
+                                                         error:nil];
+    fileContent = [regExp stringByReplacingMatchesInString:fileContent
+                                                   options:0
+                                                     range:NSMakeRange(0, [fileContent length])
+                                              withTemplate:@""];
+    
+    // CREATE_FUNC
+    regExp = [NSRegularExpression regularExpressionWithPattern:@"CREATE_FUNC\\((.*)\\)"
+                                                       options:0
+                                                         error:nil];
+    fileContent = [regExp stringByReplacingMatchesInString:fileContent
+                                                   options:0
+                                                     range:NSMakeRange(0, [fileContent length])
+                                              withTemplate:@"static $1* create();"];
+    
+    // save modified source to same path
+    NSData* data = [NSData dataWithBytes:[fileContent cStringUsingEncoding:NSUTF8StringEncoding]
+                                  length:[fileContent lengthOfBytesUsingEncoding:NSUTF8StringEncoding]];
+    [data writeToFile:path atomically:NO];
 }
 
 static void processSource(NSString* path) {
@@ -48,7 +155,7 @@ static void processSource(NSString* path) {
     compiler.createDiagnostics(NULL, false);
     DiagnosticsEngine& diagEngine = compiler.getDiagnostics();
     LangOptions& langOpt = compiler.getLangOpts();
-    langOpt.CPlusPlus = 1;
+    CompilerInvocation::setLangDefaults(langOpt, IK_CXX);
     
     // Initialize target info with the default triple for our platform.
     TargetOptions* to = new TargetOptions();
@@ -97,8 +204,16 @@ static void processSource(NSString* path) {
     // At this point the rewriter's buffer should be full with the rewritten
     // file contents.
     const RewriteBuffer* rewriteBuf = rewriter.getRewriteBufferFor(srcMgr.getMainFileID());
-    if(rewriteBuf)
-        llvm::outs() << string(rewriteBuf->begin(), rewriteBuf->end());
+    if(rewriteBuf) {
+        string tolua(rewriteBuf->begin(), rewriteBuf->end());
+        NSLog(@"tolua result: %s", tolua.c_str());
+        
+        // save to tolua file
+        NSData* data = [NSData dataWithBytes:tolua.c_str() length:tolua.length()];
+        NSString* filenameWithoutExt = [path stringByDeletingPathExtension];
+        NSString* filenameToLua = [NSString stringWithFormat:@"%@.tolua", filenameWithoutExt];
+        [data writeToFile:filenameToLua atomically:NO];
+    }
 }
 
 int main(int argc, const char * argv[]) {

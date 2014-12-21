@@ -63,7 +63,7 @@ bool MyASTVisitor::VisitFunctionDecl(FunctionDecl* decl) {
     return true;
 }
 
-bool MyASTVisitor::VisitDecl(Decl* decl) {
+bool MyASTVisitor::VisitTranslationUnitDecl(TranslationUnitDecl* decl) {
     decl->dump();
     return true;
 }
@@ -109,12 +109,18 @@ bool MyASTVisitor::VisitFieldDecl(FieldDecl* decl) {
 }
 
 bool MyASTVisitor::VisitVarDecl(VarDecl* decl) {
-    cout << decl->getQualifiedNameAsString() << endl;
     // remove static local
     if(decl->isFileVarDecl() && decl->getStorageClass() == SC_Static) {
         SourceLocation endLoc = Lexer::findLocationAfterToken(decl->getLocEnd(), tok::semi, m_ctx->getSourceManager(), m_ctx->getLangOpts(), false);
         m_rewriter.RemoveText(SourceRange(decl->getLocStart(), endLoc));
     }
     
+    return true;
+}
+
+bool MyASTVisitor::VisitNamespaceDecl(NamespaceDecl* decl) {
+    m_rewriter.RemoveText(decl->getRBraceLoc(), 1);
+    SourceLocation endLoc = Lexer::findLocationAfterToken(decl->getLocation(), tok::l_brace, m_ctx->getSourceManager(), m_ctx->getLangOpts(), false);
+    m_rewriter.RemoveText(SourceRange(decl->getLocStart(), endLoc));
     return true;
 }
