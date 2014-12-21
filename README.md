@@ -35,14 +35,15 @@
 		* 对类名称"Node"的节点, 一律创建Layout
 		* WidgetPropertiesReader0300::createWidget中, 检查文件版本, 如果为1.0.0.0, 认为其为mac版
 		* WidgetPropertiesReader0300::widgetFromJsonDictionary中添加page item的代码注释掉, 因为PageView重新实现后采用动态方式创建page item
+		* Layout的缺省背景色类型改成NONE
+		* UIPageView重新实现:
+			* 支持动态创建页, 解决了page比较多时的性能问题
+			* 使用了cocos2dx-better的VelocityTracker跟踪滑动速度, 解决了页间滑动很别扭的问题
+			* 注: 不再支持从CocoStudio中直接添加page item, 必须使用PageViewDataSource接口
 	* 修正UILabelBMFont::setFntFile方法中的内存泄露
 	* ListView的pushBackDefaultItem返回新item
 	* 由于CocoStudio Mac 1.0.0.0 beta没有骨骼动画功能, 需要使用骨骼动画时, 可以使用CocoStudio Windows版1.4.0.1, 1.4.0.1以上版本我没有测试过.
 * 重新实现TMX地图, 支持一个层有多张贴图的情况
-* UIPageView重新实现:
-	* 支持动态创建页, 解决了page比较多时的性能问题
-	* 使用了cocos2dx-better的VelocityTracker跟踪滑动速度, 解决了页间滑动很别扭的问题
-	* 注: 不再支持从CocoStudio中直接添加page item, 必须使用PageViewDataSource接口
 * 重新实现CCTableView(来自cocos2dx-better中的CCGridView代码):
 	* CCTableView支持多列
 	* 支持cell重用, cell可以设置名称
