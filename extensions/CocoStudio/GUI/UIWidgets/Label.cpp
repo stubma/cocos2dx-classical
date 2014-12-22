@@ -72,6 +72,7 @@ bool Label::init()
 void Label::initRenderer()
 {
     _labelRenderer = CCLabelTTF::create();
+    _labelRenderer->setFontSize(_fontSize);
     CCNode::addChild(_labelRenderer, LABEL_RENDERER_Z, -1);
 }
 
@@ -88,7 +89,7 @@ const char* Label::getStringValue()
 
 int Label::getStringLength()
 {
-    return std::strlen(_labelRenderer->getString());
+    return (int)std::strlen(_labelRenderer->getString());
 }
 
 void Label::setFontSize(int size)
