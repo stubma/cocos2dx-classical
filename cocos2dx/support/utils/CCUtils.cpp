@@ -881,7 +881,7 @@ CCArray& CCUtils::arrayFromString(const string& s) {
     
     // iterator components
     CCObject* obj;
-    CCARRAY_FOREACH(&comp, obj) {
+    CCARRAY_FOREACH(&copy, obj) {
         CCString* ccs = (CCString*)obj;
         string cs = ccs->getCString();
         if(cs.length() > 0) {
