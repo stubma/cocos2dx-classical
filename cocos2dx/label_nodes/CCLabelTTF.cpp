@@ -573,10 +573,13 @@ void CCLabelTTF::disableStroke(bool updateTexture)
 #else
     CCAssert(false, "Operation is not supported for your platform");
 #endif
-    
 }
 
-void CCLabelTTF::setFontFillColor(const ccColor3B &tintColor, bool updateTexture)
+void CCLabelTTF::setColor(const ccColor3B& color3) {
+    setColor(color3, true);
+}
+
+void CCLabelTTF::setColor(const ccColor3B &tintColor, bool updateTexture)
 {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
     if (m_textFillColor.r != tintColor.r || m_textFillColor.g != tintColor.g || m_textFillColor.b != tintColor.b)
@@ -652,7 +655,7 @@ void CCLabelTTF::_updateWithTextDefinition(ccFontDefinition & textDefinition, bo
     }
     
     // fill color
-    setFontFillColor(textDefinition.m_fontFillColor, false);
+    setColor(textDefinition.m_fontFillColor, false);
     
     if (mustUpdateTexture)
         updateTexture();

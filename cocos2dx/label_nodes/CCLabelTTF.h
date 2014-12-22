@@ -174,9 +174,6 @@ public:
     /** disable stroke */
     void disableStroke(bool mustUpdateTexture = true);
     
-    /** set text tinting */
-    void setFontFillColor(const ccColor3B &tintColor, bool mustUpdateTexture = true);
-    
     /** initializes the CCLabelTTF */
     virtual bool init(CC_DECRYPT_FUNC decryptFunc = NULL);
     
@@ -205,7 +202,9 @@ public:
     const char* getFontName();
     void setFontName(const char *fontName);
     
-    virtual void setColor(const ccColor3B& color3) {}
+    virtual void setColor(const ccColor3B& color3);
+    
+    void setColor(const ccColor3B &tintColor, bool mustUpdateTexture);
     
     virtual void setColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
     
