@@ -150,19 +150,15 @@ void WidgetReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
 
 void WidgetReader::setColorPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
 {
-    widget->setOpacity(DICTOOL->getIntValue_json(options, "opacity",255));
-   
-    bool isColorRExists = DICTOOL->checkObjectExist_json(options, "colorR");
-    bool isColorGExists = DICTOOL->checkObjectExist_json(options, "colorG");
-    bool isColorBExists = DICTOOL->checkObjectExist_json(options, "colorB");
-   
-    int colorR = DICTOOL->getIntValue_json(options, "colorR");
-    int colorG = DICTOOL->getIntValue_json(options, "colorG");
-    int colorB = DICTOOL->getIntValue_json(options, "colorB");
-    
-    if (isColorRExists && isColorGExists && isColorBExists) {
-        widget->setColor(ccc3(colorR, colorG, colorB));
+    bool op = DICTOOL->checkObjectExist_json(options, "opacity");
+    if (op) {
+        widget->setOpacity(DICTOOL->getIntValue_json(options, "opacity"));
     }
+    
+    int colorR = DICTOOL->getIntValue_json(options, "colorR", 255);
+    int colorG = DICTOOL->getIntValue_json(options, "colorG", 255);
+    int colorB = DICTOOL->getIntValue_json(options, "colorB", 255);
+    widget->setColor(ccc3(colorR, colorG, colorB));
     
     bool apx = DICTOOL->checkObjectExist_json(options, "anchorPointX");
     float apxf = apx ? DICTOOL->getFloatValue_json(options, "anchorPointX") : ((widget->getWidgetType() == ui::WidgetTypeWidget) ? 0.5f : 0.0f);

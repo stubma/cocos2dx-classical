@@ -34,36 +34,25 @@ LabelReader* LabelReader::getInstance()
 
 void LabelReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
 {
+    const char* name = DICTOOL->getStringValue_json(options, "name");
+    CCLOG("name is %s",  name);
     WidgetReader::setPropsFromJsonDictionary(widget, options);
-    
-    
-    std::string jsonPath = GUIReader::shareReader()->getFilePath();
     
     ui::Label* label = (ui::Label*)widget;
     bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
     label->setTouchScaleChangeEnabled(touchScaleChangeAble);
-    const char* text = DICTOOL->getStringValue_json(options, "text","Text Label");
-    label->setText(text);
+    const char* text = DICTOOL->getStringValue_json(options, "text");
+    label->setText(text ? text : "");
    
-    label->setFontSize(DICTOOL->getIntValue_json(options, "fontSize",20));
-    
-    std::string fontName = DICTOOL->getStringValue_json(options, "fontName","微软雅黑");
-    std::string file_extension = "";
-    size_t pos = fontName.find_last_of('.');
-    if (pos != std::string::npos)
+    bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
+    if (fs)
     {
-        file_extension = fontName.substr(pos, fontName.length());
-        std::transform(file_extension.begin(),file_extension.end(), file_extension.begin(), (int(*)(int))toupper);
+        label->setFontSize(DICTOOL->getIntValue_json(options, "fontSize"));
     }
-    
-    if (file_extension.compare(".TTF") == 0)
+    bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
+    if (fn)
     {
-        std::string fontFilePath = jsonPath.append(fontName);
-        label->setFontName(fontFilePath);
-    }
-    else
-    {
-        label->setFontName(fontName);
+        label->setFontName(DICTOOL->getStringValue_json(options, "fontName"));
     }
     
     bool aw = DICTOOL->checkObjectExist_json(options, "areaWidth");
