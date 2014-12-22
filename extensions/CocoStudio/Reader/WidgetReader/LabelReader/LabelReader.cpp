@@ -34,8 +34,6 @@ LabelReader* LabelReader::getInstance()
 
 void LabelReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
 {
-    const char* name = DICTOOL->getStringValue_json(options, "name");
-    CCLOG("name is %s",  name);
     WidgetReader::setPropsFromJsonDictionary(widget, options);
     
     ui::Label* label = (ui::Label*)widget;
