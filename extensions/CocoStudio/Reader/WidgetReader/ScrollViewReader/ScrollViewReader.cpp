@@ -37,6 +37,9 @@ void ScrollViewReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapi
     
     ui::ScrollView* scrollView = (ui::ScrollView*)widget;
     
+    // by default, clip scroll view
+    scrollView->ui::Layout::setClippingEnabled(true);
+    
     float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth",200);
     float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight",200);
     scrollView->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));
