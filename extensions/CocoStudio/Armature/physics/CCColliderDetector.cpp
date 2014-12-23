@@ -67,43 +67,23 @@ void CCColliderFilter::updateShape(cpShape *shape)
 #endif
 
 
+ColliderBody::ColliderBody(CCContourData *contourData) :
 #if ENABLE_PHYSICS_BOX2D_DETECT
-ColliderBody::ColliderBody(CCContourData *contourData)
-    : m_pFixture(NULL)
-    , m_pContourData(contourData)
-{
-    CC_SAFE_RETAIN(m_pContourData);
-    m_pFilter = new CCColliderFilter();
-
-#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    m_pCalculatedVertexList = CCArray::create();
-    CC_SAFE_RETAIN(m_pCalculatedVertexList);
-#endif
-}
+    m_pFixture(NULL),
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-
-ColliderBody::ColliderBody(CCContourData *contourData)
-    : m_pShape(NULL)
-    , m_pContourData(contourData)
+    m_pShape(NULL),
+#endif
+    m_pContourData(contourData)
 {
     CC_SAFE_RETAIN(m_pContourData);
+    
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     m_pFilter = new CCColliderFilter();
-
-#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    m_pCalculatedVertexList = CCArray::create();
-    CC_SAFE_RETAIN(m_pCalculatedVertexList);
-#endif
-}
 #elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-ColliderBody::ColliderBody(CCContourData *contourData)
-    : m_pContourData(contourData)
-{
-    CC_SAFE_RETAIN(m_pContourData);
-
     m_pCalculatedVertexList = CCArray::create();
     CC_SAFE_RETAIN(m_pCalculatedVertexList);
-}
 #endif
+}
 
 ColliderBody::~ColliderBody()
 {
