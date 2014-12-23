@@ -45,7 +45,7 @@
 	* 修正UILabelBMFont::setFntFile方法中的内存泄露
 	* ListView的pushBackDefaultItem返回新item
 	* 由于CocoStudio Mac 1.0.0.0 beta没有骨骼动画功能, 需要使用骨骼动画时, 可以使用CocoStudio Windows版1.4.0.1, 1.4.0.1以上版本我没有测试过.
-* 重新实现TMX地图, 支持一个层有多张贴图的情况
+* 重新实现TMX地图, 支持一个层有多张贴图的情况(来自cocos2dx-better的CBTMXTileMap)
 * 重新实现CCTableView(来自cocos2dx-better中的CCGridView代码):
 	* CCTableView支持多列
 	* 支持cell重用, cell可以设置名称
@@ -59,7 +59,7 @@
 * CCScrollView增加getTouchPoint方法获得最后一次点击位置
 * CCRepeatForever覆盖stop方法, 停掉内部动作
 
-cocos2dx-better的代码已经合并完成, 有一部分代码我感觉写的用处不大就没有合并了, 不过只是一小部分, 95%的cocos2dx-better代码已经合并.
+cocos2dx-better新加的其它功能我就不列举了, 目前cocos2dx-better的代码已经合并完成, 有一部分代码我感觉写的用处不大就没有合并了, 不过只是一小部分, 95%的cocos2dx-better代码已经合并.
 
 How to use CCImagePicker
 ==========================
