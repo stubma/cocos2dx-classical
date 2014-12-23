@@ -55,6 +55,7 @@
 * CCLayer增加is/setSwallowTouch, 从而可以控制CCScrollView是否吞掉touch
 * CCSpriteBatchNode的insertQuadFromSprite, updateQuadFromSprite, addSpriteWithoutQuad改为public
 * CCScrollView增加getTouchPoint方法获得最后一次点击位置
+* CCRepeatForever覆盖stop方法, 停掉内部动作
 
 cocos2dx-better的代码已经合并完成, 有一部分代码我感觉写的用处不大就没有合并了, 不过只是一小部分, 95%的cocos2dx-better代码已经合并.
 

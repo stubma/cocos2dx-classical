@@ -235,6 +235,7 @@ public:
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void startWithTarget(CCNode* pTarget);
     virtual void step(float dt);
+    virtual void stop(void);
     virtual bool isDone(void);
     virtual CCActionInterval* reverse(void);
 

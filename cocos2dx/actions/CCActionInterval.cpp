@@ -598,6 +598,12 @@ void CCRepeatForever::step(float dt)
     }
 }
 
+void CCRepeatForever::stop(void)
+{
+    m_pInnerAction->stop();
+    CCActionInterval::stop();
+}
+
 bool CCRepeatForever::isDone()
 {
     return false;
