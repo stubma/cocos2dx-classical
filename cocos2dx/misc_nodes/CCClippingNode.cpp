@@ -121,24 +121,28 @@ bool CCClippingNode::init(CCNode *pStencil)
 void CCClippingNode::onEnter()
 {
     CCNode::onEnter();
-    m_pStencil->onEnter();
+    if(m_pStencil)
+        m_pStencil->onEnter();
 }
 
 void CCClippingNode::onEnterTransitionDidFinish()
 {
     CCNode::onEnterTransitionDidFinish();
-    m_pStencil->onEnterTransitionDidFinish();
+    if(m_pStencil)
+        m_pStencil->onEnterTransitionDidFinish();
 }
 
 void CCClippingNode::onExitTransitionDidStart()
 {
-    m_pStencil->onExitTransitionDidStart();
+    if(m_pStencil)
+        m_pStencil->onExitTransitionDidStart();
     CCNode::onExitTransitionDidStart();
 }
 
 void CCClippingNode::onExit()
 {
-    m_pStencil->onExit();
+    if(m_pStencil)
+        m_pStencil->onExit();
     CCNode::onExit();
 }
 
