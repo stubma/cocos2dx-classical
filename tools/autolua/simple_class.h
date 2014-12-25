@@ -11,11 +11,7 @@ enum someThingEnumerated {
 	kValue4
 };
 
-USING_NS_CC   ;
-
-NS_CC_BEGIN
-
-class CC_DLL SimpleNativeClass
+class SimpleNativeClass
 {
 protected:
 	int m_someField;
@@ -27,8 +23,6 @@ public:
     virtual uint32_t getObjectType() {
         return SimpleNativeClass::OBJECT_TYPE;
     };
-
-    CREATE_FUNC(SimpleNativeClass)
 
     SimpleNativeClass();
 	SimpleNativeClass(int m) : m_someField(m) {};
@@ -96,7 +90,5 @@ public:
 	void doSomethingSimple();
 };
 };
-
-NS_CC_END
 
 #endif
