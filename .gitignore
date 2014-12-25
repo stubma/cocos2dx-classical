@@ -43,7 +43,9 @@ obj/
 gen/
 
 # Ignore python compiled files
-*.pyc
+**/.idea/workspace.xml
+**/.idea/tasks.xml
+*.py[cod]
 
 # Ignore files build by airplay and marmalade
 build_*_xcode/
