@@ -3,6 +3,7 @@
 
 #include <string>
 #include <stdint.h>
+#include "cocos2d.h"
 
 enum someThingEnumerated {
 	kValue1 = 1,
@@ -11,7 +12,7 @@ enum someThingEnumerated {
 	kValue4
 };
 
-class SimpleNativeClass
+class CC_DLL SimpleNativeClass
 {
 protected:
 	int m_someField;

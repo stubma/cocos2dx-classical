@@ -8,8 +8,17 @@ import os
 import os.path
 import re
 
-class Visitor(object):
+class NativeClass(object):
+    def __init__(self, node):
+        self.node = node
+
+    def generate_tolua(self):
+        print "generate code for class:", self.node.displayname
+
+class Generator(object):
     def __init__(self, file):
+        config = ConfigParser.SafeConfigParser()
+        config.read("autolua.conf")
         ndk_root = os.getenv("NDK_ROOT")
         self.clang = Index.create()
         self.file = file
@@ -23,11 +32,17 @@ class Visitor(object):
             "-I" + ndk_root + "/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/include",
             "-I" + ndk_root + "/sources/cxx-stl/gnu-libstdc++/4.9/include",
             "-I" + ndk_root + "/toolchains/llvm-3.4/prebuilt/darwin-x86_64/lib/clang/3.4/include",
+            "-I../../cocos2dx/include",
+            "-I../../cocos2dx",
+            "-I../../cocos2dx/platform/android",
+            "-I../../cocos2dx/platform/android/jni",
+            "-I../../cocos2dx/kazmath/include",
+            "-DANDROID",
             "-D_SIZE_T_DEFINED_"
         ]
-        self.content = None
-        with open(file) as f:
-            self.content = f.read()
+        self.target_ns = config.get("DEFAULT", "target_ns").split(" ") if config.has_option("DEFAULT", "target_ns") else None
+        self.found_classes = {}
+        self.generated_classes = {}
 
     def build_namespace(self, cursor, namespaces=[]):
         if cursor:
@@ -39,30 +54,36 @@ class Visitor(object):
 
         return namespaces
 
-    def get_qualified_name(self, declaration_cursor):
-        ns_list = self.build_namespace(declaration_cursor, [])
+    def get_qualified_name(self, node):
+        ns_list = self.build_namespace(node, [])
         ns_list.reverse()
         ns = "::".join(ns_list)
         if len(ns) > 0:
-            return ns + "::" + declaration_cursor.displayname
-        return declaration_cursor.displayname
+            return ns + "::" + node.displayname
+        return node.displayname
+
+    def get_qualified_namespace(self, node):
+        ns_list = self.build_namespace(node, [])
+        ns_list.reverse()
+        ns = "::".join(ns_list)
+        return ns
 
     def process_node(self, node):
-        # print "%s, %s" % (node.kind.name, node.semantic_parent and node.semantic_parent.displayname or "")
-        if node.kind == CursorKind.CXX_BASE_SPECIFIER:
-            pass #print node.kind.name
-        elif node.kind == CursorKind.CXX_ACCESS_SPEC_DECL:
-            self.current_access_specifier = node.get_access_specifier()
-        elif node.kind == CursorKind.FIELD_DECL:
-            qn = self.get_qualified_name(node)
-            if not qn.startswith("std::"):
-                print "field", node.displayname
-        elif node.kind == CursorKind.NAMESPACE:
-            self.current_ns = node.displayname
-        elif node.kind == CursorKind.CLASS_DECL:
-            qn = self.get_qualified_name(node)
-            if not qn.startswith("std::"):
-                print "class found:", node.displayname
+        if node.kind == CursorKind.CLASS_DECL:
+            # check namespace for found class
+            if node == node.type.get_declaration() and len(node.get_children_array()) > 0:
+                is_targeted_class = False
+                ns = self.get_qualified_namespace(node)
+                if len(ns) <= 0 or ns in self.target_ns:
+                    is_targeted_class = True
+
+                # if it is target class, process it
+                if is_targeted_class and not self.found_classes.has_key(node.displayname):
+                    klass = NativeClass(node)
+                    self.found_classes[node.displayname] = klass
+                    if not self.generated_classes.has_key(node.displayname):
+                        klass.generate_tolua()
+                        self.generated_classes[node.displayname] = klass
 
     def visit_node(self, node):
         # visit all children
@@ -113,8 +134,8 @@ def main():
         return
 
     # generate
-    v = Visitor("simple_class.h")
-    v.generate_tolua()
+    g = Generator("simple_class.h")
+    g.generate_tolua()
 
 if __name__ == '__main__':
     main()
