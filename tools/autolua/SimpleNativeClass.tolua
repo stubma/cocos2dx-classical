@@ -1,0 +1,22 @@
+class SimpleNativeClass : public CCNode {
+	int m_someOtherField;
+	static SimpleNativeClass* create();
+	static void func(int a);
+	static void func();
+	const char* getAnotherMoreComplexField();
+	void setSomeField();
+	void setSomeField(const int& f);
+	int getAge();
+	long long thisReturnsALongLong();
+	unsigned int getObjectType();
+	void setAnotherMoreComplexField(const char* str);
+	void setSomeOtherField(int f);
+	void setAge(int var);
+	~SimpleNativeClass();
+	bool init();
+	SimpleNativeClass(int m);
+	SimpleNativeClass();
+	SimpleNativeClass(int m1, int m2);
+	const int& getSomeOtherField();
+	int getSomeField(someThingEnumerated func);
+};

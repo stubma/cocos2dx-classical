@@ -14,13 +14,14 @@ enum someThingEnumerated {
 	kValue4
 };
 
-class CC_DLL SimpleNativeClass : public CCObject
+class CC_DLL SimpleNativeClass : public CCNode
 {
 protected:
 	int m_someField;
 	char* m_anotherMoreComplexField;
 
 public:
+	CREATE_FUNC(SimpleNativeClass)
     static const uint32_t OBJECT_TYPE = 0x777;
     int m_someOtherField;
     virtual uint32_t getObjectType() {
@@ -31,6 +32,7 @@ public:
 	SimpleNativeClass(int m) : m_someField(m) {};
 	SimpleNativeClass(int m1, int m2) : m_someField(m1), m_someOtherField(m2) {};
 	virtual ~SimpleNativeClass();
+	virtual bool init();
 
 	// these methods are simple, can be defined inline
 	int getSomeField(someThingEnumerated func) {

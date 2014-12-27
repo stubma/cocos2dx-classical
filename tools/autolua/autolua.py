@@ -255,6 +255,7 @@ class NativeFunction(object):
     def __init__(self, node):
         self.node = node
         self.is_constructor = False
+        self.is_destructor = False
         self.func_name = node.spelling
         self.signature_name = self.func_name
         self.arguments = []
@@ -304,7 +305,7 @@ class NativeFunction(object):
         tolua = "\t" * indent_level
 
         # constructor or not
-        if self.is_constructor:
+        if self.is_constructor or self.is_destructor:
             tolua += self.func_name
         else:
             # static
@@ -388,7 +389,18 @@ class NativeClass(object):
         dstfile = open(dstpath, "w")
 
         # write class
-        dstfile.write("class " + self.class_name + " {\n")
+        dstfile.write("class " + self.class_name)
+
+        # parent
+        if len(self.parents) > 0:
+            first_parent = True
+            for p in self.parents:
+                if first_parent is False:
+                    dstfile.write(", public " + p.class_name)
+                else:
+                    dstfile.write(" : public " + p.class_name)
+                    first_parent = False
+        dstfile.write(" {\n")
 
         # fields
         for f in self.fields:
@@ -400,6 +412,10 @@ class NativeClass(object):
 
         # write methods
         for name, m in self.methods.items():
+            dstfile.write(m.generate_tolua())
+
+        # write override methods
+        for name, m in self.override_methods.items():
             dstfile.write(m.generate_tolua())
 
         # end of class
@@ -415,7 +431,15 @@ class NativeClass(object):
             self.visit_node(c)
 
     def process_node(self, node):
-        if node.kind == CursorKind.FIELD_DECL:
+        if node.kind == CursorKind.CXX_BASE_SPECIFIER:
+            parent = node.get_definition()
+            if not self.generator.generated_classes.has_key(parent.displayname):
+                parent = NativeClass(parent, self.generator)
+                self.generator.generated_classes[parent.class_name] = parent
+            else:
+                parent = self.generator.generated_classes[parent.displayname]
+            self.parents.append(parent)
+        elif node.kind == CursorKind.FIELD_DECL:
             if self.current_access_specifier == AccessSpecifierKind.PUBLIC:
                 self.fields.append(NativeField(node))
         elif node.kind == CursorKind.CXX_ACCESS_SPEC_DECL:
@@ -475,6 +499,10 @@ class NativeClass(object):
                     nf = NativeOverloadedFunction([nf, previous_nf])
                     nf.is_constructor = True
                     self.methods['constructor'] = nf
+        elif node.kind == CursorKind.DESTRUCTOR:
+            nf = NativeFunction(node)
+            nf.is_destructor = True
+            self.methods['destructor'] = nf
 
 class Generator(object):
     def __init__(self, conf):
@@ -535,6 +563,9 @@ class Generator(object):
                         klass = NativeClass(node, self)
                         klass.generate_tolua()
                         self.generated_classes[node.displayname] = klass
+        elif node.kind == CursorKind.ENUM_DECL:
+            if node == node.type.get_declaration() and len(node.get_children_array()) > 0 and len(node.displayname) > 0:
+                pass
 
     def visit_node(self, node):
         # visit all children
@@ -563,6 +594,11 @@ class Generator(object):
                     _self.visit_node(tu.cursor)
 
     def generate_tolua(self):
+        # ensure dst dir existence
+        if not os.path.exists(self.dst_dir):
+            os.makedirs(self.dst_dir)
+
+        # recursively visit all headers
         os.path.walk(self.src_dir, self.process_dir, self)
 
     def print_diag(self, diagnostics):
