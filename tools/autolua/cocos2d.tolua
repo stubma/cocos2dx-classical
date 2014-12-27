@@ -1,4 +1,5 @@
 class SimpleNativeClass : public CCNode {
+	CCNode* m_owner;
 	int m_someOtherField;
 	static SimpleNativeClass* create();
 	static void func(int a);
@@ -27,9 +28,7 @@ class SimpleNativeClass : public CCNode {
 		kValue6
 	};
 	struct someStruct3 {
-		int i;
-		float f;
-		double d;
+		CCNode* n;
 		void test(const int& f);
 	};
 };
@@ -40,8 +39,6 @@ enum someThingEnumerated {
 	kValue4
 };
 struct someStruct1 {
-	int i;
-	float f;
-	double d;
+	CCNode* n;
 	void test(const int& f);
 };

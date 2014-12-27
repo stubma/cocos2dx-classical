@@ -126,7 +126,10 @@ class NativeType(object):
         self.whole_name = None
         self.is_const = False
         self.is_pointer = False
+        self.is_ref = False
         self.canonical_type = None
+        self.pointee_name = ""
+        self.qualified_pointee_name = ""
 
     @staticmethod
     def from_type(ntype):
@@ -152,6 +155,7 @@ class NativeType(object):
         elif ntype.kind == TypeKind.LVALUEREFERENCE:
             nt = NativeType.from_type(ntype.get_pointee())
             nt.is_const = ntype.get_pointee().is_const_qualified()
+            nt.is_ref = True
             nt.whole_name = nt.qualified_name + "&"
             nt.name += "&"
 
@@ -171,14 +175,17 @@ class NativeType(object):
                 if decl.kind == CursorKind.CLASS_DECL or decl.kind == CursorKind.STRUCT_DECL:
                     nt.is_class = True
                 nt.name = decl.displayname
+                nt.pointee_name = nt.name
                 nt.qualified_name = get_qualified_name(decl)
                 nt.qualified_ns  = get_qualified_namespace(decl)
                 nt.whole_name = nt.qualified_name
+                nt.qualified_pointee_name = nt.whole_name
             else:
                 if decl.kind == CursorKind.NO_DECL_FOUND:
                     nt.name = native_name_from_type(ntype)
                 else:
                     nt.name = decl.spelling
+                nt.pointee_name = nt.name
                 nt.qualified_name = get_qualified_name(decl)
                 nt.qualified_ns  = get_qualified_namespace(decl)
 
@@ -192,6 +199,7 @@ class NativeType(object):
                     nt.qualified_name = nt.name
 
                 nt.whole_name = nt.qualified_name
+                nt.qualified_pointee_name = nt.whole_name
                 nt.is_const = ntype.is_const_qualified()
 
                 # const prefix
@@ -521,9 +529,11 @@ class NativeClass(object):
                     tolua += f.generate_tolua(indent_level + 1)
                     self.record_field_enums(f)
             elif f.type.is_class:
-                if self.generator.structs.has_key(f.type.qualified_name) or self.structs.has_key(f.type.qualified_name):
+                if self.generator.structs.has_key(f.type.qualified_pointee_name) or self.structs.has_key(f.type.qualified_pointee_name):
                     tolua += f.generate_tolua(indent_level + 1)
                     self.record_field_structs(f)
+                elif self.generator.found_classes.has_key(f.type.qualified_pointee_name):
+                    tolua += f.generate_tolua(indent_level + 1)
             else:
                 tolua += f.generate_tolua(indent_level + 1)
 
@@ -592,11 +602,12 @@ class NativeClass(object):
         if node.kind == CursorKind.CXX_BASE_SPECIFIER:
             parent = node.get_definition()
             if parent is not None:
-                if not self.generator.found_classes.has_key(parent.displayname):
+                parent_qn = get_qualified_name(parent)
+                if not self.generator.found_classes.has_key(parent_qn):
                     parent = NativeClass(parent, self.generator)
-                    self.generator.found_classes[parent.class_name] = parent
+                    self.generator.found_classes[parent_qn] = parent
                 else:
-                    parent = self.generator.found_classes[parent.displayname]
+                    parent = self.generator.found_classes[parent_qn]
                 self.parents.append(parent)
         elif node.kind == CursorKind.FIELD_DECL:
             if node.semantic_parent == self.node and self.current_access_specifier == AccessSpecifierKind.PUBLIC:
@@ -726,6 +737,10 @@ class Generator(object):
         if node.kind == CursorKind.CLASS_DECL:
             # check namespace for found class
             if node == node.type.get_declaration() and len(node.get_children_array()) > 0:
+                # add class
+
+
+                # check class is target or not
                 is_targeted_class = False
                 ns = get_qualified_namespace(node)
                 if len(ns) <= 0 or ns in self.target_ns:
@@ -735,8 +750,8 @@ class Generator(object):
                 if is_targeted_class and not self.generated_classes.has_key(node.displayname):
                     if self.is_class_included(node.displayname) or not self.is_class_excluded(node.displayname):
                         klass = NativeClass(node, self)
+                        self.found_classes[klass.qualified_name] = klass
                         self.generated_classes[node.displayname] = klass
-                        self.found_classes[node.displayname] = klass
         elif node.kind == CursorKind.ENUM_DECL:
             if node == node.type.get_declaration() and len(node.get_children_array()) > 0 and len(node.displayname) > 0:
                 ne = NativeEnum(node)
