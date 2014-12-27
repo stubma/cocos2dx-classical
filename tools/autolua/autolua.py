@@ -112,6 +112,16 @@ def native_name_from_type(ntype, underlying=False):
     else:
         return INVALID_NATIVE_TYPE
 
+class Closure(object):
+    def __init__(self):
+        self.parent_closure = None
+        self.classes = {}
+        self.generated_classes = {}
+        self.generated_enums = {}
+        self.generated_structs = {}
+        self.enums = {}
+        self.structs = {}
+
 class NativeType(object):
     def __init__(self):
         self.is_class = False
@@ -257,9 +267,9 @@ class NativeType(object):
         return nt
 
 class NativeTypedef(object):
-    def __init__(self, node, generator):
+    def __init__(self, node, closure):
         self.node = node
-        self.generator = generator
+        self.closure = closure
         self.qualified_name = get_qualified_name(node)
 
         # visit
@@ -272,17 +282,17 @@ class NativeTypedef(object):
 
     def process_node(self, node):
         if node.kind == CursorKind.STRUCT_DECL:
-            if not self.generator.structs.has_key(self.qualified_name):
-                st = NativeClass(node, self.generator)
+            if not self.closure.structs.has_key(self.qualified_name):
+                st = NativeClass(node, self.closure)
                 st.class_name = self.node.displayname
                 st.qualified_name = self.qualified_name
-                self.generator.structs[self.qualified_name] = st
+                self.closure.structs[self.qualified_name] = st
         elif node.kind == CursorKind.ENUM_DECL:
-            if not self.generator.enums.has_key(self.qualified_name):
+            if not self.closure.enums.has_key(self.qualified_name):
                 ne = NativeEnum(node)
                 ne.qualified_name = self.qualified_name
                 ne.enum_name = self.node.displayname
-                self.generator.enums[self.qualified_name] = ne
+                self.closure.enums[self.qualified_name] = ne
 
 class NativeEnum(object):
     def __init__(self, node):
@@ -464,10 +474,11 @@ class NativeField(object):
         # final string
         return tolua
 
-class NativeClass(object):
-    def __init__(self, node, generator):
+class NativeClass(Closure):
+    def __init__(self, node, closure):
+        super(NativeClass, self).__init__()
         self.node = node
-        self.generator = generator
+        self.parent_closure = closure
         self.class_name = node.displayname
         self.qualified_name = get_qualified_name(node)
         self.parents = []
@@ -482,12 +493,6 @@ class NativeClass(object):
         self.override_methods = {}
         self.has_constructor = False
         self.qualified_ns = get_qualified_namespace(node)
-        self.enums = {}
-        self.generated_enums = {}
-        self.structs = {}
-        self.generated_structs = {}
-        self.typedefs = {}
-        self.generated_typedefs = {}
 
         # visit
         self.visit_node(self.node)
@@ -501,13 +506,13 @@ class NativeClass(object):
 
     def use_any_non_public_enums(self, nf):
         for e in nf.get_enums():
-            if not self.generator.enums.has_key(e.qualified_name) and not self.enums.has_key(e.qualified_name):
+            if not self.parent_closure.enums.has_key(e.qualified_name) and not self.enums.has_key(e.qualified_name):
                 return True
         return False
 
     def use_any_non_public_structs(self, nf):
         for arg in nf.arguments:
-            if arg.is_class and not self.generator.structs.has_key(arg.qualified_name) and not self.structs.has_key(arg.qualified_name):
+            if arg.is_class and not self.parent_closure.structs.has_key(arg.qualified_name) and not self.structs.has_key(arg.qualified_name):
                 return True
         return False
 
@@ -515,28 +520,28 @@ class NativeClass(object):
         for e in nf.get_enums():
             if self.enums.has_key(e.qualified_name):
                 self.generated_enums[e.qualified_name] = self.enums[e.qualified_name]
-            elif self.generator.enums.has_key(e.qualified_name):
-                self.generator.generated_enums[e.qualified_name] = self.generator.enums[e.qualified_name]
+            elif self.parent_closure.enums.has_key(e.qualified_name):
+                self.parent_closure.generated_enums[e.qualified_name] = self.parent_closure.enums[e.qualified_name]
 
     def record_function_structs(self, nf):
         for arg in nf.arguments:
             if arg.is_class:
                 if self.structs.has_key(arg.qualified_name):
                     self.generated_structs[arg.qualified_name] = self.structs[arg.qualified_name]
-                elif self.generator.structs.has_key(arg.qualified_name):
-                    self.generator.generated_structs[arg.qualified_name] = self.generator.structs[arg.qualified_name]
+                elif self.parent_closure.structs.has_key(arg.qualified_name):
+                    self.parent_closure.generated_structs[arg.qualified_name] = self.parent_closure.structs[arg.qualified_name]
 
     def record_field_enums(self, nf):
         if self.enums.has_key(nf.type.qualified_name):
             self.generated_enums[nf.type.qualified_name] = self.enums[nf.type.qualified_name]
-        elif self.generator.enums.has_key(nf.type.qualified_name):
-            self.generator.generated_enums[nf.type.qualified_name] = self.generator.enums[nf.type.qualified_name]
+        elif self.parent_closure.enums.has_key(nf.type.qualified_name):
+            self.parent_closure.generated_enums[nf.type.qualified_name] = self.parent_closure.enums[nf.type.qualified_name]
 
     def record_field_structs(self, nf):
         if self.structs.has_key(nf.type.qualified_name):
             self.generated_structs[nf.type.qualified_name] = self.structs[nf.type.qualified_name]
-        elif self.generator.structs.has_key(nf.type.qualified_name):
-            self.generator.generated_structs[nf.type.qualified_name] = self.generator.structs[nf.type.qualified_name]
+        elif self.parent_closure.structs.has_key(nf.type.qualified_name):
+            self.parent_closure.generated_structs[nf.type.qualified_name] = self.parent_closure.structs[nf.type.qualified_name]
 
     def generate_tolua(self, indent_level=0):
         # buf
@@ -563,14 +568,14 @@ class NativeClass(object):
         # fields
         for f in self.fields:
             if f.type.is_enum:
-                if self.generator.enums.has_key(f.type.qualified_name) or self.enums.has_key(f.type.qualified_name):
+                if self.parent_closure.enums.has_key(f.type.qualified_name) or self.enums.has_key(f.type.qualified_name):
                     tolua += f.generate_tolua(indent_level + 1)
                     self.record_field_enums(f)
             elif f.type.is_class:
-                if self.generator.structs.has_key(f.type.qualified_pointee_name) or self.structs.has_key(f.type.qualified_pointee_name):
+                if self.parent_closure.structs.has_key(f.type.qualified_pointee_name) or self.structs.has_key(f.type.qualified_pointee_name):
                     tolua += f.generate_tolua(indent_level + 1)
                     self.record_field_structs(f)
-                elif self.generator.classes.has_key(f.type.qualified_pointee_name):
+                elif self.parent_closure.classes.has_key(f.type.qualified_pointee_name):
                     tolua += f.generate_tolua(indent_level + 1)
             else:
                 tolua += f.generate_tolua(indent_level + 1)
@@ -641,11 +646,11 @@ class NativeClass(object):
             parent = node.get_definition()
             if parent is not None:
                 parent_qn = get_qualified_name(parent)
-                if not self.generator.classes.has_key(parent_qn):
-                    parent = NativeClass(parent, self.generator)
-                    self.generator.classes[parent_qn] = parent
+                if not self.parent_closure.classes.has_key(parent_qn):
+                    parent = NativeClass(parent, self.parent_closure)
+                    self.parent_closure.classes[parent_qn] = parent
                 else:
-                    parent = self.generator.classes[parent_qn]
+                    parent = self.parent_closure.classes[parent_qn]
                 self.parents.append(parent)
         elif node.kind == CursorKind.FIELD_DECL:
             if node.semantic_parent == self.node and self.current_access_specifier == AccessSpecifierKind.PUBLIC:
@@ -656,7 +661,7 @@ class NativeClass(object):
                 self.enums[get_qualified_name(node)] = ne
         elif node.kind == CursorKind.STRUCT_DECL:
             if node.semantic_parent == self.node and self.current_access_specifier == AccessSpecifierKind.PUBLIC:
-                st = NativeClass(node, self.generator)
+                st = NativeClass(node, self.parent_closure)
                 self.structs[st.qualified_name] = st
         elif node.kind == CursorKind.CXX_ACCESS_SPEC_DECL:
             if node.semantic_parent == self.node:
@@ -721,8 +726,9 @@ class NativeClass(object):
             nf.is_destructor = True
             self.methods['destructor'] = nf
 
-class Generator(object):
+class Generator(Closure):
     def __init__(self, conf):
+        super(Generator, self).__init__()
         config = ConfigParser.SafeConfigParser()
         config.read(conf)
         ndk_root = os.getenv("NDK_ROOT")
@@ -752,12 +758,6 @@ class Generator(object):
         self.exclude_classes_regex = [re.compile(x) for x in exclude_classes]
         include_classes = config.get("DEFAULT", "include_classes").split(" ") if config.has_option("DEFAULT", "include_classes") else None
         self.include_classes_regex = [re.compile(x) for x in include_classes]
-        self.classes = {}
-        self.generated_classes = {}
-        self.generated_enums = {}
-        self.generated_structs = {}
-        self.enums = {}
-        self.structs = {}
 
     def is_class_excluded(self, name):
         for r in self.exclude_classes_regex:
