@@ -46,6 +46,14 @@ public:
 		kValue8
 	};
 
+	typedef struct {
+		CCNode* t;
+	} someStruct4;
+
+	typedef enum {
+		kValue101
+	} someEnum3;
+
 public:
 	struct someStruct3 {
 		CCNode* n;
@@ -76,7 +84,9 @@ public:
 	int processSomeStruct1(someStruct1 s);
 	int processSomeStruct2(someStruct2 s);
 	int processSomeStruct3(someStruct3 s);
+	int processSomeStruct4(someStruct4* s);
 	int processSomeEnum2(someEnum2 e);
+	int processSomeEnum3(someEnum3 e);
 	int processClassEnum(someClassEnum e);
 	int getSomeField(someThingEnumerated func) {
 		return m_someField;
