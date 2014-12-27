@@ -114,7 +114,7 @@ def native_name_from_type(ntype, underlying=False):
 
 class NativeType(object):
     def __init__(self):
-        self.is_object = False
+        self.is_class = False
         self.is_function = False
         self.is_enum = False
         self.not_supported = False
@@ -168,8 +168,8 @@ class NativeType(object):
             decl = ntype.get_declaration()
 
             if ntype.kind == TypeKind.RECORD:
-                if decl.kind == CursorKind.CLASS_DECL:
-                    nt.is_object = True
+                if decl.kind == CursorKind.CLASS_DECL or decl.kind == CursorKind.STRUCT_DECL:
+                    nt.is_class = True
                 nt.name = decl.displayname
                 nt.qualified_name = get_qualified_name(decl)
                 nt.qualified_ns  = get_qualified_namespace(decl)
@@ -237,7 +237,7 @@ class NativeType(object):
         nt.name = displayname.split("::")[-1]
         nt.qualified_name = displayname
         nt.whole_name = nt.qualified_name
-        nt.is_object = True
+        nt.is_class = True
         return nt
 
 class NativeEnum(object):
@@ -303,12 +303,6 @@ class NativeOverloadedFunction(object):
         for f in self.implementations:
             tolua += f.generate_tolua(indent_level)
         return tolua
-
-    def get_enums(self):
-        e = []
-        for f in self.implementations:
-            e += f.get_enums()
-        return e
 
 class NativeFunction(object):
     def __init__(self, node):
@@ -446,6 +440,8 @@ class NativeClass(object):
         self.qualified_ns = get_qualified_namespace(node)
         self.enums = {}
         self.generated_enums = {}
+        self.structs = {}
+        self.generated_structs = {}
 
         # visit
         self.visit_node(self.node)
@@ -463,6 +459,12 @@ class NativeClass(object):
                 return True
         return False
 
+    def use_any_non_public_structs(self, nf):
+        for arg in nf.arguments:
+            if arg.is_class and not self.generator.structs.has_key(arg.qualified_name) and not self.structs.has_key(arg.qualified_name):
+                return True
+        return False
+
     def record_function_enums(self, nf):
         for e in nf.get_enums():
             if self.enums.has_key(e.qualified_name):
@@ -470,15 +472,29 @@ class NativeClass(object):
             elif self.generator.enums.has_key(e.qualified_name):
                 self.generator.generated_enums[e.qualified_name] = self.generator.enums[e.qualified_name]
 
+    def record_function_structs(self, nf):
+        for arg in nf.arguments:
+            if arg.is_class:
+                if self.structs.has_key(arg.qualified_name):
+                    self.generated_structs[arg.qualified_name] = self.structs[arg.qualified_name]
+                elif self.generator.structs.has_key(arg.qualified_name):
+                    self.generator.generated_structs[arg.qualified_name] = self.generator.structs[arg.qualified_name]
+
     def record_field_enums(self, nf):
         if self.enums.has_key(nf.type.qualified_name):
             self.generated_enums[nf.type.qualified_name] = self.enums[nf.type.qualified_name]
         elif self.generator.enums.has_key(nf.type.qualified_name):
             self.generator.generated_enums[nf.type.qualified_name] = self.generator.enums[nf.type.qualified_name]
 
-    def generate_tolua(self):
+    def record_field_structs(self, nf):
+        if self.structs.has_key(nf.type.qualified_name):
+            self.generated_structs[nf.type.qualified_name] = self.structs[nf.type.qualified_name]
+        elif self.generator.structs.has_key(nf.type.qualified_name):
+            self.generator.generated_structs[nf.type.qualified_name] = self.generator.structs[nf.type.qualified_name]
+
+    def generate_tolua(self, indent_level=0):
         # buf
-        tolua = ""
+        tolua = "\t" * indent_level
 
         # write class
         if self.is_struct:
@@ -502,34 +518,65 @@ class NativeClass(object):
         for f in self.fields:
             if f.type.is_enum:
                 if self.generator.enums.has_key(f.type.qualified_name) or self.enums.has_key(f.type.qualified_name):
-                    tolua += f.generate_tolua(1)
+                    tolua += f.generate_tolua(indent_level + 1)
                     self.record_field_enums(f)
+            elif f.type.is_class:
+                if self.generator.structs.has_key(f.type.qualified_name) or self.structs.has_key(f.type.qualified_name):
+                    tolua += f.generate_tolua(indent_level + 1)
+                    self.record_field_structs(f)
             else:
-                tolua += f.generate_tolua(1)
+                tolua += f.generate_tolua(indent_level + 1)
 
         # write static methods
+        mlist = []
         for name, m in self.static_methods.items():
-            if not self.use_any_non_public_enums(m):
-                tolua += m.generate_tolua(1)
-                self.record_function_enums(m)
+            del mlist[:]
+            if isinstance(m, NativeOverloadedFunction):
+                mlist += m.implementations
+            else:
+                mlist.append(m)
+            for f in mlist:
+                if not self.use_any_non_public_enums(f) and not self.use_any_non_public_structs(f):
+                    tolua += f.generate_tolua(indent_level + 1)
+                    self.record_function_enums(f)
+                    self.record_function_structs(f)
 
         # write methods
         for name, m in self.methods.items():
-            if not self.use_any_non_public_enums(m):
-                tolua += m.generate_tolua(1)
-                self.record_function_enums(m)
+            del mlist[:]
+            if isinstance(m, NativeOverloadedFunction):
+                mlist += m.implementations
+            else:
+                mlist.append(m)
+            for f in mlist:
+                if not self.use_any_non_public_enums(f) and not self.use_any_non_public_structs(f):
+                    tolua += f.generate_tolua(indent_level + 1)
+                    self.record_function_enums(f)
+                    self.record_function_structs(f)
 
         # write override methods
         for name, m in self.override_methods.items():
-            if not self.use_any_non_public_enums(m):
-                tolua += m.generate_tolua(1)
-                self.record_function_enums(m)
+            del mlist[:]
+            if isinstance(m, NativeOverloadedFunction):
+                mlist += m.implementations
+            else:
+                mlist.append(m)
+            for f in mlist:
+                if not self.use_any_non_public_enums(f) and not self.use_any_non_public_structs(f):
+                    tolua += f.generate_tolua(indent_level + 1)
+                    self.record_function_enums(f)
+                    self.record_function_structs(f)
 
         # write class enums
         for name, e in self.generated_enums.items():
-            tolua += e.generate_tolua(1)
+            tolua += e.generate_tolua(indent_level + 1)
+
+        # write class structs
+        for name, s in self.generated_structs.items():
+            tolua += s.generate_tolua(indent_level + 1)
 
         # end of class
+        tolua += "\t" * indent_level
         tolua += "};\n"
 
         # final string
@@ -544,23 +591,29 @@ class NativeClass(object):
     def process_node(self, node):
         if node.kind == CursorKind.CXX_BASE_SPECIFIER:
             parent = node.get_definition()
-            if not self.generator.found_classes.has_key(parent.displayname):
-                parent = NativeClass(parent, self.generator)
-                self.generator.found_classes[parent.class_name] = parent
-            else:
-                parent = self.generator.found_classes[parent.displayname]
-            self.parents.append(parent)
+            if parent is not None:
+                if not self.generator.found_classes.has_key(parent.displayname):
+                    parent = NativeClass(parent, self.generator)
+                    self.generator.found_classes[parent.class_name] = parent
+                else:
+                    parent = self.generator.found_classes[parent.displayname]
+                self.parents.append(parent)
         elif node.kind == CursorKind.FIELD_DECL:
-            if self.current_access_specifier == AccessSpecifierKind.PUBLIC:
+            if node.semantic_parent == self.node and self.current_access_specifier == AccessSpecifierKind.PUBLIC:
                 self.fields.append(NativeField(node))
         elif node.kind == CursorKind.ENUM_DECL:
-            if self.current_access_specifier == AccessSpecifierKind.PUBLIC:
+            if node.semantic_parent == self.node and self.current_access_specifier == AccessSpecifierKind.PUBLIC:
                 ne = NativeEnum(node)
                 self.enums[get_qualified_name(node)] = ne
+        elif node.kind == CursorKind.STRUCT_DECL:
+            if node.semantic_parent == self.node and self.current_access_specifier == AccessSpecifierKind.PUBLIC:
+                st = NativeClass(node, self.generator)
+                self.structs[st.qualified_name] = st
         elif node.kind == CursorKind.CXX_ACCESS_SPEC_DECL:
-            self.current_access_specifier = node.get_access_specifier()
+            if node.semantic_parent == self.node:
+                self.current_access_specifier = node.get_access_specifier()
         elif node.kind == CursorKind.CXX_METHOD and node.get_availability() != AvailabilityKind.DEPRECATED:
-            if self.current_access_specifier == AccessSpecifierKind.PUBLIC and not node.type.is_function_variadic():
+            if node.semantic_parent == self.node and self.current_access_specifier == AccessSpecifierKind.PUBLIC and not node.type.is_function_variadic():
                 nf = NativeFunction(node)
 
                 # if function is not supported, skip it
@@ -653,6 +706,7 @@ class Generator(object):
         self.found_classes = {}
         self.generated_classes = {}
         self.generated_enums = {}
+        self.generated_structs = {}
         self.enums = {}
         self.structs = {}
 
@@ -683,25 +737,21 @@ class Generator(object):
                         klass = NativeClass(node, self)
                         self.generated_classes[node.displayname] = klass
                         self.found_classes[node.displayname] = klass
-                        return False
         elif node.kind == CursorKind.ENUM_DECL:
             if node == node.type.get_declaration() and len(node.get_children_array()) > 0 and len(node.displayname) > 0:
                 ne = NativeEnum(node)
                 self.enums[get_qualified_name(node)] = ne
-                return False
-        # elif node.kind == CursorKind.STRUCT_DECL:
-        #     if node == node.type.get_declaration() and len(node.get_children_array()) > 0:
-        #         if not self.structs.has_key(node.displayname):
-        #             st = NativeClass(node, self)
-        #             self.structs[node.displayname] = st
-
-        return True
+        elif node.kind == CursorKind.STRUCT_DECL:
+            if node == node.type.get_declaration() and len(node.get_children_array()) > 0:
+                if not self.structs.has_key(node.displayname):
+                    st = NativeClass(node, self)
+                    self.structs[st.qualified_name] = st
 
     def visit_node(self, node):
         # visit all children
         for c in node.get_children():
-            if self.process_node(c):
-                self.visit_node(c)
+            self.process_node(c)
+            self.visit_node(c)
 
     @staticmethod
     def process_dir(args, dirname, filenames):
@@ -743,6 +793,10 @@ class Generator(object):
         # write global enums
         for name, e in self.generated_enums.items():
             dstfile.write(e.generate_tolua())
+
+        # write global structs
+        for name, s in self.generated_structs.items():
+            dstfile.write(s.generate_tolua())
 
         # close
         dstfile.close()

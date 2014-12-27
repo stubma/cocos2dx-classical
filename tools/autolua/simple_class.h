@@ -15,10 +15,9 @@ enum someThingEnumerated {
 };
 
 struct someStruct1 {
-	int i;
-	float f;
-	double d;
 	CCNode* n;
+
+	void test(const int& f);
 };
 
 typedef struct {
@@ -26,6 +25,8 @@ typedef struct {
 	float f;
 	double d;
 	CCNode* n;
+
+	void test(const int& f);
 } someStruct2;
 
 class CC_DLL SimpleNativeClass : public CCNode
@@ -41,11 +42,19 @@ public:
 		kValue8
 	};
 
+public:
+	struct someStruct3 {
+		CCNode* n;
+
+		void test(const int& f);
+	};
+
 protected:
 	int m_someField;
 	char* m_anotherMoreComplexField;
 
 public:
+	CCNode* m_owner;
 	CREATE_FUNC(SimpleNativeClass)
     static const uint32_t OBJECT_TYPE = 0x777;
     int m_someOtherField;
@@ -62,6 +71,7 @@ public:
 	// these methods are simple, can be defined inline
 	int processSomeStruct(someStruct1 s);
 	int processSomeStruct(someStruct2 s);
+	int processSomeStruct(someStruct3 s);
 	int processClassEnum(someClassEnum e);
 	int getSomeField(someThingEnumerated func) {
 		return m_someField;
