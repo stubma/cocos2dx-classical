@@ -4,7 +4,7 @@ class SimpleNativeClass : public CCNode {
 	static void func(int a);
 	static void func();
 	const char* getAnotherMoreComplexField();
-	void setSomeField();
+	void setSomeField(const CCNode& n, CCNode* pn);
 	void setSomeField(const int& f);
 	int getAge();
 	long long thisReturnsALongLong();
@@ -14,9 +14,16 @@ class SimpleNativeClass : public CCNode {
 	void setAge(int var);
 	~SimpleNativeClass();
 	bool init();
+	int processSomeStruct(someStruct s);
 	SimpleNativeClass(int m);
 	SimpleNativeClass();
 	SimpleNativeClass(int m1, int m2);
 	const int& getSomeOtherField();
 	int getSomeField(someThingEnumerated func);
+};
+enum someThingEnumerated {
+	kValue1,
+	kValue2,
+	kValue3,
+	kValue4
 };

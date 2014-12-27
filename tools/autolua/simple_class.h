@@ -14,6 +14,13 @@ enum someThingEnumerated {
 	kValue4
 };
 
+typedef struct {
+	int i;
+	float f;
+	double d;
+	CCNode* n;
+} someStruct;
+
 class CC_DLL SimpleNativeClass : public CCNode
 {
 protected:
@@ -30,11 +37,12 @@ public:
 
     SimpleNativeClass();
 	SimpleNativeClass(int m) : m_someField(m) {};
-	SimpleNativeClass(int m1, int m2) : m_someField(m1), m_someOtherField(m2) {};
+	SimpleNativeClass(int m1, int m2 = 3) : m_someField(m1), m_someOtherField(m2) {};
 	virtual ~SimpleNativeClass();
 	virtual bool init();
 
 	// these methods are simple, can be defined inline
+	int processSomeStruct(someStruct s);
 	int getSomeField(someThingEnumerated func) {
 		return m_someField;
 	}
@@ -47,7 +55,7 @@ public:
 	void setSomeField(const int& f) {
 		m_someField = f;
 	}
-	void setSomeField() {
+	void setSomeField(const CCNode& n, CCNode* pn) {
 
 	}
 	void setSomeOtherField(int f) {

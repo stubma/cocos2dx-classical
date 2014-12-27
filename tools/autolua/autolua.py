@@ -144,18 +144,25 @@ class NativeType(object):
             nt.is_enum = False
             nt.is_const = ntype.get_pointee().is_const_qualified()
             nt.is_pointer = True
+
+            # const prefix
             if nt.is_const:
                 nt.whole_name = "const " + nt.whole_name
+                nt.name = "const " + nt.name
         elif ntype.kind == TypeKind.LVALUEREFERENCE:
             nt = NativeType.from_type(ntype.get_pointee())
             nt.is_const = ntype.get_pointee().is_const_qualified()
             nt.whole_name = nt.qualified_name + "&"
+            nt.name += "&"
 
+            # const prefix
             if nt.is_const:
                 nt.whole_name = "const " + nt.whole_name
+                nt.name = "const " + nt.name
 
             if nt.canonical_type is not None:
                 nt.canonical_type.whole_name += "&"
+                nt.canonical_type.name += "&"
         else:
             nt = NativeType()
             decl = ntype.get_declaration()
@@ -186,6 +193,8 @@ class NativeType(object):
 
                 nt.whole_name = nt.qualified_name
                 nt.is_const = ntype.is_const_qualified()
+
+                # const prefix
                 if nt.is_const:
                     nt.whole_name = "const " + nt.whole_name
 
@@ -231,6 +240,50 @@ class NativeType(object):
         nt.is_object = True
         return nt
 
+class NativeEnum(object):
+    def __init__(self, node):
+        self.node = node
+        self.enum_name = node.displayname
+        self.qualified_name = get_qualified_name(node)
+        self.constants = []
+
+    def generate_tolua(self, indent_level=0):
+        # visit first
+        self.visit_node(self.node)
+
+        # indent
+        tolua = "\t" * indent_level
+
+        # enum
+        tolua += "enum " + self.enum_name + " {\n"
+
+        # constants
+        first_constant = True
+        for c in self.constants:
+            if first_constant is False:
+                tolua += ",\n"
+            tolua += "\t" * (indent_level + 1)
+            tolua += c
+            first_constant = False
+
+        # close
+        tolua += "\n"
+        tolua += "\t" * indent_level
+        tolua += "};\n"
+
+        # final string
+        return tolua
+
+    def visit_node(self, node):
+        # visit all children
+        for c in node.get_children():
+            self.process_node(c)
+            self.visit_node(c)
+
+    def process_node(self, node):
+        if node.kind == CursorKind.ENUM_CONSTANT_DECL:
+            self.constants.append(node.spelling)
+
 class NativeOverloadedFunction(object):
     def __init__(self, func_array):
         self.implementations = func_array
@@ -250,6 +303,12 @@ class NativeOverloadedFunction(object):
         for f in self.implementations:
             tolua += f.generate_tolua(indent_level)
         return tolua
+
+    def get_enums(self):
+        e = []
+        for f in self.implementations:
+            e += f.get_enums()
+        return e
 
 class NativeFunction(object):
     def __init__(self, node):
@@ -293,6 +352,15 @@ class NativeFunction(object):
                 return True
         return False
 
+    def get_enums(self):
+        e = []
+        if self.ret_type.is_enum:
+            e.append(self.ret_type)
+        for arg in self.arguments:
+            if arg.is_enum:
+                e.append(arg)
+        return e
+
     def generate_tolua(self, indent_level=1):
         # returned string
         tolua = ""
@@ -313,7 +381,7 @@ class NativeFunction(object):
                 tolua += "static "
 
             # return type
-            tolua += self.ret_type.whole_name
+            tolua += self.ret_type.name
 
             # name
             tolua += " " + self.func_name
@@ -324,7 +392,7 @@ class NativeFunction(object):
         for (arg_type, arg_name) in zip(self.arguments, self.argumtntTips):
             if first_arg is False:
                 tolua += ", "
-            tolua += arg_type.whole_name + " " + arg_name
+            tolua += arg_type.name + " " + arg_name
             first_arg = False
         tolua += ");\n"
 
@@ -384,6 +452,9 @@ class NativeClass(object):
         # visit
         self.visit_node(self.node)
 
+        # used enums
+        used_enums = []
+
         # dst file
         dstpath = os.path.join(self.generator.dst_dir, self.class_name + ".tolua")
         dstfile = open(dstpath, "w")
@@ -405,21 +476,33 @@ class NativeClass(object):
         # fields
         for f in self.fields:
             dstfile.write(f.generate_tolua())
+            if f.type.is_enum:
+                used_enums.append(self.generator.enums[f.type.qualified_name])
 
         # write static methods
         for name, m in self.static_methods.items():
             dstfile.write(m.generate_tolua())
+            for e in m.get_enums():
+                used_enums.append(self.generator.enums[e.qualified_name])
 
         # write methods
         for name, m in self.methods.items():
             dstfile.write(m.generate_tolua())
+            for e in m.get_enums():
+                used_enums.append(self.generator.enums[e.qualified_name])
 
         # write override methods
         for name, m in self.override_methods.items():
             dstfile.write(m.generate_tolua())
+            for e in m.get_enums():
+                used_enums.append(self.generator.enums[e.qualified_name])
 
         # end of class
-        dstfile.write("};")
+        dstfile.write("};\n")
+
+        # write enums
+        for ne in used_enums:
+            dstfile.write(ne.generate_tolua())
 
         # close
         dstfile.close()
@@ -535,6 +618,7 @@ class Generator(object):
         include_classes = config.get("DEFAULT", "include_classes").split(" ") if config.has_option("DEFAULT", "include_classes") else None
         self.include_classes_regex = [re.compile(x) for x in include_classes]
         self.generated_classes = {}
+        self.enums = {}
 
     def is_class_excluded(self, name):
         for r in self.exclude_classes_regex:
@@ -565,7 +649,8 @@ class Generator(object):
                         self.generated_classes[node.displayname] = klass
         elif node.kind == CursorKind.ENUM_DECL:
             if node == node.type.get_declaration() and len(node.get_children_array()) > 0 and len(node.displayname) > 0:
-                pass
+                ne = NativeEnum(node)
+                self.enums[get_qualified_name(node)] = ne
 
     def visit_node(self, node):
         # visit all children
