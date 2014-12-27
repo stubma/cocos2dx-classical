@@ -532,7 +532,7 @@ class NativeClass(object):
                 if self.generator.structs.has_key(f.type.qualified_pointee_name) or self.structs.has_key(f.type.qualified_pointee_name):
                     tolua += f.generate_tolua(indent_level + 1)
                     self.record_field_structs(f)
-                elif self.generator.found_classes.has_key(f.type.qualified_pointee_name):
+                elif self.generator.classes.has_key(f.type.qualified_pointee_name):
                     tolua += f.generate_tolua(indent_level + 1)
             else:
                 tolua += f.generate_tolua(indent_level + 1)
@@ -603,11 +603,11 @@ class NativeClass(object):
             parent = node.get_definition()
             if parent is not None:
                 parent_qn = get_qualified_name(parent)
-                if not self.generator.found_classes.has_key(parent_qn):
+                if not self.generator.classes.has_key(parent_qn):
                     parent = NativeClass(parent, self.generator)
-                    self.generator.found_classes[parent_qn] = parent
+                    self.generator.classes[parent_qn] = parent
                 else:
-                    parent = self.generator.found_classes[parent_qn]
+                    parent = self.generator.classes[parent_qn]
                 self.parents.append(parent)
         elif node.kind == CursorKind.FIELD_DECL:
             if node.semantic_parent == self.node and self.current_access_specifier == AccessSpecifierKind.PUBLIC:
@@ -714,7 +714,7 @@ class Generator(object):
         self.exclude_classes_regex = [re.compile(x) for x in exclude_classes]
         include_classes = config.get("DEFAULT", "include_classes").split(" ") if config.has_option("DEFAULT", "include_classes") else None
         self.include_classes_regex = [re.compile(x) for x in include_classes]
-        self.found_classes = {}
+        self.classes = {}
         self.generated_classes = {}
         self.generated_enums = {}
         self.generated_structs = {}
@@ -750,7 +750,7 @@ class Generator(object):
                 if is_targeted_class and not self.generated_classes.has_key(node.displayname):
                     if self.is_class_included(node.displayname) or not self.is_class_excluded(node.displayname):
                         klass = NativeClass(node, self)
-                        self.found_classes[klass.qualified_name] = klass
+                        self.classes[klass.qualified_name] = klass
                         self.generated_classes[node.displayname] = klass
         elif node.kind == CursorKind.ENUM_DECL:
             if node == node.type.get_declaration() and len(node.get_children_array()) > 0 and len(node.displayname) > 0:

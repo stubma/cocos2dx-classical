@@ -1,6 +1,6 @@
 /*
 ** Lua binding: cocos2d
-** Generated automatically by tolua++-1.0.92 on Sat Dec 27 19:18:58 2014.
+** Generated automatically by tolua++-1.0.92 on Sat Dec 27 20:34:58 2014.
 */
 
 #ifndef __cplusplus
@@ -30,10 +30,41 @@ static int tolua_collect_SimpleNativeClass (lua_State* tolua_S)
 static void tolua_reg_types (lua_State* tolua_S)
 {
  tolua_usertype(tolua_S,"SimpleNativeClass");
- tolua_usertype(tolua_S,"CCNode");
- tolua_usertype(tolua_S,"someStruct2");
  tolua_usertype(tolua_S,"someStruct1");
+ tolua_usertype(tolua_S,"SimpleNativeClass::someStruct3");
+ tolua_usertype(tolua_S,"someStruct2");
+ tolua_usertype(tolua_S,"CCNode");
 }
+
+/* get function: m_owner of class  SimpleNativeClass */
+#ifndef TOLUA_DISABLE_tolua_get_SimpleNativeClass_m_owner_ptr
+static int tolua_get_SimpleNativeClass_m_owner_ptr(lua_State* tolua_S)
+{
+  SimpleNativeClass* self = (SimpleNativeClass*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'm_owner'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)self->m_owner,"CCNode");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: m_owner of class  SimpleNativeClass */
+#ifndef TOLUA_DISABLE_tolua_set_SimpleNativeClass_m_owner_ptr
+static int tolua_set_SimpleNativeClass_m_owner_ptr(lua_State* tolua_S)
+{
+  SimpleNativeClass* self = (SimpleNativeClass*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'm_owner'",NULL);
+  if (!tolua_isusertype(tolua_S,2,"CCNode",0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->m_owner = ((CCNode*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
 
 /* get function: m_someOtherField of class  SimpleNativeClass */
 #ifndef TOLUA_DISABLE_tolua_get_SimpleNativeClass_m_someOtherField
@@ -184,45 +215,12 @@ static int tolua_cocos2d_SimpleNativeClass_setSomeField00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"SimpleNativeClass",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCNode",0,&tolua_err)) ||
-     !tolua_isusertype(tolua_S,3,"CCNode",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,4,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  SimpleNativeClass* self = (SimpleNativeClass*)  tolua_tousertype(tolua_S,1,0);
-  const CCNode* n = ((const CCNode*)  tolua_tousertype(tolua_S,2,0));
-  CCNode* pn = ((CCNode*)  tolua_tousertype(tolua_S,3,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSomeField'", NULL);
-#endif
-  {
-   self->setSomeField(*n,pn);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setSomeField'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: setSomeField of class  SimpleNativeClass */
-#ifndef TOLUA_DISABLE_tolua_cocos2d_SimpleNativeClass_setSomeField01
-static int tolua_cocos2d_SimpleNativeClass_setSomeField01(lua_State* tolua_S)
-{
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"SimpleNativeClass",0,&tolua_err) ||
      !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
  else
+#endif
  {
   SimpleNativeClass* self = (SimpleNativeClass*)  tolua_tousertype(tolua_S,1,0);
   const int f = ((const int)  tolua_tonumber(tolua_S,2,0));
@@ -235,8 +233,11 @@ static int tolua_cocos2d_SimpleNativeClass_setSomeField01(lua_State* tolua_S)
   }
  }
  return 1;
-tolua_lerror:
- return tolua_cocos2d_SimpleNativeClass_setSomeField00(tolua_S);
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setSomeField'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -561,6 +562,35 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: processSomeStruct of class  SimpleNativeClass */
+#ifndef TOLUA_DISABLE_tolua_cocos2d_SimpleNativeClass_processSomeStruct02
+static int tolua_cocos2d_SimpleNativeClass_processSomeStruct02(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"SimpleNativeClass",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"SimpleNativeClass::someStruct3",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  SimpleNativeClass* self = (SimpleNativeClass*)  tolua_tousertype(tolua_S,1,0);
+  SimpleNativeClass::someStruct3 s = *((SimpleNativeClass::someStruct3*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'processSomeStruct'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->processSomeStruct(s);
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_cocos2d_SimpleNativeClass_processSomeStruct01(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: new of class  SimpleNativeClass */
 #ifndef TOLUA_DISABLE_tolua_cocos2d_SimpleNativeClass_new00
 static int tolua_cocos2d_SimpleNativeClass_new00(lua_State* tolua_S)
@@ -822,93 +852,67 @@ static int tolua_cocos2d_SimpleNativeClass_getObjectType00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: i of class  someStruct1 */
-#ifndef TOLUA_DISABLE_tolua_get_someStruct1_i
-static int tolua_get_someStruct1_i(lua_State* tolua_S)
+/* get function: n of class  someStruct3 */
+#ifndef TOLUA_DISABLE_tolua_get_SimpleNativeClass__someStruct3_n_ptr
+static int tolua_get_SimpleNativeClass__someStruct3_n_ptr(lua_State* tolua_S)
 {
-  someStruct1* self = (someStruct1*)  tolua_tousertype(tolua_S,1,0);
+  SimpleNativeClass::someStruct3* self = (SimpleNativeClass::someStruct3*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'i'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'n'",NULL);
 #endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->i);
+   tolua_pushusertype(tolua_S,(void*)self->n,"CCNode");
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: i of class  someStruct1 */
-#ifndef TOLUA_DISABLE_tolua_set_someStruct1_i
-static int tolua_set_someStruct1_i(lua_State* tolua_S)
+/* set function: n of class  someStruct3 */
+#ifndef TOLUA_DISABLE_tolua_set_SimpleNativeClass__someStruct3_n_ptr
+static int tolua_set_SimpleNativeClass__someStruct3_n_ptr(lua_State* tolua_S)
 {
-  someStruct1* self = (someStruct1*)  tolua_tousertype(tolua_S,1,0);
+  SimpleNativeClass::someStruct3* self = (SimpleNativeClass::someStruct3*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'i'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'n'",NULL);
+  if (!tolua_isusertype(tolua_S,2,"CCNode",0,&tolua_err))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->i = ((int)  tolua_tonumber(tolua_S,2,0))
+  self->n = ((CCNode*)  tolua_tousertype(tolua_S,2,0))
 ;
  return 0;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: f of class  someStruct1 */
-#ifndef TOLUA_DISABLE_tolua_get_someStruct1_f
-static int tolua_get_someStruct1_f(lua_State* tolua_S)
+/* method: test of class  someStruct3 */
+#ifndef TOLUA_DISABLE_tolua_cocos2d_SimpleNativeClass_someStruct3_test00
+static int tolua_cocos2d_SimpleNativeClass_someStruct3_test00(lua_State* tolua_S)
 {
-  someStruct1* self = (someStruct1*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'f'",NULL);
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"SimpleNativeClass::someStruct3",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
 #endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->f);
+ {
+  SimpleNativeClass::someStruct3* self = (SimpleNativeClass::someStruct3*)  tolua_tousertype(tolua_S,1,0);
+  const int f = ((const int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'test'", NULL);
+#endif
+  {
+   self->test(f);
+   tolua_pushnumber(tolua_S,(lua_Number)f);
+  }
+ }
  return 1;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* set function: f of class  someStruct1 */
-#ifndef TOLUA_DISABLE_tolua_set_someStruct1_f
-static int tolua_set_someStruct1_f(lua_State* tolua_S)
-{
-  someStruct1* self = (someStruct1*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  tolua_Error tolua_err;
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'f'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
-   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
-#endif
-  self->f = ((float)  tolua_tonumber(tolua_S,2,0))
-;
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'test'.",&tolua_err);
  return 0;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* get function: d of class  someStruct1 */
-#ifndef TOLUA_DISABLE_tolua_get_someStruct1_d
-static int tolua_get_someStruct1_d(lua_State* tolua_S)
-{
-  someStruct1* self = (someStruct1*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'd'",NULL);
 #endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->d);
- return 1;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* set function: d of class  someStruct1 */
-#ifndef TOLUA_DISABLE_tolua_set_someStruct1_d
-static int tolua_set_someStruct1_d(lua_State* tolua_S)
-{
-  someStruct1* self = (someStruct1*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  tolua_Error tolua_err;
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'd'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
-   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
-#endif
-  self->d = ((double)  tolua_tonumber(tolua_S,2,0))
-;
- return 0;
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -989,13 +993,13 @@ TOLUA_API int tolua_cocos2d_open (lua_State* tolua_S)
   tolua_cclass(tolua_S,"SimpleNativeClass","SimpleNativeClass","CCNode",NULL);
   #endif
   tolua_beginmodule(tolua_S,"SimpleNativeClass");
+   tolua_variable(tolua_S,"m_owner",tolua_get_SimpleNativeClass_m_owner_ptr,tolua_set_SimpleNativeClass_m_owner_ptr);
    tolua_variable(tolua_S,"m_someOtherField",tolua_get_SimpleNativeClass_m_someOtherField,tolua_set_SimpleNativeClass_m_someOtherField);
    tolua_function(tolua_S,"create",tolua_cocos2d_SimpleNativeClass_create00);
    tolua_function(tolua_S,"func",tolua_cocos2d_SimpleNativeClass_func00);
    tolua_function(tolua_S,"func",tolua_cocos2d_SimpleNativeClass_func01);
    tolua_function(tolua_S,"getAnotherMoreComplexField",tolua_cocos2d_SimpleNativeClass_getAnotherMoreComplexField00);
    tolua_function(tolua_S,"setSomeField",tolua_cocos2d_SimpleNativeClass_setSomeField00);
-   tolua_function(tolua_S,"setSomeField",tolua_cocos2d_SimpleNativeClass_setSomeField01);
    tolua_function(tolua_S,"getAge",tolua_cocos2d_SimpleNativeClass_getAge00);
    tolua_function(tolua_S,"thisReturnsALongLong",tolua_cocos2d_SimpleNativeClass_thisReturnsALongLong00);
    tolua_function(tolua_S,"getSomeField",tolua_cocos2d_SimpleNativeClass_getSomeField00);
@@ -1006,6 +1010,7 @@ TOLUA_API int tolua_cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"init",tolua_cocos2d_SimpleNativeClass_init00);
    tolua_function(tolua_S,"processSomeStruct",tolua_cocos2d_SimpleNativeClass_processSomeStruct00);
    tolua_function(tolua_S,"processSomeStruct",tolua_cocos2d_SimpleNativeClass_processSomeStruct01);
+   tolua_function(tolua_S,"processSomeStruct",tolua_cocos2d_SimpleNativeClass_processSomeStruct02);
    tolua_function(tolua_S,"new",tolua_cocos2d_SimpleNativeClass_new00);
    tolua_function(tolua_S,"new_local",tolua_cocos2d_SimpleNativeClass_new00_local);
    tolua_function(tolua_S,".call",tolua_cocos2d_SimpleNativeClass_new00_local);
@@ -1020,6 +1025,11 @@ TOLUA_API int tolua_cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getObjectType",tolua_cocos2d_SimpleNativeClass_getObjectType00);
    tolua_constant(tolua_S,"kValue5",SimpleNativeClass::kValue5);
    tolua_constant(tolua_S,"kValue6",SimpleNativeClass::kValue6);
+   tolua_cclass(tolua_S,"someStruct3","SimpleNativeClass::someStruct3","",NULL);
+   tolua_beginmodule(tolua_S,"someStruct3");
+    tolua_variable(tolua_S,"n",tolua_get_SimpleNativeClass__someStruct3_n_ptr,tolua_set_SimpleNativeClass__someStruct3_n_ptr);
+    tolua_function(tolua_S,"test",tolua_cocos2d_SimpleNativeClass_someStruct3_test00);
+   tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
   tolua_constant(tolua_S,"kValue1",kValue1);
   tolua_constant(tolua_S,"kValue2",kValue2);
@@ -1027,9 +1037,6 @@ TOLUA_API int tolua_cocos2d_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kValue4",kValue4);
   tolua_cclass(tolua_S,"someStruct1","someStruct1","",NULL);
   tolua_beginmodule(tolua_S,"someStruct1");
-   tolua_variable(tolua_S,"i",tolua_get_someStruct1_i,tolua_set_someStruct1_i);
-   tolua_variable(tolua_S,"f",tolua_get_someStruct1_f,tolua_set_someStruct1_f);
-   tolua_variable(tolua_S,"d",tolua_get_someStruct1_d,tolua_set_someStruct1_d);
    tolua_variable(tolua_S,"n",tolua_get_someStruct1_n_ptr,tolua_set_someStruct1_n_ptr);
    tolua_function(tolua_S,"test",tolua_cocos2d_someStruct1_test00);
   tolua_endmodule(tolua_S);
