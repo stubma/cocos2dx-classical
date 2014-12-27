@@ -47,7 +47,7 @@ public:
 	};
 
 	typedef struct {
-		CCNode* t;
+		CCLayer* t;
 	} someStruct4;
 
 	typedef enum {

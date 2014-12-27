@@ -10,6 +10,8 @@ class SimpleNativeClass : public CCNode {
 	const int& getSomeOtherField();
 	void setSomeOtherField(int f);
 	long long thisReturnsALongLong();
+	int processSomeStruct4(someStruct4* s);
+	int processSomeEnum3(someEnum3 e);
 	int processSomeStruct2(someStruct2 s);
 	int processSomeStruct3(someStruct3 s);
 	void setAge(int var);
@@ -28,13 +30,118 @@ class SimpleNativeClass : public CCNode {
 		kValue5,
 		kValue6
 	};
+	enum someEnum3 {
+		kValue101
+	};
+	struct someStruct4 {
+		CCLayer* t;
+	};
 	struct someStruct3 {
 		CCNode* n;
 		void test(const int& f);
 	};
 };
+class CCLayer : public CCNode, public CCTouchDelegate, public CCAccelerometerDelegate, public CCKeypadDelegate {
+	static CCLayer* create();
+	void unregisterScriptTouchHandler();
+	void onEnter();
+	void keyBackClicked();
+	void setAccelerometerInterval(double interval);
+	void unregisterScriptAccelerateHandler();
+	void registerScriptAccelerateHandler(int nHandler);
+	int getTouchMode();
+	void setAccelerometerEnabled(bool value);
+	bool isSwallowTouch();
+	bool init();
+	~CCLayer();
+	bool isTouchEnabled();
+	void setTouchEnabled(bool value);
+	void unregisterScriptKeypadHandler();
+	void setSwallowTouch(bool flag);
+	bool isKeypadEnabled();
+	void setTouchMode(ccTouchesMode mode);
+	bool isAccelerometerEnabled();
+	void onExit();
+	void registerScriptTouchHandler(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches);
+	void setTouchPriority(int priority);
+	CCLayer();
+	int getTouchPriority();
+	void setKeypadEnabled(bool value);
+	void registerWithTouchDispatcher();
+	void keyMenuClicked();
+	void onEnterTransitionDidFinish();
+	void registerScriptKeypadHandler(int nHandler);
+};
+class CCLayerMultiplex : public CCLayer {
+	static CCLayerMultiplex* createWithLayer(CCLayer* layer);
+	static CCLayerMultiplex* create();
+	int getEnabledLayer();
+	CCLayer* layerAt(int n);
+	CCLayerMultiplex();
+	~CCLayerMultiplex();
+	void addLayer(CCLayer* layer);
+	void switchTo(unsigned int n);
+};
+class CCLayerGradient : public CCLayerColor {
+	static CCLayerGradient* create(const _ccColor4B& start, const _ccColor4B& end);
+	static CCLayerGradient* create();
+	const _ccColor3B& getStartColor();
+	bool isCompressedInterpolation();
+	unsigned char getStartOpacity();
+	void setStartOpacity(unsigned char var);
+	void setCompressedInterpolation(bool bCompressedInterpolation);
+	void setEndOpacity(unsigned char var);
+	bool init();
+	void setEndColor(const _ccColor3B& var);
+	bool initWithColor(const _ccColor4B& start, const _ccColor4B& end);
+	const _ccColor3B& getEndColor();
+	unsigned char getEndOpacity();
+	void setStartColor(const _ccColor3B& var);
+};
+class CCLayerRGBA : public CCLayer, public CCRGBAProtocol {
+	static CCLayerRGBA* create();
+	void updateDisplayedColor(const _ccColor3B& parentColor);
+	void setColor(const _ccColor3B& color);
+	bool isCascadeOpacityEnabled();
+	const _ccColor3B& getColor();
+	unsigned char getDisplayedOpacity();
+	void setCascadeColorEnabled(bool cascadeColorEnabled);
+	void setOpacity(unsigned char opacity);
+	~CCLayerRGBA();
+	void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+	void updateDisplayedOpacity(unsigned char parentOpacity);
+	bool init();
+	CCLayerRGBA();
+	void setOpacityModifyRGB(bool bValue);
+	unsigned char getOpacity();
+	bool isOpacityModifyRGB();
+	bool isCascadeColorEnabled();
+	const _ccColor3B& getDisplayedColor();
+};
+class CCLayerColor : public CCLayerRGBA, public CCBlendProtocol {
+	static CCLayerColor* create(const _ccColor4B& color, float width, float height);
+	static CCLayerColor* create();
+	static CCLayerColor* create(const _ccColor4B& color);
+	void draw();
+	_ccBlendFunc getBlendFunc();
+	void setColor(const _ccColor3B& color);
+	void setBlendFunc(_ccBlendFunc var);
+	void changeWidth(float w);
+	void changeWidthAndHeight(float w, float h);
+	~CCLayerColor();
+	bool init();
+	bool initWithColor(const _ccColor4B& color);
+	bool initWithColor(const _ccColor4B& color, float width, float height);
+	CCLayerColor();
+	void setOpacity(unsigned char opacity);
+	void changeHeight(float h);
+};
 enum someEnum2 {
 	kValue100
+};
+enum ccTouchesMode {
+	kCCTouchesAllAtOnce,
+	kCCTouchesOneByOne
 };
 struct someStruct2 {
 	int i;
@@ -43,7 +150,22 @@ struct someStruct2 {
 	CCNode* n;
 	void test(const int& f);
 };
+struct _ccColor4B {
+	unsigned char r;
+	unsigned char g;
+	unsigned char b;
+	unsigned char a;
+};
 struct someStruct1 {
 	CCNode* n;
 	void test(const int& f);
+};
+struct _ccBlendFunc {
+	unsigned int src;
+	unsigned int dst;
+};
+struct _ccColor3B {
+	unsigned char r;
+	unsigned char g;
+	unsigned char b;
 };
