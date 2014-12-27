@@ -14,15 +14,33 @@ enum someThingEnumerated {
 	kValue4
 };
 
+struct someStruct1 {
+	int i;
+	float f;
+	double d;
+	CCNode* n;
+};
+
 typedef struct {
 	int i;
 	float f;
 	double d;
 	CCNode* n;
-} someStruct;
+} someStruct2;
 
 class CC_DLL SimpleNativeClass : public CCNode
 {
+public:
+	enum someClassEnum {
+		kValue5,
+		kValue6
+	};
+
+	enum someClassEnum2 {
+		kValue7,
+		kValue8
+	};
+
 protected:
 	int m_someField;
 	char* m_anotherMoreComplexField;
@@ -42,7 +60,9 @@ public:
 	virtual bool init();
 
 	// these methods are simple, can be defined inline
-	int processSomeStruct(someStruct s);
+	int processSomeStruct(someStruct1 s);
+	int processSomeStruct(someStruct2 s);
+	int processClassEnum(someClassEnum e);
 	int getSomeField(someThingEnumerated func) {
 		return m_someField;
 	}

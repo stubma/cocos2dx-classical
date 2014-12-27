@@ -1,6 +1,6 @@
 /*
 ** Lua binding: SimpleNativeClass
-** Generated automatically by tolua++-1.0.92 on Sat Dec 27 16:12:11 2014.
+** Generated automatically by tolua++-1.0.92 on Sat Dec 27 17:12:23 2014.
 */
 
 #ifndef __cplusplus
@@ -31,7 +31,8 @@ static void tolua_reg_types (lua_State* tolua_S)
 {
  tolua_usertype(tolua_S,"SimpleNativeClass");
  tolua_usertype(tolua_S,"CCNode");
- tolua_usertype(tolua_S,"cocos2d::CCNode");
+ tolua_usertype(tolua_S,"someStruct2");
+ tolua_usertype(tolua_S,"someStruct1");
 }
 
 /* get function: m_someOtherField of class  SimpleNativeClass */
@@ -183,8 +184,8 @@ static int tolua_SimpleNativeClass_SimpleNativeClass_setSomeField00(lua_State* t
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"SimpleNativeClass",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const cocos2d::CCNode",0,&tolua_err)) ||
-     !tolua_isusertype(tolua_S,3,"const cocos2d::CCNode",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const CCNode",0,&tolua_err)) ||
+     !tolua_isusertype(tolua_S,3,"CCNode",0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
  )
   goto tolua_lerror;
@@ -192,8 +193,8 @@ static int tolua_SimpleNativeClass_SimpleNativeClass_setSomeField00(lua_State* t
 #endif
  {
   SimpleNativeClass* self = (SimpleNativeClass*)  tolua_tousertype(tolua_S,1,0);
-  const cocos2d::CCNode* n = ((const cocos2d::CCNode*)  tolua_tousertype(tolua_S,2,0));
-  const cocos2d::CCNode* pn = ((const cocos2d::CCNode*)  tolua_tousertype(tolua_S,3,0));
+  const CCNode* n = ((const CCNode*)  tolua_tousertype(tolua_S,2,0));
+  CCNode* pn = ((CCNode*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSomeField'", NULL);
 #endif
@@ -303,33 +304,35 @@ static int tolua_SimpleNativeClass_SimpleNativeClass_thisReturnsALongLong00(lua_
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: getObjectType of class  SimpleNativeClass */
-#ifndef TOLUA_DISABLE_tolua_SimpleNativeClass_SimpleNativeClass_getObjectType00
-static int tolua_SimpleNativeClass_SimpleNativeClass_getObjectType00(lua_State* tolua_S)
+/* method: getSomeField of class  SimpleNativeClass */
+#ifndef TOLUA_DISABLE_tolua_SimpleNativeClass_SimpleNativeClass_getSomeField00
+static int tolua_SimpleNativeClass_SimpleNativeClass_getSomeField00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"SimpleNativeClass",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
   SimpleNativeClass* self = (SimpleNativeClass*)  tolua_tousertype(tolua_S,1,0);
+  someThingEnumerated func = ((someThingEnumerated) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getObjectType'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSomeField'", NULL);
 #endif
   {
-   unsigned int tolua_ret = (unsigned int)  self->getObjectType();
+   int tolua_ret = (int)  self->getSomeField(func);
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getObjectType'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'getSomeField'.",&tolua_err);
  return 0;
 #endif
 }
@@ -492,6 +495,69 @@ static int tolua_SimpleNativeClass_SimpleNativeClass_init00(lua_State* tolua_S)
  tolua_error(tolua_S,"#ferror in function 'init'.",&tolua_err);
  return 0;
 #endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: processSomeStruct of class  SimpleNativeClass */
+#ifndef TOLUA_DISABLE_tolua_SimpleNativeClass_SimpleNativeClass_processSomeStruct00
+static int tolua_SimpleNativeClass_SimpleNativeClass_processSomeStruct00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"SimpleNativeClass",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"someStruct2",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  SimpleNativeClass* self = (SimpleNativeClass*)  tolua_tousertype(tolua_S,1,0);
+  someStruct2 s = *((someStruct2*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'processSomeStruct'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->processSomeStruct(s);
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'processSomeStruct'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: processSomeStruct of class  SimpleNativeClass */
+#ifndef TOLUA_DISABLE_tolua_SimpleNativeClass_SimpleNativeClass_processSomeStruct01
+static int tolua_SimpleNativeClass_SimpleNativeClass_processSomeStruct01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"SimpleNativeClass",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"someStruct1",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  SimpleNativeClass* self = (SimpleNativeClass*)  tolua_tousertype(tolua_S,1,0);
+  someStruct1 s = *((someStruct1*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'processSomeStruct'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->processSomeStruct(s);
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_SimpleNativeClass_SimpleNativeClass_processSomeStruct00(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -658,6 +724,40 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: processClassEnum of class  SimpleNativeClass */
+#ifndef TOLUA_DISABLE_tolua_SimpleNativeClass_SimpleNativeClass_processClassEnum00
+static int tolua_SimpleNativeClass_SimpleNativeClass_processClassEnum00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"SimpleNativeClass",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  SimpleNativeClass* self = (SimpleNativeClass*)  tolua_tousertype(tolua_S,1,0);
+  SimpleNativeClass::someClassEnum e = ((SimpleNativeClass::someClassEnum) (int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'processClassEnum'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->processClassEnum(e);
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'processClassEnum'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: getSomeOtherField of class  SimpleNativeClass */
 #ifndef TOLUA_DISABLE_tolua_SimpleNativeClass_SimpleNativeClass_getSomeOtherField00
 static int tolua_SimpleNativeClass_SimpleNativeClass_getSomeOtherField00(lua_State* tolua_S)
@@ -690,35 +790,33 @@ static int tolua_SimpleNativeClass_SimpleNativeClass_getSomeOtherField00(lua_Sta
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: getSomeField of class  SimpleNativeClass */
-#ifndef TOLUA_DISABLE_tolua_SimpleNativeClass_SimpleNativeClass_getSomeField00
-static int tolua_SimpleNativeClass_SimpleNativeClass_getSomeField00(lua_State* tolua_S)
+/* method: getObjectType of class  SimpleNativeClass */
+#ifndef TOLUA_DISABLE_tolua_SimpleNativeClass_SimpleNativeClass_getObjectType00
+static int tolua_SimpleNativeClass_SimpleNativeClass_getObjectType00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"SimpleNativeClass",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
   SimpleNativeClass* self = (SimpleNativeClass*)  tolua_tousertype(tolua_S,1,0);
-  someThingEnumerated func = ((someThingEnumerated) (int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSomeField'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getObjectType'", NULL);
 #endif
   {
-   int tolua_ret = (int)  self->getSomeField(func);
+   unsigned int tolua_ret = (unsigned int)  self->getObjectType();
    tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getSomeField'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'getObjectType'.",&tolua_err);
  return 0;
 #endif
 }
@@ -746,12 +844,14 @@ TOLUA_API int tolua_SimpleNativeClass_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setSomeField",tolua_SimpleNativeClass_SimpleNativeClass_setSomeField01);
    tolua_function(tolua_S,"getAge",tolua_SimpleNativeClass_SimpleNativeClass_getAge00);
    tolua_function(tolua_S,"thisReturnsALongLong",tolua_SimpleNativeClass_SimpleNativeClass_thisReturnsALongLong00);
-   tolua_function(tolua_S,"getObjectType",tolua_SimpleNativeClass_SimpleNativeClass_getObjectType00);
+   tolua_function(tolua_S,"getSomeField",tolua_SimpleNativeClass_SimpleNativeClass_getSomeField00);
    tolua_function(tolua_S,"setAnotherMoreComplexField",tolua_SimpleNativeClass_SimpleNativeClass_setAnotherMoreComplexField00);
    tolua_function(tolua_S,"setSomeOtherField",tolua_SimpleNativeClass_SimpleNativeClass_setSomeOtherField00);
    tolua_function(tolua_S,"setAge",tolua_SimpleNativeClass_SimpleNativeClass_setAge00);
    tolua_function(tolua_S,"delete",tolua_SimpleNativeClass_SimpleNativeClass_delete00);
    tolua_function(tolua_S,"init",tolua_SimpleNativeClass_SimpleNativeClass_init00);
+   tolua_function(tolua_S,"processSomeStruct",tolua_SimpleNativeClass_SimpleNativeClass_processSomeStruct00);
+   tolua_function(tolua_S,"processSomeStruct",tolua_SimpleNativeClass_SimpleNativeClass_processSomeStruct01);
    tolua_function(tolua_S,"new",tolua_SimpleNativeClass_SimpleNativeClass_new00);
    tolua_function(tolua_S,"new_local",tolua_SimpleNativeClass_SimpleNativeClass_new00_local);
    tolua_function(tolua_S,".call",tolua_SimpleNativeClass_SimpleNativeClass_new00_local);
@@ -761,8 +861,11 @@ TOLUA_API int tolua_SimpleNativeClass_open (lua_State* tolua_S)
    tolua_function(tolua_S,"new",tolua_SimpleNativeClass_SimpleNativeClass_new02);
    tolua_function(tolua_S,"new_local",tolua_SimpleNativeClass_SimpleNativeClass_new02_local);
    tolua_function(tolua_S,".call",tolua_SimpleNativeClass_SimpleNativeClass_new02_local);
+   tolua_function(tolua_S,"processClassEnum",tolua_SimpleNativeClass_SimpleNativeClass_processClassEnum00);
    tolua_function(tolua_S,"getSomeOtherField",tolua_SimpleNativeClass_SimpleNativeClass_getSomeOtherField00);
-   tolua_function(tolua_S,"getSomeField",tolua_SimpleNativeClass_SimpleNativeClass_getSomeField00);
+   tolua_function(tolua_S,"getObjectType",tolua_SimpleNativeClass_SimpleNativeClass_getObjectType00);
+   tolua_constant(tolua_S,"kValue5",SimpleNativeClass::kValue5);
+   tolua_constant(tolua_S,"kValue6",SimpleNativeClass::kValue6);
   tolua_endmodule(tolua_S);
   tolua_constant(tolua_S,"kValue1",kValue1);
   tolua_constant(tolua_S,"kValue2",kValue2);

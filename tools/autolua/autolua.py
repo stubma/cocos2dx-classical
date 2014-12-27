@@ -298,7 +298,7 @@ class NativeOverloadedFunction(object):
         self.min_args = min(self.min_args, func.min_args)
         self.implementations.append(func)
 
-    def generate_tolua(self, indent_level=1):
+    def generate_tolua(self, indent_level=0):
         tolua = ""
         for f in self.implementations:
             tolua += f.generate_tolua(indent_level)
@@ -361,7 +361,7 @@ class NativeFunction(object):
                 e.append(arg)
         return e
 
-    def generate_tolua(self, indent_level=1):
+    def generate_tolua(self, indent_level=0):
         # returned string
         tolua = ""
 
@@ -407,7 +407,7 @@ class NativeField(object):
         self.type = NativeType.from_type(cnode.type)
         self.location = cnode.location
 
-    def generate_tolua(self, indent_level=1):
+    def generate_tolua(self, indent_level=0):
         tolua = ""
 
         # if type is not support, return
@@ -418,7 +418,7 @@ class NativeField(object):
         tolua = "\t" * indent_level
 
         # type
-        tolua += self.type.whole_name
+        tolua += self.type.name
 
         # name
         tolua += " " + self.name + ";\n"
@@ -440,6 +440,8 @@ class NativeClass(object):
         self.override_methods = {}
         self.has_constructor = False
         self.qualified_ns = get_qualified_namespace(node)
+        self.is_struct = False
+        self.enums = {}
 
     def is_method_in_parents(self, method_name):
         if len(self.parents) > 0:
@@ -448,19 +450,42 @@ class NativeClass(object):
             return self.parents[0].is_method_in_parents(method_name)
         return False
 
+    def use_any_non_public_enums(self, nf):
+        for e in nf.get_enums():
+            if not self.generator.enums.has_key(e.qualified_name) and not self.enums.has_key(e.qualified_name):
+                return True
+        return False
+
+    def record_function_enums(self, enums, nf):
+        for e in nf.get_enums():
+            if self.generator.enums.has_key(e.qualified_name):
+                enums[e.qualified_name] = self.generator.enums[e.qualified_name]
+            elif self.enums.has_key(e.qualified_name):
+                enums[e.qualified_name] = self.enums[e.qualified_name]
+
+    def record_field_enums(self, enums, nf):
+        if self.generator.enums.has_key(nf.type.qualified_name):
+            enums[nf.type.qualified_name] = self.generator.enums[nf.type.qualified_name]
+        elif self.enums.has_key(nf.type.qualified_name):
+            enums[nf.type.qualified_name] = self.enums[nf.type.qualified_name]
+
     def generate_tolua(self):
         # visit
         self.visit_node(self.node)
 
         # used enums
-        used_enums = []
+        used_enums = {}
 
         # dst file
         dstpath = os.path.join(self.generator.dst_dir, self.class_name + ".tolua")
         dstfile = open(dstpath, "w")
 
         # write class
-        dstfile.write("class " + self.class_name)
+        if self.is_struct:
+            dstfile.write("struct ")
+        else:
+            dstfile.write("class ")
+        dstfile.write(self.class_name)
 
         # parent
         if len(self.parents) > 0:
@@ -475,34 +500,43 @@ class NativeClass(object):
 
         # fields
         for f in self.fields:
-            dstfile.write(f.generate_tolua())
             if f.type.is_enum:
-                used_enums.append(self.generator.enums[f.type.qualified_name])
+                if self.generator.enums.has_key(f.type.qualified_name) or self.enums.has_key(f.type.qualified_name):
+                    dstfile.write(f.generate_tolua(1))
+                    self.record_field_enums(used_enums, f)
+            else:
+                dstfile.write(f.generate_tolua(1))
 
         # write static methods
         for name, m in self.static_methods.items():
-            dstfile.write(m.generate_tolua())
-            for e in m.get_enums():
-                used_enums.append(self.generator.enums[e.qualified_name])
+            if not self.use_any_non_public_enums(m):
+                dstfile.write(m.generate_tolua(1))
+                self.record_function_enums(used_enums, m)
 
         # write methods
         for name, m in self.methods.items():
-            dstfile.write(m.generate_tolua())
-            for e in m.get_enums():
-                used_enums.append(self.generator.enums[e.qualified_name])
+            if not self.use_any_non_public_enums(m):
+                dstfile.write(m.generate_tolua(1))
+                self.record_function_enums(used_enums, m)
 
         # write override methods
         for name, m in self.override_methods.items():
-            dstfile.write(m.generate_tolua())
-            for e in m.get_enums():
-                used_enums.append(self.generator.enums[e.qualified_name])
+            if not self.use_any_non_public_enums(m):
+                dstfile.write(m.generate_tolua(1))
+                self.record_function_enums(used_enums, m)
+
+        # write class enums
+        for name, e in used_enums.items():
+            if self.enums.has_key(e.qualified_name):
+                dstfile.write(e.generate_tolua(1))
 
         # end of class
         dstfile.write("};\n")
 
         # write enums
-        for ne in used_enums:
-            dstfile.write(ne.generate_tolua())
+        for name, e in used_enums.items():
+            if self.generator.enums.has_key(e.qualified_name):
+                dstfile.write(e.generate_tolua())
 
         # close
         dstfile.close()
@@ -514,6 +548,8 @@ class NativeClass(object):
             self.visit_node(c)
 
     def process_node(self, node):
+        if self.node.displayname == "SimpleNativeClass":
+            print node.kind.name
         if node.kind == CursorKind.CXX_BASE_SPECIFIER:
             parent = node.get_definition()
             if not self.generator.generated_classes.has_key(parent.displayname):
@@ -525,6 +561,10 @@ class NativeClass(object):
         elif node.kind == CursorKind.FIELD_DECL:
             if self.current_access_specifier == AccessSpecifierKind.PUBLIC:
                 self.fields.append(NativeField(node))
+        elif node.kind == CursorKind.ENUM_DECL:
+            if self.current_access_specifier == AccessSpecifierKind.PUBLIC:
+                ne = NativeEnum(node)
+                self.enums[get_qualified_name(node)] = ne
         elif node.kind == CursorKind.CXX_ACCESS_SPEC_DECL:
             self.current_access_specifier = node.get_access_specifier()
         elif node.kind == CursorKind.CXX_METHOD and node.get_availability() != AvailabilityKind.DEPRECATED:
@@ -651,6 +691,8 @@ class Generator(object):
             if node == node.type.get_declaration() and len(node.get_children_array()) > 0 and len(node.displayname) > 0:
                 ne = NativeEnum(node)
                 self.enums[get_qualified_name(node)] = ne
+        elif node.kind == CursorKind.STRUCT_DECL:
+            pass
 
     def visit_node(self, node):
         # visit all children
