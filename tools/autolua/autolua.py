@@ -245,6 +245,12 @@ class NativeOverloadedFunction(object):
         self.min_args = min(self.min_args, func.min_args)
         self.implementations.append(func)
 
+    def generate_tolua(self, indent_level=1):
+        tolua = ""
+        for f in self.implementations:
+            tolua += f.generate_tolua(indent_level)
+        return tolua
+
 class NativeFunction(object):
     def __init__(self, node):
         self.node = node
@@ -286,13 +292,75 @@ class NativeFunction(object):
                 return True
         return False
 
+    def generate_tolua(self, indent_level=1):
+        # returned string
+        tolua = ""
+
+        # if override, no return
+        if self.is_override:
+            return tolua
+
+        # indent
+        tolua = "\t" * indent_level
+
+        # constructor or not
+        if self.is_constructor:
+            tolua += self.func_name
+        else:
+            # static
+            if self.static:
+                tolua += "static "
+
+            # return type
+            tolua += self.ret_type.whole_name
+
+            # name
+            tolua += " " + self.func_name
+
+        # args
+        tolua += "("
+        first_arg = True
+        for (arg_type, arg_name) in zip(self.arguments, self.argumtntTips):
+            if first_arg is False:
+                tolua += ", "
+            tolua += arg_type.whole_name + " " + arg_name
+            first_arg = False
+        tolua += ");\n"
+
+        # final string
+        return tolua
+
 class NativeField(object):
     def __init__(self, node):
-        self.node = node
+        cnode = node.canonical
+        self.node = cnode
+        self.name = cnode.displayname
+        self.type = NativeType.from_type(cnode.type)
+        self.location = cnode.location
+
+    def generate_tolua(self, indent_level=1):
+        tolua = ""
+
+        # if type is not support, return
+        if self.type.not_supported:
+            return tolua
+
+        # indent
+        tolua = "\t" * indent_level
+
+        # type
+        tolua += self.type.whole_name
+
+        # name
+        tolua += " " + self.name + ";\n"
+
+        # final string
+        return tolua
 
 class NativeClass(object):
-    def __init__(self, node):
+    def __init__(self, node, generator):
         self.node = node
+        self.generator = generator
         self.class_name = node.displayname
         self.qualified_name = get_qualified_name(node)
         self.parents = []
@@ -312,7 +380,33 @@ class NativeClass(object):
         return False
 
     def generate_tolua(self):
+        # visit
         self.visit_node(self.node)
+
+        # dst file
+        dstpath = os.path.join(self.generator.dst_dir, self.class_name + ".tolua")
+        dstfile = open(dstpath, "w")
+
+        # write class
+        dstfile.write("class " + self.class_name + " {\n")
+
+        # fields
+        for f in self.fields:
+            dstfile.write(f.generate_tolua())
+
+        # write static methods
+        for name, m in self.static_methods.items():
+            dstfile.write(m.generate_tolua())
+
+        # write methods
+        for name, m in self.methods.items():
+            dstfile.write(m.generate_tolua())
+
+        # end of class
+        dstfile.write("};")
+
+        # close
+        dstfile.close()
 
     def visit_node(self, node):
         # visit all children
@@ -322,7 +416,8 @@ class NativeClass(object):
 
     def process_node(self, node):
         if node.kind == CursorKind.FIELD_DECL:
-            self.fields.append(NativeField(node))
+            if self.current_access_specifier == AccessSpecifierKind.PUBLIC:
+                self.fields.append(NativeField(node))
         elif node.kind == CursorKind.CXX_ACCESS_SPEC_DECL:
             self.current_access_specifier = node.get_access_specifier()
         elif node.kind == CursorKind.CXX_METHOD and node.get_availability() != AvailabilityKind.DEPRECATED:
@@ -406,6 +501,7 @@ class Generator(object):
         ]
         self.target_ns = config.get("DEFAULT", "target_ns").split(" ") if config.has_option("DEFAULT", "target_ns") else None
         self.src_dir = config.get("DEFAULT", "src_dir") if config.has_option("DEFAULT", "src_dir") else "."
+        self.dst_dir = config.get("DEFAULT", "dst_dir") if config.has_option("DEFAULT", "dst_dir") else "."
         exclude_classes = config.get("DEFAULT", "exclude_classes").split(" ") if config.has_option("DEFAULT", "exclude_classes") else None
         self.exclude_classes_regex = [re.compile(x) for x in exclude_classes]
         include_classes = config.get("DEFAULT", "include_classes").split(" ") if config.has_option("DEFAULT", "include_classes") else None
@@ -436,7 +532,7 @@ class Generator(object):
                 # if it is target class, process it
                 if is_targeted_class and not self.generated_classes.has_key(node.displayname):
                     if self.is_class_included(node.displayname) or not self.is_class_excluded(node.displayname):
-                        klass = NativeClass(node)
+                        klass = NativeClass(node, self)
                         klass.generate_tolua()
                         self.generated_classes[node.displayname] = klass
 

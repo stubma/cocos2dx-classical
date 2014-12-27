@@ -5,6 +5,8 @@
 #include <stdint.h>
 #include "cocos2d.h"
 
+USING_NS_CC;
+
 enum someThingEnumerated {
 	kValue1 = 1,
 	kValue2,
@@ -12,15 +14,15 @@ enum someThingEnumerated {
 	kValue4
 };
 
-class CC_DLL SimpleNativeClass
+class CC_DLL SimpleNativeClass : public CCObject
 {
 protected:
 	int m_someField;
-	int m_someOtherField;
 	char* m_anotherMoreComplexField;
 
 public:
     static const uint32_t OBJECT_TYPE = 0x777;
+    int m_someOtherField;
     virtual uint32_t getObjectType() {
         return SimpleNativeClass::OBJECT_TYPE;
     };
@@ -28,19 +30,19 @@ public:
     SimpleNativeClass();
 	SimpleNativeClass(int m) : m_someField(m) {};
 	SimpleNativeClass(int m1, int m2) : m_someField(m1), m_someOtherField(m2) {};
-	~SimpleNativeClass();
+	virtual ~SimpleNativeClass();
 
 	// these methods are simple, can be defined inline
-	int getSomeField() {
+	int getSomeField(someThingEnumerated func) {
 		return m_someField;
 	}
-	int getSomeOtherField() {
+	const int& getSomeOtherField() {
 		return m_someOtherField;
 	}
 	const char *getAnotherMoreComplexField() {
 		return m_anotherMoreComplexField;
 	}
-	void setSomeField(int f) {
+	void setSomeField(const int& f) {
 		m_someField = f;
 	}
 	void setSomeField() {
@@ -55,13 +57,18 @@ public:
 
 	static void func();
 	static void func(int a);
+
+protected:
 	static void func(int a, float b);
 
+private:
 	long long receivesLongLong(long long someId);
 	std::string returnsAString();
 	const char *returnsACString();
 
 	int doSomeProcessing(std::string arg1, std::string arg2);
+
+	CC_SYNTHESIZE(int, m_age, Age);
 };
 
 namespace SomeNamespace {
