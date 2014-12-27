@@ -247,10 +247,10 @@ class NativeEnum(object):
         self.qualified_name = get_qualified_name(node)
         self.constants = []
 
-    def generate_tolua(self, indent_level=0):
-        # visit first
+        # visit
         self.visit_node(self.node)
 
+    def generate_tolua(self, indent_level=0):
         # indent
         tolua = "\t" * indent_level
 
@@ -436,12 +436,19 @@ class NativeClass(object):
         self.fields = []
         self.methods = {}
         self.static_methods = {}
+        self.is_struct = False
         self.current_access_specifier = AccessSpecifierKind.PRIVATE
+        if node.kind == CursorKind.STRUCT_DECL:
+            self.current_access_specifier = AccessSpecifierKind.PUBLIC
+            self.is_struct = True
         self.override_methods = {}
         self.has_constructor = False
         self.qualified_ns = get_qualified_namespace(node)
-        self.is_struct = False
         self.enums = {}
+        self.generated_enums = {}
+
+        # visit
+        self.visit_node(self.node)
 
     def is_method_in_parents(self, method_name):
         if len(self.parents) > 0:
@@ -456,90 +463,77 @@ class NativeClass(object):
                 return True
         return False
 
-    def record_function_enums(self, enums, nf):
+    def record_function_enums(self, nf):
         for e in nf.get_enums():
-            if self.generator.enums.has_key(e.qualified_name):
-                enums[e.qualified_name] = self.generator.enums[e.qualified_name]
-            elif self.enums.has_key(e.qualified_name):
-                enums[e.qualified_name] = self.enums[e.qualified_name]
+            if self.enums.has_key(e.qualified_name):
+                self.generated_enums[e.qualified_name] = self.enums[e.qualified_name]
+            elif self.generator.enums.has_key(e.qualified_name):
+                self.generator.generated_enums[e.qualified_name] = self.generator.enums[e.qualified_name]
 
-    def record_field_enums(self, enums, nf):
-        if self.generator.enums.has_key(nf.type.qualified_name):
-            enums[nf.type.qualified_name] = self.generator.enums[nf.type.qualified_name]
-        elif self.enums.has_key(nf.type.qualified_name):
-            enums[nf.type.qualified_name] = self.enums[nf.type.qualified_name]
+    def record_field_enums(self, nf):
+        if self.enums.has_key(nf.type.qualified_name):
+            self.generated_enums[nf.type.qualified_name] = self.enums[nf.type.qualified_name]
+        elif self.generator.enums.has_key(nf.type.qualified_name):
+            self.generator.generated_enums[nf.type.qualified_name] = self.generator.enums[nf.type.qualified_name]
 
     def generate_tolua(self):
-        # visit
-        self.visit_node(self.node)
-
-        # used enums
-        used_enums = {}
-
-        # dst file
-        dstpath = os.path.join(self.generator.dst_dir, self.class_name + ".tolua")
-        dstfile = open(dstpath, "w")
+        # buf
+        tolua = ""
 
         # write class
         if self.is_struct:
-            dstfile.write("struct ")
+            tolua += "struct "
         else:
-            dstfile.write("class ")
-        dstfile.write(self.class_name)
+            tolua += "class "
+        tolua += self.class_name
 
         # parent
         if len(self.parents) > 0:
             first_parent = True
             for p in self.parents:
                 if first_parent is False:
-                    dstfile.write(", public " + p.class_name)
+                    tolua += ", public " + p.class_name
                 else:
-                    dstfile.write(" : public " + p.class_name)
+                    tolua += " : public " + p.class_name
                     first_parent = False
-        dstfile.write(" {\n")
+        tolua += " {\n"
 
         # fields
         for f in self.fields:
             if f.type.is_enum:
                 if self.generator.enums.has_key(f.type.qualified_name) or self.enums.has_key(f.type.qualified_name):
-                    dstfile.write(f.generate_tolua(1))
-                    self.record_field_enums(used_enums, f)
+                    tolua += f.generate_tolua(1)
+                    self.record_field_enums(f)
             else:
-                dstfile.write(f.generate_tolua(1))
+                tolua += f.generate_tolua(1)
 
         # write static methods
         for name, m in self.static_methods.items():
             if not self.use_any_non_public_enums(m):
-                dstfile.write(m.generate_tolua(1))
-                self.record_function_enums(used_enums, m)
+                tolua += m.generate_tolua(1)
+                self.record_function_enums(m)
 
         # write methods
         for name, m in self.methods.items():
             if not self.use_any_non_public_enums(m):
-                dstfile.write(m.generate_tolua(1))
-                self.record_function_enums(used_enums, m)
+                tolua += m.generate_tolua(1)
+                self.record_function_enums(m)
 
         # write override methods
         for name, m in self.override_methods.items():
             if not self.use_any_non_public_enums(m):
-                dstfile.write(m.generate_tolua(1))
-                self.record_function_enums(used_enums, m)
+                tolua += m.generate_tolua(1)
+                self.record_function_enums(m)
 
         # write class enums
-        for name, e in used_enums.items():
-            if self.enums.has_key(e.qualified_name):
-                dstfile.write(e.generate_tolua(1))
+        for name, e in self.generated_enums.items():
+            tolua += e.generate_tolua(1)
 
         # end of class
-        dstfile.write("};\n")
+        tolua += "};\n"
 
-        # write enums
-        for name, e in used_enums.items():
-            if self.generator.enums.has_key(e.qualified_name):
-                dstfile.write(e.generate_tolua())
-
-        # close
-        dstfile.close()
+        # final string
+        return tolua
 
     def visit_node(self, node):
         # visit all children
@@ -548,15 +542,13 @@ class NativeClass(object):
             self.visit_node(c)
 
     def process_node(self, node):
-        if self.node.displayname == "SimpleNativeClass":
-            print node.kind.name
         if node.kind == CursorKind.CXX_BASE_SPECIFIER:
             parent = node.get_definition()
-            if not self.generator.generated_classes.has_key(parent.displayname):
+            if not self.generator.found_classes.has_key(parent.displayname):
                 parent = NativeClass(parent, self.generator)
-                self.generator.generated_classes[parent.class_name] = parent
+                self.generator.found_classes[parent.class_name] = parent
             else:
-                parent = self.generator.generated_classes[parent.displayname]
+                parent = self.generator.found_classes[parent.displayname]
             self.parents.append(parent)
         elif node.kind == CursorKind.FIELD_DECL:
             if self.current_access_specifier == AccessSpecifierKind.PUBLIC:
@@ -632,6 +624,7 @@ class Generator(object):
         config = ConfigParser.SafeConfigParser()
         config.read(conf)
         ndk_root = os.getenv("NDK_ROOT")
+        self.conf = conf
         self.clang = Index.create()
         self.current_ns = ""
         self.clang_args = [
@@ -657,8 +650,11 @@ class Generator(object):
         self.exclude_classes_regex = [re.compile(x) for x in exclude_classes]
         include_classes = config.get("DEFAULT", "include_classes").split(" ") if config.has_option("DEFAULT", "include_classes") else None
         self.include_classes_regex = [re.compile(x) for x in include_classes]
+        self.found_classes = {}
         self.generated_classes = {}
+        self.generated_enums = {}
         self.enums = {}
+        self.structs = {}
 
     def is_class_excluded(self, name):
         for r in self.exclude_classes_regex:
@@ -685,20 +681,27 @@ class Generator(object):
                 if is_targeted_class and not self.generated_classes.has_key(node.displayname):
                     if self.is_class_included(node.displayname) or not self.is_class_excluded(node.displayname):
                         klass = NativeClass(node, self)
-                        klass.generate_tolua()
                         self.generated_classes[node.displayname] = klass
+                        self.found_classes[node.displayname] = klass
+                        return False
         elif node.kind == CursorKind.ENUM_DECL:
             if node == node.type.get_declaration() and len(node.get_children_array()) > 0 and len(node.displayname) > 0:
                 ne = NativeEnum(node)
                 self.enums[get_qualified_name(node)] = ne
-        elif node.kind == CursorKind.STRUCT_DECL:
-            pass
+                return False
+        # elif node.kind == CursorKind.STRUCT_DECL:
+        #     if node == node.type.get_declaration() and len(node.get_children_array()) > 0:
+        #         if not self.structs.has_key(node.displayname):
+        #             st = NativeClass(node, self)
+        #             self.structs[node.displayname] = st
+
+        return True
 
     def visit_node(self, node):
         # visit all children
         for c in node.get_children():
-            self.process_node(c)
-            self.visit_node(c)
+            if self.process_node(c):
+                self.visit_node(c)
 
     @staticmethod
     def process_dir(args, dirname, filenames):
@@ -727,6 +730,22 @@ class Generator(object):
 
         # recursively visit all headers
         os.path.walk(self.src_dir, self.process_dir, self)
+
+        # generate tolua file
+        confname = os.path.basename(self.conf)
+        dstpath = os.path.join(self.dst_dir, os.path.splitext(confname)[0] + ".tolua")
+        dstfile = open(dstpath, "w")
+
+        # write classes
+        for name, c in self.generated_classes.items():
+            dstfile.write(c.generate_tolua())
+
+        # write global enums
+        for name, e in self.generated_enums.items():
+            dstfile.write(e.generate_tolua())
+
+        # close
+        dstfile.close()
 
     def print_diag(self, diagnostics):
         print("====\nErrors in parsing headers:")
