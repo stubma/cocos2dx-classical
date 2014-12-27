@@ -181,7 +181,15 @@ class NativeType(object):
                 nt.whole_name = nt.qualified_name
                 nt.qualified_pointee_name = nt.whole_name
             else:
-                if decl.kind == CursorKind.NO_DECL_FOUND:
+                if decl.kind == CursorKind.TYPEDEF_DECL and len(decl.get_children_array()) > 0:
+                    decl_type = decl.get_children_array()[0]
+                    if decl_type.kind == CursorKind.STRUCT_DECL:
+                        nt.is_class = True
+                        nt.name = decl.displayname
+                    elif decl_type.kind == CursorKind.ENUM_DECL:
+                        nt.is_enum = True
+                        nt.name = decl.displayname
+                elif decl.kind == CursorKind.NO_DECL_FOUND:
                     nt.name = native_name_from_type(ntype)
                 else:
                     nt.name = decl.spelling
@@ -247,6 +255,34 @@ class NativeType(object):
         nt.whole_name = nt.qualified_name
         nt.is_class = True
         return nt
+
+class NativeTypedef(object):
+    def __init__(self, node, generator):
+        self.node = node
+        self.generator = generator
+        self.qualified_name = get_qualified_name(node)
+
+        # visit
+        self.visit_node(self.node)
+
+    def visit_node(self, node):
+        for c in node.get_children():
+            self.process_node(c)
+            self.visit_node(c)
+
+    def process_node(self, node):
+        if node.kind == CursorKind.STRUCT_DECL:
+            if not self.generator.structs.has_key(self.qualified_name):
+                st = NativeClass(node, self.generator)
+                st.class_name = self.node.displayname
+                st.qualified_name = self.qualified_name
+                self.generator.structs[self.qualified_name] = st
+        elif node.kind == CursorKind.ENUM_DECL:
+            if not self.generator.enums.has_key(self.qualified_name):
+                ne = NativeEnum(node)
+                ne.qualified_name = self.qualified_name
+                ne.enum_name = self.node.displayname
+                self.generator.enums[self.qualified_name] = ne
 
 class NativeEnum(object):
     def __init__(self, node):
@@ -450,6 +486,8 @@ class NativeClass(object):
         self.generated_enums = {}
         self.structs = {}
         self.generated_structs = {}
+        self.typedefs = {}
+        self.generated_typedefs = {}
 
         # visit
         self.visit_node(self.node)
@@ -754,13 +792,19 @@ class Generator(object):
                         self.generated_classes[node.displayname] = klass
         elif node.kind == CursorKind.ENUM_DECL:
             if node == node.type.get_declaration() and len(node.get_children_array()) > 0 and len(node.displayname) > 0:
-                ne = NativeEnum(node)
-                self.enums[get_qualified_name(node)] = ne
+                qn = get_qualified_name(node)
+                if self.enums.has_key(qn):
+                    ne = NativeEnum(node)
+                    self.enums[qn] = ne
         elif node.kind == CursorKind.STRUCT_DECL:
             if node == node.type.get_declaration() and len(node.get_children_array()) > 0:
-                if not self.structs.has_key(node.displayname):
+                qn = get_qualified_name(node)
+                if not self.structs.has_key(qn):
                     st = NativeClass(node, self)
-                    self.structs[st.qualified_name] = st
+                    self.structs[qn] = st
+        elif node.kind == CursorKind.TYPEDEF_DECL:
+            if node == node.type.get_declaration():
+                NativeTypedef(node, self)
 
     def visit_node(self, node):
         # visit all children

@@ -14,6 +14,10 @@ enum someThingEnumerated {
 	kValue4
 };
 
+typedef enum {
+	kValue100
+} someEnum2;
+
 struct someStruct1 {
 	CCNode* n;
 
@@ -69,9 +73,10 @@ public:
 	virtual bool init();
 
 	// these methods are simple, can be defined inline
-	int processSomeStruct(someStruct1 s);
-	int processSomeStruct(someStruct2 s);
-	int processSomeStruct(someStruct3 s);
+	int processSomeStruct1(someStruct1 s);
+	int processSomeStruct2(someStruct2 s);
+	int processSomeStruct3(someStruct3 s);
+	int processSomeEnum2(someEnum2 e);
 	int processClassEnum(someClassEnum e);
 	int getSomeField(someThingEnumerated func) {
 		return m_someField;
