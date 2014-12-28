@@ -194,6 +194,7 @@ class NativeType(object):
                 nt.whole_name = nt.qualified_name
                 nt.qualified_pointee_name = nt.whole_name
             else:
+                # find name
                 if decl.kind == CursorKind.TYPEDEF_DECL and len(decl.get_children_array()) > 0:
                     decl_type = decl.get_children_array()[0]
                     if decl_type.kind == CursorKind.STRUCT_DECL:
@@ -202,28 +203,38 @@ class NativeType(object):
                     elif decl_type.kind == CursorKind.ENUM_DECL:
                         nt.is_enum = True
                         nt.name = decl.displayname
+                    else:
+                        nt.name = decl.displayname
                 elif decl.kind == CursorKind.NO_DECL_FOUND:
                     nt.name = native_name_from_type(ntype)
                 else:
                     nt.name = decl.spelling
+
+                # pointee name, same as name if type is not a pointer or ref
                 nt.pointee_name = nt.name
+
+                # qualified name
                 nt.qualified_name = get_qualified_name(decl)
                 nt.qualified_ns  = get_qualified_namespace(decl)
 
+                # special checking for std::string and std::function
                 if nt.qualified_name == "std::string":
                     nt.name = nt.qualified_name
-
                 if nt.qualified_name.startswith("std::function"):
                     nt.name = "std::function"
 
+                # if failed to get qualified name, use name as qualified name
                 if len(nt.qualified_name) == 0 or nt.qualified_name.find("::") == -1:
                     nt.qualified_name = nt.name
 
+                # whole name
                 nt.whole_name = nt.qualified_name
-                nt.qualified_pointee_name = nt.whole_name
-                nt.is_const = ntype.is_const_qualified()
 
-                # const prefix
+                # qualified pointee name, same as qualifed name if type is not a pointer or ref
+                nt.qualified_pointee_name = nt.whole_name
+
+                # const prefix, only for whole name
+                nt.is_const = ntype.is_const_qualified()
                 if nt.is_const:
                     nt.whole_name = "const " + nt.whole_name
 
@@ -232,16 +243,10 @@ class NativeType(object):
                 if None != cdecl.spelling and 0 == cmp(cdecl.spelling, "function"):
                     nt.name = "std::function"
 
-                if nt.name != INVALID_NATIVE_TYPE and nt.name != "std::string" and nt.name != "std::function":
-                    if ntype.kind == TypeKind.UNEXPOSED or ntype.kind == TypeKind.TYPEDEF:
-                        ret = NativeType.from_type(ntype.get_canonical())
-                        if ret.name != "":
-                            if decl.kind == CursorKind.TYPEDEF_DECL:
-                                ret.canonical_type = nt
-                            return ret
-
+                # is enum?
                 nt.is_enum = ntype.get_canonical().kind == TypeKind.ENUM
 
+                # if is std::function, get function argument types
                 if nt.name == "std::function":
                     nt.qualified_name = get_qualified_name(cdecl)
                     r = re.compile('function<(.+) .*\((.*)\)>').search(cdecl.displayname)
@@ -289,12 +294,14 @@ class NativeTypedef(object):
                 st = NativeClass(node, self.closure)
                 st.class_name = self.node.displayname
                 st.qualified_name = self.qualified_name
+                st.is_typedef = True
                 self.closure.structs[self.qualified_name] = st
         elif node.kind == CursorKind.ENUM_DECL:
             if not self.closure.enums.has_key(self.qualified_name):
                 ne = NativeEnum(node)
                 ne.qualified_name = self.qualified_name
                 ne.enum_name = self.node.displayname
+                ne.is_typedef = True
                 self.closure.enums[self.qualified_name] = ne
 
 class NativeEnum(object):
@@ -303,6 +310,7 @@ class NativeEnum(object):
         self.enum_name = node.displayname
         self.qualified_name = get_qualified_name(node)
         self.constants = []
+        self.is_typedef = False
 
         # visit
         self.visit_node(self.node)
@@ -311,8 +319,15 @@ class NativeEnum(object):
         # indent
         tolua = "\t" * indent_level
 
+        # typedef
+        if self.is_typedef:
+            tolua += "typedef "
+
         # enum
-        tolua += "enum " + self.enum_name + " {\n"
+        tolua += "enum"
+        if not self.is_typedef:
+            tolua += " " + self.enum_name
+        tolua += " {\n"
 
         # constants
         first_constant = True
@@ -326,7 +341,10 @@ class NativeEnum(object):
         # close
         tolua += "\n"
         tolua += "\t" * indent_level
-        tolua += "};\n"
+        tolua += "}"
+        if self.is_typedef:
+            tolua += " " + self.enum_name
+        tolua += ";\n"
 
         # final string
         return tolua
@@ -480,6 +498,7 @@ class NativeClass(Closure):
         self.methods = {}
         self.static_methods = {}
         self.is_struct = False
+        self.is_typedef = False
         self.current_access_specifier = AccessSpecifierKind.PRIVATE
         if node.kind == CursorKind.STRUCT_DECL:
             self.current_access_specifier = AccessSpecifierKind.PUBLIC
@@ -590,10 +609,13 @@ class NativeClass(Closure):
 
         # write class
         if self.is_struct:
-            tolua += "struct "
+            if self.is_typedef:
+                tolua += "typedef "
+            tolua += "struct"
+            if not self.is_typedef:
+                tolua += " " + self.class_name
         else:
-            tolua += "class "
-        tolua += self.class_name
+            tolua += "class " + self.class_name
 
         # parent
         if len(self.parents) > 0:
@@ -659,7 +681,10 @@ class NativeClass(Closure):
 
         # end of class
         tolua += "\t" * indent_level
-        tolua += "};\n"
+        tolua += "}"
+        if self.is_typedef:
+            tolua += " " + self.class_name
+        tolua += ";\n"
 
         # final string
         return tolua

@@ -1,6 +1,6 @@
 /*
 ** Lua binding: cocos2d
-** Generated automatically by tolua++-1.0.92 on Sat Dec 27 23:22:47 2014.
+** Generated automatically by tolua++-1.0.92 on Sun Dec 28 20:33:39 2014.
 */
 
 #ifndef __cplusplus
@@ -24,23 +24,16 @@ static int tolua_collect_SimpleNativeClass (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_CCLayerRGBA (lua_State* tolua_S)
+static int tolua_collect_GLubyte (lua_State* tolua_S)
 {
- CCLayerRGBA* self = (CCLayerRGBA*) tolua_tousertype(tolua_S,1,0);
+ GLubyte* self = (GLubyte*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
 
-static int tolua_collect_CCLayer (lua_State* tolua_S)
+static int tolua_collect_uint32_t (lua_State* tolua_S)
 {
- CCLayer* self = (CCLayer*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
-static int tolua_collect__ccBlendFunc (lua_State* tolua_S)
-{
- _ccBlendFunc* self = (_ccBlendFunc*) tolua_tousertype(tolua_S,1,0);
+ uint32_t* self = (uint32_t*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -48,6 +41,27 @@ static int tolua_collect__ccBlendFunc (lua_State* tolua_S)
 static int tolua_collect_CCLayerColor (lua_State* tolua_S)
 {
  CCLayerColor* self = (CCLayerColor*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_CCLayerRGBA (lua_State* tolua_S)
+{
+ CCLayerRGBA* self = (CCLayerRGBA*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_ccBlendFunc (lua_State* tolua_S)
+{
+ ccBlendFunc* self = (ccBlendFunc*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_CCLayer (lua_State* tolua_S)
+{
+ CCLayer* self = (CCLayer*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -66,23 +80,28 @@ static void tolua_reg_types (lua_State* tolua_S)
 {
  tolua_usertype(tolua_S,"SimpleNativeClass");
  tolua_usertype(tolua_S,"CCLayerGradient");
- tolua_usertype(tolua_S,"_ccColor4B");
  tolua_usertype(tolua_S,"CCKeypadDelegate");
- tolua_usertype(tolua_S,"SimpleNativeClass::someStruct3");
- tolua_usertype(tolua_S,"_ccColor3B");
+ tolua_usertype(tolua_S,"CCAccelerometerDelegate");
+ tolua_usertype(tolua_S,"GLfloat");
  tolua_usertype(tolua_S,"CCLayerMultiplex");
  tolua_usertype(tolua_S,"CCLayerRGBA");
+ tolua_usertype(tolua_S,"ccColor4B");
  tolua_usertype(tolua_S,"CCNode");
  tolua_usertype(tolua_S,"CCLayerColor");
+ tolua_usertype(tolua_S,"uint32_t");
+ tolua_usertype(tolua_S,"GLenum");
  tolua_usertype(tolua_S,"CCBlendProtocol");
+ tolua_usertype(tolua_S,"ccBlendFunc");
+ tolua_usertype(tolua_S,"GLubyte");
  tolua_usertype(tolua_S,"CCTouchDelegate");
- tolua_usertype(tolua_S,"_ccBlendFunc");
+ tolua_usertype(tolua_S,"va_list");
  tolua_usertype(tolua_S,"someStruct1");
  tolua_usertype(tolua_S,"CCLayer");
+ tolua_usertype(tolua_S,"ccColor3B");
  tolua_usertype(tolua_S,"CCRGBAProtocol");
  tolua_usertype(tolua_S,"SimpleNativeClass::someStruct4");
  tolua_usertype(tolua_S,"someStruct2");
- tolua_usertype(tolua_S,"CCAccelerometerDelegate");
+ tolua_usertype(tolua_S,"SimpleNativeClass::someStruct3");
 }
 
 /* get function: m_owner of class  SimpleNativeClass */
@@ -996,14 +1015,58 @@ static int tolua_cocos2d_SimpleNativeClass_getObjectType00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getObjectType'", NULL);
 #endif
   {
-   unsigned int tolua_ret = (unsigned int)  self->getObjectType();
-   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+   uint32_t tolua_ret = (uint32_t)  self->getObjectType();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((uint32_t)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"uint32_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(uint32_t));
+     tolua_pushusertype(tolua_S,tolua_obj,"uint32_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
   }
  }
  return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getObjectType'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: processGLubyte of class  SimpleNativeClass */
+#ifndef TOLUA_DISABLE_tolua_cocos2d_SimpleNativeClass_processGLubyte00
+static int tolua_cocos2d_SimpleNativeClass_processGLubyte00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"SimpleNativeClass",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"GLubyte",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  SimpleNativeClass* self = (SimpleNativeClass*)  tolua_tousertype(tolua_S,1,0);
+  GLubyte b = *((GLubyte*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'processGLubyte'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->processGLubyte(b);
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'processGLubyte'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2197,35 +2260,30 @@ static int tolua_cocos2d_CCLayerMultiplex_getEnabledLayer00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: layerAt of class  CCLayerMultiplex */
-#ifndef TOLUA_DISABLE_tolua_cocos2d_CCLayerMultiplex_layerAt00
-static int tolua_cocos2d_CCLayerMultiplex_layerAt00(lua_State* tolua_S)
+/* method: delete of class  CCLayerMultiplex */
+#ifndef TOLUA_DISABLE_tolua_cocos2d_CCLayerMultiplex_delete00
+static int tolua_cocos2d_CCLayerMultiplex_delete00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCLayerMultiplex",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
   CCLayerMultiplex* self = (CCLayerMultiplex*)  tolua_tousertype(tolua_S,1,0);
-  int n = ((int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'layerAt'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
 #endif
-  {
-   CCLayer* tolua_ret = (CCLayer*)  self->layerAt(n);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCLayer");
-  }
+  Mtolua_delete(self);
  }
- return 1;
+ return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'layerAt'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2288,30 +2346,35 @@ static int tolua_cocos2d_CCLayerMultiplex_new00_local(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: delete of class  CCLayerMultiplex */
-#ifndef TOLUA_DISABLE_tolua_cocos2d_CCLayerMultiplex_delete00
-static int tolua_cocos2d_CCLayerMultiplex_delete00(lua_State* tolua_S)
+/* method: layerAt of class  CCLayerMultiplex */
+#ifndef TOLUA_DISABLE_tolua_cocos2d_CCLayerMultiplex_layerAt00
+static int tolua_cocos2d_CCLayerMultiplex_layerAt00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCLayerMultiplex",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
   CCLayerMultiplex* self = (CCLayerMultiplex*)  tolua_tousertype(tolua_S,1,0);
+  int n = ((int)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'layerAt'", NULL);
 #endif
-  Mtolua_delete(self);
+  {
+   CCLayer* tolua_ret = (CCLayer*)  self->layerAt(n);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCLayer");
+  }
  }
- return 0;
+ return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'layerAt'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2345,6 +2408,42 @@ static int tolua_cocos2d_CCLayerMultiplex_addLayer00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'addLayer'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: initWithLayers of class  CCLayerMultiplex */
+#ifndef TOLUA_DISABLE_tolua_cocos2d_CCLayerMultiplex_initWithLayers00
+static int tolua_cocos2d_CCLayerMultiplex_initWithLayers00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCLayerMultiplex",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCLayer",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"va_list",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCLayerMultiplex* self = (CCLayerMultiplex*)  tolua_tousertype(tolua_S,1,0);
+  CCLayer* layer = ((CCLayer*)  tolua_tousertype(tolua_S,2,0));
+  va_list params = *((va_list*)  tolua_tousertype(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initWithLayers'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->initWithLayers(layer,params);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'initWithLayers'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2391,16 +2490,16 @@ static int tolua_cocos2d_CCLayerGradient_create00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCLayerGradient",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const _ccColor4B",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"const _ccColor4B",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const ccColor4B",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"const ccColor4B",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  const _ccColor4B* start = ((const _ccColor4B*)  tolua_tousertype(tolua_S,2,0));
-  const _ccColor4B* end = ((const _ccColor4B*)  tolua_tousertype(tolua_S,3,0));
+  const ccColor4B* start = ((const ccColor4B*)  tolua_tousertype(tolua_S,2,0));
+  const ccColor4B* end = ((const ccColor4B*)  tolua_tousertype(tolua_S,3,0));
   {
    CCLayerGradient* tolua_ret = (CCLayerGradient*)  CCLayerGradient::create(*start,*end);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCLayerGradient");
@@ -2457,8 +2556,8 @@ static int tolua_cocos2d_CCLayerGradient_getStartColor00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getStartColor'", NULL);
 #endif
   {
-   const _ccColor3B& tolua_ret = (const _ccColor3B&)  self->getStartColor();
-    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const _ccColor3B");
+   const ccColor3B& tolua_ret = (const ccColor3B&)  self->getStartColor();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const ccColor3B");
   }
  }
  return 1;
@@ -2521,8 +2620,18 @@ static int tolua_cocos2d_CCLayerGradient_getStartOpacity00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getStartOpacity'", NULL);
 #endif
   {
-   unsigned char tolua_ret = (unsigned char)  self->getStartOpacity();
-   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+   GLubyte tolua_ret = (GLubyte)  self->getStartOpacity();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((GLubyte)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"GLubyte");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(GLubyte));
+     tolua_pushusertype(tolua_S,tolua_obj,"GLubyte");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
   }
  }
  return 1;
@@ -2542,7 +2651,7 @@ static int tolua_cocos2d_CCLayerGradient_setStartOpacity00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCLayerGradient",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"GLubyte",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -2550,7 +2659,7 @@ static int tolua_cocos2d_CCLayerGradient_setStartOpacity00(lua_State* tolua_S)
 #endif
  {
   CCLayerGradient* self = (CCLayerGradient*)  tolua_tousertype(tolua_S,1,0);
-  unsigned char var = ((unsigned char)  tolua_tonumber(tolua_S,2,0));
+  GLubyte var = *((GLubyte*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setStartOpacity'", NULL);
 #endif
@@ -2608,7 +2717,7 @@ static int tolua_cocos2d_CCLayerGradient_setEndOpacity00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCLayerGradient",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"GLubyte",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -2616,7 +2725,7 @@ static int tolua_cocos2d_CCLayerGradient_setEndOpacity00(lua_State* tolua_S)
 #endif
  {
   CCLayerGradient* self = (CCLayerGradient*)  tolua_tousertype(tolua_S,1,0);
-  unsigned char var = ((unsigned char)  tolua_tonumber(tolua_S,2,0));
+  GLubyte var = *((GLubyte*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setEndOpacity'", NULL);
 #endif
@@ -2673,7 +2782,7 @@ static int tolua_cocos2d_CCLayerGradient_setEndColor00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCLayerGradient",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const _ccColor3B",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const ccColor3B",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -2681,7 +2790,7 @@ static int tolua_cocos2d_CCLayerGradient_setEndColor00(lua_State* tolua_S)
 #endif
  {
   CCLayerGradient* self = (CCLayerGradient*)  tolua_tousertype(tolua_S,1,0);
-  const _ccColor3B* var = ((const _ccColor3B*)  tolua_tousertype(tolua_S,2,0));
+  const ccColor3B* var = ((const ccColor3B*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setEndColor'", NULL);
 #endif
@@ -2706,8 +2815,8 @@ static int tolua_cocos2d_CCLayerGradient_initWithColor00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCLayerGradient",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const _ccColor4B",0,&tolua_err)) ||
-     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"const _ccColor4B",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const ccColor4B",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"const ccColor4B",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
  )
   goto tolua_lerror;
@@ -2715,8 +2824,8 @@ static int tolua_cocos2d_CCLayerGradient_initWithColor00(lua_State* tolua_S)
 #endif
  {
   CCLayerGradient* self = (CCLayerGradient*)  tolua_tousertype(tolua_S,1,0);
-  const _ccColor4B* start = ((const _ccColor4B*)  tolua_tousertype(tolua_S,2,0));
-  const _ccColor4B* end = ((const _ccColor4B*)  tolua_tousertype(tolua_S,3,0));
+  const ccColor4B* start = ((const ccColor4B*)  tolua_tousertype(tolua_S,2,0));
+  const ccColor4B* end = ((const ccColor4B*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initWithColor'", NULL);
 #endif
@@ -2753,8 +2862,8 @@ static int tolua_cocos2d_CCLayerGradient_getEndColor00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getEndColor'", NULL);
 #endif
   {
-   const _ccColor3B& tolua_ret = (const _ccColor3B&)  self->getEndColor();
-    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const _ccColor3B");
+   const ccColor3B& tolua_ret = (const ccColor3B&)  self->getEndColor();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const ccColor3B");
   }
  }
  return 1;
@@ -2785,8 +2894,18 @@ static int tolua_cocos2d_CCLayerGradient_getEndOpacity00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getEndOpacity'", NULL);
 #endif
   {
-   unsigned char tolua_ret = (unsigned char)  self->getEndOpacity();
-   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+   GLubyte tolua_ret = (GLubyte)  self->getEndOpacity();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((GLubyte)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"GLubyte");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(GLubyte));
+     tolua_pushusertype(tolua_S,tolua_obj,"GLubyte");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
   }
  }
  return 1;
@@ -2806,7 +2925,7 @@ static int tolua_cocos2d_CCLayerGradient_setStartColor00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCLayerGradient",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const _ccColor3B",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const ccColor3B",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -2814,7 +2933,7 @@ static int tolua_cocos2d_CCLayerGradient_setStartColor00(lua_State* tolua_S)
 #endif
  {
   CCLayerGradient* self = (CCLayerGradient*)  tolua_tousertype(tolua_S,1,0);
-  const _ccColor3B* var = ((const _ccColor3B*)  tolua_tousertype(tolua_S,2,0));
+  const ccColor3B* var = ((const ccColor3B*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setStartColor'", NULL);
 #endif
@@ -2867,7 +2986,7 @@ static int tolua_cocos2d_CCLayerRGBA_updateDisplayedColor00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCLayerRGBA",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const _ccColor3B",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const ccColor3B",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -2875,7 +2994,7 @@ static int tolua_cocos2d_CCLayerRGBA_updateDisplayedColor00(lua_State* tolua_S)
 #endif
  {
   CCLayerRGBA* self = (CCLayerRGBA*)  tolua_tousertype(tolua_S,1,0);
-  const _ccColor3B* parentColor = ((const _ccColor3B*)  tolua_tousertype(tolua_S,2,0));
+  const ccColor3B* parentColor = ((const ccColor3B*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'updateDisplayedColor'", NULL);
 #endif
@@ -2900,7 +3019,7 @@ static int tolua_cocos2d_CCLayerRGBA_setColor00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCLayerRGBA",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const _ccColor3B",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const ccColor3B",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -2908,7 +3027,7 @@ static int tolua_cocos2d_CCLayerRGBA_setColor00(lua_State* tolua_S)
 #endif
  {
   CCLayerRGBA* self = (CCLayerRGBA*)  tolua_tousertype(tolua_S,1,0);
-  const _ccColor3B* color = ((const _ccColor3B*)  tolua_tousertype(tolua_S,2,0));
+  const ccColor3B* color = ((const ccColor3B*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setColor'", NULL);
 #endif
@@ -2976,8 +3095,8 @@ static int tolua_cocos2d_CCLayerRGBA_getColor00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getColor'", NULL);
 #endif
   {
-   const _ccColor3B& tolua_ret = (const _ccColor3B&)  self->getColor();
-    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const _ccColor3B");
+   const ccColor3B& tolua_ret = (const ccColor3B&)  self->getColor();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const ccColor3B");
   }
  }
  return 1;
@@ -3008,8 +3127,18 @@ static int tolua_cocos2d_CCLayerRGBA_getDisplayedOpacity00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDisplayedOpacity'", NULL);
 #endif
   {
-   unsigned char tolua_ret = (unsigned char)  self->getDisplayedOpacity();
-   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+   GLubyte tolua_ret = (GLubyte)  self->getDisplayedOpacity();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((GLubyte)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"GLubyte");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(GLubyte));
+     tolua_pushusertype(tolua_S,tolua_obj,"GLubyte");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
   }
  }
  return 1;
@@ -3062,7 +3191,7 @@ static int tolua_cocos2d_CCLayerRGBA_setOpacity00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCLayerRGBA",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"GLubyte",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -3070,7 +3199,7 @@ static int tolua_cocos2d_CCLayerRGBA_setOpacity00(lua_State* tolua_S)
 #endif
  {
   CCLayerRGBA* self = (CCLayerRGBA*)  tolua_tousertype(tolua_S,1,0);
-  unsigned char opacity = ((unsigned char)  tolua_tonumber(tolua_S,2,0));
+  GLubyte opacity = *((GLubyte*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setOpacity'", NULL);
 #endif
@@ -3157,7 +3286,7 @@ static int tolua_cocos2d_CCLayerRGBA_updateDisplayedOpacity00(lua_State* tolua_S
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCLayerRGBA",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"GLubyte",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -3165,7 +3294,7 @@ static int tolua_cocos2d_CCLayerRGBA_updateDisplayedOpacity00(lua_State* tolua_S
 #endif
  {
   CCLayerRGBA* self = (CCLayerRGBA*)  tolua_tousertype(tolua_S,1,0);
-  unsigned char parentOpacity = ((unsigned char)  tolua_tonumber(tolua_S,2,0));
+  GLubyte parentOpacity = *((GLubyte*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'updateDisplayedOpacity'", NULL);
 #endif
@@ -3323,8 +3452,18 @@ static int tolua_cocos2d_CCLayerRGBA_getOpacity00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getOpacity'", NULL);
 #endif
   {
-   unsigned char tolua_ret = (unsigned char)  self->getOpacity();
-   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+   GLubyte tolua_ret = (GLubyte)  self->getOpacity();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((GLubyte)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"GLubyte");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(GLubyte));
+     tolua_pushusertype(tolua_S,tolua_obj,"GLubyte");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
   }
  }
  return 1;
@@ -3419,8 +3558,8 @@ static int tolua_cocos2d_CCLayerRGBA_getDisplayedColor00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getDisplayedColor'", NULL);
 #endif
   {
-   const _ccColor3B& tolua_ret = (const _ccColor3B&)  self->getDisplayedColor();
-    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const _ccColor3B");
+   const ccColor3B& tolua_ret = (const ccColor3B&)  self->getDisplayedColor();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"const ccColor3B");
   }
  }
  return 1;
@@ -3457,18 +3596,18 @@ static int tolua_cocos2d_CCLayerColor_create00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCLayerColor",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const _ccColor4B",0,&tolua_err)) ||
-     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const ccColor4B",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"GLfloat",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,4,&tolua_err) || !tolua_isusertype(tolua_S,4,"GLfloat",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,5,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  const _ccColor4B* color = ((const _ccColor4B*)  tolua_tousertype(tolua_S,2,0));
-  float width = ((float)  tolua_tonumber(tolua_S,3,0));
-  float height = ((float)  tolua_tonumber(tolua_S,4,0));
+  const ccColor4B* color = ((const ccColor4B*)  tolua_tousertype(tolua_S,2,0));
+  GLfloat width = *((GLfloat*)  tolua_tousertype(tolua_S,3,0));
+  GLfloat height = *((GLfloat*)  tolua_tousertype(tolua_S,4,0));
   {
    CCLayerColor* tolua_ret = (CCLayerColor*)  CCLayerColor::create(*color,width,height);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCLayerColor");
@@ -3513,13 +3652,13 @@ static int tolua_cocos2d_CCLayerColor_create02(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"CCLayerColor",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const _ccColor4B",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const ccColor4B",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
  else
  {
-  const _ccColor4B* color = ((const _ccColor4B*)  tolua_tousertype(tolua_S,2,0));
+  const ccColor4B* color = ((const ccColor4B*)  tolua_tousertype(tolua_S,2,0));
   {
    CCLayerColor* tolua_ret = (CCLayerColor*)  CCLayerColor::create(*color);
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCLayerColor");
@@ -3581,15 +3720,15 @@ static int tolua_cocos2d_CCLayerColor_getBlendFunc00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBlendFunc'", NULL);
 #endif
   {
-   _ccBlendFunc tolua_ret = (_ccBlendFunc)  self->getBlendFunc();
+   ccBlendFunc tolua_ret = (ccBlendFunc)  self->getBlendFunc();
    {
 #ifdef __cplusplus
-    void* tolua_obj = Mtolua_new((_ccBlendFunc)(tolua_ret));
-     tolua_pushusertype(tolua_S,tolua_obj,"_ccBlendFunc");
+    void* tolua_obj = Mtolua_new((ccBlendFunc)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"ccBlendFunc");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #else
-    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(_ccBlendFunc));
-     tolua_pushusertype(tolua_S,tolua_obj,"_ccBlendFunc");
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(ccBlendFunc));
+     tolua_pushusertype(tolua_S,tolua_obj,"ccBlendFunc");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
 #endif
    }
@@ -3612,7 +3751,7 @@ static int tolua_cocos2d_CCLayerColor_setColor00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCLayerColor",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const _ccColor3B",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const ccColor3B",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -3620,7 +3759,7 @@ static int tolua_cocos2d_CCLayerColor_setColor00(lua_State* tolua_S)
 #endif
  {
   CCLayerColor* self = (CCLayerColor*)  tolua_tousertype(tolua_S,1,0);
-  const _ccColor3B* color = ((const _ccColor3B*)  tolua_tousertype(tolua_S,2,0));
+  const ccColor3B* color = ((const ccColor3B*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setColor'", NULL);
 #endif
@@ -3645,7 +3784,7 @@ static int tolua_cocos2d_CCLayerColor_setBlendFunc00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCLayerColor",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"_ccBlendFunc",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"ccBlendFunc",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -3653,7 +3792,7 @@ static int tolua_cocos2d_CCLayerColor_setBlendFunc00(lua_State* tolua_S)
 #endif
  {
   CCLayerColor* self = (CCLayerColor*)  tolua_tousertype(tolua_S,1,0);
-  _ccBlendFunc var = *((_ccBlendFunc*)  tolua_tousertype(tolua_S,2,0));
+  ccBlendFunc var = *((ccBlendFunc*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBlendFunc'", NULL);
 #endif
@@ -3678,7 +3817,7 @@ static int tolua_cocos2d_CCLayerColor_changeWidth00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCLayerColor",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"GLfloat",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -3686,7 +3825,7 @@ static int tolua_cocos2d_CCLayerColor_changeWidth00(lua_State* tolua_S)
 #endif
  {
   CCLayerColor* self = (CCLayerColor*)  tolua_tousertype(tolua_S,1,0);
-  float w = ((float)  tolua_tonumber(tolua_S,2,0));
+  GLfloat w = *((GLfloat*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'changeWidth'", NULL);
 #endif
@@ -3711,8 +3850,8 @@ static int tolua_cocos2d_CCLayerColor_changeWidthAndHeight00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCLayerColor",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"GLfloat",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"GLfloat",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,4,&tolua_err)
  )
   goto tolua_lerror;
@@ -3720,8 +3859,8 @@ static int tolua_cocos2d_CCLayerColor_changeWidthAndHeight00(lua_State* tolua_S)
 #endif
  {
   CCLayerColor* self = (CCLayerColor*)  tolua_tousertype(tolua_S,1,0);
-  float w = ((float)  tolua_tonumber(tolua_S,2,0));
-  float h = ((float)  tolua_tonumber(tolua_S,3,0));
+  GLfloat w = *((GLfloat*)  tolua_tousertype(tolua_S,2,0));
+  GLfloat h = *((GLfloat*)  tolua_tousertype(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'changeWidthAndHeight'", NULL);
 #endif
@@ -3807,7 +3946,7 @@ static int tolua_cocos2d_CCLayerColor_initWithColor00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCLayerColor",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const _ccColor4B",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const ccColor4B",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -3815,7 +3954,7 @@ static int tolua_cocos2d_CCLayerColor_initWithColor00(lua_State* tolua_S)
 #endif
  {
   CCLayerColor* self = (CCLayerColor*)  tolua_tousertype(tolua_S,1,0);
-  const _ccColor4B* color = ((const _ccColor4B*)  tolua_tousertype(tolua_S,2,0));
+  const ccColor4B* color = ((const ccColor4B*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initWithColor'", NULL);
 #endif
@@ -3840,18 +3979,18 @@ static int tolua_cocos2d_CCLayerColor_initWithColor01(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCLayerColor",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const _ccColor4B",0,&tolua_err)) ||
-     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"const ccColor4B",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"GLfloat",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,4,&tolua_err) || !tolua_isusertype(tolua_S,4,"GLfloat",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,5,&tolua_err)
  )
   goto tolua_lerror;
  else
  {
   CCLayerColor* self = (CCLayerColor*)  tolua_tousertype(tolua_S,1,0);
-  const _ccColor4B* color = ((const _ccColor4B*)  tolua_tousertype(tolua_S,2,0));
-  float width = ((float)  tolua_tonumber(tolua_S,3,0));
-  float height = ((float)  tolua_tonumber(tolua_S,4,0));
+  const ccColor4B* color = ((const ccColor4B*)  tolua_tousertype(tolua_S,2,0));
+  GLfloat width = *((GLfloat*)  tolua_tousertype(tolua_S,3,0));
+  GLfloat height = *((GLfloat*)  tolua_tousertype(tolua_S,4,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initWithColor'", NULL);
 #endif
@@ -3931,7 +4070,7 @@ static int tolua_cocos2d_CCLayerColor_setOpacity00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCLayerColor",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"GLubyte",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -3939,7 +4078,7 @@ static int tolua_cocos2d_CCLayerColor_setOpacity00(lua_State* tolua_S)
 #endif
  {
   CCLayerColor* self = (CCLayerColor*)  tolua_tousertype(tolua_S,1,0);
-  unsigned char opacity = ((unsigned char)  tolua_tonumber(tolua_S,2,0));
+  GLubyte opacity = *((GLubyte*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setOpacity'", NULL);
 #endif
@@ -3964,7 +4103,7 @@ static int tolua_cocos2d_CCLayerColor_changeHeight00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"CCLayerColor",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"GLfloat",0,&tolua_err)) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -3972,7 +4111,7 @@ static int tolua_cocos2d_CCLayerColor_changeHeight00(lua_State* tolua_S)
 #endif
  {
   CCLayerColor* self = (CCLayerColor*)  tolua_tousertype(tolua_S,1,0);
-  float h = ((float)  tolua_tonumber(tolua_S,2,0));
+  GLfloat h = *((GLfloat*)  tolua_tousertype(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'changeHeight'", NULL);
 #endif
@@ -4160,121 +4299,181 @@ static int tolua_cocos2d_someStruct2_test00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: r of class  _ccColor4B */
-#ifndef TOLUA_DISABLE_tolua_get__ccColor4B_unsigned_r
-static int tolua_get__ccColor4B_unsigned_r(lua_State* tolua_S)
+/* get function: r of class  ccColor4B */
+#ifndef TOLUA_DISABLE_tolua_get_ccColor4B_r
+static int tolua_get_ccColor4B_r(lua_State* tolua_S)
 {
-  _ccColor4B* self = (_ccColor4B*)  tolua_tousertype(tolua_S,1,0);
+  ccColor4B* self = (ccColor4B*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'r'",NULL);
 #endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->r);
+   tolua_pushusertype(tolua_S,(void*)&self->r,"GLubyte");
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: r of class  _ccColor4B */
-#ifndef TOLUA_DISABLE_tolua_set__ccColor4B_unsigned_r
-static int tolua_set__ccColor4B_unsigned_r(lua_State* tolua_S)
+/* set function: r of class  ccColor4B */
+#ifndef TOLUA_DISABLE_tolua_set_ccColor4B_r
+static int tolua_set_ccColor4B_r(lua_State* tolua_S)
 {
-  _ccColor4B* self = (_ccColor4B*)  tolua_tousertype(tolua_S,1,0);
+  ccColor4B* self = (ccColor4B*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'r'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"GLubyte",0,&tolua_err)))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->r = ((unsigned char)  tolua_tonumber(tolua_S,2,0))
+  self->r = *((GLubyte*)  tolua_tousertype(tolua_S,2,0))
 ;
  return 0;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: g of class  _ccColor4B */
-#ifndef TOLUA_DISABLE_tolua_get__ccColor4B_unsigned_g
-static int tolua_get__ccColor4B_unsigned_g(lua_State* tolua_S)
+/* get function: g of class  ccColor4B */
+#ifndef TOLUA_DISABLE_tolua_get_ccColor4B_g
+static int tolua_get_ccColor4B_g(lua_State* tolua_S)
 {
-  _ccColor4B* self = (_ccColor4B*)  tolua_tousertype(tolua_S,1,0);
+  ccColor4B* self = (ccColor4B*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'g'",NULL);
 #endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->g);
+   tolua_pushusertype(tolua_S,(void*)&self->g,"GLubyte");
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: g of class  _ccColor4B */
-#ifndef TOLUA_DISABLE_tolua_set__ccColor4B_unsigned_g
-static int tolua_set__ccColor4B_unsigned_g(lua_State* tolua_S)
+/* set function: g of class  ccColor4B */
+#ifndef TOLUA_DISABLE_tolua_set_ccColor4B_g
+static int tolua_set_ccColor4B_g(lua_State* tolua_S)
 {
-  _ccColor4B* self = (_ccColor4B*)  tolua_tousertype(tolua_S,1,0);
+  ccColor4B* self = (ccColor4B*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'g'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"GLubyte",0,&tolua_err)))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->g = ((unsigned char)  tolua_tonumber(tolua_S,2,0))
+  self->g = *((GLubyte*)  tolua_tousertype(tolua_S,2,0))
 ;
  return 0;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: b of class  _ccColor4B */
-#ifndef TOLUA_DISABLE_tolua_get__ccColor4B_unsigned_b
-static int tolua_get__ccColor4B_unsigned_b(lua_State* tolua_S)
+/* get function: b of class  ccColor4B */
+#ifndef TOLUA_DISABLE_tolua_get_ccColor4B_b
+static int tolua_get_ccColor4B_b(lua_State* tolua_S)
 {
-  _ccColor4B* self = (_ccColor4B*)  tolua_tousertype(tolua_S,1,0);
+  ccColor4B* self = (ccColor4B*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'b'",NULL);
 #endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->b);
+   tolua_pushusertype(tolua_S,(void*)&self->b,"GLubyte");
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: b of class  _ccColor4B */
-#ifndef TOLUA_DISABLE_tolua_set__ccColor4B_unsigned_b
-static int tolua_set__ccColor4B_unsigned_b(lua_State* tolua_S)
+/* set function: b of class  ccColor4B */
+#ifndef TOLUA_DISABLE_tolua_set_ccColor4B_b
+static int tolua_set_ccColor4B_b(lua_State* tolua_S)
 {
-  _ccColor4B* self = (_ccColor4B*)  tolua_tousertype(tolua_S,1,0);
+  ccColor4B* self = (ccColor4B*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'b'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"GLubyte",0,&tolua_err)))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->b = ((unsigned char)  tolua_tonumber(tolua_S,2,0))
+  self->b = *((GLubyte*)  tolua_tousertype(tolua_S,2,0))
 ;
  return 0;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: a of class  _ccColor4B */
-#ifndef TOLUA_DISABLE_tolua_get__ccColor4B_unsigned_a
-static int tolua_get__ccColor4B_unsigned_a(lua_State* tolua_S)
+/* get function: a of class  ccColor4B */
+#ifndef TOLUA_DISABLE_tolua_get_ccColor4B_a
+static int tolua_get_ccColor4B_a(lua_State* tolua_S)
 {
-  _ccColor4B* self = (_ccColor4B*)  tolua_tousertype(tolua_S,1,0);
+  ccColor4B* self = (ccColor4B*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'a'",NULL);
 #endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->a);
+   tolua_pushusertype(tolua_S,(void*)&self->a,"GLubyte");
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: a of class  _ccColor4B */
-#ifndef TOLUA_DISABLE_tolua_set__ccColor4B_unsigned_a
-static int tolua_set__ccColor4B_unsigned_a(lua_State* tolua_S)
+/* set function: a of class  ccColor4B */
+#ifndef TOLUA_DISABLE_tolua_set_ccColor4B_a
+static int tolua_set_ccColor4B_a(lua_State* tolua_S)
 {
-  _ccColor4B* self = (_ccColor4B*)  tolua_tousertype(tolua_S,1,0);
+  ccColor4B* self = (ccColor4B*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'a'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"GLubyte",0,&tolua_err)))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->a = ((unsigned char)  tolua_tonumber(tolua_S,2,0))
+  self->a = *((GLubyte*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: src of class  ccBlendFunc */
+#ifndef TOLUA_DISABLE_tolua_get_ccBlendFunc_src
+static int tolua_get_ccBlendFunc_src(lua_State* tolua_S)
+{
+  ccBlendFunc* self = (ccBlendFunc*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'src'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)&self->src,"GLenum");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: src of class  ccBlendFunc */
+#ifndef TOLUA_DISABLE_tolua_set_ccBlendFunc_src
+static int tolua_set_ccBlendFunc_src(lua_State* tolua_S)
+{
+  ccBlendFunc* self = (ccBlendFunc*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'src'",NULL);
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"GLenum",0,&tolua_err)))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->src = *((GLenum*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: dst of class  ccBlendFunc */
+#ifndef TOLUA_DISABLE_tolua_get_ccBlendFunc_dst
+static int tolua_get_ccBlendFunc_dst(lua_State* tolua_S)
+{
+  ccBlendFunc* self = (ccBlendFunc*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'dst'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)&self->dst,"GLenum");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: dst of class  ccBlendFunc */
+#ifndef TOLUA_DISABLE_tolua_set_ccBlendFunc_dst
+static int tolua_set_ccBlendFunc_dst(lua_State* tolua_S)
+{
+  ccBlendFunc* self = (ccBlendFunc*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'dst'",NULL);
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"GLenum",0,&tolua_err)))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->dst = *((GLenum*)  tolua_tousertype(tolua_S,2,0))
 ;
  return 0;
 }
@@ -4344,151 +4543,91 @@ static int tolua_cocos2d_someStruct1_test00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: src of class  _ccBlendFunc */
-#ifndef TOLUA_DISABLE_tolua_get__ccBlendFunc_unsigned_src
-static int tolua_get__ccBlendFunc_unsigned_src(lua_State* tolua_S)
+/* get function: r of class  ccColor3B */
+#ifndef TOLUA_DISABLE_tolua_get_ccColor3B_r
+static int tolua_get_ccColor3B_r(lua_State* tolua_S)
 {
-  _ccBlendFunc* self = (_ccBlendFunc*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'src'",NULL);
-#endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->src);
- return 1;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* set function: src of class  _ccBlendFunc */
-#ifndef TOLUA_DISABLE_tolua_set__ccBlendFunc_unsigned_src
-static int tolua_set__ccBlendFunc_unsigned_src(lua_State* tolua_S)
-{
-  _ccBlendFunc* self = (_ccBlendFunc*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  tolua_Error tolua_err;
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'src'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
-   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
-#endif
-  self->src = ((unsigned int)  tolua_tonumber(tolua_S,2,0))
-;
- return 0;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* get function: dst of class  _ccBlendFunc */
-#ifndef TOLUA_DISABLE_tolua_get__ccBlendFunc_unsigned_dst
-static int tolua_get__ccBlendFunc_unsigned_dst(lua_State* tolua_S)
-{
-  _ccBlendFunc* self = (_ccBlendFunc*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'dst'",NULL);
-#endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->dst);
- return 1;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* set function: dst of class  _ccBlendFunc */
-#ifndef TOLUA_DISABLE_tolua_set__ccBlendFunc_unsigned_dst
-static int tolua_set__ccBlendFunc_unsigned_dst(lua_State* tolua_S)
-{
-  _ccBlendFunc* self = (_ccBlendFunc*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  tolua_Error tolua_err;
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'dst'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
-   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
-#endif
-  self->dst = ((unsigned int)  tolua_tonumber(tolua_S,2,0))
-;
- return 0;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* get function: r of class  _ccColor3B */
-#ifndef TOLUA_DISABLE_tolua_get__ccColor3B_unsigned_r
-static int tolua_get__ccColor3B_unsigned_r(lua_State* tolua_S)
-{
-  _ccColor3B* self = (_ccColor3B*)  tolua_tousertype(tolua_S,1,0);
+  ccColor3B* self = (ccColor3B*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'r'",NULL);
 #endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->r);
+   tolua_pushusertype(tolua_S,(void*)&self->r,"GLubyte");
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: r of class  _ccColor3B */
-#ifndef TOLUA_DISABLE_tolua_set__ccColor3B_unsigned_r
-static int tolua_set__ccColor3B_unsigned_r(lua_State* tolua_S)
+/* set function: r of class  ccColor3B */
+#ifndef TOLUA_DISABLE_tolua_set_ccColor3B_r
+static int tolua_set_ccColor3B_r(lua_State* tolua_S)
 {
-  _ccColor3B* self = (_ccColor3B*)  tolua_tousertype(tolua_S,1,0);
+  ccColor3B* self = (ccColor3B*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'r'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"GLubyte",0,&tolua_err)))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->r = ((unsigned char)  tolua_tonumber(tolua_S,2,0))
+  self->r = *((GLubyte*)  tolua_tousertype(tolua_S,2,0))
 ;
  return 0;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: g of class  _ccColor3B */
-#ifndef TOLUA_DISABLE_tolua_get__ccColor3B_unsigned_g
-static int tolua_get__ccColor3B_unsigned_g(lua_State* tolua_S)
+/* get function: g of class  ccColor3B */
+#ifndef TOLUA_DISABLE_tolua_get_ccColor3B_g
+static int tolua_get_ccColor3B_g(lua_State* tolua_S)
 {
-  _ccColor3B* self = (_ccColor3B*)  tolua_tousertype(tolua_S,1,0);
+  ccColor3B* self = (ccColor3B*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'g'",NULL);
 #endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->g);
+   tolua_pushusertype(tolua_S,(void*)&self->g,"GLubyte");
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: g of class  _ccColor3B */
-#ifndef TOLUA_DISABLE_tolua_set__ccColor3B_unsigned_g
-static int tolua_set__ccColor3B_unsigned_g(lua_State* tolua_S)
+/* set function: g of class  ccColor3B */
+#ifndef TOLUA_DISABLE_tolua_set_ccColor3B_g
+static int tolua_set_ccColor3B_g(lua_State* tolua_S)
 {
-  _ccColor3B* self = (_ccColor3B*)  tolua_tousertype(tolua_S,1,0);
+  ccColor3B* self = (ccColor3B*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'g'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"GLubyte",0,&tolua_err)))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->g = ((unsigned char)  tolua_tonumber(tolua_S,2,0))
+  self->g = *((GLubyte*)  tolua_tousertype(tolua_S,2,0))
 ;
  return 0;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: b of class  _ccColor3B */
-#ifndef TOLUA_DISABLE_tolua_get__ccColor3B_unsigned_b
-static int tolua_get__ccColor3B_unsigned_b(lua_State* tolua_S)
+/* get function: b of class  ccColor3B */
+#ifndef TOLUA_DISABLE_tolua_get_ccColor3B_b
+static int tolua_get_ccColor3B_b(lua_State* tolua_S)
 {
-  _ccColor3B* self = (_ccColor3B*)  tolua_tousertype(tolua_S,1,0);
+  ccColor3B* self = (ccColor3B*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'b'",NULL);
 #endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->b);
+   tolua_pushusertype(tolua_S,(void*)&self->b,"GLubyte");
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: b of class  _ccColor3B */
-#ifndef TOLUA_DISABLE_tolua_set__ccColor3B_unsigned_b
-static int tolua_set__ccColor3B_unsigned_b(lua_State* tolua_S)
+/* set function: b of class  ccColor3B */
+#ifndef TOLUA_DISABLE_tolua_set_ccColor3B_b
+static int tolua_set_ccColor3B_b(lua_State* tolua_S)
 {
-  _ccColor3B* self = (_ccColor3B*)  tolua_tousertype(tolua_S,1,0);
+  ccColor3B* self = (ccColor3B*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'b'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"GLubyte",0,&tolua_err)))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->b = ((unsigned char)  tolua_tonumber(tolua_S,2,0))
+  self->b = *((GLubyte*)  tolua_tousertype(tolua_S,2,0))
 ;
  return 0;
 }
@@ -4540,6 +4679,7 @@ TOLUA_API int tolua_cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"processClassEnum",tolua_cocos2d_SimpleNativeClass_processClassEnum00);
    tolua_function(tolua_S,"delete",tolua_cocos2d_SimpleNativeClass_delete00);
    tolua_function(tolua_S,"getObjectType",tolua_cocos2d_SimpleNativeClass_getObjectType00);
+   tolua_function(tolua_S,"processGLubyte",tolua_cocos2d_SimpleNativeClass_processGLubyte00);
    tolua_constant(tolua_S,"kValue5",SimpleNativeClass::kValue5);
    tolua_constant(tolua_S,"kValue6",SimpleNativeClass::kValue6);
    tolua_constant(tolua_S,"kValue101",SimpleNativeClass::kValue101);
@@ -4603,12 +4743,13 @@ TOLUA_API int tolua_cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"createWithLayer",tolua_cocos2d_CCLayerMultiplex_createWithLayer00);
    tolua_function(tolua_S,"create",tolua_cocos2d_CCLayerMultiplex_create00);
    tolua_function(tolua_S,"getEnabledLayer",tolua_cocos2d_CCLayerMultiplex_getEnabledLayer00);
-   tolua_function(tolua_S,"layerAt",tolua_cocos2d_CCLayerMultiplex_layerAt00);
+   tolua_function(tolua_S,"delete",tolua_cocos2d_CCLayerMultiplex_delete00);
    tolua_function(tolua_S,"new",tolua_cocos2d_CCLayerMultiplex_new00);
    tolua_function(tolua_S,"new_local",tolua_cocos2d_CCLayerMultiplex_new00_local);
    tolua_function(tolua_S,".call",tolua_cocos2d_CCLayerMultiplex_new00_local);
-   tolua_function(tolua_S,"delete",tolua_cocos2d_CCLayerMultiplex_delete00);
+   tolua_function(tolua_S,"layerAt",tolua_cocos2d_CCLayerMultiplex_layerAt00);
    tolua_function(tolua_S,"addLayer",tolua_cocos2d_CCLayerMultiplex_addLayer00);
+   tolua_function(tolua_S,"initWithLayers",tolua_cocos2d_CCLayerMultiplex_initWithLayers00);
    tolua_function(tolua_S,"switchTo",tolua_cocos2d_CCLayerMultiplex_switchTo00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"CCLayerGradient","CCLayerGradient","CCLayerColor",NULL);
@@ -4693,32 +4834,32 @@ TOLUA_API int tolua_cocos2d_open (lua_State* tolua_S)
    tolua_variable(tolua_S,"n",tolua_get_someStruct2_n_ptr,tolua_set_someStruct2_n_ptr);
    tolua_function(tolua_S,"test",tolua_cocos2d_someStruct2_test00);
   tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"_ccColor4B","_ccColor4B","",NULL);
-  tolua_beginmodule(tolua_S,"_ccColor4B");
-   tolua_variable(tolua_S,"r",tolua_get__ccColor4B_unsigned_r,tolua_set__ccColor4B_unsigned_r);
-   tolua_variable(tolua_S,"g",tolua_get__ccColor4B_unsigned_g,tolua_set__ccColor4B_unsigned_g);
-   tolua_variable(tolua_S,"b",tolua_get__ccColor4B_unsigned_b,tolua_set__ccColor4B_unsigned_b);
-   tolua_variable(tolua_S,"a",tolua_get__ccColor4B_unsigned_a,tolua_set__ccColor4B_unsigned_a);
+  tolua_cclass(tolua_S,"ccColor4B","ccColor4B","",NULL);
+  tolua_beginmodule(tolua_S,"ccColor4B");
+   tolua_variable(tolua_S,"r",tolua_get_ccColor4B_r,tolua_set_ccColor4B_r);
+   tolua_variable(tolua_S,"g",tolua_get_ccColor4B_g,tolua_set_ccColor4B_g);
+   tolua_variable(tolua_S,"b",tolua_get_ccColor4B_b,tolua_set_ccColor4B_b);
+   tolua_variable(tolua_S,"a",tolua_get_ccColor4B_a,tolua_set_ccColor4B_a);
+  tolua_endmodule(tolua_S);
+  #ifdef __cplusplus
+  tolua_cclass(tolua_S,"ccBlendFunc","ccBlendFunc","",tolua_collect_ccBlendFunc);
+  #else
+  tolua_cclass(tolua_S,"ccBlendFunc","ccBlendFunc","",NULL);
+  #endif
+  tolua_beginmodule(tolua_S,"ccBlendFunc");
+   tolua_variable(tolua_S,"src",tolua_get_ccBlendFunc_src,tolua_set_ccBlendFunc_src);
+   tolua_variable(tolua_S,"dst",tolua_get_ccBlendFunc_dst,tolua_set_ccBlendFunc_dst);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"someStruct1","someStruct1","",NULL);
   tolua_beginmodule(tolua_S,"someStruct1");
    tolua_variable(tolua_S,"n",tolua_get_someStruct1_n_ptr,tolua_set_someStruct1_n_ptr);
    tolua_function(tolua_S,"test",tolua_cocos2d_someStruct1_test00);
   tolua_endmodule(tolua_S);
-  #ifdef __cplusplus
-  tolua_cclass(tolua_S,"_ccBlendFunc","_ccBlendFunc","",tolua_collect__ccBlendFunc);
-  #else
-  tolua_cclass(tolua_S,"_ccBlendFunc","_ccBlendFunc","",NULL);
-  #endif
-  tolua_beginmodule(tolua_S,"_ccBlendFunc");
-   tolua_variable(tolua_S,"src",tolua_get__ccBlendFunc_unsigned_src,tolua_set__ccBlendFunc_unsigned_src);
-   tolua_variable(tolua_S,"dst",tolua_get__ccBlendFunc_unsigned_dst,tolua_set__ccBlendFunc_unsigned_dst);
-  tolua_endmodule(tolua_S);
-  tolua_cclass(tolua_S,"_ccColor3B","_ccColor3B","",NULL);
-  tolua_beginmodule(tolua_S,"_ccColor3B");
-   tolua_variable(tolua_S,"r",tolua_get__ccColor3B_unsigned_r,tolua_set__ccColor3B_unsigned_r);
-   tolua_variable(tolua_S,"g",tolua_get__ccColor3B_unsigned_g,tolua_set__ccColor3B_unsigned_g);
-   tolua_variable(tolua_S,"b",tolua_get__ccColor3B_unsigned_b,tolua_set__ccColor3B_unsigned_b);
+  tolua_cclass(tolua_S,"ccColor3B","ccColor3B","",NULL);
+  tolua_beginmodule(tolua_S,"ccColor3B");
+   tolua_variable(tolua_S,"r",tolua_get_ccColor3B_r,tolua_set_ccColor3B_r);
+   tolua_variable(tolua_S,"g",tolua_get_ccColor3B_g,tolua_set_ccColor3B_g);
+   tolua_variable(tolua_S,"b",tolua_get_ccColor3B_b,tolua_set_ccColor3B_b);
   tolua_endmodule(tolua_S);
  tolua_endmodule(tolua_S);
  return 1;

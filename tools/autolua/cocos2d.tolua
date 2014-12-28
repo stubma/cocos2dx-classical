@@ -25,17 +25,18 @@ class SimpleNativeClass : public CCNode {
 	SimpleNativeClass(int m1, int m2);
 	int processClassEnum(someClassEnum e);
 	~SimpleNativeClass();
-	unsigned int getObjectType();
+	uint32_t getObjectType();
+	int processGLubyte(GLubyte b);
 	enum someClassEnum {
 		kValue5,
 		kValue6
 	};
-	enum someEnum3 {
+	typedef enum {
 		kValue101
-	};
-	struct someStruct4 {
+	} someEnum3;
+	typedef struct {
 		CCLayer* t;
-	};
+	} someStruct4;
 	struct someStruct3 {
 		CCNode* n;
 		void test(const int& f);
@@ -76,96 +77,97 @@ class CCLayerMultiplex : public CCLayer {
 	static CCLayerMultiplex* createWithLayer(CCLayer* layer);
 	static CCLayerMultiplex* create();
 	int getEnabledLayer();
-	CCLayer* layerAt(int n);
-	CCLayerMultiplex();
 	~CCLayerMultiplex();
+	CCLayerMultiplex();
+	CCLayer* layerAt(int n);
 	void addLayer(CCLayer* layer);
+	bool initWithLayers(CCLayer* layer, va_list params);
 	void switchTo(unsigned int n);
 };
 class CCLayerGradient : public CCLayerColor {
-	static CCLayerGradient* create(const _ccColor4B& start, const _ccColor4B& end);
+	static CCLayerGradient* create(const ccColor4B& start, const ccColor4B& end);
 	static CCLayerGradient* create();
-	const _ccColor3B& getStartColor();
+	const ccColor3B& getStartColor();
 	bool isCompressedInterpolation();
-	unsigned char getStartOpacity();
-	void setStartOpacity(unsigned char var);
+	GLubyte getStartOpacity();
+	void setStartOpacity(GLubyte var);
 	void setCompressedInterpolation(bool bCompressedInterpolation);
-	void setEndOpacity(unsigned char var);
+	void setEndOpacity(GLubyte var);
 	bool init();
-	void setEndColor(const _ccColor3B& var);
-	bool initWithColor(const _ccColor4B& start, const _ccColor4B& end);
-	const _ccColor3B& getEndColor();
-	unsigned char getEndOpacity();
-	void setStartColor(const _ccColor3B& var);
+	void setEndColor(const ccColor3B& var);
+	bool initWithColor(const ccColor4B& start, const ccColor4B& end);
+	const ccColor3B& getEndColor();
+	GLubyte getEndOpacity();
+	void setStartColor(const ccColor3B& var);
 };
 class CCLayerRGBA : public CCLayer, public CCRGBAProtocol {
 	static CCLayerRGBA* create();
-	void updateDisplayedColor(const _ccColor3B& parentColor);
-	void setColor(const _ccColor3B& color);
+	void updateDisplayedColor(const ccColor3B& parentColor);
+	void setColor(const ccColor3B& color);
 	bool isCascadeOpacityEnabled();
-	const _ccColor3B& getColor();
-	unsigned char getDisplayedOpacity();
+	const ccColor3B& getColor();
+	GLubyte getDisplayedOpacity();
 	void setCascadeColorEnabled(bool cascadeColorEnabled);
-	void setOpacity(unsigned char opacity);
+	void setOpacity(GLubyte opacity);
 	~CCLayerRGBA();
 	void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
-	void updateDisplayedOpacity(unsigned char parentOpacity);
+	void updateDisplayedOpacity(GLubyte parentOpacity);
 	bool init();
 	CCLayerRGBA();
 	void setOpacityModifyRGB(bool bValue);
-	unsigned char getOpacity();
+	GLubyte getOpacity();
 	bool isOpacityModifyRGB();
 	bool isCascadeColorEnabled();
-	const _ccColor3B& getDisplayedColor();
+	const ccColor3B& getDisplayedColor();
 };
 class CCLayerColor : public CCLayerRGBA, public CCBlendProtocol {
-	static CCLayerColor* create(const _ccColor4B& color, float width, float height);
+	static CCLayerColor* create(const ccColor4B& color, GLfloat width, GLfloat height);
 	static CCLayerColor* create();
-	static CCLayerColor* create(const _ccColor4B& color);
+	static CCLayerColor* create(const ccColor4B& color);
 	void draw();
-	_ccBlendFunc getBlendFunc();
-	void setColor(const _ccColor3B& color);
-	void setBlendFunc(_ccBlendFunc var);
-	void changeWidth(float w);
-	void changeWidthAndHeight(float w, float h);
+	ccBlendFunc getBlendFunc();
+	void setColor(const ccColor3B& color);
+	void setBlendFunc(ccBlendFunc var);
+	void changeWidth(GLfloat w);
+	void changeWidthAndHeight(GLfloat w, GLfloat h);
 	~CCLayerColor();
 	bool init();
-	bool initWithColor(const _ccColor4B& color);
-	bool initWithColor(const _ccColor4B& color, float width, float height);
+	bool initWithColor(const ccColor4B& color);
+	bool initWithColor(const ccColor4B& color, GLfloat width, GLfloat height);
 	CCLayerColor();
-	void setOpacity(unsigned char opacity);
-	void changeHeight(float h);
+	void setOpacity(GLubyte opacity);
+	void changeHeight(GLfloat h);
 };
-enum someEnum2 {
+typedef enum {
 	kValue100
-};
-enum ccTouchesMode {
+} someEnum2;
+typedef enum {
 	kCCTouchesAllAtOnce,
 	kCCTouchesOneByOne
-};
-struct someStruct2 {
+} ccTouchesMode;
+typedef struct {
 	int i;
 	float f;
 	double d;
 	CCNode* n;
 	void test(const int& f);
-};
-struct _ccColor4B {
-	unsigned char r;
-	unsigned char g;
-	unsigned char b;
-	unsigned char a;
-};
+} someStruct2;
+typedef struct {
+	GLubyte r;
+	GLubyte g;
+	GLubyte b;
+	GLubyte a;
+} ccColor4B;
+typedef struct {
+	GLenum src;
+	GLenum dst;
+} ccBlendFunc;
 struct someStruct1 {
 	CCNode* n;
 	void test(const int& f);
 };
-struct _ccBlendFunc {
-	unsigned int src;
-	unsigned int dst;
-};
-struct _ccColor3B {
-	unsigned char r;
-	unsigned char g;
-	unsigned char b;
-};
+typedef struct {
+	GLubyte r;
+	GLubyte g;
+	GLubyte b;
+} ccColor3B;

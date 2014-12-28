@@ -81,6 +81,7 @@ public:
 	virtual bool init();
 
 	// these methods are simple, can be defined inline
+	int processGLubyte(GLubyte b);
 	int processSomeStruct1(someStruct1 s);
 	int processSomeStruct2(someStruct2 s);
 	int processSomeStruct3(someStruct3 s);
