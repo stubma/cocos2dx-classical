@@ -141,6 +141,7 @@ class NativeType(object):
         self.canonical_type = None
         self.pointee_name = ""
         self.qualified_pointee_name = ""
+        self.pointer_level = 0
 
     @staticmethod
     def from_type(ntype):
@@ -158,6 +159,7 @@ class NativeType(object):
             nt.is_enum = False
             nt.is_const = ntype.get_pointee().is_const_qualified()
             nt.is_pointer = True
+            nt.pointer_level += 1
 
             # const prefix
             if nt.is_const:
@@ -258,7 +260,7 @@ class NativeType(object):
                     nt.param_types = [NativeType.from_string(string) for string in params]
 
         # mark argument as not supported
-        if nt.name == INVALID_NATIVE_TYPE:
+        if nt.name == INVALID_NATIVE_TYPE or nt.pointer_level > 1:
             nt.not_supported = True
 
         return nt
@@ -393,25 +395,37 @@ class NativeFunction(object):
         self.not_supported = False
         self.is_override = False
         self.ret_type = NativeType.from_type(node.result_type)
+        self.min_args = 0
 
-        # mark the function as not supported if at least one argument is not supported
-        for arg in node.type.argument_types():
-            nt = NativeType.from_type(arg)
-            self.arguments.append(nt)
-            if nt.not_supported:
+        # if a operator overload, ignore
+        if self.func_name.startswith("operator"):
+            self.not_supported = True
+
+        # mark the function as not supported if return type is not supported
+        if not self.not_supported:
+            if self.ret_type.not_supported:
                 self.not_supported = True
 
+        # mark the function as not supported if at least one argument is not supported
+        if not self.not_supported:
+            for arg in node.type.argument_types():
+                nt = NativeType.from_type(arg)
+                self.arguments.append(nt)
+                if nt.not_supported:
+                    self.not_supported = True
+
         # parse arguments
-        self.min_args = len(self.arguments)
-        index = -1
-        for arg_node in self.node.get_children():
-            if arg_node.kind == CursorKind.CXX_OVERRIDE_ATTR:
-                self.is_override = True
-            if arg_node.kind == CursorKind.PARM_DECL:
-                index += 1
-                if self.has_default_arg(arg_node):
-                    self.min_args = index
-                    break
+        if not self.not_supported:
+            self.min_args = len(self.arguments)
+            index = -1
+            for arg_node in self.node.get_children():
+                if arg_node.kind == CursorKind.CXX_OVERRIDE_ATTR:
+                    self.is_override = True
+                if arg_node.kind == CursorKind.PARM_DECL:
+                    index += 1
+                    if self.has_default_arg(arg_node):
+                        self.min_args = index
+                        break
 
     def has_default_arg(self, param_node):
         for node in param_node.get_children():
