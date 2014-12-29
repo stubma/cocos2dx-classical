@@ -24,6 +24,8 @@
 #ifndef __CCAFCConstants_h__
 #define __CCAFCConstants_h__
 
+#include "ccTypes.h"
+
 NS_CC_BEGIN
 
 /**

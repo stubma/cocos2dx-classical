@@ -24,6 +24,8 @@
 #ifndef __CCSPXConstants_h__
 #define __CCSPXConstants_h__
 
+#include "ccTypes.h"
+
 NS_CC_BEGIN
 
 /**

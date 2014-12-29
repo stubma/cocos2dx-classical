@@ -26,6 +26,7 @@
 
 #include "ccTypes.h"
 #include "actions/CCActionInstant.h"
+#include "cocoa/CCZone.h"
 
 NS_CC_BEGIN
 

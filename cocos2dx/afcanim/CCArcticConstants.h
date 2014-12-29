@@ -24,6 +24,8 @@
 #ifndef __CCArcticConstants_h__
 #define __CCArcticConstants_h__
 
+#include "ccTypes.h"
+
 NS_CC_BEGIN
 
 /**

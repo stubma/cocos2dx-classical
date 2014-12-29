@@ -24,6 +24,8 @@
 #ifndef __CCAuroraConstants_h__
 #define __CCAuroraConstants_h__
 
+#include "ccTypes.h"
+
 NS_CC_BEGIN
 
 /**
