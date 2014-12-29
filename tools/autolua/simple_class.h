@@ -33,6 +33,8 @@ typedef struct {
 	void test(const int& f);
 } someStruct2;
 
+typedef int* SEL_Custom;
+
 class CC_DLL SimpleNativeClass : public CCNode
 {
 public:
@@ -82,7 +84,7 @@ public:
 
 	// these methods are simple, can be defined inline
 	int processGLubyte(GLubyte b);
-	int processSEL_CallFunc(SEL_CallFunc c);
+	int processSEL_CallFunc(SEL_Custom c);
 	int processSomeStruct1(someStruct1 s);
 	int processSomeStruct2(someStruct2 s);
 	int processSomeStruct3(someStruct3 s);
