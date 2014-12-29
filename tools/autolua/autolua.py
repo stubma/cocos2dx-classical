@@ -180,91 +180,116 @@ class NativeType(object):
             if nt.canonical_type is not None:
                 nt.canonical_type.whole_name += "&"
                 nt.canonical_type.name += "&"
+        elif ntype.kind == TypeKind.RECORD:
+            nt = NativeType()
+            decl = ntype.get_declaration()
+            if decl.kind == CursorKind.CLASS_DECL:
+                nt.is_class = True
+            elif decl.kind == CursorKind.STRUCT_DECL:
+                nt.is_struct = True
+            nt.name = decl.displayname
+            nt.pointee_name = nt.name
+            nt.qualified_name = get_qualified_name(decl)
+            nt.qualified_ns  = get_qualified_namespace(decl)
+            nt.whole_name = nt.qualified_name
+            nt.qualified_pointee_name = nt.whole_name
         else:
             nt = NativeType()
             decl = ntype.get_declaration()
+            ctype = ntype.get_canonical()
+            cdecl = ctype.get_declaration()
 
-            if ntype.kind == TypeKind.RECORD:
-                if decl.kind == CursorKind.CLASS_DECL:
-                    nt.is_class = True
-                elif decl.kind == CursorKind.STRUCT_DECL:
-                    nt.is_struct = True
-                nt.name = decl.displayname
-                nt.pointee_name = nt.name
-                nt.qualified_name = get_qualified_name(decl)
-                nt.qualified_ns  = get_qualified_namespace(decl)
-                nt.whole_name = nt.qualified_name
-                nt.qualified_pointee_name = nt.whole_name
-            else:
-                # find name
-                if decl.kind == CursorKind.TYPEDEF_DECL and len(decl.get_children_array()) > 0:
+            # find name
+            if decl.kind == CursorKind.TYPEDEF_DECL:
+                decl_type = None
+                if len(decl.get_children_array()) > 0:
                     decl_type = decl.get_children_array()[0]
-                    if decl_type.kind == CursorKind.STRUCT_DECL:
-                        nt.is_struct = True
-                        nt.name = decl.displayname
-                    elif decl_type.kind == CursorKind.ENUM_DECL:
-                        nt.is_enum = True
-                        nt.name = decl.displayname
+                if ctype.kind == TypeKind.MEMBERPOINTER:
+                    nt.name = decl.displayname
+                    nt.not_supported = True
+                elif decl_type is None:
+                    if ctype.kind == TypeKind.POINTER or ctype.kind == TypeKind.LVALUEREFERENCE or ctype.kind == TypeKind.RECORD:
+                        nt = NativeType.from_type(ctype)
                     else:
-                        nt.name = decl.displayname
-                elif decl.kind == CursorKind.NO_DECL_FOUND:
-                    nt.name = native_name_from_type(ntype)
+                        nt.name = native_name_from_type(ctype)
+                        nt.pointee_name = nt.name
+                        nt.qualified_name = get_qualified_name(decl)
+                        nt.qualified_ns  = get_qualified_namespace(decl)
+                elif decl_type.kind == CursorKind.STRUCT_DECL:
+                    nt.is_struct = True
+                    nt.name = decl.displayname
+                    nt.pointee_name = nt.name
+                    nt.qualified_name = get_qualified_name(decl)
+                    nt.qualified_ns  = get_qualified_namespace(decl)
+                elif decl_type.kind == CursorKind.ENUM_DECL:
+                    nt.is_enum = True
+                    nt.name = decl.displayname
+                    nt.pointee_name = nt.name
+                    nt.qualified_name = get_qualified_name(decl)
+                    nt.qualified_ns  = get_qualified_namespace(decl)
                 else:
-                    nt.name = decl.spelling
-
-                # pointee name, same as name if type is not a pointer or ref
+                    if ctype.kind == TypeKind.POINTER or ctype.kind == TypeKind.LVALUEREFERENCE or ctype.kind == TypeKind.RECORD:
+                        nt = NativeType.from_type(ctype)
+                    else:
+                        nt.name = native_name_from_type(ctype)
+                        nt.pointee_name = nt.name
+                        nt.qualified_name = get_qualified_name(decl)
+                        nt.qualified_ns  = get_qualified_namespace(decl)
+            elif decl.kind == CursorKind.NO_DECL_FOUND:
+                nt.name = native_name_from_type(ntype)
                 nt.pointee_name = nt.name
-
-                # qualified name
                 nt.qualified_name = get_qualified_name(decl)
                 nt.qualified_ns  = get_qualified_namespace(decl)
+            else:
+                nt.name = decl.spelling
+                nt.pointee_name = nt.name
+                nt.qualified_name = get_qualified_name(decl)
+                nt.qualified_ns = get_qualified_namespace(decl)
 
-                # special checking for std::string and std::function
-                if nt.qualified_name == "std::string":
-                    nt.name = nt.qualified_name
-                if nt.qualified_name.startswith("std::function"):
-                    nt.name = "std::function"
+            # set qualified pointee name
+            if len(nt.qualified_ns) > 0:
+                nt.qualified_pointee_name = nt.qualified_ns + "::" + nt.pointee_name
+            else:
+                nt.qualified_pointee_name = nt.pointee_name
 
-                # if failed to get qualified name, use name as qualified name
-                if len(nt.qualified_name) == 0 or nt.qualified_name.find("::") == -1:
-                    nt.qualified_name = nt.name
+            # special checking for std::string and std::function
+            if nt.qualified_name == "std::string":
+                nt.name = nt.qualified_name
+            if nt.qualified_name.startswith("std::function"):
+                nt.name = "std::function"
 
-                # whole name
-                nt.whole_name = nt.qualified_name
+            # if failed to get qualified name, use name as qualified name
+            if len(nt.qualified_name) == 0 or nt.qualified_name.find("::") == -1:
+                nt.qualified_name = nt.name
 
-                # qualified pointee name, same as qualifed name if type is not a pointer or ref
-                nt.qualified_pointee_name = nt.whole_name
+            # whole name
+            nt.whole_name = nt.qualified_name
 
-                # const prefix, only for whole name
-                nt.is_const = ntype.is_const_qualified()
-                if nt.is_const:
-                    nt.whole_name = "const " + nt.whole_name
+            # const prefix, only for whole name
+            nt.is_const = ntype.is_const_qualified()
+            if nt.is_const:
+                nt.whole_name = "const " + nt.whole_name
 
-                # Check whether it's a std::function typedef
-                cdecl = ntype.get_canonical().get_declaration()
-                if None != cdecl.spelling and 0 == cmp(cdecl.spelling, "function"):
-                    nt.name = "std::function"
+            # Check whether it's a std::function typedef
+            if None != cdecl.spelling and 0 == cmp(cdecl.spelling, "function"):
+                nt.name = "std::function"
 
-                # is enum?
-                nt.is_enum = ntype.get_canonical().kind == TypeKind.ENUM
+            # is enum?
+            nt.is_enum = ntype.get_canonical().kind == TypeKind.ENUM
 
-                # if is std::function, get function argument types
-                if nt.name == "std::function":
-                    nt.qualified_name = get_qualified_name(cdecl)
-                    r = re.compile('function<(.+) .*\((.*)\)>').search(cdecl.displayname)
-                    (ret_type, params) = r.groups()
-                    params = filter(None, params.split(", "))
+            # if is std::function, get function argument types
+            if nt.name == "std::function":
+                nt.qualified_name = get_qualified_name(cdecl)
+                r = re.compile('function<(.+) .*\((.*)\)>').search(cdecl.displayname)
+                (ret_type, params) = r.groups()
+                params = filter(None, params.split(", "))
 
-                    nt.is_function = True
-                    nt.ret_type = NativeType.from_string(ret_type)
-                    nt.param_types = [NativeType.from_string(string) for string in params]
+                nt.is_function = True
+                nt.ret_type = NativeType.from_string(ret_type)
+                nt.param_types = [NativeType.from_string(string) for string in params]
 
         # if invalid type or multi-level pointer, not support
         if nt.name == INVALID_NATIVE_TYPE or nt.pointer_level > 1:
-            nt.not_supported = True
-
-        # if cocos2dx callfunc pointer, not support
-        if nt.name.startswith("SEL_"):
             nt.not_supported = True
 
         return nt
@@ -870,7 +895,7 @@ class Generator(Closure):
     def process_node(self, node):
         if node.kind == CursorKind.CLASS_DECL:
             # check namespace for found class
-            if node == node.type.get_declaration() and len(node.get_children_array()) > 0:
+            if node == node.type.get_declaration():
                 # check class is target or not
                 is_targeted_class = False
                 ns = get_qualified_namespace(node)
