@@ -1,0 +1,34 @@
+class SimpleAudioEngine : public TypeInfo {
+	static void end();
+	static SimpleAudioEngine* sharedEngine();
+	void stopAllEffects();
+	float getEffectsVolume();
+	void stopEffect(unsigned int nSoundId);
+	~SimpleAudioEngine();
+	bool willPlayBackgroundMusic();
+	void pauseBackgroundMusic();
+	void setBackgroundMusicVolume(float volume);
+	void stopBackgroundMusic();
+	void stopBackgroundMusic(bool bReleaseData);
+	float getBackgroundMusicVolume();
+	bool isBackgroundMusicPlaying();
+	void pauseAllEffects();
+	void preloadBackgroundMusic(const char* pszFilePath);
+	void playBackgroundMusic(const char* pszFilePath);
+	void playBackgroundMusic(const char* pszFilePath, bool bLoop);
+	unsigned int playEffect(const char* pszFilePath);
+	unsigned int playEffect(const char* pszFilePath, bool bLoop);
+	void resumeAllEffects();
+	void unloadEffect(const char* pszFilePath);
+	void rewindBackgroundMusic();
+	void preloadEffect(const char* pszFilePath);
+	void pauseEffect(unsigned int nSoundId);
+	long getClassTypeInfo();
+	void resumeBackgroundMusic();
+	SimpleAudioEngine();
+	void setEffectsVolume(float volume);
+	void resumeEffect(unsigned int nSoundId);
+};
+class TypeInfo {
+	long getClassTypeInfo();
+};

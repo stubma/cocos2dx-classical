@@ -24,6 +24,8 @@
 #ifndef __CCNetworkCommon_h__
 #define __CCNetworkCommon_h__
 
+#include "ccTypes.h"
+
 // type
 #if !defined(__GNUC__)
 typedef signed __int64 int64;

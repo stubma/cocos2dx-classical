@@ -28,6 +28,7 @@
 #include "support/locale/CCLocalization.h"
 #include "ccTypes.h"
 #include <vector>
+#include "actions/CCActionInstant.h"
 
 using namespace std;
 

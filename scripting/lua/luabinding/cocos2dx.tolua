@@ -1,0 +1,4697 @@
+class CCParticleMeteor : public CCParticleSystemQuad {
+	static CCParticleMeteor* create();
+	static CCParticleMeteor* createWithTotalParticles(unsigned int numberOfParticles);
+	bool init();
+	~CCParticleMeteor();
+	bool initWithTotalParticles(unsigned int numberOfParticles);
+	CCParticleMeteor();
+};
+class CCSPXSprite : public CCAFCSprite {
+	static CCSPXSprite* create(const char* spxPath, CCTexture2D* tex, int actionIndex);
+	int getAnimationCount();
+	CCAFCAnimation* getAnimationAt(int index, CCAFCClipMapping* mapping);
+	CCAFCFileData* getFileData();
+	int getImageCount();
+	~CCSPXSprite();
+};
+class CCAFCFileData : public CCObject {
+	string m_path;
+	float m_resScale;
+	~CCAFCFileData();
+};
+class CCMenuItemAtlasFont : public CCMenuItemLabel {
+	static CCMenuItemAtlasFont* create(const char* value, const char* charMapFile, int itemWidth, int itemHeight, char startCharMap);
+	~CCMenuItemAtlasFont();
+	CCMenuItemAtlasFont();
+};
+class CCProgressFromTo : public CCActionInterval {
+	static CCProgressFromTo* create(float duration, float fFromPercentage, float fToPercentage);
+	void startWithTarget(CCNode* pTarget);
+	void update(float time);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, float fFromPercentage, float fToPercentage);
+	CCActionInterval* reverse();
+};
+class CCTMXObjectGroup : public CCObject {
+	static CCTMXObjectGroup* create();
+	int getObjectCount();
+	CCTMXObject* getObjectAt(int index);
+	CCDictionary& getProperties();
+	string getProperty(const string& name);
+	void addProperty(const string& key, const string& value);
+	void setName(string var);
+	void setOffsetX(float var);
+	int getColor();
+	string getName();
+	void setOpacity(float var);
+	~CCTMXObjectGroup();
+	CCTMXObject* getObject(const string& name);
+	const CCArray& getObjects();
+	float getOffsetY();
+	float getOffsetX();
+	CCTMXObject* newObject();
+	float getOpacity();
+	void setOffsetY(float var);
+	void setProperties(const CCDictionary& var);
+	void setObjects(const CCArray& var);
+	void setColor(int var);
+};
+class CCMoveBy : public CCActionInterval {
+	static CCMoveBy* create(float duration, const CCPoint& deltaPosition, bool autoHeadOn, float initAngle);
+	void startWithTarget(CCNode* pTarget);
+	void update(float time);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, const CCPoint& deltaPosition, bool autoHeadOn, float initAngle);
+	CCActionInterval* reverse();
+};
+class CCTMXLayer : public CCNodeRGBA {
+	static CCTMXLayer* create(int layerIndex, CCTMXMapInfo* mapInfo);
+	const int* getGids();
+	int getTileWidth();
+	void setTileAt(int gid, CCPoint loc);
+	void setTileAt(int gid, int x, int y);
+	CCPoint getPositionAt(CCPoint loc);
+	CCPoint getPositionAt(int x, int y);
+	CCTMXMapInfo* getMapInfo();
+	int getMinGid();
+	float getVertexZ();
+	CCTMXLayerInfo* getLayerInfo();
+	void setTileWidth(int var);
+	void setVertexZ(float var);
+	int getMaxGid();
+	void setAlphaFuncValue(float var);
+	int getGidAt(CCPoint loc);
+	int getGidAt(int x, int y);
+	void setLayerWidth(int var);
+	int getTileHeight();
+	void removeTile(CCSprite* sprite);
+	~CCTMXLayer();
+	void setMapInfo(CCTMXMapInfo* var);
+	CCSize getLayerSize();
+	void setMinGid(int var);
+	int getLayerHeight();
+	void updateTileAt(int gid, CCPoint loc);
+	void updateTileAt(int gid, int x, int y);
+	void removeTileAt(CCPoint loc);
+	void removeTileAt(int x, int y);
+	void setUseAutomaticVertexZ(bool var);
+	void setAntiAliasTexParameters();
+	void setTileColorAt(ccColor4B c, CCPoint loc);
+	void setTileColorAt(ccColor4B c, int x, int y);
+	const int* copyGids();
+	ccPosition getTileCoordinateAt(float x, float y);
+	bool isUseAutomaticVertexZ();
+	float getAlphaFuncValue();
+	void markUseAutomaticVertexZ();
+	void setLayerInfo(CCTMXLayerInfo* var);
+	void setTileHeight(int var);
+	string getProperty(const string& key);
+	void setMaxGid(int var);
+	CCSprite* tileAt(CCPoint loc);
+	CCSprite* tileAt(int x, int y);
+	void clearUseAutomaticVertexZ();
+	void setLayerHeight(int var);
+	int getLayerWidth();
+};
+class CCTouchHandler : public CCObject {
+	static CCTouchHandler* handlerWithDelegate(CCTouchDelegate* pDelegate, int nPriority);
+	CCTouchDelegate* getDelegate();
+	bool initWithDelegate(CCTouchDelegate* pDelegate, int nPriority);
+	int getPriority();
+	~CCTouchHandler();
+	void setPriority(int nPriority);
+	int getEnabledSelectors();
+	void setDelegate(CCTouchDelegate* pDelegate);
+	void setEnalbedSelectors(int nValue);
+};
+class CCProgressTo : public CCActionInterval {
+	static CCProgressTo* create(float duration, float fPercent);
+	void startWithTarget(CCNode* pTarget);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, float fPercent);
+	void update(float time);
+};
+class CCFlipX : public CCActionInstant {
+	static CCFlipX* create(bool x);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithFlipX(bool x);
+	void update(float time);
+	~CCFlipX();
+	CCFlipX();
+	CCFiniteTimeAction* reverse();
+};
+class CCFlipY : public CCActionInstant {
+	static CCFlipY* create(bool y);
+	CCFiniteTimeAction* reverse();
+	bool initWithFlipY(bool y);
+	void update(float time);
+	~CCFlipY();
+	CCFlipY();
+	CCObject* copyWithZone(CCZone* pZone);
+};
+class CCFileDownloader : public CCObject {
+	static void purge();
+	static CCFileDownloader* getInstance();
+	void setFailedEntries(const CCArray& var);
+	bool isDownloading();
+	const CCArray& getDownloadEntries();
+	const string& getFolder();
+	void addFile(const string& url, const string& dstFilename, bool append);
+	void addFile(const string& url, bool append);
+	void addFile(const string& url, const string& dstFilename, unsigned long sizeHint, bool append);
+	void setDownloading(bool var);
+	const CCArray& getFailedEntries();
+	void markDownloading();
+	string getCurrentDownloadingFileName();
+	void start();
+	void setDownloadEntries(const CCArray& var);
+	void abort();
+	void setFolder(const string& var);
+	unsigned long getTotalSize();
+	string getCurrentDownloadingFileFullPath();
+	unsigned long getCurrentDownloadingFileSize();
+	~CCFileDownloader();
+	unsigned long getTotalDownloadedSize();
+	void clearDownloading();
+	unsigned long getCurrentDownloadedSize();
+};
+class CCSAXParser {
+	static void textHandler(void* ctx, const unsigned char* name, int len);
+	static void endElement(void* ctx, const unsigned char* name);
+	bool parse(const char* pszFile);
+	bool parse(const char* pXMLData, unsigned int uDataLength);
+	bool init(const char* pszEncoding);
+	~CCSAXParser();
+	void setDelegator(CCSAXDelegator* pDelegator);
+	CCSAXParser();
+};
+class CCSPX3Sprite : public CCAFCSprite {
+	int getAnimationCount();
+	CCAFCAnimation* getAnimationAt(int index, CCAFCClipMapping* mapping);
+	CCAFCFileData* getFileData();
+	int getImageCount();
+	~CCSPX3Sprite();
+};
+class CCShaderCache : public CCObject {
+	static void purgeSharedShaderCache();
+	static CCShaderCache* sharedShaderCache();
+	void loadDefaultShaders();
+	void addProgram(CCGLProgram* program, const char* key);
+	~CCShaderCache();
+	void reloadDefaultShaders();
+	CCGLProgram* programForKey(const char* key);
+	CCShaderCache();
+};
+class CCTreeFadeOut : public CCFadeOut {
+	static CCTreeFadeOut* create(float d);
+	void excludeNode(CCNode* n, bool recursively);
+	void update(float time);
+	CCActionInterval* reverse();
+};
+class CCResourceLoaderListener {
+	void onResourceLoadingDone();
+	void onResourceLoadingProgress(float progress, float delta);
+};
+class CCTransitionFadeDown : public CCTransitionFadeTR {
+	static CCTransitionFadeDown* create(float t, CCScene* scene);
+	CCActionInterval* actionWithSize(const CCSize& size);
+	~CCTransitionFadeDown();
+	CCTransitionFadeDown();
+};
+class CCTransitionSplitCols : public CCTransitionScene, public CCTransitionEaseScene {
+	static CCTransitionSplitCols* create(float t, CCScene* scene);
+	CCActionInterval* action();
+	CCActionInterval* easeActionWithAction(CCActionInterval* action);
+	~CCTransitionSplitCols();
+	void onEnter();
+	CCTransitionSplitCols();
+};
+class CCEaseBackIn : public CCActionEase {
+	static CCEaseBackIn* create(CCActionInterval* pAction);
+	CCObject* copyWithZone(CCZone* pZone);
+	void update(float time);
+	CCActionInterval* reverse();
+};
+class CCMWSprite : public CCAFCSprite {
+	int getAnimationCount();
+	CCAFCAnimation* getAnimationAt(int index, CCAFCClipMapping* mapping);
+	CCAFCFileData* getFileData();
+	int getImageCount();
+	~CCMWSprite();
+};
+class CCTexture2D : public CCObject {
+	bool m_bHasPremultipliedAlpha;
+	bool m_bHasMipmaps;
+	static void setDefaultAlphaPixelFormat(CCTexture2DPixelFormat format);
+	static CCTexture2DPixelFormat defaultAlphaPixelFormat();
+	static void PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
+	CCGLProgram* getShaderProgram();
+	bool initWithETCFile(const char* file);
+	const char* stringForFormat();
+	bool initWithImage(CCImage* uiImage);
+	void setShaderProgram(CCGLProgram* var);
+	float getMaxS();
+	void releaseData(void* data);
+	const vector& getImageRects();
+	bool hasPremultipliedAlpha();
+	unsigned int getPixelsHigh();
+	void drawInRect(const CCRect& rect);
+	void setTexParameters(ccTexParams* texParams);
+	unsigned int bitsPerPixelForFormat(CCTexture2DPixelFormat format);
+	unsigned int bitsPerPixelForFormat();
+	bool initWithData(const void* data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const CCSize& contentSize);
+	unsigned int getName();
+	bool initWithString(const char* text, const char* fontName, float fontSize);
+	bool initWithString(const char* text, const char* fontName, float fontSize, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment);
+	bool initWithString(const char* text, ccFontDefinition* textDefinition);
+	void setMaxT(float var);
+	~CCTexture2D();
+	int getRealLength();
+	bool isNeedTime();
+	CCSize getContentSize();
+	float getMaxT();
+	const CCPoint& getShadowStrokePadding();
+	void setAliasTexParameters();
+	void setAntiAliasTexParameters();
+	void generateMipmap();
+	const char* description();
+	CCTexture2DPixelFormat getPixelFormat();
+	void setNeedTime(bool var);
+	void setRealLength(int var);
+	void clearNeedTime();
+	void* keepData(void* data, unsigned int length);
+	const CCSize& getContentSizeInPixels();
+	unsigned int getPixelsWide();
+	void markNeedTime();
+	void drawAtPoint(const CCPoint& point);
+	bool hasMipmaps();
+	bool initWithPVRFile(const char* file);
+	CCTexture2D();
+	void setMaxS(float var);
+};
+class CCPoolManager {
+	static void purgePoolManager();
+	static CCPoolManager* sharedPoolManager();
+	void addObject(CCObject* pObject);
+	void finalize();
+	void pop();
+	~CCPoolManager();
+	CCPoolManager();
+	void push();
+	void removeObject(CCObject* pObject);
+};
+class CCParticleBatchNode : public CCNode, public CCTextureProtocol {
+	static CCParticleBatchNode* create(const char* fileImage, unsigned int capacity);
+	static CCParticleBatchNode* createWithTexture(CCTexture2D* tex, unsigned int capacity);
+	void removeChildAtIndex(unsigned int index, bool doCleanup);
+	void addChild(CCNode* child, int zOrder);
+	void addChild(CCNode* child);
+	void addChild(CCNode* child, int zOrder, int tag);
+	void draw();
+	void setTexture(CCTexture2D* texture);
+	bool initWithFile(const char* fileImage, unsigned int capacity);
+	void disableParticle(unsigned int particleIndex);
+	CCTexture2D* getTexture();
+	void visit();
+	void setBlendFunc(ccBlendFunc blendFunc);
+	void removeAllChildrenWithCleanup(bool doCleanup);
+	CCTextureAtlas* getTextureAtlas();
+	~CCParticleBatchNode();
+	void removeChild(CCNode* child, bool cleanup);
+	ccBlendFunc getBlendFunc();
+	void insertChild(CCParticleSystem* pSystem, unsigned int index);
+	CCParticleBatchNode();
+	bool initWithTexture(CCTexture2D* tex, unsigned int capacity);
+	void reorderChild(CCNode* child, int zOrder);
+	void setTextureAtlas(CCTextureAtlas* var);
+};
+class CCTransitionScene : public CCScene {
+	static CCTransitionScene* create(float t, CCScene* scene);
+	void draw();
+	void finish();
+	void onEnter();
+	void onExit();
+	bool initWithDuration(float t, CCScene* scene);
+	~CCTransitionScene();
+	void cleanup();
+	CCTransitionScene();
+	void hideOutShowIn();
+};
+class CCCallFuncND : public CCCallFuncN {
+	long getClassTypeInfo();
+	void execute();
+	CCObject* copyWithZone(CCZone* pZone);
+};
+class CCPoint {
+	float x;
+	float y;
+	static CCPoint forAngle(float a);
+	CCPoint normalize();
+	CCPoint project(const CCPoint& other);
+	float getLengthSq();
+	float getAngle(const CCPoint& other);
+	float getAngle();
+	CCPoint lerp(const CCPoint& other, float alpha);
+	float getLength();
+	void setPoint(float x, float y);
+	bool equals(const CCPoint& target);
+	CCPoint rotateByAngle(const CCPoint& pivot, float angle);
+	float cross(const CCPoint& other);
+	float getDistanceSq(const CCPoint& other);
+	CCPoint getRPerp();
+	CCPoint rotate(const CCPoint& other);
+	bool fuzzyEquals(const CCPoint& target, float variance);
+	float getDistance(const CCPoint& other);
+	CCPoint(float x, float y);
+	CCPoint();
+	CCPoint(const CCPoint& other);
+	CCPoint(const CCSize& size);
+	CCPoint unrotate(const CCPoint& other);
+	CCPoint getPerp();
+	float dot(const CCPoint& other);
+};
+class CCArray {
+};
+class CCSpeed : public CCAction {
+	static CCSpeed* create(CCActionInterval* pAction, float fSpeed);
+	void startWithTarget(CCNode* pTarget);
+	void setInnerAction(CCActionInterval* pAction);
+	CCActionInterval* reverse();
+	CCObject* copyWithZone(CCZone* pZone);
+	void stop();
+	void step(float dt);
+	~CCSpeed();
+	void setSpeed(float fSpeed);
+	bool initWithAction(CCActionInterval* pAction, float fSpeed);
+	CCActionInterval* getInnerAction();
+	CCSpeed();
+	bool isDone();
+	float getSpeed();
+};
+class CCSPX3TileSet : public CCObject {
+	CCSPX3TileSetMode m_mode;
+	int m_imageIndex;
+	int m_tileWidth;
+	int m_tileHeight;
+	int m_tileColumns;
+	int m_tileRows;
+	int m_tileCount;
+	CCSPX3Tile* m_tiles;
+	static CCSPX3TileSet* create();
+	~CCSPX3TileSet();
+};
+class CCShow : public CCActionInstant {
+	static CCShow* create();
+	CCFiniteTimeAction* reverse();
+	CCObject* copyWithZone(CCZone* pZone);
+	~CCShow();
+	void update(float time);
+	CCShow();
+};
+class CCLayerClip : public CCLayerColor {
+	static CCLayerClip* create(const ccColor4B& color);
+	static CCLayerClip* create();
+	void markClipEnabled();
+	bool isClipEnabled();
+	void setClipRect(const CCRect& var);
+	void clearClipEnabled();
+	void visit();
+	~CCLayerClip();
+	const CCRect& getClipRect();
+	void setPosition(const CCPoint& position);
+	void setContentSize(const CCSize& contentSize);
+	void setClipEnabled(bool var);
+};
+class CCFadeOut : public CCActionInterval {
+	static CCFadeOut* create(float d);
+	CCObject* copyWithZone(CCZone* pZone);
+	void update(float time);
+	CCActionInterval* reverse();
+};
+class CCArcticFileData : public CCAFCFileData {
+	int m_version;
+	int m_flags;
+	int m_moduleCount;
+	CCArcticModule* m_modules;
+	int m_frameModuleCount;
+	CCArcticFrameModule* m_frameModules;
+	int m_frameCount;
+	CCArcticFrame* m_frames;
+	int m_animationFrameCount;
+	CCArcticAnimationFrame* m_animationFrames;
+	int m_animationCount;
+	CCArcticAnimation* m_animations;
+	static CCArcticFileData* create();
+	~CCArcticFileData();
+};
+class CCRepeatForever {
+};
+class CCSPXAction : public CCObject {
+	CCSPXTransform m_transform;
+	int m_frameCount;
+	int m_maxFrameTile;
+	CCSPXActionFrame* m_frames;
+	~CCSPXAction();
+};
+class CCFadeOutBLTiles : public CCFadeOutTRTiles {
+	static CCFadeOutBLTiles* create(float duration, const CCSize& gridSize);
+	float testFunc(const CCSize& pos, float time);
+};
+class CCParticleSun : public CCParticleSystemQuad {
+	static CCParticleSun* create();
+	static CCParticleSun* createWithTotalParticles(unsigned int numberOfParticles);
+	bool init();
+	~CCParticleSun();
+	bool initWithTotalParticles(unsigned int numberOfParticles);
+	CCParticleSun();
+};
+class CCKeypadHandler : public CCObject {
+	static CCKeypadHandler* handlerWithDelegate(CCKeypadDelegate* pDelegate);
+	CCKeypadDelegate* getDelegate();
+	bool initWithDelegate(CCKeypadDelegate* pDelegate);
+	void setDelegate(CCKeypadDelegate* pDelegate);
+	~CCKeypadHandler();
+};
+class CCPacket : public CCObject {
+	static CCPacket* createRawPacket(const char* buf, unsigned long len, int algorithm);
+	static CCPacket* createStandardPacket(const string& magic, int command, CCJSONObject* json, int algorithm);
+	static CCPacket* createStandardPacket(const char* buf, unsigned long len);
+	static CCPacket* createStandardPacket(const string& magic, int command, CCJSONObject* json, int protocolVersion, int serverVersion, int algorithm);
+	bool getRaw();
+	void setBuffer(char* var);
+	Header& getHeader();
+	unsigned long getPacketLength();
+	~CCPacket();
+	int getBodyLength();
+	char* getBuffer();
+	void setHeader(const Header& var);
+	const char* getBody();
+	typedef struct {
+		int protocolVersion;
+		int serverVersion;
+		int command;
+		int encryptAlgorithm;
+		int length;
+	} Header;
+};
+class CCParticleRain : public CCParticleSystemQuad {
+	static CCParticleRain* create();
+	static CCParticleRain* createWithTotalParticles(unsigned int numberOfParticles);
+	bool init();
+	~CCParticleRain();
+	bool initWithTotalParticles(unsigned int numberOfParticles);
+	CCParticleRain();
+};
+class CCImagePicker {
+	static void pickFromCamera(const string& path, CCImagePickerCallback* callback, int w, int h, bool keepRatio);
+	static void pickFromFrontCamera(const string& path, CCImagePickerCallback* callback, int w, int h, bool keepRatio);
+	static bool hasCamera();
+	static void pickFromAlbum(const string& path, CCImagePickerCallback* callback, int w, int h, bool keepRatio);
+	static bool hasFrontCamera();
+};
+class CCSecureUserDefault {
+	static void purge();
+	static CCSecureUserDefault* getInstance();
+	void setIntegerForKey(const char* pKey, int value);
+	float getFloatForKey(const char* pKey, float defaultValue);
+	float getFloatForKey(const char* pKey);
+	bool getBoolForKey(const char* pKey, bool defaultValue);
+	bool getBoolForKey(const char* pKey);
+	void setDoubleForKey(const char* pKey, double value);
+	void setFloatForKey(const char* pKey, float value);
+	~CCSecureUserDefault();
+	string getStringForKey(const char* pKey, const string& defaultValue);
+	string getStringForKey(const char* pKey);
+	void setStringForKey(const char* pKey, const string& value);
+	void flush();
+	int getIntegerForKey(const char* pKey, int defaultValue);
+	int getIntegerForKey(const char* pKey);
+	double getDoubleForKey(const char* pKey, double defaultValue);
+	double getDoubleForKey(const char* pKey);
+	void setBoolForKey(const char* pKey, bool value);
+};
+class CCSkewBy : public CCSkewTo {
+	static CCSkewBy* create(float t, float deltaSkewX, float deltaSkewY);
+	void startWithTarget(CCNode* pTarget);
+	CCActionInterval* reverse();
+	bool initWithDuration(float t, float sx, float sy);
+};
+class CCShaders {
+	static void setColorMatrix(const kmMat4& mat4);
+	static void setGray();
+	static void setFlash(float r, float g, float b, float t);
+	static void setShine(float width, CCPoint lb, CCPoint rt, ccColor4B color1, ccColor4B color2, ccColor4B color3, ccVertex3F gradientPositions, float time);
+	static CCGLProgram* programForKey(const string& key);
+	static void setBlur(CCSize nodeSize, CCSize blurSize, ccColor4F blurSubtract);
+	static void setLighting(ccColor4B mul, ccColor3B add);
+};
+class CCParticleFireworks : public CCParticleSystemQuad {
+	static CCParticleFireworks* create();
+	static CCParticleFireworks* createWithTotalParticles(unsigned int numberOfParticles);
+	bool init();
+	~CCParticleFireworks();
+	bool initWithTotalParticles(unsigned int numberOfParticles);
+	CCParticleFireworks();
+};
+class CCAssetInputStream : public CCObject {
+	static CCAssetInputStream* create(const string& path);
+	unsigned long available();
+	int readShort(short* ret);
+	int read(char* buffer, unsigned long length);
+	unsigned long getLength();
+	unsigned long seek(int offset, int mode);
+	int readInt64(long long* ret);
+	~CCAssetInputStream();
+	int readInt(int* ret);
+	int readByte(char* ret);
+	void setBigEndian(bool big);
+	bool isBigEndian();
+	void close();
+	char* getBuffer();
+	bool open();
+	unsigned long getPosition();
+};
+class CCPrettyPrinter : public CCDataVisitor {
+	void clear();
+	void visitObject(const CCObject* p);
+	void visit(const CCInteger* p);
+	void visit(const CCBool* p);
+	void visit(const CCFloat* p);
+	void visit(const CCDouble* p);
+	void visit(const CCString* p);
+	void visit(const CCArray* p);
+	void visit(const CCDictionary* p);
+	void visit(const CCSet* p);
+	string getResult();
+	CCPrettyPrinter(int indentLevel);
+};
+class CCGridAction : public CCActionInterval {
+	static CCGridAction* create(float duration, const CCSize& gridSize);
+	void startWithTarget(CCNode* pTarget);
+	CCGridBase* getGrid();
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, const CCSize& gridSize);
+	CCActionInterval* reverse();
+};
+class CCPlace : public CCActionInstant {
+	static CCPlace* create(const CCPoint& pos);
+	CCObject* copyWithZone(CCZone* pZone);
+	~CCPlace();
+	bool initWithPosition(const CCPoint& pos);
+	void update(float time);
+	CCPlace();
+};
+class CCMenuItem {
+};
+class CCSAXDelegator {
+	void textHandler(void* ctx, const char* s, int len);
+	void endElement(void* ctx, const char* name);
+};
+class CCMenu : public CCLayerRGBA {
+	static CCMenu* create();
+	static CCMenu* createWithArray(CCArray* pArrayOfItems);
+	static CCMenu* createWithItem(CCMenuItem* item);
+	bool initWithArray(CCArray* pArrayOfItems);
+	void addChild(CCNode* child, int zOrder);
+	void addChild(CCNode* child);
+	void addChild(CCNode* child, int zOrder, int tag);
+	void alignItemsVertically();
+	bool ccTouchBegan(CCTouch* touch, CCEvent* event);
+	void ccTouchEnded(CCTouch* touch, CCEvent* event);
+	bool isOpacityModifyRGB();
+	bool isEnabled();
+	void setOpacityModifyRGB(bool bValue);
+	void setHandlerPriority(int newPriority);
+	~CCMenu();
+	bool init();
+	void alignItemsHorizontallyWithPadding(float padding);
+	void alignItemsInColumnsWithArray(CCArray* rows);
+	void alignItemsHorizontally();
+	void setEnabled(bool value);
+	void alignItemsInRowsWithArray(CCArray* columns);
+	void ccTouchMoved(CCTouch* touch, CCEvent* event);
+	void onExit();
+	void ccTouchCancelled(CCTouch* touch, CCEvent* event);
+	void removeChild(CCNode* child, bool cleanup);
+	CCMenu();
+	void alignItemsVerticallyWithPadding(float padding);
+	void registerWithTouchDispatcher();
+};
+class ZipUtils {
+	static void ccSetPvrEncryptionKeyPart(int index, unsigned int value);
+	static void ccSetPvrEncryptionKey(unsigned int keyPart1, unsigned int keyPart2, unsigned int keyPart3, unsigned int keyPart4);
+};
+class CCResultSet : public CCObject {
+	int columnCount();
+	bool boolForColumn(string columnName);
+	long long int64ForColumnIndex(int columnIdx);
+	long longForColumn(string columnName);
+	string stringForColumn(string columnName);
+	~CCResultSet();
+	CCDatabase* getDatabase();
+	string stringForColumnIndex(int columnIdx);
+	bool hasAnotherRow();
+	const void* dataNoCopyForColumn(string columnName, unsigned long* outLen);
+	int intForColumn(string columnName);
+	bool next();
+	long long int64ForColumn(string columnName);
+	CCStatement* getStatement();
+	string columnNameForIndex(int columnIdx);
+	double doubleForColumnIndex(int columnIdx);
+	const void* dataForColumnIndex(int columnIdx, unsigned long* outLen);
+	long longForColumnIndex(int columnIdx);
+	int columnIndexForName(string columnName);
+	bool columnIsNull(string columnName);
+	const void* dataForColumn(string columnName, unsigned long* outLen);
+	int intForColumnIndex(int columnIdx);
+	bool columnIndexIsNull(int columnIdx);
+	bool boolForColumnIndex(int columnIdx);
+	double doubleForColumn(string columnName);
+	const void* dataNoCopyForColumnIndex(int columnIdx, unsigned long* outLen);
+};
+class CCAccelerometer {
+	~CCAccelerometer();
+	void setAccelerometerInterval(float interval);
+	void update(float x, float y, float z, long sensorTimeStamp);
+	void setDelegate(CCAccelerometerDelegate* pDelegate);
+	CCAccelerometer();
+};
+class CCFadeOutUpTiles : public CCFadeOutTRTiles {
+	static CCFadeOutUpTiles* create(float duration, const CCSize& gridSize);
+	void transformTile(const CCPoint& pos, float distance);
+	float testFunc(const CCSize& pos, float time);
+};
+class CCTransitionProgressInOut : public CCTransitionProgress {
+	static CCTransitionProgressInOut* create(float t, CCScene* scene);
+};
+class CCOrbitCamera : public CCActionCamera {
+	static CCOrbitCamera* create(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
+	void startWithTarget(CCNode* pTarget);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
+	void sphericalRadius(float* r, float* zenith, float* azimuth);
+	void update(float time);
+	~CCOrbitCamera();
+	CCOrbitCamera();
+};
+class CCAnimationFrame : public CCObject {
+	void setSpriteFrame(CCSpriteFrame* var);
+	CCDictionary* getUserInfo();
+	void setDelayUnits(float var);
+	CCObject* copyWithZone(CCZone* pZone);
+	CCSpriteFrame* getSpriteFrame();
+	~CCAnimationFrame();
+	void setUserInfo(CCDictionary* var);
+	CCAnimationFrame();
+	float getDelayUnits();
+	bool initWithSpriteFrame(CCSpriteFrame* spriteFrame, float delayUnits, CCDictionary* userInfo);
+};
+class CCDrawNode : public CCNode {
+	static CCDrawNode* create();
+	void draw();
+	ccBlendFunc getBlendFunc();
+	void drawPolygon(CCPoint* verts, unsigned int count, const ccColor4F& fillColor, float borderWidth, const ccColor4F& borderColor);
+	void clear();
+	void setBlendFunc(const ccBlendFunc& blendFunc);
+	~CCDrawNode();
+	bool init();
+	void drawDot(const CCPoint& pos, float radius, const ccColor4F& color);
+	CCDrawNode();
+	void drawSegment(const CCPoint& from, const CCPoint& to, float radius, const ccColor4F& color);
+	void listenBackToForeground(CCObject* obj);
+};
+class CCParallaxNode : public CCNode {
+	static CCParallaxNode* create();
+	void addChild(CCNode* child, unsigned int zOrder, int tag);
+	void addChild(CCNode* child, unsigned int z, const CCPoint& parallaxRatio, const CCPoint& positionOffset);
+	void visit();
+	void removeAllChildrenWithCleanup(bool cleanup);
+	~CCParallaxNode();
+	void removeChild(CCNode* child, bool cleanup);
+	CCParallaxNode();
+	_ccArray* getParallaxArray();
+	void setParallaxArray(_ccArray* var);
+};
+class CCDirector : public CCObject, public TypeInfo {
+	static CCDirector* sharedDirector();
+	void pause();
+	void setDelegate(CCDirectorDelegate* pDelegate);
+	void setContentScaleFactor(float scaleFactor);
+	void setAlphaBlending(bool bOn);
+	CCSize getWinSizeInPixels();
+	float getDeltaTime();
+	void setGLDefaultValues();
+	float getContentScaleFactor();
+	CCPoint convertToUI(const CCPoint& obPoint);
+	void popToRootScene();
+	CCKeypadDispatcher* getKeypadDispatcher();
+	CCNode* getNotificationNode();
+	CCSize getWinSize();
+	void end();
+	bool isSendCleanupToScene();
+	CCPoint getVisibleOrigin();
+	void mainLoop();
+	void setDepthTest(bool bOn);
+	float getSecondsPerFrame();
+	~CCDirector();
+	void setAccelerometer(CCAccelerometer* var);
+	void setDefaultValues();
+	bool init();
+	void setScheduler(CCScheduler* var);
+	void reshapeProjection(const CCSize& newWindowSize);
+	void startAnimation();
+	CCEGLView* getOpenGLView();
+	CCScene* getRunningScene();
+	void setViewport();
+	void stopAnimation();
+	void setKeypadDispatcher(CCKeypadDispatcher* var);
+	void popToSceneStackLevel(int level);
+	ccDirectorProjection getProjection();
+	void resume();
+	void setTouchDispatcher(CCTouchDispatcher* var);
+	bool isNextDeltaTimeZero();
+	CCDirectorDelegate* getDelegate();
+	void setActionManager(CCActionManager* var);
+	void setOpenGLView(CCEGLView* pobOpenGLView);
+	CCPoint convertToGL(const CCPoint& obPoint);
+	void purgeCachedData();
+	unsigned int getTotalFrames();
+	void runWithScene(CCScene* pScene);
+	void setNotificationNode(CCNode* node);
+	void drawScene();
+	void popScene();
+	bool isDisplayStats();
+	void setProjection(ccDirectorProjection kProjection);
+	CCTouchDispatcher* getTouchDispatcher();
+	float getZEye();
+	void setNextDeltaTimeZero(bool bNextDeltaTimeZero);
+	CCAccelerometer* getAccelerometer();
+	CCSize getVisibleSize();
+	CCScheduler* getScheduler();
+	void pushScene(CCScene* pScene);
+	long getClassTypeInfo();
+	double getAnimationInterval();
+	bool isPaused();
+	CCDirector();
+	void setDisplayStats(bool bDisplayStats);
+	void replaceScene(CCScene* pScene);
+	void setAnimationInterval(double dValue);
+	CCActionManager* getActionManager();
+};
+class CCRepeat : public CCActionInterval {
+	static CCRepeat* create(CCFiniteTimeAction* pAction, unsigned int times);
+	void startWithTarget(CCNode* pTarget);
+	void setInnerAction(CCFiniteTimeAction* pAction);
+	CCObject* copyWithZone(CCZone* pZone);
+	void stop();
+	void update(float dt);
+	~CCRepeat();
+	bool initWithAction(CCFiniteTimeAction* pAction, unsigned int times);
+	CCFiniteTimeAction* getInnerAction();
+	bool isDone();
+	CCActionInterval* reverse();
+};
+class CCMenuItemSprite : public CCMenuItem {
+	static CCMenuItemSprite* create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite);
+	void setFocus(bool flag);
+	void setEnabled(bool bEnabled);
+	void setFocusIsAttachment(bool var);
+	void centerAlignImages();
+	void setNormalImage(CCNode* var);
+	void setDisabledImage(CCNode* var);
+	void clearFocusIsAttachment();
+	void setSelectedImage(CCNode* var);
+	CCNode* getDisabledImage();
+	bool isFocus();
+	CCNode* getSelectedImage();
+	void markFocusIsAttachment();
+	CCNode* getNormalImage();
+	bool isFocusIsAttachment();
+	void selected();
+	CCNode* getFocusImage();
+	CCMenuItemSprite();
+	void unselected();
+	void setFocusImage(CCNode* focusImage);
+};
+class CCIMEDispatcher {
+	static CCIMEDispatcher* sharedDispatcher();
+	const char* getContentText();
+	void dispatchDeleteBackward();
+	void dispatchInsertText(const char* pText, int nLen);
+	void dispatchKeyboardWillShow(CCIMEKeyboardNotificationInfo& info);
+	~CCIMEDispatcher();
+	void dispatchKeyboardDidShow(CCIMEKeyboardNotificationInfo& info);
+	void dispatchKeyboardWillHide(CCIMEKeyboardNotificationInfo& info);
+	void dispatchKeyboardDidHide(CCIMEKeyboardNotificationInfo& info);
+};
+class CCZone {
+};
+class CCLabelProtocol {
+	void setString(const char* label);
+	const char* getString();
+};
+class CCInteger {
+};
+class CCActionInstant : public CCFiniteTimeAction {
+	CCObject* copyWithZone(CCZone* pZone);
+	void update(float time);
+	~CCActionInstant();
+	void step(float dt);
+	CCActionInstant();
+	bool isDone();
+	CCFiniteTimeAction* reverse();
+};
+class CCEaseSineIn : public CCActionEase {
+	static CCEaseSineIn* create(CCActionInterval* pAction);
+	CCObject* copyWithZone(CCZone* pZone);
+	void update(float time);
+	CCActionInterval* reverse();
+};
+class CCFileUtilsAndroid : public CCFileUtils {
+	bool isFileExist(const string& strFilePath);
+	unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long* pSize);
+	unsigned char* getFileDataForAsync(const char* pszFileName, const char* pszMode, unsigned long* pSize);
+	~CCFileUtilsAndroid();
+	bool init();
+	bool isAbsolutePath(const string& strPath);
+	string getWritablePath();
+};
+class CCToast : public CCLayer {
+	static CCToast* create(CCNode* owner, CCNode* content, int tag, float duration, CCFiniteTimeAction* inAction, CCFiniteTimeAction* outAction);
+	static void forceRemove(CCNode* owner, int tag);
+	~CCToast();
+};
+class CCShaky3D : public CCGrid3DAction {
+	static CCShaky3D* create(float duration, const CCSize& gridSize, int range, bool shakeZ);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, const CCSize& gridSize, int range, bool shakeZ);
+	void update(float time);
+};
+class CCBlendProtocol {
+	ccBlendFunc getBlendFunc();
+	void setBlendFunc(ccBlendFunc blendFunc);
+};
+class CCAFCSprite : public CCNodeRGBA, public CCBlendProtocol {
+	static CCSpriteBatchNode* createBatchNode(CCTexture2D* tex);
+	void addChild(CCNode* child, int z, int tag);
+	float getUnitInterval();
+	void setUnitInterval(float interval);
+	void setDebugDrawFrameRect(bool flag);
+	int getLoopCount();
+	void setLoopCount(int loop);
+	CCRect getCollisionRect(int index);
+	int getAnimationCount();
+	CCAFCAnimation* getAnimationAt(int index, CCAFCClipMapping* mapping);
+	void setFrameIndex(int index);
+	int getCurrentFrame();
+	void setForceTickMode(bool flag);
+	int getCollisionRectCount();
+	bool isForceTickMode();
+	bool isFlipX();
+	bool isFlipY();
+	~CCAFCSprite();
+	void addClipMapping(CCAFCClipMapping* mapping);
+	void draw();
+	ccBlendFunc getBlendFunc();
+	CCAFCFileData* getFileData();
+	CCRect getFrameRectRelativeToParent();
+	void setReverse(bool flag);
+	void setFlipY(bool flipY);
+	void setFlipX(bool flipX);
+	CCPoint getFrameOffset();
+	int getFrameCount();
+	void playAnimation(int index, int mappingTag);
+	void playAnimation(int index, CCAFCClipMapping* mapping);
+	bool isReverse();
+	int getCurrentAnimationIndex();
+	CCAFCClipMapping* getClipMappingByTag(int tag);
+	CCRect getCollisionRectRelativeToWorld(int index);
+	void tick(float delta);
+	void setAFCSpriteCallback(CCAFCSpriteCallback* callback);
+	CCRect getFrameRect();
+	CCRect getFrameRectRelativeToWorld();
+	void setIgnoreFrameOffset(bool flag);
+	void setColor(const ccColor3B& color);
+	bool isAnimationEnded();
+	void setBlendFunc(ccBlendFunc blendFunc);
+	bool isIgnoreFrameOffset();
+	CCRect getCollisionRectRelativeToParent(int index);
+	void setDebugDrawCollisionRect(bool flag);
+	bool isPaused();
+	void removeClipMappingByTag(int tag);
+	CCAFCAnimation* getCurrentAnimationData();
+	int getImageCount();
+	void setPaused(bool flag);
+};
+class CCTransitionSlideInT : public CCTransitionSlideInL {
+	static CCTransitionSlideInT* create(float t, CCScene* scene);
+	CCActionInterval* action();
+	~CCTransitionSlideInT();
+	void initScenes();
+	CCTransitionSlideInT();
+};
+class CCTransitionSlideInR : public CCTransitionSlideInL {
+	static CCTransitionSlideInR* create(float t, CCScene* scene);
+	CCActionInterval* action();
+	~CCTransitionSlideInR();
+	void initScenes();
+	CCTransitionSlideInR();
+};
+class CCTransitionSlideInL : public CCTransitionScene, public CCTransitionEaseScene {
+	static CCTransitionSlideInL* create(float t, CCScene* scene);
+	void onEnter();
+	~CCTransitionSlideInL();
+	CCTransitionSlideInL();
+	CCActionInterval* action();
+	CCActionInterval* easeActionWithAction(CCActionInterval* action);
+	void initScenes();
+};
+class CCTouchDelegate {
+	bool ccTouchBegan(CCTouch* pTouch, CCEvent* pEvent);
+	void ccTouchesCancelled(CCSet* pTouches, CCEvent* pEvent);
+	~CCTouchDelegate();
+	void ccTouchCancelled(CCTouch* pTouch, CCEvent* pEvent);
+	void ccTouchEnded(CCTouch* pTouch, CCEvent* pEvent);
+	void ccTouchesBegan(CCSet* pTouches, CCEvent* pEvent);
+	void ccTouchesMoved(CCSet* pTouches, CCEvent* pEvent);
+	CCTouchDelegate();
+	void ccTouchMoved(CCTouch* pTouch, CCEvent* pEvent);
+	void ccTouchesEnded(CCSet* pTouches, CCEvent* pEvent);
+};
+class CCMWLoader {
+	static CCMWFileData* load(const char* path);
+};
+class CCTransitionSlideInB : public CCTransitionSlideInL {
+	static CCTransitionSlideInB* create(float t, CCScene* scene);
+	CCActionInterval* action();
+	~CCTransitionSlideInB();
+	void initScenes();
+	CCTransitionSlideInB();
+};
+class CCAssetOutputStream : public CCObject {
+	static CCAssetOutputStream* create(const string& path, bool append);
+	bool open();
+	const string& getPath();
+	~CCAssetOutputStream();
+	int write(const int* data, unsigned long len);
+	int write(const char* data, unsigned long len);
+	void close();
+	unsigned long seek(int offset, int mode);
+	unsigned long getPosition();
+};
+class CCComponent {
+};
+class CCLocalization : public CCObject {
+	static CCLocalization* sharedLocalization();
+	void addAndroidStrings(const string& lan, const string& path, bool merge);
+	string getString(const string& key);
+	~CCLocalization();
+};
+class CCGrabber : public CCObject {
+	void beforeRender(CCTexture2D* pTexture);
+	void grab(CCTexture2D* pTexture);
+	~CCGrabber();
+	void afterRender(CCTexture2D* pTexture);
+	CCGrabber();
+};
+class CCTransitionSplitRows : public CCTransitionSplitCols {
+	static CCTransitionSplitRows* create(float t, CCScene* scene);
+	CCActionInterval* action();
+	~CCTransitionSplitRows();
+	CCTransitionSplitRows();
+};
+class CCFlipY3D : public CCFlipX3D {
+	static CCFlipY3D* create(float duration);
+	void update(float time);
+	CCObject* copyWithZone(CCZone* pZone);
+};
+class CCAFCAnimation : public CCObject {
+	static CCAFCAnimation* create();
+	void addFrame(CCAFCFrame* f);
+	int getFrameCount();
+	CCAFCFrame* getFrameAt(int index);
+	~CCAFCAnimation();
+};
+class CCEaseBackInOut : public CCActionEase {
+	static CCEaseBackInOut* create(CCActionInterval* pAction);
+	CCActionInterval* reverse();
+	void update(float time);
+	CCObject* copyWithZone(CCZone* pZone);
+};
+class CCLocale : public CCObject {
+	static CCLocale* sharedLocale();
+	string getCountry();
+	string getLanguage();
+	string getISOLanguage();
+	~CCLocale();
+};
+class CCFlipX3D : public CCGrid3DAction {
+	static CCFlipX3D* create(float duration);
+	bool initWithSize(const CCSize& gridSize, float duration);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration);
+	void update(float time);
+};
+class CCProfilingTimer : public CCObject {
+	string m_NameStr;
+	int numberOfCalls;
+	int m_dAverageTime1;
+	int m_dAverageTime2;
+	long long totalTime;
+	int minTime;
+	int maxTime;
+	cc_timeval m_sStartTime;
+	void reset();
+	const char* description();
+	~CCProfilingTimer();
+	bool initWithName(const char* timerName);
+	CCProfilingTimer();
+	cc_timeval* getStartTime();
+};
+class CCArcticLoader {
+};
+class CCTransitionSceneOriented : public CCTransitionScene {
+	static CCTransitionSceneOriented* create(float t, CCScene* scene, tOrientation orientation);
+	~CCTransitionSceneOriented();
+	bool initWithDuration(float t, CCScene* scene, tOrientation orientation);
+	CCTransitionSceneOriented();
+};
+class CCScroller : public CCObject {
+	static CCScroller* create();
+	float getCurrX();
+	float getCurrY();
+	void fling(float startX, float startY, float velocityX, float velocityY, float minX, float maxX, float minY, float maxY);
+	bool isFinished();
+	void setScrollFriction(float friction);
+	float getCurrVelocity();
+	CCScroller();
+	void startScroll(float startX, float startY, float dx, float dy, int duration);
+	void startScroll(float startX, float startY, float dx, float dy);
+	~CCScroller();
+	float getStartY();
+	float getStartX();
+	void forceFinished(bool finished);
+	float getFinalY();
+	float getFinalX();
+	int getDuration();
+	void setFinalY(float newY);
+	void setFinalX(float newX);
+	int timePassed();
+	bool computeScrollOffset();
+	void abortAnimation();
+	void extendDuration(int extend);
+};
+class CCSPX3Manager {
+};
+class CCWaves3D : public CCGrid3DAction {
+	static CCWaves3D* create(float duration, const CCSize& gridSize, unsigned int waves, float amplitude);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, const CCSize& gridSize, unsigned int waves, float amplitude);
+	void update(float time);
+	float getAmplitudeRate();
+	void setAmplitude(float fAmplitude);
+	float getAmplitude();
+	void setAmplitudeRate(float fAmplitudeRate);
+};
+class CCLayer {
+};
+class CCJSONArray : public CCObject {
+	static CCJSONArray* create(const char* json, unsigned long length);
+	static CCJSONArray* create();
+	static CCJSONArray* create(const string& path);
+	void addArray(CCJSONArray* ja);
+	void addObject(CCJSONObject* jo);
+	void addDouble(double d);
+	bool optBool(int index, bool def);
+	double optDouble(int index, double def);
+	void addLong(long l);
+	int getLength();
+	long optLong(int index, long def);
+	~CCJSONArray();
+	CCJSONArray* optJSONArray(int index);
+	CCJSONObject* optJSONObject(int index);
+	void addInt(int i);
+	float optFloat(int index, float def);
+	string toString();
+	void addNull();
+	int optInt(int index, int def);
+	void output(CCAssetOutputStream* aos, int level);
+	void addBool(bool b);
+	void addString(const char* s);
+	string optString(int index, const char* def);
+	void addFloat(float f);
+};
+class CCTurnOffTiles : public CCTiledGrid3DAction {
+	static CCTurnOffTiles* create(float duration, const CCSize& gridSize, unsigned int seed);
+	static CCTurnOffTiles* create(float duration, const CCSize& gridSize);
+	void turnOnTile(const CCPoint& pos);
+	void startWithTarget(CCNode* pTarget);
+	void turnOffTile(const CCPoint& pos);
+	void shuffle(unsigned int* pArray, unsigned int nLen);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, const CCSize& gridSize, unsigned int seed);
+	void update(float time);
+	~CCTurnOffTiles();
+};
+class CCMemoryInputStream : public CCAssetInputStream {
+	static CCMemoryInputStream* create(char* buffer, unsigned long length, bool release);
+	unsigned long available();
+	int read(char* buffer, unsigned long length);
+	unsigned long getLength();
+	~CCMemoryInputStream();
+	void close();
+	char* getBuffer();
+	unsigned long seek(int offset, int mode);
+	unsigned long getPosition();
+};
+class CCArcticManager {
+};
+class CCTexturePVR : public CCObject {
+	static CCTexturePVR* create(const char* path);
+	bool initWithContentsOfFile(const char* path);
+	bool isForcePremultipliedAlpha();
+	bool hasAlpha();
+	unsigned int getName();
+	void setRetainName(bool retainName);
+	unsigned int getHeight();
+	~CCTexturePVR();
+	unsigned int getWidth();
+	CCTexturePVR();
+	bool hasPremultipliedAlpha();
+	CCTexture2DPixelFormat getFormat();
+	unsigned int getNumberOfMipmaps();
+	bool isRetainName();
+};
+class CCImagePickerCallback {
+	void onImagePickingCancelled();
+	void onImagePicked(const string& fullPath, int w, int h);
+};
+class CCSet {
+};
+class CCSpriteFrameCache : public CCObject {
+	static void purgeSharedSpriteFrameCache();
+	static CCSpriteFrameCache* sharedSpriteFrameCache();
+	void addSpriteFramesWithFile(const char* plist, const char* textureFileName);
+	void addSpriteFramesWithFile(const char* pszPlist);
+	void addSpriteFramesWithFile(const char* pszPlist, CCTexture2D* pobTexture);
+	void addSpriteFrame(CCSpriteFrame* pobFrame, const char* pszFrameName);
+	CCSpriteFrame* spriteFrameByName(const char* pszName);
+	void removeUnusedSpriteFrames();
+	~CCSpriteFrameCache();
+	void removeSpriteFramesFromFile(const char* plist);
+	bool init();
+	void removeSpriteFrames();
+	void removeSpriteFramesFromTexture(CCTexture2D* texture);
+	void removeSpriteFrameByName(const char* pszName);
+};
+class CCTextFieldDelegate {
+	bool onTextFieldAttachWithIME(CCTextFieldTTF* sender);
+	bool onTextFieldDeleteBackward(CCTextFieldTTF* sender, const char* delText, int nLen);
+	bool onDraw(CCTextFieldTTF* sender);
+	bool onTextFieldInsertText(CCTextFieldTTF* sender, const char* text, int nLen);
+	bool onTextFieldDetachWithIME(CCTextFieldTTF* sender);
+};
+class CCTransitionProgressOutIn : public CCTransitionProgress {
+	static CCTransitionProgressOutIn* create(float t, CCScene* scene);
+};
+class CCDirectorDelegate {
+	void updateProjection();
+};
+class CCNode {
+};
+class CCKeypadDelegate {
+	void keyBackClicked();
+	void keyMenuClicked();
+};
+class CCSize {
+	float width;
+	float height;
+	void setSize(float width, float height);
+	bool equals(const CCSize& target);
+	CCSize(float width, float height);
+	CCSize();
+	CCSize(const CCSize& other);
+	CCSize(const CCPoint& point);
+};
+class CCLayerColor : public CCLayerRGBA, public CCBlendProtocol {
+	static CCLayerColor* create(const ccColor4B& color, float width, float height);
+	static CCLayerColor* create();
+	static CCLayerColor* create(const ccColor4B& color);
+	void draw();
+	ccBlendFunc getBlendFunc();
+	void setColor(const ccColor3B& color);
+	void setBlendFunc(ccBlendFunc var);
+	void changeWidth(float w);
+	void changeWidthAndHeight(float w, float h);
+	~CCLayerColor();
+	bool init();
+	bool initWithColor(const ccColor4B& color);
+	bool initWithColor(const ccColor4B& color, float width, float height);
+	CCLayerColor();
+	void setOpacity(unsigned char opacity);
+	void setContentSize(const CCSize& var);
+	void changeHeight(float h);
+};
+class CCTargetedTouchDelegate : public CCTouchDelegate {
+	void ccTouchMoved(CCTouch* pTouch, CCEvent* pEvent);
+	void ccTouchEnded(CCTouch* pTouch, CCEvent* pEvent);
+	bool ccTouchBegan(CCTouch* pTouch, CCEvent* pEvent);
+	void ccTouchCancelled(CCTouch* pTouch, CCEvent* pEvent);
+};
+class CCSchedulerScriptHandlerEntry : public CCScriptHandlerEntry {
+	static CCSchedulerScriptHandlerEntry* create(int nHandler, float fInterval, bool bPaused);
+	bool isMarkedForDeletion();
+	void markedForDeletion();
+	CCTimer* getTimer();
+	bool isPaused();
+	~CCSchedulerScriptHandlerEntry();
+};
+class CCSPX3Frame : public CCObject {
+	int m_flags;
+	CCSPX3Tile m_rect;
+	int m_patchCount;
+	CCSPX3Patch* m_patches;
+	int m_collisionCount;
+	CCSPX3Tile* m_collisionRects;
+	static CCSPX3Frame* create();
+	~CCSPX3Frame();
+};
+class CCLabelTTF : public CCGradientSprite, public CCLabelProtocol {
+	static CCLabelTTF* createWithFontDefinition(const char* string, ccFontDefinition& textDefinition);
+	void enableShadow(const CCSize& shadowOffset, int shadowColor, float shadowBlur, bool mustUpdateTexture);
+	void setDimensions(const CCSize& dim);
+	float getFontSize();
+	const char* getString();
+	void setTextDefinition(ccFontDefinition* theDefinition);
+	void setGlobalImageScaleFactor(float scale, bool mustUpdateTexture);
+	void stopLoopDisplay();
+	float getGlobalImageScaleFactor();
+	void setFontName(const char* fontName);
+	void setLineSpacing(float s, bool mustUpdateTexture);
+	CCTextAlignment getHorizontalAlignment();
+	bool initWithStringAndTextDefinition(const char* string, ccFontDefinition& textDefinition);
+	void setString(const char* label);
+	~CCLabelTTF();
+	CCRect getImageBoundInWorldSpace(int index);
+	CCRect getImageBoundInParentSpace(int index);
+	void setLinkTargetForAll(CCCallFunc* func);
+	const char* getFontName();
+	float getLineSpacing();
+	const char* description();
+	void enableStroke(const ccColor3B& strokeColor, float strokeSize, bool mustUpdateTexture);
+	void update(float delta);
+	CCSize getDimensions();
+	void setVerticalAlignment(CCVerticalTextAlignment verticalAlignment);
+	void setFontSize(float fontSize);
+	CCVerticalTextAlignment getVerticalAlignment();
+	void setLinkTarget(int index, CCCallFunc* func);
+	CCRect getImageBound(int index);
+	ccFontDefinition* getTextDefinition();
+	void setColor(const ccColor3B& tintColor, bool mustUpdateTexture);
+	void setColor(const ccColor3B& color3);
+	void setColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
+	void setLinkPriority(int p);
+	void setDisplayTo(int to);
+	void setHorizontalAlignment(CCTextAlignment alignment);
+	void disableShadow(bool mustUpdateTexture);
+	CCLabelTTF();
+	void startLoopDisplay(float interval, unsigned int repeat, int delay, CCCallFunc* loopFunc);
+	void disableStroke(bool mustUpdateTexture);
+};
+class CCTransitionPageTurn : public CCTransitionScene {
+	static CCTransitionPageTurn* create(float t, CCScene* scene, bool backwards);
+	CCActionInterval* actionWithSize(const CCSize& vector);
+	~CCTransitionPageTurn();
+	void onEnter();
+	bool initWithDuration(float t, CCScene* scene, bool backwards);
+	CCTransitionPageTurn();
+};
+class CCTransitionRotoZoom : public CCTransitionScene {
+	static CCTransitionRotoZoom* create(float t, CCScene* scene);
+	~CCTransitionRotoZoom();
+	void onEnter();
+	CCTransitionRotoZoom();
+};
+class CCDelayTime : public CCActionInterval {
+	static CCDelayTime* create(float d);
+	CCObject* copyWithZone(CCZone* pZone);
+	void update(float time);
+	CCActionInterval* reverse();
+};
+class CCTiledSprite : public CCSprite {
+	static CCTiledSprite* create(const char* fileImage);
+	static CCTiledSprite* createWithSprite(CCSprite* sprite);
+	static CCTiledSprite* createWithTexture(CCTexture2D* tex);
+	static CCTiledSprite* createWithSpriteFrameName(const char* name);
+	static CCTiledSprite* createWithSpriteFrame(CCSpriteFrame* frame);
+	void setHeight(float h);
+	void draw();
+	bool initWithTexture(CCTexture2D* pTexture, const CCRect& rect, bool rotated);
+	void setOpacity(unsigned char opacity);
+	~CCTiledSprite();
+	CCTiledSprite(CCSprite* sprite);
+	void setDisplayFrame(CCSpriteFrame* pNewFrame);
+	void setWidth(float w);
+	void setContentSize(const CCSize& contentSize);
+};
+class CCDownloadEntry {
+};
+class CCHttpClient : public CCObject {
+	static CCHttpClient* create();
+	void setReadTimeout(float var);
+	void cancelAll();
+	~CCHttpClient();
+	bool init();
+	float getConnectTimeout();
+	void cancel(int tag);
+	void setConnectTimeout(float var);
+	float getReadTimeout();
+	void asyncExecute(CCHttpRequest* request);
+};
+class CCFadeOutDownTiles : public CCFadeOutUpTiles {
+	static CCFadeOutDownTiles* create(float duration, const CCSize& gridSize);
+	float testFunc(const CCSize& pos, float time);
+};
+class CCAction {
+};
+class CCAccelDeccelAmplitude : public CCActionInterval {
+	static CCAccelDeccelAmplitude* create(CCAction* pAction, float duration);
+	void startWithTarget(CCNode* pTarget);
+	CCActionInterval* reverse();
+	float getRate();
+	void update(float time);
+	void setRate(float fRate);
+	bool initWithAction(CCAction* pAction, float duration);
+	~CCAccelDeccelAmplitude();
+};
+class CCMoveTo : public CCMoveBy {
+	static CCMoveTo* create(float duration, const CCPoint& position, bool autoHeadOn, float initAngle);
+	void startWithTarget(CCNode* pTarget);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, const CCPoint& position, bool autoHeadOn, float initAngle);
+};
+class CCPageTurn3D : public CCGrid3DAction {
+	static CCPageTurn3D* create(float duration, const CCSize& gridSize);
+	void update(float time);
+};
+class CCBMFontConfiguration : public CCObject {
+	tCCFontDefHashElement* m_pFontDefDictionary;
+	int m_nCommonHeight;
+	ccBMFontPadding m_tPadding;
+	string m_sAtlasName;
+	tCCKerningHashElement* m_pKerningDictionary;
+	set* m_pCharacterSet;
+	static CCBMFontConfiguration* create(const char* FNTfile);
+	set* getCharacterSet();
+	const char* description();
+	const char* getAtlasName();
+	~CCBMFontConfiguration();
+	void setAtlasName(const char* atlasName);
+	bool initWithFNTfile(const char* FNTfile);
+	CCBMFontConfiguration();
+};
+class CCEGLView {
+};
+class CCEvent {
+};
+class CCProfiler : public CCObject {
+	CCDictionary* m_pActiveTimers;
+	static CCProfiler* sharedProfiler();
+	void displayTimers();
+	void releaseTimer(const char* timerName);
+	~CCProfiler();
+	bool init();
+	void releaseAllTimers();
+	CCProfilingTimer* createAndAddTimerWithName(const char* timerName);
+};
+class CCFileUtils : public TypeInfo {
+	static void purgeFileUtils();
+	static CCFileUtils* sharedFileUtils();
+	void removeSearchPath(const char* path);
+	string fullPathForFilename(const char* pszFileName);
+	void setFilenameLookupDictionary(CCDictionary* pFilenameLookupDict);
+	bool isAbsolutePath(const string& strPath);
+	bool isPopupNotify();
+	const vector& getSearchPaths();
+	~CCFileUtils();
+	unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long* pSize);
+	void setSearchPaths(const vector& searchPaths);
+	unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long* pSize);
+	void removeAllPaths();
+	void setSearchResolutionsOrder(const vector& searchResolutionsOrder);
+	void addSearchResolutionsOrder(const char* order);
+	void addSearchPath(const char* path);
+	bool isFileExist(const string& strFilePath);
+	void purgeCachedEntries();
+	const char* fullPathFromRelativeFile(const char* pszFilename, const char* pszRelativeFile);
+	void setPopupNotify(bool bNotify);
+	long getClassTypeInfo();
+	const vector& getSearchResolutionsOrder();
+	void loadFilenameLookupDictionaryFromFile(const char* filename);
+	string getWritablePath();
+};
+class CCMotionStreak : public CCNodeRGBA, public CCTextureProtocol {
+	static CCMotionStreak* create(float fade, float minSeg, float stroke, const ccColor3B& color, CCTexture2D* texture);
+	static CCMotionStreak* create(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path);
+	void reset();
+	void draw();
+	void setTexture(CCTexture2D* texture);
+	bool isOpacityModifyRGB();
+	void setOpacity(unsigned char opacity);
+	CCTexture2D* getTexture();
+	void tintWithColor(ccColor3B colors);
+	void setBlendFunc(ccBlendFunc blendFunc);
+	void update(float delta);
+	~CCMotionStreak();
+	ccBlendFunc getBlendFunc();
+	bool initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, CCTexture2D* texture);
+	bool initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path);
+	bool isFastMode();
+	CCMotionStreak();
+	void setOpacityModifyRGB(bool bValue);
+	unsigned char getOpacity();
+	void setPosition(const CCPoint& position);
+	void setStartingPositionInitialized(bool bStartingPositionInitialized);
+	void setFastMode(bool bFastMode);
+	bool isStartingPositionInitialized();
+};
+class CCClippingNode : public CCNode {
+	static CCClippingNode* create(CCNode* pStencil);
+	static CCClippingNode* create();
+	void onEnter();
+	void onExit();
+	void setInverted(bool bInverted);
+	void visit();
+	void setStencil(CCNode* pStencil);
+	~CCClippingNode();
+	float getAlphaThreshold();
+	bool init(CCNode* pStencil);
+	bool init();
+	void onExitTransitionDidStart();
+	CCNode* getStencil();
+	void setAlphaThreshold(float fAlphaThreshold);
+	void onEnterTransitionDidFinish();
+	bool isInverted();
+};
+class CCFadeIn : public CCActionInterval {
+	static CCFadeIn* create(float d);
+	CCObject* copyWithZone(CCZone* pZone);
+	void update(float time);
+	CCActionInterval* reverse();
+};
+class CCMissile : public CCActionInterval {
+	static CCMissile* create(float velocity, CCNode* aimed, float targetPresetDegree, CCCallFunc* doneCallFunc);
+	CCObject* copyWithZone(CCZone* pZone);
+	~CCMissile();
+	void step(float dt);
+	CCMissile();
+	bool isDone();
+	bool initWithVelocity(float velocity, CCNode* aimed, float targetPresetDegree, CCCallFunc* doneCallFunc);
+};
+class CCTileMapAtlas : public CCAtlasNode {
+	static CCTileMapAtlas* create(const char* tile, const char* mapFile, int tileWidth, int tileHeight);
+	bool initWithTileFile(const char* tile, const char* mapFile, int tileWidth, int tileHeight);
+	void releaseMap();
+	ccColor3B tileAt(const CCPoint& position);
+	~CCTileMapAtlas();
+	sImageTGA* getTGAInfo();
+	CCTileMapAtlas();
+	void setTile(const ccColor3B& tile, const CCPoint& position);
+	void setTGAInfo(sImageTGA* var);
+};
+class CCPointArray : public CCObject {
+	static CCPointArray* create(unsigned int capacity);
+	unsigned int count();
+	void insertControlPoint(CCPoint& controlPoint, unsigned int index);
+	CCPointArray* reverse();
+	bool initWithCapacity(unsigned int capacity);
+	void removeControlPointAtIndex(unsigned int index);
+	void setControlPoints(vector* controlPoints);
+	~CCPointArray();
+	void replaceControlPoint(CCPoint& controlPoint, unsigned int index);
+	void addControlPoint(CCPoint controlPoint);
+	CCPoint getControlPointAtIndex(unsigned int index);
+	CCPointArray();
+	void reverseInline();
+	const vector* getControlPoints();
+	CCObject* copyWithZone(CCZone* zone);
+};
+class CCTextureProtocol : public CCBlendProtocol {
+	void setTexture(CCTexture2D* texture);
+	CCTexture2D* getTexture();
+};
+class CCMenuItemFont : public CCMenuItemLabel {
+	static void setFontName(const char* name);
+	static const char* fontName();
+	static unsigned int fontSize();
+	static CCMenuItemFont* create(const char* value);
+	static void setFontSize(unsigned int s);
+	CCMenuItemFont();
+	~CCMenuItemFont();
+	const char* fontNameObj();
+	void setFontNameObj(const char* name);
+	unsigned int fontSizeObj();
+	void setFontSizeObj(unsigned int s);
+};
+class CCSPXFrame : public CCObject {
+	int m_width;
+	int m_height;
+	int m_frameTileCount;
+	int m_collisionCount;
+	int m_referencePointCount;
+	CCSPXFrameTile* m_tiles;
+	CCSPXCollision* m_collisions;
+	CCSPXReferencePoint* m_refPoints;
+	~CCSPXFrame();
+};
+class CCTouchDispatcher {
+};
+class CCDisplayLinkDirector : public CCDirector {
+	void startAnimation();
+	void mainLoop();
+	void stopAnimation();
+	void setAnimationInterval(double dValue);
+	CCDisplayLinkDirector();
+};
+class CCToggleVisibility : public CCActionInstant {
+	static CCToggleVisibility* create();
+	CCObject* copyWithZone(CCZone* pZone);
+	~CCToggleVisibility();
+	void update(float time);
+	CCToggleVisibility();
+};
+class CCAuroraFileData : public CCAFCFileData {
+	int m_version;
+	int m_flags;
+	int m_imageCount;
+	int m_moduleCount;
+	CCAuroraModule* m_modules;
+	int m_frameModuleCount;
+	CCAuroraFrameModule* m_frameModules;
+	int m_collisionRectCount;
+	ccRect* m_collisionRects;
+	int m_frameCount;
+	CCAuroraFrame* m_frames;
+	int m_animationFrameCount;
+	CCAuroraAnimationFrame* m_animationFrames;
+	int m_animationCount;
+	CCAuroraAnimation* m_animations;
+	static CCAuroraFileData* create();
+	~CCAuroraFileData();
+};
+class CCTransitionMoveInR : public CCTransitionMoveInL {
+	static CCTransitionMoveInR* create(float t, CCScene* scene);
+	~CCTransitionMoveInR();
+	void initScenes();
+	CCTransitionMoveInR();
+};
+class CCTransitionMoveInT : public CCTransitionMoveInL {
+	static CCTransitionMoveInT* create(float t, CCScene* scene);
+	~CCTransitionMoveInT();
+	void initScenes();
+	CCTransitionMoveInT();
+};
+class CCStopGrid : public CCActionInstant {
+	static CCStopGrid* create();
+	void startWithTarget(CCNode* pTarget);
+};
+class CCSpriteBatchNode : public CCNode, public CCTextureProtocol {
+	static CCSpriteBatchNode* create(const char* fileImage);
+	static CCSpriteBatchNode* create(const char* fileImage, unsigned int capacity);
+	static CCSpriteBatchNode* createWithTexture(CCTexture2D* tex);
+	static CCSpriteBatchNode* createWithTexture(CCTexture2D* tex, unsigned int capacity);
+	void appendChild(CCSprite* sprite);
+	void reorderBatch(bool reorder);
+	CCTexture2D* getTexture();
+	void visit();
+	void insertQuadFromSprite(CCSprite* sprite, unsigned int index);
+	void setTexture(CCTexture2D* texture);
+	void addChild(CCNode* child, int zOrder);
+	void addChild(CCNode* child);
+	void addChild(CCNode* child, int zOrder, int tag);
+	void removeChildAtIndex(unsigned int index, bool doCleanup);
+	void removeSpriteFromAtlas(CCSprite* sprite);
+	CCSpriteBatchNode* addSpriteWithoutQuad(CCSprite* child, unsigned int z, int aTag);
+	unsigned int atlasIndexForChild(CCSprite* sprite, int z);
+	void increaseAtlasCapacity();
+	~CCSpriteBatchNode();
+	bool init();
+	void insertChild(CCSprite* child, unsigned int index);
+	unsigned int lowestAtlasIndexInChild(CCSprite* sprite);
+	void draw();
+	ccBlendFunc getBlendFunc();
+	bool initWithTexture(CCTexture2D* tex, unsigned int capacity);
+	void setTextureAtlas(CCTextureAtlas* textureAtlas);
+	void removeAllChildrenWithCleanup(bool cleanup);
+	void sortAllChildren();
+	void updateQuadFromSprite(CCSprite* sprite, unsigned int index);
+	void reorderChild(CCNode* child, int zOrder);
+	bool initWithFile(const char* fileImage, unsigned int capacity);
+	void setBlendFunc(ccBlendFunc blendFunc);
+	unsigned int rebuildIndexInOrder(CCSprite* parent, unsigned int index);
+	CCTextureAtlas* getTextureAtlas();
+	CCArray* getDescendants();
+	void removeChild(CCNode* child, bool cleanup);
+	CCSpriteBatchNode();
+	unsigned int highestAtlasIndexInChild(CCSprite* sprite);
+};
+class CCTransitionMoveInL : public CCTransitionScene, public CCTransitionEaseScene {
+	static CCTransitionMoveInL* create(float t, CCScene* scene);
+	void onEnter();
+	~CCTransitionMoveInL();
+	CCTransitionMoveInL();
+	CCActionInterval* action();
+	CCActionInterval* easeActionWithAction(CCActionInterval* action);
+	void initScenes();
+};
+class CCTransitionMoveInB : public CCTransitionMoveInL {
+	static CCTransitionMoveInB* create(float t, CCScene* scene);
+	~CCTransitionMoveInB();
+	void initScenes();
+	CCTransitionMoveInB();
+};
+class CCTMXLoader : public CCObject, public CCSAXDelegator {
+	static CCTMXLoader* create();
+	void textHandler(void* ctx, const char* s, int len);
+	CCTMXMapInfo* load(const char* tmxData, int length, const string& resourcePath);
+	CCTMXMapInfo* load(const string& tmxFile);
+	void endElement(void* ctx, const char* name);
+	~CCTMXLoader();
+};
+class CCTransitionZoomFlipX : public CCTransitionSceneOriented {
+	static CCTransitionZoomFlipX* create(float t, CCScene* s);
+	static CCTransitionZoomFlipX* create(float t, CCScene* s, tOrientation o);
+	~CCTransitionZoomFlipX();
+	void onEnter();
+	CCTransitionZoomFlipX();
+};
+class CCTransitionZoomFlipY : public CCTransitionSceneOriented {
+	static CCTransitionZoomFlipY* create(float t, CCScene* s);
+	static CCTransitionZoomFlipY* create(float t, CCScene* s, tOrientation o);
+	~CCTransitionZoomFlipY();
+	void onEnter();
+	CCTransitionZoomFlipY();
+};
+class CCScriptHandlerEntry : public CCObject {
+	static CCScriptHandlerEntry* create(int nHandler);
+	int getHandler();
+	int getEntryId();
+	~CCScriptHandlerEntry();
+};
+class CCAuroraLoader {
+};
+class CCHttpResponse : public CCObject {
+	const CCDictionary& getHeaders();
+	CCData* getData();
+	void clearSuccess();
+	void setHeaders(const CCDictionary& var);
+	int getResponseCode();
+	string getHeader(const string& name);
+	void setSuccess(bool var);
+	void setResponseCode(int var);
+	CCHttpRequest* getRequest();
+	void addHeader(const string& name, const string& value);
+	bool isSuccess();
+	const CCData& getErrorData();
+	bool initWithRequest(CCHttpRequest* request);
+	CCHttpResponse(CCHttpRequest* request);
+	~CCHttpResponse();
+	void markSuccess();
+	void setErrorData(char* buf);
+	void setData(CCData* var);
+};
+class CCStandardTouchDelegate : public CCTouchDelegate {
+	void ccTouchesBegan(CCSet* pTouches, CCEvent* pEvent);
+	void ccTouchesCancelled(CCSet* pTouches, CCEvent* pEvent);
+	void ccTouchesMoved(CCSet* pTouches, CCEvent* pEvent);
+	void ccTouchesEnded(CCSet* pTouches, CCEvent* pEvent);
+};
+class CCParticleSnow : public CCParticleSystemQuad {
+	static CCParticleSnow* create();
+	static CCParticleSnow* createWithTotalParticles(unsigned int numberOfParticles);
+	bool init();
+	~CCParticleSnow();
+	bool initWithTotalParticles(unsigned int numberOfParticles);
+	CCParticleSnow();
+};
+class CCShatteredTiles3D : public CCTiledGrid3DAction {
+	static CCShatteredTiles3D* create(float duration, const CCSize& gridSize, int nRange, bool bShatterZ);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, const CCSize& gridSize, int nRange, bool bShatterZ);
+	void update(float time);
+};
+class CCVelocityTracker : public CCObject {
+	static CCVelocityTracker* create();
+	void addTouchBegan(const CCPoint& pos);
+	void addTouchBegan(CCTouch* event);
+	void computeCurrentVelocity(int units, float maxVelocity);
+	void computeCurrentVelocity(int units);
+	float getYVelocity(int id);
+	float getYVelocity();
+	~CCVelocityTracker();
+	float getXVelocity(int id);
+	float getXVelocity();
+	void addTouchMoved(const CCPoint& pos);
+	void addTouchMoved(CCTouch* event);
+};
+class CCSpriteFrame : public CCObject {
+	static CCSpriteFrame* create(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
+	static CCSpriteFrame* create(const char* filename, const CCRect& rect);
+	static CCSpriteFrame* createWithTexture(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
+	static CCSpriteFrame* createWithTexture(CCTexture2D* pobTexture, const CCRect& rect);
+	void setRotated(bool bRotated);
+	void setTexture(CCTexture2D* pobTexture);
+	const CCPoint& getOffset();
+	CCObject* copyWithZone(CCZone* pZone);
+	void setRectInPixels(const CCRect& rectInPixels);
+	CCTexture2D* getTexture();
+	const CCRect& getRect();
+	void setOffsetInPixels(const CCPoint& offsetInPixels);
+	const CCRect& getRectInPixels();
+	bool initWithTextureFilename(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
+	bool initWithTextureFilename(const char* filename, const CCRect& rect);
+	void setOriginalSize(const CCSize& sizeInPixels);
+	const CCSize& getOriginalSizeInPixels();
+	void setOriginalSizeInPixels(const CCSize& sizeInPixels);
+	void setOffset(const CCPoint& offsets);
+	bool initWithTexture(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
+	bool initWithTexture(CCTexture2D* pobTexture, const CCRect& rect);
+	bool isRotated();
+	~CCSpriteFrame();
+	void setRect(const CCRect& rect);
+	const CCPoint& getOffsetInPixels();
+	const CCSize& getOriginalSize();
+};
+class CCFadeOutTRTiles : public CCTiledGrid3DAction {
+	static CCFadeOutTRTiles* create(float duration, const CCSize& gridSize);
+	void turnOnTile(const CCPoint& pos);
+	void turnOffTile(const CCPoint& pos);
+	void transformTile(const CCPoint& pos, float distance);
+	float testFunc(const CCSize& pos, float time);
+	void update(float time);
+};
+class CCAtlasNode : public CCNodeRGBA, public CCTextureProtocol {
+	bool m_bIsOpacityModifyRGB;
+	int m_nUniformColor;
+	bool m_bIgnoreContentScaleFactor;
+	static CCAtlasNode* create(const char* tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
+	void setTexture(CCTexture2D* texture);
+	void draw();
+	ccBlendFunc getBlendFunc();
+	bool initWithTileFile(const char* tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
+	void setColor(const ccColor3B& color);
+	void setOpacity(unsigned char opacity);
+	void setBlendFunc(ccBlendFunc var);
+	void setTextureAtlas(CCTextureAtlas* var);
+	CCTexture2D* getTexture();
+	CCTextureAtlas* getTextureAtlas();
+	~CCAtlasNode();
+	unsigned int getQuadsToDraw();
+	void updateAtlasValues();
+	const ccColor3B& getColor();
+	CCAtlasNode();
+	void setOpacityModifyRGB(bool isOpacityModifyRGB);
+	bool initWithTexture(CCTexture2D* texture, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender);
+	bool isOpacityModifyRGB();
+	void setQuadsToDraw(unsigned int var);
+};
+class CCParticleFire : public CCParticleSystemQuad {
+	static CCParticleFire* create();
+	static CCParticleFire* createWithTotalParticles(unsigned int numberOfParticles);
+	bool init();
+	~CCParticleFire();
+	bool initWithTotalParticles(unsigned int numberOfParticles);
+	CCParticleFire();
+};
+class CCNodeRGBA : public CCNode, public CCRGBAProtocol {
+	static CCNodeRGBA* create();
+	void updateDisplayedColor(const ccColor3B& parentColor);
+	void setColor(const ccColor3B& color);
+	bool isCascadeOpacityEnabled();
+	const ccColor3B& getColor();
+	unsigned char getDisplayedOpacity();
+	void setCascadeColorEnabled(bool cascadeColorEnabled);
+	void setOpacity(unsigned char opacity);
+	~CCNodeRGBA();
+	void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+	void updateDisplayedOpacity(unsigned char parentOpacity);
+	bool init();
+	CCNodeRGBA();
+	void setOpacityModifyRGB(bool bValue);
+	unsigned char getOpacity();
+	bool isOpacityModifyRGB();
+	bool isCascadeColorEnabled();
+	const ccColor3B& getDisplayedColor();
+};
+class CCTMXMapInfo : public CCObject {
+	static CCTMXMapInfo* create();
+	float getTileWidth();
+	void setObjectGroups(const CCArray& var);
+	void setTileWidth(float var);
+	void setLayers(const CCArray& var);
+	CCArray& getTileSets();
+	int getMapHeight();
+	void setMapWidth(int var);
+	CCArray& getLayers();
+	float getTileHeight();
+	void addTileProperty(int gid, const string& key, const string& value);
+	~CCTMXMapInfo();
+	int getTileSetIndex(int gid);
+	void setProperties(const CCDictionary& var);
+	void setTileHeight(float var);
+	CCDictionary& getProperties();
+	cbTMXOrientation getOrientation();
+	void setTileProperties(const CCDictionary& var);
+	CCDictionary& getTileProperties();
+	CCDictionary* getTileProperties(int gid);
+	void setTileSets(const CCArray& var);
+	CCArray& getObjectGroups();
+	void setOrientation(cbTMXOrientation var);
+	void setTMXFilename(string var);
+	void setMapHeight(int var);
+	string getProperty(const string& key);
+	void addProperty(const string& key, const string& value);
+	int getMapWidth();
+	string getTileProperty(int gid, const string& key);
+	string getTMXFilename();
+};
+class CCDictionary {
+};
+class CCTMXLayerInfo {
+};
+class CCReuseGrid : public CCActionInstant {
+	static CCReuseGrid* create(int times);
+	void startWithTarget(CCNode* pTarget);
+	bool initWithTimes(int times);
+};
+class CCScrollBar : public CCLayer, public CCScrollViewDelegate {
+	static CCScrollBar* create(CCScale9Sprite* track, CCSprite* thumb);
+	static CCScrollBar* create(CCScale9Sprite* track, CCScale9Sprite* thumb);
+	bool initWithTrackAndFixedThumb(CCScale9Sprite* track, CCSprite* thumb);
+	bool isHorizontal();
+	void setTrack(CCScale9Sprite* var);
+	void markHorizontal();
+	void setAutoFade(bool autoFade, bool initFadeOut);
+	CCScale9Sprite* getTrack();
+	void scrollViewDidZoom(CCScrollView* view);
+	void update(float delta);
+	~CCScrollBar();
+	void setThumb(CCScale9Sprite* var);
+	void attachToScrollView(ScrollView* scrollView, ccInsets insets, bool horizontal);
+	void setFixedThumb(CCSprite* var);
+	void clearHorizontal();
+	void scrollViewDidScroll(CCScrollView* view);
+	CCSprite* getFixedThumb();
+	CCScale9Sprite* getThumb();
+	void setHorizontal(bool var);
+	void attachToCCScrollView(CCScrollView* scrollView, ccInsets insets, bool horizontal);
+	bool initWithTrackAndThumb(CCScale9Sprite* track, CCScale9Sprite* thumb);
+};
+class CCSPXFileData : public CCAFCFileData {
+	int m_tileCount;
+	int m_frameCount;
+	int m_actionCount;
+	CCSPXTile* m_tiles;
+	static CCSPXFileData* create();
+	CCSPXAction* getActionAt(int index);
+	CCSPXFrame* getFrameAt(int index);
+	~CCSPXFileData();
+};
+class CCShine : public CCActionInterval {
+	static CCShine* create(float duration, ccColor4B color1, ccColor4B color2, ccColor4B color3, ccVertex3F gradientPositions);
+	void startWithTarget(CCNode* pTarget);
+	const ccVertex3F& getGradientPositions();
+	CCObject* copyWithZone(CCZone* pZone);
+	void setColor1(const ccColor4B& var);
+	bool initWithColors(float duration, ccColor4B color1, ccColor4B color2, ccColor4B color3, ccVertex3F gradientPositions);
+	void stop();
+	void update(float time);
+	~CCShine();
+	void setGradientPositions(const ccVertex3F& var);
+	const ccColor4B& getColor2();
+	const ccColor4B& getColor3();
+	const ccColor4B& getColor1();
+	void setColor2(const ccColor4B& var);
+	void setColor3(const ccColor4B& var);
+	CCActionInterval* reverse();
+};
+class CCStatement : public CCObject {
+	void reset();
+	const string& getQuery();
+	~CCStatement();
+	void setQuery(const string& var);
+	void close();
+};
+class CCBezierBy : public CCActionInterval {
+	static CCBezierBy* create(float t, const ccBezierConfig& c);
+	void startWithTarget(CCNode* pTarget);
+	CCActionInterval* reverse();
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float t, const ccBezierConfig& c);
+	void update(float time);
+};
+class CCEaseSineInOut : public CCActionEase {
+	static CCEaseSineInOut* create(CCActionInterval* pAction);
+	CCActionInterval* reverse();
+	void update(float time);
+	CCObject* copyWithZone(CCZone* pZone);
+};
+class CCUDPSocketHub {
+};
+class CCLiquid : public CCGrid3DAction {
+	static CCLiquid* create(float duration, const CCSize& gridSize, unsigned int waves, float amplitude);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, const CCSize& gridSize, unsigned int waves, float amplitude);
+	void update(float time);
+	float getAmplitudeRate();
+	void setAmplitude(float fAmplitude);
+	float getAmplitude();
+	void setAmplitudeRate(float fAmplitudeRate);
+};
+class CCEaseBounceInOut : public CCEaseBounce {
+	static CCEaseBounceInOut* create(CCActionInterval* pAction);
+	CCActionInterval* reverse();
+	void update(float time);
+	CCObject* copyWithZone(CCZone* pZone);
+};
+class CCEGLViewProtocol {
+	void setFrameSize(float width, float height);
+	const CCRect& getViewPortRect();
+	void setIMEKeyboardState(bool bOpen);
+	void setScissorInPoints(float x, float y, float w, float h);
+	const char* getViewName();
+	bool isOpenGLReady();
+	void end();
+	float getScaleY();
+	float getScaleX();
+	CCPoint getVisibleOrigin();
+	const CCSize& getFrameSize();
+	~CCEGLViewProtocol();
+	const CCSize& getDesignResolutionSize();
+	void swapBuffers();
+	void setViewPortInPoints(float x, float y, float w, float h);
+	CCRect getScissorRect();
+	void setViewName(const char* pszViewName);
+	CCSize getVisibleSize();
+	CCEGLViewProtocol();
+	bool isScissorEnabled();
+};
+class CCAnimation : public CCObject {
+	static CCAnimation* create(CCArray* arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
+	static CCAnimation* create();
+	static CCAnimation* create(CCArray* arrayOfAnimationFrameNames, float delayPerUnit);
+	static CCAnimation* createWithSpriteFrames(CCArray* arrayOfSpriteFrameNames, float delay);
+	void addSpriteFrameWithFileName(const char* pszFileName);
+	void setFrames(CCArray* var);
+	CCObject* copyWithZone(CCZone* pZone);
+	CCArray* getFrames();
+	void addSpriteFrame(CCSpriteFrame* pFrame);
+	void setDelayPerUnit(float var);
+	bool initWithAnimationFrames(CCArray* arrayOfAnimationFrames, float delayPerUnit, unsigned int loops);
+	~CCAnimation();
+	bool init();
+	bool initWithSpriteFrames(CCArray* pFrames, float delay);
+	unsigned int getLoops();
+	void setLoops(unsigned int var);
+	CCAnimation();
+	void setRestoreOriginalFrame(bool var);
+	float getTotalDelayUnits();
+	float getDelayPerUnit();
+	bool getRestoreOriginalFrame();
+	float getDuration();
+	void addSpriteFrameWithTexture(CCTexture2D* pobTexture, const CCRect& rect);
+};
+class CCApplication : public CCApplicationProtocol {
+	static CCApplication* sharedApplication();
+	int run();
+	ccLanguageType getCurrentLanguage();
+	~CCApplication();
+	CCApplication();
+	void setAnimationInterval(double interval);
+};
+class CCLock {
+};
+class CCTCPSocketHub {
+};
+class CCEaseBounce : public CCActionEase {
+	static CCEaseBounce* create(CCActionInterval* pAction);
+	float bounceTime(float time);
+	CCObject* copyWithZone(CCZone* pZone);
+	CCActionInterval* reverse();
+};
+class CCParticleSpiral : public CCParticleSystemQuad {
+	static CCParticleSpiral* create();
+	static CCParticleSpiral* createWithTotalParticles(unsigned int numberOfParticles);
+	bool init();
+	~CCParticleSpiral();
+	bool initWithTotalParticles(unsigned int numberOfParticles);
+	CCParticleSpiral();
+};
+class CCPinyinUtils {
+	static string chs2Pinyin(const string& s);
+};
+class CCHttpRequest : public CCObject {
+	static CCHttpRequest* create();
+	const string& getUrl();
+	void setUserData(void* var);
+	void* getUserData();
+	CCData* getRequestData();
+	void clearCancel();
+	void setCancel(bool var);
+	void setUrl(const string& var);
+	HttpMethod getMethod();
+	~CCHttpRequest();
+	const vector& getHeaders();
+	void setMethod(HttpMethod var);
+	bool isCancel();
+	void setRequestData(CCData* var);
+	void setTag(const int& var);
+	CCHttpRequest();
+	const int& getTag();
+	void setHeaders(const vector& var);
+	void markCancel();
+	typedef enum {
+		kHttpGet,
+		kHttpPost,
+		kHttpPut,
+		kHttpDelete,
+		kHttpUnknown
+	} HttpMethod;
+};
+class CCTargetedTouchHandler : public CCTouchHandler {
+	static CCTargetedTouchHandler* handlerWithDelegate(CCTouchDelegate* pDelegate, int nPriority, bool bSwallow);
+	bool isSwallowsTouches();
+	CCSet* getClaimedTouches();
+	void setSwallowsTouches(bool bSwallowsTouches);
+	bool initWithDelegate(CCTouchDelegate* pDelegate, int nPriority, bool bSwallow);
+	~CCTargetedTouchHandler();
+};
+class CCBool {
+};
+class CCEaseElasticInOut : public CCEaseElastic {
+	static CCEaseElasticInOut* create(CCActionInterval* pAction);
+	static CCEaseElasticInOut* create(CCActionInterval* pAction, float fPeriod);
+	CCObject* copyWithZone(CCZone* pZone);
+	void update(float time);
+	CCActionInterval* reverse();
+};
+class CCCatmullRomTo : public CCCardinalSplineTo {
+	static CCCatmullRomTo* create(float dt, CCPointArray* points);
+	bool initWithDuration(float dt, CCPointArray* points);
+};
+class CCLabelTTFLinkStateSynchronizer {
+};
+class CCBezierTo : public CCBezierBy {
+	static CCBezierTo* create(float t, const ccBezierConfig& c);
+	void startWithTarget(CCNode* pTarget);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float t, const ccBezierConfig& c);
+};
+class CCDeccelAmplitude : public CCActionInterval {
+	static CCDeccelAmplitude* create(CCAction* pAction, float duration);
+	void startWithTarget(CCNode* pTarget);
+	CCActionInterval* reverse();
+	void update(float time);
+	float getRate();
+	void setRate(float fRate);
+	bool initWithAction(CCAction* pAction, float duration);
+	~CCDeccelAmplitude();
+};
+class CCEaseBounceOut : public CCEaseBounce {
+	static CCEaseBounceOut* create(CCActionInterval* pAction);
+	CCObject* copyWithZone(CCZone* pZone);
+	void update(float time);
+	CCActionInterval* reverse();
+};
+class CCJumpTo : public CCJumpBy {
+	static CCJumpTo* create(float duration, const CCPoint& position, float height, int jumps, bool autoHeadOn, float initAngle);
+	void startWithTarget(CCNode* pTarget);
+	CCObject* copyWithZone(CCZone* pZone);
+};
+class CCWavesTiles3D : public CCTiledGrid3DAction {
+	static CCWavesTiles3D* create(float duration, const CCSize& gridSize, unsigned int waves, float amplitude);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, const CCSize& gridSize, unsigned int waves, float amplitude);
+	void update(float time);
+	float getAmplitudeRate();
+	void setAmplitude(float fAmplitude);
+	float getAmplitude();
+	void setAmplitudeRate(float fAmplitudeRate);
+};
+class CCSPXManager {
+};
+class CCTextFieldTTF : public CCLabelTTF, public CCIMEDelegate {
+	static CCTextFieldTTF* textFieldWithPlaceHolder(const char* placeholder, const char* fontName, float fontSize);
+	static CCTextFieldTTF* textFieldWithPlaceHolder(const char* placeholder, const CCSize& dimensions, CCTextAlignment alignment, const char* fontName, float fontSize);
+	int getCharCount();
+	CCTextFieldDelegate* getDelegate();
+	const char* getPlaceHolder();
+	const char* getString();
+	void setSecureTextEntry(bool value);
+	const ccColor3B& getColorSpaceHolder();
+	bool initWithPlaceHolder(const char* placeholder, const char* fontName, float fontSize);
+	bool initWithPlaceHolder(const char* placeholder, const CCSize& dimensions, CCTextAlignment alignment, const char* fontName, float fontSize);
+	~CCTextFieldTTF();
+	void setColorSpaceHolder(const ccColor3B& color);
+	bool detachWithIME();
+	void setDelegate(CCTextFieldDelegate* var);
+	CCTextFieldTTF();
+	void setPlaceHolder(const char* text);
+	bool isSecureTextEntry();
+	void setString(const char* text);
+	bool attachWithIME();
+};
+class CCCount : public CCActionInterval {
+	static CCCount* create(float duration, int from, int to, const string& pattern);
+	void startWithTarget(CCNode* pTarget);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float d, int from, int to, const string& pattern);
+	void update(float time);
+	~CCCount();
+	CCCount();
+	CCActionInterval* reverse();
+};
+class CCTransitionJumpZoom : public CCTransitionScene {
+	static CCTransitionJumpZoom* create(float t, CCScene* scene);
+	~CCTransitionJumpZoom();
+	void onEnter();
+	CCTransitionJumpZoom();
+};
+class CCTouch : public CCObject {
+	CCPoint getPreviousLocationInView();
+	CCPoint getLocation();
+	CCPoint getDelta();
+	CCPoint getStartLocationInView();
+	CCPoint getStartLocation();
+	int getID();
+	void setTouchInfo(int id, float x, float y);
+	CCPoint getLocationInView();
+	CCTouch();
+	CCPoint getPreviousLocation();
+};
+class CCImage : public CCObject {
+	int getDataLen();
+	bool isPremultipliedAlpha();
+	int getBitsPerComponent();
+	unsigned short getWidth();
+	const vector& getImageRects();
+	bool initWithImageFileThreadSafe(const char* fullpath, EImageFormat imageType);
+	bool initWithString(const char* pText, int nWidth, int nHeight, ETextAlign eAlignMask, const char* pFontName, int nSize);
+	unsigned short getHeight();
+	bool initWithImageFile(const char* strPath, EImageFormat imageType);
+	~CCImage();
+	int getRealLength();
+	bool isNeedTime();
+	unsigned char* getData();
+	const CCPoint& getShadowStrokePadding();
+	bool saveToFile(const char* pszFilePath, bool bIsToRGB);
+	bool initWithImageData(void* pData, int nDataLen, EImageFormat eFmt, int nWidth, int nHeight, int nBitsPerComponent);
+	void setNeedTime(bool var);
+	bool hasAlpha();
+	void setRealLength(int var);
+	void clearNeedTime();
+	void markNeedTime();
+	CCImage();
+	typedef enum {
+		kAlignCenter,
+		kAlignTop,
+		kAlignTopRight,
+		kAlignRight,
+		kAlignBottomRight,
+		kAlignBottom,
+		kAlignBottomLeft,
+		kAlignLeft,
+		kAlignTopLeft
+	} ETextAlign;
+};
+class CCResourceLoader : public CCObject {
+	static void unloadArmatures(string plistPattern, string texPattern, int start, int end, string config);
+	static void unloadSpriteFrames(const string& plistPattern, const string& texPattern, int start, int end);
+	static void abortAll();
+	static void unloadImages(const string& texPattern, int start, int end);
+	static void unloadImages(const string& tex);
+	float getDelay();
+	void addAndroidStringTask(const string& lan, const string& path, bool merge);
+	void addBMFontTask(const string& fntFile, float idle);
+	void run();
+	void addCustomTask(CCCallFunc* func);
+	void addArmatureTask(string config, float idle);
+	void addZwoptexAnimTask(const string& name, float unitDelay, const string& pattern, int startIndex, int endIndex, int startIndex2, int endIndex2, bool restoreOriginalFrame, float idle);
+	void addZwoptexAnimTask(const string& name, float unitDelay, const string& pattern, int startIndex, int endIndex, bool restoreOriginalFrame, float idle);
+	void addZwoptexAnimTask(const string& name, const string& pattern, int startIndex, int endIndex, const string& delayString, bool restoreOriginalFrame, float idle);
+	void addZwoptexAnimTask(const string& name, const string& pattern, const string& indicesString, float delay, bool restoreOriginalFrame, float idle);
+	void addZwoptexAnimTask(const string& name, const string& pattern, const string& indicesString, const string& delayString, bool restoreOriginalFrame, float idle);
+	~CCResourceLoader();
+	void addZwoptexTask(const string& pattern, int start, int end, float idle);
+	void addZwoptexTask(const string& name, float idle);
+	void runInBlockMode();
+	void abort();
+	void setDelay(float var);
+	CCResourceLoader(CCResourceLoaderListener* listener);
+	void addCDMusicTask(const string& name, float idle);
+	void addCDEffectTask(const string& name, float idle);
+	void addLoadTask(LoadTask* t);
+	void addImageTask(const string& name, float idle);
+	struct LoadTask {
+		float idle;
+		void load();
+		~LoadTask();
+		LoadTask();
+	};
+};
+class CCGLProgram : public CCObject {
+	bool initWithVertexShaderFilename(const char* vShaderFilename, const char* fShaderFilename);
+	const char* fragmentShaderLog();
+	void addAttribute(const char* attributeName, unsigned int index);
+	void setUniformLocationWith3fv(int location, float* floats, unsigned int numberOfArrays);
+	const char* vertexShaderLog();
+	void setUniformLocationWith2fv(int location, float* floats, unsigned int numberOfArrays);
+	void setUniformLocationWithMatrix4fv(int location, float* matrixArray, unsigned int numberOfMatrices);
+	int getUniformLocationForName(const char* name);
+	void use();
+	void setUniformLocationWith1i(int location, int i1);
+	void setUniformLocationWith1f(int location, float f1);
+	unsigned int getProgram();
+	~CCGLProgram();
+	void setUniformLocationWith3f(int location, float f1, float f2, float f3);
+	void setUniformsForBuiltins();
+	void setUniformLocationWith3i(int location, int i1, int i2, int i3);
+	void setUniformLocationWith3iv(int location, int* ints, unsigned int numberOfArrays);
+	CCGLProgram();
+	void updateUniforms();
+	void setUniformLocationWith4iv(int location, int* ints, unsigned int numberOfArrays);
+	bool link();
+	void setUniformLocationWith2iv(int location, int* ints, unsigned int numberOfArrays);
+	void reset();
+	void setUniformLocationWith4fv(int location, float* floats, unsigned int numberOfArrays);
+	bool initWithVertexShaderByteArray(const char* vShaderByteArray, const char* fShaderByteArray);
+	const char* programLog();
+	void setUniformLocationWith2f(int location, float f1, float f2);
+	void setUniformLocationWith4f(int location, float f1, float f2, float f3, float f4);
+	void setUniformLocationWith4i(int location, int i1, int i2, int i3, int i4);
+	void setUniformLocationWith2i(int location, int i1, int i2);
+};
+class CCActionManager {
+};
+class CCAFCClip : public CCObject {
+	static CCAFCClip* create();
+	int getIndex();
+	CCAFCClipType getType();
+	void setIndex(int i);
+	~CCAFCClip();
+	CCAFCClipData& getData();
+	void setType(CCAFCClipType type);
+};
+class CCAuroraManager {
+};
+class CCBase64 {
+	static string encode(const void* data, int len);
+	static const char* decode(const string& data, int* outLen);
+	static const char* decodeAsCString(const string& data, int* outLen);
+};
+class CCReverseTime : public CCActionInterval {
+	static CCReverseTime* create(CCFiniteTimeAction* pAction);
+	void startWithTarget(CCNode* pTarget);
+	CCObject* copyWithZone(CCZone* pZone);
+	void stop();
+	void update(float time);
+	~CCReverseTime();
+	bool initWithAction(CCFiniteTimeAction* pAction);
+	CCReverseTime();
+	CCActionInterval* reverse();
+};
+class CCDataVisitor {
+	void visitObject(const CCObject* p);
+	void visit(const CCInteger* p);
+	void visit(const CCBool* p);
+	void visit(const CCFloat* p);
+	void visit(const CCDouble* p);
+	void visit(const CCString* p);
+	void visit(const CCArray* p);
+	void visit(const CCDictionary* p);
+	void visit(const CCSet* p);
+	~CCDataVisitor();
+};
+class CCMenuItemColorStateListener {
+	void onMenuItemColorFocused(CCMenuItemColor* item);
+	void onMenuItemColorDeselected(CCMenuItemColor* item);
+	void onMenuItemColorDisabled(CCMenuItemColor* item);
+	void onMenuItemColorSelected(CCMenuItemColor* item);
+	void onMenuItemColorUnfocused(CCMenuItemColor* item);
+	void onMenuItemColorEnabled(CCMenuItemColor* item);
+};
+class CCTargetedAction : public CCActionInterval {
+	static CCTargetedAction* create(CCNode* pTarget, CCFiniteTimeAction* pAction);
+	void startWithTarget(CCNode* pTarget);
+	CCObject* copyWithZone(CCZone* pZone);
+	void setForcedTarget(CCNode* var);
+	bool initWithTarget(CCNode* pTarget, CCFiniteTimeAction* pAction);
+	void stop();
+	void update(float time);
+	~CCTargetedAction();
+	CCNode* getForcedTarget();
+	CCTargetedAction();
+};
+class CCScene {
+};
+class CCNotificationObserver : public CCObject {
+	void performSelector(CCObject* obj);
+	char* getName();
+	CCObject* getTarget();
+	~CCNotificationObserver();
+	CCObject* getObject();
+	CCNotificationObserver(CCObject* target, SEL_CallFuncO selector, const char* name, CCObject* obj);
+	int getHandler();
+	void setHandler(int var);
+};
+class CCApplicationProtocol {
+	void applicationDidEnterBackground();
+	void applicationWillEnterForeground();
+	bool applicationDidFinishLaunching();
+	ccLanguageType getCurrentLanguage();
+	~CCApplicationProtocol();
+	void setAnimationInterval(double interval);
+};
+class CCFiniteTimeAction : public CCAction {
+	void setDuration(float duration);
+	~CCFiniteTimeAction();
+	CCFiniteTimeAction* reverse();
+	float getDuration();
+	CCFiniteTimeAction();
+};
+class CCShakyTiles3D : public CCTiledGrid3DAction {
+	static CCShakyTiles3D* create(float duration, const CCSize& gridSize, int nRange, bool bShakeZ);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, const CCSize& gridSize, int nRange, bool bShakeZ);
+	void update(float time);
+};
+class CCJumpBy : public CCActionInterval {
+	static CCJumpBy* create(float duration, const CCPoint& position, float height, unsigned int jumps, bool autoHeadOn, float initAngle);
+	void startWithTarget(CCNode* pTarget);
+	CCActionInterval* reverse();
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, const CCPoint& position, float height, unsigned int jumps, bool autoHeadOn, float initAngle);
+	void update(float time);
+};
+class CCTransitionProgressRadialCCW : public CCTransitionProgress {
+	static CCTransitionProgressRadialCCW* create(float t, CCScene* scene);
+};
+class CCClipIn : public CCActionInterval {
+	static CCClipIn* create(float duration, CCPoint v);
+	void startWithTarget(CCNode* pTarget);
+	CCActionInterval* reverse();
+	bool initWithDuration(float d, const CCPoint& v);
+	void setDirection(const CCPoint& var);
+	void update(float time);
+	~CCClipIn();
+	const CCPoint& getDirection();
+};
+class CCTransitionProgress : public CCTransitionScene {
+	static CCTransitionProgress* create(float t, CCScene* scene);
+	void onEnter();
+	void onExit();
+	CCTransitionProgress();
+};
+class CCCatmullRomBy : public CCCardinalSplineBy {
+	static CCCatmullRomBy* create(float dt, CCPointArray* points);
+	bool initWithDuration(float dt, CCPointArray* points);
+};
+class CCTransitionFlipAngular : public CCTransitionSceneOriented {
+	static CCTransitionFlipAngular* create(float t, CCScene* s);
+	static CCTransitionFlipAngular* create(float t, CCScene* s, tOrientation o);
+	~CCTransitionFlipAngular();
+	void onEnter();
+	CCTransitionFlipAngular();
+};
+class CCTransitionFadeUp : public CCTransitionFadeTR {
+	static CCTransitionFadeUp* create(float t, CCScene* scene);
+	CCActionInterval* actionWithSize(const CCSize& size);
+	~CCTransitionFadeUp();
+	CCTransitionFadeUp();
+};
+class CCTreeFadeIn : public CCFadeIn {
+	static CCTreeFadeIn* create(float d);
+	void excludeNode(CCNode* n, bool recursively);
+	void update(float time);
+	CCActionInterval* reverse();
+};
+class CCTransitionCrossFade : public CCTransitionScene {
+	static CCTransitionCrossFade* create(float t, CCScene* scene);
+	void draw();
+	~CCTransitionCrossFade();
+	void onEnter();
+	void onExit();
+	CCTransitionCrossFade();
+};
+class CCEaseElasticIn : public CCEaseElastic {
+	static CCEaseElasticIn* create(CCActionInterval* pAction);
+	static CCEaseElasticIn* create(CCActionInterval* pAction, float fPeriod);
+	CCObject* copyWithZone(CCZone* pZone);
+	void update(float time);
+	CCActionInterval* reverse();
+};
+class CCActionCamera : public CCActionInterval {
+	void startWithTarget(CCNode* pTarget);
+	~CCActionCamera();
+	CCActionInterval* reverse();
+	CCActionCamera();
+};
+class CCAccelAmplitude : public CCActionInterval {
+	static CCAccelAmplitude* create(CCAction* pAction, float duration);
+	void startWithTarget(CCNode* pTarget);
+	CCActionInterval* reverse();
+	void update(float time);
+	float getRate();
+	void setRate(float fRate);
+	bool initWithAction(CCAction* pAction, float duration);
+	~CCAccelAmplitude();
+};
+class CCScaleTo : public CCActionInterval {
+	static CCScaleTo* create(float duration, float sx, float sy);
+	static CCScaleTo* create(float duration, float s);
+	void startWithTarget(CCNode* pTarget);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, float sx, float sy);
+	bool initWithDuration(float duration, float s);
+	void update(float time);
+};
+class CCParticleSystem : public CCNode, public CCTextureProtocol {
+	bool m_bTransformSystemDirty;
+	unsigned int m_uAllocatedParticles;
+	bool m_bIsActive;
+	bool m_bIsBlendAdditive;
+	static CCParticleSystem* create(const char* plistFile);
+	static CCParticleSystem* createWithTotalParticles(unsigned int numberOfParticles);
+	float getStartSizeVar();
+	CCTexture2D* getTexture();
+	bool isFull();
+	CCParticleBatchNode* getBatchNode();
+	const ccColor4F& getStartColor();
+	tCCPositionType getPositionType();
+	void setPosVar(const CCPoint& var);
+	float getEndSpin();
+	void setRotatePerSecondVar(float degrees);
+	float getStartSpinVar();
+	float getEndSpinVar();
+	void stopSystem();
+	bool init();
+	float getEndSizeVar();
+	void setRotation(float newRotation);
+	void setTangentialAccel(float t);
+	void setScaleY(float newScaleY);
+	void setScaleX(float newScaleX);
+	float getRadialAccel();
+	void setStartRadius(float startRadius);
+	void setRotatePerSecond(float degrees);
+	void setEndSize(float var);
+	const CCPoint& getGravity();
+	float getTangentialAccel();
+	void setEndRadius(float endRadius);
+	float getAngle();
+	float getSpeed();
+	void setEndColor(const ccColor4F& var);
+	void setStartSpin(float var);
+	void setDuration(float var);
+	bool initWithTotalParticles(unsigned int numberOfParticles);
+	void setTexture(CCTexture2D* var);
+	const CCPoint& getPosVar();
+	void updateWithNoTime();
+	bool isBlendAdditive();
+	float getAngleVar();
+	void setPositionType(tCCPositionType var);
+	float getEndRadius();
+	const CCPoint& getSourcePosition();
+	void setLifeVar(float var);
+	void setTotalParticles(unsigned int var);
+	void setEndColorVar(const ccColor4F& var);
+	void updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition);
+	unsigned int getAtlasIndex();
+	float getStartSize();
+	void setStartSpinVar(float var);
+	void resetSystem();
+	void setAtlasIndex(unsigned int var);
+	void setTangentialAccelVar(float t);
+	void setEndRadiusVar(float endRadiusVar);
+	bool isActive();
+	void setRadialAccelVar(float t);
+	void setStartSize(float var);
+	void setSpeed(float speed);
+	float getStartSpin();
+	CCParticleSystem();
+	float getRotatePerSecond();
+	void initParticle(tCCParticle* particle);
+	void setEmitterMode(int var);
+	float getDuration();
+	void setSourcePosition(const CCPoint& var);
+	float getRadialAccelVar();
+	void setBlendAdditive(bool value);
+	void setLife(float var);
+	void setAngleVar(float var);
+	void setRotationIsDir(bool t);
+	~CCParticleSystem();
+	void setEndSizeVar(float var);
+	void setAngle(float var);
+	void setBatchNode(CCParticleBatchNode* var);
+	float getTangentialAccelVar();
+	int getEmitterMode();
+	void setEndSpinVar(float var);
+	bool initWithFile(const char* plistFile);
+	float getSpeedVar();
+	void setStartColor(const ccColor4F& var);
+	float getRotatePerSecondVar();
+	float getEndSize();
+	float getLife();
+	void setSpeedVar(float speed);
+	void setAutoRemoveOnFinish(bool var);
+	void setGravity(const CCPoint& g);
+	void postStep();
+	void setEmissionRate(float var);
+	const ccColor4F& getEndColorVar();
+	bool getRotationIsDir();
+	void setScale(float s);
+	float getEmissionRate();
+	const ccColor4F& getEndColor();
+	float getLifeVar();
+	void setStartSizeVar(float var);
+	void setOpacityModifyRGB(bool var);
+	bool addParticle();
+	bool getOpacityModifyRGB();
+	float getStartRadius();
+	unsigned int getParticleCount();
+	float getStartRadiusVar();
+	ccBlendFunc getBlendFunc();
+	void setStartColorVar(const ccColor4F& var);
+	void setEndSpin(float var);
+	void update(float dt);
+	void setRadialAccel(float t);
+	bool initWithDictionary(CCDictionary* dictionary, const char* dirname);
+	bool initWithDictionary(CCDictionary* dictionary);
+	bool isAutoRemoveOnFinish();
+	unsigned int getTotalParticles();
+	void setStartRadiusVar(float startRadiusVar);
+	void setBlendFunc(ccBlendFunc var);
+	float getEndRadiusVar();
+	const ccColor4F& getStartColorVar();
+};
+class CCEaseExponentialInOut : public CCActionEase {
+	static CCEaseExponentialInOut* create(CCActionInterval* pAction);
+	CCActionInterval* reverse();
+	void update(float time);
+	CCObject* copyWithZone(CCZone* pZone);
+};
+class CCSpawn : public CCActionInterval {
+	static CCSpawn* create(CCArray* arrayOfActions);
+	static CCSpawn* createWithTwoActions(CCFiniteTimeAction* pAction1, CCFiniteTimeAction* pAction2);
+	void startWithTarget(CCNode* pTarget);
+	CCObject* copyWithZone(CCZone* pZone);
+	void stop();
+	void update(float time);
+	bool initWithTwoActions(CCFiniteTimeAction* pAction1, CCFiniteTimeAction* pAction2);
+	~CCSpawn();
+	CCActionInterval* reverse();
+};
+class CCTransitionFade : public CCTransitionScene {
+	static CCTransitionFade* create(float duration, CCScene* scene);
+	static CCTransitionFade* create(float duration, CCScene* scene, const ccColor3B& color);
+	~CCTransitionFade();
+	void onEnter();
+	void onExit();
+	bool initWithDuration(float t, CCScene* scene);
+	bool initWithDuration(float t, CCScene* scene, const ccColor3B& color);
+	CCTransitionFade();
+};
+class CCObject : public CCCopying {
+	unsigned int m_uID;
+	int m_nLuaID;
+	CCObject* copy();
+	unsigned int retainCount();
+	void acceptVisitor(CCDataVisitor& visitor);
+	bool isEqual(const CCObject* pObject);
+	void update(float dt);
+	CCObject* autorelease();
+	bool isSingleReference();
+	CCObject();
+	void release();
+	void retain();
+	~CCObject();
+};
+class VelocityTrackerState {
+};
+class CCRGBAProtocol {
+	bool isOpacityModifyRGB();
+	void setColor(const ccColor3B& color);
+	const ccColor3B& getDisplayedColor();
+	const ccColor3B& getColor();
+	unsigned char getDisplayedOpacity();
+	void setCascadeColorEnabled(bool cascadeColorEnabled);
+	void setOpacity(unsigned char opacity);
+	void setOpacityModifyRGB(bool bValue);
+	void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+	void updateDisplayedOpacity(unsigned char opacity);
+	bool isCascadeColorEnabled();
+	unsigned char getOpacity();
+	bool isCascadeOpacityEnabled();
+	void updateDisplayedColor(const ccColor3B& color);
+};
+class CCMWFileData : public CCAFCFileData {
+	unsigned int m_numOfImage;
+	int m_numOfAnimation;
+	short* m_animationTable;
+	short* m_frameTable;
+	short* m_framePoolTable;
+	short* m_imageClipPool;
+	int* m_ellipseClipPool;
+	int* m_lineClipPool;
+	int* m_rectangleClipPool;
+	int* m_roundedRectangleClipPool;
+	short* m_positionerRectangleClipPool;
+	short* m_frameTableIndex;
+	short* m_imageIndex;
+	~CCMWFileData();
+	CCMWFileData();
+};
+class CCFollow : public CCAction {
+	static CCFollow* create(CCNode* pFollowedNode, const CCRect& rect);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithTarget(CCNode* pFollowedNode, const CCRect& rect);
+	void stop();
+	void setBoudarySet(bool bValue);
+	~CCFollow();
+	void step(float dt);
+	CCFollow();
+	bool isDone();
+	bool isBoundarySet();
+};
+class CCThread {
+	void createAutoreleasePool();
+	~CCThread();
+	CCThread();
+};
+class CCSkewTo : public CCActionInterval {
+	static CCSkewTo* create(float t, float sx, float sy);
+	void startWithTarget(CCNode* pTarget);
+	void update(float time);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float t, float sx, float sy);
+	CCSkewTo();
+};
+class CCEaseElastic : public CCActionEase {
+	static CCEaseElastic* create(CCActionInterval* pAction);
+	static CCEaseElastic* create(CCActionInterval* pAction, float fPeriod);
+	CCObject* copyWithZone(CCZone* pZone);
+	void setPeriod(float fPeriod);
+	bool initWithAction(CCActionInterval* pAction, float fPeriod);
+	float getPeriod();
+	CCActionInterval* reverse();
+};
+class CCDouble {
+};
+class CCTimer {
+};
+class CCTransitionFlipY : public CCTransitionSceneOriented {
+	static CCTransitionFlipY* create(float t, CCScene* s);
+	static CCTransitionFlipY* create(float t, CCScene* s, tOrientation o);
+	~CCTransitionFlipY();
+	void onEnter();
+	CCTransitionFlipY();
+};
+class CCTransitionFlipX : public CCTransitionSceneOriented {
+	static CCTransitionFlipX* create(float t, CCScene* s);
+	static CCTransitionFlipX* create(float t, CCScene* s, tOrientation o);
+	~CCTransitionFlipX();
+	void onEnter();
+	CCTransitionFlipX();
+};
+class CCCardinalSplineTo : public CCActionInterval {
+	static CCCardinalSplineTo* create(float duration, CCPointArray* points, float tension);
+	void startWithTarget(CCNode* pTarget);
+	CCCardinalSplineTo* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, CCPointArray* points, float tension);
+	CCPointArray* getPoints();
+	void setPoints(CCPointArray* points);
+	void update(float time);
+	~CCCardinalSplineTo();
+	CCCardinalSplineTo();
+	void updatePosition(CCPoint& newPos);
+	CCActionInterval* reverse();
+};
+class CCTextureCache : public CCObject {
+	static CCTextureCache* sharedTextureCache();
+	static void purgeSharedTextureCache();
+	static void reloadAllTextures();
+	void dumpCachedTextureInfo();
+	bool reloadTexture(const char* fileName);
+	CCTexture2D* addETCImage(const char* filename);
+	const char* description();
+	CCTexture2D* addUIImage(CCImage* image, const char* key);
+	void removeTextureForKey(const char* textureKeyName);
+	CCTexture2D* textureForKey(const char* key);
+	CCDictionary* snapshotTextures();
+	CCTexture2D* addPVRImage(const char* filename);
+	~CCTextureCache();
+	CCTexture2D* addImage(const char* fileimage);
+	void removeAllTextures();
+	CCTextureCache();
+	void removeUnusedTextures();
+	void removeTexture(CCTexture2D* texture);
+};
+class CCMeasurableProtocol {
+	float getPercentage();
+	void setPercentage(float p);
+};
+class CCEaseIn : public CCEaseRateAction {
+	static CCEaseIn* create(CCActionInterval* pAction, float fRate);
+	CCObject* copyWithZone(CCZone* pZone);
+	void update(float time);
+	CCActionInterval* reverse();
+};
+class CCTiledGrid3DAction : public CCGridAction {
+	static CCTiledGrid3DAction* create(float duration, const CCSize& gridSize);
+	ccQuad3 tile(const CCPoint& position);
+	void setTile(const CCPoint& position, const ccQuad3& coords);
+	ccQuad3 originalTile(const CCPoint& position);
+	CCGridBase* getGrid();
+};
+class CCSPX3Loader {
+};
+class CCAccelerometerDelegate {
+	void didAccelerate(CCAcceleration* pAccelerationValue);
+};
+class CCClipOut : public CCActionInterval {
+	static CCClipOut* create(float duration, CCPoint v);
+	void startWithTarget(CCNode* pTarget);
+	CCActionInterval* reverse();
+	bool initWithDuration(float d, const CCPoint& v);
+	void setDirection(const CCPoint& var);
+	void update(float time);
+	~CCClipOut();
+	const CCPoint& getDirection();
+};
+class CCShuffleTiles : public CCTiledGrid3DAction {
+	static CCShuffleTiles* create(float duration, const CCSize& gridSize, unsigned int seed);
+	void startWithTarget(CCNode* pTarget);
+	bool initWithDuration(float duration, const CCSize& gridSize, unsigned int seed);
+	CCSize getDelta(const CCSize& pos);
+	void update(float time);
+	~CCShuffleTiles();
+	void shuffle(unsigned int* pArray, unsigned int nLen);
+	CCObject* copyWithZone(CCZone* pZone);
+};
+class CCSPX3FileData : public CCAFCFileData {
+	int m_version;
+	int m_tileSetCount;
+	int m_frameCount;
+	int m_actionCount;
+	static CCSPX3FileData* create();
+	CCSPX3Action* getActionAt(int index);
+	CCSPX3TileSet* getTileSetAt(int index);
+	CCSPX3Frame* getFrameAt(int index);
+	~CCSPX3FileData();
+};
+class CCAutoreleasePool : public CCObject {
+	void addObject(CCObject* pObject);
+	void clear();
+	~CCAutoreleasePool();
+	void removeObject(CCObject* pObject);
+	CCAutoreleasePool();
+};
+class CCConfiguration : public CCObject {
+	static CCConfiguration* sharedConfiguration();
+	static void purgeConfiguration();
+	bool checkForGLExtension(const string& searchName);
+	CCObject* getObject(const char* key);
+	void setObject(const char* key, CCObject* value);
+	double getNumber(const char* key, double default_value);
+	bool supportsPVRTC();
+	bool supportsShareableVAO();
+	const char* getCString(const char* key, const char* default_value);
+	bool getBool(const char* key, bool default_value);
+	int getMaxTextureUnits();
+	bool supportsNPOT();
+	int getMaxModelviewStackDepth();
+	bool supportsDiscardFramebuffer();
+	bool init();
+	void gatherGPUInfo();
+	void dumpInfo();
+	void loadConfigFile(const char* filename);
+	~CCConfiguration();
+	int getMaxTextureSize();
+	bool supportsBGRA8888();
+};
+class CCEaseRateAction : public CCActionEase {
+	static CCEaseRateAction* create(CCActionInterval* pAction, float fRate);
+	CCObject* copyWithZone(CCZone* pZone);
+	float getRate();
+	~CCEaseRateAction();
+	void setRate(float rate);
+	bool initWithAction(CCActionInterval* pAction, float fRate);
+	CCActionInterval* reverse();
+};
+class CCActionTween : public CCActionInterval {
+	string m_strKey;
+	float m_fFrom;
+	float m_fTo;
+	float m_fDelta;
+	static CCActionTween* create(float aDuration, const char* key, float from, float to);
+	void startWithTarget(CCNode* pTarget);
+	void update(float dt);
+	bool initWithDuration(float aDuration, const char* key, float from, float to);
+	CCActionInterval* reverse();
+};
+class CCTransitionFadeBL : public CCTransitionFadeTR {
+	static CCTransitionFadeBL* create(float t, CCScene* scene);
+	CCActionInterval* actionWithSize(const CCSize& size);
+	~CCTransitionFadeBL();
+	CCTransitionFadeBL();
+};
+class CCFlash : public CCActionInterval {
+	static CCFlash* create(float duration, ccColor3B c);
+	void startWithTarget(CCNode* pTarget);
+	CCObject* copyWithZone(CCZone* pZone);
+	void stop();
+	void update(float time);
+	~CCFlash();
+	bool initWithDurationAndColor(float d, ccColor3B c);
+	CCActionInterval* reverse();
+};
+class CCJSONValue {
+	static long castToLong(KeyValue& kv);
+	static int castToInt(KeyValue& kv);
+	static const char* castToString(KeyValue& kv);
+	static double castToDouble(KeyValue& kv);
+	static CCJSONArray* castToArray(KeyValue& kv);
+	static float castToFloat(KeyValue& kv);
+	static CCJSONObject* castToObject(KeyValue& kv);
+	static bool castToBool(KeyValue& kv);
+};
+class CCTransitionProgressRadialCW : public CCTransitionProgress {
+	static CCTransitionProgressRadialCW* create(float t, CCScene* scene);
+};
+class CCPointList : public CCObject {
+	static CCPointList* create();
+	void addPoint(CCPoint p);
+	void addPoint(float x, float y);
+	CCPoint* getBuffer();
+	void addPoints(CCPointList& plist);
+	void clear();
+	CCPoint getPointAt(int index);
+	~CCPointList();
+	CCPointList();
+	int getCount();
+	void deletePointAt(int index);
+};
+class CCMemoryOutputStream : public CCAssetOutputStream {
+	static CCMemoryOutputStream* create(unsigned long capacity, bool release);
+	static CCMemoryOutputStream* create();
+	void reset();
+	unsigned long getLength();
+	~CCMemoryOutputStream();
+	int write(const int* data, unsigned long len);
+	int write(const char* data, unsigned long len);
+	CCMemoryOutputStream();
+	void close();
+	const char* getBuffer();
+	unsigned long seek(int offset, int mode);
+	unsigned long getPosition();
+};
+class CCUDPSocket : public CCObject {
+	static CCUDPSocket* create(const string& hostname, int port, int tag, int blockSec);
+	void setServerAddress(const sockaddr_in& var);
+	void setHub(CCUDPSocketHub* var);
+	const string& getHostname();
+	void clearStop();
+	bool isStop();
+	const sockaddr_in& getServerAddress();
+	const CCArray& getSendQueue();
+	void setStop(bool var);
+	bool isConnected();
+	~CCUDPSocket();
+	void markStop();
+	int getSocket();
+	CCUDPSocket();
+	void sendPacket(CCPacket* p);
+	int getTag();
+	CCUDPSocketHub* getHub();
+	int getPort();
+};
+class CCTransitionTurnOffTiles : public CCTransitionScene, public CCTransitionEaseScene {
+	static CCTransitionTurnOffTiles* create(float t, CCScene* scene);
+	CCActionInterval* easeActionWithAction(CCActionInterval* action);
+	~CCTransitionTurnOffTiles();
+	void onEnter();
+	CCTransitionTurnOffTiles();
+};
+class CCBlink : public CCActionInterval {
+	static CCBlink* create(float duration, unsigned int uBlinks);
+	void startWithTarget(CCNode* pTarget);
+	CCActionInterval* reverse();
+	bool initWithDuration(float duration, unsigned int uBlinks);
+	void stop();
+	void update(float time);
+	CCObject* copyWithZone(CCZone* pZone);
+};
+class CCMenuItemColor : public CCMenuItem, public CCBlendProtocol {
+	static CCMenuItemColor* create(ccColor4B normal, ccColor4B selected);
+	static CCMenuItemColor* create(ccColor4B normal);
+	static CCMenuItemColor* create(ccColor4B normal, ccColor4B selected, ccColor4B focus);
+	static CCMenuItemColor* create(ccColor4B normal, ccColor4B selected, ccColor4B focus, ccColor4B disabled);
+	void setEnabledSilent(bool value);
+	void setEnabled(bool value);
+	void draw();
+	ccBlendFunc getBlendFunc();
+	void setFocus(bool var);
+	void setBlendFunc(ccBlendFunc var);
+	void selected();
+	CCMenuItemColorStateListener* getStateListener();
+	~CCMenuItemColor();
+	void unselectedSilent();
+	void setFocusSilent(bool flag);
+	void selectedSilent();
+	bool isFocus();
+	void setContentSize(const CCSize& size);
+	void setStateListener(CCMenuItemColorStateListener* var);
+	void unselected();
+};
+class CCCallFunc {
+};
+class CCDevice {
+	static int getDPI();
+};
+class CCTransitionProgressHorizontal : public CCTransitionProgress {
+	static CCTransitionProgressHorizontal* create(float t, CCScene* scene);
+};
+class CCProgressTimer : public CCNodeRGBA, public CCMeasurableProtocol {
+	bool m_bReverseDirection;
+	static CCProgressTimer* create(CCSprite* sp);
+	void setAnchorPoint(CCPoint anchorPoint);
+	void setBarChangeRate(CCPoint var);
+	void setReverseDirection(bool value);
+	void setMidpoint(CCPoint var);
+	void setPercentage(float fPercentage);
+	void setType(CCProgressTimerType type);
+	float getPercentage();
+	void setSprite(CCSprite* pSprite);
+	void setOpacity(unsigned char opacity);
+	CCSprite* getSprite();
+	~CCProgressTimer();
+	unsigned char getOpacity();
+	CCPoint getMidpoint();
+	void draw();
+	const ccColor3B& getColor();
+	CCProgressTimerType getType();
+	void setReverseProgress(bool reverse);
+	bool isReverseDirection();
+	void setColor(const ccColor3B& color);
+	CCProgressTimer();
+	CCPoint getBarChangeRate();
+	bool initWithSprite(CCSprite* sp);
+};
+class CCMemory {
+	static void usageReport();
+	static void dumpRecord();
+};
+class ZipFile {
+	bool fileExists(const string& fileName);
+	~ZipFile();
+	unsigned char* getFileData(const string& fileName, unsigned long* pSize);
+	bool setFilter(const string& filter);
+	ZipFile(const string& zipFile, const string& filter);
+};
+class CCCurl : public CCActionInterval {
+	static CCCurl* create(float duration, CCPoint center, float toRadius, float angularVelocity);
+	void startWithTarget(CCNode* pTarget);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float d, CCPoint center, float toRadius, float angularVelocity);
+	void update(float time);
+	~CCCurl();
+	CCCurl();
+	CCActionInterval* reverse();
+};
+class CCTwirl : public CCGrid3DAction {
+	static CCTwirl* create(float duration, const CCSize& gridSize, CCPoint position, unsigned int twirls, float amplitude);
+	void setAmplitudeRate(float fAmplitudeRate);
+	bool initWithDuration(float duration, const CCSize& gridSize, CCPoint position, unsigned int twirls, float amplitude);
+	void update(float time);
+	float getAmplitudeRate();
+	void setAmplitude(float fAmplitude);
+	float getAmplitude();
+	void setPosition(const CCPoint& position);
+	const CCPoint& getPosition();
+	CCObject* copyWithZone(CCZone* pZone);
+};
+class CCWaves : public CCGrid3DAction {
+	static CCWaves* create(float duration, const CCSize& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, const CCSize& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical);
+	void update(float time);
+	float getAmplitudeRate();
+	void setAmplitude(float fAmplitude);
+	float getAmplitude();
+	void setAmplitudeRate(float fAmplitudeRate);
+};
+class CCTransitionZoomFlipAngular : public CCTransitionSceneOriented {
+	static CCTransitionZoomFlipAngular* create(float t, CCScene* s);
+	static CCTransitionZoomFlipAngular* create(float t, CCScene* s, tOrientation o);
+	~CCTransitionZoomFlipAngular();
+	void onEnter();
+	CCTransitionZoomFlipAngular();
+};
+class CCSPXLoader {
+};
+class CCLens3D : public CCGrid3DAction {
+	static CCLens3D* create(float duration, const CCSize& gridSize, const CCPoint& position, float radius);
+	void setConcave(bool bConcave);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, const CCSize& gridSize, const CCPoint& position, float radius);
+	void setLensEffect(float fLensEffect);
+	void update(float time);
+	float getLensEffect();
+	void setPosition(const CCPoint& position);
+	const CCPoint& getPosition();
+};
+class CCJSONParser {
+	static CCObject* load(const string& path);
+	static CCObject* load(const char* json, unsigned long length);
+};
+class CCAFCFrame : public CCObject {
+	static CCAFCFrame* create();
+	void addClip(CCAFCClip* clip);
+	float getDelay();
+	void setIncrementation(ccPoint inc);
+	void setUseTickDelay(bool flag);
+	int getClipCount(CCAFCClipType type);
+	int getClipCount();
+	void setFlipY(bool flag);
+	void setFlipX(bool flag);
+	bool isFlipX();
+	bool isFlipY();
+	~CCAFCFrame();
+	bool isUseTickDelay();
+	CCAFCClip* getClipAt(CCAFCClipType type, int index);
+	CCAFCClip* getClipAt(int index);
+	void setDelay(float delay);
+	ccPoint getIncrementation();
+};
+class CCLayerGradient : public CCLayerColor {
+	static CCLayerGradient* create(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
+	static CCLayerGradient* create(const ccColor4B& start, const ccColor4B& end);
+	static CCLayerGradient* create();
+	const ccColor3B& getStartColor();
+	bool isCompressedInterpolation();
+	unsigned char getStartOpacity();
+	void setVector(const CCPoint& var);
+	void setStartOpacity(unsigned char var);
+	void setCompressedInterpolation(bool bCompressedInterpolation);
+	void setEndOpacity(unsigned char var);
+	const CCPoint& getVector();
+	bool init();
+	void setEndColor(const ccColor3B& var);
+	bool initWithColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
+	bool initWithColor(const ccColor4B& start, const ccColor4B& end);
+	const ccColor3B& getEndColor();
+	unsigned char getEndOpacity();
+	void setStartColor(const ccColor3B& var);
+};
+class CCTMXObject : public CCObject {
+	static CCTMXObject* create();
+	string getProperty(const string& key);
+	void addProperty(const string& key, const string& value);
+	void setName(const string& var);
+	CCPointList& getPoints();
+	void setSize(const CCSize& var);
+	string& getName();
+	string& getType();
+	~CCTMXObject();
+	CCSize& getSize();
+	Shape getShape();
+	CCDictionary& getProperties();
+	void setProperties(const CCDictionary& var);
+	void setType(const string& var);
+	void setPoints(const CCPointList& var);
+	void setPosition(const CCPoint& var);
+	CCPoint& getPosition();
+	void setShape(Shape var);
+	enum Shape {
+		NORMAL,
+		POLYGON,
+		POLYLINE
+	};
+};
+class CCRemoveSelf : public CCActionInstant {
+	static CCRemoveSelf* create(bool isNeedCleanUp);
+	CCFiniteTimeAction* reverse();
+	void update(float time);
+	~CCRemoveSelf();
+	bool init(bool isNeedCleanUp);
+	CCRemoveSelf();
+	CCObject* copyWithZone(CCZone* pZone);
+};
+class CCSplitCols : public CCTiledGrid3DAction {
+	static CCSplitCols* create(float duration, unsigned int nCols);
+	void startWithTarget(CCNode* pTarget);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, unsigned int nCols);
+	void update(float time);
+};
+class CCTCPSocket : public CCObject {
+	static CCTCPSocket* create(const string& hostname, int port, int tag, int blockSec, bool keepAlive);
+	void setStop(bool var);
+	void setHub(CCTCPSocketHub* var);
+	const string& getHostname();
+	void clearStop();
+	bool isStop();
+	const CCArray& getSendQueue();
+	bool hasAvailable();
+	bool isConnected();
+	~CCTCPSocket();
+	void markStop();
+	int getSocket();
+	CCTCPSocket();
+	void sendPacket(CCPacket* p);
+	int getTag();
+	CCTCPSocketHub* getHub();
+	int getPort();
+};
+class CCDictElement {
+	UT_hash_handle hh;
+	CCObject* getObject();
+	const char* getStrKey();
+	long getIntKey();
+	~CCDictElement();
+};
+class CCSPX3Action : public CCObject {
+	CCSPX3ActionMode m_mode;
+	CCSPX3Tile m_collisionRect;
+	int m_frameCount;
+	short* m_frameIndices;
+	float* m_delays;
+	static CCSPX3Action* create();
+	~CCSPX3Action();
+};
+class CCRenderTexture : public CCNode {
+	static CCRenderTexture* create(int w, int h, CCTexture2DPixelFormat eFormat);
+	static CCRenderTexture* create(int w, int h, CCTexture2DPixelFormat eFormat, unsigned int uDepthStencilFormat);
+	static CCRenderTexture* create(int w, int h);
+	void clearStencil(int stencilValue);
+	void begin();
+	void listenToForeground(CCObject* obj);
+	float getClearDepth();
+	int getClearStencil();
+	void end();
+	void setClearStencil(float fClearStencil);
+	void setSprite(CCSprite* var);
+	void visit();
+	CCSprite* getSprite();
+	~CCRenderTexture();
+	bool isAutoDraw();
+	void setClearFlags(unsigned int uClearFlags);
+	void draw();
+	bool saveToFile(const char* name, tCCImageFormat format);
+	bool saveToFile(const char* szFilePath);
+	void setAutoDraw(bool bAutoDraw);
+	void setClearColor(const ccColor4F& clearColor);
+	void endToLua();
+	void beginWithClear(float r, float g, float b, float a, float depthValue);
+	void beginWithClear(float r, float g, float b, float a);
+	void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue);
+	void clearDepth(float depthValue);
+	const ccColor4F& getClearColor();
+	void listenToBackground(CCObject* obj);
+	void clear(float r, float g, float b, float a);
+	unsigned int getClearFlags();
+	CCRenderTexture();
+	CCImage* newCCImage(bool flipImage);
+	void setClearDepth(float fClearDepth);
+	bool initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat, unsigned int uDepthStencilFormat);
+	bool initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat);
+};
+class CCGrid3D : public CCGridBase {
+	static CCGrid3D* create(const CCSize& gridSize);
+	static CCGrid3D* create(const CCSize& gridSize, CCTexture2D* pTexture, bool bFlipped);
+	void calculateVertexPoints();
+	void setVertex(const CCPoint& pos, const ccVertex3F& vertex);
+	void reuse();
+	ccVertex3F vertex(const CCPoint& pos);
+	~CCGrid3D();
+	ccVertex3F originalVertex(const CCPoint& pos);
+	CCGrid3D();
+	void blit();
+};
+class CCCamera : public CCObject {
+	static float getZEye();
+	void locate();
+	void restore();
+	void setUpXYZ(float fUpX, float fUpY, float fUpZ);
+	const char* description();
+	void setCenterXYZ(float fCenterX, float fCenterY, float fCenterZ);
+	void setEyeXYZ(float fEyeX, float fEyeY, float fEyeZ);
+	void getCenterXYZ(float* pCenterX, float* pCenterY, float* pCenterZ);
+	void getEyeXYZ(float* pEyeX, float* pEyeY, float* pEyeZ);
+	bool isDirty();
+	void init();
+	void getUpXYZ(float* pUpX, float* pUpY, float* pUpZ);
+	CCCamera();
+	void setDirty(bool bValue);
+	~CCCamera();
+};
+class CCAcceleration {
+	double x;
+	double y;
+	double z;
+	double timestamp;
+};
+class CCTransitionFadeTR : public CCTransitionScene, public CCTransitionEaseScene {
+	static CCTransitionFadeTR* create(float t, CCScene* scene);
+	CCActionInterval* actionWithSize(const CCSize& size);
+	~CCTransitionFadeTR();
+	void onEnter();
+	CCActionInterval* easeActionWithAction(CCActionInterval* action);
+	CCTransitionFadeTR();
+};
+class CCScaleBy : public CCScaleTo {
+	static CCScaleBy* create(float duration, float sx, float sy);
+	static CCScaleBy* create(float duration, float s);
+	void startWithTarget(CCNode* pTarget);
+	CCActionInterval* reverse();
+	CCObject* copyWithZone(CCZone* pZone);
+};
+class CCTime {
+	static int gettimeofdayCocos2d(cc_timeval* tp, void* tzp);
+	static double timersubCocos2d(cc_timeval* start, cc_timeval* end);
+};
+class CCEaseInOut : public CCEaseRateAction {
+	static CCEaseInOut* create(CCActionInterval* pAction, float fRate);
+	CCActionInterval* reverse();
+	void update(float time);
+	CCObject* copyWithZone(CCZone* pZone);
+};
+class CCTextureETC : public CCObject {
+	bool initWithFile(const char* file);
+	unsigned int getName();
+	unsigned int getHeight();
+	~CCTextureETC();
+	unsigned int getWidth();
+	CCTextureETC();
+};
+class CCUserDefault {
+	static void purgeSharedUserDefault();
+	static bool isXMLFileExist();
+	static const string& getXMLFilePath();
+	static CCUserDefault* sharedUserDefault();
+	void setIntegerForKey(const char* pKey, int value);
+	float getFloatForKey(const char* pKey, float defaultValue);
+	float getFloatForKey(const char* pKey);
+	bool getBoolForKey(const char* pKey, bool defaultValue);
+	bool getBoolForKey(const char* pKey);
+	void setDoubleForKey(const char* pKey, double value);
+	void setFloatForKey(const char* pKey, float value);
+	~CCUserDefault();
+	string getStringForKey(const char* pKey, const string& defaultValue);
+	string getStringForKey(const char* pKey);
+	void setStringForKey(const char* pKey, const string& value);
+	void flush();
+	void purgeDefaultForKey(const string& key);
+	int getIntegerForKey(const char* pKey, int defaultValue);
+	int getIntegerForKey(const char* pKey);
+	double getDoubleForKey(const char* pKey, double defaultValue);
+	double getDoubleForKey(const char* pKey);
+	void setBoolForKey(const char* pKey, bool value);
+};
+class CCHide : public CCActionInstant {
+	static CCHide* create();
+	CCFiniteTimeAction* reverse();
+	CCObject* copyWithZone(CCZone* pZone);
+	~CCHide();
+	void update(float time);
+	CCHide();
+};
+class CCShake : public CCActionInterval {
+	static CCShake* create(float duration, float startMaxRadius, float endMaxRadius, float startMinRadius, float endMinRadius);
+	static CCShake* create(float duration, float maxRadius, float minRadius);
+	void startWithTarget(CCNode* pTarget);
+	CCActionInterval* reverse();
+	void update(float t);
+	~CCShake();
+	bool initWithRing(float d, float maxR, float minR);
+	bool initWithDynamicRing(float d, float startMaxR, float endMaxR, float startMinR, float endMinR);
+	CCObject* copyWithZone(CCZone* pZone);
+};
+class CCEaseSineOut : public CCActionEase {
+	static CCEaseSineOut* create(CCActionInterval* pAction);
+	CCObject* copyWithZone(CCZone* pZone);
+	void update(float time);
+	CCActionInterval* reverse();
+};
+class CCJumpTiles3D : public CCTiledGrid3DAction {
+	static CCJumpTiles3D* create(float duration, const CCSize& gridSize, unsigned int numberOfJumps, float amplitude);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, const CCSize& gridSize, unsigned int numberOfJumps, float amplitude);
+	void update(float time);
+	float getAmplitudeRate();
+	void setAmplitude(float fAmplitude);
+	float getAmplitude();
+	void setAmplitudeRate(float fAmplitudeRate);
+};
+class CCParticleSystemQuad : public CCParticleSystem {
+	static CCParticleSystemQuad* create();
+	static CCParticleSystemQuad* create(const char* plistFile);
+	static CCParticleSystemQuad* createWithTotalParticles(unsigned int numberOfParticles);
+	void postStep();
+	void setBatchNode(CCParticleBatchNode* batchNode);
+	void draw();
+	void setTexture(CCTexture2D* texture);
+	void setTotalParticles(unsigned int tp);
+	void updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition);
+	~CCParticleSystemQuad();
+	void initTexCoordsWithRect(const CCRect& rect);
+	void setTextureWithRect(CCTexture2D* texture, const CCRect& rect);
+	void initIndices();
+	CCParticleSystemQuad();
+	void setDisplayFrame(CCSpriteFrame* spriteFrame);
+	void listenBackToForeground(CCObject* obj);
+	bool initWithTotalParticles(unsigned int numberOfParticles);
+};
+class CCTMXObjectDebugRenderer : public CCNode {
+	static CCTMXObjectDebugRenderer* create(CCTMXTiledMap* m);
+	void draw();
+	void setMap(CCTMXTiledMap* var);
+	CCPointList getVertices();
+	void setVertices(CCPointList var);
+	~CCTMXObjectDebugRenderer();
+	CCTMXTiledMap* getMap();
+	bool initWithMap(CCTMXTiledMap* map);
+};
+class CCGLBufferedNode {
+	void setGLBufferData(void* buf, unsigned int bufSize, int slot);
+	void setGLIndexData(void* buf, unsigned int bufSize, int slot);
+	CCGLBufferedNode();
+};
+class CCTrailMoveTo : public CCMoveTo {
+	static CCTrailMoveTo* createWithFileName(float duration, const CCPoint& position, const string& fileName, float trailDistance, int trailSegments, ccColor3B trailColor, ccColor4B trailColorScale, bool removeWhenDone);
+	static CCTrailMoveTo* createWithSpriteFrameName(float duration, const CCPoint& position, const string& trailFrameName, float trailDistance, int trailSegments, ccColor3B trailColor, ccColor4B trailColorScale, bool removeWhenDone);
+	static CCTrailMoveTo* createWithArmature(float duration, const CCPoint& position, const string& armatureName, const string& animationName, float trailDistance, int trailSegments, ccColor3B trailColor, ccColor4B trailColorScale, bool removeWhenDone);
+	static CCTrailMoveTo* createWithArmature(float duration, const CCPoint& position, const string& armatureName, int animationIndex, float trailDistance, int trailSegments, ccColor3B trailColor, ccColor4B trailColorScale, bool removeWhenDone);
+	void setRemoveWhenDone(bool var);
+	float gettrailDistance();
+	CCObject* copyWithZone(CCZone* pZone);
+	void setAnimationIndex(int var);
+	void setTrailColorScale(const ccColor4B& var);
+	~CCTrailMoveTo();
+	bool initWithDurationAndSpriteTrail(float duration, const CCPoint& position, const string& spriteName, float trailDistance, int trailSegments, ccColor3B trailColor, ccColor4B trailColorScale, bool removeWhenDone);
+	const ccColor4B& getTrailColorScale();
+	void setTrailColor(const ccColor3B& var);
+	const ccColor3B& getTrailColor();
+	const string& getAnimationName();
+	void update(float time);
+	void clearRemoveWhenDone();
+	bool isRemoveWhenDone();
+	void settrailDistance(float var);
+	void setAnimationName(const string& var);
+	void startWithTarget(CCNode* pTarget);
+	int getAnimationIndex();
+	bool initWithDurationAndArmatureTrail(float duration, const CCPoint& position, const string& armatureName, int animationIndex, float trailDistance, int trailSegments, ccColor3B trailColor, ccColor4B trailColorScale, bool removeWhenDone);
+	bool initWithDurationAndArmatureTrail(float duration, const CCPoint& position, const string& armatureName, const string& animationName, float trailDistance, int trailSegments, ccColor3B trailColor, ccColor4B trailColorScale, bool removeWhenDone);
+	void markRemoveWhenDone();
+	int getTrailSegments();
+	void setTrailSegments(int var);
+};
+class CCRotateTo : public CCActionInterval {
+	static CCRotateTo* create(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
+	static CCRotateTo* create(float fDuration, float fDeltaAngle);
+	void startWithTarget(CCNode* pTarget);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
+	bool initWithDuration(float fDuration, float fDeltaAngle);
+	void update(float time);
+};
+class CCCardinalSplineBy : public CCCardinalSplineTo {
+	static CCCardinalSplineBy* create(float duration, CCPointArray* points, float tension);
+	void startWithTarget(CCNode* pTarget);
+	void updatePosition(CCPoint& newPos);
+	CCActionInterval* reverse();
+	CCCardinalSplineBy();
+};
+class CCTiledGrid3D : public CCGridBase {
+	static CCTiledGrid3D* create(const CCSize& gridSize);
+	static CCTiledGrid3D* create(const CCSize& gridSize, CCTexture2D* pTexture, bool bFlipped);
+	void calculateVertexPoints();
+	void reuse();
+	~CCTiledGrid3D();
+	ccQuad3 originalTile(const CCPoint& pos);
+	CCTiledGrid3D();
+	ccQuad3 tile(const CCPoint& pos);
+	void setTile(const CCPoint& pos, const ccQuad3& coords);
+	void blit();
+};
+class CCAnimationCache : public CCObject {
+	static CCAnimationCache* sharedAnimationCache();
+	static void purgeSharedAnimationCache();
+	void addAnimation(CCAnimation* animation, const char* name);
+	void addAnimationsWithFile(const char* plist);
+	CCAnimationCache();
+	~CCAnimationCache();
+	void removeAnimationByName(const char* name);
+	bool init();
+	CCAnimation* animationByName(const char* name);
+	void addAnimationsWithDictionary(CCDictionary* dictionary, const char* plist);
+};
+class CCArcticSprite : public CCAFCSprite {
+	int getAnimationCount();
+	CCAFCAnimation* getAnimationAt(int index, CCAFCClipMapping* mapping);
+	CCAFCFileData* getFileData();
+	int getImageCount();
+	~CCArcticSprite();
+};
+class CCLayerMultiplex : public CCLayer {
+	static CCLayerMultiplex* createWithLayer(CCLayer* layer);
+	static CCLayerMultiplex* create();
+	static CCLayerMultiplex* createWithArray(CCArray* arrayOfLayers);
+	bool initWithArray(CCArray* arrayOfLayers);
+	int getEnabledLayer();
+	CCLayer* layerAt(int n);
+	CCLayerMultiplex();
+	~CCLayerMultiplex();
+	void addLayer(CCLayer* layer);
+	void switchTo(unsigned int n);
+};
+class CCTransitionProgressVertical : public CCTransitionProgress {
+	static CCTransitionProgressVertical* create(float t, CCScene* scene);
+};
+class CCFloat {
+};
+class CCAuroraSprite : public CCAFCSprite {
+	int getAnimationCount();
+	CCAFCAnimation* getAnimationAt(int index, CCAFCClipMapping* mapping);
+	CCAFCFileData* getFileData();
+	int getImageCount();
+	~CCAuroraSprite();
+};
+class CCComponentContainer {
+};
+class CCParticleFlower : public CCParticleSystemQuad {
+	static CCParticleFlower* create();
+	static CCParticleFlower* createWithTotalParticles(unsigned int numberOfParticles);
+	bool init();
+	~CCParticleFlower();
+	bool initWithTotalParticles(unsigned int numberOfParticles);
+	CCParticleFlower();
+};
+class CCAFCClipMapping : public CCObject {
+	static CCAFCClipMapping* create(int tag);
+	static CCAFCClipMapping* createWithAuroraGT(int tag, const char* ammPath);
+	CCAFCClipMappingRule* findRule(int sourceClipIndex);
+	int getTag();
+	void mapClip(int fromClipIndex, const char* externalFilePath, int toClipIndex);
+	void mapClip(int fromClipIndex, int toClipIndex);
+	void mapClip(int fromClipIndex, CCTexture2D* tex, ccPoint pos, ccRect texRect, bool flipX, float rotation);
+	~CCAFCClipMapping();
+};
+class CCTransitionShrinkGrow : public CCTransitionScene, public CCTransitionEaseScene {
+	static CCTransitionShrinkGrow* create(float t, CCScene* scene);
+	CCActionInterval* easeActionWithAction(CCActionInterval* action);
+	~CCTransitionShrinkGrow();
+	void onEnter();
+	CCTransitionShrinkGrow();
+};
+class CCBlur : public CCActionInterval {
+	static CCBlur* create(float duration, CCSize startBlurSize, CCSize endBlurSize);
+	void startWithTarget(CCNode* pTarget);
+	CCObject* copyWithZone(CCZone* pZone);
+	void stop();
+	void update(float time);
+	~CCBlur();
+	bool initWithBlurSize(float d, CCSize startBlurSize, CCSize endBlurSize);
+	CCActionInterval* reverse();
+};
+class CCTintBy : public CCActionInterval {
+	static CCTintBy* create(float duration, short deltaRed, short deltaGreen, short deltaBlue);
+	void startWithTarget(CCNode* pTarget);
+	CCActionInterval* reverse();
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, short deltaRed, short deltaGreen, short deltaBlue);
+	void update(float time);
+};
+class CCCatmullRomSprite : public CCNodeRGBA, public CCBlendProtocol {
+	static CCCatmullRomSprite* create(const char* fileImage);
+	static CCCatmullRomSprite* createWithSprite(CCSprite* sprite);
+	static CCCatmullRomSprite* createWithTexture(CCTexture2D* tex);
+	static CCCatmullRomSprite* createWithSpriteFrameName(const char* name);
+	static CCCatmullRomSprite* createWithSpriteFrame(CCSpriteFrame* frame);
+	void setControlPoints(CCPointArray& pa);
+	void draw();
+	ccBlendFunc getBlendFunc();
+	void setBlendFunc(ccBlendFunc blendFunc);
+	void resetSegmentVisibility();
+	bool isSegmentVisible(int sIndex);
+	void setTension(float t);
+	void setOpacity(unsigned char opacity);
+	~CCCatmullRomSprite();
+	int getControlPointCount();
+	void addControlPoint(const CCPoint& p);
+	int getSegmentCount();
+	CCSprite* getPatternSprite();
+	CCCatmullRomSprite(CCSprite* sprite);
+	void setSegmentVisible(int sIndex, bool visible);
+};
+class CCScriptEngineManager {
+	static CCScriptEngineManager* sharedManager();
+	static void purgeSharedManager();
+	void setScriptEngine(CCScriptEngineProtocol* pScriptEngine);
+	CCScriptEngineProtocol* getScriptEngine();
+	void removeScriptEngine();
+	~CCScriptEngineManager();
+};
+class CCTMXTiledMap : public CCNodeRGBA {
+	static CCTMXTiledMap* create(const string& file);
+	float getTileWidth();
+	CCTMXMapInfo* getMapInfo();
+	void setTileWidth(float var);
+	int getMapHeight();
+	void setMapWidth(int var);
+	CCPoint tmxToNodeSpace(CCPoint p);
+	float getTileHeight();
+	CCPoint nodeToTMXSpace(CCPoint p);
+	~CCTMXTiledMap();
+	void setMapInfo(CCTMXMapInfo* var);
+	bool isDebugDrawObjects();
+	CCTMXLayer* getLayerAt(int index);
+	CCTMXLayer* getLayer(const string& name);
+	void setTileHeight(float var);
+	CCSize getTileSize();
+	cbTMXOrientation getOrientation();
+	void setDebugDrawObjects(bool var);
+	CCDictionary* getTileProperties(int gid);
+	bool initWithXMLFile(const string& file);
+	void setMapHeight(int var);
+	string getProperty(const string& name);
+	CCTMXObjectGroup* getObjectGroup(const string& name);
+	int getMapWidth();
+	CCSize getMapSize();
+	string getTileProperty(int gid, const string& name);
+};
+class CCParticleExplosion : public CCParticleSystemQuad {
+	static CCParticleExplosion* create();
+	static CCParticleExplosion* createWithTotalParticles(unsigned int numberOfParticles);
+	bool init();
+	~CCParticleExplosion();
+	bool initWithTotalParticles(unsigned int numberOfParticles);
+	CCParticleExplosion();
+};
+class CCDatabase : public CCObject {
+	static CCDatabase* create(string path);
+	static bool isThreadSafe();
+	static string sqliteLibVersion();
+	CCResultSet* getTableSchema(string tableName);
+	void setBusyRetryTimeout(int var);
+	void clearInUse();
+	CCResultSet* getSchema();
+	bool databaseOpened();
+	bool close();
+	~CCDatabase();
+	bool open(int flags);
+	void setVersion(int v);
+	const string& getDatabasePath();
+	bool hadError();
+	bool executeSQL(const void* data, unsigned long length);
+	void setInUse(bool var);
+	void markInUse();
+	void setShouldCacheStatements(bool value);
+	int getBusyRetryTimeout();
+	bool shouldCacheStatements();
+	bool rollback();
+	int lastErrorCode();
+	bool columnExists(string tableName, string columnName);
+	long long lastInsertRowId();
+	bool beginTransaction();
+	string lastErrorMessage();
+	int getVersion();
+	bool isInTransaction();
+	bool goodConnection();
+	bool tableExists(string tableName);
+	void clearCachedStatements();
+	bool commit();
+	bool beginDeferredTransaction();
+	int changes();
+	bool isInUse();
+};
+class CCScheduler {
+};
+class CCGridBase {
+};
+class CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, public CCRGBAProtocol {
+	static void purgeCachedData();
+	static CCLabelBMFont* create(const char* str, const char* fntFile, float width, CCTextAlignment alignment);
+	static CCLabelBMFont* create(const char* str, const char* fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset);
+	static CCLabelBMFont* create(const char* str, const char* fntFile, float width);
+	static CCLabelBMFont* create(const char* str, const char* fntFile);
+	static CCLabelBMFont* create();
+	void setAnchorPoint(const CCPoint& var);
+	void createFontChars();
+	const char* getString();
+	CCBMFontConfiguration* getConfiguration();
+	void setScale(float scale);
+	void setOpacity(unsigned char opacity);
+	void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+	const char* getFntFile();
+	void updateLabel();
+	void setWidth(float width);
+	bool isOpacityModifyRGB();
+	bool isCascadeOpacityEnabled();
+	void setString(const char* newString, bool needUpdateLabel);
+	void setString(const char* newString);
+	bool initWithString(const char* str, const char* fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset);
+	void setCascadeColorEnabled(bool cascadeColorEnabled);
+	void setOpacityModifyRGB(bool isOpacityModifyRGB);
+	~CCLabelBMFont();
+	void updateDisplayedOpacity(unsigned char parentOpacity);
+	bool init();
+	void setFntFile(const char* fntFile);
+	unsigned char getOpacity();
+	void setLineBreakWithoutSpace(bool breakWithoutSpace);
+	void setScaleY(float scaleY);
+	void setScaleX(float scaleX);
+	const ccColor3B& getColor();
+	unsigned char getDisplayedOpacity();
+	void setLineKerning(float k);
+	bool isCascadeColorEnabled();
+	void setColor(const ccColor3B& color);
+	void setCString(const char* label);
+	const ccColor3B& getDisplayedColor();
+	CCLabelBMFont();
+	void updateDisplayedColor(const ccColor3B& parentColor);
+	void setAlignment(CCTextAlignment alignment);
+};
+class ZipFilePrivate {
+};
+class CCActionTweenDelegate {
+	void updateTweenAction(float value, const char* key);
+	~CCActionTweenDelegate();
+};
+class CCParticleSmoke : public CCParticleSystemQuad {
+	static CCParticleSmoke* create();
+	static CCParticleSmoke* createWithTotalParticles(unsigned int numberOfParticles);
+	bool init();
+	~CCParticleSmoke();
+	bool initWithTotalParticles(unsigned int numberOfParticles);
+	CCParticleSmoke();
+};
+class CCSprite : public CCNodeRGBA, public CCTextureProtocol {
+	static CCSprite* create(const char* pszFileName);
+	static CCSprite* create();
+	static CCSprite* create(const char* pszFileName, const CCRect& rect);
+	static CCSprite* createWithTexture(CCTexture2D* pTexture, const CCRect& rect);
+	static CCSprite* createWithTexture(CCTexture2D* pTexture);
+	static CCSprite* createWithSpriteFrameName(const char* pszSpriteFrameName);
+	static CCSprite* createWithSpriteFrame(CCSpriteFrame* pSpriteFrame);
+	void draw();
+	void addChild(CCNode* pChild, int zOrder);
+	void addChild(CCNode* pChild);
+	void addChild(CCNode* pChild, int zOrder, int tag);
+	void setTexture(CCTexture2D* texture);
+	CCTexture2D* getTexture();
+	void setPreDrawFunction(CCCallFuncO* var);
+	void setScaleY(float fScaleY);
+	void setScale(float fScale);
+	void setOpacity(unsigned char opacity);
+	void setDisplayFrameWithAnimationName(const char* animationName, int frameIndex);
+	void setRotationY(float fRotationY);
+	void setAnchorPoint(const CCPoint& anchor);
+	CCSpriteFrame* displayFrame();
+	void setOpacityModifyRGB(bool modify);
+	CCSpriteBatchNode* getBatchNode();
+	bool isTextureRectRotated();
+	void setShouldUpdateBlendFunc(bool var);
+	CCCallFuncO* getPreDrawFunction();
+	bool isOpacityModifyRGB();
+	bool isShouldUpdateBlendFunc();
+	void setTextureRect(const CCRect& rect, bool rotated, const CCSize& untrimmedSize);
+	void setTextureRect(const CCRect& rect);
+	bool isFlipX();
+	bool init();
+	void setVertexZ(float fVertexZ);
+	~CCSprite();
+	void updateDisplayedOpacity(unsigned char parentOpacity);
+	bool initWithSpriteFrameName(const char* pszSpriteFrameName);
+	bool isFrameDisplayed(CCSpriteFrame* pFrame);
+	unsigned int getAtlasIndex();
+	void setRotation(float fRotation);
+	void setDisplayFrame(CCSpriteFrame* pNewFrame);
+	const CCPoint& getOffsetPosition();
+	void setBatchNode(CCSpriteBatchNode* pobSpriteBatchNode);
+	void setRotationX(float fRotationX);
+	void setScaleX(float fScaleX);
+	bool initWithTexture(CCTexture2D* pTexture, const CCRect& rect);
+	bool initWithTexture(CCTexture2D* pTexture);
+	bool initWithTexture(CCTexture2D* pTexture, const CCRect& rect, bool rotated);
+	bool isFlipY();
+	void setTextureAtlas(CCTextureAtlas* pobTextureAtlas);
+	void setFlipY(bool bFlipY);
+	void setFlipX(bool bFlipX);
+	void removeAllChildrenWithCleanup(bool bCleanup);
+	void sortAllChildren();
+	void setAtlasIndex(unsigned int uAtlasIndex);
+	void markShouldUpdateBlendFunc();
+	void clearShouldUpdateBlendFunc();
+	void setVertexRect(const CCRect& rect);
+	void setDirty(bool bDirty);
+	void setPosition(const CCPoint& pos);
+	bool isDirty();
+	void reorderChild(CCNode* pChild, int zOrder);
+	void ignoreAnchorPointForPosition(bool value);
+	bool initWithFile(const char* pszFilename, const CCRect& rect);
+	bool initWithFile(const char* pszFilename);
+	void setColor(const ccColor3B& color3);
+	void setBlendFunc(ccBlendFunc blendFunc);
+	const CCRect& getTextureRect();
+	CCTextureAtlas* getTextureAtlas();
+	ccBlendFunc getBlendFunc();
+	bool initWithSpriteFrame(CCSpriteFrame* pSpriteFrame);
+	void removeChild(CCNode* pChild, bool bCleanup);
+	void updateTransform();
+	ccV3F_C4B_T2F_Quad getQuad();
+	CCSprite();
+	void updateDisplayedColor(const ccColor3B& parentColor);
+	void setSkewX(float sx);
+	void setSkewY(float sy);
+	void setVisible(bool bVisible);
+};
+class CCProgressHUD : public CCLayerColor {
+	static CCProgressHUD* current();
+	static void hide();
+	static CCProgressHUD* show(const string& message, CCNode* parent);
+	static CCProgressHUD* show(const string& message);
+	void keyBackClicked();
+	void setPanelColor(const ccColor4B& var);
+	bool ccTouchBegan(CCTouch* pTouch, CCEvent* pEvent);
+	bool isForceSquare();
+	bool isCancellable();
+	void clearCancellable();
+	bool initWithMessage(const string& message);
+	const ccColor4B& getPanelColor();
+	~CCProgressHUD();
+	const string& getMessage();
+	void ccTouchMoved(CCTouch* pTouch, CCEvent* pEvent);
+	void setForceSquare(bool var);
+	void setIcon(CCSprite* var);
+	void draw();
+	void setCancellable(bool var);
+	void update(float delta);
+	const ccColor4B& getDimColor();
+	void setDimColor(const ccColor4B& var);
+	void ccTouchEnded(CCTouch* pTouch, CCEvent* pEvent);
+	CCSprite* getIcon();
+	void ccTouchCancelled(CCTouch* pTouch, CCEvent* pEvent);
+	void setMessage(const string& var);
+	void markCancellable();
+};
+class CCMenuItemToggle : public CCMenuItem {
+	static CCMenuItemToggle* create(CCMenuItem* item);
+	static CCMenuItemToggle* create();
+	void setSubItems(CCArray* var);
+	bool initWithItem(CCMenuItem* item);
+	void setSelectedIndex(unsigned int var);
+	void setEnabled(bool var);
+	unsigned int getSelectedIndex();
+	void addSubItem(CCMenuItem* item);
+	void selected();
+	~CCMenuItemToggle();
+	void activate();
+	CCMenuItemToggle();
+	void unselected();
+	CCMenuItem* selectedItem();
+	CCArray* getSubItems();
+};
+class CCLabelAtlas : public CCAtlasNode, public CCLabelProtocol {
+	static CCLabelAtlas* create(const char* string, const char* fntFile);
+	static CCLabelAtlas* create(const char* string, const char* charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+	void updateAtlasValues();
+	const char* getString();
+	void setString(const char* label);
+	bool initWithString(const char* string, const char* fntFile);
+	bool initWithString(const char* string, const char* charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+	bool initWithString(const char* string, CCTexture2D* texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+	~CCLabelAtlas();
+	CCLabelAtlas();
+};
+class CCEaseElasticOut : public CCEaseElastic {
+	static CCEaseElasticOut* create(CCActionInterval* pAction);
+	static CCEaseElasticOut* create(CCActionInterval* pAction, float fPeriod);
+	CCObject* copyWithZone(CCZone* pZone);
+	void update(float time);
+	CCActionInterval* reverse();
+};
+class CCData : public CCObject {
+	static CCData* create();
+	static CCData* createWithBytes(unsigned char* bytes, unsigned long size);
+	static CCData* createWithData(CCData* data);
+	void setBytes(unsigned char* var);
+	void appendBytes(unsigned char* bytes, unsigned long size);
+	~CCData();
+	unsigned long getSize();
+	CCData(unsigned char* bytes, unsigned long size);
+	CCData();
+	CCData(CCData* data);
+	void appendData(CCData* data);
+	void setSize(unsigned long var);
+	unsigned char* getBytes();
+};
+class CCGrid3DAction : public CCGridAction {
+	static CCGrid3DAction* create(float duration, const CCSize& gridSize);
+	void setVertex(const CCPoint& position, const ccVertex3F& vertex);
+	CCGridBase* getGrid();
+	ccVertex3F vertex(const CCPoint& position);
+	ccVertex3F originalVertex(const CCPoint& position);
+};
+class CCLayerRGBA : public CCLayer, public CCRGBAProtocol {
+	static CCLayerRGBA* create();
+	void updateDisplayedColor(const ccColor3B& parentColor);
+	void setColor(const ccColor3B& color);
+	bool isCascadeOpacityEnabled();
+	const ccColor3B& getColor();
+	unsigned char getDisplayedOpacity();
+	void setCascadeColorEnabled(bool cascadeColorEnabled);
+	void setOpacity(unsigned char opacity);
+	~CCLayerRGBA();
+	void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+	void updateDisplayedOpacity(unsigned char parentOpacity);
+	bool init();
+	CCLayerRGBA();
+	void setOpacityModifyRGB(bool bValue);
+	unsigned char getOpacity();
+	bool isOpacityModifyRGB();
+	bool isCascadeColorEnabled();
+	const ccColor3B& getDisplayedColor();
+};
+class CCSplitRows : public CCTiledGrid3DAction {
+	static CCSplitRows* create(float duration, unsigned int nRows);
+	void startWithTarget(CCNode* pTarget);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, unsigned int nRows);
+	void update(float time);
+};
+class CCRipple3D : public CCGrid3DAction {
+	static CCRipple3D* create(float duration, const CCSize& gridSize, const CCPoint& position, float radius, unsigned int waves, float amplitude);
+	void setAmplitudeRate(float fAmplitudeRate);
+	bool initWithDuration(float duration, const CCSize& gridSize, const CCPoint& position, float radius, unsigned int waves, float amplitude);
+	void update(float time);
+	float getAmplitudeRate();
+	void setAmplitude(float fAmplitude);
+	float getAmplitude();
+	void setPosition(const CCPoint& position);
+	const CCPoint& getPosition();
+	CCObject* copyWithZone(CCZone* pZone);
+};
+class CCRotateBy : public CCActionInterval {
+	static CCRotateBy* create(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
+	static CCRotateBy* create(float fDuration, float fDeltaAngle);
+	void startWithTarget(CCNode* pTarget);
+	CCActionInterval* reverse();
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
+	bool initWithDuration(float fDuration, float fDeltaAngle);
+	void update(float time);
+};
+class CCActionEase : public CCActionInterval {
+	static CCActionEase* create(CCActionInterval* pAction);
+	void startWithTarget(CCNode* pTarget);
+	CCObject* copyWithZone(CCZone* pZone);
+	void stop();
+	void update(float time);
+	~CCActionEase();
+	bool initWithAction(CCActionInterval* pAction);
+	CCActionInterval* getInnerAction();
+	CCActionInterval* reverse();
+};
+class CCCallFuncO : public CCCallFunc, public TypeInfo {
+	CCObject* getObject();
+	void execute();
+	void setObject(CCObject* pObj);
+	CCObject* copyWithZone(CCZone* pZone);
+	~CCCallFuncO();
+	long getClassTypeInfo();
+	CCCallFuncO();
+};
+class CCCallFuncN : public CCCallFunc, public TypeInfo {
+	static CCCallFuncN* create(int nHandler);
+	long getClassTypeInfo();
+	void execute();
+	~CCCallFuncN();
+	CCObject* copyWithZone(CCZone* pZone);
+	CCCallFuncN();
+};
+class CCMD5 {
+	static const char* md5(const void* data, unsigned long len);
+	static string md5(const char* s);
+};
+class CCAnimate : public CCActionInterval {
+	static CCAnimate* create(CCAnimation* pAnimation);
+	void startWithTarget(CCNode* pTarget);
+	CCAnimation* getAnimation();
+	CCObject* copyWithZone(CCZone* pZone);
+	void stop();
+	void update(float t);
+	~CCAnimate();
+	bool initWithAnimation(CCAnimation* pAnimation);
+	void setAnimation(CCAnimation* var);
+	CCAnimate();
+	CCActionInterval* reverse();
+};
+class CCMWManager : public CCObject {
+	static CCMWManager* getInstance();
+	CCMWFileData* load(const char* path);
+	CCMWFileData* getAnimationFileData(const string& path);
+	void releaseAllAnimationFileData();
+	CCAFCAnimation* getAnimationData(CCMWFileData* fileData, int animIndex, CCAFCClipMapping* mapping);
+	~CCMWManager();
+};
+class CCRect {
+	CCPoint origin;
+	CCSize size;
+	float getMaxY();
+	float getMaxX();
+	bool equals(const CCRect& rect);
+	float getMinY();
+	float getMinX();
+	float getMidY();
+	float getMidX();
+	bool intersectsRect(const CCRect& rect);
+	CCRect(float x, float y, float width, float height);
+	CCRect();
+	CCRect(const CCRect& other);
+	bool containsPoint(const CCPoint& point);
+	void setRect(float x, float y, float width, float height);
+};
+class CCJSONObject : public CCObject {
+	static CCJSONObject* create(const char* json, unsigned long length);
+	static CCJSONObject* create();
+	static CCJSONObject* create(const string& path);
+	void addDouble(const char* key, double d);
+	long optLong(int index, long def);
+	long optLong(const char* key, long def);
+	const char* keyAt(int index);
+	CCJSONObject* optJSONObject(int index);
+	CCJSONObject* optJSONObject(const char* key);
+	void addInt(const char* key, int i);
+	void addBool(const char* key, bool b);
+	void addArray(const char* key, CCJSONArray* ja);
+	bool optBool(int index, bool def);
+	bool optBool(const char* key, bool def);
+	int getLength();
+	~CCJSONObject();
+	string toString();
+	void addNull(const char* key);
+	void addString(const char* key, const char* s);
+	void addObject(const char* key, CCJSONObject* jo);
+	void addLong(const char* key, long l);
+	CCJSONArray* optJSONArray(int index);
+	CCJSONArray* optJSONArray(const char* key);
+	float optFloat(int index, float def);
+	float optFloat(const char* key, float def);
+	void addFloat(const char* key, float f);
+	string optString(int index, const char* def);
+	string optString(const char* key, const char* def);
+	double optDouble(int index, double def);
+	double optDouble(const char* key, double def);
+	int optInt(int index, int def);
+	int optInt(const char* key, int def);
+	void output(CCAssetOutputStream* aos, int level);
+};
+class CCScriptEngineProtocol {
+	int executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName);
+	int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch* pTouch);
+	int executeMenuItemEvent(CCMenuItem* pMenuItem);
+	int executeEventWithArgs(int nHandler, CCArray* pArgs);
+	int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue);
+	int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet* pTouches);
+	void removeScriptObjectByCCObject(CCObject* pObj);
+	int executeScriptFile(const char* filename);
+	int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget);
+	~CCScriptEngineProtocol();
+	int executeGlobalFunction(const char* functionName);
+	int executeString(const char* codes);
+	bool handleAssert(const char* msg);
+	int executeSchedule(int nHandler, float dt, CCNode* pNode);
+	int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource, const char* pEventSourceClassName);
+	bool parseConfig(ConfigType type, const string& str);
+	int executeNodeEvent(CCNode* pNode, int nAction);
+	void removeScriptHandler(int nHandler);
+	int executeLayerKeypadEvent(CCLayer* pLayer, int eventType);
+	int reallocateScriptHandler(int nHandler);
+	enum ConfigType {
+		NONE,
+		COCOSTUDIO
+	};
+};
+class CCEaseOut : public CCEaseRateAction {
+	static CCEaseOut* create(CCActionInterval* pAction, float fRate);
+	CCObject* copyWithZone(CCZone* pZone);
+	void update(float time);
+	CCActionInterval* reverse();
+};
+class CCTintTo : public CCActionInterval {
+	static CCTintTo* create(float duration, unsigned char red, unsigned char green, unsigned char blue);
+	void startWithTarget(CCNode* pTarget);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, unsigned char red, unsigned char green, unsigned char blue);
+	void update(float time);
+};
+class CCParticleGalaxy : public CCParticleSystemQuad {
+	static CCParticleGalaxy* create();
+	static CCParticleGalaxy* createWithTotalParticles(unsigned int numberOfParticles);
+	bool init();
+	~CCParticleGalaxy();
+	bool initWithTotalParticles(unsigned int numberOfParticles);
+	CCParticleGalaxy();
+};
+class CCEaseExponentialIn : public CCActionEase {
+	static CCEaseExponentialIn* create(CCActionInterval* pAction);
+	CCObject* copyWithZone(CCZone* pZone);
+	void update(float time);
+	CCActionInterval* reverse();
+};
+class CCTextureAtlas {
+};
+class CCTMXTileSetInfo {
+};
+class CCUUID {
+	static string generate(bool noHyphen);
+};
+class CCUtils {
+	static string trim(const string& s);
+	static bool createIntermediateFolders(const string& path);
+	static void openUrl(const string& url);
+	static int getUTF8Bytes(unsigned char c);
+	static void removeChar(string& s, char c);
+	static string joinFloat(const CCArray& a, char sep);
+	static string deletePathExtension(const string& path);
+	static CCArray* getChildrenByTag(CCNode* parent, int tag);
+	static CCPoint getOrigin(CCNode* node);
+	static string joinInt(const CCArray& a, char sep);
+	static string appendPathComponent(const string& path, const string& component);
+	static CCPoint getPoint(CCNode* node, CCPoint anchor);
+	static CCPoint getPoint(CCNode* node, float xpercent, float ypercent);
+	static string replace(string& s, const string& c, const string& sub);
+	static string arrayToString(const CCArray& array);
+	static CCArray& boolComponentsOfString(const string& s, char sep);
+	static double pfloor(double x, int precision);
+	static string externalize(const string& path);
+	static string decodeHtmlEntities(const string& src);
+	static bool verifySignature(void* validSign, unsigned long len);
+	static string getPinyin(const string& s);
+	static long long currentTimeMillis();
+	static bool deleteFile(const string& path);
+	static string makeScreenshot(CCNode* root, const string& path, bool needStencil);
+	static CCRect getCenterRect(CCSpriteFrame* f);
+	static CCRect getCenterRect(const string& frameName);
+	static bool startsWith(const string& s, const string& sub);
+	static string getMacAddress();
+	static int getSystemVersionInt();
+	static CCArray& intComponentsOfString(const string& s, char sep);
+	static string getAppVersion();
+	static int strlen8(const char* s);
+	static long long getAvailableStorageSize();
+	static string getDeviceType();
+	static float lerp(float a, float b, float p);
+	static bool createFolder(const string& path);
+	static int getNumDigits(int num);
+	static ccColorHSV ccc32hsv(ccColor3B c);
+	static CCRect combine(const CCRect& r1, const CCRect& r2);
+	static CCSize ccsFromString(const string& s);
+	static CCPoint getLocalPoint(CCNode* node, CCPoint anchor);
+	static CCPoint getLocalPoint(CCNode* node, float xpercent, float ypercent);
+	static CCScene* getScene(CCNode* n);
+	static bool testSegmentAABB(CCPoint p0, CCPoint p1, ccAABB b);
+	static CCArray& arrayFromString(const string& s);
+	static bool hasExternalStorage();
+	static double pceil(double x, int precision);
+	static void toLowercase(string& s);
+	static string lastPathComponent(const string& path);
+	static string joinString(const CCArray& a, char sep);
+	static string getPackageName();
+	static string getParentPath(const string& path);
+	static double pround(double x, int precision);
+	static void removeChildrenByTag(CCNode* parent, int tag);
+	static string joinBool(const CCArray& a, char sep);
+	static CCRect ccrFromString(const string& s);
+	static CCPoint getCenter(CCNode* node);
+	static CCRect getBoundingBoxInWorldSpace(CCNode* node);
+	static string getInternalStoragePath();
+	static CCArray& componentsOfString(const string& s, char sep);
+	static const char* copy(const char* src, int start, unsigned long len);
+	static const char* copy(const char* src);
+	static void replaceChar(string& s, char c, char sub);
+	static bool containsRect(const CCRect& r1, const CCRect& r2);
+	static int binarySearch(int* a, unsigned long len, int key);
+	static unsigned long nextPOT(unsigned long value);
+	static CCPoint ccpFromString(const string& s);
+	static string getExternalOrFullPath(const string& path);
+	static int lastSlashIndex(string path);
+	static void setOpacityRecursively(CCNode* node, int o);
+	static string deleteLastPathComponent(const string& path);
+	static bool isPathExistent(const string& path);
+	static CCPoint getLocalCenter(CCNode* node);
+	static bool isDebugSignature();
+	static bool endsWith(const string& s, const string& sub);
+	static int lastDotIndex(const string& path);
+	static string getPathExtension(const string& path);
+	static void openAppInStore(const string& appId);
+	static CCArray& floatComponentsOfString(const string& s, char sep);
+	static ccColor3B hsv2ccc3(ccColorHSV c);
+	static int getCpuHz();
+	static void showSystemConfirmDialog(const char* title, const char* msg, const char* positiveButton, const char* negativeButton, CCCallFunc* onOK, CCCallFunc* onCancel);
+};
+class CCEaseBounceIn : public CCEaseBounce {
+	static CCEaseBounceIn* create(CCActionInterval* pAction);
+	CCObject* copyWithZone(CCZone* pZone);
+	void update(float time);
+	CCActionInterval* reverse();
+};
+class CCTransitionEaseScene {
+	CCActionInterval* easeActionWithAction(CCActionInterval* action);
+};
+class CCTouchScriptHandlerEntry : public CCScriptHandlerEntry {
+	static CCTouchScriptHandlerEntry* create(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches);
+	bool isMultiTouches();
+	int getPriority();
+	bool getSwallowsTouches();
+	~CCTouchScriptHandlerEntry();
+};
+class CCString {
+};
+class CCFadeTo : public CCActionInterval {
+	static CCFadeTo* create(float duration, unsigned char opacity);
+	void startWithTarget(CCNode* pTarget);
+	CCObject* copyWithZone(CCZone* pZone);
+	bool initWithDuration(float duration, unsigned char opacity);
+	void update(float time);
+};
+class CCEaseExponentialOut : public CCActionEase {
+	static CCEaseExponentialOut* create(CCActionInterval* pAction);
+	CCObject* copyWithZone(CCZone* pZone);
+	void update(float time);
+	CCActionInterval* reverse();
+};
+class CCAFCSpriteCallback {
+	void onAFCSpriteAnimationFrameChanged(CCAFCSprite* sprite);
+	void onAFCSpriteAnimationEnded(CCAFCSprite* sprite);
+};
+class CCNotificationCenter {
+};
+class CCGradientSprite : public CCSprite {
+	static CCGradientSprite* create(const char* pszFileName);
+	static CCGradientSprite* create();
+	static CCGradientSprite* create(const char* pszFileName, const CCRect& rect);
+	static CCGradientSprite* createWithTexture(CCTexture2D* pTexture, const CCRect& rect);
+	static CCGradientSprite* createWithTexture(CCTexture2D* pTexture);
+	static CCGradientSprite* createWithSpriteFrameName(const char* pszSpriteFrameName);
+	static CCGradientSprite* createWithSpriteFrame(CCSpriteFrame* pSpriteFrame);
+	const ccColor3B& getStartColor();
+	void setCompressedInterpolation(bool var);
+	unsigned char getEndOpacity();
+	void setColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
+	void setColor(const ccColor3B& color3);
+	void setOpacity(unsigned char opacity);
+	bool getCompressedInterpolation();
+	unsigned char getStartOpacity();
+	void setStartOpacity(unsigned char var);
+	const ccColor3B& getEndColor();
+	bool isCompressedInterpolation();
+	void setOpacityModifyRGB(bool modify);
+	~CCGradientSprite();
+	const CCPoint& getVector();
+	void updateDisplayedOpacity(unsigned char parentOpacity);
+	void setEndColor(const ccColor3B& var);
+	CCGradientSprite();
+	void updateDisplayedColor(const ccColor3B& parentColor);
+	void setEndOpacity(unsigned char var);
+	void setStartColor(const ccColor3B& var);
+	void setVector(const CCPoint& var);
+};
+class CCSequence : public CCActionInterval {
+	static CCSequence* create(CCArray* arrayOfActions);
+	static CCSequence* createWithTwoActions(CCFiniteTimeAction* pActionOne, CCFiniteTimeAction* pActionTwo);
+	void startWithTarget(CCNode* pTarget);
+	CCObject* copyWithZone(CCZone* pZone);
+	void stop();
+	void update(float t);
+	bool initWithTwoActions(CCFiniteTimeAction* pActionOne, CCFiniteTimeAction* pActionTwo);
+	~CCSequence();
+	CCActionInterval* reverse();
+};
+class CCCopying {
+	CCObject* copyWithZone(CCZone* pZone);
+};
+class CCMenuItemImage : public CCMenuItemSprite {
+	static CCMenuItemImage* create(const char* normalImage, const char* selectedImage, const char* disabledImage);
+	static CCMenuItemImage* create(const char* normalImage, const char* selectedImage);
+	static CCMenuItemImage* create();
+	void setDisabledSpriteFrame(CCSpriteFrame* frame);
+	void setSelectedSpriteFrame(CCSpriteFrame* frame);
+	void setNormalSpriteFrame(CCSpriteFrame* frame);
+	~CCMenuItemImage();
+	bool init();
+	CCMenuItemImage();
+};
+class CCEaseBackOut : public CCActionEase {
+	static CCEaseBackOut* create(CCActionInterval* pAction);
+	CCObject* copyWithZone(CCZone* pZone);
+	void update(float time);
+	CCActionInterval* reverse();
+};
+class CCCalendar : public CCObject {
+	static CCCalendar* sharedCalendar();
+	int getWeekday();
+	int getHour();
+	int getSecond();
+	float getTime();
+	~CCCalendar();
+	void setTime(float time);
+	void setNow();
+	int getYear();
+	int getDay();
+	int getMinute();
+	int getMonth();
+};
+class CCStandardTouchHandler : public CCTouchHandler {
+	static CCStandardTouchHandler* handlerWithDelegate(CCTouchDelegate* pDelegate, int nPriority);
+	bool initWithDelegate(CCTouchDelegate* pDelegate, int nPriority);
+};
+class CCByteBuffer : public CCObject {
+	static CCByteBuffer* create(unsigned long res);
+	static CCByteBuffer* create();
+	unsigned long available();
+	void compact();
+	void setReadPos(unsigned long p);
+	void readPascalString(string& dest);
+	void revoke(unsigned long len);
+	void read(string& dest);
+	unsigned long read(unsigned char* buffer, unsigned long len);
+	void skip(unsigned long len);
+	void clear();
+	void writeCString(const string& value);
+	~CCByteBuffer();
+	void write(const string& value);
+	void write(const unsigned char* data, unsigned long size);
+	void readCString(string& dest);
+	unsigned long getReadPos();
+	void writeLine(const string& value);
+	CCByteBuffer(unsigned long res);
+	CCByteBuffer();
+	CCByteBuffer(const CCByteBuffer& b);
+	CCByteBuffer(const char* buf, unsigned long bufSize, unsigned long dataLen);
+	void readLine(string& dest);
+	const unsigned char* getBuffer();
+	void setWritePos(unsigned long p);
+	void writePascalString(const string& value);
+};
+class CCActionInterval {
+};
+class CCIMEDelegate {
+	bool attachWithIME();
+	bool detachWithIME();
+	~CCIMEDelegate();
+};
+class CCMenuItemLabel : public CCMenuItem {
+	static CCMenuItemLabel* create(CCNode* label);
+	void setEnabled(bool enabled);
+	void setLabel(CCNode* var);
+	void activate();
+	const ccColor3B& getDisabledColor();
+	void setString(const char* label);
+	void selected();
+	~CCMenuItemLabel();
+	void setDisabledColor(const ccColor3B& var);
+	CCNode* getLabel();
+	CCMenuItemLabel();
+	void unselected();
+};
+class CCKeypadDispatcher {
+};
+typedef enum {
+	AFC_CLIP_IMAGE,
+	AFC_CLIP_ELLIPSE,
+	AFC_CLIP_LINE,
+	AFC_CLIP_RECT,
+	AFC_CLIP_ROUNDRECT,
+	AFC_CLIP_COLLISION_RECT,
+	AFC_CLIP_POINT,
+	AFC_CLIP_TRIANGLE
+} CCAFCClipType;
+typedef enum {
+	kFmtJpg,
+	kFmtPng,
+	kFmtTiff,
+	kFmtWebp,
+	kFmtRawData,
+	kFmtUnKnown
+} EImageFormat;
+typedef enum {
+	SPX_TILE_INDEX,
+	SPX_TILE_CLIP
+} CCSPX3TileSetMode;
+typedef enum {
+	kCCTMXOrientationOrthogonal,
+	kCCTMXOrientationIsometric,
+	kCCTMXOrientationHexagonal
+} cbTMXOrientation;
+typedef enum {
+	kCCImageFormatJPEG,
+	kCCImageFormatPNG
+} tCCImageFormat;
+typedef enum {
+	kCCDirectorProjection2D,
+	kCCDirectorProjection3D,
+	kCCDirectorProjectionCustom,
+	kCCDirectorProjectionDefault
+} ccDirectorProjection;
+typedef enum {
+	kCCTransitionOrientationLeftOver,
+	kCCTransitionOrientationRightOver,
+	kCCTransitionOrientationUpOver,
+	kCCTransitionOrientationDownOver
+} tOrientation;
+typedef enum {
+	kCCTextAlignmentLeft,
+	kCCTextAlignmentCenter,
+	kCCTextAlignmentRight
+} CCTextAlignment;
+typedef enum {
+	kCCPositionTypeFree,
+	kCCPositionTypeRelative,
+	kCCPositionTypeGrouped
+} tCCPositionType;
+typedef enum {
+	kCCProgressTimerTypeRadial,
+	kCCProgressTimerTypeBar
+} CCProgressTimerType;
+typedef enum {
+	kLanguageEnglish,
+	kLanguageChinese,
+	kLanguageFrench,
+	kLanguageItalian,
+	kLanguageGerman,
+	kLanguageSpanish,
+	kLanguageDutch,
+	kLanguageRussian,
+	kLanguageKorean,
+	kLanguageJapanese,
+	kLanguageHungarian,
+	kLanguagePortuguese,
+	kLanguageArabic
+} ccLanguageType;
+typedef enum {
+	kCCVerticalTextAlignmentTop,
+	kCCVerticalTextAlignmentCenter,
+	kCCVerticalTextAlignmentBottom
+} CCVerticalTextAlignment;
+typedef enum {
+	kCCTexture2DPixelFormat_RGBA8888,
+	kCCTexture2DPixelFormat_RGB888,
+	kCCTexture2DPixelFormat_RGB565,
+	kCCTexture2DPixelFormat_A8,
+	kCCTexture2DPixelFormat_I8,
+	kCCTexture2DPixelFormat_AI88,
+	kCCTexture2DPixelFormat_RGBA4444,
+	kCCTexture2DPixelFormat_RGB5A1,
+	kCCTexture2DPixelFormat_PVRTC4,
+	kCCTexture2DPixelFormat_PVRTC2,
+	kCCTexture2DPixelFormat_Default,
+	kTexture2DPixelFormat_RGBA8888,
+	kTexture2DPixelFormat_RGB888,
+	kTexture2DPixelFormat_RGB565,
+	kTexture2DPixelFormat_A8,
+	kTexture2DPixelFormat_RGBA4444,
+	kTexture2DPixelFormat_RGB5A1,
+	kTexture2DPixelFormat_Default
+} CCTexture2DPixelFormat;
+typedef enum {
+	SPX_TRANS_NONE,
+	SPX_TRANS_MIRROR_ROT180,
+	SPX_TRANS_MIRROR,
+	SPX_TRANS_ROT180,
+	SPX_TRANS_MIRROR_ROT270,
+	SPX_TRANS_ROT90,
+	SPX_TRANS_ROT270,
+	SPX_TRANS_MIRROR_ROT90
+} CCSPXTransform;
+typedef enum {
+	SPX_DELAY,
+	SPX_NODELAY
+} CCSPX3ActionMode;
+struct CCAFCClipMappingRule {
+	CCAFCClipMappingRuleType type;
+	int sourceClipIndex;
+};
+typedef struct {
+	string m_fontName;
+	int m_fontSize;
+	CCTextAlignment m_alignment;
+	CCVerticalTextAlignment m_vertAlignment;
+	CCSize m_dimensions;
+	ccColor3B m_fontFillColor;
+	ccFontShadow m_shadow;
+	ccFontStroke m_stroke;
+	int m_shadowColor;
+	float m_lineSpacing;
+	float m_globalImageScaleFactor;
+	int m_toCharIndex;
+	float m_elapsed;
+	_ccFontDefinition();
+} ccFontDefinition;
+struct CCSPX3Tile {
+	short x1;
+	short y1;
+	short x2;
+	short y2;
+	short right();
+	short bottom();
+	short top();
+	short height();
+	short width();
+	short left();
+};
+typedef struct {
+	CCPoint pos;
+	CCPoint startPos;
+	ccColor4F color;
+	ccColor4F deltaColor;
+	float size;
+	float deltaSize;
+	float rotation;
+	float deltaRotation;
+	float timeToLive;
+	unsigned int atlasIndex;
+	 modeA;
+	 modeB;
+} tCCParticle;
+struct CCSPXFrameTile {
+	int index;
+	int x;
+	int y;
+	CCSPXTransform transform;
+};
+struct UT_hash_handle {
+	UT_hash_table* tbl;
+	void* prev;
+	void* next;
+	UT_hash_handle* hh_prev;
+	UT_hash_handle* hh_next;
+	void* key;
+	unsigned int keylen;
+	unsigned int hashv;
+};
+typedef struct {
+	unsigned char r;
+	unsigned char g;
+	unsigned char b;
+	unsigned char a;
+} ccColor4B;
+struct CCAFCClipData {
+	ccPoint clipPos;
+};
+typedef struct {
+	float r;
+	float g;
+	float b;
+	float a;
+} ccColor4F;
+struct CCSPXCollision {
+	int x;
+	int y;
+	int width;
+	int height;
+};
+struct CCAuroraAnimation {
+	short frameCount;
+	short firstFrameIndex;
+};
+typedef struct {
+	int left;
+	int top;
+	int right;
+	int bottom;
+} ccBMFontPadding;
+struct CCAuroraModule {
+	CCAuroraModuleType type;
+	int imageIndex;
+	int color;
+	short x;
+	short y;
+	short w;
+	short h;
+};
+struct CCSPXReferencePoint {
+	int x;
+	int y;
+};
+typedef struct {
+	ccVertex3F bl;
+	ccVertex3F br;
+	ccVertex3F tl;
+	ccVertex3F tr;
+} ccQuad3;
+struct ccAABB {
+	CCPoint min;
+	CCPoint max;
+};
+struct CCArcticFrame {
+	short moduleCount;
+	short firstModuleIndex;
+	short collisionRectCount;
+	ccRect* collisionRects;
+};
+struct CCSPXActionFrame {
+	int index;
+	float duration;
+};
+typedef struct {
+	unsigned int key;
+	ccBMFontDef fontDef;
+	UT_hash_handle hh;
+} tCCFontDefHashElement;
+struct kmMat4 {
+};
+struct sockaddr_in {
+	unsigned short sin_family;
+	unsigned short sin_port;
+	in_addr sin_addr;
+};
+struct CCArcticAnimation {
+	short frameCount;
+	short firstFrameIndex;
+};
+struct CCSPXTile {
+	short x;
+	short y;
+	short w;
+	short h;
+};
+struct ccPosition {
+	int x;
+	int y;
+};
+typedef struct {
+	unsigned char r;
+	unsigned char g;
+	unsigned char b;
+} ccColor3B;
+struct CCAuroraFrame {
+	short moduleCount;
+	short firstModuleIndex;
+	short collisionRectCount;
+	ccRect bound;
+};
+struct ccInsets {
+	float top;
+	float left;
+	float right;
+	float bottom;
+};
+struct CCArcticAnimationFrame {
+	short index;
+	short delay;
+	short offsetX;
+	short offsetY;
+	unsigned char flags;
+};
+typedef struct {
+	ccV3F_C4B_T2F tl;
+	ccV3F_C4B_T2F bl;
+	ccV3F_C4B_T2F tr;
+	ccV3F_C4B_T2F br;
+} ccV3F_C4B_T2F_Quad;
+struct CCAuroraAnimationFrame {
+	short index;
+	short delay;
+	short offsetX;
+	short offsetY;
+	unsigned char flags;
+};
+typedef struct {
+	float x;
+	float y;
+	float z;
+} ccVertex3F;
+typedef struct {
+	unsigned int src;
+	unsigned int dst;
+} ccBlendFunc;
+typedef struct {
+	CCRect begin;
+	CCRect end;
+	float duration;
+} CCIMEKeyboardNotificationInfo;
+struct CCSPX3Patch {
+	CCSPX3PatchType type;
+};
+struct ccRect {
+	float x;
+	float y;
+	float width;
+	float height;
+};
+struct ccPoint {
+	float x;
+	float y;
+};
+struct CCArcticModule {
+	int imageIndex;
+	short x;
+	short y;
+	short w;
+	short h;
+};
+struct CCAuroraFrameModule {
+	short index;
+	short x;
+	short y;
+	short palette;
+	unsigned char flags;
+};
+typedef struct {
+	CCPoint endPosition;
+	CCPoint controlPoint_1;
+	CCPoint controlPoint_2;
+} ccBezierConfig;
+typedef struct {
+	unsigned int minFilter;
+	unsigned int magFilter;
+	unsigned int wrapS;
+	unsigned int wrapT;
+} ccTexParams;
+typedef struct {
+	int key;
+	int amount;
+	UT_hash_handle hh;
+} tCCKerningHashElement;
+struct ccColorHSV {
+	float h;
+	float s;
+	float v;
+};
+struct CCArcticFrameModule {
+	short index;
+	short x;
+	short y;
+	unsigned char flags;
+};

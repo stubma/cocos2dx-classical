@@ -1,7 +1,6 @@
-
-$pfile "cocos2dx/Cocos2d.tolua"
-$pfile "CocosDenshion/SimpleAudioEngine.tolua"
-$pfile "extensions/cocos-ext.tolua"
+$pfile "cocos2dx.tolua"
+$pfile "CocosDenshion.tolua"
+$pfile "cocos-ext.tolua"
 
 $[
 

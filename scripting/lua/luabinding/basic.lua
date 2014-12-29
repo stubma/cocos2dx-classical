@@ -1,5 +1,4 @@
 -- usage: (use instead of ant)
--- tolua++ "-L" "basic.lua" "-o" "../../scripting/lua/cocos2dx_support/LuaCocos2d.cpp" "Cocos2d.pkg"
 
 _is_functions = _is_functions or {}
 _to_functions = _to_functions or {}
@@ -362,12 +361,15 @@ extern "C" {
 #include "cocos2d.h"
 #include "CCLuaEngine.h"
 #include "SimpleAudioEngine.h"
+#include "lua_cocos2d_auto.h"
 
-using namespace cocos2d;
+using namespace std;
+USING_NS_CC;
+USING_NS_CC_EXT;
 using namespace CocosDenshion;]])
 
     replace([[/* Exported function */
-TOLUA_API int  tolua_Cocos2d_open (lua_State* tolua_S);]], [[]])
+TOLUA_API int  tolua_cocos2d_open (lua_State* tolua_S);]], [[]])
 
     replace([[*((LUA_FUNCTION*)]], [[(]])
 

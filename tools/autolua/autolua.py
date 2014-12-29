@@ -253,10 +253,17 @@ class NativeType(object):
                 nt.qualified_pointee_name = nt.pointee_name
 
             # special checking for std::string and std::function
-            if nt.qualified_name == "std::string":
-                nt.name = nt.qualified_name
-            if nt.qualified_name.startswith("std::function"):
-                nt.name = "std::function"
+            decl_qn = get_qualified_name(decl)
+            if decl_qn == "std::string":
+                nt.name = "string"
+                nt.qualified_name = decl_qn
+                nt.pointee_name = nt.name
+                nt.qualified_pointee_name = nt.qualified_name
+            if decl_qn.startswith("std::function"):
+                nt.name = "function"
+                nt.qualified_name = "std::function"
+                nt.pointee_name = nt.name
+                nt.qualified_pointee_name = nt.qualified_name
 
             # if failed to get qualified name, use name as qualified name
             if len(nt.qualified_name) == 0 or nt.qualified_name.find("::") == -1:
@@ -278,7 +285,7 @@ class NativeType(object):
             nt.is_enum = ntype.get_canonical().kind == TypeKind.ENUM
 
             # if is std::function, get function argument types
-            if nt.name == "std::function":
+            if nt.qualified_name == "std::function":
                 nt.qualified_name = get_qualified_name(cdecl)
                 r = re.compile('function<(.+) .*\((.*)\)>').search(cdecl.displayname)
                 (ret_type, params) = r.groups()
@@ -561,7 +568,9 @@ class NativeClass(Closure):
         return False
 
     def is_non_public_type(self, t):
-        if t.is_enum:
+        if t.qualified_pointee_name == "std::string" or t.qualified_pointee_name.startswith("std::function"):
+            return False
+        elif t.is_enum:
             closure = self
             while closure is not None:
                 if closure.enums.has_key(t.qualified_pointee_name):
@@ -869,6 +878,8 @@ class Generator(Closure):
             "-I../../cocos2dx/platform/android",
             "-I../../cocos2dx/platform/android/jni",
             "-I../../cocos2dx/kazmath/include",
+            "-I../../extensions",
+            "-I../../extensions/GUI/CCScrollView",
             "-DANDROID",
             "-D_SIZE_T_DEFINED_"
         ]
@@ -898,16 +909,21 @@ class Generator(Closure):
             if node == node.type.get_declaration():
                 # check class is target or not
                 is_targeted_class = False
+                qn = get_qualified_name(node)
                 ns = get_qualified_namespace(node)
                 if len(ns) <= 0 or ns in self.target_ns:
                     is_targeted_class = True
 
                 # if it is target class, process it
-                if is_targeted_class and not self.generated_classes.has_key(node.displayname):
-                    if self.is_class_included(node.displayname) or not self.is_class_excluded(node.displayname):
-                        klass = NativeClass(node, self)
-                        self.classes[klass.qualified_name] = klass
-                        self.generated_classes[node.displayname] = klass
+                # if not target class, just register it
+                if is_targeted_class:
+                    if not self.generated_classes.has_key(node.displayname):
+                        if self.is_class_included(node.displayname) or not self.is_class_excluded(node.displayname):
+                            klass = NativeClass(node, self)
+                            self.classes[qn] = klass
+                            self.generated_classes[node.displayname] = klass
+                else:
+                    self.classes[qn] = None
 
             return False
         elif node.kind == CursorKind.ENUM_DECL:

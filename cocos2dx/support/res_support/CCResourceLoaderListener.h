@@ -24,7 +24,7 @@
 #ifndef __CCResourceLoaderListener_h__
 #define __CCResourceLoaderListener_h__
 
-#include "cocos2d.h"
+#include "ccTypes.h"
 
 NS_CC_BEGIN
 

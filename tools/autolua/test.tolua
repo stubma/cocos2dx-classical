@@ -1,0 +1,3 @@
+class SimpleNativeClass {
+	string processString(int s);
+};

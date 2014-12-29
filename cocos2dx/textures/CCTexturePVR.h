@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "cocoa/CCObject.h"
 #include "cocoa/CCArray.h"
+#include "textures/CCTexture2D.h"
 
 NS_CC_BEGIN
 
