@@ -259,8 +259,12 @@ class NativeType(object):
                     nt.ret_type = NativeType.from_string(ret_type)
                     nt.param_types = [NativeType.from_string(string) for string in params]
 
-        # mark argument as not supported
+        # if invalid type or multi-level pointer, not support
         if nt.name == INVALID_NATIVE_TYPE or nt.pointer_level > 1:
+            nt.not_supported = True
+
+        # if cocos2dx callfunc pointer, not support
+        if nt.name.startswith("SEL_"):
             nt.not_supported = True
 
         return nt
