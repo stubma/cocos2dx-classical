@@ -71,8 +71,6 @@ public:
     char*				GetValue(CocoLoader*	pCoco);
     int					GetChildNum();
     stExpCocoNode*		GetChildArray(CocoLoader*	pCoco);
-public:
-    void WriteJson(CocoLoader* pCoco,void* pFileName = NULL, int vLayer = 0, bool bEndNode = false, bool bParentNodeIsArray = false);
 };
 
 

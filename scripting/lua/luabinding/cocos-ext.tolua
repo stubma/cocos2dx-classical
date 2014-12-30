@@ -270,7 +270,6 @@ class CCArrayForObjectSorting : public CCArray {
 	void setObjectID_ofSortedObject(unsigned int tag, CCSortableObject* object);
 	CCArrayForObjectSorting();
 	unsigned int indexOfSortedObject(CCSortableObject* obj);
-	CCSortableObject* getObjectWithObjectID(unsigned int tag);
 	void insertSortedObject(CCSortableObject* object);
 	CCSortableObject* objectWithObjectID(unsigned int tag);
 	void removeSortedObject(CCSortableObject* object);

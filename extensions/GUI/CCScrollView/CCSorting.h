@@ -84,16 +84,6 @@ public:
     void setObjectID_ofSortedObject(unsigned int tag, CCSortableObject* object);
 
     CCSortableObject* objectWithObjectID(unsigned int tag);
-    /*!
-     * Returns an object with given key and value.
-     * 
-     * Returns an object with given key and value. If no object is found,
-     * it returns nil.
-     *
-     * @param value to locate object
-     * @return object found or nil.
-     */
-    CCSortableObject* getObjectWithObjectID(unsigned int tag);
 
     /*!
      * Returns an index of the object with given key and value.

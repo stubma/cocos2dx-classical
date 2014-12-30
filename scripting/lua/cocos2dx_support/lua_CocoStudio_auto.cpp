@@ -1,6 +1,6 @@
 /*
 ** Lua binding: CocoStudio
-** Generated automatically by tolua++-1.0.92 on Tue Dec 30 14:33:20 2014.
+** Generated automatically by tolua++-1.0.92 on Tue Dec 30 21:03:50 2014.
 */
 
 /****************************************************************************
@@ -19459,37 +19459,6 @@ static int tolua_CocoStudio_ObjectFactory_delete00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: removeAll of class  ObjectFactory */
-#ifndef TOLUA_DISABLE_tolua_CocoStudio_ObjectFactory_removeAll00
-static int tolua_CocoStudio_ObjectFactory_removeAll00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"ObjectFactory",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  ObjectFactory* self = (ObjectFactory*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeAll'", NULL);
-#endif
-  {
-   self->removeAll();
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'removeAll'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: createGUI of class  ObjectFactory */
 #ifndef TOLUA_DISABLE_tolua_CocoStudio_ObjectFactory_createGUI00
 static int tolua_CocoStudio_ObjectFactory_createGUI00(lua_State* tolua_S)
@@ -28190,40 +28159,6 @@ static int tolua_CocoStudio_CCArrayForObjectSorting_indexOfSortedObject00(lua_St
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'indexOfSortedObject'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: getObjectWithObjectID of class  CCArrayForObjectSorting */
-#ifndef TOLUA_DISABLE_tolua_CocoStudio_CCArrayForObjectSorting_getObjectWithObjectID00
-static int tolua_CocoStudio_CCArrayForObjectSorting_getObjectWithObjectID00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"CCArrayForObjectSorting",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  CCArrayForObjectSorting* self = (CCArrayForObjectSorting*)  tolua_tousertype(tolua_S,1,0);
-  unsigned int tag = ((unsigned int)  tolua_tonumber(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getObjectWithObjectID'", NULL);
-#endif
-  {
-   CCSortableObject* tolua_ret = (CCSortableObject*)  self->getObjectWithObjectID(tag);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCSortableObject");
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'getObjectWithObjectID'.",&tolua_err);
  return 0;
 #endif
 }
@@ -69355,47 +69290,6 @@ static int tolua_CocoStudio_stExpCocoNode_GetChildArray00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: WriteJson of class  stExpCocoNode */
-#ifndef TOLUA_DISABLE_tolua_CocoStudio_stExpCocoNode_WriteJson00
-static int tolua_CocoStudio_stExpCocoNode_WriteJson00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"stExpCocoNode",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"CocoLoader",0,&tolua_err) ||
-     !tolua_isuserdata(tolua_S,3,0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
-     !tolua_isboolean(tolua_S,5,0,&tolua_err) ||
-     !tolua_isboolean(tolua_S,6,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,7,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  stExpCocoNode* self = (stExpCocoNode*)  tolua_tousertype(tolua_S,1,0);
-  CocoLoader* pCoco = ((CocoLoader*)  tolua_tousertype(tolua_S,2,0));
-  void* pFileName = ((void*)  tolua_touserdata(tolua_S,3,0));
-  int vLayer = ((int)  tolua_tonumber(tolua_S,4,0));
-  bool bEndNode = ((bool)  tolua_toboolean(tolua_S,5,0));
-  bool bParentNodeIsArray = ((bool)  tolua_toboolean(tolua_S,6,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'WriteJson'", NULL);
-#endif
-  {
-   self->WriteJson(pCoco,pFileName,vLayer,bEndNode,bParentNodeIsArray);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'WriteJson'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: GetName of class  stExpCocoNode */
 #ifndef TOLUA_DISABLE_tolua_CocoStudio_stExpCocoNode_GetName00
 static int tolua_CocoStudio_stExpCocoNode_GetName00(lua_State* tolua_S)
@@ -70735,7 +70629,6 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"createObject",tolua_CocoStudio_ObjectFactory_createObject00);
    tolua_function(tolua_S,"createComponent",tolua_CocoStudio_ObjectFactory_createComponent00);
    tolua_function(tolua_S,"delete",tolua_CocoStudio_ObjectFactory_delete00);
-   tolua_function(tolua_S,"removeAll",tolua_CocoStudio_ObjectFactory_removeAll00);
    tolua_function(tolua_S,"createGUI",tolua_CocoStudio_ObjectFactory_createGUI00);
    tolua_function(tolua_S,"new",tolua_CocoStudio_ObjectFactory_new00);
    tolua_function(tolua_S,"new_local",tolua_CocoStudio_ObjectFactory_new00_local);
@@ -71175,7 +71068,6 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"new_local",tolua_CocoStudio_CCArrayForObjectSorting_new00_local);
    tolua_function(tolua_S,".call",tolua_CocoStudio_CCArrayForObjectSorting_new00_local);
    tolua_function(tolua_S,"indexOfSortedObject",tolua_CocoStudio_CCArrayForObjectSorting_indexOfSortedObject00);
-   tolua_function(tolua_S,"getObjectWithObjectID",tolua_CocoStudio_CCArrayForObjectSorting_getObjectWithObjectID00);
    tolua_function(tolua_S,"insertSortedObject",tolua_CocoStudio_CCArrayForObjectSorting_insertSortedObject00);
    tolua_function(tolua_S,"objectWithObjectID",tolua_CocoStudio_CCArrayForObjectSorting_objectWithObjectID00);
    tolua_function(tolua_S,"removeSortedObject",tolua_CocoStudio_CCArrayForObjectSorting_removeSortedObject00);
@@ -73162,7 +73054,6 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_variable(tolua_S,"m_szValue",tolua_get_stExpCocoNode_unsigned_m_szValue,tolua_set_stExpCocoNode_unsigned_m_szValue);
    tolua_variable(tolua_S,"m_ChildArray",tolua_get_stExpCocoNode_unsigned_m_ChildArray,tolua_set_stExpCocoNode_unsigned_m_ChildArray);
    tolua_function(tolua_S,"GetChildArray",tolua_CocoStudio_stExpCocoNode_GetChildArray00);
-   tolua_function(tolua_S,"WriteJson",tolua_CocoStudio_stExpCocoNode_WriteJson00);
    tolua_function(tolua_S,"GetName",tolua_CocoStudio_stExpCocoNode_GetName00);
    tolua_function(tolua_S,"GetValue",tolua_CocoStudio_stExpCocoNode_GetValue00);
    tolua_function(tolua_S,"GetChildNum",tolua_CocoStudio_stExpCocoNode_GetChildNum00);

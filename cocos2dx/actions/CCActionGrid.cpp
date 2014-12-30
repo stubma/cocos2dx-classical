@@ -131,6 +131,16 @@ CCObject* CCGridAction::copyWithZone(CCZone *pZone)
 
 // implementation of Grid3DAction
 
+CCGrid3DAction* CCGrid3DAction::create(float duration, const CCSize& gridSize) {
+    CCGrid3DAction* a = new CCGrid3DAction();
+    if(a->initWithDuration(duration, gridSize)) {
+        a->autorelease();
+        return a;
+    }
+    CC_SAFE_RELEASE(a);
+    return NULL;
+}
+
 CCGridBase* CCGrid3DAction::getGrid(void)
 {
     return CCGrid3D::create(m_sGridSize);

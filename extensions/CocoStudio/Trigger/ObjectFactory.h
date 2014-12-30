@@ -69,7 +69,7 @@ public:
     ui::Widget* createGUI(std::string name);
     WidgetReaderProtocol* createWidgetReaderProtocol(std::string name);
     void registerType(const TInfo &t);
-    void removeAll();
+
 private:
     static ObjectFactory *_sharedFactory;
     FactoryMap _typeMap;

@@ -50,8 +50,6 @@ public:
         CC_SAFE_RETAIN(m_request);
     }
     
-    bool initWithRequest(CCHttpRequest* request);
-    
     virtual ~CCHttpResponse() {
         CC_SAFE_RELEASE(m_request);
     }

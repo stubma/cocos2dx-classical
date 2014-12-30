@@ -608,7 +608,6 @@ class ObjectFactory {
 	CCObject* createObject(string name);
 	CCComponent* createComponent(string name);
 	~ObjectFactory();
-	void removeAll();
 	Widget* createGUI(string name);
 	ObjectFactory();
 	WidgetReaderProtocol* createWidgetReaderProtocol(string name);
@@ -907,7 +906,6 @@ class CCArrayForObjectSorting : public CCArray {
 	void setObjectID_ofSortedObject(unsigned int tag, CCSortableObject* object);
 	CCArrayForObjectSorting();
 	unsigned int indexOfSortedObject(CCSortableObject* obj);
-	CCSortableObject* getObjectWithObjectID(unsigned int tag);
 	void insertSortedObject(CCSortableObject* object);
 	CCSortableObject* objectWithObjectID(unsigned int tag);
 	void removeSortedObject(CCSortableObject* object);
@@ -2410,7 +2408,6 @@ struct stExpCocoNode {
 	unsigned int m_szValue;
 	unsigned int m_ChildArray;
 	stExpCocoNode* GetChildArray(CocoLoader* pCoco);
-	void WriteJson(CocoLoader* pCoco, void* pFileName, int vLayer, bool bEndNode, bool bParentNodeIsArray);
 	char* GetName(CocoLoader* pCoco);
 	char* GetValue(CocoLoader* pCoco);
 	int GetChildNum();

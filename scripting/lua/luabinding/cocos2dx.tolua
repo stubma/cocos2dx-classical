@@ -1942,7 +1942,6 @@ class CCHttpResponse : public CCObject {
 	void addHeader(const string& name, const string& value);
 	bool isSuccess();
 	const CCData& getErrorData();
-	bool initWithRequest(CCHttpRequest* request);
 	CCHttpResponse(CCHttpRequest* request);
 	~CCHttpResponse();
 	void markSuccess();
