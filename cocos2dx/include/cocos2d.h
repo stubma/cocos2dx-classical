@@ -113,6 +113,7 @@ THE SOFTWARE.
 #include "label_nodes/CCLabelAtlas.h"
 #include "label_nodes/CCLabelTTF.h"
 #include "label_nodes/CCLabelBMFont.h"
+#include "label_nodes/CCLabelTTFLinkStateSynchronizer.h"
 
 // layers_scenes_transitions_nodes
 #include "layers_scenes_transitions_nodes/CCLayer.h"
@@ -120,6 +121,7 @@ THE SOFTWARE.
 #include "layers_scenes_transitions_nodes/CCTransition.h"
 #include "layers_scenes_transitions_nodes/CCTransitionPageTurn.h"
 #include "layers_scenes_transitions_nodes/CCTransitionProgress.h"
+#include "layers_scenes_transitions_nodes/CCLayerClip.h"
 
 // menu_nodes
 #include "menu_nodes/CCMenu.h"
@@ -133,6 +135,7 @@ THE SOFTWARE.
 #include "misc_nodes/CCProgressTimer.h"
 #include "misc_nodes/CCRenderTexture.h"
 #include "misc_nodes/CCProgressHUD.h"
+#include "misc_nodes/CCToast.h"
 
 // particle_nodes
 #include "particle_nodes/CCParticleBatchNode.h"
@@ -156,6 +159,7 @@ THE SOFTWARE.
 #include "platform/CCMemoryInputStream.h"
 #include "platform/CCMemoryOutputStream.h"
 #include "platform/CCCalendar.h"
+#include "platform/CCImagePicker.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "platform/ios/CCAccelerometer.h"
@@ -191,6 +195,36 @@ THE SOFTWARE.
 #include "sprite_nodes/CCSpriteFrameCache.h"
 #include "sprite_nodes/CCGradientSprite.h"
 #include "sprite_nodes/CCTiledSprite.h"
+#include "sprite_nodes/CCCatmullRomSprite.h"
+
+// afcanim
+#include "afcanim/CCAFCConstants.h"
+#include "afcanim/CCAFCAnimation.h"
+#include "afcanim/CCAFCClip.h"
+#include "afcanim/CCAFCClipMapping.h"
+#include "afcanim/CCAFCFileData.h"
+#include "afcanim/CCAFCFrame.h"
+#include "afcanim/CCAFCSprite.h"
+#include "afcanim/CCArcticFileData.h"
+#include "afcanim/CCArcticManager.h"
+#include "afcanim/CCArcticSprite.h"
+#include "afcanim/CCArcticLoader.h"
+#include "afcanim/CCAuroraFileData.h"
+#include "afcanim/CCAuroraManager.h"
+#include "afcanim/CCAuroraSprite.h"
+#include "afcanim/CCAuroraLoader.h"
+#include "afcanim/CCMWFileData.h"
+#include "afcanim/CCMWManager.h"
+#include "afcanim/CCMWSprite.h"
+#include "afcanim/CCMWLoader.h"
+#include "afcanim/CCSPX3FileData.h"
+#include "afcanim/CCSPX3Manager.h"
+#include "afcanim/CCSPX3Sprite.h"
+#include "afcanim/CCSPX3Loader.h"
+#include "afcanim/CCSPXFileData.h"
+#include "afcanim/CCSPXManager.h"
+#include "afcanim/CCSPXSprite.h"
+#include "afcanim/CCSPXLoader.h"
 
 // support
 #include "support/ccUTF8.h"
@@ -212,12 +246,20 @@ THE SOFTWARE.
 #include "support/ui_support/CCVelocityTracker.h"
 #include "support/data_support/CCPointList.h"
 #include "support/json/CCJSONValue.h"
+#include "support/json/CCJSONObject.h"
+#include "support/json/CCJSONArray.h"
+#include "support/json/CCJSONParser.h"
 #include "support/db/CCDatabase.h"
 #include "support/db/CCResultSet.h"
 #include "support/db/CCStatement.h"
 #include "support/res_support/CCResourceLoader.h"
 #include "support/network/CCFileDownloader.h"
 #include "support/network/CCByteBuffer.h"
+#include "support/network/CCTCPSocket.h"
+#include "support/network/CCTCPSocketHub.h"
+#include "support/network/CCUDPSocket.h"
+#include "support/network/CCUDPSocketHub.h"
+#include "support/network/CCPacket.h"
 
 // text_input_node
 #include "text_input_node/CCIMEDelegate.h"
@@ -229,6 +271,7 @@ THE SOFTWARE.
 #include "textures/CCTextureAtlas.h"
 #include "textures/CCTextureCache.h"
 #include "textures/CCTexturePVR.h"
+#include "textures/CCTextureETC.h"
 
 // tilemap_parallax_nodes
 #include "tilemap_parallax_nodes/CCParallaxNode.h"
@@ -237,6 +280,10 @@ THE SOFTWARE.
 #include "tilemap_parallax_nodes/CCTMXTiledMap.h"
 #include "tilemap_parallax_nodes/CCTMXLoader.h"
 #include "tilemap_parallax_nodes/CCTileMapAtlas.h"
+#include "tilemap_parallax_nodes/CCTMXObjectDebugRenderer.h"
+#include "tilemap_parallax_nodes/CCTMXTileSetInfo.h"
+#include "tilemap_parallax_nodes/CCTMXMapInfo.h"
+#include "tilemap_parallax_nodes/CCTMXLayerInfo.h"
 
 // touch_dispatcher
 #include "touch_dispatcher/CCTouch.h"

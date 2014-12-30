@@ -25,6 +25,9 @@
 #ifndef __UIHELPER_H__
 #define __UIHELPER_H__
 
+#include "ccTypes.h"
+#include "CocoStudio/GUI/BaseClasses/UIWidget.h"
+
 NS_CC_BEGIN
 
 namespace ui {

@@ -121,6 +121,16 @@ class Closure(object):
         self.generated_structs = {}
         self.enums = {}
         self.structs = {}
+        self.ignore_structs = []
+
+    def is_struct_ignored(self, node):
+        for sr in self.ignore_structs:
+            if sr.match(node.displayname):
+                return True
+        if self.parent_closure is not None:
+            return self.parent_closure.is_struct_ignored(node)
+        else:
+            return False
 
 class NativeType(object):
     def __init__(self):
@@ -265,6 +275,14 @@ class NativeType(object):
                 nt.pointee_name = nt.name
                 nt.qualified_pointee_name = nt.qualified_name
 
+            # for std::map, vector, queue, list, not support
+            if decl_qn.startswith("std::map") or\
+                decl_qn.startswith("std::list") or\
+                decl_qn.startswith("std::queue") or\
+                decl_qn.startswith("std::vector") or\
+                decl_qn.startswith("std::set"):
+                nt.not_supported = True
+
             # if failed to get qualified name, use name as qualified name
             if len(nt.qualified_name) == 0 or nt.qualified_name.find("::") == -1:
                 nt.qualified_name = nt.name
@@ -328,12 +346,13 @@ class NativeTypedef(object):
 
     def process_node(self, node):
         if node.kind == CursorKind.STRUCT_DECL:
-            if not self.closure.structs.has_key(self.qualified_name):
-                st = NativeClass(node, self.closure)
-                st.class_name = self.node.displayname
-                st.qualified_name = self.qualified_name
-                st.is_typedef = True
-                self.closure.structs[self.qualified_name] = st
+            if not self.closure.is_struct_ignored(self.node):
+                if not self.closure.structs.has_key(self.qualified_name):
+                    st = NativeClass(node, self.closure)
+                    st.class_name = self.node.displayname
+                    st.qualified_name = self.qualified_name
+                    st.is_typedef = True
+                    self.closure.structs[self.qualified_name] = st
         elif node.kind == CursorKind.ENUM_DECL:
             if not self.closure.enums.has_key(self.qualified_name):
                 ne = NativeEnum(node)
@@ -432,6 +451,8 @@ class NativeFunction(object):
         self.is_override = False
         self.ret_type = NativeType.from_type(node.result_type)
         self.min_args = 0
+        self.virtual = node.kind == CursorKind.CXX_METHOD and node.is_virtual_method()
+        self.pure_virtual = node.kind == CursorKind.CXX_METHOD and node.is_pure_virtual_method()
 
         # if a operator overload, ignore
         if self.func_name.startswith("operator"):
@@ -462,6 +483,18 @@ class NativeFunction(object):
                     if self.has_default_arg(arg_node):
                         self.min_args = index
                         break
+
+    def __eq__(self, other):
+        if self.func_name != other.func_name:
+            return False
+        if self.ret_type.qualified_name != other.ret_type.qualified_name:
+            return False
+        if len(self.arguments) != len(other.arguments):
+            return False
+        for a, oa in zip(self.arguments, other.arguments):
+            if a.qualified_name != oa.qualified_name:
+                return False
+        return True
 
     def has_default_arg(self, param_node):
         for node in param_node.get_children():
@@ -524,6 +557,10 @@ class NativeField(object):
         if self.type.not_supported:
             return tolua
 
+        # if type is pointer or reference, return
+        if self.type.is_pointer or self.type.is_ref:
+            return tolua
+
         # indent
         tolua = "\t" * indent_level
 
@@ -537,7 +574,7 @@ class NativeField(object):
         return tolua
 
 class NativeClass(Closure):
-    def __init__(self, node, closure):
+    def __init__(self, node, closure, dont_visit=False):
         super(NativeClass, self).__init__()
         self.node = node
         self.parent_closure = closure
@@ -556,9 +593,11 @@ class NativeClass(Closure):
         self.override_methods = {}
         self.has_constructor = False
         self.qualified_ns = get_qualified_namespace(node)
+        self.is_abstract = False
 
         # visit
-        self.visit_node(self.node)
+        if not dont_visit:
+            self.visit_node(self.node)
 
     def is_method_in_parents(self, method_name):
         if len(self.parents) > 0:
@@ -695,6 +734,8 @@ class NativeClass(Closure):
             else:
                 mlist.append(m)
             for f in mlist:
+                if self.is_abstract and f.is_constructor:
+                    continue
                 if not self.use_any_non_public_type(f):
                     tolua += f.generate_tolua(indent_level + 1)
                     self.record_function_types(f)
@@ -707,6 +748,8 @@ class NativeClass(Closure):
             else:
                 mlist.append(m)
             for f in mlist:
+                if self.is_abstract and f.is_constructor:
+                    continue
                 if not self.use_any_non_public_type(f):
                     tolua += f.generate_tolua(indent_level + 1)
                     self.record_function_types(f)
@@ -719,6 +762,8 @@ class NativeClass(Closure):
             else:
                 mlist.append(m)
             for f in mlist:
+                if self.is_abstract and f.is_constructor:
+                    continue
                 if not self.use_any_non_public_type(f):
                     tolua += f.generate_tolua(indent_level + 1)
                     self.record_function_types(f)
@@ -784,8 +829,9 @@ class NativeClass(Closure):
             return False
         elif node.kind == CursorKind.STRUCT_DECL:
             if node.semantic_parent == self.node and self.current_access_specifier == AccessSpecifierKind.PUBLIC:
-                st = NativeClass(node, self)
-                self.structs[st.qualified_name] = st
+                if not self.is_struct_ignored(node):
+                    st = NativeClass(node, self)
+                    self.structs[st.qualified_name] = st
             return False
         elif node.kind == CursorKind.TYPEDEF_DECL:
             if node == node.type.get_declaration() and self.current_access_specifier == AccessSpecifierKind.PUBLIC:
@@ -802,6 +848,10 @@ class NativeClass(Closure):
                 # not supported means at least one argument type is not supported
                 if nf.not_supported:
                     return
+
+                # if virtual
+                if nf.pure_virtual:
+                    self.is_abstract = True
 
                 # if function is override, need confirm it is defined in parents
                 if nf.is_override:
@@ -835,9 +885,16 @@ class NativeClass(Closure):
                             previous_nf.append(nf)
                         else:
                             self.methods[nf.func_name] = NativeOverloadedFunction([nf, previous_nf])
-        elif node.kind == CursorKind.CONSTRUCTOR and self.current_access_specifier == AccessSpecifierKind.PUBLIC:
+        elif node.kind == CursorKind.CONSTRUCTOR and self.current_access_specifier == AccessSpecifierKind.PUBLIC:                # if function is not supported, skip it
+            # create native function
             nf = NativeFunction(node)
             nf.is_constructor = True
+
+            # not supported means at least one argument type is not supported
+            if nf.not_supported:
+                return
+
+            # set flag
             self.has_constructor = True
             if not self.methods.has_key('constructor'):
                 self.methods['constructor'] = nf
@@ -879,19 +936,26 @@ class Generator(Closure):
             "-I../../cocos2dx/platform/android/jni",
             "-I../../cocos2dx/kazmath/include",
             "-I../../extensions",
+            "-I../../extensions/CocoStudio",
+            "-I../../extensions/CocoStudio/GUI",
+            "-I../../extensions/CocoStudio/GUI/Layouts",
             "-I../../extensions/GUI/CCScrollView",
             "-DANDROID",
             "-D_SIZE_T_DEFINED_"
         ]
-        self.target_ns = config.get("DEFAULT", "target_ns").split(" ") if config.has_option("DEFAULT", "target_ns") else None
+        self.target_ns = config.get("DEFAULT", "target_ns").split(" ") if config.has_option("DEFAULT", "target_ns") else []
         self.src_dir = config.get("DEFAULT", "src_dir") if config.has_option("DEFAULT", "src_dir") else "."
         self.dst_dir = config.get("DEFAULT", "dst_dir") if config.has_option("DEFAULT", "dst_dir") else "."
-        exclude_classes = config.get("DEFAULT", "exclude_classes").split(" ") if config.has_option("DEFAULT", "exclude_classes") else None
+        exclude_classes = config.get("DEFAULT", "exclude_classes").split(" ") if config.has_option("DEFAULT", "exclude_classes") else []
         self.exclude_classes_regex = [re.compile(x) for x in exclude_classes]
-        include_classes = config.get("DEFAULT", "include_classes").split(" ") if config.has_option("DEFAULT", "include_classes") else None
+        include_classes = config.get("DEFAULT", "include_classes").split(" ") if config.has_option("DEFAULT", "include_classes") else []
         self.include_classes_regex = [re.compile(x) for x in include_classes]
+        ignore_structs = config.get("DEFAULT", "ignore_structs").split(" ") if config.has_option("DEFAULT", "ignore_structs") else []
+        self.ignore_structs = [re.compile(x) for x in ignore_structs]
 
     def is_class_excluded(self, name):
+        if len(self.exclude_classes_regex) <= 0:
+            return True
         for r in self.exclude_classes_regex:
             if r.match(name):
                 return True
@@ -906,24 +970,25 @@ class Generator(Closure):
     def process_node(self, node):
         if node.kind == CursorKind.CLASS_DECL:
             # check namespace for found class
-            if node == node.type.get_declaration():
+            if node == node.type.get_declaration() and len(node.get_children_array()) > 0:
                 # check class is target or not
                 is_targeted_class = False
                 qn = get_qualified_name(node)
                 ns = get_qualified_namespace(node)
-                if len(ns) <= 0 or ns in self.target_ns:
-                    is_targeted_class = True
+                ns_matched = len(ns) <= 0 or ns in self.target_ns
+                name_matched = self.is_class_included(node.displayname) or not self.is_class_excluded(node.displayname)
+                is_targeted_class = ns_matched and name_matched
 
                 # if it is target class, process it
                 # if not target class, just register it
                 if is_targeted_class:
                     if not self.generated_classes.has_key(node.displayname):
-                        if self.is_class_included(node.displayname) or not self.is_class_excluded(node.displayname):
-                            klass = NativeClass(node, self)
-                            self.classes[qn] = klass
-                            self.generated_classes[node.displayname] = klass
+                        klass = NativeClass(node, self)
+                        self.classes[qn] = klass
+                        self.generated_classes[node.displayname] = klass
                 else:
-                    self.classes[qn] = None
+                    if not self.classes.has_key(qn):
+                        self.classes[qn] = NativeClass(node, self)
 
             return False
         elif node.kind == CursorKind.ENUM_DECL:
@@ -935,11 +1000,11 @@ class Generator(Closure):
             return False
         elif node.kind == CursorKind.STRUCT_DECL:
             if node == node.type.get_declaration() and len(node.get_children_array()) > 0:
-                qn = get_qualified_name(node)
-                if not self.structs.has_key(qn):
-                    st = NativeClass(node, self)
-                    self.structs[qn] = st
-
+                if not self.is_struct_ignored(node):
+                    qn = get_qualified_name(node)
+                    if not self.structs.has_key(qn):
+                        st = NativeClass(node, self)
+                        self.structs[qn] = st
             return False
         elif node.kind == CursorKind.TYPEDEF_DECL:
             if node == node.type.get_declaration():
@@ -974,6 +1039,37 @@ class Generator(Closure):
                     # visit from top node
                     _self.visit_node(tu.cursor)
 
+    def check_class_abstract(self, c, parents, puref={}):
+        for p in parents:
+            self.check_class_abstract(p, p.parents, puref)
+        if len(c.parents) > 0:
+            for name, m in c.methods.items():
+                if isinstance(m, NativeOverloadedFunction):
+                    for f in m.implementations:
+                        if f.pure_virtual:
+                            puref[f] = f
+                else:
+                    if m.pure_virtual:
+                        puref[m] = m
+        else:
+            # append self pure virtual to pure virtual list
+            for name, m in c.methods.items():
+                if isinstance(m, NativeOverloadedFunction):
+                    for f in m.implementations:
+                        if f.pure_virtual:
+                            puref[f] = f
+                else:
+                    if m.pure_virtual:
+                        puref[m] = m
+            for name, m in c.override_methods.items():
+                if isinstance(m, NativeOverloadedFunction):
+                    for f in m.implementations:
+                        if f.pure_virtual:
+                            puref[f] = f
+                else:
+                    if m.pure_virtual:
+                        puref[m] = m
+
     def generate_tolua(self):
         # ensure dst dir existence
         if not os.path.exists(self.dst_dir):
@@ -981,6 +1077,10 @@ class Generator(Closure):
 
         # recursively visit all headers
         os.path.walk(self.src_dir, self.process_dir, self)
+
+        # walk all classes to find out abstract classes
+        for name, c in self.generated_classes.items():
+            self.check_class_abstract(c, c.parents)
 
         # generate tolua file
         confname = os.path.basename(self.conf)
@@ -998,6 +1098,39 @@ class Generator(Closure):
         # write global structs
         for name, s in self.generated_structs.items():
             dstfile.write(s.generate_tolua())
+
+        # close
+        dstfile.close()
+
+    def is_ccobject_type(self, nc):
+        if nc.qualified_name == "cocos2d::CCObject":
+            return True
+        for pc in nc.parents:
+            if self.is_ccobject_type(pc):
+                return True
+        return False
+
+    def generate_ccobject_types(self):
+        # ensure dst dir existence
+        if not os.path.exists(self.dst_dir):
+            os.makedirs(self.dst_dir)
+
+        # generate tolua file
+        confname = os.path.basename(self.conf)
+        dstpath = os.path.join(self.dst_dir, os.path.splitext(confname)[0] + "_classes.lua")
+        dstfile = open(dstpath, "w")
+
+        # start
+        dstfile.write("local CCObjectTypes = {\n")
+
+        # write classes
+        for name, c in self.generated_classes.items():
+            if self.is_ccobject_type(c):
+                dstfile.write('\t"' + c.class_name + '",\n')
+
+        # end
+        dstfile.write("}\n")
+        dstfile.write("return CCObjectTypes\n")
 
         # close
         dstfile.close()
@@ -1033,6 +1166,7 @@ def main():
     # generate
     g = Generator(sys.argv[1])
     g.generate_tolua()
+    g.generate_ccobject_types();
 
 if __name__ == '__main__':
     main()

@@ -24,6 +24,7 @@
 #include "CCMWSprite.h"
 #include <stdarg.h>
 #include "CCMWManager.h"
+#include "sprite_nodes/CCSpriteBatchNode.h"
 
 NS_CC_BEGIN
 

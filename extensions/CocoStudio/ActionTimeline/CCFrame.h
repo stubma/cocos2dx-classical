@@ -34,7 +34,8 @@ class Timeline;
 class CC_DLL Frame : public cocos2d::CCObject
 {
 public:
-
+    virtual ~Frame();
+    
     virtual void setFrameIndex(unsigned int frameIndex) { _frameIndex = frameIndex; }
     virtual unsigned int getFrameIndex()const { return _frameIndex; }
 
@@ -53,7 +54,6 @@ public:
     virtual Frame* clone() = 0;
 protected:
     Frame();
-    virtual ~Frame();
 
     virtual void emitEvent();
     void cloneProperty(Frame* frame);

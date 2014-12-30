@@ -28,10 +28,10 @@ THE SOFTWARE.
 
 
 #include "base_nodes/CCAtlasNode.h"
+#include "support/image_support/TGAlib.h"
 
 NS_CC_BEGIN
 
-struct sImageTGA;
 class CCDictionary;
 
 /**
@@ -57,7 +57,7 @@ Instead, use the newer TMX file format: CCTMXTiledMap
 class CC_DLL CCTileMapAtlas : public CCAtlasNode 
 {
     /** TileMap info */
-    CC_PROPERTY(struct sImageTGA*, m_pTGAInfo, TGAInfo);
+    CC_PROPERTY(tImageTGA*, m_pTGAInfo, TGAInfo);
 public:
     /**
      * @js ctor

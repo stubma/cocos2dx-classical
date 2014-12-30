@@ -20,6 +20,8 @@
 #include "CocoStudio/Armature/utils/CCArmatureDataManager.h"
 #include "CocoStudio/Armature/utils/CCDataReaderHelper.h"
 #include "CocoStudio/Armature/utils/CCTweenFunction.h"
+#include "CocoStudio/Armature/utils/CCTransformHelp.h"
+#include "CocoStudio/Armature/utils/CCSpriteFrameCacheHelper.h"
 #include "CocoStudio/Armature/external_tool/sigslot.h"
 #include "CocoStudio/ActionTimeline/CCActionTimeline.h"
 #include "CocoStudio/ActionTimeline/CCActionTimelineCache.h"
@@ -38,5 +40,9 @@
 #include "CocoStudio/Reader/SceneReader.h"
 #include "CocoStudio/Action/CCActionManager.h"
 #include "CocoStudio/Action/CCActionNode.h"
+#include "CocoStudio/Action/CCActionFrameEasing.h"
+#include "CocoStudio/Action/CCActionFrame.h"
+#include "CocoStudio/Action/CCActionEaseEx.h"
+#include "CocoStudio/Action/CCActionObject.h"
 
 #endif /* __COCOS2D_EXT_H__ */

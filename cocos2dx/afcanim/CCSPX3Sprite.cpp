@@ -24,6 +24,7 @@
 #include "CCSPX3Sprite.h"
 #include "CCSPX3Manager.h"
 #include <stdarg.h>
+#include "sprite_nodes/CCSpriteBatchNode.h"
 
 NS_CC_BEGIN
 

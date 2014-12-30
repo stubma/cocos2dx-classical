@@ -853,6 +853,24 @@
 		92C613591A41A6DE00550090 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92C613581A41A6DE00550090 /* libcurl.a */; };
 		92CCB7E71A416E3500C8A508 /* CCCallFuncNT.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CCB7E51A416E3500C8A508 /* CCCallFuncNT.h */; };
 		92CCB7E81A416E3500C8A508 /* CCCallFuncT.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CCB7E61A416E3500C8A508 /* CCCallFuncT.h */; };
+		92CF92EE1A523D6000441150 /* CCLuaBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92CF92DC1A523D6000441150 /* CCLuaBridge.cpp */; };
+		92CF92EF1A523D6000441150 /* CCLuaBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CF92DD1A523D6000441150 /* CCLuaBridge.h */; };
+		92CF92F01A523D6000441150 /* CCLuaEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92CF92DE1A523D6000441150 /* CCLuaEngine.cpp */; };
+		92CF92F11A523D6000441150 /* CCLuaEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CF92DF1A523D6000441150 /* CCLuaEngine.h */; };
+		92CF92F21A523D6000441150 /* CCLuaStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92CF92E01A523D6000441150 /* CCLuaStack.cpp */; };
+		92CF92F31A523D6000441150 /* CCLuaStack.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CF92E11A523D6000441150 /* CCLuaStack.h */; };
+		92CF92F41A523D6000441150 /* CCLuaValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92CF92E21A523D6000441150 /* CCLuaValue.cpp */; };
+		92CF92F51A523D6000441150 /* CCLuaValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CF92E31A523D6000441150 /* CCLuaValue.h */; };
+		92CF92F61A523D6000441150 /* Cocos2dxLuaLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92CF92E41A523D6000441150 /* Cocos2dxLuaLoader.cpp */; };
+		92CF92F71A523D6000441150 /* Cocos2dxLuaLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CF92E51A523D6000441150 /* Cocos2dxLuaLoader.h */; };
+		92CF92F81A523D6000441150 /* lua_cocos2d_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92CF92E61A523D6000441150 /* lua_cocos2d_auto.cpp */; };
+		92CF92F91A523D6000441150 /* lua_cocos2d_auto.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CF92E71A523D6000441150 /* lua_cocos2d_auto.h */; };
+		92CF92FA1A523D6000441150 /* CCLuaObjcBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CF92EA1A523D6000441150 /* CCLuaObjcBridge.h */; };
+		92CF92FB1A523D6000441150 /* CCLuaObjcBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92CF92EB1A523D6000441150 /* CCLuaObjcBridge.mm */; };
+		92CF92FC1A523D6000441150 /* tolua_fix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92CF92EC1A523D6000441150 /* tolua_fix.cpp */; };
+		92CF92FD1A523D6000441150 /* tolua_fix.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CF92ED1A523D6000441150 /* tolua_fix.h */; };
+		92CF93001A523E1F00441150 /* lua_CocoStudio_auto.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CF92FF1A523E1F00441150 /* lua_CocoStudio_auto.h */; };
+		92CF93021A52519300441150 /* lua_CocoStudio_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92CF93011A52519300441150 /* lua_CocoStudio_auto.cpp */; };
 		92D6833C1A2F669600CD9F2A /* CCGradientSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D6833A1A2F669600CD9F2A /* CCGradientSprite.cpp */; };
 		92D6833D1A2F669600CD9F2A /* CCGradientSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D6833B1A2F669600CD9F2A /* CCGradientSprite.h */; };
 		92D683441A2F695900CD9F2A /* CCMenuItemColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D683421A2F695900CD9F2A /* CCMenuItemColor.cpp */; };
@@ -1723,6 +1741,24 @@
 		92C613581A41A6DE00550090 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		92CCB7E51A416E3500C8A508 /* CCCallFuncNT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCallFuncNT.h; sourceTree = "<group>"; };
 		92CCB7E61A416E3500C8A508 /* CCCallFuncT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCallFuncT.h; sourceTree = "<group>"; };
+		92CF92DC1A523D6000441150 /* CCLuaBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaBridge.cpp; sourceTree = "<group>"; };
+		92CF92DD1A523D6000441150 /* CCLuaBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLuaBridge.h; sourceTree = "<group>"; };
+		92CF92DE1A523D6000441150 /* CCLuaEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaEngine.cpp; sourceTree = "<group>"; };
+		92CF92DF1A523D6000441150 /* CCLuaEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLuaEngine.h; sourceTree = "<group>"; };
+		92CF92E01A523D6000441150 /* CCLuaStack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaStack.cpp; sourceTree = "<group>"; };
+		92CF92E11A523D6000441150 /* CCLuaStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLuaStack.h; sourceTree = "<group>"; };
+		92CF92E21A523D6000441150 /* CCLuaValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaValue.cpp; sourceTree = "<group>"; };
+		92CF92E31A523D6000441150 /* CCLuaValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLuaValue.h; sourceTree = "<group>"; };
+		92CF92E41A523D6000441150 /* Cocos2dxLuaLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cocos2dxLuaLoader.cpp; sourceTree = "<group>"; };
+		92CF92E51A523D6000441150 /* Cocos2dxLuaLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cocos2dxLuaLoader.h; sourceTree = "<group>"; };
+		92CF92E61A523D6000441150 /* lua_cocos2d_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2d_auto.cpp; sourceTree = "<group>"; };
+		92CF92E71A523D6000441150 /* lua_cocos2d_auto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2d_auto.h; sourceTree = "<group>"; };
+		92CF92EA1A523D6000441150 /* CCLuaObjcBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLuaObjcBridge.h; sourceTree = "<group>"; };
+		92CF92EB1A523D6000441150 /* CCLuaObjcBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCLuaObjcBridge.mm; sourceTree = "<group>"; };
+		92CF92EC1A523D6000441150 /* tolua_fix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tolua_fix.cpp; sourceTree = "<group>"; };
+		92CF92ED1A523D6000441150 /* tolua_fix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tolua_fix.h; sourceTree = "<group>"; };
+		92CF92FF1A523E1F00441150 /* lua_CocoStudio_auto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_CocoStudio_auto.h; sourceTree = "<group>"; };
+		92CF93011A52519300441150 /* lua_CocoStudio_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_CocoStudio_auto.cpp; sourceTree = "<group>"; };
 		92D6833A1A2F669600CD9F2A /* CCGradientSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGradientSprite.cpp; sourceTree = "<group>"; };
 		92D6833B1A2F669600CD9F2A /* CCGradientSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGradientSprite.h; sourceTree = "<group>"; };
 		92D683421A2F695900CD9F2A /* CCMenuItemColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMenuItemColor.cpp; sourceTree = "<group>"; };
@@ -3340,6 +3376,7 @@
 		92B9B8381A43240300443F4A /* lua */ = {
 			isa = PBXGroup;
 			children = (
+				92CF92DB1A523D6000441150 /* cocos2dx_support */,
 				92B9B8541A43240300443F4A /* lua */,
 				92B9B9721A43240400443F4A /* tolua */,
 			);
@@ -3437,6 +3474,47 @@
 				92B9B9791A43240400443F4A /* tolua_to.c */,
 			);
 			path = tolua;
+			sourceTree = "<group>";
+		};
+		92CF92DB1A523D6000441150 /* cocos2dx_support */ = {
+			isa = PBXGroup;
+			children = (
+				92CF92DC1A523D6000441150 /* CCLuaBridge.cpp */,
+				92CF92DD1A523D6000441150 /* CCLuaBridge.h */,
+				92CF92DE1A523D6000441150 /* CCLuaEngine.cpp */,
+				92CF92DF1A523D6000441150 /* CCLuaEngine.h */,
+				92CF92E01A523D6000441150 /* CCLuaStack.cpp */,
+				92CF92E11A523D6000441150 /* CCLuaStack.h */,
+				92CF92E21A523D6000441150 /* CCLuaValue.cpp */,
+				92CF92E31A523D6000441150 /* CCLuaValue.h */,
+				92CF92E41A523D6000441150 /* Cocos2dxLuaLoader.cpp */,
+				92CF92E51A523D6000441150 /* Cocos2dxLuaLoader.h */,
+				92CF92E61A523D6000441150 /* lua_cocos2d_auto.cpp */,
+				92CF92E71A523D6000441150 /* lua_cocos2d_auto.h */,
+				92CF92FF1A523E1F00441150 /* lua_CocoStudio_auto.h */,
+				92CF93011A52519300441150 /* lua_CocoStudio_auto.cpp */,
+				92CF92E81A523D6000441150 /* platform */,
+				92CF92EC1A523D6000441150 /* tolua_fix.cpp */,
+				92CF92ED1A523D6000441150 /* tolua_fix.h */,
+			);
+			path = cocos2dx_support;
+			sourceTree = "<group>";
+		};
+		92CF92E81A523D6000441150 /* platform */ = {
+			isa = PBXGroup;
+			children = (
+				92CF92E91A523D6000441150 /* ios */,
+			);
+			path = platform;
+			sourceTree = "<group>";
+		};
+		92CF92E91A523D6000441150 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				92CF92EA1A523D6000441150 /* CCLuaObjcBridge.h */,
+				92CF92EB1A523D6000441150 /* CCLuaObjcBridge.mm */,
+			);
+			path = ios;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -3590,6 +3668,7 @@
 				92A7AF5D1A3C4038001C830B /* CCArcticFileData.h in Headers */,
 				92A7AF741A3C4038001C830B /* CCMWSprite.h in Headers */,
 				924308431A2F5FBE00BE2476 /* CCAssetOutputStream.h in Headers */,
+				92CF93001A523E1F00441150 /* lua_CocoStudio_auto.h in Headers */,
 				92D683451A2F695900CD9F2A /* CCMenuItemColor.h in Headers */,
 				927FE5321A45708A0065F052 /* CCArmatureDefine.h in Headers */,
 				92D6833D1A2F669600CD9F2A /* CCGradientSprite.h in Headers */,
@@ -3636,6 +3715,7 @@
 				929D533A1A27575400560A2E /* CCPinyinUtils.h in Headers */,
 				1551A719158F2ADE00E66CFE /* CCAccelerometerDelegate.h in Headers */,
 				92A7AF7D1A3C4038001C830B /* CCSPX3Loader.h in Headers */,
+				92CF92F91A523D6000441150 /* lua_cocos2d_auto.h in Headers */,
 				1551A71A158F2ADE00E66CFE /* CCApplicationProtocol.h in Headers */,
 				927FE5061A45708A0065F052 /* CCActionManager.h in Headers */,
 				929D53A31A275B7900560A2E /* CCUtilsIOS.h in Headers */,
@@ -3691,6 +3771,7 @@
 				92A7AFB51A3C456F001C830B /* CCGLProgram.h in Headers */,
 				92B9B9C61A43240400443F4A /* ltm.h in Headers */,
 				1551A735158F2ADE00E66CFE /* CCESRenderer.h in Headers */,
+				92CF92FD1A523D6000441150 /* tolua_fix.h in Headers */,
 				927FE5791A45708A0065F052 /* pow10.h in Headers */,
 				921112491A2B4D89003FE653 /* CCSorting.h in Headers */,
 				927FE5141A45708A0065F052 /* CCTimeLine.h in Headers */,
@@ -3794,12 +3875,14 @@
 				92B9153A1A3D443900622FDA /* CCTrailMoveTo.h in Headers */,
 				927FE59C1A45708A0065F052 /* SliderReader.h in Headers */,
 				929D53691A27582F00560A2E /* Vector.h in Headers */,
+				92CF92F31A523D6000441150 /* CCLuaStack.h in Headers */,
 				929F3A711A26193200DE78AC /* CCLocalization.h in Headers */,
 				1551A853158F2ADF00E66CFE /* ZipUtils.h in Headers */,
 				921112431A2B4D89003FE653 /* CCEditBoxImplMac.h in Headers */,
 				924308411A2F5FBE00BE2476 /* CCAssetInputStream.h in Headers */,
 				9211122D1A2B4D89003FE653 /* CCControlPotentiometer.h in Headers */,
 				92B9154F1A3D7A3400622FDA /* CCTMXLayer.h in Headers */,
+				92CF92F11A523D6000441150 /* CCLuaEngine.h in Headers */,
 				1551A854158F2ADF00E66CFE /* CCIMEDelegate.h in Headers */,
 				921112261A2B4D89003FE653 /* CCControlButton.h in Headers */,
 				1551A856158F2ADF00E66CFE /* CCIMEDispatcher.h in Headers */,
@@ -3813,6 +3896,7 @@
 				927FE57D1A45708A0065F052 /* rapidjson.h in Headers */,
 				929D535B1A27582F00560A2E /* Errors.h in Headers */,
 				1551A85C158F2ADF00E66CFE /* CCTextureAtlas.h in Headers */,
+				92CF92FA1A523D6000441150 /* CCLuaObjcBridge.h in Headers */,
 				92A7AF631A3C4038001C830B /* CCArcticSprite.h in Headers */,
 				1551A85E158F2ADF00E66CFE /* CCTextureCache.h in Headers */,
 				1551A860158F2ADF00E66CFE /* CCTexturePVR.h in Headers */,
@@ -3825,6 +3909,7 @@
 				1551A86D158F2ADF00E66CFE /* CCTouch.h in Headers */,
 				9211122B1A2B4D89003FE653 /* CCControlHuePicker.h in Headers */,
 				92A7AF4F1A3C4038001C830B /* CCAFCAnimation.h in Headers */,
+				92CF92F71A523D6000441150 /* Cocos2dxLuaLoader.h in Headers */,
 				927FE55B1A45708A0065F052 /* ImageView.h in Headers */,
 				927FE5541A45708A0065F052 /* UIHelper.h in Headers */,
 				1551A86E158F2ADF00E66CFE /* CCTouchDelegateProtocol.h in Headers */,
@@ -3872,6 +3957,7 @@
 				1AA6226216CF6BDF0028C05E /* CCDevice.h in Headers */,
 				92A7AFD81A3C46DB001C830B /* ccShader_matrix_frag.h in Headers */,
 				928F64B61A33EE6900178235 /* CCHttpClient.h in Headers */,
+				92CF92EF1A523D6000441150 /* CCLuaBridge.h in Headers */,
 				929D535A1A27582F00560A2E /* BitSet.h in Headers */,
 				927FE5411A45708A0065F052 /* CCComBase.h in Headers */,
 				921111731A2B4D89003FE653 /* cocos-ext.h in Headers */,
@@ -3911,6 +3997,7 @@
 				92A7AFBE1A3C456F001C830B /* ccShader_lighting_frag.h in Headers */,
 				927FE59A1A45708A0065F052 /* ScrollViewReader.h in Headers */,
 				921110041A2B3FA8003FE653 /* CCScroller.h in Headers */,
+				92CF92F51A523D6000441150 /* CCLuaValue.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4038,6 +4125,7 @@
 				1551A64A158F2ADE00E66CFE /* CCDirector.cpp in Sources */,
 				927FE5201A45708A0065F052 /* CCDatas.cpp in Sources */,
 				92A7AF8F1A3C4038001C830B /* CCSPXSprite.cpp in Sources */,
+				92CF92FC1A523D6000441150 /* tolua_fix.cpp in Sources */,
 				924308461A2F5FBE00BE2476 /* CCMemoryOutputStream.cpp in Sources */,
 				929D53621A27582F00560A2E /* String8.cpp in Sources */,
 				92A7AFB41A3C456F001C830B /* CCGLProgram.cpp in Sources */,
@@ -4065,6 +4153,7 @@
 				927FE50F1A45708A0065F052 /* CCFrame.cpp in Sources */,
 				928F64F21A341F4D00178235 /* CCTreeFadeIn.cpp in Sources */,
 				928F64FC1A342E5900178235 /* CCProgressHUD.cpp in Sources */,
+				92CF92F61A523D6000441150 /* Cocos2dxLuaLoader.cpp in Sources */,
 				1551A65D158F2ADE00E66CFE /* CCObject.cpp in Sources */,
 				927FE53F1A45708A0065F052 /* CCComAudio.cpp in Sources */,
 				92A7AFFC1A3C7377001C830B /* CCShake.cpp in Sources */,
@@ -4111,6 +4200,7 @@
 				927FE56B1A45708A0065F052 /* TextField.cpp in Sources */,
 				1551A6CC158F2ADE00E66CFE /* plane.c in Sources */,
 				1551A6CD158F2ADE00E66CFE /* quaternion.c in Sources */,
+				92CF92EE1A523D6000441150 /* CCLuaBridge.cpp in Sources */,
 				928F64D11A33EF7600178235 /* CCJSONParser.cpp in Sources */,
 				927FE55C1A45708A0065F052 /* Label.cpp in Sources */,
 				1551A6CE158F2ADE00E66CFE /* ray2.c in Sources */,
@@ -4206,6 +4296,7 @@
 				1551A72E158F2ADE00E66CFE /* CCCommon.mm in Sources */,
 				92B915541A3D7A3400622FDA /* CCTMXMapInfo.cpp in Sources */,
 				927FE56F1A45708A0065F052 /* LoadingBar.cpp in Sources */,
+				92CF92F21A523D6000441150 /* CCLuaStack.cpp in Sources */,
 				921112231A2B4D89003FE653 /* CCControl.cpp in Sources */,
 				927FE5391A45708A0065F052 /* CCTweenFunction.cpp in Sources */,
 				928F65001A342FB000178235 /* CCCatmullRomSprite.cpp in Sources */,
@@ -4239,6 +4330,7 @@
 				927FE5311A45708A0065F052 /* CCArmatureDefine.cpp in Sources */,
 				921112341A2B4D89003FE653 /* CCControlSwitch.cpp in Sources */,
 				929D53351A2755B300560A2E /* CCSAXParser.cpp in Sources */,
+				92CF92F41A523D6000441150 /* CCLuaValue.cpp in Sources */,
 				928F64DC1A33F43200178235 /* CCDatabase.cpp in Sources */,
 				929D53641A27582F00560A2E /* Timers.cpp in Sources */,
 				927FE5711A45708A0065F052 /* RichText.cpp in Sources */,
@@ -4281,6 +4373,7 @@
 				1551A846158F2ADF00E66CFE /* ccCArray.cpp in Sources */,
 				927FE5051A45708A0065F052 /* CCActionManager.cpp in Sources */,
 				1551A84A158F2ADF00E66CFE /* TGAlib.cpp in Sources */,
+				92CF93021A52519300441150 /* lua_CocoStudio_auto.cpp in Sources */,
 				9211100C1A2B45AB003FE653 /* CCProfiling.cpp in Sources */,
 				1551A84E158F2ADF00E66CFE /* ioapi.cpp in Sources */,
 				1551A850158F2ADF00E66CFE /* unzip.cpp in Sources */,
@@ -4306,6 +4399,7 @@
 				92A7AF751A3C4038001C830B /* CCSPX3Action.cpp in Sources */,
 				928F64CF1A33EF7600178235 /* CCJSONObject.cpp in Sources */,
 				927FE5971A45708A0065F052 /* PageViewReader.cpp in Sources */,
+				92CF92F81A523D6000441150 /* lua_cocos2d_auto.cpp in Sources */,
 				921112381A2B4D89003FE653 /* CCInvocation.cpp in Sources */,
 				92B9B9A61A43240400443F4A /* ldo.c in Sources */,
 				1551A85F158F2ADF00E66CFE /* CCTexturePVR.cpp in Sources */,
@@ -4337,11 +4431,13 @@
 				92B9B9C51A43240400443F4A /* ltm.c in Sources */,
 				927FE5A61A45708A0065F052 /* TriggerMng.cpp in Sources */,
 				9211123F1A2B4D89003FE653 /* CCEditBoxImplAndroid.cpp in Sources */,
+				92CF92FB1A523D6000441150 /* CCLuaObjcBridge.mm in Sources */,
 				928F64F81A342D6C00178235 /* CCToast.cpp in Sources */,
 				92A7AF801A3C4038001C830B /* CCSPX3Sprite.cpp in Sources */,
 				927FE5571A45708A0065F052 /* Button.cpp in Sources */,
 				92A7AFF41A3C720C001C830B /* CCShine.cpp in Sources */,
 				929D53391A27575400560A2E /* CCPinyinUtils.cpp in Sources */,
+				92CF92F01A523D6000441150 /* CCLuaEngine.cpp in Sources */,
 				927FE5501A45708A0065F052 /* CocosGUI.cpp in Sources */,
 				92A7AF6B1A3C4038001C830B /* CCAuroraSprite.cpp in Sources */,
 				46A393F616E5D01B00210B16 /* CCUserDefault.cpp in Sources */,

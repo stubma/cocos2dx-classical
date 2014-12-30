@@ -1,12 +1,17 @@
 #ifndef __SIMPLE_CLASS_H__
 #define __SIMPLE_CLASS_H__
 
-#include <string>
+class BaseClass {
+public:
+	virtual void haha() = 0;
+};
 
-class SimpleNativeClass
+class SimpleNativeClass : public BaseClass
 {
 public:
-	std::string processString(int s);
+	SimpleNativeClass();
+	virtual void processString(int s);
+	void method1();
 };
 
 #endif

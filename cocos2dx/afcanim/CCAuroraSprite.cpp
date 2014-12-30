@@ -24,6 +24,7 @@
 #include "CCAuroraSprite.h"
 #include "CCAuroraManager.h"
 #include <stdarg.h>
+#include "sprite_nodes/CCSpriteBatchNode.h"
 
 NS_CC_BEGIN
 

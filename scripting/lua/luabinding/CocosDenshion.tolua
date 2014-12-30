@@ -1,4 +1,4 @@
-class SimpleAudioEngine : public TypeInfo {
+class SimpleAudioEngine : public CDTypeInfo {
 	static void end();
 	static SimpleAudioEngine* sharedEngine();
 	void stopAllEffects();
@@ -29,6 +29,6 @@ class SimpleAudioEngine : public TypeInfo {
 	void setEffectsVolume(float volume);
 	void resumeEffect(unsigned int nSoundId);
 };
-class TypeInfo {
+class CDTypeInfo {
 	long getClassTypeInfo();
 };

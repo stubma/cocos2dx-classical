@@ -39,6 +39,8 @@ public:
 
     void setDelegate(CCAccelerometerDelegate* pDelegate);
     void setAccelerometerInterval(float interval);
+    
+protected:
     void update(float x, float y, float z, long sensorTimeStamp);
 
 private:

@@ -25,6 +25,8 @@
 #include "CCMWFileData.h"
 #include "ccMacros.h"
 #include "CCUtils.h"
+#include "platform/CCFileUtils.h"
+#include "CCDirector.h"
  
 NS_CC_BEGIN
 

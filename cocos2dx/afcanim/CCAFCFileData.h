@@ -24,7 +24,7 @@
 #ifndef __CCAFCFileData_h__
 #define __CCAFCFileData_h__
 
-#include "cocos2d.h"
+#include "ccTypes.h"
 #include "CCAFCClip.h"
 
 using namespace std;

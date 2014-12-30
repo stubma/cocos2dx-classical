@@ -24,7 +24,8 @@
 #ifndef __CCAFCFrame_h__
 #define __CCAFCFrame_h__
 
-#include "cocos2d.h"
+#include <vector>
+#include "ccTypes.h"
 #include "CCAFCClip.h"
 
 using namespace std;

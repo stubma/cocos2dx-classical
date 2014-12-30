@@ -53,14 +53,14 @@ UICCLabelAtlas* UICCLabelAtlas::create()
     return NULL;
 }
 
-void UICCLabelAtlas::setProperty(const std::string& string, const std::string& charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
+void UICCLabelAtlas::setProperty(const std::string& s, const std::string& charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
 {
-    initWithString(string.c_str(), charMapFile.c_str(), itemWidth, itemHeight, startCharMap);
+    initWithString(s.c_str(), charMapFile.c_str(), itemWidth, itemHeight, startCharMap);
 }
 
-void UICCLabelAtlas::setProperty(const std::string& string, CCTexture2D *texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
+void UICCLabelAtlas::setProperty(const std::string& s, CCTexture2D *texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
 {
-    initWithString(string.c_str(), texture, itemWidth, itemHeight, startCharMap);
+    initWithString(s.c_str(), texture, itemWidth, itemHeight, startCharMap);
 }
 
 void UICCLabelAtlas::draw()

@@ -36,9 +36,9 @@ class CC_DLL CCComAudio : public cocos2d::CCComponent
 	DECLARE_CLASS_COMPONENT_INFO
 protected:
     CCComAudio(void);
-    virtual ~CCComAudio(void);
     
 public:
+    virtual ~CCComAudio(void);
    virtual bool init();
    virtual void onEnter();
    virtual void onExit();

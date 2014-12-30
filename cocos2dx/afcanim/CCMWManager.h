@@ -24,7 +24,7 @@
 #ifndef __CCMWManager_h__
 #define __CCMWManager_h__
 
-#include "cocos2d.h"
+#include "ccTypes.h"
 #include "CCMWFileData.h"
 #include "CCAFCAnimation.h"
 #include "CCAFCClipMapping.h"

@@ -34,7 +34,7 @@ THE SOFTWARE.
 
 namespace CocosDenshion {
 
-class TypeInfo
+class CDTypeInfo
 {
 public:
     virtual long getClassTypeInfo() = 0;
@@ -59,7 +59,7 @@ static inline unsigned int getHashCodeByString(const char *key)
 @brief          offer a VERY simple interface to play background music & sound effect
 */
 
-class EXPORT_DLL SimpleAudioEngine : public TypeInfo
+class EXPORT_DLL SimpleAudioEngine : public CDTypeInfo
 {
 public:
     SimpleAudioEngine();

@@ -119,40 +119,40 @@ public:
     /**
      * creates a CCLabelTTF with a font name and font size in points
      */
-    static CCLabelTTF* create(const char *string, const char *fontName, float fontSize, CC_DECRYPT_FUNC decryptFunc = NULL);
+    static CCLabelTTF* create(const char *s, const char *fontName, float fontSize, CC_DECRYPT_FUNC decryptFunc = NULL);
     
     /**
      * creates a CCLabelTTF from a fontname, horizontal alignment, dimension in points,  and font size in points.
      */
-    static CCLabelTTF* create(const char *string, const char *fontName, float fontSize,
+    static CCLabelTTF* create(const char *s, const char *fontName, float fontSize,
                                   const CCSize& dimensions, CCTextAlignment hAlignment, CC_DECRYPT_FUNC decryptFunc = NULL);
     
     /**
      * creates a CCLabelTTF from a fontname, alignment, dimension in points and font size in points
      */
-    static CCLabelTTF* create(const char *string, const char *fontName, float fontSize,
+    static CCLabelTTF* create(const char *s, const char *fontName, float fontSize,
                                   const CCSize& dimensions, CCTextAlignment hAlignment,
                                   CCVerticalTextAlignment vAlignment, CC_DECRYPT_FUNC decryptFunc = NULL);
     
     /** Create a lable with string and a font definition*/
-    static CCLabelTTF* createWithFontDefinition(const char *string, ccFontDefinition &textDefinition);
+    static CCLabelTTF* createWithFontDefinition(const char* s, ccFontDefinition &textDefinition);
     
     const char* description();
     
     /** initializes the CCLabelTTF with a font name and font size */
-    virtual bool initWithString(const char *string, const char *fontName, float fontSize, CC_DECRYPT_FUNC decryptFunc = NULL);
+    virtual bool initWithString(const char * s, const char *fontName, float fontSize, CC_DECRYPT_FUNC decryptFunc = NULL);
     
     /** initializes the CCLabelTTF with a font name, alignment, dimension and font size */
-    virtual bool initWithString(const char *string, const char *fontName, float fontSize,
+    virtual bool initWithString(const char * s, const char *fontName, float fontSize,
                         const CCSize& dimensions, CCTextAlignment hAlignment, CC_DECRYPT_FUNC decryptFunc = NULL);
     
     /** initializes the CCLabelTTF with a font name, alignment, dimension and font size */
-    virtual bool initWithString(const char *string, const char *fontName, float fontSize,
+    virtual bool initWithString(const char * s, const char *fontName, float fontSize,
                         const CCSize& dimensions, CCTextAlignment hAlignment,
                         CCVerticalTextAlignment vAlignment, CC_DECRYPT_FUNC decryptFunc = NULL);
     
     /** initializes the CCLabelTTF with a font name, alignment, dimension and font size */
-    virtual bool initWithStringAndTextDefinition(const char *string, ccFontDefinition &textDefinition);
+    virtual bool initWithStringAndTextDefinition(const char * s, ccFontDefinition &textDefinition);
     
     /** set the text definition used by this label */
     void setTextDefinition(ccFontDefinition *theDefinition);

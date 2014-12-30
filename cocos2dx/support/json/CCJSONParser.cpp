@@ -28,6 +28,8 @@
 #include "platform/CCMemoryInputStream.h"
 #include "CCJSONArray.h"
 #include "support/utils/CCUtils.h"
+#include "cocoa/CCString.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 

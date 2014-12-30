@@ -40,8 +40,10 @@ public:
     static CCSpriteFrameCacheHelper *sharedSpriteFrameCacheHelper();
 
     static void purge();
+    
 public:
-
+    ~CCSpriteFrameCacheHelper();
+    
     /**
      *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
      */
@@ -50,7 +52,6 @@ public:
 
 private:
     CCSpriteFrameCacheHelper();
-    ~CCSpriteFrameCacheHelper();
 
     static CCSpriteFrameCacheHelper *s_SpriteFrameCacheHelper;
 };

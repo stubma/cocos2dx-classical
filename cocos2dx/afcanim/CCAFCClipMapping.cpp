@@ -25,6 +25,8 @@
 #include "CCAFCSprite.h"
 #include "ccMacros.h"
 #include "CCUtils.h"
+#include "sprite_nodes/CCSpriteBatchNode.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 

@@ -1,0 +1,3 @@
+local CCObjectTypes = {
+}
+return CCObjectTypes

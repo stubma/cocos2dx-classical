@@ -24,7 +24,8 @@
 #ifndef __CCJSONParser_h__
 #define __CCJSONParser_h__
 
-#include "cocos2d.h"
+#include "ccTypes.h"
+#include <string>
 
 using namespace std;
 

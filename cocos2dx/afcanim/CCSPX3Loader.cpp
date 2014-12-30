@@ -28,7 +28,9 @@
 #include <math.h>
 #include "ccMacros.h"
 #include "CCUtils.h"
- 
+#include "platform/CCFileUtils.h"
+#include "CCDirector.h"
+
 NS_CC_BEGIN
 
 #define SPX_MIN_VERSION 11

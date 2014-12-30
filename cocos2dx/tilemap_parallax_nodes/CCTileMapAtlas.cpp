@@ -265,12 +265,12 @@ void CCTileMapAtlas::updateAtlasValues()
     }
 }
 
-void CCTileMapAtlas::setTGAInfo(struct sImageTGA* var)
+void CCTileMapAtlas::setTGAInfo(tImageTGA* var)
 {
     m_pTGAInfo = var;
 }
 
-struct sImageTGA * CCTileMapAtlas::getTGAInfo()
+tImageTGA * CCTileMapAtlas::getTGAInfo()
 {
     return m_pTGAInfo;
 }

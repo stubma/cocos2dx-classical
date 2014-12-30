@@ -28,6 +28,7 @@
 #include "CCSPX3TileSet.h"
 #include "CCSPX3Frame.h"
 #include "CCSPX3Action.h"
+#include <vector>
 
 using namespace std;
 

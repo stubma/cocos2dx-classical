@@ -59,9 +59,6 @@ class CCInvocation : public CCObject {
 	void invoke(CCObject* sender);
 	unsigned int getControlEvent();
 	CCObject* getTarget();
-	CCInvocation(CCObject* target, SEL_CCControlHandler action, unsigned int controlEvent);
-};
-class CCControlSwitchSprite {
 };
 class CCControlSaturationBrightnessPicker : public CCControl {
 	static CCControlSaturationBrightnessPicker* create(CCNode* target, CCPoint pos);
@@ -78,30 +75,6 @@ class CCControlSaturationBrightnessPicker : public CCControl {
 	void updateDraggerWithHSV(HSV hsv);
 	float getSaturation();
 	float getBrightness();
-};
-class CCEditBoxImplAndroid : public CCEditBoxImpl {
-	void setAnchorPoint(const CCPoint& anchorPoint);
-	void onEnter();
-	void doAnimationWhenKeyboardMove(float duration, float distance);
-	bool isEditing();
-	const char* getText();
-	void setPosition(const CCPoint& pos);
-	void openKeyboard();
-	void visit();
-	void closeKeyboard();
-	~CCEditBoxImplAndroid();
-	bool initWithSize(const CCSize& size);
-	void setPlaceholderFontColor(const ccColor3B& color);
-	void setFontColor(const ccColor3B& color);
-	void setPlaceholderFont(const char* pFontName, int fontSize);
-	void setPlaceHolder(const char* pText);
-	void setContentSize(const CCSize& size);
-	int getMaxLength();
-	void setText(const char* pText);
-	void setMaxLength(int maxLength);
-	CCEditBoxImplAndroid(CCEditBox* pEditText);
-	void setFont(const char* pFontName, int fontSize);
-	void setVisible(bool visible);
 };
 class CCScrollViewDelegate {
 	void scrollViewDidScroll(CCScrollView* view);
@@ -286,8 +259,6 @@ class CCTableView : public CCScrollView, public CCScrollViewDelegate {
 	void ccTouchCancelled(CCTouch* pTouch, CCEvent* pEvent);
 	void setDataSource(CCTableViewDataSource* source);
 	CCTableView();
-};
-class CCEditBoxImpl {
 };
 class CCTableViewDataSource {
 	unsigned int numberOfCellsInTableView(CCTableView* table);
@@ -536,13 +507,3 @@ typedef struct {
 	double b;
 	double a;
 } RGBA;
-typedef struct {
-	unsigned char r;
-	unsigned char g;
-	unsigned char b;
-} ccColor3B;
-typedef struct {
-	CCRect begin;
-	CCRect end;
-	float duration;
-} CCIMEKeyboardNotificationInfo;

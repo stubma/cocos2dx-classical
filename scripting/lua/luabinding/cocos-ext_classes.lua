@@ -1,0 +1,20 @@
+local CCObjectTypes = {
+	"CCScrollView",
+	"CCColor3bObject",
+	"CCInvocation",
+	"CCControlSaturationBrightnessPicker",
+	"CCControl",
+	"CCTableViewCell",
+	"CCControlStepper",
+	"CCControlSlider",
+	"CCControlPotentiometer",
+	"CCTableView",
+	"CCArrayForObjectSorting",
+	"CCControlButton",
+	"CCEditBox",
+	"CCControlSwitch",
+	"CCControlHuePicker",
+	"CCScale9Sprite",
+	"CCControlColourPicker",
+}
+return CCObjectTypes

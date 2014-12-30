@@ -24,7 +24,7 @@
 #ifndef __CCSPXManager_h__
 #define __CCSPXManager_h__
 
-#include "cocos2d.h"
+#include "ccTypes.h"
 #include "CCSPXFileData.h"
 #include "CCAFCAnimation.h"
 #include "CCAFCClipMapping.h"

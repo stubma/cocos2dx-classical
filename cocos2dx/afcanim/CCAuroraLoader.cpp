@@ -27,6 +27,9 @@
 #include <math.h>
 #include "ccMacros.h"
 #include "CCUtils.h"
+#include "CCDirector.h"
+#include "platform/CCFileUtils.h"
+#include "cocoa/CCString.h"
 
 NS_CC_BEGIN
 

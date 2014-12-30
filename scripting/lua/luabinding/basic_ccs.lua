@@ -5,53 +5,7 @@ _is_functions = _is_functions or {}
 _to_functions = _to_functions or {}
 _push_functions = _push_functions or {}
 
-local CCObjectTypes = {
-    "ActionManager",
-    "ActionObject",
-    "ActionTimeline",
-    "ActionTimelineCache",
-    "Button",
-    "CCArmature",
-    "CCArmatureAnimation",
-    "CCArmatureDataManager",
-    "CCArray",
-    "CCBaseData",
-    "CCBatchNode",
-    "CCBone",
-    "CCComAttribute",
-    "CCComAudio",
-    "CCComController",
-    "CCComRender",
-    "CCDictionary",
-    "CCDisplayManager",
-    "CCNode",
-    "CCSkin",
-    "CCTween",
-    "CheckBox",
-    "GUIReader",
-    "ImageView",
-    "Label",
-    "LabelAtlas",
-    "Layer",
-    "Layout",
-    "LayoutParameter",
-    "LinearLayoutParameter",
-    "ListView",
-    "LoadingBar",
-    "NodeReader",
-    "PageView",
-    "RichElement",
-    "RichElementCustomNode",
-    "RichElementImage",
-    "RichElementText",
-    "RichText",
-    "RootWidget",
-    "ScrollView",
-    "Slider",
-    "TextField",
-    "Timeline",
-    "Widget",
-}
+local CCObjectTypes = require("CocoStudio_classes")
 
 -- register CCObject types
 for i = 1, #CCObjectTypes do
@@ -148,17 +102,19 @@ extern "C" {
 #include "tolua_fix.h"
 }
 
-#include <map>
 #include <string>
 #include "cocos2d.h"
 #include "CCLuaEngine.h"
 #include "SimpleAudioEngine.h"
 #include "cocos-ext.h"
+#include "lua_CocoStudio_auto.h"
 
-using namespace cocos2d;
-using namespace cocos2d::ui;
-using namespace cocos2d::extension;
-using namespace CocosDenshion;]])
+using namespace std;
+USING_NS_CC;
+USING_NS_CC_EXT;
+USING_NS_TIMELINE;
+using namespace CocosDenshion;
+using namespace cocos2d::ui;]])
 
     replace([[/* Exported function */
 TOLUA_API int  tolua_CocoStudio_open (lua_State* tolua_S);]], [[]])

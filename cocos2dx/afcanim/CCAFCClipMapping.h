@@ -24,7 +24,6 @@
 #ifndef __CCAFCClipMapping_h__
 #define __CCAFCClipMapping_h__
 
-#include "cocos2d.h"
 #include "ccTypes.h"
  
 NS_CC_BEGIN

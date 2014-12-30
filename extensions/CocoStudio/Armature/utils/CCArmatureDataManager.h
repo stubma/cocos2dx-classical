@@ -54,10 +54,10 @@ public:
     static void purge();
 private:
     CCArmatureDataManager(void);
-    ~CCArmatureDataManager(void);
 
 public:
-
+    ~CCArmatureDataManager(void);
+    
     /**
      * Init CCArmatureDataManager
      */

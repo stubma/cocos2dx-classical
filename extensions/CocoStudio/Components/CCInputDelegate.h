@@ -36,9 +36,9 @@ class CC_DLL CCInputDelegate : public CCTouchDelegate, public CCAccelerometerDel
 {
 protected:
     CCInputDelegate(void);
-    virtual ~CCInputDelegate(void);
     
 public:
+    virtual ~CCInputDelegate(void);
     virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);

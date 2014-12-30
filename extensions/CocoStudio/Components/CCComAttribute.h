@@ -39,12 +39,13 @@ protected:
      *  @js ctor
      */
     CCComAttribute(void);
+    
+public:
     /**
      *  @js NA
      */
     virtual ~CCComAttribute(void);
     
-public:
    virtual bool init();
    static CCComAttribute* create(void);
    virtual bool serialize(void* r);

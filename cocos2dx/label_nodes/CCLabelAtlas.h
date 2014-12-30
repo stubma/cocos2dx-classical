@@ -68,24 +68,24 @@ public:
     }
 
     /** creates the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-    static CCLabelAtlas * create(const char *string, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+    static CCLabelAtlas * create(const char *s, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
     
     /** creates the CCLabelAtlas with a string and a configuration file
      @since v2.0
      @js _create
      */
-    static CCLabelAtlas* create(const char *string, const char *fntFile);
+    static CCLabelAtlas* create(const char *s, const char *fntFile);
 
     /** initializes the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-    bool initWithString(const char *string, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+    bool initWithString(const char *s, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
     
     /** initializes the CCLabelAtlas with a string and a configuration file
      @since v2.0
      */
-    bool initWithString(const char *string, const char *fntFile);
+    bool initWithString(const char *s, const char *fntFile);
     
     /** initializes the CCLabelAtlas with a string, a texture, the width and height in points of each element and the starting char of the atlas */
-    bool initWithString(const char* string, CCTexture2D* texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+    bool initWithString(const char* s, CCTexture2D* texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
     
     // super methods
     virtual void updateAtlasValues();

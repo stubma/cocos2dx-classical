@@ -27,6 +27,7 @@
 #include "CCAFCFileData.h"
 #include "CCSPXFrame.h"
 #include "CCSPXAction.h"
+#include <vector>
 
 using namespace std;
 

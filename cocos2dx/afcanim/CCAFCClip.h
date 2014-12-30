@@ -24,7 +24,6 @@
 #ifndef __CCAFCClip_h__
 #define __CCAFCClip_h__
 
-#include "cocos2d.h"
 #include "ccTypes.h"
 #include "CCAFCConstants.h"
 

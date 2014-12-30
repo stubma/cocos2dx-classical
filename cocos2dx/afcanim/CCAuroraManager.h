@@ -24,7 +24,7 @@
 #ifndef __CCAuroraManager_h__
 #define __CCAuroraManager_h__
 
-#include "cocos2d.h"
+#include "ccTypes.h"
 #include "CCAuroraFileData.h"
 #include "CCAFCAnimation.h"
 #include "CCAFCClipMapping.h"

@@ -24,9 +24,7 @@
 #ifndef __CCLayerClip_h__
 #define __CCLayerClip_h__
 
-#include "cocos2d.h"
-#include "ccMacros.h"
-#include "ccTypes.h"
+#include "layers_scenes_transitions_nodes/CCLayer.h"
 
 NS_CC_BEGIN
 

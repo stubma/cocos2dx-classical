@@ -37,7 +37,7 @@ enum {
 };
 
 /** TGA format */
-typedef struct sImageTGA {
+typedef struct {
     int status;
     unsigned char type, pixelDepth;
     

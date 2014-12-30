@@ -24,8 +24,10 @@
 #ifndef __CCAFCSprite_h__
 #define __CCAFCSprite_h__
 
-#include "cocos2d.h"
 #include "ccTypes.h"
+#include "base_nodes/CCNode.h"
+#include "sprite_nodes/CCSprite.h"
+#include <vector>
 
 using namespace std;
  

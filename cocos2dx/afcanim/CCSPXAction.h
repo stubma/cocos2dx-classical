@@ -24,7 +24,7 @@
 #ifndef __CCSPXAction_h__
 #define __CCSPXAction_h__
 
-#include "cocos2d.h"
+#include "ccTypes.h"
 #include "CCSPXConstants.h"
 
 NS_CC_BEGIN

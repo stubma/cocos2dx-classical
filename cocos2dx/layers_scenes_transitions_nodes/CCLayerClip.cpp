@@ -23,6 +23,11 @@
  ****************************************************************************/
 #include "CCLayerClip.h"
 #include "CCUtils.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    #include "platform/ios/CCEGLView.h"
+#else
+    #include "platform/android/CCEGLView.h"
+#endif
 
 NS_CC_BEGIN
 

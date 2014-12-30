@@ -24,7 +24,7 @@
 #ifndef __CCAFCAnimation_h__
 #define __CCAFCAnimation_h__
 
-#include "cocos2d.h"
+#include "ccTypes.h"
 #include "CCAFCFrame.h"
 
 using namespace std;
