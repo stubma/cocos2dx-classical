@@ -952,11 +952,11 @@ class Generator(Closure):
         self.target_ns = config.get("DEFAULT", "target_ns").split(" ") if config.has_option("DEFAULT", "target_ns") else []
         self.src_dirs = config.get("DEFAULT", "src_dirs").split(" ") if config.has_option("DEFAULT", "src_dirs") else ["."]
         self.dst_dir = config.get("DEFAULT", "dst_dir") if config.has_option("DEFAULT", "dst_dir") else "."
-        exclude_classes = config.get("DEFAULT", "exclude_classes").split(" ") if config.has_option("DEFAULT", "exclude_classes") else []
+        exclude_classes = re.split(r"\s", config.get("DEFAULT", "exclude_classes")) if config.has_option("DEFAULT", "exclude_classes") else []
         self.exclude_classes_regex = [re.compile(x) for x in exclude_classes]
-        include_classes = config.get("DEFAULT", "include_classes").split(" ") if config.has_option("DEFAULT", "include_classes") else []
+        include_classes = re.split(r"\s", config.get("DEFAULT", "include_classes")) if config.has_option("DEFAULT", "include_classes") else []
         self.include_classes_regex = [re.compile(x) for x in include_classes]
-        ignore_structs = config.get("DEFAULT", "ignore_structs").split(" ") if config.has_option("DEFAULT", "ignore_structs") else []
+        ignore_structs = re.split(r"\s", config.get("DEFAULT", "ignore_structs")) if config.has_option("DEFAULT", "ignore_structs") else []
         self.ignore_structs = [re.compile(x) for x in ignore_structs]
 
     def is_class_excluded(self, name):

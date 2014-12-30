@@ -34,7 +34,6 @@ extern "C" {
 
 #include "lua_cocos2d_auto.h"
 #include "Cocos2dxLuaLoader.h"
-#include "lua_CocoStudio_auto.h"
 //#include "lua_cocos2dx_manual.h"
 //#include "lua_cocos2dx_extensions_manual.h"
 //#include "lua_cocos2dx_cocostudio_manual.h"
@@ -118,7 +117,6 @@ bool CCLuaStack::init(void)
         {NULL, NULL}
     };
     luaL_register(m_state, "_G", global_functions);
-    tolua_CocoStudio_open(m_state);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     CCLuaObjcBridge::luaopen_luaoc(m_state);
 #endif

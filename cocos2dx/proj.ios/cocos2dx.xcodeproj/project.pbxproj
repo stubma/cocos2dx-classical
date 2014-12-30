@@ -869,8 +869,6 @@
 		92CF92FB1A523D6000441150 /* CCLuaObjcBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92CF92EB1A523D6000441150 /* CCLuaObjcBridge.mm */; };
 		92CF92FC1A523D6000441150 /* tolua_fix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92CF92EC1A523D6000441150 /* tolua_fix.cpp */; };
 		92CF92FD1A523D6000441150 /* tolua_fix.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CF92ED1A523D6000441150 /* tolua_fix.h */; };
-		92CF93001A523E1F00441150 /* lua_CocoStudio_auto.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CF92FF1A523E1F00441150 /* lua_CocoStudio_auto.h */; };
-		92CF93021A52519300441150 /* lua_CocoStudio_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92CF93011A52519300441150 /* lua_CocoStudio_auto.cpp */; };
 		92D6833C1A2F669600CD9F2A /* CCGradientSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D6833A1A2F669600CD9F2A /* CCGradientSprite.cpp */; };
 		92D6833D1A2F669600CD9F2A /* CCGradientSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D6833B1A2F669600CD9F2A /* CCGradientSprite.h */; };
 		92D683441A2F695900CD9F2A /* CCMenuItemColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D683421A2F695900CD9F2A /* CCMenuItemColor.cpp */; };
@@ -1757,8 +1755,6 @@
 		92CF92EB1A523D6000441150 /* CCLuaObjcBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCLuaObjcBridge.mm; sourceTree = "<group>"; };
 		92CF92EC1A523D6000441150 /* tolua_fix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tolua_fix.cpp; sourceTree = "<group>"; };
 		92CF92ED1A523D6000441150 /* tolua_fix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tolua_fix.h; sourceTree = "<group>"; };
-		92CF92FF1A523E1F00441150 /* lua_CocoStudio_auto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_CocoStudio_auto.h; sourceTree = "<group>"; };
-		92CF93011A52519300441150 /* lua_CocoStudio_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_CocoStudio_auto.cpp; sourceTree = "<group>"; };
 		92D6833A1A2F669600CD9F2A /* CCGradientSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGradientSprite.cpp; sourceTree = "<group>"; };
 		92D6833B1A2F669600CD9F2A /* CCGradientSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGradientSprite.h; sourceTree = "<group>"; };
 		92D683421A2F695900CD9F2A /* CCMenuItemColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMenuItemColor.cpp; sourceTree = "<group>"; };
@@ -3491,8 +3487,6 @@
 				92CF92E51A523D6000441150 /* Cocos2dxLuaLoader.h */,
 				92CF92E61A523D6000441150 /* lua_cocos2d_auto.cpp */,
 				92CF92E71A523D6000441150 /* lua_cocos2d_auto.h */,
-				92CF92FF1A523E1F00441150 /* lua_CocoStudio_auto.h */,
-				92CF93011A52519300441150 /* lua_CocoStudio_auto.cpp */,
 				92CF92E81A523D6000441150 /* platform */,
 				92CF92EC1A523D6000441150 /* tolua_fix.cpp */,
 				92CF92ED1A523D6000441150 /* tolua_fix.h */,
@@ -3668,7 +3662,6 @@
 				92A7AF5D1A3C4038001C830B /* CCArcticFileData.h in Headers */,
 				92A7AF741A3C4038001C830B /* CCMWSprite.h in Headers */,
 				924308431A2F5FBE00BE2476 /* CCAssetOutputStream.h in Headers */,
-				92CF93001A523E1F00441150 /* lua_CocoStudio_auto.h in Headers */,
 				92D683451A2F695900CD9F2A /* CCMenuItemColor.h in Headers */,
 				927FE5321A45708A0065F052 /* CCArmatureDefine.h in Headers */,
 				92D6833D1A2F669600CD9F2A /* CCGradientSprite.h in Headers */,
@@ -4373,7 +4366,6 @@
 				1551A846158F2ADF00E66CFE /* ccCArray.cpp in Sources */,
 				927FE5051A45708A0065F052 /* CCActionManager.cpp in Sources */,
 				1551A84A158F2ADF00E66CFE /* TGAlib.cpp in Sources */,
-				92CF93021A52519300441150 /* lua_CocoStudio_auto.cpp in Sources */,
 				9211100C1A2B45AB003FE653 /* CCProfiling.cpp in Sources */,
 				1551A84E158F2ADF00E66CFE /* ioapi.cpp in Sources */,
 				1551A850158F2ADF00E66CFE /* unzip.cpp in Sources */,
