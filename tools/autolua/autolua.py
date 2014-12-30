@@ -1000,9 +1000,8 @@ class Generator(Closure):
         elif node.kind == CursorKind.ENUM_DECL:
             if node == node.type.get_declaration() and len(node.get_children_array()) > 0 and len(node.displayname) > 0:
                 qn = get_qualified_name(node)
-                if self.enums.has_key(qn):
-                    ne = NativeEnum(node)
-                    self.enums[qn] = ne
+                ne = NativeEnum(node)
+                self.enums[qn] = ne
             return False
         elif node.kind == CursorKind.STRUCT_DECL:
             if node == node.type.get_declaration() and len(node.get_children_array()) > 0:
