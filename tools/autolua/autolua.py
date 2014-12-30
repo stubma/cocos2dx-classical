@@ -496,6 +496,12 @@ class NativeFunction(object):
                 return False
         return True
 
+    def __hash__(self):
+        hs = self.func_name + self.ret_type.qualified_name
+        for arg in self.arguments:
+            hs += arg.qualified_name
+        return hash(hs)
+
     def has_default_arg(self, param_node):
         for node in param_node.get_children():
             if node.kind in default_arg_type_arr:
@@ -1043,14 +1049,35 @@ class Generator(Closure):
         for p in parents:
             self.check_class_abstract(p, p.parents, puref)
         if len(c.parents) > 0:
+            # visit my functions, if pure virtual add to dict, if not, remove from dict if has
             for name, m in c.methods.items():
                 if isinstance(m, NativeOverloadedFunction):
                     for f in m.implementations:
                         if f.pure_virtual:
                             puref[f] = f
+                        elif puref.has_key(f):
+                            del puref[f]
                 else:
                     if m.pure_virtual:
                         puref[m] = m
+                    elif puref.has_key(m):
+                        del puref[m]
+            for name, m in c.override_methods.items():
+                if isinstance(m, NativeOverloadedFunction):
+                    for f in m.implementations:
+                        if f.pure_virtual:
+                            puref[f] = f
+                        else:
+                            del puref[f]
+                else:
+                    if m.pure_virtual:
+                        puref[m] = m
+                    else:
+                        del puref[m]
+
+            # finally if dict is not empty then this is an abstract class
+            if len(puref) > 0:
+                c.is_abstract = True
         else:
             # append self pure virtual to pure virtual list
             for name, m in c.methods.items():

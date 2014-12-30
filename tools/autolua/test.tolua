@@ -1,8 +1,12 @@
-class SimpleNativeClass : public BaseClass {
+class SimpleNativeClass : public BaseClass, public BaseClass2 {
 	void method1();
+	void haha();
 	void processString(int s);
 	SimpleNativeClass();
 };
 class BaseClass {
 	void haha();
+};
+class BaseClass2 {
+	void haha2();
 };
