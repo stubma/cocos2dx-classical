@@ -10,12 +10,6 @@ for i = 1, #CCObjectTypes do
     _push_functions[CCObjectTypes[i]] = "toluafix_pushusertype_ccobject"
 end
 
--- register CCObject types
-CCObjectTypes = require("cocos-ext_classes")
-for i = 1, #CCObjectTypes do
-    _push_functions[CCObjectTypes[i]] = "toluafix_pushusertype_ccobject"
-end
-
 -- register LUA_FUNCTION, LUA_TABLE, LUA_HANDLE type
 _to_functions["LUA_FUNCTION"] = "toluafix_ref_function"
 _is_functions["LUA_FUNCTION"] = "toluafix_isfunction"

@@ -1,6 +1,5 @@
 $pfile "cocos2dx.tolua"
 $pfile "CocosDenshion.tolua"
-$pfile "cocos-ext.tolua"
 
 $[
 

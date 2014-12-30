@@ -950,7 +950,7 @@ class Generator(Closure):
             "-D_SIZE_T_DEFINED_"
         ]
         self.target_ns = config.get("DEFAULT", "target_ns").split(" ") if config.has_option("DEFAULT", "target_ns") else []
-        self.src_dir = config.get("DEFAULT", "src_dir") if config.has_option("DEFAULT", "src_dir") else "."
+        self.src_dirs = config.get("DEFAULT", "src_dirs").split(" ") if config.has_option("DEFAULT", "src_dirs") else ["."]
         self.dst_dir = config.get("DEFAULT", "dst_dir") if config.has_option("DEFAULT", "dst_dir") else "."
         exclude_classes = config.get("DEFAULT", "exclude_classes").split(" ") if config.has_option("DEFAULT", "exclude_classes") else []
         self.exclude_classes_regex = [re.compile(x) for x in exclude_classes]
@@ -1103,7 +1103,8 @@ class Generator(Closure):
             os.makedirs(self.dst_dir)
 
         # recursively visit all headers
-        os.path.walk(self.src_dir, self.process_dir, self)
+        for d in self.src_dirs:
+            os.path.walk(d, self.process_dir, self)
 
         # walk all classes to find out abstract classes
         for name, c in self.generated_classes.items():
