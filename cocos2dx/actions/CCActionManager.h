@@ -35,6 +35,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class CCSet;
+class CCActionWatcher;
 
 struct _hashElement;
 
@@ -119,6 +120,9 @@ public:
     /** Resume a set of targets (convenience function to reverse a pauseAllRunningActions call)
      */
     void resumeTargets(CCSet *targetsToResume);
+    
+    /// register an action watcher
+    void registerWatcher(CCActionWatcher* w);
 
 protected:
     // declared in CCActionManager.m
@@ -127,11 +131,13 @@ protected:
     void deleteHashElement(struct _hashElement *pElement);
     void actionAllocWithHashElement(struct _hashElement *pElement);
     void update(float dt);
+    void notifyWatcher(CCAction* a);
 
 protected:
     struct _hashElement    *m_pTargets;
     struct _hashElement    *m_pCurrentTarget;
     bool            m_bCurrentTargetSalvaged;
+    CCArray m_actionWatchers;
 };
 
 // end of actions group

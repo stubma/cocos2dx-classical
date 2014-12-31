@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "support/data_support/ccCArray.h"
 #include "support/data_support/uthash.h"
 #include "cocoa/CCSet.h"
+#include "actions/CCActionWatcher.h"
 
 NS_CC_BEGIN
 //
@@ -87,6 +88,17 @@ void CCActionManager::actionAllocWithHashElement(tHashElement *pElement)
 
 }
 
+void CCActionManager::notifyWatcher(CCAction* a) {
+    CCObject* obj;
+    CCARRAY_FOREACH_REVERSE(&m_actionWatchers, obj) {
+        CCActionWatcher* w = (CCActionWatcher*)obj;
+        w->onActionRemoved(a);
+        if(!w->isValid()) {
+            m_actionWatchers.removeObject(w);
+        }
+    }
+}
+
 void CCActionManager::removeActionAtIndex(unsigned int uIndex, tHashElement *pElement)
 {
     CCAction *pAction = (CCAction*)pElement->actions->arr[uIndex];
@@ -97,6 +109,7 @@ void CCActionManager::removeActionAtIndex(unsigned int uIndex, tHashElement *pEl
         pElement->currentActionSalvaged = true;
     }
 
+    notifyWatcher(pAction);
     ccArrayRemoveObjectAtIndex(pElement->actions, uIndex, true);
 
     // update actionIndex in case we are in tick. looping over the actions
@@ -223,7 +236,11 @@ void CCActionManager::removeAllActionsFromTarget(CCObject *pTarget)
             pElement->currentAction->retain();
             pElement->currentActionSalvaged = true;
         }
-
+        
+        for(unsigned int i = 0; i < pElement->actions->num; i++) {
+            notifyWatcher((CCAction*)pElement->actions->arr[i]);
+        }
+        
         ccArrayRemoveAllObjects(pElement->actions);
         if (m_pCurrentTarget == pElement)
         {
@@ -393,6 +410,10 @@ void CCActionManager::update(float dt)
 
     // issue #635
     m_pCurrentTarget = NULL;
+}
+
+void CCActionManager::registerWatcher(CCActionWatcher* w) {
+    m_actionWatchers.addObject(w);
 }
 
 NS_CC_END

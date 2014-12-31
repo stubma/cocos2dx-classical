@@ -65,6 +65,7 @@ THE SOFTWARE.
 #include "actions/CCTrailMoveTo.h"
 #include "actions/CCCallFuncT.h"
 #include "actions/CCCallFuncNT.h"
+#include "actions/CCActionWatcher.h"
 
 // base_nodes
 #include "base_nodes/CCNode.h"

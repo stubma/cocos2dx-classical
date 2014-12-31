@@ -335,6 +335,8 @@
 		9211124B1A2B4D89003FE653 /* CCTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 921111341A2B4D89003FE653 /* CCTableView.h */; };
 		9211124C1A2B4D89003FE653 /* CCTableViewCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 921111351A2B4D89003FE653 /* CCTableViewCell.cpp */; };
 		9211124D1A2B4D89003FE653 /* CCTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 921111361A2B4D89003FE653 /* CCTableViewCell.h */; };
+		921B61701A53A93A006BAA2B /* CCActionWatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 921B616E1A53A93A006BAA2B /* CCActionWatcher.cpp */; };
+		921B61711A53A93A006BAA2B /* CCActionWatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 921B616F1A53A93A006BAA2B /* CCActionWatcher.h */; };
 		9242C2551A3078FB00E1E944 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9242C2541A3078FB00E1E944 /* CoreText.framework */; };
 		924308401A2F5FBE00BE2476 /* CCAssetInputStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 924308381A2F5FBE00BE2476 /* CCAssetInputStream.cpp */; };
 		924308411A2F5FBE00BE2476 /* CCAssetInputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 924308391A2F5FBE00BE2476 /* CCAssetInputStream.h */; };
@@ -1221,6 +1223,8 @@
 		921111341A2B4D89003FE653 /* CCTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTableView.h; sourceTree = "<group>"; };
 		921111351A2B4D89003FE653 /* CCTableViewCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTableViewCell.cpp; sourceTree = "<group>"; };
 		921111361A2B4D89003FE653 /* CCTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTableViewCell.h; sourceTree = "<group>"; };
+		921B616E1A53A93A006BAA2B /* CCActionWatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionWatcher.cpp; sourceTree = "<group>"; };
+		921B616F1A53A93A006BAA2B /* CCActionWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionWatcher.h; sourceTree = "<group>"; };
 		9242C2541A3078FB00E1E944 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		924308381A2F5FBE00BE2476 /* CCAssetInputStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAssetInputStream.cpp; sourceTree = "<group>"; };
 		924308391A2F5FBE00BE2476 /* CCAssetInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAssetInputStream.h; sourceTree = "<group>"; };
@@ -1902,6 +1906,8 @@
 				1551A364158F2ADE00E66CFE /* CCActionInterval.h */,
 				1551A365158F2ADE00E66CFE /* CCActionManager.cpp */,
 				1551A366158F2ADE00E66CFE /* CCActionManager.h */,
+				921B616E1A53A93A006BAA2B /* CCActionWatcher.cpp */,
+				921B616F1A53A93A006BAA2B /* CCActionWatcher.h */,
 				1551A367158F2ADE00E66CFE /* CCActionPageTurn3D.cpp */,
 				1551A368158F2ADE00E66CFE /* CCActionPageTurn3D.h */,
 				1551A369158F2ADE00E66CFE /* CCActionProgressTimer.cpp */,
@@ -3957,6 +3963,7 @@
 				1A4646DA16DC8FB700DE131F /* ccFPSImages.h in Headers */,
 				928F64FD1A342E5900178235 /* CCProgressHUD.h in Headers */,
 				1A2802B116DF1C5B00189CBF /* ccUTF8.h in Headers */,
+				921B61711A53A93A006BAA2B /* CCActionWatcher.h in Headers */,
 				4EF8999116E207E70040A527 /* CCParallaxNode.h in Headers */,
 				92A7AF581A3C4038001C830B /* CCAFCFrame.h in Headers */,
 				921112401A2B4D89003FE653 /* CCEditBoxImplAndroid.h in Headers */,
@@ -4093,6 +4100,7 @@
 				921112481A2B4D89003FE653 /* CCSorting.cpp in Sources */,
 				1551A638158F2ADE00E66CFE /* CCActionManager.cpp in Sources */,
 				1551A63A158F2ADE00E66CFE /* CCActionPageTurn3D.cpp in Sources */,
+				921B61701A53A93A006BAA2B /* CCActionWatcher.cpp in Sources */,
 				9211124A1A2B4D89003FE653 /* CCTableView.cpp in Sources */,
 				92B9B9BF1A43240400443F4A /* lstring.c in Sources */,
 				1551A63C158F2ADE00E66CFE /* CCActionProgressTimer.cpp in Sources */,
