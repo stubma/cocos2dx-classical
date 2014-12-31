@@ -9,6 +9,7 @@ import os
 import os.path
 import re
 from Cheetah.Template import Template
+import yaml
 
 type_map = {
     TypeKind.VOID        : "void",
@@ -66,6 +67,45 @@ default_arg_type_arr = [
     CursorKind.DECL_REF_EXPR
 ]
 
+def dict_has_key_re(dict, real_key_list):
+    for real_key in real_key_list:
+        for (k, v) in dict.items():
+            if k.startswith('@'):
+                k = k[1:]
+                match = re.match("^" + k + "$", real_key)
+                if match:
+                    return True
+            else:
+                if k == real_key:
+                    return True
+    return False
+
+def dict_get_value_re(dict, real_key_list):
+    for real_key in real_key_list:
+        for (k, v) in dict.items():
+            if k.startswith('@'):
+                k = k[1:]
+                match = re.match("^" + k + "$", real_key)
+                if match:
+                    return v
+            else:
+                if k == real_key:
+                    return v
+    return None
+
+def dict_replace_value_re(dict, real_key_list):
+    for real_key in real_key_list:
+        for (k, v) in dict.items():
+            if k.startswith('@'):
+                k = k[1:]
+                match = re.match('.*' + k, real_key)
+                if match:
+                    return re.sub(k, v, real_key)
+            else:
+                if k == real_key:
+                    return v
+    return None
+
 def build_namespace(cursor, namespaces=[]):
     if cursor:
         parent = cursor.semantic_parent
@@ -88,6 +128,8 @@ def get_qualified_namespace(node):
     ns_list = build_namespace(node, [])
     ns_list.reverse()
     ns = "::".join(ns_list)
+    if len(ns) > 0:
+        ns += "::"
     return ns
 
 def native_name_from_type(ntype, underlying=False):
@@ -152,7 +194,6 @@ class NativeType(object):
         self.canonical_type = None
         self.pointee_name = ""
         self.qualified_pointee_name = ""
-        self.pointer_level = 0
 
     @staticmethod
     def from_type(ntype):
@@ -170,7 +211,6 @@ class NativeType(object):
             nt.is_enum = False
             nt.is_const = ntype.get_pointee().is_const_qualified()
             nt.is_pointer = True
-            nt.pointer_level += 1
 
             # const prefix
             if nt.is_const:
@@ -266,27 +306,27 @@ class NativeType(object):
             # special checking for std::string and std::function
             decl_qn = get_qualified_name(decl)
             if decl_qn == "std::string":
-                nt.name = "string"
+                nt.name = decl_qn
                 nt.qualified_name = decl_qn
                 nt.pointee_name = nt.name
                 nt.qualified_pointee_name = nt.qualified_name
             if decl_qn.startswith("std::function"):
-                nt.name = "function"
+                nt.name = decl_qn
                 nt.qualified_name = "std::function"
                 nt.pointee_name = nt.name
                 nt.qualified_pointee_name = nt.qualified_name
 
-            # for std::map, vector, queue, list, not support
-            if decl_qn.startswith("std::map") or\
-                decl_qn.startswith("std::list") or\
-                decl_qn.startswith("std::queue") or\
-                decl_qn.startswith("std::vector") or\
-                decl_qn.startswith("std::set"):
-                nt.not_supported = True
-
             # if failed to get qualified name, use name as qualified name
             if len(nt.qualified_name) == 0 or nt.qualified_name.find("::") == -1:
                 nt.qualified_name = nt.name
+
+            # set canonical type
+            if nt.name != INVALID_NATIVE_TYPE and nt.name != "std::string" and nt.name != "std::function":
+                if ntype.kind == TypeKind.UNEXPOSED or ntype.kind == TypeKind.TYPEDEF:
+                    if decl.kind == CursorKind.TYPEDEF_DECL:
+                        ret = NativeType.from_type(ctype)
+                        if ret.name != "":
+                            nt.canonical_type = ret
 
             # whole name
             nt.whole_name = nt.qualified_name
@@ -301,7 +341,7 @@ class NativeType(object):
                 nt.name = "std::function"
 
             # is enum?
-            nt.is_enum = ntype.get_canonical().kind == TypeKind.ENUM
+            nt.is_enum = ctype.kind == TypeKind.ENUM
 
             # if is std::function, get function argument types
             if nt.qualified_name == "std::function":
@@ -313,10 +353,6 @@ class NativeType(object):
                 nt.is_function = True
                 nt.ret_type = NativeType.from_string(ret_type)
                 nt.param_types = [NativeType.from_string(string) for string in params]
-
-        # if invalid type or multi-level pointer, not support
-        if nt.name == INVALID_NATIVE_TYPE or nt.pointer_level > 1:
-            nt.not_supported = True
 
         return nt
 
@@ -330,6 +366,119 @@ class NativeType(object):
         nt.whole_name = nt.qualified_name
         nt.is_class = True
         return nt
+
+    def decl_in_tpl(self, generator):
+        # search in type mapping first
+        native_types_dict = generator.tpl_opt['conversions']['native_types']
+        if dict_has_key_re(native_types_dict, [self.qualified_name]):
+            return dict_get_value_re(native_types_dict, [self.qualified_name])
+
+        # get name
+        name = self.qualified_name
+
+        # dict
+        to_native_dict = generator.tpl_opt['conversions']['to_native']
+        from_native_dict = generator.tpl_opt['conversions']['from_native']
+
+        # get typedef name
+        use_typedef = False
+        typedef_name = self.canonical_type.name if None != self.canonical_type else None
+
+        # if has typedef name, and type mapping is found, use canonical name
+        if None != typedef_name:
+            if NativeType.dict_has_key_re(to_native_dict, [typedef_name]) or NativeType.dict_has_key_re(from_native_dict, [typedef_name]):
+                use_typedef = True
+        if use_typedef and self.canonical_type:
+            name = self.canonical_type.namespaced_name
+
+        # final name
+        return "const " + name if (self.is_pointer and self.is_const) else self.name
+
+    def whole_decl_in_tpl(self, generator):
+        # get mapping dict
+        conversions = generator.tpl_opt['conversions']
+        to_native_dict = conversions['to_native']
+        from_native_dict = conversions['from_native']
+
+        # get canonical name if has
+        use_typedef = False
+        name = self.whole_name
+        typedef_name = self.canonical_type.name if None != self.canonical_type else None
+        if None != typedef_name:
+            if dict_has_key_re(to_native_dict, [typedef_name]) or dict_has_key_re(from_native_dict, [typedef_name]):
+                use_typedef = True
+        if use_typedef and self.canonical_type:
+            name = self.canonical_type.whole_name
+
+        # name mapping
+        native_types_dict = conversions['native_types']
+        to_replace = dict_replace_value_re(native_types_dict, [name])
+        if to_replace:
+            name = to_replace
+
+        # final name
+        return name
+
+    def lua_from_native(self, convert_opts):
+        # get generator, ensure it is in option
+        assert(convert_opts.has_key('generator'))
+        generator = convert_opts['generator']
+
+        # get argument name
+        keys = []
+        if self.canonical_type != None:
+            keys.append(self.canonical_type.name)
+        keys.append(self.name)
+
+        # if arg is an object but no mapping defined, use object for it
+        # if arg is an enum, use int for it
+        from_native_dict = generator.tpl_opt['conversions']['from_native']
+        if self.is_class:
+            if not dict_has_key_re(from_native_dict, keys):
+                keys.append("object")
+        elif self.is_enum:
+            keys.append("int")
+
+        # find mapping, if no mapping, print error
+        if dict_has_key_re(from_native_dict, keys):
+            tpl = dict_get_value_re(from_native_dict, keys)
+            tpl = Template(tpl, searchList=[convert_opts])
+            return str(tpl).rstrip()
+        return "#pragma warning NO CONVERSION FROM NATIVE FOR " + self.name
+
+    def lua_to_native(self, convert_opts):
+        # get generator, ensure it is in option
+        assert('generator' in convert_opts)
+        generator = convert_opts['generator']
+
+        # get argument name
+        keys = []
+        if self.canonical_type != None:
+            keys.append(self.canonical_type.name)
+        keys.append(self.name)
+
+        # if arg is an object but no mapping defined, use object for it
+        # if arg is an enum, use int for it
+        to_native_dict = generator.tpl_opt['conversions']['to_native']
+        if self.is_class:
+            if not dict_has_key_re(to_native_dict, keys):
+                keys.append("object")
+        elif self.is_enum:
+            keys.append("int")
+
+        # if it is function, use lambda template
+        if self.is_function:
+            tpl = Template(file=os.path.join("templates", "lambda.c"),
+                           searchList=[convert_opts, self])
+            indent = convert_opts['level'] * "\t"
+            return str(tpl).replace("\n", "\n" + indent)
+
+        # for other situation, find mapping, if no mapping, print error
+        if dict_has_key_re(to_native_dict, keys):
+            tpl = dict_get_value_re(to_native_dict, keys)
+            tpl = Template(tpl, searchList=[convert_opts])
+            return str(tpl).rstrip()
+        return "#pragma warning NO CONVERSION TO NATIVE FOR " + self.name + "\n" + convert_opts['level'] * "\t" +  "ok = false"
 
 class NativeTypedef(object):
     def __init__(self, node, closure):
@@ -430,8 +579,26 @@ class NativeOverloadedFunction(object):
         self.min_args = min(self.min_args, func.min_args)
         self.implementations.append(func)
 
-    def generate_code(self, hfile, cppfile):
-        pass
+    def generate_code(self, hfile, cppfile, clazz, generator):
+        static = self.implementations[0].static
+        override = self.implementations[0].is_override
+
+        # if override method, no need generate
+        if override:
+            return
+
+        # generate binding code
+        tpl = None
+        if static:
+            tpl = Template(file=os.path.join("templates", "sfunction_overloaded.c"),
+                           searchList=[self, clazz, generator])
+        else:
+            tpl = Template(file=os.path.join("templates", "ifunction_overloaded.c"),
+                           searchList=[self, clazz, generator])
+
+        # write
+        if tpl is not None:
+            cppfile.write(str(tpl))
 
 class NativeFunction(object):
     def __init__(self, node):
@@ -515,11 +682,10 @@ class NativeFunction(object):
         # generate binding code
         tpl = None
         if self.static:
-            pass
+            tpl = Template(file=os.path.join("templates", "sfunction.c"),
+                           searchList=[self, clazz, generator])
         else:
-            if self.is_constructor:
-                pass
-            elif self.is_destructor:
+            if self.is_destructor:
                 pass
             else:
                 tpl = Template(file=os.path.join("templates", "ifunction.c"),
@@ -581,6 +747,7 @@ class NativeClass(Closure):
         self.has_constructor = False
         self.qualified_ns = get_qualified_namespace(node)
         self.is_abstract = False
+        self.is_ccobject = False
 
         # visit
         if not dont_visit:
@@ -832,6 +999,7 @@ class Generator(Closure):
         config = ConfigParser.SafeConfigParser()
         config.read(conf)
         ndk_root = os.getenv("NDK_ROOT")
+        self.tpl_opt = yaml.load(file("conversions.yaml", "r"))
         self.conf = conf
         self.clang = Index.create()
         self.current_ns = ""
@@ -871,6 +1039,23 @@ class Generator(Closure):
         self.cppfile_path = ""
         self.headers = []
         self.target_module_fullname = os.path.splitext(os.path.basename(self.conf))[0]
+
+    @property
+    def generator(self):
+        return self
+
+    def to_lua_type(self, namespace_class_name, namespace_name):
+        script_ns_dict = self.tpl_opt['conversions']['ns_map']
+        for (k, v) in script_ns_dict.items():
+            if k == namespace_name:
+                return namespace_class_name.replace("*","").replace("const ", "").replace(k, v)
+        if namespace_class_name.find("::") >= 0:
+            if namespace_class_name.find("std::") == 0:
+                return namespace_class_name
+            else:
+                raise Exception("The namespace (%s) conversion wasn't set in 'ns_map' section of the conversions.yaml" % namespace_class_name)
+        else:
+            return namespace_class_name.replace("*","").replace("const ", "")
 
     def is_class_excluded(self, name):
         if len(self.exclude_classes_regex) <= 0:
@@ -1031,9 +1216,11 @@ class Generator(Closure):
         for d in self.src_dirs:
             os.path.walk(d, self.process_dir, self)
 
-        # walk all classes to find out abstract classes
+        # walk all classes to find out abstract classes and ccobject types
         for name, c in self.generated_classes.items():
             self.check_class_abstract(c, c.parents)
+            if self.is_ccobject_type(c):
+                c.is_ccobject = True
 
         # generate header file
         self.hfile_path = os.path.join(self.dst_dir, "lua_" + self.target_module_fullname + "_auto.h")
