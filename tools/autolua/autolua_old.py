@@ -373,7 +373,7 @@ class NativeEnum(object):
         # visit
         self.visit_node(self.node)
 
-    def generate_code(self, indent_level=0):
+    def generate_tolua(self, indent_level=0):
         # indent
         tolua = "\t" * indent_level
 
@@ -430,8 +430,11 @@ class NativeOverloadedFunction(object):
         self.min_args = min(self.min_args, func.min_args)
         self.implementations.append(func)
 
-    def generate_code(self, hfile, cppfile):
-        pass
+    def generate_tolua(self, indent_level=0):
+        tolua = ""
+        for f in self.implementations:
+            tolua += f.generate_tolua(indent_level)
+        return tolua
 
 class NativeFunction(object):
     def __init__(self, node):
@@ -507,27 +510,55 @@ class NativeFunction(object):
                 return True
         return False
 
-    def generate_code(self, hfile, cppfile, clazz, generator):
-        # if override method, no need generate
+    def generate_tolua(self, indent_level=0):
+        # returned string
+        tolua = ""
+
+        # if override, no return
         if self.is_override:
-            return
+            return tolua
 
-        # generate binding code
-        tpl = None
-        if self.static:
-            pass
+        # indent
+        tolua = "\t" * indent_level
+
+        # constructor or not
+        if self.is_constructor or self.is_destructor:
+            tolua += self.func_name
         else:
-            if self.is_constructor:
-                pass
-            elif self.is_destructor:
-                pass
-            else:
-                tpl = Template(file=os.path.join("templates", "ifunction.c"),
-                               searchList=[self, clazz, generator])
+            # static
+            if self.static:
+                tolua += "static "
 
-        # write
-        if tpl is not None:
-            cppfile.write(str(tpl))
+            # return type
+            tolua += self.ret_type.name
+
+            # name
+            tolua += " " + self.func_name
+
+            # if overloaded, append arg sig
+            if self.overload:
+                tolua += " @ " + self.func_name
+                for arg in self.arguments:
+                    if arg.is_pointer:
+                        tolua += "p"
+                    elif arg.is_ref:
+                        tolua += "r"
+                    parts = arg.name.split(" ")
+                    for part in parts:
+                        tolua += part[0]
+
+        # args
+        tolua += "("
+        first_arg = True
+        for (arg_type, arg_name) in zip(self.arguments, self.argumtntTips):
+            if first_arg is False:
+                tolua += ", "
+            tolua += arg_type.name + " " + arg_name
+            first_arg = False
+        tolua += ");\n"
+
+        # final string
+        return tolua
 
 class NativeField(object):
     def __init__(self, node):
@@ -537,7 +568,7 @@ class NativeField(object):
         self.type = NativeType.from_type(cnode.type)
         self.location = cnode.location
 
-    def generate_code(self, indent_level=0):
+    def generate_tolua(self, indent_level=0):
         tolua = ""
 
         # if type is not support, return
@@ -681,15 +712,97 @@ class NativeClass(Closure):
                     break
                 closure = closure.parent_closure
 
-    def generate_code(self, hfile, cppfile, generator):
+    def generate_tolua(self, indent_level=0):
+        # buf
+        tolua = "\t" * indent_level
+
+        # write class
+        if self.is_struct:
+            if self.is_typedef:
+                tolua += "typedef "
+            tolua += "struct"
+            if not self.is_typedef:
+                tolua += " " + self.class_name
+        else:
+            tolua += "class " + self.class_name
+
+        # parent
+        if len(self.parents) > 0:
+            first_parent = True
+            for p in self.parents:
+                if first_parent is False:
+                    tolua += ", public " + p.class_name
+                else:
+                    tolua += " : public " + p.class_name
+                    first_parent = False
+        tolua += " {\n"
+
+        # fields
+        for f in self.fields:
+            if not self.is_non_public_type(f.type):
+                tolua += f.generate_tolua(indent_level + 1)
+                self.record_field_types(f)
+
+        # write static methods
+        mlist = []
         for name, m in self.static_methods.items():
-            m.generate_code(hfile, cppfile, self, generator)
+            del mlist[:]
+            if isinstance(m, NativeOverloadedFunction):
+                mlist += m.implementations
+            else:
+                mlist.append(m)
+            for f in mlist:
+                if self.is_abstract and f.is_constructor:
+                    continue
+                if not self.use_any_non_public_type(f):
+                    tolua += f.generate_tolua(indent_level + 1)
+                    self.record_function_types(f)
 
+        # write methods
         for name, m in self.methods.items():
-            m.generate_code(hfile, cppfile, self, generator)
+            del mlist[:]
+            if isinstance(m, NativeOverloadedFunction):
+                mlist += m.implementations
+            else:
+                mlist.append(m)
+            for f in mlist:
+                if self.is_abstract and f.is_constructor:
+                    continue
+                if not self.use_any_non_public_type(f):
+                    tolua += f.generate_tolua(indent_level + 1)
+                    self.record_function_types(f)
 
+        # write override methods
         for name, m in self.override_methods.items():
-            m.generate_code(hfile, cppfile, self, generator)
+            del mlist[:]
+            if isinstance(m, NativeOverloadedFunction):
+                mlist += m.implementations
+            else:
+                mlist.append(m)
+            for f in mlist:
+                if self.is_abstract and f.is_constructor:
+                    continue
+                if not self.use_any_non_public_type(f):
+                    tolua += f.generate_tolua(indent_level + 1)
+                    self.record_function_types(f)
+
+        # write class enums
+        for name, e in self.generated_enums.items():
+            tolua += e.generate_tolua(indent_level + 1)
+
+        # write class structs
+        for name, s in self.generated_structs.items():
+            tolua += s.generate_tolua(indent_level + 1)
+
+        # end of class
+        tolua += "\t" * indent_level
+        tolua += "}"
+        if self.is_typedef:
+            tolua += " " + self.class_name
+        tolua += ";\n"
+
+        # final string
+        return tolua
 
     def visit_node(self, node):
         # visit all children
@@ -856,9 +969,8 @@ class Generator(Closure):
             "-DANDROID",
             "-D_SIZE_T_DEFINED_"
         ]
-        self.include_namespaces = re.split(r"\s", config.get("DEFAULT", "include_namespaces")) if config.has_option("DEFAULT", "include_namespaces") else []
-        self.src_dirs = re.split(r"\s", config.get("DEFAULT", "src_dirs")) if config.has_option("DEFAULT", "src_dirs") else ["."]
-        self.exclude_dirs = re.split(r"\s", config.get("DEFAULT", "exclude_dirs")) if config.has_option("DEFAULT", "exclude_dirs") else ["."]
+        self.target_ns = config.get("DEFAULT", "target_ns").split(" ") if config.has_option("DEFAULT", "target_ns") else []
+        self.src_dirs = config.get("DEFAULT", "src_dirs").split(" ") if config.has_option("DEFAULT", "src_dirs") else ["."]
         self.dst_dir = config.get("DEFAULT", "dst_dir") if config.has_option("DEFAULT", "dst_dir") else "."
         exclude_classes = re.split(r"\s", config.get("DEFAULT", "exclude_classes")) if config.has_option("DEFAULT", "exclude_classes") else []
         self.exclude_classes_regex = [re.compile(x) for x in exclude_classes]
@@ -866,11 +978,6 @@ class Generator(Closure):
         self.include_classes_regex = [re.compile(x) for x in include_classes]
         ignore_structs = re.split(r"\s", config.get("DEFAULT", "ignore_structs")) if config.has_option("DEFAULT", "ignore_structs") else []
         self.ignore_structs = [re.compile(x) for x in ignore_structs]
-        self.target_module = config.get("DEFAULT", "target_module") if config.has_option("DEFAULT", "target_module") else None
-        self.hfile_path = ""
-        self.cppfile_path = ""
-        self.headers = []
-        self.target_module_fullname = os.path.splitext(os.path.basename(self.conf))[0]
 
     def is_class_excluded(self, name):
         if len(self.exclude_classes_regex) <= 0:
@@ -894,7 +1001,7 @@ class Generator(Closure):
                 is_targeted_class = False
                 qn = get_qualified_name(node)
                 ns = get_qualified_namespace(node)
-                ns_matched = len(ns) <= 0 or ns in self.include_namespaces
+                ns_matched = len(ns) <= 0 or ns in self.target_ns
                 name_matched = self.is_class_included(node.displayname) or not self.is_class_excluded(node.displayname)
                 is_targeted_class = ns_matched and name_matched
 
@@ -940,20 +1047,10 @@ class Generator(Closure):
     @staticmethod
     def process_dir(args, dirname, filenames):
         _self = args
-
-        # check excluded dir
-        absdir = os.path.abspath(dirname)
-        for d in _self.exclude_dirs:
-            abs_exclude = os.path.abspath(d)
-            if absdir.startswith(abs_exclude):
-                return
-
-        # process files under this path
         for f in filenames:
             # if file is header, and not hidden, process it
             filepath = os.path.join(dirname, f)
-            filename = os.path.basename(filepath)
-            if os.path.isfile(filepath) and not filename.startswith(".") and not filename.startswith("lua_"):
+            if os.path.isfile(filepath) and not os.path.basename(filepath).startswith("."):
                 ext = os.path.splitext(filepath)[1][1:]
                 if ext == "h":
                     tu = _self.clang.parse(filepath, _self.clang_args)
@@ -963,9 +1060,6 @@ class Generator(Closure):
                     if not _self.verify_source(tu):
                         print "%s contains errors, skip it" % filepath
                         continue
-
-                    # record this header
-                    _self.headers.append(filepath)
 
                     # visit from top node
                     _self.visit_node(tu.cursor)
@@ -1022,7 +1116,7 @@ class Generator(Closure):
                     if m.pure_virtual:
                         puref[m] = m
 
-    def generate_code(self):
+    def generate_tolua(self):
         # ensure dst dir existence
         if not os.path.exists(self.dst_dir):
             os.makedirs(self.dst_dir)
@@ -1035,39 +1129,25 @@ class Generator(Closure):
         for name, c in self.generated_classes.items():
             self.check_class_abstract(c, c.parents)
 
-        # generate header file
-        self.hfile_path = os.path.join(self.dst_dir, "lua_" + self.target_module_fullname + "_auto.h")
-        hfile = open(self.hfile_path, "w")
-        self.cppfile_path = os.path.join(self.dst_dir, "lua_" + self.target_module_fullname + "_auto.cpp")
-        cppfile = open(self.cppfile_path, "w")
-
-        # load layout head template
-        layout_h = Template(file=os.path.join("templates", "layout_head.h"),
-                            searchList=[self])
-        layout_c = Template(file=os.path.join("templates", "layout_head.c"),
-                            searchList=[self])
-
-        # write header
-        hfile.write(str(layout_h))
-        cppfile.write(str(layout_c))
+        # generate tolua file
+        confname = os.path.basename(self.conf)
+        dstpath = os.path.join(self.dst_dir, os.path.splitext(confname)[0] + ".tolua")
+        dstfile = open(dstpath, "w")
 
         # write classes
         for name, c in self.generated_classes.items():
-            c.generate_code(hfile, cppfile, self)
+            dstfile.write(c.generate_tolua())
 
-        # load layout footer template
-        layout_h = Template(file=os.path.join("templates", "layout_foot.h"),
-                            searchList=[self])
-        layout_c = Template(file=os.path.join("templates", "layout_foot.c"),
-                            searchList=[self])
+        # write global enums
+        for name, e in self.generated_enums.items():
+            dstfile.write(e.generate_tolua())
 
-        # write footer
-        hfile.write(str(layout_h))
-        cppfile.write(str(layout_c))
+        # write global structs
+        for name, s in self.generated_structs.items():
+            dstfile.write(s.generate_tolua())
 
         # close
-        hfile.close()
-        cppfile.close()
+        dstfile.close()
 
     def is_ccobject_type(self, nc):
         if nc.qualified_name == "cocos2d::CCObject":
@@ -1076,6 +1156,31 @@ class Generator(Closure):
             if self.is_ccobject_type(pc):
                 return True
         return False
+
+    def generate_ccobject_types(self):
+        # ensure dst dir existence
+        if not os.path.exists(self.dst_dir):
+            os.makedirs(self.dst_dir)
+
+        # generate tolua file
+        confname = os.path.basename(self.conf)
+        dstpath = os.path.join(self.dst_dir, os.path.splitext(confname)[0] + "_classes.lua")
+        dstfile = open(dstpath, "w")
+
+        # start
+        dstfile.write("local CCObjectTypes = {\n")
+
+        # write classes
+        for name, c in self.generated_classes.items():
+            if self.is_ccobject_type(c):
+                dstfile.write('\t"' + c.class_name + '",\n')
+
+        # end
+        dstfile.write("}\n")
+        dstfile.write("return CCObjectTypes\n")
+
+        # close
+        dstfile.close()
 
     def print_diag(self, diagnostics):
         print("====\nErrors in parsing headers:")
@@ -1107,7 +1212,8 @@ def main():
 
     # generate
     g = Generator(sys.argv[1])
-    g.generate_code()
+    g.generate_tolua()
+    g.generate_ccobject_types();
 
 if __name__ == '__main__':
     main()
