@@ -420,7 +420,6 @@ class NativeOverloadedFunction(object):
     def __init__(self, func_array):
         self.implementations = func_array
         self.func_name = func_array[0].func_name
-        self.signature_name = self.func_name
         self.min_args = sys.maxint
         self.is_constructor = False
         for m in func_array:
@@ -442,13 +441,13 @@ class NativeFunction(object):
         self.is_constructor = False
         self.is_destructor = False
         self.func_name = node.spelling
-        self.signature_name = self.func_name
         self.arguments = []
         self.argumtntTips = [arg.spelling for arg in node.get_arguments()]
         self.static = node.kind == CursorKind.CXX_METHOD and node.is_static_method()
         self.implementations = []
         self.not_supported = False
         self.is_override = False
+        self.overload = False
         self.ret_type = NativeType.from_type(node.result_type)
         self.min_args = 0
         self.virtual = node.kind == CursorKind.CXX_METHOD and node.is_virtual_method()
@@ -534,6 +533,18 @@ class NativeFunction(object):
 
             # name
             tolua += " " + self.func_name
+
+            # if overloaded, append arg sig
+            if self.overload:
+                tolua += " @ " + self.func_name
+                for arg in self.arguments:
+                    if arg.is_pointer:
+                        tolua += "p"
+                    elif arg.is_ref:
+                        tolua += "r"
+                    parts = arg.name.split(" ")
+                    for part in parts:
+                        tolua += part[0]
 
         # args
         tolua += "("
@@ -865,11 +876,13 @@ class NativeClass(Closure):
                         if not self.override_methods.has_key(nf.func_name):
                             self.override_methods[nf.func_name] = nf
                         else:
+                            nf.overload = True
                             previous_nf = self.override_methods[nf.func_name]
                             if isinstance(previous_nf, NativeOverloadedFunction):
                                 previous_nf.append(nf)
                             else:
                                 self.override_methods[nf.func_name] = NativeOverloadedFunction([nf, previous_nf])
+                                previous_nf.overload = True
                         return False
 
                 # non-override function
@@ -877,20 +890,24 @@ class NativeClass(Closure):
                     if not self.static_methods.has_key(nf.func_name):
                         self.static_methods[nf.func_name] = nf
                     else:
+                        nf.overload = True
                         previous_nf = self.static_methods[nf.func_name]
                         if isinstance(previous_nf, NativeOverloadedFunction):
                             previous_nf.append(nf)
                         else:
                             self.static_methods[nf.func_name] = NativeOverloadedFunction([nf, previous_nf])
+                            previous_nf.overload = True
                 else:
                     if not self.methods.has_key(nf.func_name):
                         self.methods[nf.func_name] = nf
                     else:
+                        nf.overload = True
                         previous_nf = self.methods[nf.func_name]
                         if isinstance(previous_nf, NativeOverloadedFunction):
                             previous_nf.append(nf)
                         else:
                             self.methods[nf.func_name] = NativeOverloadedFunction([nf, previous_nf])
+                            previous_nf.overload = True
         elif node.kind == CursorKind.CONSTRUCTOR and self.current_access_specifier == AccessSpecifierKind.PUBLIC:                # if function is not supported, skip it
             # create native function
             nf = NativeFunction(node)
@@ -905,12 +922,14 @@ class NativeClass(Closure):
             if not self.methods.has_key('constructor'):
                 self.methods['constructor'] = nf
             else:
+                nf.overload = True
                 previous_nf = self.methods['constructor']
                 if isinstance(previous_nf, NativeOverloadedFunction):
                     previous_nf.append(nf)
                 else:
                     nf = NativeOverloadedFunction([nf, previous_nf])
                     nf.is_constructor = True
+                    previous_nf.overload = True
                     self.methods['constructor'] = nf
         elif node.kind == CursorKind.DESTRUCTOR:
             nf = NativeFunction(node)

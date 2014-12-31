@@ -68,10 +68,10 @@ class CCTMXLayer : public CCNodeRGBA {
 	static CCTMXLayer* create(int layerIndex, CCTMXMapInfo* mapInfo);
 	const int* getGids();
 	int getTileWidth();
-	void setTileAt(int gid, CCPoint loc);
-	void setTileAt(int gid, int x, int y);
-	CCPoint getPositionAt(CCPoint loc);
-	CCPoint getPositionAt(int x, int y);
+	void setTileAt @ setTileAtiC(int gid, CCPoint loc);
+	void setTileAt @ setTileAtiii(int gid, int x, int y);
+	CCPoint getPositionAt @ getPositionAtC(CCPoint loc);
+	CCPoint getPositionAt @ getPositionAtii(int x, int y);
 	CCTMXMapInfo* getMapInfo();
 	int getMinGid();
 	float getVertexZ();
@@ -80,8 +80,8 @@ class CCTMXLayer : public CCNodeRGBA {
 	void setVertexZ(float var);
 	int getMaxGid();
 	void setAlphaFuncValue(float var);
-	int getGidAt(CCPoint loc);
-	int getGidAt(int x, int y);
+	int getGidAt @ getGidAtC(CCPoint loc);
+	int getGidAt @ getGidAtii(int x, int y);
 	void setLayerWidth(int var);
 	int getTileHeight();
 	void removeTile(CCSprite* sprite);
@@ -90,14 +90,14 @@ class CCTMXLayer : public CCNodeRGBA {
 	CCSize getLayerSize();
 	void setMinGid(int var);
 	int getLayerHeight();
-	void updateTileAt(int gid, CCPoint loc);
-	void updateTileAt(int gid, int x, int y);
-	void removeTileAt(CCPoint loc);
-	void removeTileAt(int x, int y);
+	void updateTileAt @ updateTileAtiC(int gid, CCPoint loc);
+	void updateTileAt @ updateTileAtiii(int gid, int x, int y);
+	void removeTileAt @ removeTileAtC(CCPoint loc);
+	void removeTileAt @ removeTileAtii(int x, int y);
 	void setUseAutomaticVertexZ(bool var);
 	void setAntiAliasTexParameters();
-	void setTileColorAt(ccColor4B c, CCPoint loc);
-	void setTileColorAt(ccColor4B c, int x, int y);
+	void setTileColorAt @ setTileColorAtcC(ccColor4B c, CCPoint loc);
+	void setTileColorAt @ setTileColorAtcii(ccColor4B c, int x, int y);
 	const int* copyGids();
 	ccPosition getTileCoordinateAt(float x, float y);
 	bool isUseAutomaticVertexZ();
@@ -107,8 +107,8 @@ class CCTMXLayer : public CCNodeRGBA {
 	void setTileHeight(int var);
 	string getProperty(const string& key);
 	void setMaxGid(int var);
-	CCSprite* tileAt(CCPoint loc);
-	CCSprite* tileAt(int x, int y);
+	CCSprite* tileAt @ tileAtC(CCPoint loc);
+	CCSprite* tileAt @ tileAtii(int x, int y);
 	void clearUseAutomaticVertexZ();
 	void setLayerHeight(int var);
 	int getLayerWidth();
@@ -221,9 +221,9 @@ class CCFileDownloader : public CCObject {
 	bool isDownloading();
 	const CCArray& getDownloadEntries();
 	const string& getFolder();
-	void addFile(const string& url, const string& dstFilename, bool append);
-	void addFile(const string& url, bool append);
-	void addFile(const string& url, const string& dstFilename, unsigned long sizeHint, bool append);
+	void addFile @ addFilercsrcsb(const string& url, const string& dstFilename, bool append);
+	void addFile @ addFilercsb(const string& url, bool append);
+	void addFile @ addFilercsrcsulb(const string& url, const string& dstFilename, unsigned long sizeHint, bool append);
 	void setDownloading(bool var);
 	const CCArray& getFailedEntries();
 	void markDownloading();
@@ -251,8 +251,8 @@ class ZOrderFrame : public Frame {
 class CCSAXParser {
 	static void textHandler(void* ctx, const unsigned char* name, int len);
 	static void endElement(void* ctx, const unsigned char* name);
-	bool parse(const char* pszFile);
-	bool parse(const char* pXMLData, unsigned int uDataLength);
+	bool parse @ parsepcc(const char* pszFile);
+	bool parse @ parsepccui(const char* pXMLData, unsigned int uDataLength);
 	bool init(const char* pszEncoding);
 	~CCSAXParser();
 	void setDelegator(CCSAXDelegator* pDelegator);
@@ -351,12 +351,12 @@ class CCTexture2D : public CCObject {
 	unsigned int getPixelsHigh();
 	void drawInRect(const CCRect& rect);
 	void setTexParameters(ccTexParams* texParams);
-	unsigned int bitsPerPixelForFormat(CCTexture2DPixelFormat format);
-	unsigned int bitsPerPixelForFormat();
+	unsigned int bitsPerPixelForFormat @ bitsPerPixelForFormatC(CCTexture2DPixelFormat format);
+	unsigned int bitsPerPixelForFormat @ bitsPerPixelForFormat();
 	bool initWithData(const void* data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const CCSize& contentSize);
 	unsigned int getName();
-	bool initWithString(const char* text, const char* fontName, float fontSize);
-	bool initWithString(const char* text, const char* fontName, float fontSize, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment);
+	bool initWithString @ initWithStringpccpccf(const char* text, const char* fontName, float fontSize);
+	bool initWithString @ initWithStringpccpccfrcCCC(const char* text, const char* fontName, float fontSize, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment);
 	void setMaxT(float var);
 	~CCTexture2D();
 	int getRealLength();
@@ -396,9 +396,9 @@ class CCParticleBatchNode : public CCNode, public CCTextureProtocol {
 	static CCParticleBatchNode* create(const char* fileImage, unsigned int capacity);
 	static CCParticleBatchNode* createWithTexture(CCTexture2D* tex, unsigned int capacity);
 	void removeChildAtIndex(unsigned int index, bool doCleanup);
-	void addChild(CCNode* child, int zOrder);
-	void addChild(CCNode* child);
-	void addChild(CCNode* child, int zOrder, int tag);
+	void addChild @ addChildpCi(CCNode* child, int zOrder);
+	void addChild @ addChildpC(CCNode* child);
+	void addChild @ addChildpCii(CCNode* child, int zOrder, int tag);
 	void draw();
 	void setTexture(CCTexture2D* texture);
 	bool initWithFile(const char* fileImage, unsigned int capacity);
@@ -439,8 +439,8 @@ class CCPoint {
 	CCPoint normalize();
 	CCPoint project(const CCPoint& other);
 	float getLengthSq();
-	float getAngle(const CCPoint& other);
-	float getAngle();
+	float getAngle @ getAnglercC(const CCPoint& other);
+	float getAngle @ getAngle();
 	CCPoint lerp(const CCPoint& other, float alpha);
 	float getLength();
 	void setPoint(float x, float y);
@@ -535,8 +535,8 @@ class CCShow : public CCActionInstant {
 	void update(float time);
 };
 class CCLayerClip : public CCLayerColor {
-	static CCLayerClip* create(const ccColor4B& color);
-	static CCLayerClip* create();
+	static CCLayerClip* create @ creatercc(const ccColor4B& color);
+	static CCLayerClip* create @ create();
 	void markClipEnabled();
 	bool isClipEnabled();
 	void setClipRect(const CCRect& var);
@@ -592,8 +592,8 @@ class CCParticleSun : public CCParticleSystemQuad {
 };
 class UICCLabelAtlas : public CCLabelAtlas {
 	static UICCLabelAtlas* create();
-	void setProperty(const string& s, CCTexture2D* texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
-	void setProperty(const string& s, const string& charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+	void setProperty @ setPropertyrcspCuiuiui(const string& s, CCTexture2D* texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+	void setProperty @ setPropertyrcsrcsuiuiui(const string& s, const string& charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
 	void updateDisplayedOpacity(unsigned char opacity);
 	void draw();
 	~UICCLabelAtlas();
@@ -631,9 +631,9 @@ class CCKeypadHandler : public CCObject {
 };
 class CCPacket : public CCObject {
 	static CCPacket* createRawPacket(const char* buf, unsigned long len, int algorithm);
-	static CCPacket* createStandardPacket(const string& magic, int command, CCJSONObject* json, int algorithm);
-	static CCPacket* createStandardPacket(const char* buf, unsigned long len);
-	static CCPacket* createStandardPacket(const string& magic, int command, CCJSONObject* json, int protocolVersion, int serverVersion, int algorithm);
+	static CCPacket* createStandardPacket @ createStandardPacketrcsipCi(const string& magic, int command, CCJSONObject* json, int algorithm);
+	static CCPacket* createStandardPacket @ createStandardPacketpccul(const char* buf, unsigned long len);
+	static CCPacket* createStandardPacket @ createStandardPacketrcsipCiii(const string& magic, int command, CCJSONObject* json, int protocolVersion, int serverVersion, int algorithm);
 	bool getRaw();
 	void setBuffer(char* var);
 	Header& getHeader();
@@ -678,21 +678,21 @@ class CCSecureUserDefault {
 	static void purge();
 	static CCSecureUserDefault* getInstance();
 	void setIntegerForKey(const char* pKey, int value);
-	float getFloatForKey(const char* pKey, float defaultValue);
-	float getFloatForKey(const char* pKey);
-	bool getBoolForKey(const char* pKey, bool defaultValue);
-	bool getBoolForKey(const char* pKey);
+	float getFloatForKey @ getFloatForKeypccf(const char* pKey, float defaultValue);
+	float getFloatForKey @ getFloatForKeypcc(const char* pKey);
+	bool getBoolForKey @ getBoolForKeypccb(const char* pKey, bool defaultValue);
+	bool getBoolForKey @ getBoolForKeypcc(const char* pKey);
 	void setDoubleForKey(const char* pKey, double value);
 	void setFloatForKey(const char* pKey, float value);
 	~CCSecureUserDefault();
-	string getStringForKey(const char* pKey, const string& defaultValue);
-	string getStringForKey(const char* pKey);
+	string getStringForKey @ getStringForKeypccrcs(const char* pKey, const string& defaultValue);
+	string getStringForKey @ getStringForKeypcc(const char* pKey);
 	void setStringForKey(const char* pKey, const string& value);
 	void flush();
-	int getIntegerForKey(const char* pKey, int defaultValue);
-	int getIntegerForKey(const char* pKey);
-	double getDoubleForKey(const char* pKey, double defaultValue);
-	double getDoubleForKey(const char* pKey);
+	int getIntegerForKey @ getIntegerForKeypcci(const char* pKey, int defaultValue);
+	int getIntegerForKey @ getIntegerForKeypcc(const char* pKey);
+	double getDoubleForKey @ getDoubleForKeypccd(const char* pKey, double defaultValue);
+	double getDoubleForKey @ getDoubleForKeypcc(const char* pKey);
 	void setBoolForKey(const char* pKey, bool value);
 };
 class CCSkewBy : public CCSkewTo {
@@ -735,17 +735,54 @@ class CCAssetInputStream : public CCObject {
 	bool open();
 	unsigned long getPosition();
 };
+class CCDatabase : public CCObject {
+	static CCDatabase* create(string path);
+	static bool isThreadSafe();
+	static string sqliteLibVersion();
+	CCResultSet* getTableSchema(string tableName);
+	void setBusyRetryTimeout(int var);
+	void clearInUse();
+	CCResultSet* getSchema();
+	bool databaseOpened();
+	bool close();
+	~CCDatabase();
+	bool open(int flags);
+	void setVersion(int v);
+	const string& getDatabasePath();
+	bool hadError();
+	bool executeSQL(const void* data, unsigned long length);
+	void setInUse(bool var);
+	void markInUse();
+	void setShouldCacheStatements(bool value);
+	int getBusyRetryTimeout();
+	bool shouldCacheStatements();
+	bool rollback();
+	int lastErrorCode();
+	bool columnExists(string tableName, string columnName);
+	long long lastInsertRowId();
+	bool beginTransaction();
+	string lastErrorMessage();
+	int getVersion();
+	bool isInTransaction();
+	bool goodConnection();
+	bool tableExists(string tableName);
+	void clearCachedStatements();
+	bool commit();
+	bool beginDeferredTransaction();
+	int changes();
+	bool isInUse();
+};
 class CCPrettyPrinter : public CCDataVisitor {
 	void clear();
 	void visitObject(const CCObject* p);
-	void visit(const CCInteger* p);
-	void visit(const CCBool* p);
-	void visit(const CCFloat* p);
-	void visit(const CCDouble* p);
-	void visit(const CCString* p);
-	void visit(const CCArray* p);
-	void visit(const CCDictionary* p);
-	void visit(const CCSet* p);
+	void visit @ visitpcC(const CCInteger* p);
+	void visit @ visitpcC(const CCBool* p);
+	void visit @ visitpcC(const CCFloat* p);
+	void visit @ visitpcC(const CCDouble* p);
+	void visit @ visitpcC(const CCString* p);
+	void visit @ visitpcC(const CCArray* p);
+	void visit @ visitpcC(const CCDictionary* p);
+	void visit @ visitpcC(const CCSet* p);
 	string getResult();
 };
 class CCGridAction : public CCActionInterval {
@@ -764,8 +801,8 @@ class CCPlace : public CCActionInstant {
 	void update(float time);
 };
 class CCColliderDetector : public CCObject {
-	static CCColliderDetector* create(CCBone* bone);
-	static CCColliderDetector* create();
+	static CCColliderDetector* create @ createpC(CCBone* bone);
+	static CCColliderDetector* create @ create();
 	CCBone* getBone();
 	void addContourData(CCContourData* contourData);
 	void addContourDataList(CCArray* contourDataList);
@@ -774,8 +811,8 @@ class CCColliderDetector : public CCObject {
 	void updateTransform(CCAffineTransform& t);
 	~CCColliderDetector();
 	void removeAll();
-	bool init(CCBone* bone);
-	bool init();
+	bool init @ initpC(CCBone* bone);
+	bool init @ init();
 	void removeContourData(CCContourData* contourData);
 	void setBone(CCBone* var);
 	CCArray* getColliderBodyList();
@@ -814,9 +851,9 @@ class CCMenu : public CCLayerRGBA {
 	static CCMenu* createWithArray(CCArray* pArrayOfItems);
 	static CCMenu* createWithItem(CCMenuItem* item);
 	bool initWithArray(CCArray* pArrayOfItems);
-	void addChild(CCNode* child, int zOrder);
-	void addChild(CCNode* child);
-	void addChild(CCNode* child, int zOrder, int tag);
+	void addChild @ addChildpCi(CCNode* child, int zOrder);
+	void addChild @ addChildpC(CCNode* child);
+	void addChild @ addChildpCii(CCNode* child, int zOrder, int tag);
 	void alignItemsVertically();
 	bool ccTouchBegan(CCTouch* touch, CCEvent* event);
 	void ccTouchEnded(CCTouch* touch, CCEvent* event);
@@ -910,8 +947,8 @@ class TextureFrame : public Frame {
 };
 class CCParallaxNode : public CCNode {
 	static CCParallaxNode* create();
-	void addChild(CCNode* child, unsigned int zOrder, int tag);
-	void addChild(CCNode* child, unsigned int z, const CCPoint& parallaxRatio, const CCPoint& positionOffset);
+	void addChild @ addChildpCuii(CCNode* child, unsigned int zOrder, int tag);
+	void addChild @ addChildpCuircCrcC(CCNode* child, unsigned int z, const CCPoint& parallaxRatio, const CCPoint& positionOffset);
 	void visit();
 	void removeAllChildrenWithCleanup(bool cleanup);
 	~CCParallaxNode();
@@ -1071,8 +1108,8 @@ class ActionManager : public CCObject {
 	static ActionManager* shareManager();
 	ActionObject* getActionByName(const char* jsonName, const char* actionName);
 	~ActionManager();
-	ActionObject* playActionByName(const char* jsonName, const char* actionName, CCCallFunc* func);
-	ActionObject* playActionByName(const char* jsonName, const char* actionName);
+	ActionObject* playActionByName @ playActionByNamepccpccpC(const char* jsonName, const char* actionName, CCCallFunc* func);
+	ActionObject* playActionByName @ playActionByNamepccpcc(const char* jsonName, const char* actionName);
 	void releaseActions();
 };
 class CCActionInstant : public CCFiniteTimeAction {
@@ -1103,8 +1140,8 @@ class CCComAudio : public CCComponent {
 	void setBackgroundMusicVolume(float volume);
 	void end();
 	bool isEnabled();
-	void stopBackgroundMusic();
-	void stopBackgroundMusic(bool bReleaseData);
+	void stopBackgroundMusic @ stopBackgroundMusic();
+	void stopBackgroundMusic @ stopBackgroundMusicb(bool bReleaseData);
 	~CCComAudio();
 	bool isBackgroundMusicPlaying();
 	bool init();
@@ -1112,12 +1149,12 @@ class CCComAudio : public CCComponent {
 	void pauseAllEffects();
 	void setEnabled(bool b);
 	void preloadBackgroundMusic(const char* pszFilePath);
-	void playBackgroundMusic(const char* pszFilePath);
-	void playBackgroundMusic(const char* pszFilePath, bool bLoop);
-	void playBackgroundMusic();
-	unsigned int playEffect(const char* pszFilePath);
-	unsigned int playEffect(const char* pszFilePath, bool bLoop);
-	unsigned int playEffect();
+	void playBackgroundMusic @ playBackgroundMusicpcc(const char* pszFilePath);
+	void playBackgroundMusic @ playBackgroundMusicpccb(const char* pszFilePath, bool bLoop);
+	void playBackgroundMusic @ playBackgroundMusic();
+	unsigned int playEffect @ playEffectpcc(const char* pszFilePath);
+	unsigned int playEffect @ playEffectpccb(const char* pszFilePath, bool bLoop);
+	unsigned int playEffect @ playEffect();
 	void resumeAllEffects();
 	void setLoop(bool bLoop);
 	void unloadEffect(const char* pszFilePath);
@@ -1185,8 +1222,8 @@ class CCAFCSprite : public CCNodeRGBA, public CCBlendProtocol {
 	void setFlipX(bool flipX);
 	CCPoint getFrameOffset();
 	int getFrameCount();
-	void playAnimation(int index, int mappingTag);
-	void playAnimation(int index, CCAFCClipMapping* mapping);
+	void playAnimation @ playAnimationii(int index, int mappingTag);
+	void playAnimation @ playAnimationipC(int index, CCAFCClipMapping* mapping);
 	bool isReverse();
 	int getCurrentAnimationIndex();
 	CCAFCClipMapping* getClipMappingByTag(int tag);
@@ -1312,8 +1349,8 @@ class CCAssetOutputStream : public CCObject {
 	bool open();
 	const string& getPath();
 	~CCAssetOutputStream();
-	int write(const int* data, unsigned long len);
-	int write(const char* data, unsigned long len);
+	int write @ writepciul(const int* data, unsigned long len);
+	int write @ writepccul(const char* data, unsigned long len);
 	void close();
 	unsigned long seek(int offset, int mode);
 	unsigned long getPosition();
@@ -1376,8 +1413,8 @@ class CCLocale : public CCObject {
 	~CCLocale();
 };
 class CCJSONParser {
-	static CCObject* load(const string& path);
-	static CCObject* load(const char* json, unsigned long length);
+	static CCObject* load @ loadrcs(const string& path);
+	static CCObject* load @ loadpccul(const char* json, unsigned long length);
 };
 class UIScrollInterface {
 	~UIScrollInterface();
@@ -1419,8 +1456,8 @@ class CCScroller : public CCObject {
 	bool isFinished();
 	void setScrollFriction(float friction);
 	float getCurrVelocity();
-	void startScroll(float startX, float startY, float dx, float dy, int duration);
-	void startScroll(float startX, float startY, float dx, float dy);
+	void startScroll @ startScrollffffi(float startX, float startY, float dx, float dy, int duration);
+	void startScroll @ startScrollffff(float startX, float startY, float dx, float dy);
 	~CCScroller();
 	float getStartY();
 	float getStartX();
@@ -1507,9 +1544,9 @@ class CCLayer : public CCNode, public CCTouchDelegate, public CCAccelerometerDel
 	void registerScriptKeypadHandler(int nHandler);
 };
 class CCJSONArray : public CCObject {
-	static CCJSONArray* create(const char* json, unsigned long length);
-	static CCJSONArray* create();
-	static CCJSONArray* create(const string& path);
+	static CCJSONArray* create @ createpccul(const char* json, unsigned long length);
+	static CCJSONArray* create @ create();
+	static CCJSONArray* create @ creatercs(const string& path);
 	void addArray(CCJSONArray* ja);
 	void addObject(CCJSONObject* jo);
 	void addDouble(double d);
@@ -1533,8 +1570,8 @@ class CCJSONArray : public CCObject {
 	void addFloat(float f);
 };
 class CCTurnOffTiles : public CCTiledGrid3DAction {
-	static CCTurnOffTiles* create(float duration, const CCSize& gridSize, unsigned int seed);
-	static CCTurnOffTiles* create(float duration, const CCSize& gridSize);
+	static CCTurnOffTiles* create @ createfrcCui(float duration, const CCSize& gridSize, unsigned int seed);
+	static CCTurnOffTiles* create @ createfrcC(float duration, const CCSize& gridSize);
 	void turnOnTile(const CCPoint& pos);
 	void startWithTarget(CCNode* pTarget);
 	void turnOffTile(const CCPoint& pos);
@@ -1639,9 +1676,9 @@ class CCSet : public CCObject {
 class CCSpriteFrameCache : public CCObject {
 	static void purgeSharedSpriteFrameCache();
 	static CCSpriteFrameCache* sharedSpriteFrameCache();
-	void addSpriteFramesWithFile(const char* plist, const char* textureFileName);
-	void addSpriteFramesWithFile(const char* pszPlist);
-	void addSpriteFramesWithFile(const char* pszPlist, CCTexture2D* pobTexture);
+	void addSpriteFramesWithFile @ addSpriteFramesWithFilepccpcc(const char* plist, const char* textureFileName);
+	void addSpriteFramesWithFile @ addSpriteFramesWithFilepcc(const char* pszPlist);
+	void addSpriteFramesWithFile @ addSpriteFramesWithFilepccpC(const char* pszPlist, CCTexture2D* pobTexture);
 	void addSpriteFrame(CCSpriteFrame* pobFrame, const char* pszFrameName);
 	CCSpriteFrame* spriteFrameByName(const char* pszName);
 	void removeUnusedSpriteFrames();
@@ -1711,11 +1748,11 @@ class CCDirectorDelegate {
 };
 class CCNode : public CCObject {
 	static CCNode* create();
-	void addChild(CCNode* child, int zOrder);
-	void addChild(CCNode* child);
-	void addChild(CCNode* child, int zOrder, int tag);
-	bool removeComponent(CCComponent* pComponent);
-	bool removeComponent(const char* pName);
+	void addChild @ addChildpCi(CCNode* child, int zOrder);
+	void addChild @ addChildpC(CCNode* child);
+	void addChild @ addChildpCii(CCNode* child, int zOrder, int tag);
+	bool removeComponent @ removeComponentpC(CCComponent* pComponent);
+	bool removeComponent @ removeComponentpcc(const char* pName);
 	CCAffineTransform nodeToWorldTransform();
 	void removeAllComponents();
 	CCGLProgram* getShaderProgram();
@@ -1733,8 +1770,8 @@ class CCNode : public CCObject {
 	void unregisterScriptHandler();
 	int getTag();
 	void onExit();
-	void removeChild(CCNode* child, bool cleanup);
-	void removeChild(CCNode* child);
+	void removeChild @ removeChildpCb(CCNode* child, bool cleanup);
+	void removeChild @ removeChildpC(CCNode* child);
 	CCPoint convertToWorldSpace(const CCPoint& nodePoint);
 	void setSkewX(float fSkewX);
 	void setSkewY(float fSkewY);
@@ -1753,8 +1790,8 @@ class CCNode : public CCObject {
 	CCGridBase* getGrid();
 	unsigned int numberOfRunningActions();
 	void removeFromParentAndCleanup(bool cleanup);
-	void setPosition(float x, float y);
-	void setPosition(const CCPoint& position);
+	void setPosition @ setPositionff(float x, float y);
+	void setPosition @ setPositionrcC(const CCPoint& position);
 	void stopActionByTag(int tag);
 	void reorderChild(CCNode* child, int zOrder);
 	void setGLServerState(ccGLServerState glServerState);
@@ -1793,20 +1830,20 @@ class CCNode : public CCObject {
 	CCRect boundingBox();
 	void setContentSize(const CCSize& contentSize);
 	void setActionManager(CCActionManager* actionManager);
-	void getPosition(float* x, float* y);
-	const CCPoint& getPosition();
+	void getPosition @ getPositionpfpf(float* x, float* y);
+	const CCPoint& getPosition @ getPosition();
 	bool isRunning();
 	CCNode* getParent();
 	float getPositionY();
 	float getPositionX();
-	void removeChildByTag(int tag, bool cleanup);
-	void removeChildByTag(int tag);
+	void removeChildByTag @ removeChildByTagib(int tag, bool cleanup);
+	void removeChildByTag @ removeChildByTagi(int tag);
 	void setVisible(bool visible);
 	void pauseSchedulerAndActions();
 	float getVertexZ();
 	void _setZOrder(int z);
-	void setScale(float fScaleX, float fScaleY);
-	void setScale(float scale);
+	void setScale @ setScaleff(float fScaleX, float fScaleY);
+	void setScale @ setScalef(float scale);
 	CCNode* getChildByTag(int tag);
 	void setOrderOfArrival(unsigned int uOrderOfArrival);
 	float getScaleY();
@@ -1869,10 +1906,10 @@ class ActionTimeline : public CCAction {
 	int getDuration();
 	void gotoFrameAndPause(int startIndex);
 	bool isPlaying();
-	void gotoFrameAndPlay(int startIndex, bool loop);
-	void gotoFrameAndPlay(int startIndex);
-	void gotoFrameAndPlay(int startIndex, int endIndex, bool loop);
-	void gotoFrameAndPlay(int startIndex, int endIndex, int currentFrameIndex, bool loop);
+	void gotoFrameAndPlay @ gotoFrameAndPlayib(int startIndex, bool loop);
+	void gotoFrameAndPlay @ gotoFrameAndPlayi(int startIndex);
+	void gotoFrameAndPlay @ gotoFrameAndPlayiib(int startIndex, int endIndex, bool loop);
+	void gotoFrameAndPlay @ gotoFrameAndPlayiiib(int startIndex, int endIndex, int currentFrameIndex, bool loop);
 	void clearFrameEventCallFunc();
 	void startWithTarget(CCNode* target);
 	ActionTimeline* reverse();
@@ -1882,9 +1919,9 @@ class ActionTimeline : public CCAction {
 	void setCurrentFrame(int frameIndex);
 };
 class CCLayerColor : public CCLayerRGBA, public CCBlendProtocol {
-	static CCLayerColor* create(const ccColor4B& color, float width, float height);
-	static CCLayerColor* create();
-	static CCLayerColor* create(const ccColor4B& color);
+	static CCLayerColor* create @ createrccff(const ccColor4B& color, float width, float height);
+	static CCLayerColor* create @ create();
+	static CCLayerColor* create @ creatercc(const ccColor4B& color);
 	void draw();
 	ccBlendFunc getBlendFunc();
 	void setColor(const ccColor3B& color);
@@ -1893,8 +1930,8 @@ class CCLayerColor : public CCLayerRGBA, public CCBlendProtocol {
 	void changeWidthAndHeight(float w, float h);
 	~CCLayerColor();
 	bool init();
-	bool initWithColor(const ccColor4B& color);
-	bool initWithColor(const ccColor4B& color, float width, float height);
+	bool initWithColor @ initWithColorrcc(const ccColor4B& color);
+	bool initWithColor @ initWithColorrccff(const ccColor4B& color, float width, float height);
 	void setOpacity(unsigned char opacity);
 	void setContentSize(const CCSize& var);
 	void changeHeight(float h);
@@ -1921,9 +1958,9 @@ class CCSchedulerScriptHandlerEntry : public CCScriptHandlerEntry {
 };
 class Widget : public CCNodeRGBA {
 	static Widget* create();
-	void addChild(CCNode* child, int zOrder);
-	void addChild(CCNode* child);
-	void addChild(CCNode* child, int zOrder, int tag);
+	void addChild @ addChildpCi(CCNode* child, int zOrder);
+	void addChild @ addChildpC(CCNode* child);
+	void addChild @ addChildpCii(CCNode* child, int zOrder, int tag);
 	CCNode* getVirtualRenderer();
 	const CCSize& getCustomSize();
 	void setActionTag(int tag);
@@ -1942,13 +1979,13 @@ class Widget : public CCNodeRGBA {
 	LayoutParameter* getLayoutParameter(LayoutParameterType type);
 	const ccColor3B& getColor();
 	bool isBright();
-	void updateSizeAndPosition(const CCSize& parentSize);
-	void updateSizeAndPosition();
+	void updateSizeAndPosition @ updateSizeAndPositionrcC(const CCSize& parentSize);
+	void updateSizeAndPosition @ updateSizeAndPosition();
 	SizeType getSizeType();
 	void onExit();
 	const CCPoint& getPositionPercent();
-	void removeChild(CCNode* child, bool cleanup);
-	void removeChild(CCNode* child);
+	void removeChild @ removeChildpCb(CCNode* child, bool cleanup);
+	void removeChild @ removeChildpC(CCNode* child);
 	void moveEvent();
 	void setSize(const CCSize& size);
 	void removeAllChildren();
@@ -1974,9 +2011,9 @@ class Widget : public CCNodeRGBA {
 	float getLeftInParent();
 	void setPositionPercent(const CCPoint& percent);
 	CCArray* getNodes();
-	void addNode(CCNode* node, int zOrder);
-	void addNode(CCNode* node);
-	void addNode(CCNode* node, int zOrder, int tag);
+	void addNode @ addNodepCi(CCNode* node, int zOrder);
+	void addNode @ addNodepC(CCNode* node);
+	void addNode @ addNodepCii(CCNode* node, int zOrder, int tag);
 	float getBottomInParent();
 	void ignoreContentAdaptWithSize(bool ignore);
 	void visit();
@@ -2051,9 +2088,9 @@ class CCLabelTTF : public CCGradientSprite, public CCLabelProtocol {
 	CCVerticalTextAlignment getVerticalAlignment();
 	void setLinkTarget(int index, CCCallFunc* func);
 	CCRect getImageBound(int index);
-	void setColor(const ccColor3B& tintColor, bool mustUpdateTexture);
-	void setColor(const ccColor3B& color3);
-	void setColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
+	void setColor @ setColorrccb(const ccColor3B& tintColor, bool mustUpdateTexture);
+	void setColor @ setColorrcc(const ccColor3B& color3);
+	void setColor @ setColorrccrccrcC(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
 	void setLinkPriority(int p);
 	void setDisplayTo(int to);
 	void setHorizontalAlignment(CCTextAlignment alignment);
@@ -2211,8 +2248,8 @@ class CCFileUtils : public TypeInfo {
 	void setPopupNotify(bool bNotify);
 };
 class CCMotionStreak : public CCNodeRGBA, public CCTextureProtocol {
-	static CCMotionStreak* create(float fade, float minSeg, float stroke, const ccColor3B& color, CCTexture2D* texture);
-	static CCMotionStreak* create(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path);
+	static CCMotionStreak* create @ createfffrccpC(float fade, float minSeg, float stroke, const ccColor3B& color, CCTexture2D* texture);
+	static CCMotionStreak* create @ createfffrccpcc(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path);
 	void reset();
 	void draw();
 	void setTexture(CCTexture2D* texture);
@@ -2224,8 +2261,8 @@ class CCMotionStreak : public CCNodeRGBA, public CCTextureProtocol {
 	void update(float delta);
 	~CCMotionStreak();
 	ccBlendFunc getBlendFunc();
-	bool initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, CCTexture2D* texture);
-	bool initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path);
+	bool initWithFade @ initWithFadefffrccpC(float fade, float minSeg, float stroke, const ccColor3B& color, CCTexture2D* texture);
+	bool initWithFade @ initWithFadefffrccpcc(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path);
 	bool isFastMode();
 	void setOpacityModifyRGB(bool bValue);
 	unsigned char getOpacity();
@@ -2242,8 +2279,8 @@ class AnchorPointFrame : public Frame {
 	CCPoint getAnchorPoint();
 };
 class CCClippingNode : public CCNode {
-	static CCClippingNode* create(CCNode* pStencil);
-	static CCClippingNode* create();
+	static CCClippingNode* create @ createpC(CCNode* pStencil);
+	static CCClippingNode* create @ create();
 	void onEnter();
 	void onExit();
 	void setInverted(bool bInverted);
@@ -2251,8 +2288,8 @@ class CCClippingNode : public CCNode {
 	void setStencil(CCNode* pStencil);
 	~CCClippingNode();
 	float getAlphaThreshold();
-	bool init(CCNode* pStencil);
-	bool init();
+	bool init @ initpC(CCNode* pStencil);
+	bool init @ init();
 	void onExitTransitionDidStart();
 	CCNode* getStencil();
 	void setAlphaThreshold(float fAlphaThreshold);
@@ -2453,8 +2490,8 @@ class CCArmatureDataManager : public CCObject {
 	CCDictionary* getAnimationDatas();
 	void removeAnimationData(const char* id);
 	void addArmatureData(const char* id, CCArmatureData* armatureData, const char* configFilePath);
-	void addArmatureFileInfo(const char* imagePath, const char* plistPath, const char* configFilePath);
-	void addArmatureFileInfo(const char* configFilePath);
+	void addArmatureFileInfo @ addArmatureFileInfopccpccpcc(const char* imagePath, const char* plistPath, const char* configFilePath);
+	void addArmatureFileInfo @ addArmatureFileInfopcc(const char* configFilePath);
 	void removeArmatureFileInfo(const char* configFilePath);
 	CCDictionary* getTextureDatas();
 	CCTextureData* getTextureData(const char* id);
@@ -2475,19 +2512,19 @@ class CCStopGrid : public CCActionInstant {
 	void startWithTarget(CCNode* pTarget);
 };
 class CCSpriteBatchNode : public CCNode, public CCTextureProtocol {
-	static CCSpriteBatchNode* create(const char* fileImage);
-	static CCSpriteBatchNode* create(const char* fileImage, unsigned int capacity);
-	static CCSpriteBatchNode* createWithTexture(CCTexture2D* tex);
-	static CCSpriteBatchNode* createWithTexture(CCTexture2D* tex, unsigned int capacity);
+	static CCSpriteBatchNode* create @ createpcc(const char* fileImage);
+	static CCSpriteBatchNode* create @ createpccui(const char* fileImage, unsigned int capacity);
+	static CCSpriteBatchNode* createWithTexture @ createWithTexturepC(CCTexture2D* tex);
+	static CCSpriteBatchNode* createWithTexture @ createWithTexturepCui(CCTexture2D* tex, unsigned int capacity);
 	void appendChild(CCSprite* sprite);
 	void reorderBatch(bool reorder);
 	CCTexture2D* getTexture();
 	void visit();
 	void insertQuadFromSprite(CCSprite* sprite, unsigned int index);
 	void setTexture(CCTexture2D* texture);
-	void addChild(CCNode* child, int zOrder);
-	void addChild(CCNode* child);
-	void addChild(CCNode* child, int zOrder, int tag);
+	void addChild @ addChildpCi(CCNode* child, int zOrder);
+	void addChild @ addChildpC(CCNode* child);
+	void addChild @ addChildpCii(CCNode* child, int zOrder, int tag);
 	void removeChildAtIndex(unsigned int index, bool doCleanup);
 	void removeSpriteFromAtlas(CCSprite* sprite);
 	CCSpriteBatchNode* addSpriteWithoutQuad(CCSprite* child, unsigned int z, int aTag);
@@ -2554,20 +2591,20 @@ class CCTransitionMoveInB : public CCTransitionMoveInL {
 class CCTMXLoader : public CCObject, public CCSAXDelegator {
 	static CCTMXLoader* create();
 	void textHandler(void* ctx, const char* s, int len);
-	CCTMXMapInfo* load(const char* tmxData, int length, const string& resourcePath);
-	CCTMXMapInfo* load(const string& tmxFile);
+	CCTMXMapInfo* load @ loadpccircs(const char* tmxData, int length, const string& resourcePath);
+	CCTMXMapInfo* load @ loadrcs(const string& tmxFile);
 	void endElement(void* ctx, const char* name);
 	~CCTMXLoader();
 };
 class CCTransitionZoomFlipX : public CCTransitionSceneOriented {
-	static CCTransitionZoomFlipX* create(float t, CCScene* s);
-	static CCTransitionZoomFlipX* create(float t, CCScene* s, tOrientation o);
+	static CCTransitionZoomFlipX* create @ createfpC(float t, CCScene* s);
+	static CCTransitionZoomFlipX* create @ createfpCt(float t, CCScene* s, tOrientation o);
 	~CCTransitionZoomFlipX();
 	void onEnter();
 };
 class CCTransitionZoomFlipY : public CCTransitionSceneOriented {
-	static CCTransitionZoomFlipY* create(float t, CCScene* s);
-	static CCTransitionZoomFlipY* create(float t, CCScene* s, tOrientation o);
+	static CCTransitionZoomFlipY* create @ createfpC(float t, CCScene* s);
+	static CCTransitionZoomFlipY* create @ createfpCt(float t, CCScene* s, tOrientation o);
 	~CCTransitionZoomFlipY();
 	void onEnter();
 };
@@ -2615,8 +2652,8 @@ class ActionRotationFrame : public ActionFrame {
 	float m_rotation;
 	void setRotation(float rotation);
 	~ActionRotationFrame();
-	CCActionInterval* getAction(float fDuration, ActionFrame* srcFrame);
-	CCActionInterval* getAction(float fDuration);
+	CCActionInterval* getAction @ getActionfpA(float fDuration, ActionFrame* srcFrame);
+	CCActionInterval* getAction @ getActionf(float fDuration);
 	float getRotation();
 };
 class CCParticleSnow : public CCParticleSystemQuad {
@@ -2634,23 +2671,23 @@ class CCShatteredTiles3D : public CCTiledGrid3DAction {
 };
 class CCVelocityTracker : public CCObject {
 	static CCVelocityTracker* create();
-	void addTouchBegan(const CCPoint& pos);
-	void addTouchBegan(CCTouch* event);
-	void computeCurrentVelocity(int units, float maxVelocity);
-	void computeCurrentVelocity(int units);
-	float getYVelocity(int id);
-	float getYVelocity();
+	void addTouchBegan @ addTouchBeganrcC(const CCPoint& pos);
+	void addTouchBegan @ addTouchBeganpC(CCTouch* event);
+	void computeCurrentVelocity @ computeCurrentVelocityif(int units, float maxVelocity);
+	void computeCurrentVelocity @ computeCurrentVelocityi(int units);
+	float getYVelocity @ getYVelocityi(int id);
+	float getYVelocity @ getYVelocity();
 	~CCVelocityTracker();
-	float getXVelocity(int id);
-	float getXVelocity();
-	void addTouchMoved(const CCPoint& pos);
-	void addTouchMoved(CCTouch* event);
+	float getXVelocity @ getXVelocityi(int id);
+	float getXVelocity @ getXVelocity();
+	void addTouchMoved @ addTouchMovedrcC(const CCPoint& pos);
+	void addTouchMoved @ addTouchMovedpC(CCTouch* event);
 };
 class CCSpriteFrame : public CCObject {
-	static CCSpriteFrame* create(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
-	static CCSpriteFrame* create(const char* filename, const CCRect& rect);
-	static CCSpriteFrame* createWithTexture(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
-	static CCSpriteFrame* createWithTexture(CCTexture2D* pobTexture, const CCRect& rect);
+	static CCSpriteFrame* create @ createpccrcCbrcCrcC(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
+	static CCSpriteFrame* create @ createpccrcC(const char* filename, const CCRect& rect);
+	static CCSpriteFrame* createWithTexture @ createWithTexturepCrcCbrcCrcC(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
+	static CCSpriteFrame* createWithTexture @ createWithTexturepCrcC(CCTexture2D* pobTexture, const CCRect& rect);
 	void setRotated(bool bRotated);
 	void setTexture(CCTexture2D* pobTexture);
 	const CCPoint& getOffset();
@@ -2660,14 +2697,14 @@ class CCSpriteFrame : public CCObject {
 	const CCRect& getRect();
 	void setOffsetInPixels(const CCPoint& offsetInPixels);
 	const CCRect& getRectInPixels();
-	bool initWithTextureFilename(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
-	bool initWithTextureFilename(const char* filename, const CCRect& rect);
+	bool initWithTextureFilename @ initWithTextureFilenamepccrcCbrcCrcC(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
+	bool initWithTextureFilename @ initWithTextureFilenamepccrcC(const char* filename, const CCRect& rect);
 	void setOriginalSize(const CCSize& sizeInPixels);
 	const CCSize& getOriginalSizeInPixels();
 	void setOriginalSizeInPixels(const CCSize& sizeInPixels);
 	void setOffset(const CCPoint& offsets);
-	bool initWithTexture(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
-	bool initWithTexture(CCTexture2D* pobTexture, const CCRect& rect);
+	bool initWithTexture @ initWithTexturepCrcCbrcCrcC(CCTexture2D* pobTexture, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize);
+	bool initWithTexture @ initWithTexturepCrcC(CCTexture2D* pobTexture, const CCRect& rect);
 	bool isRotated();
 	~CCSpriteFrame();
 	void setRect(const CCRect& rect);
@@ -2788,8 +2825,8 @@ class CCTMXMapInfo : public CCObject {
 	CCDictionary& getProperties();
 	cbTMXOrientation getOrientation();
 	void setTileProperties(const CCDictionary& var);
-	CCDictionary& getTileProperties();
-	CCDictionary* getTileProperties(int gid);
+	CCDictionary& getTileProperties @ getTileProperties();
+	CCDictionary* getTileProperties @ getTilePropertiesi(int gid);
 	void setTileSets(const CCArray& var);
 	CCArray& getObjectGroups();
 	void setOrientation(cbTMXOrientation var);
@@ -2826,20 +2863,20 @@ class CCDictionary : public CCObject {
 	static CCDictionary* createWithContentsOfFileThreadSafe(const char* pFileName);
 	unsigned int count();
 	void acceptVisitor(CCDataVisitor& visitor);
-	void setObject(CCObject* pObject, long key);
-	void setObject(CCObject* pObject, const string& key);
+	void setObject @ setObjectpCl(CCObject* pObject, long key);
+	void setObject @ setObjectpCrcs(CCObject* pObject, const string& key);
 	CCObject* copyWithZone(CCZone* pZone);
-	void removeObjectForKey(long key);
-	void removeObjectForKey(const string& key);
+	void removeObjectForKey @ removeObjectForKeyl(long key);
+	void removeObjectForKey @ removeObjectForKeyrcs(const string& key);
 	bool writeToFile(const char* fullPath);
 	~CCDictionary();
 	CCObject* randomObject();
 	void removeAllObjects();
 	void removeObjectsForKeys(CCArray* pKeyArray);
-	const CCString* valueForKey(long key);
-	const CCString* valueForKey(const string& key);
-	CCObject* objectForKey(long key);
-	CCObject* objectForKey(const string& key);
+	const CCString* valueForKey @ valueForKeyl(long key);
+	const CCString* valueForKey @ valueForKeyrcs(const string& key);
+	CCObject* objectForKey @ objectForKeyl(long key);
+	CCObject* objectForKey @ objectForKeyrcs(const string& key);
 	void removeObjectForElememt(CCDictElement* pElement);
 	CCArray* allKeys();
 	CCArray* allKeysForObject(CCObject* object);
@@ -3046,8 +3083,8 @@ class CCUDPSocketHub : public CCObject {
 	void clearRawPolicy();
 };
 class CCScrollBar : public CCLayer, public CCScrollViewDelegate {
-	static CCScrollBar* create(CCScale9Sprite* track, CCSprite* thumb);
-	static CCScrollBar* create(CCScale9Sprite* track, CCScale9Sprite* thumb);
+	static CCScrollBar* create @ createpCpC(CCScale9Sprite* track, CCSprite* thumb);
+	static CCScrollBar* create @ createpCpC(CCScale9Sprite* track, CCScale9Sprite* thumb);
 	bool initWithTrackAndFixedThumb(CCScale9Sprite* track, CCSprite* thumb);
 	bool isHorizontal();
 	void setTrack(CCScale9Sprite* var);
@@ -3075,32 +3112,32 @@ class CCEaseCircleActionIn : public CCActionEase {
 	CCActionInterval* reverse();
 };
 class CCControlSwitch : public CCControl {
-	static CCControlSwitch* create(CCSprite* maskSprite, CCSprite* onSprite, CCSprite* offSprite, CCSprite* thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel);
-	static CCControlSwitch* create(CCSprite* maskSprite, CCSprite* onSprite, CCSprite* offSprite, CCSprite* thumbSprite);
+	static CCControlSwitch* create @ createpCpCpCpCpCpC(CCSprite* maskSprite, CCSprite* onSprite, CCSprite* offSprite, CCSprite* thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel);
+	static CCControlSwitch* create @ createpCpCpCpC(CCSprite* maskSprite, CCSprite* onSprite, CCSprite* offSprite, CCSprite* thumbSprite);
 	void setEnabled(bool enabled);
-	void setOn(bool isOn);
-	void setOn(bool isOn, bool animated);
+	void setOn @ setOnb(bool isOn);
+	void setOn @ setOnbb(bool isOn, bool animated);
 	bool ccTouchBegan(CCTouch* pTouch, CCEvent* pEvent);
 	bool isOn();
 	void ccTouchCancelled(CCTouch* pTouch, CCEvent* pEvent);
 	void ccTouchEnded(CCTouch* pTouch, CCEvent* pEvent);
-	bool initWithMaskSprite(CCSprite* maskSprite, CCSprite* onSprite, CCSprite* offSprite, CCSprite* thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel);
-	bool initWithMaskSprite(CCSprite* maskSprite, CCSprite* onSprite, CCSprite* offSprite, CCSprite* thumbSprite);
+	bool initWithMaskSprite @ initWithMaskSpritepCpCpCpCpCpC(CCSprite* maskSprite, CCSprite* onSprite, CCSprite* offSprite, CCSprite* thumbSprite, CCLabelTTF* onLabel, CCLabelTTF* offLabel);
+	bool initWithMaskSprite @ initWithMaskSpritepCpCpCpC(CCSprite* maskSprite, CCSprite* onSprite, CCSprite* offSprite, CCSprite* thumbSprite);
 	void ccTouchMoved(CCTouch* pTouch, CCEvent* pEvent);
 	bool hasMoved();
 	~CCControlSwitch();
 	CCPoint locationFromTouch(CCTouch* touch);
 };
 class CCScale9Sprite : public CCNodeRGBA {
-	static CCScale9Sprite* create(const char* file, CCRect rect);
-	static CCScale9Sprite* create(const char* file, CCRect rect, CCRect capInsets);
-	static CCScale9Sprite* create(CCRect capInsets, const char* file);
-	static CCScale9Sprite* create(const char* file);
-	static CCScale9Sprite* create();
-	static CCScale9Sprite* createWithSpriteFrameName(const char* spriteFrameName);
-	static CCScale9Sprite* createWithSpriteFrameName(const char* spriteFrameName, CCRect capInsets);
-	static CCScale9Sprite* createWithSpriteFrame(CCSpriteFrame* spriteFrame);
-	static CCScale9Sprite* createWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capInsets);
+	static CCScale9Sprite* create @ createpccC(const char* file, CCRect rect);
+	static CCScale9Sprite* create @ createpccCC(const char* file, CCRect rect, CCRect capInsets);
+	static CCScale9Sprite* create @ createCpcc(CCRect capInsets, const char* file);
+	static CCScale9Sprite* create @ createpcc(const char* file);
+	static CCScale9Sprite* create @ create();
+	static CCScale9Sprite* createWithSpriteFrameName @ createWithSpriteFrameNamepcc(const char* spriteFrameName);
+	static CCScale9Sprite* createWithSpriteFrameName @ createWithSpriteFrameNamepccC(const char* spriteFrameName, CCRect capInsets);
+	static CCScale9Sprite* createWithSpriteFrame @ createWithSpriteFramepC(CCSpriteFrame* spriteFrame);
+	static CCScale9Sprite* createWithSpriteFrame @ createWithSpriteFramepCC(CCSpriteFrame* spriteFrame, CCRect capInsets);
 	CCRect getCapInsets();
 	void setOpacityModifyRGB(bool bValue);
 	void setInsetTop(float var);
@@ -3108,8 +3145,8 @@ class CCScale9Sprite : public CCNodeRGBA {
 	void setInsetBottom(float var);
 	bool isOpacityModifyRGB();
 	void visit();
-	bool initWithSpriteFrameName(const char* spriteFrameName);
-	bool initWithSpriteFrameName(const char* spriteFrameName, CCRect capInsets);
+	bool initWithSpriteFrameName @ initWithSpriteFrameNamepcc(const char* spriteFrameName);
+	bool initWithSpriteFrameName @ initWithSpriteFrameNamepccC(const char* spriteFrameName, CCRect capInsets);
 	~CCScale9Sprite();
 	void updateDisplayedOpacity(unsigned char parentOpacity);
 	bool init();
@@ -3117,23 +3154,23 @@ class CCScale9Sprite : public CCNodeRGBA {
 	unsigned char getOpacity();
 	void setSpriteFrame(CCSpriteFrame* spriteFrame);
 	const ccColor3B& getColor();
-	bool initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, CCRect capInsets);
-	bool initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, bool rotated, CCRect capInsets);
+	bool initWithBatchNode @ initWithBatchNodepCCC(CCSpriteBatchNode* batchnode, CCRect rect, CCRect capInsets);
+	bool initWithBatchNode @ initWithBatchNodepCCbC(CCSpriteBatchNode* batchnode, CCRect rect, bool rotated, CCRect capInsets);
 	float getInsetBottom();
 	CCScale9Sprite* resizableSpriteWithCapInsets(CCRect capInsets);
 	void setOpacity(unsigned char opacity);
 	void setContentSize(const CCSize& size);
 	float getInsetRight();
 	CCSize getOriginalSize();
-	bool initWithFile(const char* file, CCRect rect);
-	bool initWithFile(const char* file, CCRect rect, CCRect capInsets);
-	bool initWithFile(CCRect capInsets, const char* file);
-	bool initWithFile(const char* file);
+	bool initWithFile @ initWithFilepccC(const char* file, CCRect rect);
+	bool initWithFile @ initWithFilepccCC(const char* file, CCRect rect, CCRect capInsets);
+	bool initWithFile @ initWithFileCpcc(CCRect capInsets, const char* file);
+	bool initWithFile @ initWithFilepcc(const char* file);
 	void setColor(const ccColor3B& color);
 	float getInsetTop();
 	void setInsetLeft(float var);
-	bool initWithSpriteFrame(CCSpriteFrame* spriteFrame);
-	bool initWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capInsets);
+	bool initWithSpriteFrame @ initWithSpriteFramepC(CCSpriteFrame* spriteFrame);
+	bool initWithSpriteFrame @ initWithSpriteFramepCC(CCSpriteFrame* spriteFrame, CCRect capInsets);
 	CCSize getPreferredSize();
 	void setCapInsets(CCRect var);
 	float getInsetLeft();
@@ -3168,9 +3205,9 @@ class CCActionTween : public CCActionInterval {
 	CCActionInterval* reverse();
 };
 class CCAnimation : public CCObject {
-	static CCAnimation* create(CCArray* arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
-	static CCAnimation* create();
-	static CCAnimation* create(CCArray* arrayOfAnimationFrameNames, float delayPerUnit);
+	static CCAnimation* create @ createpCfui(CCArray* arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
+	static CCAnimation* create @ create();
+	static CCAnimation* create @ createpCf(CCArray* arrayOfAnimationFrameNames, float delayPerUnit);
 	static CCAnimation* createWithSpriteFrames(CCArray* arrayOfSpriteFrameNames, float delay);
 	void addSpriteFrameWithFileName(const char* pszFileName);
 	void setFrames(CCArray* var);
@@ -3313,8 +3350,8 @@ class CCBool : public CCObject {
 	void acceptVisitor(CCDataVisitor& visitor);
 };
 class CCEaseElasticInOut : public CCEaseElastic {
-	static CCEaseElasticInOut* create(CCActionInterval* pAction);
-	static CCEaseElasticInOut* create(CCActionInterval* pAction, float fPeriod);
+	static CCEaseElasticInOut* create @ createpC(CCActionInterval* pAction);
+	static CCEaseElasticInOut* create @ createpCf(CCActionInterval* pAction, float fPeriod);
 	CCObject* copyWithZone(CCZone* pZone);
 	void update(float time);
 	CCActionInterval* reverse();
@@ -3421,16 +3458,16 @@ class CCSPXManager : public CCObject {
 	~CCSPXManager();
 };
 class CCTextFieldTTF : public CCLabelTTF, public CCIMEDelegate {
-	static CCTextFieldTTF* textFieldWithPlaceHolder(const char* placeholder, const char* fontName, float fontSize);
-	static CCTextFieldTTF* textFieldWithPlaceHolder(const char* placeholder, const CCSize& dimensions, CCTextAlignment alignment, const char* fontName, float fontSize);
+	static CCTextFieldTTF* textFieldWithPlaceHolder @ textFieldWithPlaceHolderpccpccf(const char* placeholder, const char* fontName, float fontSize);
+	static CCTextFieldTTF* textFieldWithPlaceHolder @ textFieldWithPlaceHolderpccrcCCpccf(const char* placeholder, const CCSize& dimensions, CCTextAlignment alignment, const char* fontName, float fontSize);
 	int getCharCount();
 	CCTextFieldDelegate* getDelegate();
 	const char* getPlaceHolder();
 	const char* getString();
 	void setSecureTextEntry(bool value);
 	const ccColor3B& getColorSpaceHolder();
-	bool initWithPlaceHolder(const char* placeholder, const char* fontName, float fontSize);
-	bool initWithPlaceHolder(const char* placeholder, const CCSize& dimensions, CCTextAlignment alignment, const char* fontName, float fontSize);
+	bool initWithPlaceHolder @ initWithPlaceHolderpccpccf(const char* placeholder, const char* fontName, float fontSize);
+	bool initWithPlaceHolder @ initWithPlaceHolderpccrcCCpccf(const char* placeholder, const CCSize& dimensions, CCTextAlignment alignment, const char* fontName, float fontSize);
 	~CCTextFieldTTF();
 	void setColorSpaceHolder(const ccColor3B& color);
 	bool detachWithIME();
@@ -3479,8 +3516,8 @@ class PageView : public Layout, public UIScrollInterface {
 	void onEnter();
 	~PageView();
 	Widget* dequeuePageItem(const string& itemId);
-	void reloadData();
-	void reloadData(int wantedPageIndex);
+	void reloadData @ reloadData();
+	void reloadData @ reloadDatai(int wantedPageIndex);
 	Widget* getRightChild();
 	LayoutType getLayoutType();
 	void setRightChild(Widget* var);
@@ -3531,22 +3568,22 @@ class CCResourceLoader : public CCObject {
 	static void unloadArmatures(string plistPattern, string texPattern, int start, int end, string config);
 	static void unloadSpriteFrames(const string& plistPattern, const string& texPattern, int start, int end);
 	static void abortAll();
-	static void unloadImages(const string& texPattern, int start, int end);
-	static void unloadImages(const string& tex);
+	static void unloadImages @ unloadImagesrcsii(const string& texPattern, int start, int end);
+	static void unloadImages @ unloadImagesrcs(const string& tex);
 	float getDelay();
 	void addAndroidStringTask(const string& lan, const string& path, bool merge);
 	void addBMFontTask(const string& fntFile, float idle);
 	void run();
 	void addCustomTask(CCCallFunc* func);
 	void addArmatureTask(string config, float idle);
-	void addZwoptexAnimTask(const string& name, float unitDelay, const string& pattern, int startIndex, int endIndex, int startIndex2, int endIndex2, bool restoreOriginalFrame, float idle);
-	void addZwoptexAnimTask(const string& name, float unitDelay, const string& pattern, int startIndex, int endIndex, bool restoreOriginalFrame, float idle);
-	void addZwoptexAnimTask(const string& name, const string& pattern, int startIndex, int endIndex, const string& delayString, bool restoreOriginalFrame, float idle);
-	void addZwoptexAnimTask(const string& name, const string& pattern, const string& indicesString, float delay, bool restoreOriginalFrame, float idle);
-	void addZwoptexAnimTask(const string& name, const string& pattern, const string& indicesString, const string& delayString, bool restoreOriginalFrame, float idle);
+	void addZwoptexAnimTask @ addZwoptexAnimTaskrcsfrcsiiiibf(const string& name, float unitDelay, const string& pattern, int startIndex, int endIndex, int startIndex2, int endIndex2, bool restoreOriginalFrame, float idle);
+	void addZwoptexAnimTask @ addZwoptexAnimTaskrcsfrcsiibf(const string& name, float unitDelay, const string& pattern, int startIndex, int endIndex, bool restoreOriginalFrame, float idle);
+	void addZwoptexAnimTask @ addZwoptexAnimTaskrcsrcsiircsbf(const string& name, const string& pattern, int startIndex, int endIndex, const string& delayString, bool restoreOriginalFrame, float idle);
+	void addZwoptexAnimTask @ addZwoptexAnimTaskrcsrcsrcsfbf(const string& name, const string& pattern, const string& indicesString, float delay, bool restoreOriginalFrame, float idle);
+	void addZwoptexAnimTask @ addZwoptexAnimTaskrcsrcsrcsrcsbf(const string& name, const string& pattern, const string& indicesString, const string& delayString, bool restoreOriginalFrame, float idle);
 	~CCResourceLoader();
-	void addZwoptexTask(const string& pattern, int start, int end, float idle);
-	void addZwoptexTask(const string& name, float idle);
+	void addZwoptexTask @ addZwoptexTaskrcsiif(const string& pattern, int start, int end, float idle);
+	void addZwoptexTask @ addZwoptexTaskrcsf(const string& name, float idle);
 	void runInBlockMode();
 	void abort();
 	void setDelay(float var);
@@ -3610,6 +3647,7 @@ class CCActionManager : public CCObject {
 	void resumeTargets(CCSet* targetsToResume);
 	void removeAction(CCAction* pAction);
 	unsigned int numberOfRunningActionsInTarget(CCObject* pTarget);
+	void registerWatcher(CCActionWatcher* w);
 	CCSet* pauseAllRunningActions();
 };
 class CCAFCClip : public CCObject {
@@ -3672,14 +3710,14 @@ class CCFrameData : public CCBaseData {
 };
 class CCDataVisitor {
 	void visitObject(const CCObject* p);
-	void visit(const CCInteger* p);
-	void visit(const CCBool* p);
-	void visit(const CCFloat* p);
-	void visit(const CCDouble* p);
-	void visit(const CCString* p);
-	void visit(const CCArray* p);
-	void visit(const CCDictionary* p);
-	void visit(const CCSet* p);
+	void visit @ visitpcC(const CCInteger* p);
+	void visit @ visitpcC(const CCBool* p);
+	void visit @ visitpcC(const CCFloat* p);
+	void visit @ visitpcC(const CCDouble* p);
+	void visit @ visitpcC(const CCString* p);
+	void visit @ visitpcC(const CCArray* p);
+	void visit @ visitpcC(const CCDictionary* p);
+	void visit @ visitpcC(const CCSet* p);
 	~CCDataVisitor();
 };
 class CCMenuItemColorStateListener {
@@ -3779,8 +3817,8 @@ class CCCatmullRomBy : public CCCardinalSplineBy {
 	bool initWithDuration(float dt, CCPointArray* points);
 };
 class CCTransitionFlipAngular : public CCTransitionSceneOriented {
-	static CCTransitionFlipAngular* create(float t, CCScene* s);
-	static CCTransitionFlipAngular* create(float t, CCScene* s, tOrientation o);
+	static CCTransitionFlipAngular* create @ createfpC(float t, CCScene* s);
+	static CCTransitionFlipAngular* create @ createfpCt(float t, CCScene* s, tOrientation o);
 	~CCTransitionFlipAngular();
 	void onEnter();
 };
@@ -3799,8 +3837,8 @@ class CCColliderFilter {
 	~CCColliderFilter();
 };
 class CCTableView : public CCScrollView, public CCScrollViewDelegate {
-	static CCTableView* create(CCTableViewDataSource* dataSource, CCSize size, CCNode* container);
-	static CCTableView* create(CCTableViewDataSource* dataSource, CCSize size);
+	static CCTableView* create @ createpCCpC(CCTableViewDataSource* dataSource, CCSize size, CCNode* container);
+	static CCTableView* create @ createpCC(CCTableViewDataSource* dataSource, CCSize size);
 	bool ccTouchBegan(CCTouch* pTouch, CCEvent* pEvent);
 	void scrollViewDidScroll(CCScrollView* view);
 	void setColCount(unsigned int var);
@@ -3840,10 +3878,10 @@ class CCTransitionCrossFade : public CCTransitionScene {
 };
 class CCControlButton : public CCControl {
 	bool m_doesAdjustBackgroundImage;
-	static CCControlButton* create(string title, const char* fontName, float fontSize);
-	static CCControlButton* create(CCNode* label, CCScale9Sprite* backgroundSprite);
-	static CCControlButton* create(CCScale9Sprite* sprite);
-	static CCControlButton* create();
+	static CCControlButton* create @ createspccf(string title, const char* fontName, float fontSize);
+	static CCControlButton* create @ createpCpC(CCNode* label, CCScale9Sprite* backgroundSprite);
+	static CCControlButton* create @ createpC(CCScale9Sprite* sprite);
+	static CCControlButton* create @ create();
 	void setTitleColorDispatchTable(CCDictionary* var);
 	void setZoomOnTouchDown(bool var);
 	void setSelected(bool enabled);
@@ -3904,8 +3942,8 @@ class CCControlButton : public CCControl {
 	CCString* getTitleForState(unsigned int state);
 };
 class CCEaseElasticIn : public CCEaseElastic {
-	static CCEaseElasticIn* create(CCActionInterval* pAction);
-	static CCEaseElasticIn* create(CCActionInterval* pAction, float fPeriod);
+	static CCEaseElasticIn* create @ createpC(CCActionInterval* pAction);
+	static CCEaseElasticIn* create @ createpCf(CCActionInterval* pAction, float fPeriod);
 	CCObject* copyWithZone(CCZone* pZone);
 	void update(float time);
 	CCActionInterval* reverse();
@@ -3936,12 +3974,12 @@ class CCArmatureData : public CCObject {
 	CCBoneData* getBoneData(const char* boneName);
 };
 class CCScaleTo : public CCActionInterval {
-	static CCScaleTo* create(float duration, float sx, float sy);
-	static CCScaleTo* create(float duration, float s);
+	static CCScaleTo* create @ createfff(float duration, float sx, float sy);
+	static CCScaleTo* create @ createff(float duration, float s);
 	void startWithTarget(CCNode* pTarget);
 	CCObject* copyWithZone(CCZone* pZone);
-	bool initWithDuration(float duration, float sx, float sy);
-	bool initWithDuration(float duration, float s);
+	bool initWithDuration @ initWithDurationfff(float duration, float sx, float sy);
+	bool initWithDuration @ initWithDurationff(float duration, float s);
 	void update(float time);
 };
 class CCParticleSystem : public CCNode, public CCTextureProtocol {
@@ -4050,8 +4088,8 @@ class CCParticleSystem : public CCNode, public CCTextureProtocol {
 	void setEndSpin(float var);
 	void update(float dt);
 	void setRadialAccel(float t);
-	bool initWithDictionary(CCDictionary* dictionary, const char* dirname);
-	bool initWithDictionary(CCDictionary* dictionary);
+	bool initWithDictionary @ initWithDictionarypCpcc(CCDictionary* dictionary, const char* dirname);
+	bool initWithDictionary @ initWithDictionarypC(CCDictionary* dictionary);
 	bool isAutoRemoveOnFinish();
 	unsigned int getTotalParticles();
 	void setStartRadiusVar(float startRadiusVar);
@@ -4099,13 +4137,13 @@ class CCComController : public CCComponent, public CCInputDelegate {
 	bool init();
 };
 class CCTransitionFade : public CCTransitionScene {
-	static CCTransitionFade* create(float duration, CCScene* scene);
-	static CCTransitionFade* create(float duration, CCScene* scene, const ccColor3B& color);
+	static CCTransitionFade* create @ createfpC(float duration, CCScene* scene);
+	static CCTransitionFade* create @ createfpCrcc(float duration, CCScene* scene, const ccColor3B& color);
 	~CCTransitionFade();
 	void onEnter();
 	void onExit();
-	bool initWithDuration(float t, CCScene* scene);
-	bool initWithDuration(float t, CCScene* scene, const ccColor3B& color);
+	bool initWithDuration @ initWithDurationfpC(float t, CCScene* scene);
+	bool initWithDuration @ initWithDurationfpCrcc(float t, CCScene* scene, const ccColor3B& color);
 };
 class CCObject : public CCCopying {
 	unsigned int m_uID;
@@ -4223,8 +4261,8 @@ class ActionScaleFrame : public ActionFrame {
 	CCActionInterval* getAction(float fDuration);
 };
 class CCEaseElastic : public CCActionEase {
-	static CCEaseElastic* create(CCActionInterval* pAction);
-	static CCEaseElastic* create(CCActionInterval* pAction, float fPeriod);
+	static CCEaseElastic* create @ createpC(CCActionInterval* pAction);
+	static CCEaseElastic* create @ createpCf(CCActionInterval* pAction, float fPeriod);
 	CCObject* copyWithZone(CCZone* pZone);
 	void setPeriod(float fPeriod);
 	bool initWithAction(CCActionInterval* pAction, float fPeriod);
@@ -4232,15 +4270,15 @@ class CCEaseElastic : public CCActionEase {
 	CCActionInterval* reverse();
 };
 class CCScrollView : public CCLayer {
-	static CCScrollView* create();
-	static CCScrollView* create(CCSize size, CCNode* container);
+	static CCScrollView* create @ create();
+	static CCScrollView* create @ createCpC(CCSize size, CCNode* container);
 	bool isClippingToBounds();
 	void setContainer(CCNode* pContainer);
 	void setContentOffsetInDuration(CCPoint offset, float dt);
 	void setZoomScaleInDuration(float s, float dt);
-	void addChild(CCNode* child, int zOrder);
-	void addChild(CCNode* child, int zOrder, int tag);
-	void addChild(CCNode* child);
+	void addChild @ addChildpCi(CCNode* child, int zOrder);
+	void addChild @ addChildpCii(CCNode* child, int zOrder, int tag);
+	void addChild @ addChildpC(CCNode* child);
 	bool ccTouchBegan(CCTouch* pTouch, CCEvent* pEvent);
 	CCNode* getContainer();
 	void ccTouchEnded(CCTouch* pTouch, CCEvent* pEvent);
@@ -4280,8 +4318,8 @@ class CCScrollView : public CCLayer {
 	CCPoint minContainerOffset();
 	CCPoint getTouchPoint();
 	void registerWithTouchDispatcher();
-	void setZoomScale(float s, bool animated);
-	void setZoomScale(float s);
+	void setZoomScale @ setZoomScalefb(float s, bool animated);
+	void setZoomScale @ setZoomScalef(float s);
 };
 class CCDouble : public CCObject {
 	static CCDouble* create(double v);
@@ -4297,14 +4335,14 @@ class CCTimer : public CCObject {
 	int getScriptHandler();
 };
 class CCTransitionFlipY : public CCTransitionSceneOriented {
-	static CCTransitionFlipY* create(float t, CCScene* s);
-	static CCTransitionFlipY* create(float t, CCScene* s, tOrientation o);
+	static CCTransitionFlipY* create @ createfpC(float t, CCScene* s);
+	static CCTransitionFlipY* create @ createfpCt(float t, CCScene* s, tOrientation o);
 	~CCTransitionFlipY();
 	void onEnter();
 };
 class CCTransitionFlipX : public CCTransitionSceneOriented {
-	static CCTransitionFlipX* create(float t, CCScene* s);
-	static CCTransitionFlipX* create(float t, CCScene* s, tOrientation o);
+	static CCTransitionFlipX* create @ createfpC(float t, CCScene* s);
+	static CCTransitionFlipX* create @ createfpCt(float t, CCScene* s, tOrientation o);
 	~CCTransitionFlipX();
 	void onEnter();
 };
@@ -4540,8 +4578,8 @@ class CCTransitionProgressRadialCW : public CCTransitionProgress {
 };
 class CCPointList : public CCObject {
 	static CCPointList* create();
-	void addPoint(CCPoint p);
-	void addPoint(float x, float y);
+	void addPoint @ addPointC(CCPoint p);
+	void addPoint @ addPointff(float x, float y);
 	CCPoint* getBuffer();
 	void addPoints(CCPointList& plist);
 	void clear();
@@ -4551,13 +4589,13 @@ class CCPointList : public CCObject {
 	void deletePointAt(int index);
 };
 class CCMemoryOutputStream : public CCAssetOutputStream {
-	static CCMemoryOutputStream* create(unsigned long capacity, bool release);
-	static CCMemoryOutputStream* create();
+	static CCMemoryOutputStream* create @ createulb(unsigned long capacity, bool release);
+	static CCMemoryOutputStream* create @ create();
 	void reset();
 	unsigned long getLength();
 	~CCMemoryOutputStream();
-	int write(const int* data, unsigned long len);
-	int write(const char* data, unsigned long len);
+	int write @ writepciul(const int* data, unsigned long len);
+	int write @ writepccul(const char* data, unsigned long len);
 	void close();
 	const char* getBuffer();
 	unsigned long seek(int offset, int mode);
@@ -4598,10 +4636,10 @@ class CCBlink : public CCActionInterval {
 	CCObject* copyWithZone(CCZone* pZone);
 };
 class CCMenuItemColor : public CCMenuItem, public CCBlendProtocol {
-	static CCMenuItemColor* create(ccColor4B normal, ccColor4B selected);
-	static CCMenuItemColor* create(ccColor4B normal);
-	static CCMenuItemColor* create(ccColor4B normal, ccColor4B selected, ccColor4B focus);
-	static CCMenuItemColor* create(ccColor4B normal, ccColor4B selected, ccColor4B focus, ccColor4B disabled);
+	static CCMenuItemColor* create @ createcc(ccColor4B normal, ccColor4B selected);
+	static CCMenuItemColor* create @ createc(ccColor4B normal);
+	static CCMenuItemColor* create @ createccc(ccColor4B normal, ccColor4B selected, ccColor4B focus);
+	static CCMenuItemColor* create @ createcccc(ccColor4B normal, ccColor4B selected, ccColor4B focus, ccColor4B disabled);
 	void setEnabledSilent(bool value);
 	void setEnabled(bool value);
 	void draw();
@@ -4716,8 +4754,8 @@ class CCWaves : public CCGrid3DAction {
 	void setAmplitudeRate(float fAmplitudeRate);
 };
 class CCTransitionZoomFlipAngular : public CCTransitionSceneOriented {
-	static CCTransitionZoomFlipAngular* create(float t, CCScene* s);
-	static CCTransitionZoomFlipAngular* create(float t, CCScene* s, tOrientation o);
+	static CCTransitionZoomFlipAngular* create @ createfpC(float t, CCScene* s);
+	static CCTransitionZoomFlipAngular* create @ createfpCt(float t, CCScene* s, tOrientation o);
 	~CCTransitionZoomFlipAngular();
 	void onEnter();
 };
@@ -4763,16 +4801,16 @@ class CCAFCFrame : public CCObject {
 	float getDelay();
 	void setIncrementation(ccPoint inc);
 	void setUseTickDelay(bool flag);
-	int getClipCount(CCAFCClipType type);
-	int getClipCount();
+	int getClipCount @ getClipCountC(CCAFCClipType type);
+	int getClipCount @ getClipCount();
 	void setFlipY(bool flag);
 	void setFlipX(bool flag);
 	bool isFlipX();
 	bool isFlipY();
 	~CCAFCFrame();
 	bool isUseTickDelay();
-	CCAFCClip* getClipAt(CCAFCClipType type, int index);
-	CCAFCClip* getClipAt(int index);
+	CCAFCClip* getClipAt @ getClipAtCi(CCAFCClipType type, int index);
+	CCAFCClip* getClipAt @ getClipAti(int index);
 	void setDelay(float delay);
 	ccPoint getIncrementation();
 };
@@ -4807,9 +4845,9 @@ class CCControlSlider : public CCControl {
 	void setMaximumAllowedValue(float var);
 };
 class CCLayerGradient : public CCLayerColor {
-	static CCLayerGradient* create(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
-	static CCLayerGradient* create(const ccColor4B& start, const ccColor4B& end);
-	static CCLayerGradient* create();
+	static CCLayerGradient* create @ createrccrccrcC(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
+	static CCLayerGradient* create @ createrccrcc(const ccColor4B& start, const ccColor4B& end);
+	static CCLayerGradient* create @ create();
 	const ccColor3B& getStartColor();
 	bool isCompressedInterpolation();
 	unsigned char getStartOpacity();
@@ -4820,8 +4858,8 @@ class CCLayerGradient : public CCLayerColor {
 	const CCPoint& getVector();
 	bool init();
 	void setEndColor(const ccColor3B& var);
-	bool initWithColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
-	bool initWithColor(const ccColor4B& start, const ccColor4B& end);
+	bool initWithColor @ initWithColorrccrccrcC(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
+	bool initWithColor @ initWithColorrccrcc(const ccColor4B& start, const ccColor4B& end);
 	const ccColor3B& getEndColor();
 	unsigned char getEndOpacity();
 	void setStartColor(const ccColor3B& var);
@@ -4877,8 +4915,8 @@ class CCRemoveSelf : public CCActionInstant {
 	CCObject* copyWithZone(CCZone* pZone);
 };
 class CCSkin : public CCSprite {
-	static CCSkin* create(const char* pszFileName);
-	static CCSkin* create();
+	static CCSkin* create @ createpcc(const char* pszFileName);
+	static CCSkin* create @ create();
 	static CCSkin* createWithSpriteFrameName(const char* pszSpriteFrameName);
 	CCBone* getBone();
 	CCAffineTransform nodeToWorldTransform();
@@ -4932,9 +4970,9 @@ class CCSPX3Action : public CCObject {
 	~CCSPX3Action();
 };
 class CCRenderTexture : public CCNode {
-	static CCRenderTexture* create(int w, int h, CCTexture2DPixelFormat eFormat);
-	static CCRenderTexture* create(int w, int h, CCTexture2DPixelFormat eFormat, unsigned int uDepthStencilFormat);
-	static CCRenderTexture* create(int w, int h);
+	static CCRenderTexture* create @ createiiC(int w, int h, CCTexture2DPixelFormat eFormat);
+	static CCRenderTexture* create @ createiiCui(int w, int h, CCTexture2DPixelFormat eFormat, unsigned int uDepthStencilFormat);
+	static CCRenderTexture* create @ createii(int w, int h);
 	void clearStencil(int stencilValue);
 	void begin();
 	void listenToForeground(CCObject* obj);
@@ -4949,14 +4987,14 @@ class CCRenderTexture : public CCNode {
 	bool isAutoDraw();
 	void setClearFlags(unsigned int uClearFlags);
 	void draw();
-	bool saveToFile(const char* name, tCCImageFormat format);
-	bool saveToFile(const char* szFilePath);
+	bool saveToFile @ saveToFilepcct(const char* name, tCCImageFormat format);
+	bool saveToFile @ saveToFilepcc(const char* szFilePath);
 	void setAutoDraw(bool bAutoDraw);
 	void setClearColor(const ccColor4F& clearColor);
 	void endToLua();
-	void beginWithClear(float r, float g, float b, float a, float depthValue);
-	void beginWithClear(float r, float g, float b, float a);
-	void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue);
+	void beginWithClear @ beginWithClearfffff(float r, float g, float b, float a, float depthValue);
+	void beginWithClear @ beginWithClearffff(float r, float g, float b, float a);
+	void beginWithClear @ beginWithClearfffffi(float r, float g, float b, float a, float depthValue, int stencilValue);
 	void clearDepth(float depthValue);
 	const ccColor4F& getClearColor();
 	void listenToBackground(CCObject* obj);
@@ -4964,8 +5002,8 @@ class CCRenderTexture : public CCNode {
 	unsigned int getClearFlags();
 	CCImage* newCCImage(bool flipImage);
 	void setClearDepth(float fClearDepth);
-	bool initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat, unsigned int uDepthStencilFormat);
-	bool initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat);
+	bool initWithWidthAndHeight @ initWithWidthAndHeightiiCui(int w, int h, CCTexture2DPixelFormat eFormat, unsigned int uDepthStencilFormat);
+	bool initWithWidthAndHeight @ initWithWidthAndHeightiiC(int w, int h, CCTexture2DPixelFormat eFormat);
 };
 class CCControlHuePicker : public CCControl {
 	static CCControlHuePicker* create(CCNode* target, CCPoint pos);
@@ -4993,8 +5031,8 @@ class RichText : public Widget {
 	void visit();
 	~RichText();
 	const CCSize& getContentSize();
-	void removeElement(RichElement* element);
-	void removeElement(int index);
+	void removeElement @ removeElementpR(RichElement* element);
+	void removeElement @ removeElementi(int index);
 	string getDescription();
 };
 class TouchGroup : public CCLayer {
@@ -5016,8 +5054,8 @@ class TouchGroup : public CCLayer {
 	void onEnterTransitionDidFinish();
 };
 class CCGrid3D : public CCGridBase {
-	static CCGrid3D* create(const CCSize& gridSize);
-	static CCGrid3D* create(const CCSize& gridSize, CCTexture2D* pTexture, bool bFlipped);
+	static CCGrid3D* create @ creatercC(const CCSize& gridSize);
+	static CCGrid3D* create @ creatercCpCb(const CCSize& gridSize, CCTexture2D* pTexture, bool bFlipped);
 	void calculateVertexPoints();
 	void setVertex(const CCPoint& pos, const ccVertex3F& vertex);
 	void reuse();
@@ -5067,8 +5105,8 @@ class CCCamera : public CCObject {
 	~CCCamera();
 };
 class ActionFrame : public CCObject {
-	CCActionInterval* getAction(float fDuration, ActionFrame* srcFrame);
-	CCActionInterval* getAction(float fDuration);
+	CCActionInterval* getAction @ getActionfpA(float fDuration, ActionFrame* srcFrame);
+	CCActionInterval* getAction @ getActionf(float fDuration);
 	int getFrameType();
 	void setFrameTime(float fTime);
 	void setEasingType(int easingType);
@@ -5107,8 +5145,8 @@ class CCTransitionFadeTR : public CCTransitionScene, public CCTransitionEaseScen
 	CCActionInterval* easeActionWithAction(CCActionInterval* action);
 };
 class CCScaleBy : public CCScaleTo {
-	static CCScaleBy* create(float duration, float sx, float sy);
-	static CCScaleBy* create(float duration, float s);
+	static CCScaleBy* create @ createfff(float duration, float sx, float sy);
+	static CCScaleBy* create @ createff(float duration, float s);
 	void startWithTarget(CCNode* pTarget);
 	CCActionInterval* reverse();
 	CCObject* copyWithZone(CCZone* pZone);
@@ -5150,22 +5188,22 @@ class CCUserDefault {
 	static const string& getXMLFilePath();
 	static CCUserDefault* sharedUserDefault();
 	void setIntegerForKey(const char* pKey, int value);
-	float getFloatForKey(const char* pKey, float defaultValue);
-	float getFloatForKey(const char* pKey);
-	bool getBoolForKey(const char* pKey, bool defaultValue);
-	bool getBoolForKey(const char* pKey);
+	float getFloatForKey @ getFloatForKeypccf(const char* pKey, float defaultValue);
+	float getFloatForKey @ getFloatForKeypcc(const char* pKey);
+	bool getBoolForKey @ getBoolForKeypccb(const char* pKey, bool defaultValue);
+	bool getBoolForKey @ getBoolForKeypcc(const char* pKey);
 	void setDoubleForKey(const char* pKey, double value);
 	void setFloatForKey(const char* pKey, float value);
 	~CCUserDefault();
-	string getStringForKey(const char* pKey, const string& defaultValue);
-	string getStringForKey(const char* pKey);
+	string getStringForKey @ getStringForKeypccrcs(const char* pKey, const string& defaultValue);
+	string getStringForKey @ getStringForKeypcc(const char* pKey);
 	void setStringForKey(const char* pKey, const string& value);
 	void flush();
 	void purgeDefaultForKey(const string& key);
-	int getIntegerForKey(const char* pKey, int defaultValue);
-	int getIntegerForKey(const char* pKey);
-	double getDoubleForKey(const char* pKey, double defaultValue);
-	double getDoubleForKey(const char* pKey);
+	int getIntegerForKey @ getIntegerForKeypcci(const char* pKey, int defaultValue);
+	int getIntegerForKey @ getIntegerForKeypcc(const char* pKey);
+	double getDoubleForKey @ getDoubleForKeypccd(const char* pKey, double defaultValue);
+	double getDoubleForKey @ getDoubleForKeypcc(const char* pKey);
 	void setBoolForKey(const char* pKey, bool value);
 };
 class CCHide : public CCActionInstant {
@@ -5176,8 +5214,8 @@ class CCHide : public CCActionInstant {
 	void update(float time);
 };
 class CCShake : public CCActionInterval {
-	static CCShake* create(float duration, float startMaxRadius, float endMaxRadius, float startMinRadius, float endMinRadius);
-	static CCShake* create(float duration, float maxRadius, float minRadius);
+	static CCShake* create @ createfffff(float duration, float startMaxRadius, float endMaxRadius, float startMinRadius, float endMinRadius);
+	static CCShake* create @ createfff(float duration, float maxRadius, float minRadius);
 	void startWithTarget(CCNode* pTarget);
 	CCActionInterval* reverse();
 	void update(float t);
@@ -5226,8 +5264,8 @@ class CCJumpTiles3D : public CCTiledGrid3DAction {
 	void setAmplitudeRate(float fAmplitudeRate);
 };
 class CCParticleSystemQuad : public CCParticleSystem {
-	static CCParticleSystemQuad* create();
-	static CCParticleSystemQuad* create(const char* plistFile);
+	static CCParticleSystemQuad* create @ create();
+	static CCParticleSystemQuad* create @ createpcc(const char* plistFile);
 	static CCParticleSystemQuad* createWithTotalParticles(unsigned int numberOfParticles);
 	void postStep();
 	void setBatchNode(CCParticleBatchNode* batchNode);
@@ -5243,8 +5281,8 @@ class CCParticleSystemQuad : public CCParticleSystem {
 	bool initWithTotalParticles(unsigned int numberOfParticles);
 };
 class CCComRender : public CCComponent {
-	static CCComRender* create();
-	static CCComRender* create(CCNode* pNode, const char* comName);
+	static CCComRender* create @ create();
+	static CCComRender* create @ createpCpcc(CCNode* pNode, const char* comName);
 	static CCObject* createInstance();
 	void setNode(CCNode* pNode);
 	void onEnter();
@@ -5274,8 +5312,8 @@ class ActionFadeFrame : public ActionFrame {
 class CCTrailMoveTo : public CCMoveTo {
 	static CCTrailMoveTo* createWithFileName(float duration, const CCPoint& position, const string& fileName, float trailDistance, int trailSegments, ccColor3B trailColor, ccColor4B trailColorScale, bool removeWhenDone);
 	static CCTrailMoveTo* createWithSpriteFrameName(float duration, const CCPoint& position, const string& trailFrameName, float trailDistance, int trailSegments, ccColor3B trailColor, ccColor4B trailColorScale, bool removeWhenDone);
-	static CCTrailMoveTo* createWithArmature(float duration, const CCPoint& position, const string& armatureName, const string& animationName, float trailDistance, int trailSegments, ccColor3B trailColor, ccColor4B trailColorScale, bool removeWhenDone);
-	static CCTrailMoveTo* createWithArmature(float duration, const CCPoint& position, const string& armatureName, int animationIndex, float trailDistance, int trailSegments, ccColor3B trailColor, ccColor4B trailColorScale, bool removeWhenDone);
+	static CCTrailMoveTo* createWithArmature @ createWithArmaturefrcCrcsrcsficcb(float duration, const CCPoint& position, const string& armatureName, const string& animationName, float trailDistance, int trailSegments, ccColor3B trailColor, ccColor4B trailColorScale, bool removeWhenDone);
+	static CCTrailMoveTo* createWithArmature @ createWithArmaturefrcCrcsificcb(float duration, const CCPoint& position, const string& armatureName, int animationIndex, float trailDistance, int trailSegments, ccColor3B trailColor, ccColor4B trailColorScale, bool removeWhenDone);
 	void setRemoveWhenDone(bool var);
 	float gettrailDistance();
 	CCObject* copyWithZone(CCZone* pZone);
@@ -5294,19 +5332,19 @@ class CCTrailMoveTo : public CCMoveTo {
 	void setAnimationName(const string& var);
 	void startWithTarget(CCNode* pTarget);
 	int getAnimationIndex();
-	bool initWithDurationAndArmatureTrail(float duration, const CCPoint& position, const string& armatureName, int animationIndex, float trailDistance, int trailSegments, ccColor3B trailColor, ccColor4B trailColorScale, bool removeWhenDone);
-	bool initWithDurationAndArmatureTrail(float duration, const CCPoint& position, const string& armatureName, const string& animationName, float trailDistance, int trailSegments, ccColor3B trailColor, ccColor4B trailColorScale, bool removeWhenDone);
+	bool initWithDurationAndArmatureTrail @ initWithDurationAndArmatureTrailfrcCrcsificcb(float duration, const CCPoint& position, const string& armatureName, int animationIndex, float trailDistance, int trailSegments, ccColor3B trailColor, ccColor4B trailColorScale, bool removeWhenDone);
+	bool initWithDurationAndArmatureTrail @ initWithDurationAndArmatureTrailfrcCrcsrcsficcb(float duration, const CCPoint& position, const string& armatureName, const string& animationName, float trailDistance, int trailSegments, ccColor3B trailColor, ccColor4B trailColorScale, bool removeWhenDone);
 	void markRemoveWhenDone();
 	int getTrailSegments();
 	void setTrailSegments(int var);
 };
 class CCRotateTo : public CCActionInterval {
-	static CCRotateTo* create(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
-	static CCRotateTo* create(float fDuration, float fDeltaAngle);
+	static CCRotateTo* create @ createfff(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
+	static CCRotateTo* create @ createff(float fDuration, float fDeltaAngle);
 	void startWithTarget(CCNode* pTarget);
 	CCObject* copyWithZone(CCZone* pZone);
-	bool initWithDuration(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
-	bool initWithDuration(float fDuration, float fDeltaAngle);
+	bool initWithDuration @ initWithDurationfff(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
+	bool initWithDuration @ initWithDurationff(float fDuration, float fDeltaAngle);
 	void update(float time);
 };
 class CCEaseQuarticActionIn : public CCActionEase {
@@ -5322,9 +5360,9 @@ class CCCardinalSplineBy : public CCCardinalSplineTo {
 	CCActionInterval* reverse();
 };
 class CCArmature : public CCNodeRGBA, public CCBlendProtocol {
-	static CCArmature* create(const char* name);
-	static CCArmature* create();
-	static CCArmature* create(const char* name, CCBone* parentBone);
+	static CCArmature* create @ createpcc(const char* name);
+	static CCArmature* create @ create();
+	static CCArmature* create @ createpccpC(const char* name, CCBone* parentBone);
 	CCBone* getBone(const char* name);
 	void changeBoneParent(CCBone* bone, const char* parentName);
 	void onEnter();
@@ -5342,9 +5380,9 @@ class CCArmature : public CCNodeRGBA, public CCBlendProtocol {
 	string getName();
 	void visit();
 	~CCArmature();
-	bool init(const char* name);
-	bool init();
-	bool init(const char* name, CCBone* parentBone);
+	bool init @ initpcc(const char* name);
+	bool init @ init();
+	bool init @ initpccpC(const char* name, CCBone* parentBone);
 	void setParentBone(CCBone* var);
 	void setBatchNode(CCBatchNode* var);
 	void draw();
@@ -5365,8 +5403,8 @@ class CCArmature : public CCNodeRGBA, public CCBlendProtocol {
 	CCTextureAtlas* getTextureAtlas();
 };
 class CCTiledGrid3D : public CCGridBase {
-	static CCTiledGrid3D* create(const CCSize& gridSize);
-	static CCTiledGrid3D* create(const CCSize& gridSize, CCTexture2D* pTexture, bool bFlipped);
+	static CCTiledGrid3D* create @ creatercC(const CCSize& gridSize);
+	static CCTiledGrid3D* create @ creatercCpCb(const CCSize& gridSize, CCTexture2D* pTexture, bool bFlipped);
 	void calculateVertexPoints();
 	void reuse();
 	~CCTiledGrid3D();
@@ -5454,8 +5492,8 @@ class CCAuroraSprite : public CCAFCSprite {
 class CCComponentContainer {
 	CCComponent* get(const char* pName);
 	void visit(float fDelta);
-	bool remove(CCComponent* pCom);
-	bool remove(const char* pName);
+	bool remove @ removepC(CCComponent* pCom);
+	bool remove @ removepcc(const char* pName);
 	~CCComponentContainer();
 	void removeAll();
 	bool add(CCComponent* pCom);
@@ -5473,9 +5511,9 @@ class CCAFCClipMapping : public CCObject {
 	static CCAFCClipMapping* createWithAuroraGT(int tag, const char* ammPath);
 	CCAFCClipMappingRule* findRule(int sourceClipIndex);
 	int getTag();
-	void mapClip(int fromClipIndex, const char* externalFilePath, int toClipIndex);
-	void mapClip(int fromClipIndex, int toClipIndex);
-	void mapClip(int fromClipIndex, CCTexture2D* tex, ccPoint pos, ccRect texRect, bool flipX, float rotation);
+	void mapClip @ mapClipipcci(int fromClipIndex, const char* externalFilePath, int toClipIndex);
+	void mapClip @ mapClipii(int fromClipIndex, int toClipIndex);
+	void mapClip @ mapClipipCccbf(int fromClipIndex, CCTexture2D* tex, ccPoint pos, ccRect texRect, bool flipX, float rotation);
 	~CCAFCClipMapping();
 };
 class CCTransitionShrinkGrow : public CCTransitionScene, public CCTransitionEaseScene {
@@ -5564,10 +5602,10 @@ class CCDisplayManager : public CCObject {
 	bool init(CCBone* bone);
 	CCSize getContentSize();
 	CCRect getBoundingBox();
-	void addDisplay(CCNode* display, int index);
-	void addDisplay(CCDisplayData* displayData, int index);
-	bool containPoint(float x, float y);
-	bool containPoint(CCPoint& _point);
+	void addDisplay @ addDisplaypCi(CCNode* display, int index);
+	void addDisplay @ addDisplaypCi(CCDisplayData* displayData, int index);
+	bool containPoint @ containPointff(float x, float y);
+	bool containPoint @ containPointrC(CCPoint& _point);
 	void initDisplayList(CCBoneData* boneData);
 	void changeDisplayWithIndex(int index, bool force);
 	void changeDisplayWithName(const char* name, bool force);
@@ -5579,49 +5617,29 @@ class CCDisplayManager : public CCObject {
 	bool isVisible();
 	void setVisible(bool visible);
 };
-class CCDatabase : public CCObject {
-	static CCDatabase* create(string path);
-	static bool isThreadSafe();
-	static string sqliteLibVersion();
-	CCResultSet* getTableSchema(string tableName);
-	void setBusyRetryTimeout(int var);
-	void clearInUse();
-	CCResultSet* getSchema();
-	bool databaseOpened();
-	bool close();
-	~CCDatabase();
-	bool open(int flags);
-	void setVersion(int v);
-	const string& getDatabasePath();
-	bool hadError();
-	bool executeSQL(const void* data, unsigned long length);
-	void setInUse(bool var);
-	void markInUse();
-	void setShouldCacheStatements(bool value);
-	int getBusyRetryTimeout();
-	bool shouldCacheStatements();
-	bool rollback();
-	int lastErrorCode();
-	bool columnExists(string tableName, string columnName);
-	long long lastInsertRowId();
-	bool beginTransaction();
-	string lastErrorMessage();
-	int getVersion();
-	bool isInTransaction();
-	bool goodConnection();
-	bool tableExists(string tableName);
-	void clearCachedStatements();
-	bool commit();
-	bool beginDeferredTransaction();
-	int changes();
-	bool isInUse();
+class CCActionWatcher : public CCObject {
+	static CCActionWatcher* create(CCCallFunc* doneFunc);
+	bool isValid();
+	CCCallFunc* getDoneFunc();
+	void setMustAllDone(bool var);
+	void setDoneFunc(CCCallFunc* var);
+	void waitAction(CCAction* a);
+	void onActionRemoved(CCAction* a);
+	void markMustAllDone();
+	~CCActionWatcher();
+	bool init(CCCallFunc* doneFunc);
+	void markValid();
+	void clearValid();
+	bool isMustAllDone();
+	void setValid(bool var);
+	void clearMustAllDone();
 };
 class ScrollView : public Layout, public UIScrollInterface {
 	static ScrollView* create();
 	static CCObject* createInstance();
-	void addChild(CCNode* child, int zOrder);
-	void addChild(CCNode* child);
-	void addChild(CCNode* child, int zOrder, int tag);
+	void addChild @ addChildpCi(CCNode* child, int zOrder);
+	void addChild @ addChildpC(CCNode* child);
+	void addChild @ addChildpCii(CCNode* child, int zOrder, int tag);
 	void scrollToTop(float time, bool attenuated);
 	void onTouchEnded(CCTouch* touch, CCEvent* unusedEvent);
 	void scrollToPercentHorizontal(float percent, float time, bool attenuated);
@@ -5650,9 +5668,9 @@ class ScrollView : public Layout, public UIScrollInterface {
 	void onTouchMoved(CCTouch* touch, CCEvent* unusedEvent);
 	void jumpToTopLeft();
 	void jumpToPercentHorizontal(float percent);
-	void addNode(CCNode* node, int zOrder);
-	void addNode(CCNode* node);
-	void addNode(CCNode* node, int zOrder, int tag);
+	void addNode @ addNodepCi(CCNode* node, int zOrder);
+	void addNode @ addNodepC(CCNode* node);
+	void addNode @ addNodepCii(CCNode* node, int zOrder, int tag);
 	void jumpToBottomRight();
 	void update(float dt);
 	LayoutType getLayoutType();
@@ -5671,8 +5689,8 @@ class ScrollView : public Layout, public UIScrollInterface {
 	void removeAllNodes();
 	void jumpToLeft();
 	void scrollToRight(float time, bool attenuated);
-	void removeChild(CCNode* child, bool cleaup);
-	void removeChild(CCNode* child);
+	void removeChild @ removeChildpCb(CCNode* child, bool cleaup);
+	void removeChild @ removeChildpC(CCNode* child);
 	CCArray* getNodes();
 	void jumpToBottomLeft();
 	CCPoint getTouchEndPoint();
@@ -5701,8 +5719,8 @@ class CCScheduler : public CCObject {
 	float getTimeScale();
 };
 class CCGridBase : public CCObject {
-	static CCGridBase* create(const CCSize& gridSize);
-	static CCGridBase* create(const CCSize& gridSize, CCTexture2D* texture, bool flipped);
+	static CCGridBase* create @ creatercC(const CCSize& gridSize);
+	static CCGridBase* create @ creatercCpCb(const CCSize& gridSize, CCTexture2D* texture, bool flipped);
 	void setGridSize(const CCSize& gridSize);
 	void calculateVertexPoints();
 	void afterDraw(CCNode* pTarget);
@@ -5717,19 +5735,19 @@ class CCGridBase : public CCObject {
 	void blit();
 	void setActive(bool bActive);
 	int getReuseGrid();
-	bool initWithSize(const CCSize& gridSize);
-	bool initWithSize(const CCSize& gridSize, CCTexture2D* pTexture, bool bFlipped);
+	bool initWithSize @ initWithSizercC(const CCSize& gridSize);
+	bool initWithSize @ initWithSizercCpCb(const CCSize& gridSize, CCTexture2D* pTexture, bool bFlipped);
 	void setReuseGrid(int nReuseGrid);
 	bool isActive();
 	void reuse();
 };
 class CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, public CCRGBAProtocol {
 	static void purgeCachedData();
-	static CCLabelBMFont* create(const char* str, const char* fntFile, float width, CCTextAlignment alignment);
-	static CCLabelBMFont* create(const char* str, const char* fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset);
-	static CCLabelBMFont* create(const char* str, const char* fntFile, float width);
-	static CCLabelBMFont* create(const char* str, const char* fntFile);
-	static CCLabelBMFont* create();
+	static CCLabelBMFont* create @ createpccpccfC(const char* str, const char* fntFile, float width, CCTextAlignment alignment);
+	static CCLabelBMFont* create @ createpccpccfCC(const char* str, const char* fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset);
+	static CCLabelBMFont* create @ createpccpccf(const char* str, const char* fntFile, float width);
+	static CCLabelBMFont* create @ createpccpcc(const char* str, const char* fntFile);
+	static CCLabelBMFont* create @ create();
 	void setAnchorPoint(const CCPoint& var);
 	void createFontChars();
 	const char* getString();
@@ -5742,8 +5760,8 @@ class CCLabelBMFont : public CCSpriteBatchNode, public CCLabelProtocol, public C
 	void setWidth(float width);
 	bool isOpacityModifyRGB();
 	bool isCascadeOpacityEnabled();
-	void setString(const char* newString, bool needUpdateLabel);
-	void setString(const char* newString);
+	void setString @ setStringpccb(const char* newString, bool needUpdateLabel);
+	void setString @ setStringpcc(const char* newString);
 	bool initWithString(const char* str, const char* fntFile, float width, CCTextAlignment alignment, CCPoint imageOffset);
 	void setCascadeColorEnabled(bool cascadeColorEnabled);
 	void setOpacityModifyRGB(bool isOpacityModifyRGB);
@@ -5781,17 +5799,17 @@ class CCParticleSmoke : public CCParticleSystemQuad {
 	bool initWithTotalParticles(unsigned int numberOfParticles);
 };
 class CCSprite : public CCNodeRGBA, public CCTextureProtocol {
-	static CCSprite* create(const char* pszFileName);
-	static CCSprite* create();
-	static CCSprite* create(const char* pszFileName, const CCRect& rect);
-	static CCSprite* createWithTexture(CCTexture2D* pTexture, const CCRect& rect);
-	static CCSprite* createWithTexture(CCTexture2D* pTexture);
+	static CCSprite* create @ createpcc(const char* pszFileName);
+	static CCSprite* create @ create();
+	static CCSprite* create @ createpccrcC(const char* pszFileName, const CCRect& rect);
+	static CCSprite* createWithTexture @ createWithTexturepCrcC(CCTexture2D* pTexture, const CCRect& rect);
+	static CCSprite* createWithTexture @ createWithTexturepC(CCTexture2D* pTexture);
 	static CCSprite* createWithSpriteFrameName(const char* pszSpriteFrameName);
 	static CCSprite* createWithSpriteFrame(CCSpriteFrame* pSpriteFrame);
 	void draw();
-	void addChild(CCNode* pChild, int zOrder);
-	void addChild(CCNode* pChild);
-	void addChild(CCNode* pChild, int zOrder, int tag);
+	void addChild @ addChildpCi(CCNode* pChild, int zOrder);
+	void addChild @ addChildpC(CCNode* pChild);
+	void addChild @ addChildpCii(CCNode* pChild, int zOrder, int tag);
 	void setTexture(CCTexture2D* texture);
 	CCTexture2D* getTexture();
 	void setPreDrawFunction(CCCallFuncO* var);
@@ -5809,8 +5827,8 @@ class CCSprite : public CCNodeRGBA, public CCTextureProtocol {
 	CCCallFuncO* getPreDrawFunction();
 	bool isOpacityModifyRGB();
 	bool isShouldUpdateBlendFunc();
-	void setTextureRect(const CCRect& rect, bool rotated, const CCSize& untrimmedSize);
-	void setTextureRect(const CCRect& rect);
+	void setTextureRect @ setTextureRectrcCbrcC(const CCRect& rect, bool rotated, const CCSize& untrimmedSize);
+	void setTextureRect @ setTextureRectrcC(const CCRect& rect);
 	bool isFlipX();
 	bool init();
 	void setVertexZ(float fVertexZ);
@@ -5825,9 +5843,9 @@ class CCSprite : public CCNodeRGBA, public CCTextureProtocol {
 	void setBatchNode(CCSpriteBatchNode* pobSpriteBatchNode);
 	void setRotationX(float fRotationX);
 	void setScaleX(float fScaleX);
-	bool initWithTexture(CCTexture2D* pTexture, const CCRect& rect);
-	bool initWithTexture(CCTexture2D* pTexture);
-	bool initWithTexture(CCTexture2D* pTexture, const CCRect& rect, bool rotated);
+	bool initWithTexture @ initWithTexturepCrcC(CCTexture2D* pTexture, const CCRect& rect);
+	bool initWithTexture @ initWithTexturepC(CCTexture2D* pTexture);
+	bool initWithTexture @ initWithTexturepCrcCb(CCTexture2D* pTexture, const CCRect& rect, bool rotated);
 	bool isFlipY();
 	void setTextureAtlas(CCTextureAtlas* pobTextureAtlas);
 	void setFlipY(bool bFlipY);
@@ -5843,8 +5861,8 @@ class CCSprite : public CCNodeRGBA, public CCTextureProtocol {
 	bool isDirty();
 	void reorderChild(CCNode* pChild, int zOrder);
 	void ignoreAnchorPointForPosition(bool value);
-	bool initWithFile(const char* pszFilename, const CCRect& rect);
-	bool initWithFile(const char* pszFilename);
+	bool initWithFile @ initWithFilepccrcC(const char* pszFilename, const CCRect& rect);
+	bool initWithFile @ initWithFilepcc(const char* pszFilename);
 	void setColor(const ccColor3B& color3);
 	void setBlendFunc(ccBlendFunc blendFunc);
 	const CCRect& getTextureRect();
@@ -5868,8 +5886,8 @@ class CCEaseCubicActionOut : public CCActionEase {
 class CCProgressHUD : public CCLayerColor {
 	static CCProgressHUD* current();
 	static void hide();
-	static CCProgressHUD* show(const string& message, CCNode* parent);
-	static CCProgressHUD* show(const string& message);
+	static CCProgressHUD* show @ showrcspC(const string& message, CCNode* parent);
+	static CCProgressHUD* show @ showrcs(const string& message);
 	void keyBackClicked();
 	void setPanelColor(const ccColor4B& var);
 	bool ccTouchBegan(CCTouch* pTouch, CCEvent* pEvent);
@@ -5895,8 +5913,8 @@ class CCProgressHUD : public CCLayerColor {
 	void markCancellable();
 };
 class CCMenuItemToggle : public CCMenuItem {
-	static CCMenuItemToggle* create(CCMenuItem* item);
-	static CCMenuItemToggle* create();
+	static CCMenuItemToggle* create @ createpC(CCMenuItem* item);
+	static CCMenuItemToggle* create @ create();
 	void setSubItems(CCArray* var);
 	bool initWithItem(CCMenuItem* item);
 	void setSelectedIndex(unsigned int var);
@@ -5911,14 +5929,14 @@ class CCMenuItemToggle : public CCMenuItem {
 	CCArray* getSubItems();
 };
 class CCLabelAtlas : public CCAtlasNode, public CCLabelProtocol {
-	static CCLabelAtlas* create(const char* s, const char* fntFile);
-	static CCLabelAtlas* create(const char* s, const char* charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+	static CCLabelAtlas* create @ createpccpcc(const char* s, const char* fntFile);
+	static CCLabelAtlas* create @ createpccpccuiuiui(const char* s, const char* charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
 	void updateAtlasValues();
 	const char* getString();
 	void setString(const char* label);
-	bool initWithString(const char* s, const char* fntFile);
-	bool initWithString(const char* s, const char* charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
-	bool initWithString(const char* s, CCTexture2D* texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+	bool initWithString @ initWithStringpccpcc(const char* s, const char* fntFile);
+	bool initWithString @ initWithStringpccpccuiuiui(const char* s, const char* charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+	bool initWithString @ initWithStringpccpCuiuiui(const char* s, CCTexture2D* texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
 	~CCLabelAtlas();
 };
 class CCBaseData : public CCObject {
@@ -5948,8 +5966,8 @@ class CCBone : public CCNodeRGBA {
 	float m_fDataVersion;
 	ccBlendFunc m_sBlendFunc;
 	bool m_bBlendDirty;
-	static CCBone* create(const char* name);
-	static CCBone* create();
+	static CCBone* create @ createpcc(const char* name);
+	static CCBone* create @ create();
 	CCAffineTransform nodeToWorldTransform();
 	bool isTransformDirty();
 	void updateZOrder();
@@ -5968,8 +5986,8 @@ class CCBone : public CCNodeRGBA {
 	DisplayType getDisplayRenderNodeType();
 	void removeDisplay(int index);
 	void updateDisplayedOpacity(unsigned char parentOpacity);
-	bool init(const char* name);
-	bool init();
+	bool init @ initpcc(const char* name);
+	bool init @ init();
 	void setParentBone(CCBone* parent);
 	void setZOrder(int zOrder);
 	bool getIgnoreMovementBoneData();
@@ -5987,8 +6005,8 @@ class CCBone : public CCNodeRGBA {
 	void setBoneData(CCBoneData* var);
 	void setArmature(CCArmature* var);
 	void setBlendDirty(bool dirty);
-	void addDisplay(CCNode* display, int index);
-	void addDisplay(CCDisplayData* displayData, int index);
+	void addDisplay @ addDisplaypCi(CCNode* display, int index);
+	void addDisplay @ addDisplaypCi(CCDisplayData* displayData, int index);
 	void setColor(const ccColor3B& color);
 	void removeChildBone(CCBone* bone, bool recursion);
 	void setBlendFunc(const ccBlendFunc& blendFunc);
@@ -5999,8 +6017,8 @@ class CCBone : public CCNodeRGBA {
 	CCBoneData* getBoneData();
 };
 class CCEaseElasticOut : public CCEaseElastic {
-	static CCEaseElasticOut* create(CCActionInterval* pAction);
-	static CCEaseElasticOut* create(CCActionInterval* pAction, float fPeriod);
+	static CCEaseElasticOut* create @ createpC(CCActionInterval* pAction);
+	static CCEaseElasticOut* create @ createpCf(CCActionInterval* pAction, float fPeriod);
 	CCObject* copyWithZone(CCZone* pZone);
 	void update(float time);
 	CCActionInterval* reverse();
@@ -6083,18 +6101,18 @@ class CCRipple3D : public CCGrid3DAction {
 class BaseTriggerAction : public CCObject {
 	void removeAll();
 	bool init();
-	void serialize(CocoLoader* pCocoLoader, stExpCocoNode* pCocoNode);
+	void serialize @ serializepCps(CocoLoader* pCocoLoader, stExpCocoNode* pCocoNode);
 	void done();
 	~BaseTriggerAction();
 };
 class CCRotateBy : public CCActionInterval {
-	static CCRotateBy* create(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
-	static CCRotateBy* create(float fDuration, float fDeltaAngle);
+	static CCRotateBy* create @ createfff(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
+	static CCRotateBy* create @ createff(float fDuration, float fDeltaAngle);
 	void startWithTarget(CCNode* pTarget);
 	CCActionInterval* reverse();
 	CCObject* copyWithZone(CCZone* pZone);
-	bool initWithDuration(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
-	bool initWithDuration(float fDuration, float fDeltaAngle);
+	bool initWithDuration @ initWithDurationfff(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
+	bool initWithDuration @ initWithDurationff(float fDuration, float fDeltaAngle);
 	void update(float time);
 };
 class CCContourData : public CCObject {
@@ -6131,8 +6149,8 @@ class CCCallFuncN : public CCCallFunc, public TypeInfo {
 	CCObject* copyWithZone(CCZone* pZone);
 };
 class CCMD5 {
-	static const char* md5(const void* data, unsigned long len);
-	static string md5(const char* s);
+	static const char* md5 @ md5pcvul(const void* data, unsigned long len);
+	static string md5 @ md5pcc(const char* s);
 };
 class LinearLayoutParameter : public LayoutParameter {
 	static LinearLayoutParameter* create();
@@ -6180,20 +6198,20 @@ class CCRect {
 	void setRect(float x, float y, float width, float height);
 };
 class CCJSONObject : public CCObject {
-	static CCJSONObject* create(const char* json, unsigned long length);
-	static CCJSONObject* create();
-	static CCJSONObject* create(const string& path);
+	static CCJSONObject* create @ createpccul(const char* json, unsigned long length);
+	static CCJSONObject* create @ create();
+	static CCJSONObject* create @ creatercs(const string& path);
 	void addDouble(const char* key, double d);
-	long optLong(int index, long def);
-	long optLong(const char* key, long def);
+	long optLong @ optLongil(int index, long def);
+	long optLong @ optLongpccl(const char* key, long def);
 	const char* keyAt(int index);
-	CCJSONObject* optJSONObject(int index);
-	CCJSONObject* optJSONObject(const char* key);
+	CCJSONObject* optJSONObject @ optJSONObjecti(int index);
+	CCJSONObject* optJSONObject @ optJSONObjectpcc(const char* key);
 	void addInt(const char* key, int i);
 	void addBool(const char* key, bool b);
 	void addArray(const char* key, CCJSONArray* ja);
-	bool optBool(int index, bool def);
-	bool optBool(const char* key, bool def);
+	bool optBool @ optBoolib(int index, bool def);
+	bool optBool @ optBoolpccb(const char* key, bool def);
 	int getLength();
 	~CCJSONObject();
 	string toString();
@@ -6201,17 +6219,17 @@ class CCJSONObject : public CCObject {
 	void addString(const char* key, const char* s);
 	void addObject(const char* key, CCJSONObject* jo);
 	void addLong(const char* key, long l);
-	CCJSONArray* optJSONArray(int index);
-	CCJSONArray* optJSONArray(const char* key);
-	float optFloat(int index, float def);
-	float optFloat(const char* key, float def);
+	CCJSONArray* optJSONArray @ optJSONArrayi(int index);
+	CCJSONArray* optJSONArray @ optJSONArraypcc(const char* key);
+	float optFloat @ optFloatif(int index, float def);
+	float optFloat @ optFloatpccf(const char* key, float def);
 	void addFloat(const char* key, float f);
-	string optString(int index, const char* def);
-	string optString(const char* key, const char* def);
-	double optDouble(int index, double def);
-	double optDouble(const char* key, double def);
-	int optInt(int index, int def);
-	int optInt(const char* key, int def);
+	string optString @ optStringipcc(int index, const char* def);
+	string optString @ optStringpccpcc(const char* key, const char* def);
+	double optDouble @ optDoubleid(int index, double def);
+	double optDouble @ optDoublepccd(const char* key, double def);
+	int optInt @ optIntii(int index, int def);
+	int optInt @ optIntpcci(const char* key, int def);
 	void output(CCAssetOutputStream* aos, int level);
 };
 class CCScriptEngineProtocol {
@@ -6274,8 +6292,8 @@ class CCTextureAtlas : public CCObject {
 	void updateQuad(ccV3F_C4B_T2F_Quad* quad, unsigned int index);
 	CCTexture2D* getTexture();
 	void setQuads(ccV3F_C4B_T2F_Quad* var);
-	void moveQuadsFromIndex(unsigned int index, unsigned int newIndex);
-	void moveQuadsFromIndex(unsigned int oldIndex, unsigned int amount, unsigned int newIndex);
+	void moveQuadsFromIndex @ moveQuadsFromIndexuiui(unsigned int index, unsigned int newIndex);
+	void moveQuadsFromIndex @ moveQuadsFromIndexuiuiui(unsigned int oldIndex, unsigned int amount, unsigned int newIndex);
 	unsigned int getTotalQuads();
 	void drawQuads();
 	void fillWithEmptyQuadsFromIndex(unsigned int index, unsigned int amount);
@@ -6286,8 +6304,8 @@ class CCTextureAtlas : public CCObject {
 	const char* description();
 	void removeQuadsAtIndex(unsigned int index, unsigned int amount);
 	void insertQuad(ccV3F_C4B_T2F_Quad* quad, unsigned int index);
-	void drawNumberOfQuads(unsigned int n, unsigned int start);
-	void drawNumberOfQuads(unsigned int n);
+	void drawNumberOfQuads @ drawNumberOfQuadsuiui(unsigned int n, unsigned int start);
+	void drawNumberOfQuads @ drawNumberOfQuadsui(unsigned int n);
 	void setDirty(bool bDirty);
 	bool isDirty();
 	void removeAllQuads();
@@ -6339,8 +6357,8 @@ class CCUtils {
 	static CCPoint getOrigin(CCNode* node);
 	static string joinInt(const CCArray& a, char sep);
 	static string appendPathComponent(const string& path, const string& component);
-	static CCPoint getPoint(CCNode* node, CCPoint anchor);
-	static CCPoint getPoint(CCNode* node, float xpercent, float ypercent);
+	static CCPoint getPoint @ getPointpCC(CCNode* node, CCPoint anchor);
+	static CCPoint getPoint @ getPointpCff(CCNode* node, float xpercent, float ypercent);
 	static string replace(string& s, const string& c, const string& sub);
 	static string arrayToString(const CCArray& array);
 	static CCArray& boolComponentsOfString(const string& s, char sep);
@@ -6352,8 +6370,8 @@ class CCUtils {
 	static long long currentTimeMillis();
 	static bool deleteFile(const string& path);
 	static string makeScreenshot(CCNode* root, const string& path, bool needStencil);
-	static CCRect getCenterRect(CCSpriteFrame* f);
-	static CCRect getCenterRect(const string& frameName);
+	static CCRect getCenterRect @ getCenterRectpC(CCSpriteFrame* f);
+	static CCRect getCenterRect @ getCenterRectrcs(const string& frameName);
 	static bool startsWith(const string& s, const string& sub);
 	static string getMacAddress();
 	static int getSystemVersionInt();
@@ -6368,8 +6386,8 @@ class CCUtils {
 	static ccColorHSV ccc32hsv(ccColor3B c);
 	static CCRect combine(const CCRect& r1, const CCRect& r2);
 	static CCSize ccsFromString(const string& s);
-	static CCPoint getLocalPoint(CCNode* node, CCPoint anchor);
-	static CCPoint getLocalPoint(CCNode* node, float xpercent, float ypercent);
+	static CCPoint getLocalPoint @ getLocalPointpCC(CCNode* node, CCPoint anchor);
+	static CCPoint getLocalPoint @ getLocalPointpCff(CCNode* node, float xpercent, float ypercent);
 	static CCScene* getScene(CCNode* n);
 	static bool testSegmentAABB(CCPoint p0, CCPoint p1, ccAABB b);
 	static CCArray& arrayFromString(const string& s);
@@ -6388,8 +6406,8 @@ class CCUtils {
 	static CCRect getBoundingBoxInWorldSpace(CCNode* node);
 	static string getInternalStoragePath();
 	static CCArray& componentsOfString(const string& s, char sep);
-	static const char* copy(const char* src, int start, unsigned long len);
-	static const char* copy(const char* src);
+	static const char* copy @ copypcciul(const char* src, int start, unsigned long len);
+	static const char* copy @ copypcc(const char* src);
 	static void replaceChar(string& s, char c, char sub);
 	static bool containsRect(const CCRect& r1, const CCRect& r2);
 	static int binarySearch(int* a, unsigned long len, int key);
@@ -6459,9 +6477,9 @@ class Layout : public Widget {
 	static Layout* create();
 	static CCObject* createInstance();
 	void setBackGroundColorVector(const CCPoint& vector);
-	void addChild(CCNode* child, int zOrder);
-	void addChild(CCNode* child);
-	void addChild(CCNode* child, int zOrder, int tag);
+	void addChild @ addChildpCi(CCNode* child, int zOrder);
+	void addChild @ addChildpC(CCNode* child);
+	void addChild @ addChildpCii(CCNode* child, int zOrder, int tag);
 	void onEnter();
 	void setClippingType(LayoutClippingType type);
 	void setBackGroundColorType(LayoutBackGroundColorType type);
@@ -6474,8 +6492,8 @@ class Layout : public Widget {
 	bool isClippingEnabled();
 	void setBackGroundImageOpacity(unsigned char opacity);
 	void setBackGroundImage(const char* fileName, TextureResType texType);
-	void setBackGroundColor(const ccColor3B& startColor, const ccColor3B& endColor);
-	void setBackGroundColor(const ccColor3B& color);
+	void setBackGroundColor @ setBackGroundColorrccrcc(const ccColor3B& startColor, const ccColor3B& endColor);
+	void setBackGroundColor @ setBackGroundColorrcc(const ccColor3B& color);
 	void visit();
 	void requestDoLayout();
 	~Layout();
@@ -6497,8 +6515,8 @@ class Layout : public Widget {
 	LayoutType getLayoutType();
 	const ccColor3B& getBackGroundStartColor();
 	bool hitTest(const CCPoint& pt);
-	void removeChild(CCNode* widget, bool cleanup);
-	void removeChild(CCNode* child);
+	void removeChild @ removeChildpCb(CCNode* widget, bool cleanup);
+	void removeChild @ removeChildpC(CCNode* child);
 	void setBackGroundImageScale9Enabled(bool enabled);
 	void setLayoutType(LayoutType type);
 };
@@ -6550,8 +6568,8 @@ class CCAFCSpriteCallback {
 class CCNotificationCenter : public CCObject {
 	static CCNotificationCenter* sharedNotificationCenter();
 	static void purgeNotificationCenter();
-	void postNotification(const char* name, CCObject* object);
-	void postNotification(const char* name);
+	void postNotification @ postNotificationpccpC(const char* name, CCObject* object);
+	void postNotification @ postNotificationpcc(const char* name);
 	void removeObserver(CCObject* target, const char* name);
 	int getObserverHandlerByName(const char* name);
 	int removeAllObservers(CCObject* target);
@@ -6561,18 +6579,18 @@ class CCNotificationCenter : public CCObject {
 	void registerScriptObserver(CCObject* target, int handler, const char* name);
 };
 class CCGradientSprite : public CCSprite {
-	static CCGradientSprite* create(const char* pszFileName);
-	static CCGradientSprite* create();
-	static CCGradientSprite* create(const char* pszFileName, const CCRect& rect);
-	static CCGradientSprite* createWithTexture(CCTexture2D* pTexture, const CCRect& rect);
-	static CCGradientSprite* createWithTexture(CCTexture2D* pTexture);
+	static CCGradientSprite* create @ createpcc(const char* pszFileName);
+	static CCGradientSprite* create @ create();
+	static CCGradientSprite* create @ createpccrcC(const char* pszFileName, const CCRect& rect);
+	static CCGradientSprite* createWithTexture @ createWithTexturepCrcC(CCTexture2D* pTexture, const CCRect& rect);
+	static CCGradientSprite* createWithTexture @ createWithTexturepC(CCTexture2D* pTexture);
 	static CCGradientSprite* createWithSpriteFrameName(const char* pszSpriteFrameName);
 	static CCGradientSprite* createWithSpriteFrame(CCSpriteFrame* pSpriteFrame);
 	const ccColor3B& getStartColor();
 	void setCompressedInterpolation(bool var);
 	unsigned char getEndOpacity();
-	void setColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
-	void setColor(const ccColor3B& color3);
+	void setColor @ setColorrccrccrcC(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
+	void setColor @ setColorrcc(const ccColor3B& color3);
 	void setOpacity(unsigned char opacity);
 	bool getCompressedInterpolation();
 	unsigned char getStartOpacity();
@@ -6648,9 +6666,9 @@ class CCComAttribute : public CCComponent {
 	void setBool(const char* key, bool value);
 };
 class CCMenuItemImage : public CCMenuItemSprite {
-	static CCMenuItemImage* create(const char* normalImage, const char* selectedImage, const char* disabledImage);
-	static CCMenuItemImage* create(const char* normalImage, const char* selectedImage);
-	static CCMenuItemImage* create();
+	static CCMenuItemImage* create @ createpccpccpcc(const char* normalImage, const char* selectedImage, const char* disabledImage);
+	static CCMenuItemImage* create @ createpccpcc(const char* normalImage, const char* selectedImage);
+	static CCMenuItemImage* create @ create();
 	void setDisabledSpriteFrame(CCSpriteFrame* frame);
 	void setSelectedSpriteFrame(CCSpriteFrame* frame);
 	void setNormalSpriteFrame(CCSpriteFrame* frame);
@@ -6678,8 +6696,8 @@ class ActionObject : public CCObject {
 	void simulationActionUpdate(float dt);
 	const char* getName();
 	void stop();
-	void play(CCCallFunc* func);
-	void play();
+	void play @ playpC(CCCallFunc* func);
+	void play @ play();
 	float getCurrentTime();
 	~ActionObject();
 	bool getLoop();
@@ -6709,21 +6727,21 @@ class CCStandardTouchHandler : public CCTouchHandler {
 	bool initWithDelegate(CCTouchDelegate* pDelegate, int nPriority);
 };
 class CCByteBuffer : public CCObject {
-	static CCByteBuffer* create(unsigned long res);
-	static CCByteBuffer* create();
+	static CCByteBuffer* create @ createul(unsigned long res);
+	static CCByteBuffer* create @ create();
 	unsigned long available();
 	void compact();
 	void setReadPos(unsigned long p);
 	void readPascalString(string& dest);
 	void revoke(unsigned long len);
-	void read(string& dest);
-	unsigned long read(unsigned char* buffer, unsigned long len);
+	void read @ readrs(string& dest);
+	unsigned long read @ readpucul(unsigned char* buffer, unsigned long len);
 	void skip(unsigned long len);
 	void clear();
 	void writeCString(const string& value);
 	~CCByteBuffer();
-	void write(const string& value);
-	void write(const unsigned char* data, unsigned long size);
+	void write @ writercs(const string& value);
+	void write @ writepcucul(const unsigned char* data, unsigned long size);
 	void readCString(string& dest);
 	unsigned long getReadPos();
 	void writeLine(const string& value);
@@ -6746,9 +6764,9 @@ class CCActionInterval : public CCFiniteTimeAction {
 };
 class CCBatchNode : public CCNode {
 	static CCBatchNode* create();
-	void addChild(CCNode* pChild, int zOrder);
-	void addChild(CCNode* pChild);
-	void addChild(CCNode* pChild, int zOrder, int tag);
+	void addChild @ addChildpCi(CCNode* pChild, int zOrder);
+	void addChild @ addChildpC(CCNode* pChild);
+	void addChild @ addChildpCii(CCNode* pChild, int zOrder, int tag);
 	void draw();
 	CCTextureAtlas* getTexureAtlasWithTexture(CCTexture2D* texture);
 	void visit();
