@@ -192,8 +192,6 @@ class NativeType(object):
         self.is_pointer = False
         self.is_ref = False
         self.canonical_type = None
-        self.pointee_name = ""
-        self.qualified_pointee_name = ""
 
     @staticmethod
     def from_type(ntype):
@@ -208,14 +206,16 @@ class NativeType(object):
             nt.name += "*"
             nt.qualified_name += "*"
             nt.whole_name = nt.qualified_name
-            nt.is_enum = False
             nt.is_const = ntype.get_pointee().is_const_qualified()
             nt.is_pointer = True
 
             # const prefix
             if nt.is_const:
                 nt.whole_name = "const " + nt.whole_name
-                nt.name = "const " + nt.name
+
+            # don't support non-object pointer
+            if not nt.is_class:
+                nt.not_supported = True
         elif ntype.kind == TypeKind.LVALUEREFERENCE:
             nt = NativeType.from_type(ntype.get_pointee())
             nt.is_const = ntype.get_pointee().is_const_qualified()
@@ -231,16 +231,12 @@ class NativeType(object):
         elif ntype.kind == TypeKind.RECORD:
             nt = NativeType()
             decl = ntype.get_declaration()
-            if decl.kind == CursorKind.CLASS_DECL:
+            if decl.kind == CursorKind.CLASS_DECL or decl.kind == CursorKind.STRUCT_DECL:
                 nt.is_class = True
-            elif decl.kind == CursorKind.STRUCT_DECL:
-                nt.is_struct = True
             nt.name = decl.displayname
-            nt.pointee_name = nt.name
             nt.qualified_name = get_qualified_name(decl)
             nt.qualified_ns  = get_qualified_namespace(decl)
             nt.whole_name = nt.qualified_name
-            nt.qualified_pointee_name = nt.whole_name
         else:
             nt = NativeType()
             decl = ntype.get_declaration()
@@ -260,19 +256,16 @@ class NativeType(object):
                         nt = NativeType.from_type(ctype)
                     else:
                         nt.name = native_name_from_type(ctype)
-                        nt.pointee_name = nt.name
                         nt.qualified_name = get_qualified_name(decl)
                         nt.qualified_ns  = get_qualified_namespace(decl)
                 elif decl_type.kind == CursorKind.STRUCT_DECL:
                     nt.is_struct = True
                     nt.name = decl.displayname
-                    nt.pointee_name = nt.name
                     nt.qualified_name = get_qualified_name(decl)
                     nt.qualified_ns  = get_qualified_namespace(decl)
                 elif decl_type.kind == CursorKind.ENUM_DECL:
                     nt.is_enum = True
                     nt.name = decl.displayname
-                    nt.pointee_name = nt.name
                     nt.qualified_name = get_qualified_name(decl)
                     nt.qualified_ns  = get_qualified_namespace(decl)
                 else:
@@ -280,38 +273,25 @@ class NativeType(object):
                         nt = NativeType.from_type(ctype)
                     else:
                         nt.name = native_name_from_type(ctype)
-                        nt.pointee_name = nt.name
                         nt.qualified_name = get_qualified_name(decl)
                         nt.qualified_ns  = get_qualified_namespace(decl)
             elif decl.kind == CursorKind.NO_DECL_FOUND:
                 nt.name = native_name_from_type(ntype)
-                nt.pointee_name = nt.name
                 nt.qualified_name = get_qualified_name(decl)
                 nt.qualified_ns  = get_qualified_namespace(decl)
             else:
                 nt.name = decl.spelling
-                nt.pointee_name = nt.name
                 nt.qualified_name = get_qualified_name(decl)
                 nt.qualified_ns = get_qualified_namespace(decl)
-
-            # set qualified pointee name
-            if len(nt.qualified_ns) > 0:
-                nt.qualified_pointee_name = nt.qualified_ns + "::" + nt.pointee_name
-            else:
-                nt.qualified_pointee_name = nt.pointee_name
 
             # special checking for std::string and std::function
             decl_qn = get_qualified_name(decl)
             if decl_qn == "std::string":
                 nt.name = decl_qn
                 nt.qualified_name = decl_qn
-                nt.pointee_name = nt.name
-                nt.qualified_pointee_name = nt.qualified_name
             if decl_qn.startswith("std::function"):
                 nt.name = decl_qn
                 nt.qualified_name = "std::function"
-                nt.pointee_name = nt.name
-                nt.qualified_pointee_name = nt.qualified_name
 
             # if failed to get qualified name, use name as qualified name
             if len(nt.qualified_name) == 0 or nt.qualified_name.find("::") == -1:
@@ -755,94 +735,6 @@ class NativeClass(Closure):
             return self.parents[0].is_method_in_parents(method_name)
         return False
 
-    def is_non_public_type(self, t):
-        if t.qualified_pointee_name == "std::string" or t.qualified_pointee_name.startswith("std::function"):
-            return False
-        elif t.is_enum:
-            closure = self
-            while closure is not None:
-                if closure.enums.has_key(t.qualified_pointee_name):
-                    return False
-                closure = closure.parent_closure
-            return True
-        elif t.is_struct:
-            closure = self
-            while closure is not None:
-                if closure.structs.has_key(t.qualified_pointee_name):
-                    return False
-                closure = closure.parent_closure
-            return True
-        elif t.is_class:
-            closure = self
-            while closure is not None:
-                if closure.classes.has_key(t.qualified_pointee_name):
-                    return False
-                closure = closure.parent_closure
-            return True
-        return False
-
-    def use_any_non_public_type(self, nf):
-        # check return type
-        if self.is_non_public_type(nf.ret_type):
-            return True
-
-        # check every arg
-        for arg in nf.arguments:
-            if self.is_non_public_type(arg):
-                return True
-
-        return False
-
-    def record_function_types(self, nf):
-        # check return type
-        if nf.ret_type.is_enum:
-            closure = self
-            while closure is not None:
-                if closure.enums.has_key(nf.ret_type.qualified_pointee_name):
-                    closure.generated_enums[nf.ret_type.qualified_pointee_name] = closure.enums[nf.ret_type.qualified_pointee_name]
-                    break
-                closure = closure.parent_closure
-        elif nf.ret_type.is_struct:
-            closure = self
-            while closure is not None:
-                if closure.structs.has_key(nf.ret_type.qualified_pointee_name):
-                    closure.generated_structs[nf.ret_type.qualified_pointee_name] = closure.structs[nf.ret_type.qualified_pointee_name]
-                    break
-                closure = closure.parent_closure
-
-        # check arguments
-        for arg in nf.arguments:
-            if arg.is_enum:
-                closure = self
-                while closure is not None:
-                    if closure.enums.has_key(arg.qualified_pointee_name):
-                        closure.generated_enums[arg.qualified_pointee_name] = closure.enums[arg.qualified_pointee_name]
-                        break
-                    closure = closure.parent_closure
-            elif arg.is_struct:
-                closure = self
-                while closure is not None:
-                    if closure.structs.has_key(arg.qualified_pointee_name):
-                        closure.generated_structs[arg.qualified_pointee_name] = closure.structs[arg.qualified_pointee_name]
-                        break
-                    closure = closure.parent_closure
-
-    def record_field_types(self, nf):
-        if nf.type.is_enum:
-            closure = self
-            while closure is not None:
-                if closure.enums.has_key(nf.type.qualified_pointee_name):
-                    closure.generated_enums[nf.type.qualified_pointee_name] = closure.enums[nf.type.qualified_pointee_name]
-                    break
-                closure = closure.parent_closure
-        elif nf.type.is_struct:
-            closure = self
-            while closure is not None:
-                if closure.structs.has_key(nf.type.qualified_pointee_name):
-                    closure.generated_structs[nf.type.qualified_pointee_name] = closure.structs[nf.type.qualified_pointee_name]
-                    break
-                closure = closure.parent_closure
-
     def generate_code(self, hfile, cppfile, generator):
         # function binding code
         for name, m in self.static_methods.items():
@@ -1206,6 +1098,12 @@ class Generator(Closure):
             self.check_class_abstract(c, c.parents)
             if self.is_ccobject_type(c):
                 c.is_ccobject = True
+
+            # if class is abstract, remove constructor
+            if c.is_abstract:
+                if c.has_constructor:
+                    del c.methods["constructor"]
+                    c.has_constructor = False
 
         # generate header file
         self.hfile_path = os.path.join(self.dst_dir, "lua_" + self.target_module_fullname + "_auto.h")

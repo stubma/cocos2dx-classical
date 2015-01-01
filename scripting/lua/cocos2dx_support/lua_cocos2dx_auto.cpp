@@ -164,49 +164,28 @@ int lua_cocos2dx_CCNode_removeComponent(lua_State* tolua_S) {
     // get argument count
     argc = lua_gettop(tolua_S) - 1;
 
-    // try call function
-    do {
-        if (argc == 1) {
-            // arguments declaration
-            CCComponent* arg0;
+    // if argument count matched, call
+    if (argc == 1) {
+        // arguments declaration
+        CCComponent* arg0;
 
-            // convert lua value to desired arguments
-            ok &= luaval_to_object<CCComponent>(tolua_S, 2, "CCComponent", &arg0);
+        // convert lua value to desired arguments
+        ok &= luaval_to_object<CCComponent>(tolua_S, 2, "CCComponent", &arg0);
 
-            // if conversion is not ok, print error and return
-            if(!ok) { break; }
-
-            // call function
-            bool ret = cobj->removeComponent(arg0);
-            tolua_pushboolean(tolua_S, (bool)ret);
-            return 1;
+        // if conversion is not ok, print error and return
+        if(!ok) {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_CCNode_removeComponent'", NULL);
+            return 0;
         }
-    } while(0);
-    ok = true;
 
-    // try call function
-    do {
-        if (argc == 1) {
-            // arguments declaration
-            const char* arg0;
-
-            // convert lua value to desired arguments
-            #pragma warning NO CONVERSION TO NATIVE FOR const char*
-				ok = false;
-
-            // if conversion is not ok, print error and return
-            if(!ok) { break; }
-
-            // call function
-            bool ret = cobj->removeComponent(arg0);
-            tolua_pushboolean(tolua_S, (bool)ret);
-            return 1;
-        }
-    } while(0);
-    ok = true;
+        // call function
+        bool ret = cobj->removeComponent(arg0);
+        tolua_pushboolean(tolua_S, (bool)ret);
+        return 1;
+    }
 
     // if to here, means argument count is not correct
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "CCNode:removeComponent",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "CCNode:removeComponent", argc, 1);
     return 0;
 }
 
@@ -1405,47 +1384,6 @@ int lua_cocos2dx_CCNode_getRotationY(lua_State* tolua_S) {
     return 0;
 }
 
-int lua_cocos2dx_CCNode_description(lua_State* tolua_S) {
-    // variables
-    int argc = 0;
-    cocos2d::CCNode* cobj = NULL;
-    bool ok = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-    // if not constructor, validate the top is our desired object type
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S, 1, "CCNode", 0, &tolua_err)) {
-        tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_CCNode_description'.", &tolua_err);
-        return 0;
-    }
-#endif
-    cobj = (cocos2d::CCNode*)tolua_tousertype(tolua_S, 1, 0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) {
-        tolua_error(tolua_S, "invalid 'cobj' in function 'lua_cocos2dx_CCNode_description'", NULL);
-        return 0;
-    }
-#endif
-
-    // get argument count
-    argc = lua_gettop(tolua_S) - 1;
-
-    // if argument count matched, call
-    if (argc == 0) {
-
-        // call function
-        const char* ret = cobj->description();
-        #pragma warning NO CONVERSION FROM NATIVE FOR const char*;
-        return 1;
-    }
-
-    // if to here, means argument count is not correct
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "CCNode:description", argc, 0);
-    return 0;
-}
-
 int lua_cocos2dx_CCNode_unscheduleUpdate(lua_State* tolua_S) {
     // variables
     int argc = 0;
@@ -1483,47 +1421,6 @@ int lua_cocos2dx_CCNode_unscheduleUpdate(lua_State* tolua_S) {
 
     // if to here, means argument count is not correct
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "CCNode:unscheduleUpdate", argc, 0);
-    return 0;
-}
-
-int lua_cocos2dx_CCNode_getUserData(lua_State* tolua_S) {
-    // variables
-    int argc = 0;
-    cocos2d::CCNode* cobj = NULL;
-    bool ok = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-    // if not constructor, validate the top is our desired object type
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S, 1, "CCNode", 0, &tolua_err)) {
-        tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_CCNode_getUserData'.", &tolua_err);
-        return 0;
-    }
-#endif
-    cobj = (cocos2d::CCNode*)tolua_tousertype(tolua_S, 1, 0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) {
-        tolua_error(tolua_S, "invalid 'cobj' in function 'lua_cocos2dx_CCNode_getUserData'", NULL);
-        return 0;
-    }
-#endif
-
-    // get argument count
-    argc = lua_gettop(tolua_S) - 1;
-
-    // if argument count matched, call
-    if (argc == 0) {
-
-        // call function
-        void* ret = cobj->getUserData();
-        #pragma warning NO CONVERSION FROM NATIVE FOR void*;
-        return 1;
-    }
-
-    // if to here, means argument count is not correct
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "CCNode:getUserData", argc, 0);
     return 0;
 }
 
@@ -2530,7 +2427,7 @@ int lua_cocos2dx_CCNode_addComponent(lua_State* tolua_S) {
     return 0;
 }
 
-int lua_cocos2dx_CCNode_visit(lua_State* tolua_S) {
+int lua_cocos2dx_CCNode_runAction(lua_State* tolua_S) {
     // variables
     int argc = 0;
     cocos2d::CCNode* cobj = NULL;
@@ -2542,14 +2439,14 @@ int lua_cocos2dx_CCNode_visit(lua_State* tolua_S) {
     // if not constructor, validate the top is our desired object type
 #if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S, 1, "CCNode", 0, &tolua_err)) {
-        tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_CCNode_visit'.", &tolua_err);
+        tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_CCNode_runAction'.", &tolua_err);
         return 0;
     }
 #endif
     cobj = (cocos2d::CCNode*)tolua_tousertype(tolua_S, 1, 0);
 #if COCOS2D_DEBUG >= 1
     if (!cobj) {
-        tolua_error(tolua_S, "invalid 'cobj' in function 'lua_cocos2dx_CCNode_visit'", NULL);
+        tolua_error(tolua_S, "invalid 'cobj' in function 'lua_cocos2dx_CCNode_runAction'", NULL);
         return 0;
     }
 #endif
@@ -2558,15 +2455,27 @@ int lua_cocos2dx_CCNode_visit(lua_State* tolua_S) {
     argc = lua_gettop(tolua_S) - 1;
 
     // if argument count matched, call
-    if (argc == 0) {
+    if (argc == 1) {
+        // arguments declaration
+        CCAction* arg0;
+
+        // convert lua value to desired arguments
+        ok &= luaval_to_object<CCAction>(tolua_S, 2, "CCAction", &arg0);
+
+        // if conversion is not ok, print error and return
+        if(!ok) {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_CCNode_runAction'", NULL);
+            return 0;
+        }
 
         // call function
-        cobj->visit();
-        return 0;
+        cocos2d::CCAction* ret = cobj->runAction(arg0);
+        object_to_luaval<cocos2d::CCAction>(tolua_S, "CCAction", (cocos2d::CCAction*)ret);
+        return 1;
     }
 
     // if to here, means argument count is not correct
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "CCNode:visit", argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "CCNode:runAction", argc, 1);
     return 0;
 }
 
@@ -2837,7 +2746,7 @@ int lua_cocos2dx_CCNode_getAnchorPointInPoints(lua_State* tolua_S) {
     return 0;
 }
 
-int lua_cocos2dx_CCNode_runAction(lua_State* tolua_S) {
+int lua_cocos2dx_CCNode_visit(lua_State* tolua_S) {
     // variables
     int argc = 0;
     cocos2d::CCNode* cobj = NULL;
@@ -2849,14 +2758,14 @@ int lua_cocos2dx_CCNode_runAction(lua_State* tolua_S) {
     // if not constructor, validate the top is our desired object type
 #if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S, 1, "CCNode", 0, &tolua_err)) {
-        tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_CCNode_runAction'.", &tolua_err);
+        tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_CCNode_visit'.", &tolua_err);
         return 0;
     }
 #endif
     cobj = (cocos2d::CCNode*)tolua_tousertype(tolua_S, 1, 0);
 #if COCOS2D_DEBUG >= 1
     if (!cobj) {
-        tolua_error(tolua_S, "invalid 'cobj' in function 'lua_cocos2dx_CCNode_runAction'", NULL);
+        tolua_error(tolua_S, "invalid 'cobj' in function 'lua_cocos2dx_CCNode_visit'", NULL);
         return 0;
     }
 #endif
@@ -2865,27 +2774,15 @@ int lua_cocos2dx_CCNode_runAction(lua_State* tolua_S) {
     argc = lua_gettop(tolua_S) - 1;
 
     // if argument count matched, call
-    if (argc == 1) {
-        // arguments declaration
-        CCAction* arg0;
-
-        // convert lua value to desired arguments
-        ok &= luaval_to_object<CCAction>(tolua_S, 2, "CCAction", &arg0);
-
-        // if conversion is not ok, print error and return
-        if(!ok) {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_CCNode_runAction'", NULL);
-            return 0;
-        }
+    if (argc == 0) {
 
         // call function
-        cocos2d::CCAction* ret = cobj->runAction(arg0);
-        object_to_luaval<cocos2d::CCAction>(tolua_S, "CCAction", (cocos2d::CCAction*)ret);
-        return 1;
+        cobj->visit();
+        return 0;
     }
 
     // if to here, means argument count is not correct
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "CCNode:runAction", argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "CCNode:visit", argc, 0);
     return 0;
 }
 
@@ -3661,43 +3558,17 @@ int lua_cocos2dx_CCNode_getPosition(lua_State* tolua_S) {
     // get argument count
     argc = lua_gettop(tolua_S) - 1;
 
-    // try call function
-    do {
-        if (argc == 2) {
-            // arguments declaration
-            float* arg0;
-            float* arg1;
+    // if argument count matched, call
+    if (argc == 0) {
 
-            // convert lua value to desired arguments
-            #pragma warning NO CONVERSION TO NATIVE FOR float*
-				ok = false;
-            #pragma warning NO CONVERSION TO NATIVE FOR float*
-				ok = false;
-
-            // if conversion is not ok, print error and return
-            if(!ok) { break; }
-
-            // call function
-            cobj->getPosition(arg0, arg1);
-            return 0;
-        }
-    } while(0);
-    ok = true;
-
-    // try call function
-    do {
-        if (argc == 0) {
-
-            // call function
-            const cocos2d::CCPoint& ret = cobj->getPosition();
-            point_to_luaval(tolua_S, ret);
-            return 1;
-        }
-    } while(0);
-    ok = true;
+        // call function
+        const cocos2d::CCPoint& ret = cobj->getPosition();
+        point_to_luaval(tolua_S, ret);
+        return 1;
+    }
 
     // if to here, means argument count is not correct
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "CCNode:getPosition",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "CCNode:getPosition", argc, 0);
     return 0;
 }
 
@@ -4417,59 +4288,6 @@ int lua_cocos2dx_CCNode_cleanup(lua_State* tolua_S) {
     return 0;
 }
 
-int lua_cocos2dx_CCNode_getComponent(lua_State* tolua_S) {
-    // variables
-    int argc = 0;
-    cocos2d::CCNode* cobj = NULL;
-    bool ok = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-    // if not constructor, validate the top is our desired object type
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S, 1, "CCNode", 0, &tolua_err)) {
-        tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_CCNode_getComponent'.", &tolua_err);
-        return 0;
-    }
-#endif
-    cobj = (cocos2d::CCNode*)tolua_tousertype(tolua_S, 1, 0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) {
-        tolua_error(tolua_S, "invalid 'cobj' in function 'lua_cocos2dx_CCNode_getComponent'", NULL);
-        return 0;
-    }
-#endif
-
-    // get argument count
-    argc = lua_gettop(tolua_S) - 1;
-
-    // if argument count matched, call
-    if (argc == 1) {
-        // arguments declaration
-        const char* arg0;
-
-        // convert lua value to desired arguments
-        #pragma warning NO CONVERSION TO NATIVE FOR const char*
-				ok = false;
-
-        // if conversion is not ok, print error and return
-        if(!ok) {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_CCNode_getComponent'", NULL);
-            return 0;
-        }
-
-        // call function
-        cocos2d::CCComponent* ret = cobj->getComponent(arg0);
-        object_to_luaval<cocos2d::CCComponent>(tolua_S, "CCComponent", (cocos2d::CCComponent*)ret);
-        return 1;
-    }
-
-    // if to here, means argument count is not correct
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "CCNode:getComponent", argc, 1);
-    return 0;
-}
-
 int lua_cocos2dx_CCNode_getContentSize(lua_State* tolua_S) {
     // variables
     int argc = 0;
@@ -5132,58 +4950,6 @@ int lua_cocos2dx_CCNode_worldToNodeTransform(lua_State* tolua_S) {
     return 0;
 }
 
-int lua_cocos2dx_CCNode_setUserData(lua_State* tolua_S) {
-    // variables
-    int argc = 0;
-    cocos2d::CCNode* cobj = NULL;
-    bool ok = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-    // if not constructor, validate the top is our desired object type
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S, 1, "CCNode", 0, &tolua_err)) {
-        tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_CCNode_setUserData'.", &tolua_err);
-        return 0;
-    }
-#endif
-    cobj = (cocos2d::CCNode*)tolua_tousertype(tolua_S, 1, 0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) {
-        tolua_error(tolua_S, "invalid 'cobj' in function 'lua_cocos2dx_CCNode_setUserData'", NULL);
-        return 0;
-    }
-#endif
-
-    // get argument count
-    argc = lua_gettop(tolua_S) - 1;
-
-    // if argument count matched, call
-    if (argc == 1) {
-        // arguments declaration
-        void* arg0;
-
-        // convert lua value to desired arguments
-        #pragma warning NO CONVERSION TO NATIVE FOR void*
-				ok = false;
-
-        // if conversion is not ok, print error and return
-        if(!ok) {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_CCNode_setUserData'", NULL);
-            return 0;
-        }
-
-        // call function
-        cobj->setUserData(arg0);
-        return 0;
-    }
-
-    // if to here, means argument count is not correct
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "CCNode:setUserData", argc, 1);
-    return 0;
-}
-
 int lua_cocos2dx_CCNode_parentToNodeTransform(lua_State* tolua_S) {
     // variables
     int argc = 0;
@@ -5524,9 +5290,7 @@ int lua_register_cocos2dx_CCNode(lua_State* tolua_S) {
         tolua_function(tolua_S, "removeAllChildren", lua_cocos2dx_CCNode_removeAllChildren);
         tolua_function(tolua_S, "getRotationX", lua_cocos2dx_CCNode_getRotationX);
         tolua_function(tolua_S, "getRotationY", lua_cocos2dx_CCNode_getRotationY);
-        tolua_function(tolua_S, "description", lua_cocos2dx_CCNode_description);
         tolua_function(tolua_S, "unscheduleUpdate", lua_cocos2dx_CCNode_unscheduleUpdate);
-        tolua_function(tolua_S, "getUserData", lua_cocos2dx_CCNode_getUserData);
         tolua_function(tolua_S, "setParent", lua_cocos2dx_CCNode_setParent);
         tolua_function(tolua_S, "nodeToParentTransform", lua_cocos2dx_CCNode_nodeToParentTransform);
         tolua_function(tolua_S, "unscheduleAllSelectors", lua_cocos2dx_CCNode_unscheduleAllSelectors);
@@ -5548,14 +5312,14 @@ int lua_register_cocos2dx_CCNode(lua_State* tolua_S) {
         tolua_function(tolua_S, "onEnter", lua_cocos2dx_CCNode_onEnter);
         tolua_function(tolua_S, "convertToNodeSpaceAR", lua_cocos2dx_CCNode_convertToNodeSpaceAR);
         tolua_function(tolua_S, "addComponent", lua_cocos2dx_CCNode_addComponent);
-        tolua_function(tolua_S, "visit", lua_cocos2dx_CCNode_visit);
+        tolua_function(tolua_S, "runAction", lua_cocos2dx_CCNode_runAction);
         tolua_function(tolua_S, "setShaderProgram", lua_cocos2dx_CCNode_setShaderProgram);
         tolua_function(tolua_S, "scheduleUpdateWithPriorityLua", lua_cocos2dx_CCNode_scheduleUpdateWithPriorityLua);
         tolua_function(tolua_S, "getRotation", lua_cocos2dx_CCNode_getRotation);
         tolua_function(tolua_S, "resumeSchedulerAndActions", lua_cocos2dx_CCNode_resumeSchedulerAndActions);
         tolua_function(tolua_S, "getZOrder", lua_cocos2dx_CCNode_getZOrder);
         tolua_function(tolua_S, "getAnchorPointInPoints", lua_cocos2dx_CCNode_getAnchorPointInPoints);
-        tolua_function(tolua_S, "runAction", lua_cocos2dx_CCNode_runAction);
+        tolua_function(tolua_S, "visit", lua_cocos2dx_CCNode_visit);
         tolua_function(tolua_S, "transform", lua_cocos2dx_CCNode_transform);
         tolua_function(tolua_S, "setVertexZ", lua_cocos2dx_CCNode_setVertexZ);
         tolua_function(tolua_S, "setScheduler", lua_cocos2dx_CCNode_setScheduler);
@@ -5588,7 +5352,6 @@ int lua_register_cocos2dx_CCNode(lua_State* tolua_S) {
         tolua_function(tolua_S, "getScaleY", lua_cocos2dx_CCNode_getScaleY);
         tolua_function(tolua_S, "getScaleX", lua_cocos2dx_CCNode_getScaleX);
         tolua_function(tolua_S, "cleanup", lua_cocos2dx_CCNode_cleanup);
-        tolua_function(tolua_S, "getComponent", lua_cocos2dx_CCNode_getComponent);
         tolua_function(tolua_S, "getContentSize", lua_cocos2dx_CCNode_getContentSize);
         tolua_function(tolua_S, "setGrid", lua_cocos2dx_CCNode_setGrid);
         tolua_function(tolua_S, "draw", lua_cocos2dx_CCNode_draw);
@@ -5604,7 +5367,6 @@ int lua_register_cocos2dx_CCNode(lua_State* tolua_S) {
         tolua_function(tolua_S, "onExitTransitionDidStart", lua_cocos2dx_CCNode_onExitTransitionDidStart);
         tolua_function(tolua_S, "getScale", lua_cocos2dx_CCNode_getScale);
         tolua_function(tolua_S, "worldToNodeTransform", lua_cocos2dx_CCNode_worldToNodeTransform);
-        tolua_function(tolua_S, "setUserData", lua_cocos2dx_CCNode_setUserData);
         tolua_function(tolua_S, "parentToNodeTransform", lua_cocos2dx_CCNode_parentToNodeTransform);
         tolua_function(tolua_S, "getCamera", lua_cocos2dx_CCNode_getCamera);
         tolua_function(tolua_S, "setTag", lua_cocos2dx_CCNode_setTag);
