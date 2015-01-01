@@ -478,7 +478,7 @@ class NativeType(object):
             tpl = dict_get_value_re(to_native_dict, keys)
             tpl = Template(tpl, searchList=[convert_opts])
             return str(tpl).rstrip()
-        return "#pragma warning NO CONVERSION TO NATIVE FOR " + self.name + "\n" + convert_opts['level'] * "\t" +  "ok = false"
+        return "#pragma warning NO CONVERSION TO NATIVE FOR " + self.name + "\n" + convert_opts['level'] * "\t\t" + "ok = false"
 
 class NativeTypedef(object):
     def __init__(self, node, closure):
@@ -737,12 +737,10 @@ class NativeClass(Closure):
         self.fields = []
         self.methods = {}
         self.static_methods = {}
-        self.is_struct = False
         self.is_typedef = False
         self.current_access_specifier = AccessSpecifierKind.PRIVATE
         if node.kind == CursorKind.STRUCT_DECL:
             self.current_access_specifier = AccessSpecifierKind.PUBLIC
-            self.is_struct = True
         self.override_methods = {}
         self.has_constructor = False
         self.qualified_ns = get_qualified_namespace(node)
@@ -849,14 +847,18 @@ class NativeClass(Closure):
                 closure = closure.parent_closure
 
     def generate_code(self, hfile, cppfile, generator):
+        # function binding code
         for name, m in self.static_methods.items():
             m.generate_code(hfile, cppfile, self, generator)
-
         for name, m in self.methods.items():
             m.generate_code(hfile, cppfile, self, generator)
-
         for name, m in self.override_methods.items():
             m.generate_code(hfile, cppfile, self, generator)
+
+        # register code
+        tpl = Template(file=os.path.join("templates", "register.c"),
+                               searchList=[self, generator])
+        cppfile.write(str(tpl))
 
     def visit_node(self, node):
         # visit all children
@@ -894,16 +896,10 @@ class NativeClass(Closure):
                 ne = NativeEnum(node)
                 self.enums[get_qualified_name(node)] = ne
             return False
-        elif node.kind == CursorKind.CLASS_DECL:
+        elif node.kind == CursorKind.CLASS_DECL or node.kind == CursorKind.STRUCT_DECL:
             if node.semantic_parent == self.node and self.current_access_specifier == AccessSpecifierKind.PUBLIC:
                 klass = NativeClass(node, self)
                 self.classes[klass.qualified_name] = klass
-            return False
-        elif node.kind == CursorKind.STRUCT_DECL:
-            if node.semantic_parent == self.node and self.current_access_specifier == AccessSpecifierKind.PUBLIC:
-                if not self.is_struct_ignored(node):
-                    st = NativeClass(node, self)
-                    self.structs[st.qualified_name] = st
             return False
         elif node.kind == CursorKind.TYPEDEF_DECL:
             if node == node.type.get_declaration() and self.current_access_specifier == AccessSpecifierKind.PUBLIC:
@@ -1072,7 +1068,7 @@ class Generator(Closure):
         return False
 
     def process_node(self, node):
-        if node.kind == CursorKind.CLASS_DECL:
+        if node.kind == CursorKind.CLASS_DECL or node.kind == CursorKind.STRUCT_DECL:
             # check namespace for found class
             if node == node.type.get_declaration() and len(node.get_children_array()) > 0:
                 # check class is target or not
@@ -1100,14 +1096,6 @@ class Generator(Closure):
                 qn = get_qualified_name(node)
                 ne = NativeEnum(node)
                 self.enums[qn] = ne
-            return False
-        elif node.kind == CursorKind.STRUCT_DECL:
-            if node == node.type.get_declaration() and len(node.get_children_array()) > 0:
-                if not self.is_struct_ignored(node):
-                    qn = get_qualified_name(node)
-                    if not self.structs.has_key(qn):
-                        st = NativeClass(node, self)
-                        self.structs[qn] = st
             return False
         elif node.kind == CursorKind.TYPEDEF_DECL:
             if node == node.type.get_declaration():

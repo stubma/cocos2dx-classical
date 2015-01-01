@@ -32,28 +32,6 @@ int lua_test_SimpleNativeClass_processInt(lua_State* tolua_S) {
 
     // try call function
     do {
-        if (argc == 2) {
-            // arguments declaration
-            std::string arg0;
-            CCPoint arg1;
-
-            // convert lua value to desired arguments
-            ok &= luaval_to_std_string(tolua_S, 2, &arg0, "SimpleNativeClass:processInt");
-            ok &= luaval_to_point(tolua_S, 3, &arg1, "SimpleNativeClass:processInt");
-
-            // if conversion is not ok, print error and return
-            if(!ok) { break; }
-
-            // call function
-            int ret = SimpleNativeClass::processInt(arg0, arg1);
-            tolua_pushnumber(tolua_S, (lua_Number)ret);
-            return 1;
-        }
-    } while(0);
-    ok = true;
-
-    // try call function
-    do {
         if (argc == 3) {
             // arguments declaration
             std::string arg0;
@@ -127,6 +105,21 @@ int lua_test_SimpleNativeClass_SimpleNativeClass(lua_State* tolua_S) {
     // if to here, means argument count is not correct
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "SimpleNativeClass:SimpleNativeClass", argc, 0);
     return 0;
+}
+
+int lua_register_test_SimpleNativeClass(lua_State* tolua_S) {
+    tolua_usertype(tolua_S, "SimpleNativeClass");
+    tolua_cclass(tolua_S, "SimpleNativeClass", "SimpleNativeClass", "BaseClass", nullptr);
+
+    // register module
+    tolua_beginmodule(tolua_S, "SimpleNativeClass");
+        tolua_function(tolua_S, "new", lua_test_SimpleNativeClass_SimpleNativeClass);
+        tolua_function(tolua_S, "processInt", lua_test_SimpleNativeClass_processInt);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(SimpleNativeClass).name();
+    g_luaType[typeName] = "SimpleNativeClass";
+    g_typeCast["SimpleNativeClass"] = "SimpleNativeClass";
+    return 1;
 }
 
 TOLUA_API int register_all_test(lua_State* tolua_S) {

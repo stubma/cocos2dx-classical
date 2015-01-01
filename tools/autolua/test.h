@@ -9,12 +9,17 @@ typedef struct {
 } CCPoint;
 }
 
-class SimpleNativeClass
+class BaseClass {
+public:
+    void baseMethod(float* f);
+};
+
+class SimpleNativeClass : public BaseClass
 {
 public:
 	SimpleNativeClass();
 	static void processInt(std::string s);
-	static int processInt(std::string s, cocos2d::CCPoint f, float fd = 1);
+	static int processInt(std::string s, cocos2d::CCPoint f, float fd);
 };
 
 #endif
