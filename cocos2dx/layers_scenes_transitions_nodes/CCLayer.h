@@ -385,6 +385,12 @@ protected:
     unsigned int m_nEnabledLayer;
     CCArray*     m_pLayers;
     
+    /** initializes a MultiplexLayer with one or more layers using a variable argument list.
+     *  @js NA
+     *  @lua NA
+     */
+    bool initWithLayers(CCLayer* layer, va_list params);
+    
 public:
     /**
      * @js ctor
@@ -421,12 +427,6 @@ public:
     static CCLayerMultiplex* createWithLayer(CCLayer* layer);
     
     void addLayer(CCLayer* layer);
-    
-    /** initializes a MultiplexLayer with one or more layers using a variable argument list.
-     *  @js NA
-     *  @lua NA
-     */
-    bool initWithLayers(CCLayer* layer, va_list params);
     
     /** initializes a CCMultiplexLayer with an array of layers
      *  @since v2.1

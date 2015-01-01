@@ -32,7 +32,7 @@ CCPacket::CCPacket() :
 m_buffer(NULL),
 m_packetLength(0),
 m_raw(false) {
-    memset(&m_header, 0, sizeof(Header));
+    memset(&m_header, 0, sizeof(ccPacketHeader));
 }
 
 CCPacket::~CCPacket() {

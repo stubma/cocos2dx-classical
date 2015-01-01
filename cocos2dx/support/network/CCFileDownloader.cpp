@@ -135,7 +135,7 @@ void CCFileDownloader::downloadNext() {
     // start downloading
     CCHttpRequest* request = CCHttpRequest::create();
     request->setUrl(m_entry->m_url);
-    request->setMethod(CCHttpRequest::kHttpGet);
+    request->setMethod(kHttpGet);
     m_client->asyncExecute(request);
 }
 

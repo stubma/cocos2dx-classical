@@ -271,6 +271,178 @@ bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue, const cha
     return ok;
 }
 
+bool luaval_to_position(lua_State* L, int lo, cocos2d::ccPosition* outValue, const char* funcName) {
+    // null checking
+    if (NULL == L || NULL == outValue)
+        return false;
+    bool ok = true;
+    
+    // top should be table
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err)) {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:", &tolua_err, funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok) {
+        lua_pushstring(L, "x");
+        lua_gettable(L, lo);
+        outValue->x = lua_isnil(L, -1) ? 0 : (int)lua_tointeger(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "y");
+        lua_gettable(L, lo);
+        outValue->y = lua_isnil(L, -1) ? 0 : (int)lua_tointeger(L, -1);
+        lua_pop(L, 1);
+    }
+    return ok;
+}
+
+bool luaval_to_quad3(lua_State* L, int lo, cocos2d::ccQuad3* outValue, const char* funcName) {
+    // null checking
+    if (NULL == L || NULL == outValue)
+        return false;
+    bool ok = true;
+    
+    // top should be table
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err)) {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok) {
+        lua_pushstring(L, "bl");
+        lua_gettable(L, lo);
+        if(!lua_isnil(L, -1))
+            luaval_to_vertex3f(L, -1, &outValue->bl);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "br");
+        lua_gettable(L, lo);
+        if(!lua_isnil(L, -1))
+            luaval_to_vertex3f(L, -1, &outValue->br);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "tl");
+        lua_gettable(L, lo);
+        if(!lua_isnil(L, -1))
+            luaval_to_vertex3f(L, -1, &outValue->tl);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "tr");
+        lua_gettable(L, lo);
+        if(!lua_isnil(L, -1))
+            luaval_to_vertex3f(L, -1, &outValue->tr);
+        lua_pop(L, 1);
+    }
+    return ok;
+}
+
+bool luaval_to_vertex3f(lua_State* L, int lo, cocos2d::ccVertex3F* outValue, const char* funcName) {
+    // null checking
+    if (NULL == L || NULL == outValue)
+        return false;
+    bool ok = true;
+    
+    // top should be table
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err)) {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok) {
+        lua_pushstring(L, "x");
+        lua_gettable(L, lo);
+        outValue->x = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "y");
+        lua_gettable(L, lo);
+        outValue->y = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "z");
+        lua_gettable(L, lo);
+        outValue->z = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+    }
+    return ok;
+}
+
+bool luaval_to_bezierconfig(lua_State* L, int lo, cocos2d::ccBezierConfig* outValue, const char* funcName) {
+    // null checking
+    if (NULL == L || NULL == outValue)
+        return false;
+    bool ok = true;
+    
+    // top should be table
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err)) {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok) {
+        lua_pushstring(L, "endPosition");
+        lua_gettable(L, lo);
+        if(!lua_isnil(L, -1))
+            luaval_to_point(L, -1, &outValue->endPosition, funcName);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "controlPoint_1");
+        lua_gettable(L, lo);
+        if(!lua_isnil(L, -1))
+            luaval_to_point(L, -1, &outValue->controlPoint_1, funcName);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "controlPoint_2");
+        lua_gettable(L, lo);
+        if(!lua_isnil(L, -1))
+            luaval_to_point(L, -1, &outValue->controlPoint_2, funcName);
+        lua_pop(L, 1);
+    }
+    return ok;
+}
+
+bool luaval_to_cpoint(lua_State* L, int lo, cocos2d::ccPoint* outValue, const char* funcName) {
+    // null checking
+    if (NULL == L || NULL == outValue)
+        return false;
+    bool ok = true;
+    
+    // top should be a table
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err)) {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok) {
+        lua_pushstring(L, "x");
+        lua_gettable(L, lo);
+        outValue->x = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "y");
+        lua_gettable(L, lo);
+        outValue->y = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+    }
+    return ok;
+}
+
 bool luaval_to_point(lua_State* L,int lo,cocos2d::CCPoint* outValue, const char* funcName)
 {
     if (NULL == L || NULL == outValue)
@@ -410,6 +582,47 @@ bool luaval_to_size(lua_State* L,int lo, CCSize* outValue, const char* funcName)
         lua_gettable(L,lo);/* L: paramStack paramStack[lo][key] */
         outValue->width = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
         lua_pop(L,1);/* L: paramStack*/
+        
+        lua_pushstring(L, "height");
+        lua_gettable(L,lo);
+        outValue->height = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        lua_pop(L,1);
+    }
+    
+    return ok;
+}
+
+bool luaval_to_crect(lua_State* L, int lo, cocos2d::ccRect* outValue, const char* funcName) {
+    if (NULL == L || NULL == outValue)
+        return false;
+    
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err) )
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        lua_pushstring(L, "x");
+        lua_gettable(L,lo);
+        outValue->x = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        lua_pop(L,1);
+        
+        lua_pushstring(L, "y");
+        lua_gettable(L,lo);
+        outValue->y = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        lua_pop(L,1);
+        
+        lua_pushstring(L, "width");
+        lua_gettable(L,lo);
+        outValue->width = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        lua_pop(L,1);
         
         lua_pushstring(L, "height");
         lua_gettable(L,lo);
@@ -1298,9 +1511,81 @@ void point_array_to_luaval(lua_State* L,const cocos2d::CCPoint* points, int coun
     }
 }
 
+void quad3_to_luaval(lua_State* L, const cocos2d::ccQuad3& q) {
+    if (NULL == L)
+        return;
+    lua_newtable(L);
+    lua_pushstring(L, "bl");
+    vertex3f_to_luaval(L, q.bl);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "br");
+    vertex3f_to_luaval(L, q.br);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "tl");
+    vertex3f_to_luaval(L, q.tl);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "tr");
+    vertex3f_to_luaval(L, q.tr);
+    lua_rawset(L, -3);
+}
+
+void vertex3f_to_luaval(lua_State* L, const cocos2d::ccVertex3F& v) {
+    if (NULL == L)
+        return;
+    lua_newtable(L);
+    lua_pushstring(L, "x");
+    lua_pushnumber(L, (lua_Number)v.x);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "y");
+    lua_pushnumber(L, (lua_Number)v.y);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "z");
+    lua_pushnumber(L, (lua_Number)v.z);
+    lua_rawset(L, -3);
+}
+
+void position_to_luaval(lua_State* L, const cocos2d::ccPosition& pos) {
+    if (NULL == L)
+        return;
+    lua_newtable(L);                                    /* L: table */
+    lua_pushstring(L, "x");                             /* L: table key */
+    lua_pushinteger(L, (lua_Integer)pos.x);               /* L: table key value*/
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    lua_pushstring(L, "y");                             /* L: table key */
+    lua_pushinteger(L, (lua_Integer)pos.y);               /* L: table key value*/
+    lua_rawset(L, -3);
+}
+
+void bezierconfig_to_luaval(lua_State* L, const cocos2d::ccBezierConfig& bc) {
+    if (NULL == L)
+        return;
+    lua_newtable(L);
+    lua_pushstring(L, "endPosition");
+    point_to_luaval(L, bc.endPosition);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "controlPoint_1");
+    point_to_luaval(L, bc.controlPoint_1);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "controlPoint_2");
+    point_to_luaval(L, bc.controlPoint_2);
+    lua_rawset(L, -3);
+}
+
+void cpoint_to_luaval(lua_State* L, const cocos2d::ccPoint& p) {
+    if (NULL == L)
+        return;
+    lua_newtable(L);
+    lua_pushstring(L, "x");
+    lua_pushnumber(L, (lua_Number)p.x);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "y");
+    lua_pushnumber(L, (lua_Number)p.y);
+    lua_rawset(L, -3);
+}
+
 void point_to_luaval(lua_State* L,const cocos2d::CCPoint& vec2)
 {
-    if (NULL  == L)
+    if (NULL == L)
         return;
     lua_newtable(L);                                    /* L: table */
     lua_pushstring(L, "x");                             /* L: table key */
@@ -1309,12 +1594,11 @@ void point_to_luaval(lua_State* L,const cocos2d::CCPoint& vec2)
     lua_pushstring(L, "y");                             /* L: table key */
     lua_pushnumber(L, (lua_Number) vec2.y);               /* L: table key value*/
     lua_rawset(L, -3);
-    
 }
 
 void size_to_luaval(lua_State* L,const CCSize& sz)
 {
-    if (NULL  == L)
+    if (NULL == L)
         return;
     lua_newtable(L);                                    /* L: table */
     lua_pushstring(L, "width");                         /* L: table key */
@@ -1323,6 +1607,24 @@ void size_to_luaval(lua_State* L,const CCSize& sz)
     lua_pushstring(L, "height");                        /* L: table key */
     lua_pushnumber(L, (lua_Number) sz.height);          /* L: table key value*/
     lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+}
+
+void crect_to_luaval(lua_State* L, const cocos2d::ccRect& r) {
+    if (NULL == L)
+        return;
+    lua_newtable(L);                                    /* L: table */
+    lua_pushstring(L, "x");                             /* L: table key */
+    lua_pushnumber(L, (lua_Number)r.x);               /* L: table key value*/
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    lua_pushstring(L, "y");                             /* L: table key */
+    lua_pushnumber(L, (lua_Number)r.y);               /* L: table key value*/
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    lua_pushstring(L, "width");                         /* L: table key */
+    lua_pushnumber(L, (lua_Number)r.width);           /* L: table key value*/
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    lua_pushstring(L, "height");                        /* L: table key */
+    lua_pushnumber(L, (lua_Number)r.height);          /* L: table key value*/
+    lua_rawset(L, -3);
 }
 
 void rect_to_luaval(lua_State* L,const CCRect& rt)

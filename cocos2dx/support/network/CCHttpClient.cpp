@@ -368,16 +368,16 @@ void* CCHttpClient::httpThreadEntry(void* arg) {
         // process request
         bool retValue = false;
         switch (curl->m_ctx->request->getMethod()) {
-            case CCHttpRequest::kHttpGet:
+            case kHttpGet:
                 retValue = curl->processGetTask();
                 break;
-            case CCHttpRequest::kHttpPost:
+            case kHttpPost:
                 retValue = curl->processPostTask();
                 break;
-            case CCHttpRequest::kHttpPut:
+            case kHttpPut:
                 retValue = curl->processPutTask();
                 break;
-            case CCHttpRequest::kHttpDelete:
+            case kHttpDelete:
                 retValue = curl->processDeleteTask();
                 break;
             default:

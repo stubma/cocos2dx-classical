@@ -32,20 +32,20 @@ using namespace std;
 
 NS_CC_BEGIN
 
+/// http method definition
+typedef enum {
+    kHttpGet,
+    kHttpPost,
+    kHttpPut,
+    kHttpDelete,
+    kHttpUnknown,
+} ccHttpMethod;
+
 /**
  * Http request
  */
 class CC_DLL CCHttpRequest : public CCObject {
 public:
-    /// http method definition
-    typedef enum {
-        kHttpGet,
-        kHttpPost,
-        kHttpPut,
-        kHttpDelete,
-        kHttpUnknown,
-    } HttpMethod;
-    
     CCHttpRequest() {
         m_method = kHttpUnknown;
         m_requestData = NULL;
@@ -65,7 +65,7 @@ public:
     }
     
     /// http method
-    CC_SYNTHESIZE(HttpMethod, m_method, Method);
+    CC_SYNTHESIZE(ccHttpMethod, m_method, Method);
     
     /// url string
     CC_SYNTHESIZE_PASS_BY_REF(string, m_url, Url);

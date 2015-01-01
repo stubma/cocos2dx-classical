@@ -55,8 +55,27 @@ enum {
 */
 class CC_DLL CCMenu : public CCLayerRGBA
 {
+private:
     /** whether or not the menu will receive events */
     bool m_bEnabled;
+    
+    /** creates a CCMenu with CCMenuItem objects
+     * @js NA
+     * @lua NA
+     */
+    static CCMenu* createWithItems(CCMenuItem *firstItem, va_list args);
+    
+    /**
+     * @js NA
+     * @lua NA
+     */
+    void alignItemsInRows(unsigned int rows, va_list args);
+    
+    /**
+     * @js NA
+     * @lua NA
+     */
+    void alignItemsInColumns(unsigned int columns, va_list args);
     
 public:
     /**
@@ -88,12 +107,6 @@ public:
       * @js NA
     */
     static CCMenu* createWithItem(CCMenuItem* item);
-    
-    /** creates a CCMenu with CCMenuItem objects 
-     * @js NA
-     * @lua NA
-     */
-    static CCMenu* createWithItems(CCMenuItem *firstItem, va_list args);
 
     /** initializes an empty CCMenu */
     bool init();
@@ -125,11 +138,7 @@ public:
      * @lua NA
      */
     void alignItemsInColumns(unsigned int columns, ...);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    void alignItemsInColumns(unsigned int columns, va_list args);
+
     /**
      * @js NA
      */
@@ -143,11 +152,7 @@ public:
      * @lua NA
      */
     void alignItemsInRows(unsigned int rows, ...);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    void alignItemsInRows(unsigned int rows, va_list args);
+
     /**
      * @js NA
      */

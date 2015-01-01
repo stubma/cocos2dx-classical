@@ -45,7 +45,7 @@ NS_CC_BEGIN
 class CC_DLL CCUserDefault
 {
 public:
-    ~CCUserDefault();
+    virtual ~CCUserDefault();
 
     // get value methods
 

@@ -1,3 +1,0 @@
-local CCObjectTypes = {
-}
-return CCObjectTypes

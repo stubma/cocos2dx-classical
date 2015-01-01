@@ -267,6 +267,13 @@ protected:
  */
 class CC_DLL CCSpawn : public CCActionInterval
 {
+private:
+    /** helper constructor to create an array of spawned actions
+     * @js  NA
+     * @lua NA
+     */
+    static CCSpawn* createWithVariableList(CCFiniteTimeAction *pAction1, va_list args);
+    
 public:
     /**
      * @js NA
@@ -296,19 +303,13 @@ public:
      */
     virtual void update(float time);
     virtual CCActionInterval* reverse(void);
-
+    
 public:
 
     /** helper constructor to create an array of spawned actions 
      * @lua NA
      */
     static CCSpawn* create(CCFiniteTimeAction *pAction1, ...);
-    
-    /** helper constructor to create an array of spawned actions 
-     * @js  NA
-     * @lua NA
-     */
-    static CCSpawn* createWithVariableList(CCFiniteTimeAction *pAction1, va_list args);
 
     /** helper constructor to create an array of spawned actions given an array 
      * @js NA

@@ -37,11 +37,214 @@ NS_CC_BEGIN
 class CCImage;
 class CCCallFunc;
 
+/// load parameter
+struct CCResourceLoadTask {
+    /// idle time after loaded
+    float idle;
+    
+    CCResourceLoadTask() : idle(0.1f) {
+    }
+    
+    virtual ~CCResourceLoadTask() {}
+    
+    /// do loading
+    virtual void load() {}
+};
+
+/// android string load task
+struct AndroidStringLoadTask : public CCResourceLoadTask {
+    /// language
+    string lan;
+    
+    /// file path
+    string path;
+    
+    /// merge or not
+    bool merge;
+    
+    virtual ~AndroidStringLoadTask() {}
+    
+    virtual void load() {
+        CCLocalization::sharedLocalization()->addAndroidStrings(lan, path, merge);
+    }
+};
+
+/// cocosdenshion music load parameter
+struct CDMusicTask : public CCResourceLoadTask {
+    /// image name
+    string name;
+    
+    virtual ~CDMusicTask() {}
+    
+    virtual void load();
+};
+
+/// cocosdenshion effect load parameter
+struct CDEffectTask : public CCResourceLoadTask {
+    /// image name
+    string name;
+    
+    virtual ~CDEffectTask() {}
+    
+    virtual void load();
+};
+
+/// bitmap font load task
+struct BMFontLoadTask : public CCResourceLoadTask {
+    /// fnt file name
+    string name;
+    
+    virtual ~BMFontLoadTask() {}
+    
+    virtual void load();
+};
+
+/// bitmap font load task, image is encrypted
+struct EncryptedBMFontLoadTask : public CCResourceLoadTask {
+    /// fnt file name
+    string name;
+    
+    /// decrypt func
+    CC_DECRYPT_FUNC func;
+    
+    virtual ~EncryptedBMFontLoadTask() {}
+    
+    virtual void load();
+};
+
+/// image load parameter
+struct ImageLoadTask : public CCResourceLoadTask {
+    /// image name
+    string name;
+    
+    virtual ~ImageLoadTask() {}
+    
+    virtual void load();
+};
+
+/// encrypted image load parameter
+struct EncryptedImageLoadTask : public CCResourceLoadTask {
+    /// image name
+    string name;
+    
+    /// decrypt function
+    CC_DECRYPT_FUNC func;
+    
+    virtual ~EncryptedImageLoadTask() {}
+    
+    virtual void load();
+};
+
+/// zwoptex load parameter
+struct ZwoptexLoadTask : public CCResourceLoadTask {
+    /// plist name
+    string name;
+    
+    virtual ~ZwoptexLoadTask() {}
+    
+    virtual void load();
+};
+
+/// encrypted zwoptex load task
+struct EncryptedZwoptexLoadTask : public CCResourceLoadTask {
+    /// plist name, plist is not encrypted
+    string name;
+    
+    /// texture name, which is encrypted
+    string texName;
+    
+    // decrypt func
+    CC_DECRYPT_FUNC func;
+    
+    virtual ~EncryptedZwoptexLoadTask() {}
+    
+    virtual void load();
+};
+
+/// zwoptex animation load parameter
+struct ZwoptexAnimLoadTask : public CCResourceLoadTask {
+    /// frame list
+    typedef vector<string> StringList;
+    StringList frames;
+    
+    /// animation name
+    string name;
+    
+    /// animation unit delay
+    float unitDelay;
+    
+    /// restore original frame when animate is done
+    bool restoreOriginalFrame;
+    
+    ZwoptexAnimLoadTask() :
+				unitDelay(0),
+				restoreOriginalFrame(false) {
+                }
+    
+    virtual ~ZwoptexAnimLoadTask() {}
+    
+    virtual void load();
+};
+
+/// zwoptex animation load parameter
+/// it can specify duration for every single frame
+struct ZwoptexAnimLoadTask2 : public CCResourceLoadTask {
+    /// frame list
+    typedef vector<string> StringList;
+    StringList frames;
+    
+    /// duration list
+    typedef vector<float> TimeList;
+    TimeList durations;
+    
+    /// restore original frame when animate is done
+    bool restoreOriginalFrame;
+    
+    /// animation name
+    string name;
+    
+    ZwoptexAnimLoadTask2() :
+    restoreOriginalFrame(false) {
+    }
+    
+    virtual ~ZwoptexAnimLoadTask2() {}
+    
+    virtual void load();
+};
+
+struct ArmatureTask : public CCResourceLoadTask {
+    string configFilePath;
+    
+    ArmatureTask() {
+    }
+    
+    virtual ~ArmatureTask() {
+    }
+    
+    virtual void load();
+};
+
+struct CustomTask : public CCResourceLoadTask {
+    CCCallFunc* func;
+    
+    CustomTask() :
+    func(NULL) {
+    }
+    
+    virtual ~CustomTask() {
+        CC_SAFE_RELEASE(func);
+    }
+    
+    virtual void load() {
+        func->execute();
+    }
+};
+
 /**
  * A self-retain class for resource loading. It schedule resource loading in OpenGL thread in
  * every tick. One resource is handled by one Task, the loading logic is encapsulated in task so
  * you don't care about that. For CPU intensive task, you can set idle time to avoid blocking OpenGL
- * thread too long. If you display an animation feedback, don't use CCAction mechanism because a long 
+ * thread too long. If you display an animation feedback, don't use CCAction mechanism because a long
  * task will cause animation to skip frames. The better choice is invoking setDisplayFrame one by one.
  *
  * \par
@@ -60,21 +263,6 @@ class CCCallFunc;
  * If not supported, just adding a task to support it.
  */
 class CC_DLL CCResourceLoader : public CCObject {
-public:
-	/// load parameter
-    struct LoadTask {
-        /// idle time after loaded
-        float idle;
-        
-        LoadTask() : idle(0.1f) {
-        }
-        
-        virtual ~LoadTask() {}
-        
-        /// do loading
-        virtual void load() {}
-    };
-	
 private:
     /// type of load operation
     enum ResourceType {
@@ -83,195 +271,6 @@ private:
         ANIMATION
     };
     
-    /// android string load task
-    struct AndroidStringLoadTask : public LoadTask {
-        /// language
-        string lan;
-        
-        /// file path
-        string path;
-        
-        /// merge or not
-        bool merge;
-        
-        virtual ~AndroidStringLoadTask() {}
-        
-        virtual void load() {
-            CCLocalization::sharedLocalization()->addAndroidStrings(lan, path, merge);
-        }
-    };
-	
-	/// cocosdenshion music load parameter
-    struct CDMusicTask : public LoadTask {
-        /// image name
-        string name;
-        
-        virtual ~CDMusicTask() {}
-        
-        virtual void load();
-    };
-	
-	/// cocosdenshion effect load parameter
-    struct CDEffectTask : public LoadTask {
-        /// image name
-        string name;
-        
-        virtual ~CDEffectTask() {}
-        
-        virtual void load();
-    };
-    
-    /// bitmap font load task
-    struct BMFontLoadTask : public LoadTask {
-        /// fnt file name
-        string name;
-        
-        virtual ~BMFontLoadTask() {}
-        
-        virtual void load();
-    };
-    
-    /// bitmap font load task, image is encrypted
-    struct EncryptedBMFontLoadTask : public LoadTask {
-        /// fnt file name
-        string name;
-        
-        /// decrypt func
-        CC_DECRYPT_FUNC func;
-        
-        virtual ~EncryptedBMFontLoadTask() {}
-        
-        virtual void load();
-    };
-    
-    /// image load parameter
-    struct ImageLoadTask : public LoadTask {
-        /// image name
-        string name;
-        
-        virtual ~ImageLoadTask() {}
-        
-        virtual void load();
-    };
-	
-	/// encrypted image load parameter
-    struct EncryptedImageLoadTask : public LoadTask {
-        /// image name
-        string name;
-		
-		/// decrypt function
-		CC_DECRYPT_FUNC func;
-        
-        virtual ~EncryptedImageLoadTask() {}
-        
-        virtual void load();
-    };
-    
-    /// zwoptex load parameter
-    struct ZwoptexLoadTask : public LoadTask {
-        /// plist name
-        string name;
-        
-        virtual ~ZwoptexLoadTask() {}
-        
-        virtual void load();
-    };
-	
-    /// encrypted zwoptex load task
-    struct EncryptedZwoptexLoadTask : public LoadTask {
-        /// plist name, plist is not encrypted
-        string name;
-        
-        /// texture name, which is encrypted
-        string texName;
-        
-        // decrypt func
-        CC_DECRYPT_FUNC func;
-        
-        virtual ~EncryptedZwoptexLoadTask() {}
-        
-        virtual void load();
-    };
-	    
-    /// zwoptex animation load parameter
-    struct ZwoptexAnimLoadTask : public LoadTask {
-        /// frame list
-        typedef vector<string> StringList;
-        StringList frames;
-        
-        /// animation name
-        string name;
-        
-        /// animation unit delay
-        float unitDelay;
-		
-		/// restore original frame when animate is done
-		bool restoreOriginalFrame;
-		
-		ZwoptexAnimLoadTask() :
-				unitDelay(0),
-				restoreOriginalFrame(false) {
-		}
-        
-        virtual ~ZwoptexAnimLoadTask() {}
-        
-        virtual void load();
-    };
-    
-    /// zwoptex animation load parameter
-    /// it can specify duration for every single frame
-    struct ZwoptexAnimLoadTask2 : public LoadTask {
-        /// frame list
-        typedef vector<string> StringList;
-        StringList frames;
-        
-        /// duration list
-        typedef vector<float> TimeList;
-        TimeList durations;
-        
-        /// restore original frame when animate is done
-		bool restoreOriginalFrame;
-        
-        /// animation name
-        string name;
-        
-        ZwoptexAnimLoadTask2() :
-        restoreOriginalFrame(false) {
-		}
-        
-        virtual ~ZwoptexAnimLoadTask2() {}
-        
-        virtual void load();
-    };
-    
-    struct ArmatureTask : public LoadTask {
-        string configFilePath;
-        
-        ArmatureTask() {
-        }
-        
-        virtual ~ArmatureTask() {
-        }
-        
-        virtual void load();
-    };
-    
-    struct CustomTask : public LoadTask {
-        CCCallFunc* func;
-        
-        CustomTask() :
-        func(NULL) {
-        }
-        
-        virtual ~CustomTask() {
-            CC_SAFE_RELEASE(func);
-        }
-        
-        virtual void load() {
-            func->execute();
-        }
-    };
- 
 private:
 	/// listener
 	CCResourceLoaderListener* m_listener;
@@ -283,7 +282,7 @@ private:
     int m_nextLoad;
     
     /// load list
-    typedef vector<LoadTask*> LoadTaskPtrList;
+    typedef vector<CCResourceLoadTask*> LoadTaskPtrList;
     LoadTaskPtrList m_loadTaskList;
     
     /// flag indicating it is running
@@ -366,7 +365,7 @@ public:
     void abort();
     
     /// directly add a load task
-    void addLoadTask(LoadTask* t);
+    void addLoadTask(CCResourceLoadTask* t);
     
     /// add a custom task and the task is executing a function
     void addCustomTask(CCCallFunc* func);

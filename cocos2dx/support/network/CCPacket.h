@@ -34,21 +34,20 @@ NS_CC_BEGIN
 
 #define kCCPacketHeaderLength 24
 
+typedef struct {
+    char magic[4];
+    int protocolVersion;
+    int serverVersion;
+    int command;
+    int encryptAlgorithm;
+    int length; // data length after header
+} ccPacketHeader;
+
 /**
  * A general packet definition, it will have a header. However, it provides
  * methods to create a raw packet which has no header.
  */
 class CC_DLL CCPacket : public CCObject {
-public:
-    typedef struct {
-        char magic[4];
-        int protocolVersion;
-        int serverVersion;
-		int command;
-		int encryptAlgorithm;
-        int length; // data length after header
-    } Header;
-    
 protected:
     CCPacket();
     
@@ -93,7 +92,7 @@ public:
     // get body pointer
     const char* getBody();
     
-    CC_SYNTHESIZE_PASS_BY_REF_NC(Header, m_header, Header);
+    CC_SYNTHESIZE_PASS_BY_REF_NC(ccPacketHeader, m_header, Header);
     CC_SYNTHESIZE(char*, m_buffer, Buffer);
     CC_SYNTHESIZE_READONLY(size_t, m_packetLength, PacketLength);
     CC_SYNTHESIZE_READONLY(bool, m_raw, Raw);

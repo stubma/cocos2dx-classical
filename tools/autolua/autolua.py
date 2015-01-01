@@ -155,26 +155,6 @@ def native_name_from_type(ntype, underlying=False):
     else:
         return INVALID_NATIVE_TYPE
 
-class Closure(object):
-    def __init__(self):
-        self.parent_closure = None
-        self.classes = {}
-        self.generated_classes = {}
-        self.generated_enums = {}
-        self.generated_structs = {}
-        self.enums = {}
-        self.structs = {}
-        self.ignore_structs = []
-
-    def is_struct_ignored(self, node):
-        for sr in self.ignore_structs:
-            if sr.match(node.displayname):
-                return True
-        if self.parent_closure is not None:
-            return self.parent_closure.is_struct_ignored(node)
-        else:
-            return False
-
 class NativeType(object):
     def __init__(self):
         self.is_class = False
@@ -192,6 +172,7 @@ class NativeType(object):
         self.is_pointer = False
         self.is_ref = False
         self.canonical_type = None
+        self.pointer_level = 0
 
     @staticmethod
     def from_type(ntype):
@@ -208,6 +189,7 @@ class NativeType(object):
             nt.whole_name = nt.qualified_name
             nt.is_const = ntype.get_pointee().is_const_qualified()
             nt.is_pointer = True
+            nt.pointer_level += 1
 
             # const prefix
             if nt.is_const:
@@ -279,6 +261,10 @@ class NativeType(object):
                 nt.name = native_name_from_type(ntype)
                 nt.qualified_name = get_qualified_name(decl)
                 nt.qualified_ns  = get_qualified_namespace(decl)
+            elif decl.kind == CursorKind.CLASS_DECL:
+                nt.name = decl.displayname
+                nt.qualified_name = get_qualified_name(decl)
+                nt.qualified_ns = get_qualified_namespace(decl)
             else:
                 nt.name = decl.spelling
                 nt.qualified_name = get_qualified_name(decl)
@@ -331,6 +317,14 @@ class NativeType(object):
                 nt.ret_type = NativeType.from_string(ret_type)
                 nt.param_types = [NativeType.from_string(string) for string in params]
 
+        # mark argument as not supported
+        if nt.name == INVALID_NATIVE_TYPE:
+            nt.not_supported = True
+
+        # multilevel pointer not supported
+        if nt.is_pointer and nt.pointer_level > 1:
+            nt.not_supported = True
+
         return nt
 
     @staticmethod
@@ -366,10 +360,10 @@ class NativeType(object):
             if dict_has_key_re(to_native_dict, [typedef_name]) or dict_has_key_re(from_native_dict, [typedef_name]):
                 use_typedef = True
         if use_typedef and self.canonical_type:
-            name = self.canonical_type.namespaced_name
+            name = self.canonical_type.qualified_name
 
         # final name
-        return "const " + name if (self.is_pointer and self.is_const) else self.name
+        return name
 
     def whole_decl_in_tpl(self, generator):
         # get mapping dict
@@ -395,6 +389,36 @@ class NativeType(object):
 
         # final name
         return name
+
+    def has_from_native_mapping(self, generator):
+        # get argument name
+        keys = []
+        if self.canonical_type != None:
+            keys.append(self.canonical_type.name)
+        keys.append(self.name)
+
+        # if arg is an object but no mapping defined, use object for it
+        # if arg is an enum, use int for it
+        from_native_dict = generator.tpl_opt['conversions']['from_native']
+        if self.is_class:
+            if not dict_has_key_re(from_native_dict, keys):
+                return False
+        return True
+
+    def has_to_native_mapping(self, generator):
+        # get argument name
+        keys = []
+        if self.canonical_type != None:
+            keys.append(self.canonical_type.name)
+        keys.append(self.name)
+
+        # if arg is an object but no mapping defined, use object for it
+        # if arg is an enum, use int for it
+        to_native_dict = generator.tpl_opt['conversions']['to_native']
+        if self.is_class:
+            if not dict_has_key_re(to_native_dict, keys):
+                return False
+        return True
 
     def lua_from_native(self, convert_opts):
         # get generator, ensure it is in option
@@ -457,9 +481,9 @@ class NativeType(object):
         return "#pragma warning NO CONVERSION TO NATIVE FOR " + self.name + "\n" + convert_opts['level'] * "\t\t" + "ok = false"
 
 class NativeTypedef(object):
-    def __init__(self, node, closure):
+    def __init__(self, node, generator):
         self.node = node
-        self.closure = closure
+        self.generator = generator
         self.qualified_name = get_qualified_name(node)
 
         # visit
@@ -472,20 +496,19 @@ class NativeTypedef(object):
 
     def process_node(self, node):
         if node.kind == CursorKind.STRUCT_DECL:
-            if not self.closure.is_struct_ignored(self.node):
-                if not self.closure.structs.has_key(self.qualified_name):
-                    st = NativeClass(node, self.closure)
-                    st.class_name = self.node.displayname
-                    st.qualified_name = self.qualified_name
-                    st.is_typedef = True
-                    self.closure.structs[self.qualified_name] = st
+            if not self.generator.structs.has_key(self.qualified_name):
+                st = NativeClass(node, self.generator)
+                st.class_name = self.node.displayname
+                st.qualified_name = self.qualified_name
+                st.is_typedef = True
+                self.generator.structs[self.qualified_name] = st
         elif node.kind == CursorKind.ENUM_DECL:
-            if not self.closure.enums.has_key(self.qualified_name):
+            if not self.generator.enums.has_key(self.qualified_name):
                 ne = NativeEnum(node)
                 ne.qualified_name = self.qualified_name
                 ne.enum_name = self.node.displayname
                 ne.is_typedef = True
-                self.closure.enums[self.qualified_name] = ne
+                self.generator.enums[self.qualified_name] = ne
 
 class NativeEnum(object):
     def __init__(self, node):
@@ -497,40 +520,6 @@ class NativeEnum(object):
 
         # visit
         self.visit_node(self.node)
-
-    def generate_code(self, indent_level=0):
-        # indent
-        tolua = "\t" * indent_level
-
-        # typedef
-        if self.is_typedef:
-            tolua += "typedef "
-
-        # enum
-        tolua += "enum"
-        if not self.is_typedef:
-            tolua += " " + self.enum_name
-        tolua += " {\n"
-
-        # constants
-        first_constant = True
-        for c in self.constants:
-            if first_constant is False:
-                tolua += ",\n"
-            tolua += "\t" * (indent_level + 1)
-            tolua += c
-            first_constant = False
-
-        # close
-        tolua += "\n"
-        tolua += "\t" * indent_level
-        tolua += "}"
-        if self.is_typedef:
-            tolua += " " + self.enum_name
-        tolua += ";\n"
-
-        # final string
-        return tolua
 
     def visit_node(self, node):
         # visit all children
@@ -556,7 +545,7 @@ class NativeOverloadedFunction(object):
         self.min_args = min(self.min_args, func.min_args)
         self.implementations.append(func)
 
-    def generate_code(self, hfile, cppfile, clazz, generator):
+    def generate_code(self, hfile, cppfile, clazz):
         static = self.implementations[0].static
         override = self.implementations[0].is_override
 
@@ -568,10 +557,10 @@ class NativeOverloadedFunction(object):
         tpl = None
         if static:
             tpl = Template(file=os.path.join("templates", "sfunction_overloaded.c"),
-                           searchList=[self, clazz, generator])
+                           searchList=[self, clazz, clazz.generator])
         else:
             tpl = Template(file=os.path.join("templates", "ifunction_overloaded.c"),
-                           searchList=[self, clazz, generator])
+                           searchList=[self, clazz, clazz.generator])
 
         # write
         if tpl is not None:
@@ -584,7 +573,7 @@ class NativeFunction(object):
         self.is_destructor = False
         self.func_name = node.spelling
         self.arguments = []
-        self.argumtntTips = [arg.spelling for arg in node.get_arguments()]
+        self.argumentTips = [arg.spelling for arg in node.get_arguments()]
         self.static = node.kind == CursorKind.CXX_METHOD and node.is_static_method()
         self.implementations = []
         self.not_supported = False
@@ -651,7 +640,7 @@ class NativeFunction(object):
                 return True
         return False
 
-    def generate_code(self, hfile, cppfile, clazz, generator):
+    def generate_code(self, hfile, cppfile, clazz):
         # if override method, no need generate
         if self.is_override:
             return
@@ -660,13 +649,13 @@ class NativeFunction(object):
         tpl = None
         if self.static:
             tpl = Template(file=os.path.join("templates", "sfunction.c"),
-                           searchList=[self, clazz, generator])
+                           searchList=[self, clazz, clazz.generator])
         else:
             if self.is_destructor:
                 pass
             else:
                 tpl = Template(file=os.path.join("templates", "ifunction.c"),
-                               searchList=[self, clazz, generator])
+                               searchList=[self, clazz, clazz.generator])
 
         # write
         if tpl is not None:
@@ -703,11 +692,11 @@ class NativeField(object):
         # final string
         return tolua
 
-class NativeClass(Closure):
-    def __init__(self, node, closure, dont_visit=False):
+class NativeClass(object):
+    def __init__(self, node, generator):
         super(NativeClass, self).__init__()
         self.node = node
-        self.parent_closure = closure
+        self.generator = generator
         self.class_name = node.displayname
         self.qualified_name = get_qualified_name(node)
         self.parents = []
@@ -725,8 +714,7 @@ class NativeClass(Closure):
         self.is_ccobject = False
 
         # visit
-        if not dont_visit:
-            self.visit_node(self.node)
+        self.visit_node(self.node)
 
     def is_method_in_parents(self, method_name):
         if len(self.parents) > 0:
@@ -735,19 +723,33 @@ class NativeClass(Closure):
             return self.parents[0].is_method_in_parents(method_name)
         return False
 
-    def generate_code(self, hfile, cppfile, generator):
+    def generate_code(self, hfile, cppfile):
         # function binding code
         for name, m in self.static_methods.items():
-            m.generate_code(hfile, cppfile, self, generator)
+            m.generate_code(hfile, cppfile, self)
         for name, m in self.methods.items():
-            m.generate_code(hfile, cppfile, self, generator)
+            m.generate_code(hfile, cppfile, self)
         for name, m in self.override_methods.items():
-            m.generate_code(hfile, cppfile, self, generator)
+            m.generate_code(hfile, cppfile, self)
 
         # register code
         tpl = Template(file=os.path.join("templates", "register.c"),
-                               searchList=[self, generator])
+                               searchList=[self, self.generator])
         cppfile.write(str(tpl))
+
+    def should_function_be_generated(self, f):
+        if not f.ret_type.has_from_native_mapping(self.generator):
+            if not self.generator.is_class_included(f.ret_type.name.replace("*", "")) or\
+                    self.generator.is_class_excluded(f.ret_type.name.replace("*", "")):
+                return False
+
+        for arg in f.arguments:
+            if not arg.has_to_native_mapping(self.generator):
+                if not self.generator.is_class_included(arg.name.replace("*", "")) or\
+                        self.generator.is_class_excluded(arg.name.replace("*", "")):
+                    return False
+
+        return True
 
     def visit_node(self, node):
         # visit all children
@@ -762,20 +764,11 @@ class NativeClass(Closure):
                 # try to find cached class
                 parent_class = None
                 parent_qn = get_qualified_name(parent)
-                closure = self
-                while closure is not None:
-                    if closure.classes.has_key(parent_qn):
-                        parent_class = closure.classes[parent_qn]
-                        break
-                    closure = closure.parent_closure
-
-                # if not found, create new one and add to top closure
-                if parent_class is None:
-                    closure = self
-                    while closure.parent_closure is not None:
-                        closure = closure.parent_closure
-                    parent_class = NativeClass(parent, closure)
-                closure.classes[parent_qn] = parent_class
+                if self.generator.classes.has_key(parent_qn):
+                    parent_class = self.generator.classes[parent_qn]
+                else:
+                    parent_class = NativeClass(parent, self.generator)
+                self.generator.classes[parent_qn] = parent_class
                 self.parents.append(parent_class)
         elif node.kind == CursorKind.FIELD_DECL:
             if node.semantic_parent == self.node and self.current_access_specifier == AccessSpecifierKind.PUBLIC:
@@ -783,16 +776,16 @@ class NativeClass(Closure):
         elif node.kind == CursorKind.ENUM_DECL:
             if node.semantic_parent == self.node and self.current_access_specifier == AccessSpecifierKind.PUBLIC:
                 ne = NativeEnum(node)
-                self.enums[get_qualified_name(node)] = ne
+                self.generator.enums[get_qualified_name(node)] = ne
             return False
         elif node.kind == CursorKind.CLASS_DECL or node.kind == CursorKind.STRUCT_DECL:
             if node.semantic_parent == self.node and self.current_access_specifier == AccessSpecifierKind.PUBLIC:
-                klass = NativeClass(node, self)
-                self.classes[klass.qualified_name] = klass
+                klass = NativeClass(node, self.generator)
+                self.generator.classes[klass.qualified_name] = klass
             return False
         elif node.kind == CursorKind.TYPEDEF_DECL:
             if node == node.type.get_declaration() and self.current_access_specifier == AccessSpecifierKind.PUBLIC:
-                NativeTypedef(node, self)
+                NativeTypedef(node, self.generator)
             return False
         elif node.kind == CursorKind.CXX_ACCESS_SPEC_DECL:
             if node.semantic_parent == self.node:
@@ -809,6 +802,10 @@ class NativeClass(Closure):
                 # if virtual
                 if nf.pure_virtual:
                     self.is_abstract = True
+
+                # if function should be excluded, return
+                if not self.should_function_be_generated(nf):
+                    return
 
                 # if function is override, need confirm it is defined in parents
                 if nf.is_override:
@@ -878,7 +875,7 @@ class NativeClass(Closure):
 
         return True
 
-class Generator(Closure):
+class Generator(object):
     def __init__(self, conf):
         super(Generator, self).__init__()
         config = ConfigParser.SafeConfigParser()
@@ -917,13 +914,17 @@ class Generator(Closure):
         self.exclude_classes_regex = [re.compile(x) for x in exclude_classes]
         include_classes = re.split(r"\s", config.get("DEFAULT", "include_classes")) if config.has_option("DEFAULT", "include_classes") else []
         self.include_classes_regex = [re.compile(x) for x in include_classes]
-        ignore_structs = re.split(r"\s", config.get("DEFAULT", "ignore_structs")) if config.has_option("DEFAULT", "ignore_structs") else []
-        self.ignore_structs = [re.compile(x) for x in ignore_structs]
         self.target_module = config.get("DEFAULT", "target_module") if config.has_option("DEFAULT", "target_module") else None
         self.hfile_path = ""
         self.cppfile_path = ""
         self.headers = []
         self.target_module_fullname = os.path.splitext(os.path.basename(self.conf))[0]
+        self.classes = {}
+        self.generated_classes = {}
+        self.generated_enums = {}
+        self.generated_structs = {}
+        self.enums = {}
+        self.structs = {}
 
     @property
     def generator(self):
@@ -932,7 +933,7 @@ class Generator(Closure):
     def to_lua_type(self, namespace_class_name, namespace_name):
         script_ns_dict = self.tpl_opt['conversions']['ns_map']
         for (k, v) in script_ns_dict.items():
-            if k == namespace_name:
+            if namespace_name.startswith(k):
                 return namespace_class_name.replace("*","").replace("const ", "").replace(k, v)
         if namespace_class_name.find("::") >= 0:
             if namespace_class_name.find("std::") == 0:
@@ -943,8 +944,6 @@ class Generator(Closure):
             return namespace_class_name.replace("*","").replace("const ", "")
 
     def is_class_excluded(self, name):
-        if len(self.exclude_classes_regex) <= 0:
-            return True
         for r in self.exclude_classes_regex:
             if r.match(name):
                 return True
@@ -965,7 +964,7 @@ class Generator(Closure):
                 qn = get_qualified_name(node)
                 ns = get_qualified_namespace(node)
                 ns_matched = len(ns) <= 0 or ns in self.include_namespaces
-                name_matched = self.is_class_included(node.displayname) or not self.is_class_excluded(node.displayname)
+                name_matched = self.is_class_included(node.displayname) and not self.is_class_excluded(node.displayname)
                 is_targeted_class = ns_matched and name_matched
 
                 # if it is target class, process it
@@ -1012,25 +1011,28 @@ class Generator(Closure):
 
         # process files under this path
         for f in filenames:
-            # if file is header, and not hidden, process it
             filepath = os.path.join(dirname, f)
-            filename = os.path.basename(filepath)
-            if os.path.isfile(filepath) and not filename.startswith(".") and not filename.startswith("lua_"):
-                ext = os.path.splitext(filepath)[1][1:]
-                if ext == "h":
-                    tu = _self.clang.parse(filepath, _self.clang_args)
-                    print 'parsing file:', filepath
+            _self.process_header(filepath)
 
-                    # verify source file
-                    if not _self.verify_source(tu):
-                        print "%s contains errors, skip it" % filepath
-                        continue
+    def process_header(self, filepath):
+        # if file is header, and not hidden, process it
+        filename = os.path.basename(filepath)
+        if os.path.isfile(filepath) and not filename.startswith(".") and not filename.startswith("lua_"):
+            ext = os.path.splitext(filepath)[1][1:]
+            if ext == "h":
+                tu = self.clang.parse(filepath, self.clang_args)
+                print 'parsing file:', filepath
 
-                    # record this header
-                    _self.headers.append(filepath)
+                # verify source file
+                if not self.verify_source(tu):
+                    print "%s contains errors, skip it" % filepath
+                    return
 
-                    # visit from top node
-                    _self.visit_node(tu.cursor)
+                # record this header
+                self.headers.append(filepath)
+
+                # visit from top node
+                self.visit_node(tu.cursor)
 
     def check_class_abstract(self, c, parents, puref={}):
         for p in parents:
@@ -1091,7 +1093,10 @@ class Generator(Closure):
 
         # recursively visit all headers
         for d in self.src_dirs:
-            os.path.walk(d, self.process_dir, self)
+            if os.path.isfile(d):
+                self.process_header(d)
+            else:
+                os.path.walk(d, self.process_dir, self)
 
         # walk all classes to find out abstract classes and ccobject types
         for name, c in self.generated_classes.items():
@@ -1123,7 +1128,7 @@ class Generator(Closure):
 
         # write classes
         for name, c in self.generated_classes.items():
-            c.generate_code(hfile, cppfile, self)
+            c.generate_code(hfile, cppfile)
 
         # load layout footer template
         layout_h = Template(file=os.path.join("templates", "layout_foot.h"),

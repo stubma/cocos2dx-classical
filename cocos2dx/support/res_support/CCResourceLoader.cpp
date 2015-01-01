@@ -33,7 +33,7 @@ NS_CC_BEGIN
 
 static CCArray sActiveLoaders;
 
-void CCResourceLoader::ZwoptexAnimLoadTask2::load() {
+void ZwoptexAnimLoadTask2::load() {
     if(!CCAnimationCache::sharedAnimationCache()->animationByName(name.c_str())) {
         CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
         CCArray* array = CCArray::create();
@@ -52,7 +52,7 @@ void CCResourceLoader::ZwoptexAnimLoadTask2::load() {
     }
 }
 
-void CCResourceLoader::ZwoptexAnimLoadTask::load() {
+void ZwoptexAnimLoadTask::load() {
     if(!CCAnimationCache::sharedAnimationCache()->animationByName(name.c_str())) {
         CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
         CCArray* array = CCArray::create();
@@ -66,11 +66,11 @@ void CCResourceLoader::ZwoptexAnimLoadTask::load() {
     }
 }
 
-void CCResourceLoader::ZwoptexLoadTask::load() {
+void ZwoptexLoadTask::load() {
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name.c_str());
 }
 
-void CCResourceLoader::EncryptedZwoptexLoadTask::load() {
+void EncryptedZwoptexLoadTask::load() {
     // load encryptd data
     unsigned long len;
     char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(texName.c_str(), "rb", &len);
@@ -98,11 +98,11 @@ void CCResourceLoader::EncryptedZwoptexLoadTask::load() {
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name.c_str(), tex);
 }
 
-void CCResourceLoader::ImageLoadTask::load() {
+void ImageLoadTask::load() {
     CCTextureCache::sharedTextureCache()->addImage(name.c_str());
 }
 
-void CCResourceLoader::EncryptedImageLoadTask::load() {
+void EncryptedImageLoadTask::load() {
     // load encryptd data
     unsigned long len;
     char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(name.c_str(), "rb", &len);
@@ -127,12 +127,12 @@ void CCResourceLoader::EncryptedImageLoadTask::load() {
     free(data);
 }
 
-void CCResourceLoader::BMFontLoadTask::load() {
+void BMFontLoadTask::load() {
     CCBMFontConfiguration* conf = FNTConfigLoadFile(name.c_str());
     CCTextureCache::sharedTextureCache()->addImage(conf->getAtlasName());
 }
 
-void CCResourceLoader::EncryptedBMFontLoadTask::load() {
+void EncryptedBMFontLoadTask::load() {
     CCBMFontConfiguration* conf = FNTConfigLoadFile(name.c_str());
     
     // load encryptd data
@@ -159,15 +159,15 @@ void CCResourceLoader::EncryptedBMFontLoadTask::load() {
     free(data);
 }
 
-void CCResourceLoader::CDMusicTask::load() {
+void CDMusicTask::load() {
 	SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(name.c_str());
 }
 
-void CCResourceLoader::CDEffectTask::load() {
+void CDEffectTask::load() {
 	SimpleAudioEngine::sharedEngine()->preloadEffect(name.c_str());
 }
 
-void CCResourceLoader::ArmatureTask::load() {
+void ArmatureTask::load() {
     CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(configFilePath.c_str());
 }
 
@@ -360,7 +360,7 @@ void CCResourceLoader::run() {
 void CCResourceLoader::runInBlockMode() {
     m_loading = true;
     for(LoadTaskPtrList::iterator iter = m_loadTaskList.begin(); iter != m_loadTaskList.end(); iter++) {
-        LoadTask* lp = *iter;
+        CCResourceLoadTask* lp = *iter;
         lp->load();
         if(m_listener)
             m_listener->onResourceLoadingProgress(m_nextLoad * 100 / m_loadTaskList.size(), 0);
@@ -632,7 +632,7 @@ void CCResourceLoader::addArmatureTask(string plistPattern, string texPattern, i
         addArmatureTask(config);
 }
 
-void CCResourceLoader::addLoadTask(LoadTask* t) {
+void CCResourceLoader::addLoadTask(CCResourceLoadTask* t) {
     m_loadTaskList.push_back(t);
 }
 
@@ -650,7 +650,7 @@ void CCResourceLoader::doLoad(float delta) {
         if(m_listener)
             m_listener->onResourceLoadingDone();
     } else {
-        LoadTask* lp = m_loadTaskList.at(m_nextLoad++);
+        CCResourceLoadTask* lp = m_loadTaskList.at(m_nextLoad++);
         m_remainingIdle = lp->idle;
         
         lp->load();

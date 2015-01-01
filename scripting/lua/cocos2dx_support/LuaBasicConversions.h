@@ -71,6 +71,12 @@ extern bool luaval_to_array_of_point(lua_State* L,int lo,cocos2d::CCPoint **poin
 extern bool luavals_variadic_to_array(lua_State* L,int argc, CCArray** ret);
 extern bool luaval_to_point(lua_State* L,int lo,cocos2d::CCPoint* outValue, const char* funcName = "");
 extern bool luaval_to_blendfunc(lua_State* L, int lo, cocos2d::ccBlendFunc* outValue, const char* funcName = "");
+extern bool luaval_to_position(lua_State* L, int lo, cocos2d::ccPosition* outValue, const char* funcName = "");
+extern bool luaval_to_vertex3f(lua_State* L, int lo, cocos2d::ccVertex3F* outValue, const char* funcName = "");
+extern bool luaval_to_bezierconfig(lua_State* L, int lo, cocos2d::ccBezierConfig* outValue, const char* funcName = "");
+extern bool luaval_to_quad3(lua_State* L, int lo, cocos2d::ccQuad3* outValue, const char* funcName = "");
+extern bool luaval_to_cpoint(lua_State* L, int lo, cocos2d::ccPoint* outValue, const char* funcName = "");
+extern bool luaval_to_crect(lua_State* L, int lo, cocos2d::ccRect* outValue, const char* funcName = "");
 
 bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret, const char* funcName = "");
 bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret, const char* funcName = "");
@@ -108,6 +114,12 @@ extern void fontdefinition_to_luaval(lua_State* L,const ccFontDefinition& inValu
 extern void array_to_luaval(lua_State* L, CCArray* inValue);
 extern void dictionary_to_luaval(lua_State* L, CCDictionary* dict);
 extern void blendfunc_to_luaval(lua_State* L, const cocos2d::ccBlendFunc& func);
+extern void position_to_luaval(lua_State* L, const cocos2d::ccPosition& pos);
+extern void vertex3f_to_luaval(lua_State* L, const cocos2d::ccVertex3F& v);
+extern void bezierconfig_to_luaval(lua_State* L, const cocos2d::ccBezierConfig& bc);
+extern void quad3_to_luaval(lua_State* L, const cocos2d::ccQuad3& q);
+extern void cpoint_to_luaval(lua_State* L, const cocos2d::ccPoint& p);
+extern void crect_to_luaval(lua_State* L, const cocos2d::ccRect& r);
 
 /**
  Because all override functions wouldn't be bound,so we must use `typeid` to get the real class name
