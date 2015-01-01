@@ -221,16 +221,13 @@ class NativeType(object):
             nt.is_const = ntype.get_pointee().is_const_qualified()
             nt.is_ref = True
             nt.whole_name = nt.qualified_name + "&"
-            nt.name += "&"
 
             # const prefix
             if nt.is_const:
                 nt.whole_name = "const " + nt.whole_name
-                nt.name = "const " + nt.name
 
             if nt.canonical_type is not None:
                 nt.canonical_type.whole_name += "&"
-                nt.canonical_type.name += "&"
         elif ntype.kind == TypeKind.RECORD:
             nt = NativeType()
             decl = ntype.get_declaration()
@@ -386,7 +383,7 @@ class NativeType(object):
 
         # if has typedef name, and type mapping is found, use canonical name
         if None != typedef_name:
-            if NativeType.dict_has_key_re(to_native_dict, [typedef_name]) or NativeType.dict_has_key_re(from_native_dict, [typedef_name]):
+            if dict_has_key_re(to_native_dict, [typedef_name]) or dict_has_key_re(from_native_dict, [typedef_name]):
                 use_typedef = True
         if use_typedef and self.canonical_type:
             name = self.canonical_type.namespaced_name
@@ -441,8 +438,7 @@ class NativeType(object):
 
         # find mapping, if no mapping, print error
         if dict_has_key_re(from_native_dict, keys):
-            tpl = dict_get_value_re(from_native_dict, keys)
-            tpl = Template(tpl, searchList=[convert_opts])
+            tpl = Template(dict_get_value_re(from_native_dict, keys), searchList=[convert_opts])
             return str(tpl).rstrip()
         return "#pragma warning NO CONVERSION FROM NATIVE FOR " + self.name
 
@@ -572,6 +568,7 @@ class NativeOverloadedFunction(object):
         self.func_name = func_array[0].func_name
         self.min_args = sys.maxint
         self.is_constructor = False
+        self.is_destructor = False
         for m in func_array:
             self.min_args = min(self.min_args, m.min_args)
 

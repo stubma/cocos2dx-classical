@@ -30,10 +30,10 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-struct CCAffineTransform {
+typedef struct {
   float a, b, c, d;
   float tx, ty;
-};
+} CCAffineTransform;
 
 CC_DLL CCAffineTransform __CCAffineTransformMake(float a, float b, float c, float d, float tx, float ty);
 #define CCAffineTransformMake __CCAffineTransformMake

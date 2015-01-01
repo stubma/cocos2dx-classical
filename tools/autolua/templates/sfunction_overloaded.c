@@ -8,7 +8,7 @@
 int ${signature}(lua_State* tolua_S) {
     // variables
     int argc = 0;
-    ${qualified_name}* cobj = nullptr;
+    ${qualified_name}* cobj = NULL;
     bool ok = true;
 \#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -25,7 +25,7 @@ int ${signature}(lua_State* tolua_S) {
     cobj = (${qualified_name}*)tolua_tousertype(tolua_S, 1, 0);
 \#if COCOS2D_DEBUG >= 1
     if (!cobj) {
-        tolua_error(tolua_S, "invalid 'cobj' in function '${signature}'", nullptr);
+        tolua_error(tolua_S, "invalid 'cobj' in function '${signature}'", NULL);
         return 0;
     }
 \#endif
@@ -43,8 +43,8 @@ int ${signature}(lua_State* tolua_S) {
 
     // try call function
     do {
-            #if $func.min_args > 0
         if (argc == ${arg_idx}) {
+            #if $func.min_args > 0
             // arguments declaration
                 #set $count = 0
                 #while $count < $arg_idx
@@ -91,7 +91,7 @@ int ${signature}(lua_State* tolua_S) {
                                             "ntype": $func.ret_type.whole_decl_in_tpl($generator),
                                             "class_name": $class_name,
                                             "level": 2,
-                                            "lua_type": $lua_type})};
+                                            "arg_lua_type": $generator.to_lua_type($func.ret_type.qualified_name, $func.ret_type.qualified_ns)})};
             return 1;
             #else
             ${qualified_name}::${func.func_name}($arg_list);
