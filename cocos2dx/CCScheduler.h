@@ -27,6 +27,7 @@ THE SOFTWARE.
 #ifndef __CCSCHEDULER_H__
 #define __CCSCHEDULER_H__
 
+#include "ccTypes.h"
 #include "cocoa/CCObject.h"
 #include "support/data_support/uthash.h"
 
@@ -232,7 +233,7 @@ public:
      return schedule script entry ID, used for unscheduleScriptFunc().
      @js NA
      */
-    unsigned int scheduleScriptFunc(unsigned int nHandler, float fInterval, bool bPaused);
+    unsigned int scheduleScriptFunc(ccLuaFunction nHandler, float fInterval, bool bPaused);
     
     /** Unschedule a script entry. 
      *  @js NA

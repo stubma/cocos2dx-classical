@@ -89,10 +89,10 @@ void CCMenuItem::unselected()
     m_bSelected = false;
 }
 
-void CCMenuItem::registerScriptTapHandler(int nHandler)
+void CCMenuItem::registerScriptTapHandler(ccLuaFunction nHandler)
 {
     unregisterScriptTapHandler();
-    m_nScriptTapHandler = nHandler;
+    m_nScriptTapHandler = nHandler.handler;
     LUALOG("[LUA] Add CCMenuItem script handler: %d", m_nScriptTapHandler);
 }
 

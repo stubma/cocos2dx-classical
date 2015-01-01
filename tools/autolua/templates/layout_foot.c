@@ -9,7 +9,7 @@ TOLUA_API int register_all_${target_module_fullname}(lua_State* tolua_S) {
 	tolua_beginmodule(tolua_S, NULL);
 	#end if
 
-	#for jsclass in $generated_classes
+	#for jsclass in $sorted_classes
 	lua_register_${target_module_fullname}_${jsclass}(tolua_S);
 	#end for
 

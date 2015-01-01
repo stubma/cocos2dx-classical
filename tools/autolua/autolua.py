@@ -196,7 +196,7 @@ class NativeType(object):
                 nt.whole_name = "const " + nt.whole_name
 
             # don't support non-object pointer
-            if not nt.is_class:
+            if not nt.is_class and nt.name != "char*":
                 nt.not_supported = True
         elif ntype.kind == TypeKind.LVALUEREFERENCE:
             nt = NativeType.from_type(ntype.get_pointee())
@@ -716,11 +716,18 @@ class NativeClass(object):
         # visit
         self.visit_node(self.node)
 
-    def is_method_in_parents(self, method_name):
+    def is_method_in_parents(self, f):
         if len(self.parents) > 0:
-            if method_name in self.parents[0].methods:
-                return True
-            return self.parents[0].is_method_in_parents(method_name)
+            if self.parents[0].methods.has_key(f.func_name):
+                pf = self.parents[0].methods[f.func_name]
+                if isinstance(pf, NativeOverloadedFunction):
+                    for pfm in pf.implementations:
+                        if pfm == f:
+                            return True
+                else:
+                    if pf == f:
+                        return True
+            return self.parents[0].is_method_in_parents(f)
         return False
 
     def generate_code(self, hfile, cppfile):
@@ -807,23 +814,23 @@ class NativeClass(object):
                 if not self.should_function_be_generated(nf):
                     return
 
-                # if function is override, need confirm it is defined in parents
-                if nf.is_override:
-                    if self.is_method_in_parents(nf.func_name):
-                        if not self.override_methods.has_key(nf.func_name):
-                            self.override_methods[nf.func_name] = nf
-                        else:
-                            nf.overload = True
-                            previous_nf = self.override_methods[nf.func_name]
-                            if isinstance(previous_nf, NativeOverloadedFunction):
-                                previous_nf.append(nf)
-                            else:
-                                self.override_methods[nf.func_name] = NativeOverloadedFunction([nf, previous_nf])
-                                previous_nf.overload = True
-                        return False
+                # check if function is override
+                if self.is_method_in_parents(nf):
+                    nf.is_override = True
 
-                # non-override function
-                if nf.static:
+                # if override, put to override_methods
+                if nf.is_override:
+                    if not self.override_methods.has_key(nf.func_name):
+                        self.override_methods[nf.func_name] = nf
+                    else:
+                        nf.overload = True
+                        previous_nf = self.override_methods[nf.func_name]
+                        if isinstance(previous_nf, NativeOverloadedFunction):
+                            previous_nf.append(nf)
+                        else:
+                            self.override_methods[nf.func_name] = NativeOverloadedFunction([nf, previous_nf])
+                            previous_nf.overload = True
+                elif nf.static:
                     if not self.static_methods.has_key(nf.func_name):
                         self.static_methods[nf.func_name] = nf
                     else:
@@ -845,6 +852,8 @@ class NativeClass(object):
                         else:
                             self.methods[nf.func_name] = NativeOverloadedFunction([nf, previous_nf])
                             previous_nf.overload = True
+
+                return False
         elif node.kind == CursorKind.CONSTRUCTOR and self.current_access_specifier == AccessSpecifierKind.PUBLIC:                # if function is not supported, skip it
             # create native function
             nf = NativeFunction(node)
@@ -925,6 +934,7 @@ class Generator(object):
         self.generated_structs = {}
         self.enums = {}
         self.structs = {}
+        self.sorted_classes = []
 
     @property
     def generator(self):
@@ -942,6 +952,31 @@ class Generator(object):
                 raise Exception("The namespace (%s) conversion wasn't set in 'ns_map' section of the conversions.yaml" % namespace_class_name)
         else:
             return namespace_class_name.replace("*","").replace("const ", "")
+
+    def sort_classes(self):
+        '''
+        sorted classes in order of inheritance
+        '''
+        sorted_list = []
+        for class_name in self.generated_classes.iterkeys():
+            nclass = self.generated_classes[class_name]
+            sorted_list += self.sort_parents(nclass)
+        # remove dupes from the list
+        no_dupes = []
+        [no_dupes.append(i) for i in sorted_list if not no_dupes.count(i)]
+        return no_dupes
+
+    def sort_parents(self, nclass):
+        '''
+        returns the sorted list of parents for a native class
+        '''
+        sorted_parents = []
+        for p in nclass.parents:
+            if p.class_name in self.generated_classes.keys():
+                sorted_parents += self.sort_parents(p)
+        if nclass.class_name in self.generated_classes.keys():
+            sorted_parents.append(nclass.class_name)
+        return sorted_parents
 
     def is_class_excluded(self, name):
         for r in self.exclude_classes_regex:
@@ -1056,12 +1091,12 @@ class Generator(object):
                     for f in m.implementations:
                         if f.pure_virtual:
                             puref[f] = f
-                        else:
+                        elif puref.has_key(m):
                             del puref[f]
                 else:
                     if m.pure_virtual:
                         puref[m] = m
-                    else:
+                    elif puref.has_key(m):
                         del puref[m]
 
             # finally if dict is not empty then this is an abstract class
@@ -1109,6 +1144,9 @@ class Generator(object):
                 if c.has_constructor:
                     del c.methods["constructor"]
                     c.has_constructor = False
+
+        # sort classes
+        self.sorted_classes = self.sort_classes()
 
         # generate header file
         self.hfile_path = os.path.join(self.dst_dir, "lua_" + self.target_module_fullname + "_auto.h")

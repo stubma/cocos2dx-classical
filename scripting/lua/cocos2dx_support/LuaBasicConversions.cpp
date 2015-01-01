@@ -127,6 +127,27 @@ bool luaval_to_int32(lua_State* L,int lo,int* outValue, const char* funcName)
     return ok;
 }
 
+bool luaval_to_luafunc(lua_State* L, int lo, cocos2d::ccLuaFunction* outValue, const char* funcName) {
+    // null checking
+    if (NULL == L || NULL == outValue)
+        return false;
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if(!toluafix_isfunction(L, lo, "LUA_FUNCTION", 0, &tolua_err)) {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:", &tolua_err, funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok) {
+        outValue->handler = (unsigned int)toluafix_ref_function(L, lo, 0);
+    }
+    
+    return ok;
+}
+
 bool luaval_to_uint32(lua_State* L, int lo, unsigned int* outValue, const char* funcName)
 {
     if (NULL == L || NULL == outValue)

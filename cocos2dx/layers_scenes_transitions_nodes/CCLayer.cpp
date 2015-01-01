@@ -127,10 +127,10 @@ void CCLayer::registerWithTouchDispatcher()
     }
 }
 
-void CCLayer::registerScriptTouchHandler(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
+void CCLayer::registerScriptTouchHandler(ccLuaFunction nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
 {
     unregisterScriptTouchHandler();
-    m_pScriptTouchHandlerEntry = CCTouchScriptHandlerEntry::create(nHandler, bIsMultiTouches, nPriority, bSwallowsTouches);
+    m_pScriptTouchHandlerEntry = CCTouchScriptHandlerEntry::create(nHandler.handler, bIsMultiTouches, nPriority, bSwallowsTouches);
     m_pScriptTouchHandlerEntry->retain();
 }
 

@@ -8,28 +8,18 @@
 int ${signature}(lua_State* tolua_S) {
     // variables
     int argc = 0;
-    ${qualified_name}* cobj = NULL;
     bool ok = true;
 \#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 \#endif
 
-#if not $is_constructor
     // if not constructor, validate the top is our desired object type
 \#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S, 1, "${lua_type}", 0, &tolua_err)) {
+    if (!tolua_isusertable(tolua_S, 1, "${lua_type}", 0, &tolua_err)) {
         tolua_error(tolua_S, "#ferror in function '${signature}'.", &tolua_err);
         return 0;
     }
 \#endif
-    cobj = (${qualified_name}*)tolua_tousertype(tolua_S, 1, 0);
-\#if COCOS2D_DEBUG >= 1
-    if (!cobj) {
-        tolua_error(tolua_S, "invalid 'cobj' in function '${signature}'", NULL);
-        return 0;
-    }
-\#endif
-#end if
 
     // get argument count
     argc = lua_gettop(tolua_S) - 1;

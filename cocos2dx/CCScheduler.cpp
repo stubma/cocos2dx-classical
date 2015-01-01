@@ -625,9 +625,9 @@ void CCScheduler::unscheduleAllForTarget(CCObject *pTarget)
     unscheduleUpdateForTarget(pTarget);
 }
 
-unsigned int CCScheduler::scheduleScriptFunc(unsigned int nHandler, float fInterval, bool bPaused)
+unsigned int CCScheduler::scheduleScriptFunc(ccLuaFunction nHandler, float fInterval, bool bPaused)
 {
-    CCSchedulerScriptHandlerEntry* pEntry = CCSchedulerScriptHandlerEntry::create(nHandler, fInterval, bPaused);
+    CCSchedulerScriptHandlerEntry* pEntry = CCSchedulerScriptHandlerEntry::create(nHandler.handler, fInterval, bPaused);
     if (!m_pScriptHandlerEntries)
     {
         m_pScriptHandlerEntries = CCArray::createWithCapacity(20);

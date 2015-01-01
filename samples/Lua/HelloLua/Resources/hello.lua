@@ -24,6 +24,10 @@ local function main()
     local visibleSize = CCDirector:sharedDirector():getVisibleSize()
     local origin = CCDirector:sharedDirector():getVisibleOrigin()
 
+    local function CCRectMake(x, y, w, h)
+        return { x = x, y = y, width = w, height = h }
+    end
+
     -- add the moving dog
     local function creatDog()
         local frameWidth = 105
@@ -40,11 +44,7 @@ local function main()
         spriteDog.isPaused = false
         spriteDog:setPosition(origin.x, origin.y + visibleSize.height / 4 * 3)
 
-        local animFrames = CCArray:create()
-
-        animFrames:addObject(frame0)
-        animFrames:addObject(frame1)
-
+        local animFrames = { frame0, frame1 }
         local animation = CCAnimation:createWithSpriteFrames(animFrames, 0.5)
         local animate = CCAnimate:create(animation);
         spriteDog:runAction(CCRepeatForever:create(animate))
@@ -52,14 +52,14 @@ local function main()
         -- moving dog at every frame
         local function tick()
             if spriteDog.isPaused then return end
-            local x, y = spriteDog:getPosition()
-            if x > origin.x + visibleSize.width then
-                x = origin.x
+            pos = spriteDog:getPosition()
+            if pos.x > origin.x + visibleSize.width then
+                pos.x = origin.x
             else
-                x = x + 1
+                pos.x = pos.x + 1
             end
 
-            spriteDog:setPositionX(x)
+            spriteDog:setPositionX(pos.x)
         end
 
         CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(tick, 0, false)
@@ -113,9 +113,9 @@ local function main()
         local function onTouchMoved(x, y)
             cclog("onTouchMoved: %0.2f, %0.2f", x, y)
             if touchBeginPoint then
-                local cx, cy = layerFarm:getPosition()
-                layerFarm:setPosition(cx + x - touchBeginPoint.x,
-                                      cy + y - touchBeginPoint.y)
+                pos = layerFarm:getPosition()
+                layerFarm:setPosition(pos.x + x - touchBeginPoint.x,
+                                      pos.y + y - touchBeginPoint.y)
                 touchBeginPoint = {x = x, y = y}
             end
         end
