@@ -1,3 +1,9 @@
+require("extern")
+require("json")
+require("Cocos2d")
+require("AudioEngine")
+require("CocoStudio")
+
 -- cclog
 cclog = function(...)
     print(string.format(...))
@@ -195,9 +201,9 @@ local function main()
 		bgMusicPath = CCFileUtils:sharedFileUtils():fullPathForFilename("background.mp3")
 	end
 
-    SimpleAudioEngine:sharedEngine():playBackgroundMusic(bgMusicPath, true)
+    AudioEngine.playMusic(bgMusicPath, true)
     local effectPath = CCFileUtils:sharedFileUtils():fullPathForFilename("effect1.wav")
-    SimpleAudioEngine:sharedEngine():preloadEffect(effectPath)
+    AudioEngine.preloadEffect(effectPath)
 
     -- run
     local sceneGame = CCScene:create()

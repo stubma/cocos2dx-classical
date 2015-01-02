@@ -23,6 +23,11 @@
 		78DC4C9A15490B9500317402 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 78DC4C9815490B9500317402 /* Default.png */; };
 		92A4A2DA1A52D81E007D7211 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A4A2D91A52D81E007D7211 /* CoreText.framework */; };
 		92A4A2DC1A52D82A007D7211 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A4A2DB1A52D82A007D7211 /* libsqlite3.dylib */; };
+		92E3B8AF1A568A350042BF52 /* AudioEngine.lua in Resources */ = {isa = PBXBuildFile; fileRef = 92E3B8AA1A568A350042BF52 /* AudioEngine.lua */; };
+		92E3B8B01A568A350042BF52 /* Cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 92E3B8AB1A568A350042BF52 /* Cocos2d.lua */; };
+		92E3B8B11A568A350042BF52 /* CocoStudio.lua in Resources */ = {isa = PBXBuildFile; fileRef = 92E3B8AC1A568A350042BF52 /* CocoStudio.lua */; };
+		92E3B8B21A568A350042BF52 /* extern.lua in Resources */ = {isa = PBXBuildFile; fileRef = 92E3B8AD1A568A350042BF52 /* extern.lua */; };
+		92E3B8B31A568A350042BF52 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = 92E3B8AE1A568A350042BF52 /* json.lua */; };
 		BF82F41713A864D700616D55 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F41513A864D700616D55 /* AppDelegate.cpp */; };
 		BF82F42113A8652A00616D55 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF82F41F13A8652A00616D55 /* AppController.mm */; };
 		BF82F42213A8652A00616D55 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BF82F42013A8652A00616D55 /* main.m */; };
@@ -78,6 +83,11 @@
 		78DC4C9815490B9500317402 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		92A4A2D91A52D81E007D7211 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		92A4A2DB1A52D82A007D7211 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		92E3B8AA1A568A350042BF52 /* AudioEngine.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AudioEngine.lua; path = ../../../../scripting/lua/script/AudioEngine.lua; sourceTree = "<group>"; };
+		92E3B8AB1A568A350042BF52 /* Cocos2d.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Cocos2d.lua; path = ../../../../scripting/lua/script/Cocos2d.lua; sourceTree = "<group>"; };
+		92E3B8AC1A568A350042BF52 /* CocoStudio.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CocoStudio.lua; path = ../../../../scripting/lua/script/CocoStudio.lua; sourceTree = "<group>"; };
+		92E3B8AD1A568A350042BF52 /* extern.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = extern.lua; path = ../../../../scripting/lua/script/extern.lua; sourceTree = "<group>"; };
+		92E3B8AE1A568A350042BF52 /* json.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = json.lua; path = ../../../../scripting/lua/script/json.lua; sourceTree = "<group>"; };
 		BF82F41513A864D700616D55 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = SOURCE_ROOT; };
 		BF82F41613A864D700616D55 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		BF82F41E13A8652A00616D55 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
@@ -199,6 +209,11 @@
 				78947C6114EBB9B000DBD5A6 /* dog.png */,
 				78947C6214EBB9B000DBD5A6 /* effect1.wav */,
 				78947C6314EBB9B000DBD5A6 /* farm.jpg */,
+				92E3B8AA1A568A350042BF52 /* AudioEngine.lua */,
+				92E3B8AB1A568A350042BF52 /* Cocos2d.lua */,
+				92E3B8AC1A568A350042BF52 /* CocoStudio.lua */,
+				92E3B8AD1A568A350042BF52 /* extern.lua */,
+				92E3B8AE1A568A350042BF52 /* json.lua */,
 				78947C6614EBB9B000DBD5A6 /* hello.lua */,
 				78947C6714EBB9B000DBD5A6 /* hello2.lua */,
 				78947C6914EBB9B000DBD5A6 /* land.png */,
@@ -295,9 +310,13 @@
 				78947C7014EBB9B100DBD5A6 /* dog.png in Resources */,
 				78947C7114EBB9B100DBD5A6 /* effect1.wav in Resources */,
 				78947C7214EBB9B100DBD5A6 /* farm.jpg in Resources */,
+				92E3B8AF1A568A350042BF52 /* AudioEngine.lua in Resources */,
 				78947C7414EBB9B100DBD5A6 /* hello.lua in Resources */,
+				92E3B8B01A568A350042BF52 /* Cocos2d.lua in Resources */,
 				78947C7514EBB9B100DBD5A6 /* hello2.lua in Resources */,
 				78947C7714EBB9B100DBD5A6 /* land.png in Resources */,
+				92E3B8B31A568A350042BF52 /* json.lua in Resources */,
+				92E3B8B21A568A350042BF52 /* extern.lua in Resources */,
 				78947C7814EBB9B100DBD5A6 /* menu1.png in Resources */,
 				78947C7914EBB9B100DBD5A6 /* menu2.png in Resources */,
 				78DC4C9A15490B9500317402 /* Default.png in Resources */,
@@ -306,6 +325,7 @@
 				D4EF94DB15BD311E00D803EB /* Icon-72.png in Resources */,
 				D4EF94DD15BD312100D803EB /* Icon-144.png in Resources */,
 				D41A0AA2160F13F8004552AE /* Default-568h@2x.png in Resources */,
+				92E3B8B11A568A350042BF52 /* CocoStudio.lua in Resources */,
 				D446FD3B16102085000ADA7B /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
