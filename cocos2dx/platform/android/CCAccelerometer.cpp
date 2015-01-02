@@ -32,49 +32,50 @@ THE SOFTWARE.
 #define  LOG_TAG    "CCAccelerometer_android"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
-namespace cocos2d
+NS_CC_BEGIN
+
+CCAccelerometer::CCAccelerometer() : m_pAccelDelegate(NULL)
 {
-    CCAccelerometer::CCAccelerometer() : m_pAccelDelegate(NULL)
-    {
-    }
+}
 
-    CCAccelerometer::~CCAccelerometer() 
-    {
+CCAccelerometer::~CCAccelerometer()
+{
 
-    }
+}
 
-    void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate) 
-    {
-        m_pAccelDelegate = pDelegate;
+void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
+{
+	m_pAccelDelegate = pDelegate;
 
-        if (pDelegate)
-        {        
-            enableAccelerometerJNI();
-        }
-        else
-        {
-            disableAccelerometerJNI();
-        }
-    }
+	if (pDelegate)
+	{
+		enableAccelerometerJNI();
+	}
+	else
+	{
+		disableAccelerometerJNI();
+	}
+}
 
-    void CCAccelerometer::setAccelerometerInterval(float interval) 
-    {
-        setAccelerometerIntervalJNI(interval);
-    }
+void CCAccelerometer::setAccelerometerInterval(float interval)
+{
+	setAccelerometerIntervalJNI(interval);
+}
 
 
-    void CCAccelerometer::update(float x, float y, float z, long sensorTimeStamp) 
-    {
-        if (m_pAccelDelegate)
-        {
-            m_obAccelerationValue.x = -((double)x / TG3_GRAVITY_EARTH);
-            m_obAccelerationValue.y = -((double)y / TG3_GRAVITY_EARTH);
-            m_obAccelerationValue.z = -((double)z / TG3_GRAVITY_EARTH);
-            m_obAccelerationValue.timestamp = (double)sensorTimeStamp;
+void CCAccelerometer::update(float x, float y, float z, long sensorTimeStamp)
+{
+	if (m_pAccelDelegate)
+	{
+		m_obAccelerationValue.x = -((double)x / TG3_GRAVITY_EARTH);
+		m_obAccelerationValue.y = -((double)y / TG3_GRAVITY_EARTH);
+		m_obAccelerationValue.z = -((double)z / TG3_GRAVITY_EARTH);
+		m_obAccelerationValue.timestamp = (double)sensorTimeStamp;
 
-            m_pAccelDelegate->didAccelerate(&m_obAccelerationValue);
-        }    
-    }
-} // end of namespace cococs2d
+		m_pAccelDelegate->didAccelerate(&m_obAccelerationValue);
+	}
+}
+
+NS_CC_END
 
 #endif // #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID

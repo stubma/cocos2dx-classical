@@ -22,7 +22,8 @@ LOCAL_WHOLE_STATIC_LIBRARIES := cocos_testcpp_common \
 	cocosdenshion_static \
 	box2d_static \
 	chipmunk_static \
-	cocos_extension_static
+	cocos_extension_static \
+	cocos_lua_static
 include $(BUILD_SHARED_LIBRARY)
 $(call import-module,samples/Cpp/TestCpp)
 $(call import-module,cocos2dx)
@@ -31,3 +32,4 @@ $(call import-module,CocosDenshion/android)
 $(call import-module,extensions)
 $(call import-module,external/Box2D)
 $(call import-module,external/chipmunk)
+$(call import-module,scripting/lua)

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 APPNAME="TestCpp"
 
 # options

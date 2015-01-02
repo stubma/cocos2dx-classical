@@ -96,9 +96,49 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>Resources</name>
+			<name>assets</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Resources</locationURI>
+			<locationURI>RESOURCES</locationURI>
+		</link>
+		<link>
+			<name>cocos2dx</name>
+			<type>2</type>
+			<locationURI>COCOS2DX/cocos2dx/platform/android/java/src</locationURI>
+		</link>
+		<link>
+			<name>jni/Classes</name>
+			<type>2</type>
+			<locationURI>$%7BCOCOS2DX%7D/samples/Lua/HelloLua/Classes</locationURI>
+		</link>
+		<link>
+			<name>jni/CocosDenshion</name>
+			<type>2</type>
+			<locationURI>COCOS2DX/CocosDenshion</locationURI>
+		</link>
+		<link>
+			<name>jni/cocos2dx</name>
+			<type>2</type>
+			<locationURI>COCOS2DX/cocos2dx</locationURI>
+		</link>
+		<link>
+			<name>jni/extensions</name>
+			<type>2</type>
+			<locationURI>COCOS2DX/extensions</locationURI>
+		</link>
+		<link>
+			<name>jni/scripting</name>
+			<type>2</type>
+			<locationURI>$%7BCOCOS2DX%7D/scripting</locationURI>
 		</link>
 	</linkedResources>
+	<variableList>
+		<variable>
+			<name>COCOS2DX</name>
+			<value>$%7BPARENT-4-PROJECT_LOC%7D</value>
+		</variable>
+		<variable>
+			<name>RESOURCES</name>
+			<value>$%7BPARENT-1-PROJECT_LOC%7D/Resources</value>
+		</variable>
+	</variableList>
 </projectDescription>

@@ -73,13 +73,13 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_C_INCLUDES)
 LOCAL_LDLIBS := -lGLESv2 -llog -lz
 LOCAL_EXPORT_LDLIBS := $(LOCAL_LDLIBS)
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_libpng_static \
-  cocos_jpeg_static \
+	cocos_jpeg_static \
 	cocos_libxml2_static \
 	cocos_libtiff_static \
 	cocos_libwebp_static \
-  cocos_sqlite3_static \
-  cocosdenshion_static \
-  cocos_extension_static
+	cocos_sqlite3_static \
+	cocosdenshion_static \
+	cocos_extension_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS := -Wno-psabi -DUSE_FILE32API

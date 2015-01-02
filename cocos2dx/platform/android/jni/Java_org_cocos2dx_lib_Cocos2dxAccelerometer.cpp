@@ -1,5 +1,5 @@
 #include "cocoa/CCGeometry.h"
-#include "platform/android/CCAccelerometer.h"
+#include "platform/CCAccelerometer.h"
 #include "../CCEGLView.h"
 #include "JniHelper.h"
 #include <jni.h>

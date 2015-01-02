@@ -17,6 +17,9 @@
 #ifndef ANDROID_TYPE_HELPERS_H
 #define ANDROID_TYPE_HELPERS_H
 
+// FIXME: to fix a compile error when build in c++11 mode
+#define _LIBCPP_HAS_NO_UNICODE_CHARS
+
 #include <new>
 #include <stdint.h>
 #include <string.h>

@@ -63,7 +63,7 @@ void* CCUDPSocket::udpThreadEntry(void* arg) {
 	my_addr.sin_port = 0;
 	
 	// bind
-	if(bind(s->m_socket, (sockaddr*)&my_addr, sizeof(my_addr)) == kCCSocketError && s->hasError()) {
+    if(::bind(s->m_socket, (sockaddr*)&my_addr, sizeof(my_addr)) == kCCSocketError && s->hasError()) {
         s->closeSocket();
 	} else {
      	// select it

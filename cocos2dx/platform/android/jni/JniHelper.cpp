@@ -24,6 +24,7 @@ THE SOFTWARE.
 #include "JniHelper.h"
 #include <android/log.h>
 #include <string.h>
+#include <pthread.h>
 
 #if 1
 #define  LOG_TAG    "JniHelper"

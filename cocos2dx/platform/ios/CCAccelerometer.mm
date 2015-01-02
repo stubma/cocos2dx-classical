@@ -27,7 +27,7 @@
 
 NS_CC_BEGIN
     
-CCAccelerometer::CCAccelerometer()
+CCAccelerometer::CCAccelerometer() : m_pAccelDelegate(NULL)
 {
 }
 
@@ -37,12 +37,17 @@ CCAccelerometer::~CCAccelerometer()
 
 void CCAccelerometer::setDelegate(CCAccelerometerDelegate* pDelegate)
 {
+    m_pAccelDelegate = pDelegate;
     [[AccelerometerDispatcher sharedAccelerometerDispather] addDelegate:pDelegate];
 }
 
 void CCAccelerometer::setAccelerometerInterval(float interval)
 {
     [[AccelerometerDispatcher sharedAccelerometerDispather] setAccelerometerInterval:interval];
+}
+
+void CCAccelerometer::update(float x, float y, float z, long sensorTimeStamp) {
+    // ios doesn't need this method
 }
 
 NS_CC_END

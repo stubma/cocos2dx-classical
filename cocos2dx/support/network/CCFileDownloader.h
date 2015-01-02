@@ -81,7 +81,7 @@ public:
      * @param url file download url, only http is supported
      * @param append true means downloaded data is appended to existent file, by default it is false
      */
-    void addFile(const string& url, bool append = false);
+    void addFile(const string& url, bool append);
     
     /**
      * add a download entry, you can change the name of destination file
@@ -90,7 +90,7 @@ public:
      * @param dstFilename destination file name
      * @param append true means downloaded data is appended to existent file, by default it is false
      */
-    void addFile(const string& url, const string& dstFilename, bool append = false);
+    void addFile(const string& url, const string& dstFilename, bool append);
     
     /**
      * add a download entry, you can change the name of destination file
@@ -100,7 +100,7 @@ public:
      * @param sizeHint size of file to be downloaded
      * @param append true means downloaded data is appended to existent file, by default it is false
      */
-    void addFile(const string& url, const string& dstFilename, size_t sizeHint, bool append = false);
+    void addFile(const string& url, const string& dstFilename, size_t sizeHint, bool append);
     
     /// start download
     void start();

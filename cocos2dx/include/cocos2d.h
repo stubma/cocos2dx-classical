@@ -161,18 +161,16 @@ THE SOFTWARE.
 #include "platform/CCMemoryOutputStream.h"
 #include "platform/CCCalendar.h"
 #include "platform/CCImagePicker.h"
+#include "platform/CCApplication.h"
+#include "platform/CCAccelerometer.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    #include "platform/ios/CCAccelerometer.h"
-    #include "platform/ios/CCApplication.h"
     #include "platform/ios/CCEGLView.h"
     #include "platform/ios/CCGL.h"
     #include "platform/ios/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    #include "platform/android/CCAccelerometer.h"
-    #include "platform/android/CCApplication.h"
     #include "platform/android/CCEGLView.h"
     #include "platform/android/CCGL.h"
     #include "platform/android/CCStdC.h"
