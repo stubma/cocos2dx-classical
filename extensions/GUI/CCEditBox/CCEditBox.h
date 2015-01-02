@@ -372,6 +372,13 @@ public:
      *  @lua NA
      */
     virtual void onExit(void);
+    
+    /** callback funtions 
+     *  @js NA
+     */
+    void touchDownAction(CCObject *sender, CCControlEvent controlEvent);
+    
+protected:
     /**
      *  @js NA
      *  @lua NA
@@ -392,11 +399,6 @@ public:
      *  @lua NA
      */
     virtual void keyboardDidHide(CCIMEKeyboardNotificationInfo& info);
-    
-    /** callback funtions 
-     *  @js NA
-     */
-    void touchDownAction(CCObject *sender, CCControlEvent controlEvent);
     
 protected:
     CCEditBoxImpl*      m_pEditBoxImpl;

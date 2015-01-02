@@ -96,18 +96,18 @@ void CCControlSaturationBrightnessPicker::setEnabled(bool enabled)
     }
 }
 
-void CCControlSaturationBrightnessPicker::updateWithHSV(HSV hsv)
+void CCControlSaturationBrightnessPicker::updateWithHSV(ccColorHSV hsv)
 {
-    HSV hsvTemp;
+    ccColorHSV hsvTemp;
     hsvTemp.s = 1;
     hsvTemp.h = hsv.h;
     hsvTemp.v = 1;
     
-    RGBA rgb = CCControlUtils::RGBfromHSV(hsvTemp);
+    ccColor4F rgb = CCControlUtils::RGBfromHSV(hsvTemp);
     m_background->setColor(ccc3((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
 }
 
-void CCControlSaturationBrightnessPicker::updateDraggerWithHSV(HSV hsv)
+void CCControlSaturationBrightnessPicker::updateDraggerWithHSV(ccColorHSV hsv)
 {
     // Set the position of the slider to the correct saturation and brightness
     CCPoint pos = CCPointMake(m_startPos.x + boxPos + (boxSize*(1 - hsv.s)),

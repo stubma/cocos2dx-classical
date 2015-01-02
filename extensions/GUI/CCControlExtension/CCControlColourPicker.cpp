@@ -138,7 +138,7 @@ void CCControlColourPicker::setColor(const ccColor3B& color)
     // XXX fixed me if not correct
     CCControl::setColor(color);
     
-    RGBA rgba;
+    ccColor4F rgba;
     rgba.r      = color.r / 255.0f;
     rgba.g      = color.g / 255.0f;
     rgba.b      = color.b / 255.0f;
@@ -182,7 +182,7 @@ void CCControlColourPicker::hueSliderValueChanged(CCObject * sender, CCControlEv
     m_hsv.h      = ((CCControlHuePicker*)sender)->getHue();
 
     // Update the value
-    RGBA rgb    = CCControlUtils::RGBfromHSV(m_hsv);
+    ccColor4F rgb    = CCControlUtils::RGBfromHSV(m_hsv);
     // XXX fixed me if not correct
     CCControl::setColor(ccc3((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
     
@@ -198,7 +198,7 @@ void CCControlColourPicker::colourSliderValueChanged(CCObject * sender, CCContro
 
 
      // Update the value
-    RGBA rgb    = CCControlUtils::RGBfromHSV(m_hsv);
+    ccColor4F rgb    = CCControlUtils::RGBfromHSV(m_hsv);
     // XXX fixed me if not correct
     CCControl::setColor(ccc3((GLubyte)(rgb.r * 255.0f), (GLubyte)(rgb.g * 255.0f), (GLubyte)(rgb.b * 255.0f)));
     

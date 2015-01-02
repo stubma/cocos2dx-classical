@@ -71,8 +71,8 @@ public:
     static CCControlSaturationBrightnessPicker* create(CCNode* target, CCPoint pos);
 
     virtual void setEnabled(bool enabled);
-    virtual void updateWithHSV(HSV hsv);
-    virtual void updateDraggerWithHSV(HSV hsv);
+    virtual void updateWithHSV(ccColorHSV hsv);
+    virtual void updateDraggerWithHSV(ccColorHSV hsv);
 
 protected:    
     void updateSliderPosition(CCPoint location);

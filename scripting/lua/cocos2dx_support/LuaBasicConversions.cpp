@@ -321,6 +321,37 @@ bool luaval_to_position(lua_State* L, int lo, cocos2d::ccPosition* outValue, con
     return ok;
 }
 
+bool luaval_to_aabb(lua_State* L, int lo, cocos2d::ccAABB* outValue, const char* funcName) {
+    // null checking
+    if (NULL == L || NULL == outValue)
+        return false;
+    bool ok = true;
+    
+    // top should be table
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err)) {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok) {
+        lua_pushstring(L, "min");
+        lua_gettable(L, lo);
+        if(!lua_isnil(L, -1))
+            luaval_to_point(L, -1, &outValue->min);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "max");
+        lua_gettable(L, lo);
+        if(!lua_isnil(L, -1))
+            luaval_to_point(L, -1, &outValue->max);
+        lua_pop(L, 1);
+    }
+    return ok;
+}
+
 bool luaval_to_quad3(lua_State* L, int lo, cocos2d::ccQuad3* outValue, const char* funcName) {
     // null checking
     if (NULL == L || NULL == outValue)
@@ -393,6 +424,60 @@ bool luaval_to_vertex3f(lua_State* L, int lo, cocos2d::ccVertex3F* outValue, con
         lua_pushstring(L, "z");
         lua_gettable(L, lo);
         outValue->z = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+    }
+    return ok;
+}
+
+bool luaval_to_packetheader(lua_State* L, int lo, cocos2d::ccPacketHeader* outValue, const char* funcName) {
+    // null checking
+    if (NULL == L || NULL == outValue)
+        return false;
+    bool ok = true;
+    
+    // top should be table
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err)) {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok) {
+        lua_pushstring(L, "magic");
+        lua_gettable(L, lo);
+        if(!lua_isnil(L, -1)) {
+            int magic;
+            luaval_to_int32(L, -1, &magic);
+            magic = htobe32(magic);
+            memcpy(outValue->magic, &magic, 4);
+        }
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "protocolVersion");
+        lua_gettable(L, lo);
+        outValue->protocolVersion = lua_isnil(L, -1) ? 0 : (int)lua_tointeger(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "serverVersion");
+        lua_gettable(L, lo);
+        outValue->serverVersion = lua_isnil(L, -1) ? 0 : (int)lua_tointeger(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "command");
+        lua_gettable(L, lo);
+        outValue->command = lua_isnil(L, -1) ? 0 : (int)lua_tointeger(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "encryptAlgorithm");
+        lua_gettable(L, lo);
+        outValue->encryptAlgorithm = lua_isnil(L, -1) ? 0 : (int)lua_tointeger(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "length");
+        lua_gettable(L, lo);
+        outValue->length = lua_isnil(L, -1) ? 0 : (int)lua_tointeger(L, -1);
         lua_pop(L, 1);
     }
     return ok;
@@ -733,6 +818,41 @@ bool luaval_to_color4b(lua_State* L,int lo,ccColor4B* outValue, const char* func
         lua_gettable(L,lo);
         outValue->a = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
         lua_pop(L,1);
+    }
+    
+    return ok;
+}
+
+bool luaval_to_colorhsv(lua_State* L,int lo, ccColorHSV* outValue, const char* funcName) {
+    // null checking
+    if (NULL == L || NULL == outValue)
+        return false;
+    bool ok = true;
+    
+    // top should be a table
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err))  {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok) {
+        lua_pushstring(L, "h");
+        lua_gettable(L, lo);
+        outValue->h = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "s");
+        lua_gettable(L, lo);
+        outValue->s = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "v");
+        lua_gettable(L, lo);
+        outValue->v = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
     }
     
     return ok;
@@ -1519,6 +1639,41 @@ bool luaval_to_std_vector_ushort(lua_State* L, int lo, std::vector<unsigned shor
     return ok;
 }
 
+bool luaval_to_std_vector_rect(lua_State* L, int lo, std::vector<cocos2d::CCRect>* ret, const char* funcName) {
+    // null checking
+    if (NULL == L || NULL == ret || lua_gettop(L) < lo)
+        return false;
+    
+    // top should be a table
+    tolua_Error tolua_err;
+    bool ok = true;
+    if (!tolua_istable(L, lo, 0, &tolua_err)) {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok) {
+        CCRect r;
+        size_t len = lua_objlen(L, lo);
+        for (size_t i = 0; i < len; i++) {
+            lua_pushnumber(L, i + 1);
+            lua_gettable(L, lo);
+            if(lua_istable(L, -1)) {
+                luaval_to_rect(L, -1, &r);
+                ret->push_back(r);
+            } else {
+                CCAssert(false, "table is needed");
+            }
+            
+            lua_pop(L, 1);
+        }
+    }
+    
+    return ok;
+}
+
 void point_array_to_luaval(lua_State* L,const cocos2d::CCPoint* points, int count)
 {
     if (NULL  == L)
@@ -1530,6 +1685,42 @@ void point_array_to_luaval(lua_State* L,const cocos2d::CCPoint* points, int coun
         point_to_luaval(L, points[i-1]);
         lua_rawset(L, -3);
     }
+}
+
+void aabb_to_luaval(lua_State* L, const cocos2d::ccAABB& r) {
+    if (NULL == L)
+        return;
+    lua_newtable(L);
+    lua_pushstring(L, "min");
+    point_to_luaval(L, r.min);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "max");
+    point_to_luaval(L, r.max);
+    lua_rawset(L, -3);
+}
+
+void packetheader_to_luaval(lua_State* L, const cocos2d::ccPacketHeader& r) {
+    if (NULL == L)
+        return;
+    lua_newtable(L);
+    lua_pushstring(L, "magic");
+    lua_pushinteger(L, (lua_Integer)*(int*)r.magic);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "protocolVersion");
+    lua_pushinteger(L, (lua_Integer)r.protocolVersion);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "serverVersion");
+    lua_pushinteger(L, (lua_Integer)r.serverVersion);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "command");
+    lua_pushinteger(L, (lua_Integer)r.command);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "encryptAlgorithm");
+    lua_pushinteger(L, (lua_Integer)r.encryptAlgorithm);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "length");
+    lua_pushinteger(L, (lua_Integer)r.length);
+    lua_rawset(L, -3);
 }
 
 void quad3_to_luaval(lua_State* L, const cocos2d::ccQuad3& q) {
@@ -1684,6 +1875,21 @@ void color4b_to_luaval(lua_State* L,const ccColor4B& cc)
     lua_pushstring(L, "a");                        /* L: table key */
     lua_pushnumber(L, (lua_Number) cc.a);          /* L: table key value*/
     lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+}
+
+void colorhsv_to_luaval(lua_State* L,const ccColorHSV& cc) {
+    if (NULL  == L)
+        return;
+    lua_newtable(L);                                    /* L: table */
+    lua_pushstring(L, "h");                             /* L: table key */
+    lua_pushnumber(L, (lua_Number)cc.h);               /* L: table key value*/
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    lua_pushstring(L, "s");                             /* L: table key */
+    lua_pushnumber(L, (lua_Number)cc.s);               /* L: table key value*/
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    lua_pushstring(L, "v");                         /* L: table key */
+    lua_pushnumber(L, (lua_Number)cc.v);           /* L: table key value*/
+    lua_rawset(L, -3);
 }
 
 void color4f_to_luaval(lua_State* L,const ccColor4F& cc)
@@ -2080,6 +2286,21 @@ void ccvector_ushort_to_luaval(lua_State* L, const std::vector<unsigned short>& 
     {
         lua_pushnumber(L, (lua_Number)index);
         lua_pushnumber(L, (lua_Number)value);
+        lua_rawset(L, -3);
+        ++index;
+    }
+}
+
+void ccvector_rect_to_luaval(lua_State* L, const std::vector<cocos2d::CCRect>& inValue) {
+    if (NULL == L)
+        return;
+    
+    lua_newtable(L);
+    
+    int index = 1;
+    for (const CCRect& value : inValue) {
+        lua_pushnumber(L, (lua_Number)index);
+        rect_to_luaval(L, value);
         lua_rawset(L, -3);
         ++index;
     }

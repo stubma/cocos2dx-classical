@@ -63,6 +63,7 @@ extern bool luaval_to_rect(lua_State* L,int lo, CCRect* outValue, const char* fu
 extern bool luaval_to_color3b(lua_State* L,int lo, ccColor3B* outValue, const char* funcName = "");
 extern bool luaval_to_color4b(lua_State* L,int lo, ccColor4B* outValue, const char* funcName = "");
 extern bool luaval_to_color4f(lua_State* L,int lo, ccColor4F* outValue, const char* funcName = "");
+extern bool luaval_to_colorhsv(lua_State* L,int lo, ccColorHSV* outValue, const char* funcName = "");
 extern bool luaval_to_affinetransform(lua_State* L,int lo, CCAffineTransform* outValue, const char* funcName = "");
 extern bool luaval_to_fontdefinition(lua_State* L, int lo, ccFontDefinition* outValue , const char* funcName = "");
 extern bool luaval_to_array(lua_State* L,int lo, CCArray** outValue, const char* funcName = "");
@@ -78,6 +79,8 @@ extern bool luaval_to_quad3(lua_State* L, int lo, cocos2d::ccQuad3* outValue, co
 extern bool luaval_to_cpoint(lua_State* L, int lo, cocos2d::ccPoint* outValue, const char* funcName = "");
 extern bool luaval_to_crect(lua_State* L, int lo, cocos2d::ccRect* outValue, const char* funcName = "");
 extern bool luaval_to_luafunc(lua_State* L, int lo, cocos2d::ccScriptFunction* outValue, const char* funcName = "");
+extern bool luaval_to_aabb(lua_State* L, int lo, cocos2d::ccAABB* outValue, const char* funcName = "");
+extern bool luaval_to_packetheader(lua_State* L, int lo, cocos2d::ccPacketHeader* outValue, const char* funcName = "");
 
 bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret, const char* funcName = "");
 bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret, const char* funcName = "");
@@ -101,6 +104,7 @@ bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret)
 
 extern bool luaval_to_std_vector_float(lua_State* L, int lo, std::vector<float>* ret, const char* funcName = "");
 extern bool luaval_to_std_vector_ushort(lua_State* L, int lo, std::vector<unsigned short>* ret, const char* funcName = "");
+extern bool luaval_to_std_vector_rect(lua_State* L, int lo, std::vector<cocos2d::CCRect>* ret, const char* funcName = "");
 
 // from native
 extern void point_to_luaval(lua_State* L,const cocos2d::CCPoint& vec2);
@@ -110,6 +114,7 @@ extern void rect_to_luaval(lua_State* L,const CCRect& rt);
 extern void color3b_to_luaval(lua_State* L,const ccColor3B& cc);
 extern void color4b_to_luaval(lua_State* L,const ccColor4B& cc);
 extern void color4f_to_luaval(lua_State* L,const ccColor4F& cc);
+extern void colorhsv_to_luaval(lua_State* L,const ccColorHSV& cc);
 extern void affinetransform_to_luaval(lua_State* L,const CCAffineTransform& inValue);
 extern void fontdefinition_to_luaval(lua_State* L,const ccFontDefinition& inValue);
 extern void array_to_luaval(lua_State* L, CCArray* inValue);
@@ -121,6 +126,8 @@ extern void bezierconfig_to_luaval(lua_State* L, const cocos2d::ccBezierConfig& 
 extern void quad3_to_luaval(lua_State* L, const cocos2d::ccQuad3& q);
 extern void cpoint_to_luaval(lua_State* L, const cocos2d::ccPoint& p);
 extern void crect_to_luaval(lua_State* L, const cocos2d::ccRect& r);
+extern void aabb_to_luaval(lua_State* L, const cocos2d::ccAABB& r);
+extern void packetheader_to_luaval(lua_State* L, const cocos2d::ccPacketHeader& r);
 
 /**
  Because all override functions wouldn't be bound,so we must use `typeid` to get the real class name
@@ -168,5 +175,6 @@ void ccvector_std_string_to_luaval(lua_State* L, const std::vector<std::string>&
 void ccvector_int_to_luaval(lua_State* L, const std::vector<int>& inValue);
 void ccvector_float_to_luaval(lua_State* L, const std::vector<float>& inValue);
 void ccvector_ushort_to_luaval(lua_State* L, const std::vector<unsigned short>& inValue);
+void ccvector_rect_to_luaval(lua_State* L, const std::vector<cocos2d::CCRect>& inValue);
 
 #endif //__COCOS2DX_SCRIPTING_LUA_COCOS2DXSUPPORT_LUABAISCCONVERSIONS_H__

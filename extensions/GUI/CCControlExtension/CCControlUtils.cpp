@@ -42,9 +42,9 @@ CCSprite* CCControlUtils::addSpriteToTargetWithPosAndAnchor(const char* spriteNa
 }
 
 
-HSV CCControlUtils::HSVfromRGB(RGBA value)
+ccColorHSV CCControlUtils::HSVfromRGB(ccColor4F value)
 {
-    HSV         out;
+    ccColorHSV         out;
     double      min, max, delta;
     
     min = value.r < value.g ? value.r : value.g;
@@ -84,11 +84,11 @@ HSV CCControlUtils::HSVfromRGB(RGBA value)
     return out;
 }
 
-RGBA CCControlUtils::RGBfromHSV(HSV value)
+ccColor4F CCControlUtils::RGBfromHSV(ccColorHSV value)
 {
     double      hh, p, q, t, ff;
     long        i;
-    RGBA        out;
+    ccColor4F        out;
     out.a        = 1;
     
     if (value.s <= 0.0) // < is bogus, just shuts up warnings

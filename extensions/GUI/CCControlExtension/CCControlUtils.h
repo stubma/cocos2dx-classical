@@ -39,21 +39,6 @@
 
 NS_CC_EXT_BEGIN
 
-typedef struct
-{
-    double r;       // percent
-    double g;       // percent
-    double b;       // percent
-    double a;       // percent
-} RGBA;
-
-typedef struct
-{
-    double h;       // angle in degrees
-    double s;       // percent
-    double v;       // percent
-} HSV;
-
 /**
  * @addtogroup GUI
  * @{
@@ -76,8 +61,8 @@ class CC_DLL CCControlUtils
 {
 public:
     static CCSprite* addSpriteToTargetWithPosAndAnchor(const char* spriteName, CCNode * target, CCPoint pos, CCPoint anchor);
-    static HSV HSVfromRGB(RGBA value);
-    static RGBA RGBfromHSV(HSV value);
+    static ccColorHSV HSVfromRGB(ccColor4F value);
+    static ccColor4F RGBfromHSV(ccColorHSV value);
     static CCRect CCRectUnion(const CCRect& src1, const CCRect& src2);
 };
 
