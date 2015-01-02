@@ -89,7 +89,7 @@ void CCMenuItem::unselected()
     m_bSelected = false;
 }
 
-void CCMenuItem::registerScriptTapHandler(ccLuaFunction nHandler)
+void CCMenuItem::registerScriptTapHandler(ccScriptFunction nHandler)
 {
     unregisterScriptTapHandler();
     m_nScriptTapHandler = nHandler.handler;

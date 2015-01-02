@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include <string>
 #include "ccTypeInfo.h"
 #include "CCAction.h"
+#include "script_support/CCScriptSupport.h"
 
 NS_CC_BEGIN
 
@@ -315,7 +316,7 @@ public:
 	/** creates the action with the handler script function 
      * @js NA
      */
-	static CCCallFunc * create(int nHandler);
+	static CCCallFunc * create(ccScriptFunction nHandler);
 
 	/** initializes the action with the callback 
     
@@ -408,7 +409,7 @@ public:
     static CCCallFuncN * create(CCObject* pSelectorTarget, SEL_CallFuncN selector);
 
 	/** creates the action with the handler script function*/
-	static CCCallFuncN * create(int nHandler);
+	static CCCallFuncN * create(ccScriptFunction nHandler);
 
     /** initializes the action with the callback 
 

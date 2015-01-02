@@ -127,7 +127,7 @@ bool luaval_to_int32(lua_State* L,int lo,int* outValue, const char* funcName)
     return ok;
 }
 
-bool luaval_to_luafunc(lua_State* L, int lo, cocos2d::ccLuaFunction* outValue, const char* funcName) {
+bool luaval_to_luafunc(lua_State* L, int lo, cocos2d::ccScriptFunction* outValue, const char* funcName) {
     // null checking
     if (NULL == L || NULL == outValue)
         return false;

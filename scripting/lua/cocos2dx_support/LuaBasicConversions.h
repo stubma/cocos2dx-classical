@@ -77,7 +77,7 @@ extern bool luaval_to_bezierconfig(lua_State* L, int lo, cocos2d::ccBezierConfig
 extern bool luaval_to_quad3(lua_State* L, int lo, cocos2d::ccQuad3* outValue, const char* funcName = "");
 extern bool luaval_to_cpoint(lua_State* L, int lo, cocos2d::ccPoint* outValue, const char* funcName = "");
 extern bool luaval_to_crect(lua_State* L, int lo, cocos2d::ccRect* outValue, const char* funcName = "");
-extern bool luaval_to_luafunc(lua_State* L, int lo, cocos2d::ccLuaFunction* outValue, const char* funcName = "");
+extern bool luaval_to_luafunc(lua_State* L, int lo, cocos2d::ccScriptFunction* outValue, const char* funcName = "");
 
 bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret, const char* funcName = "");
 bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret, const char* funcName = "");

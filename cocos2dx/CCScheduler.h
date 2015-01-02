@@ -27,7 +27,7 @@ THE SOFTWARE.
 #ifndef __CCSCHEDULER_H__
 #define __CCSCHEDULER_H__
 
-#include "ccTypes.h"
+#include "script_support/CCScriptSupport.h"
 #include "cocoa/CCObject.h"
 #include "support/data_support/uthash.h"
 
@@ -96,7 +96,7 @@ public:
     static CCTimer* timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds);
     
     /** Allocates a timer with a script callback function and an interval in seconds. */
-    static CCTimer* timerWithScriptHandler(int nHandler, float fSeconds);
+    static CCTimer* timerWithScriptHandler(ccScriptFunction nHandler, float fSeconds);
     /**
      *  @lua NA
      */
@@ -233,7 +233,7 @@ public:
      return schedule script entry ID, used for unscheduleScriptFunc().
      @js NA
      */
-    unsigned int scheduleScriptFunc(ccLuaFunction nHandler, float fInterval, bool bPaused);
+    unsigned int scheduleScriptFunc(ccScriptFunction nHandler, float fInterval, bool bPaused);
     
     /** Unschedule a script entry. 
      *  @js NA

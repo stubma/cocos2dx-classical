@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "cocoa/CCObject.h"
 #include "cocoa/CCArray.h"
+#include "script_support/CCScriptSupport.h"
 
 NS_CC_BEGIN
 /**
@@ -74,7 +75,7 @@ public:
      *  @note Only supports Lua Binding now.
      *  @param handler The lua handler.
      */
-    void registerScriptObserver(CCObject *target,int handler,const char* name);
+    void registerScriptObserver(CCObject *target, ccScriptFunction handler,const char* name);
 
     /** Unregisters script observer */
     void unregisterScriptObserver(CCObject *target,const char* name);

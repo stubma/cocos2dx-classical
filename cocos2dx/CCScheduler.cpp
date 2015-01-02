@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include "support/data_support/utlist.h"
 #include "support/data_support/ccCArray.h"
 #include "cocoa/CCArray.h"
-#include "script_support/CCScriptSupport.h"
 
 using namespace std;
 
@@ -104,11 +103,11 @@ CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, f
     return pTimer;
 }
 
-CCTimer* CCTimer::timerWithScriptHandler(int nHandler, float fSeconds)
+CCTimer* CCTimer::timerWithScriptHandler(ccScriptFunction nHandler, float fSeconds)
 {
     CCTimer *pTimer = new CCTimer();
 
-    pTimer->initWithScriptHandler(nHandler, fSeconds);
+    pTimer->initWithScriptHandler(nHandler.handler, fSeconds);
     pTimer->autorelease();
 
     return pTimer;
@@ -625,7 +624,7 @@ void CCScheduler::unscheduleAllForTarget(CCObject *pTarget)
     unscheduleUpdateForTarget(pTarget);
 }
 
-unsigned int CCScheduler::scheduleScriptFunc(ccLuaFunction nHandler, float fInterval, bool bPaused)
+unsigned int CCScheduler::scheduleScriptFunc(ccScriptFunction nHandler, float fInterval, bool bPaused)
 {
     CCSchedulerScriptHandlerEntry* pEntry = CCSchedulerScriptHandlerEntry::create(nHandler.handler, fInterval, bPaused);
     if (!m_pScriptHandlerEntries)

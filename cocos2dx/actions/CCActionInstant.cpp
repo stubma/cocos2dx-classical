@@ -27,7 +27,6 @@
 #include "CCActionInstant.h"
 #include "base_nodes/CCNode.h"
 #include "sprite_nodes/CCSprite.h"
-#include "script_support/CCScriptSupport.h"
 #include "cocoa/CCZone.h"
 
 NS_CC_BEGIN
@@ -390,12 +389,12 @@ CCCallFunc * CCCallFunc::create(CCObject* pSelectorTarget, SEL_CallFunc selector
     return NULL;
 }
 
-CCCallFunc * CCCallFunc::create(int nHandler)
+CCCallFunc * CCCallFunc::create(ccScriptFunction nHandler)
 {
 	CCCallFunc *pRet = new CCCallFunc();
 
 	if (pRet) {
-		pRet->m_nScriptHandler = nHandler;
+		pRet->m_nScriptHandler = nHandler.handler;
 		pRet->autorelease();
 	}
 	else{
@@ -490,12 +489,12 @@ CCCallFuncN * CCCallFuncN::create(CCObject* pSelectorTarget, SEL_CallFuncN selec
     return NULL;
 }
 
-CCCallFuncN * CCCallFuncN::create(int nHandler)
+CCCallFuncN * CCCallFuncN::create(ccScriptFunction nHandler)
 {
 	CCCallFuncN *pRet = new CCCallFuncN();
 
 	if (pRet) {
-		pRet->m_nScriptHandler = nHandler;
+		pRet->m_nScriptHandler = nHandler.handler;
 		pRet->autorelease();
 	}
 	else{

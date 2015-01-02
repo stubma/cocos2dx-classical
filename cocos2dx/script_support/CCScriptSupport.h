@@ -45,6 +45,11 @@ class CCNotificationCenter;
 class CCCallFunc;
 class CCAcceleration;
 
+// for script function
+typedef struct {
+    unsigned int handler;
+} ccScriptFunction;
+
 enum ccScriptType {
     kScriptTypeNone = 0,
     kScriptTypeLua,

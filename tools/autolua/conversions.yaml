@@ -52,7 +52,7 @@ conversions:
     "ccVertex3F": "ok &= luaval_to_vertex3f(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "ccBezierConfig": "ok &= luaval_to_bezierconfig(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "ccQuad3": "ok &= luaval_to_quad3(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
-    "ccLuaFunction": "ok &= luaval_to_luafunc(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
+    "ccScriptFunction": "ok &= luaval_to_luafunc(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "CCArray*": "ok &= luaval_to_array(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "CCDictionary*": "ok &= luaval_to_dictionary(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "CCAffineTransform": "ok &= luaval_to_affinetransform(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"

@@ -628,11 +628,6 @@ public:
     float m_elapsed;
 } ccFontDefinition;
 
-// for lua function
-typedef struct {
-    unsigned int handler;
-} ccLuaFunction;
-
 NS_CC_END
 
 #endif //__CCTYPES_H__

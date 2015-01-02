@@ -134,7 +134,7 @@ int CCNotificationCenter::removeAllObservers(CCObject *target)
     return toRemove->count();
 }
 
-void CCNotificationCenter::registerScriptObserver( CCObject *target, int handler,const char* name)
+void CCNotificationCenter::registerScriptObserver( CCObject *target, ccScriptFunction handler,const char* name)
 {
     
     if (this->observerExisted(target, name))
@@ -144,7 +144,7 @@ void CCNotificationCenter::registerScriptObserver( CCObject *target, int handler
     if (!observer)
         return;
     
-    observer->setHandler(handler);
+    observer->setHandler(handler.handler);
     observer->autorelease();
     m_observers->addObject(observer);
 }

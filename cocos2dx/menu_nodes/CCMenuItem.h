@@ -97,7 +97,7 @@ public:
     virtual void unselected();
     
     /** Register menu handler script function */
-    virtual void registerScriptTapHandler(ccLuaFunction nHandler);
+    virtual void registerScriptTapHandler(ccScriptFunction nHandler);
     virtual void unregisterScriptTapHandler(void);
     int getScriptTapHandler() { return m_nScriptTapHandler; };
 
