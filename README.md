@@ -9,23 +9,38 @@
 
 所以, 如果你正好也是一个Mac/iOS/Android开发者, 也正好还在使用cocos2dx 2.x, 不妨可以看几眼.
 
+What is this
+===
+
+It is a customized cocos2dx, based on latest code of cocos2dx v2 branch. The purpose of it is creating a classical cocos2dx version. I created it because cocos2dx already gave up v2 but v2 is still valuable to me. v3 doesn't interest me much because it may have more bugs. So I need a better v2, not a creepy v3.
+
+To get a bette v2, I created a cocos2dx-better project to overcome limitations of v2. Now I start this project to merge cocos2dx-better code to v2 branch, and more.
+
+I only care iOS/Android platform, so other platform code will be deleted. Are you same with me? If so, take a look at this project.
+
 目标
 ===
-1. 基于cocos2dx 2.x最新代码
-2. 将我个人的cocos2dx-better代码融入
-3. 把quick-cocos2dx那一套lua支持拷贝过来改吧改吧
-4. 专注于填坑改bug, 而非大刀阔斧的修改架构
+1. 基于cocos2dx 2.x最新代码 **(已完成)**
+2. 将我个人的cocos2dx-better代码融入 **(已完成)**
+3. 把quick-cocos2dx那一套lua支持拷贝过来改吧改吧 **(基本完成)**
+4. 专注于填坑改bug, 而非大刀阔斧的修改架构 **(随时进行中)**
 
-注意, 由于这是私人定制版, 我会加东西, 也会删东西, 主要删得都是一些我用不上的玩意, 主要都是extension里面的, 基本上我就留下了CocoStudio和GUI, 其它的我都咔嚓掉了, 有的我在cocos2dx-better里也实现过一份.
-
-当前状态
+Purpose
 ===
 
-参考quick 3.x的方式, 在做了N多调试和修改之后, 成功的支持了2.x, HelloLua工程编译运行成功! 剩下的事情就是把一些还没做映射的类型支持完.	
+1. base on cocos2dx v2 **(Done)**
+2. merge my cocos2dx-better **(Done)**
+3. provide fully lua support, in quick-cocos2dx 3.x way **(Almost Done)**
+4. fix v2 bugs **(Always in progress)**	
 
 何时结束
 ===
 等有一天我也开始使用3.x的时候, 这个项目就结束了, 即使到了那一天, 我也希望这个项目留下了一个好用的2.x. 就像名字希望的一样, 这会成为cocos2dx的古典经典版.
+
+Everything that has a beginning has an end
+===
+
+At the day when I switch to v3, this project will be stopped. But, I hope its corpse is still valuable to somebody because it is better than v2 corpse.
 
 这些年, 已经填过的坑
 ===
@@ -64,6 +79,42 @@
 * CCRepeatForever覆盖stop方法, 停掉内部动作
 
 cocos2dx-better新加的其它功能我就不列举了, 目前cocos2dx-better的代码已经合并完成, 有一部分代码我感觉写的用处不大就没有合并了, 不过只是一小部分, 95%的cocos2dx-better代码已经合并.
+
+Things Improved
+===
+
+* fixed project 64bits compiling
+* reimplement CCLabelTTF (merge code from cocos2dx-better CCRichLabelTTF)
+	* fully compatibile with old CCLabelTTF
+	* support attibuted style, such as color, font, size, style, image, link
+* polish CocoStudio
+	* remove UI prefix
+	* fix json parsing bug for CocoStudio Mac 1.0.0.0 beta, how to do:
+		* set Label default _fontSize to 20 because CocoStudio Mac use 20 by default
+		* create Layout for node whose name is "Node"
+		* check version in WidgetPropertiesReader0300::createWidget to detect CocoStudio Mac json
+		* because PageView is reimplemented, comment out page item code in WidgetPropertiesReader0300::widgetFromJsonDictionary
+		* set Layout default background color style to NONE
+		* reimplement PageView
+			* use data source to create page item dynamically, and reuseable
+			* use VelocityTracker (from cocos2dx-better) to improve page slide experience
+			* Note: don't support add page item in CocoStudio
+	* fix memory leak in UILabelBMFont::setFntFile
+	* return created item in Listview::pushBackDefaultItem
+	* Note: if you want to use skeleton animation, please still use CocoStudio Windows version, 1.4.0.1 is recommended.
+* reimplement TMX, support multi-tileset for one layer(merge from cocos2dx-better CBTMXTileMap)
+* reimplement CCTableView(merge from cocos2dx-better CCGridView):
+	* support multi-column
+	* support cell reuse, cell can set name
+	* column or row can be different size
+* add CCMeasurableProtocol class to abstract LoadingBar and CCProgressTimer, so that CProgressTo, CCProgressFromTo can be used on LoadingBar
+* CCLabelBMFont adds setLineKerning to adjust line spacing
+* CCScrollView add methods to set min/max scale
+* reimplement CCLayerMultiplex to avoid memory leak
+* CCLayer adds is/setSwallowTouch to control swallowing touch or not
+* CCSpriteBatchNode insertQuadFromSprite, updateQuadFromSprite, addSpriteWithoutQuad are changed to public
+* CCScrollView adds getTouchPoint to get last touch position
+* CCRepeatForever override stop method
 
 How to use CCImagePicker
 ==========================
