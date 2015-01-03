@@ -34,7 +34,7 @@ static const int LABELBMFONT_RENDERER_Z = (-1);
 IMPLEMENT_CLASS_GUI_INFO(LabelBMFont)
     
 LabelBMFont::LabelBMFont():
-_labelBMFontRenderer(NULL),
+_labelBMFontRenderer(nullptr),
 _fntFileHasInit(false),
 _fntFileName(""),
 _stringValue("")
@@ -55,7 +55,7 @@ LabelBMFont* LabelBMFont::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
 void LabelBMFont::initRenderer()
@@ -74,7 +74,7 @@ void LabelBMFont::setFntFile(const char *fileName)
     
     if(_labelBMFontRenderer) {
         _labelBMFontRenderer->removeFromParent();
-        _labelBMFontRenderer = NULL;
+        _labelBMFontRenderer = nullptr;
     }
     _labelBMFontRenderer = cocos2d::CCLabelBMFont::create("", fileName);
     CCNodeRGBA::addChild(_labelBMFontRenderer, LABELBMFONT_RENDERER_Z, -1);

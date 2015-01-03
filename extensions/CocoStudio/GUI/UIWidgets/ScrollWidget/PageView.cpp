@@ -33,16 +33,16 @@ IMPLEMENT_CLASS_GUI_INFO(PageView)
     
 PageView::PageView():
 _curPageIdx(0),
-m_tracker(NULL),
-m_dataSource(NULL),
-m_curPage(NULL),
-m_dstPage(NULL),
+m_tracker(nullptr),
+m_dataSource(nullptr),
+m_curPage(nullptr),
+m_dstPage(nullptr),
 _touchMoveDir(PAGEVIEW_TOUCHLEFT),
 _touchStartLocation(0.0f),
 _touchMoveStartLocation(0.0f),
 _movePagePoint(CCPointZero),
-m_leftChild(NULL),
-m_rightChild(NULL),
+m_leftChild(nullptr),
+m_rightChild(nullptr),
 _leftBoundary(0.0f),
 _rightBoundary(0.0f),
 _isAutoScrolling(false),
@@ -50,8 +50,8 @@ _autoScrollDistance(0.0f),
 _autoScrollSpeed(0.0f),
 _autoScrollDir(0),
 _childFocusCancelOffset(5.0f),
-_pageViewEventListener(NULL),
-_pageViewEventSelector(NULL)
+_pageViewEventListener(nullptr),
+_pageViewEventSelector(nullptr)
 {
 }
 
@@ -59,8 +59,8 @@ PageView::~PageView()
 {
     // release others
     CC_SAFE_RELEASE(m_tracker);
-    _pageViewEventListener = NULL;
-    _pageViewEventSelector = NULL;
+    _pageViewEventListener = nullptr;
+    _pageViewEventSelector = nullptr;
 }
 
 PageView* PageView::create()
@@ -72,7 +72,7 @@ PageView* PageView::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
     
 void PageView::onEnter()
@@ -98,7 +98,7 @@ void PageView::recyclePage(Widget* page) {
         page->removeFromParent();
         if(m_dataSource)
             m_dataSource->pageItemDidRecycled(this, page);
-        page = NULL;
+        page = nullptr;
     }
 }
     
@@ -109,10 +109,10 @@ void PageView::reloadData() {
         recyclePage(m_dstPage);
     recyclePage(m_leftChild);
     recyclePage(m_rightChild);
-    m_curPage = NULL;
-    m_leftChild = NULL;
-    m_rightChild = NULL;
-    m_dstPage = NULL;
+    m_curPage = nullptr;
+    m_leftChild = nullptr;
+    m_rightChild = nullptr;
+    m_dstPage = nullptr;
     
     // recreate current page
     if(m_dataSource) {
@@ -428,14 +428,14 @@ void PageView::pageTurningEvent() {
         recyclePage(m_rightChild);
         m_rightChild = m_curPage;
         m_curPage = m_leftChild;
-        m_leftChild = m_dstIndex > 0 ? m_dataSource->pageItemAtIndex(this, m_dstIndex - 1) : NULL;
+        m_leftChild = m_dstIndex > 0 ? m_dataSource->pageItemAtIndex(this, m_dstIndex - 1) : nullptr;
         if(m_leftChild)
             addPage(m_leftChild, -1);
     } else if(m_dstPage == m_rightChild) {
         recyclePage(m_leftChild);
         m_leftChild = m_curPage;
         m_curPage = m_rightChild;
-        m_rightChild = (m_dstIndex < m_dataSource->pageViewItemCount(this) - 1) ? m_dataSource->pageItemAtIndex(this, m_dstIndex + 1) : NULL;
+        m_rightChild = (m_dstIndex < m_dataSource->pageViewItemCount(this) - 1) ? m_dataSource->pageItemAtIndex(this, m_dstIndex + 1) : nullptr;
         if(m_rightChild)
             addPage(m_rightChild, 1);
     } else if(m_dstPage != m_curPage) {
@@ -445,7 +445,7 @@ void PageView::pageTurningEvent() {
             recyclePage(m_curPage);
             m_leftChild = m_rightChild;
             m_curPage = m_dstPage;
-            m_rightChild = (m_dstIndex < m_dataSource->pageViewItemCount(this) - 1) ? m_dataSource->pageItemAtIndex(this, m_dstIndex + 1) : NULL;
+            m_rightChild = (m_dstIndex < m_dataSource->pageViewItemCount(this) - 1) ? m_dataSource->pageItemAtIndex(this, m_dstIndex + 1) : nullptr;
             if(m_rightChild)
                 addPage(m_rightChild, 1);
         } else if(delta == -2) {
@@ -453,7 +453,7 @@ void PageView::pageTurningEvent() {
             recyclePage(m_curPage);
             m_rightChild = m_leftChild;
             m_curPage = m_dstPage;
-            m_leftChild = m_dstIndex > 0 ? m_dataSource->pageItemAtIndex(this, m_dstIndex - 1) : NULL;
+            m_leftChild = m_dstIndex > 0 ? m_dataSource->pageItemAtIndex(this, m_dstIndex - 1) : nullptr;
             if(m_leftChild)
                 addPage(m_leftChild, -1);
         } else {
@@ -461,17 +461,17 @@ void PageView::pageTurningEvent() {
             recyclePage(m_curPage);
             recyclePage(m_rightChild);
             m_curPage = m_dstPage;
-            m_leftChild = m_dstIndex > 0 ? m_dataSource->pageItemAtIndex(this, m_dstIndex - 1) : NULL;
+            m_leftChild = m_dstIndex > 0 ? m_dataSource->pageItemAtIndex(this, m_dstIndex - 1) : nullptr;
             if(m_leftChild)
                 addPage(m_leftChild, -1);
-            m_rightChild = (m_dstIndex < m_dataSource->pageViewItemCount(this) - 1) ? m_dataSource->pageItemAtIndex(this, m_dstIndex + 1) : NULL;
+            m_rightChild = (m_dstIndex < m_dataSource->pageViewItemCount(this) - 1) ? m_dataSource->pageItemAtIndex(this, m_dstIndex + 1) : nullptr;
             if(m_rightChild)
                 addPage(m_rightChild, 1);
         }
     }
     _isAutoScrolling = false;
     _curPageIdx = m_dstIndex;
-    m_dstPage = NULL;
+    m_dstPage = nullptr;
     
     // notify event
     if (_pageViewEventListener && _pageViewEventSelector) {
@@ -550,7 +550,7 @@ Widget* PageView::dequeuePageItem(const string& itemId) {
         }
     }
     
-    return NULL;
+    return nullptr;
 }
     
 }

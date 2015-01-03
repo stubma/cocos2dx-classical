@@ -41,7 +41,7 @@ CCBone *CCBone::create()
         return pBone;
     }
     CC_SAFE_DELETE(pBone);
-    return NULL;
+    return nullptr;
 
 }
 
@@ -55,25 +55,25 @@ CCBone *CCBone::create(const char *name)
         return pBone;
     }
     CC_SAFE_DELETE(pBone);
-    return NULL;
+    return nullptr;
 }
 
 CCBone::CCBone()
 {
-    m_pTweenData = NULL;
-    m_pParentBone = NULL;
-    m_pArmature = NULL;
-    m_pChildArmature = NULL;
-    m_pBoneData = NULL;
-    m_pTween = NULL;
-    m_pTween = NULL;
-    m_pChildren = NULL;
-    m_pDisplayManager = NULL;
+    m_pTweenData = nullptr;
+    m_pParentBone = nullptr;
+    m_pArmature = nullptr;
+    m_pChildArmature = nullptr;
+    m_pBoneData = nullptr;
+    m_pTween = nullptr;
+    m_pTween = nullptr;
+    m_pChildren = nullptr;
+    m_pDisplayManager = nullptr;
     m_bIgnoreMovementBoneData = false;
     m_tWorldTransform = CCAffineTransformMake(1, 0, 0, 1, 0, 0);
     m_bBoneTransformDirty = true;
-    m_tWorldInfo = NULL;
-    m_pArmatureParentBone = NULL;
+    m_tWorldInfo = nullptr;
+    m_pArmatureParentBone = nullptr;
     m_fDataVersion = 0;
     m_sBlendFunc.src = CC_BLEND_SRC;
     m_sBlendFunc.dst = CC_BLEND_DST;
@@ -96,7 +96,7 @@ CCBone::~CCBone(void)
 
 bool CCBone::init()
 {
-    return CCBone::init(NULL);
+    return CCBone::init(nullptr);
 }
 
 
@@ -106,7 +106,7 @@ bool CCBone::init(const char *name)
     do
     {
 
-        if(NULL != name)
+        if(nullptr != name)
         {
             m_strName = name;
         }
@@ -137,7 +137,7 @@ bool CCBone::init(const char *name)
 
 void CCBone::setBoneData(CCBoneData *boneData)
 {
-    CCAssert(NULL != boneData, "_boneData must not be NULL");
+    CCAssert(nullptr != boneData, "_boneData must not be nullptr");
 
     if (m_pBoneData != boneData)
     {
@@ -168,7 +168,7 @@ void CCBone::setArmature(CCArmature *armature)
     }
     else
     {
-        m_pArmatureParentBone = NULL;
+        m_pArmatureParentBone = nullptr;
     }
 }
 
@@ -226,7 +226,7 @@ void CCBone::update(float delta)
 
     CCDisplayFactory::updateDisplay(this, delta, m_bBoneTransformDirty || m_pArmature->getArmatureTransformDirty());
 
-    CCObject *object = NULL;
+    CCObject *object = nullptr;
     CCARRAY_FOREACH(m_pChildren, object)
     {
         CCBone *childBone = (CCBone *)object;
@@ -278,7 +278,7 @@ void CCBone::updateColor()
 {
     CCNode *display = m_pDisplayManager->getDisplayRenderNode();
     CCRGBAProtocol *protocol = dynamic_cast<CCRGBAProtocol *>(display);
-    if(protocol != NULL)
+    if(protocol != nullptr)
     {
         protocol->setColor(ccc3(_displayedColor.r * m_pTweenData->r / 255, _displayedColor.g * m_pTweenData->g / 255, _displayedColor.b * m_pTweenData->b / 255));
         protocol->setOpacity(_displayedOpacity * m_pTweenData->a / 255);
@@ -300,8 +300,8 @@ void CCBone::updateZOrder()
 
 void CCBone::addChildBone(CCBone *child)
 {
-    CCAssert( NULL != child, "Argument must be non-nil");
-    CCAssert( NULL == child->m_pParentBone, "child already added. It can't be added again");
+    CCAssert( nullptr != child, "Argument must be non-nil");
+    CCAssert( nullptr == child->m_pParentBone, "child already added. It can't be added again");
 
     if(!m_pChildren)
     {
@@ -323,7 +323,7 @@ void CCBone::removeChildBone(CCBone *bone, bool recursion)
         if(recursion)
         {
             CCArray *_ccbones = bone->m_pChildren;
-            CCObject *_object = NULL;
+            CCObject *_object = nullptr;
             CCARRAY_FOREACH(_ccbones, _object)
             {
                 CCBone *_ccBone = (CCBone *)_object;
@@ -331,9 +331,9 @@ void CCBone::removeChildBone(CCBone *bone, bool recursion)
             }
         }
 
-        bone->setParentBone(NULL);
+        bone->setParentBone(nullptr);
 
-        bone->getDisplayManager()->setCurrentDecorativeDisplay(NULL);
+        bone->getDisplayManager()->setCurrentDecorativeDisplay(nullptr);
 
         m_pChildren->removeObject(bone);
     }
@@ -341,7 +341,7 @@ void CCBone::removeChildBone(CCBone *bone, bool recursion)
 
 void CCBone::removeFromParent(bool recursion)
 {
-    if (NULL != m_pParentBone)
+    if (nullptr != m_pParentBone)
     {
         m_pParentBone->removeChildBone(this, recursion);
     }
@@ -361,9 +361,9 @@ void CCBone::setChildArmature(CCArmature *armature)
 {
     if (m_pChildArmature != armature)
     {
-        if (armature == NULL && m_pChildArmature)
+        if (armature == nullptr && m_pChildArmature)
         {
-            m_pChildArmature->setParentBone(NULL);
+            m_pChildArmature->setParentBone(nullptr);
         }
 
         CC_SAFE_RETAIN(armature);
@@ -465,14 +465,14 @@ CCArray *CCBone::getColliderBodyList()
         }
     }
 #endif
-    return NULL;
+    return nullptr;
 }
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
 void CCBone::setColliderFilter(CCColliderFilter *filter)
 {
     CCArray *array = m_pDisplayManager->getDecorativeDisplayList();
-    CCObject *object = NULL;
+    CCObject *object = nullptr;
     CCARRAY_FOREACH(array, object)
     {
         CCDecorativeDisplay *decoDisplay = static_cast<CCDecorativeDisplay *>(object);
@@ -491,7 +491,7 @@ CCColliderFilter *CCBone::getColliderFilter()
             return detector->getColliderFilter();
         }
     }
-    return NULL;
+    return nullptr;
 }
 #endif
 

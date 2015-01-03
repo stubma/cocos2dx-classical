@@ -29,8 +29,8 @@ NS_CC_BEGIN
 CCSPX3Action::CCSPX3Action() :
 		m_mode(SPX_DELAY),
 		m_frameCount(0),
-		m_frameIndices(NULL),
-		m_delays(NULL) {
+		m_frameIndices(nullptr),
+		m_delays(nullptr) {
 	memset(&m_collisionRect, 0, sizeof(CCSPX3Tile));
 }
 

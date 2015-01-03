@@ -62,19 +62,19 @@ static unsigned short* copyUTF16StringN(unsigned short* str)
 //
 //FNTConfig Cache - free functions
 //
-static CCDictionary* s_pConfigurations = NULL;
+static CCDictionary* s_pConfigurations = nullptr;
 
 CCBMFontConfiguration* FNTConfigLoadFile( const char *fntFile)
 {
-    CCBMFontConfiguration* pRet = NULL;
+    CCBMFontConfiguration* pRet = nullptr;
 
-    if( s_pConfigurations == NULL )
+    if( s_pConfigurations == nullptr )
     {
         s_pConfigurations = new CCDictionary();
     }
 
     pRet = (CCBMFontConfiguration*)s_pConfigurations->objectForKey(fntFile);
-    if( pRet == NULL )
+    if( pRet == nullptr )
     {
         pRet = CCBMFontConfiguration::create(fntFile);
         if (pRet)
@@ -108,13 +108,13 @@ CCBMFontConfiguration * CCBMFontConfiguration::create(const char *FNTfile)
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 bool CCBMFontConfiguration::initWithFNTfile(const char *FNTfile)
 {
-    m_pKerningDictionary = NULL;
-    m_pFontDefDictionary = NULL;
+    m_pKerningDictionary = nullptr;
+    m_pFontDefDictionary = nullptr;
     
     m_pCharacterSet = this->parseConfigFile(FNTfile);
     
@@ -132,10 +132,10 @@ std::set<unsigned int>* CCBMFontConfiguration::getCharacterSet() const
 }
 
 CCBMFontConfiguration::CCBMFontConfiguration()
-: m_pFontDefDictionary(NULL)
+: m_pFontDefDictionary(nullptr)
 , m_nCommonHeight(0)
-, m_pKerningDictionary(NULL)
-, m_pCharacterSet(NULL)
+, m_pKerningDictionary(nullptr)
+, m_pCharacterSet(nullptr)
 {
 
 }
@@ -193,7 +193,7 @@ std::set<unsigned int>* CCBMFontConfiguration::parseConfigFile(const char *contr
     if (!contents)
     {
         CCLOG("cocos2d: Error parsing FNTfile %s", controlFile);
-        return NULL;
+        return nullptr;
     }
 
     // parse spacing / padding
@@ -429,7 +429,7 @@ CCLabelBMFont * CCLabelBMFont::create()
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 CCLabelBMFont * CCLabelBMFont::create(const char *str, const char *fntFile, float width, CCTextAlignment alignment)
@@ -457,20 +457,20 @@ CCLabelBMFont *CCLabelBMFont::create(const char *str, const char *fntFile, float
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 bool CCLabelBMFont::init()
 {
-    return initWithString(NULL, NULL, kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPointZero);
+    return initWithString(nullptr, nullptr, kCCLabelAutomaticWidth, kCCTextAlignmentLeft, CCPointZero);
 }
 
 bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, float width/* = kCCLabelAutomaticWidth*/, CCTextAlignment alignment/* = kCCTextAlignmentLeft*/, CCPoint imageOffset/* = CCPointZero*/)
 {
     CCAssert(!m_pConfiguration, "re-init is no longer supported");
-    CCAssert( (theString && fntFile) || (theString==NULL && fntFile==NULL), "Invalid params for CCLabelBMFont");
+    CCAssert( (theString && fntFile) || (theString==nullptr && fntFile==nullptr), "Invalid params for CCLabelBMFont");
     
-    CCTexture2D *texture = NULL;
+    CCTexture2D *texture = nullptr;
     
     if (fntFile)
     {
@@ -496,7 +496,7 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
         texture->autorelease();
     }
 
-    if (theString == NULL)
+    if (theString == nullptr)
     {
         theString = "";
     }
@@ -530,14 +530,14 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
 }
 
 CCLabelBMFont::CCLabelBMFont()
-: m_sString(NULL)
-, m_sInitialString(NULL)
+: m_sString(nullptr)
+, m_sInitialString(nullptr)
 , m_pAlignment(kCCTextAlignmentCenter)
 , m_fWidth(-1.0f)
-, m_pConfiguration(NULL)
+, m_pConfiguration(nullptr)
 , m_bLineBreakWithoutSpaces(false)
 , m_tImageOffset(CCPointZero)
-, m_pReusedChar(NULL)
+, m_pReusedChar(nullptr)
 , m_cDisplayedOpacity(255)
 , m_cRealOpacity(255)
 , m_tDisplayedColor(ccWHITE)
@@ -565,7 +565,7 @@ int CCLabelBMFont::kerningAmountForFirst(unsigned short first, unsigned short se
     unsigned int key = (first<<16) | (second & 0xffff);
 
     if( m_pConfiguration->m_pKerningDictionary ) {
-        tCCKerningHashElement *element = NULL;
+        tCCKerningHashElement *element = nullptr;
         HASH_FIND_INT(m_pConfiguration->m_pKerningDictionary, &key, element);        
         if(element)
             ret = element->amount;
@@ -630,7 +630,7 @@ void CCLabelBMFont::createFontChars()
 
         kerningAmount = this->kerningAmountForFirst(prev, c);
         
-        tCCFontDefHashElement *element = NULL;
+        tCCFontDefHashElement *element = nullptr;
 
         // unichar is a short, and an int is needed on HASH_FIND_INT
         unsigned int key = c;
@@ -668,7 +668,7 @@ void CCLabelBMFont::createFontChars()
 				 Ideal for big labels.
 				 */
 				fontChar = m_pReusedChar;
-				fontChar->setBatchNode(NULL);
+				fontChar->setBatchNode(nullptr);
 				hasSprite = false;
 			}
             else
@@ -740,7 +740,7 @@ void CCLabelBMFont::setString(const char *newString)
 
 void CCLabelBMFont::setString(const char *newString, bool needUpdateLabel)
 {
-    if (newString == NULL) {
+    if (newString == nullptr) {
         newString = "";
     }
     if (needUpdateLabel) {
@@ -1127,7 +1127,7 @@ void CCLabelBMFont::updateLabel()
                 if (index < 0) continue;
 
                 CCSprite* lastChar = (CCSprite*)getChildByTag(index);
-                if ( lastChar == NULL )
+                if ( lastChar == nullptr )
                     continue;
 
                 lineWidth = lastChar->getPosition().x + lastChar->getContentSize().width/2.0f;
@@ -1222,7 +1222,7 @@ float CCLabelBMFont::getLetterPosXRight( CCSprite* sp )
 // LabelBMFont - FntFile
 void CCLabelBMFont::setFntFile(const char* fntFile)
 {
-    if (fntFile != NULL && strcmp(fntFile, m_sFntFile.c_str()) != 0 )
+    if (fntFile != nullptr && strcmp(fntFile, m_sFntFile.c_str()) != 0 )
     {
         CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFile);
 

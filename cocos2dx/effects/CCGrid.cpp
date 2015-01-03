@@ -267,7 +267,7 @@ CCGrid3D* CCGrid3D::create(const CCSize& gridSize, CCTexture2D *pTexture, bool b
         else
         {
             delete pRet;
-            pRet = NULL;
+            pRet = nullptr;
         }
     }
 
@@ -287,7 +287,7 @@ CCGrid3D* CCGrid3D::create(const CCSize& gridSize)
         else
         {
             delete pRet;
-            pRet = NULL;
+            pRet = nullptr;
         }
     }
 
@@ -296,10 +296,10 @@ CCGrid3D* CCGrid3D::create(const CCSize& gridSize)
 
 
 CCGrid3D::CCGrid3D()
-    : m_pTexCoordinates(NULL)
-    , m_pVertices(NULL)
-    , m_pOriginalVertices(NULL)
-    , m_pIndices(NULL)
+    : m_pTexCoordinates(nullptr)
+    , m_pVertices(nullptr)
+    , m_pOriginalVertices(nullptr)
+    , m_pIndices(nullptr)
 {
 
 }
@@ -471,10 +471,10 @@ void CCGrid3D::reuse(void)
 // implementation of CCTiledGrid3D
 
 CCTiledGrid3D::CCTiledGrid3D()
-    : m_pTexCoordinates(NULL)
-    , m_pVertices(NULL)
-    , m_pOriginalVertices(NULL)
-    , m_pIndices(NULL)
+    : m_pTexCoordinates(nullptr)
+    , m_pVertices(nullptr)
+    , m_pOriginalVertices(nullptr)
+    , m_pIndices(nullptr)
 {
 
 }
@@ -500,7 +500,7 @@ CCTiledGrid3D* CCTiledGrid3D::create(const CCSize& gridSize, CCTexture2D *pTextu
         else
         {
             delete pRet;
-            pRet = NULL;
+            pRet = nullptr;
         }
     }
 
@@ -520,7 +520,7 @@ CCTiledGrid3D* CCTiledGrid3D::create(const CCSize& gridSize)
         else
         {
             delete pRet;
-            pRet = NULL;
+            pRet = nullptr;
         }
     }
 

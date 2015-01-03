@@ -27,7 +27,7 @@
 NS_CC_BEGIN
 
 CCBlur::CCBlur() :
-m_oldProgram(NULL) {
+m_oldProgram(nullptr) {
 }
 
 CCBlur::~CCBlur() {
@@ -71,8 +71,8 @@ void CCBlur::stop() {
 }
 
 CCObject* CCBlur::copyWithZone(CCZone *pZone) {
-    CCZone* pNewZone = NULL;
-    CCBlur* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCBlur* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) {
         // in case of being called at sub class
         pCopy = (CCBlur*)(pZone->m_pCopyObject);

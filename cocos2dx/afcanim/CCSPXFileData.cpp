@@ -29,7 +29,7 @@ CCSPXFileData::CCSPXFileData() :
 		m_tileCount(0),
 		m_frameCount(0),
 		m_actionCount(0),
-		m_tiles(NULL) {
+		m_tiles(nullptr) {
 }
 
 CCSPXFileData::~CCSPXFileData() {

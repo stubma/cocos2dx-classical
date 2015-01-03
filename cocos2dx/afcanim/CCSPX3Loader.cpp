@@ -69,7 +69,7 @@ CCSPX3FileData* CCSPX3Loader::load(const char* data, size_t length, float resSca
 	s_data = data;
 	if(s_data[0] != 'S' || s_data[1] != 'P' || s_data[2] != 'X' || s_data[3] != '3') {
 		CCLOGERROR("CCSPX3Loader::load: Invalid SpriteX 2011 file header");
-		return NULL;
+		return nullptr;
 	}
 	s_pos = 4;
 
@@ -77,7 +77,7 @@ CCSPX3FileData* CCSPX3Loader::load(const char* data, size_t length, float resSca
 	int version = readByte();
 	if(version < SPX_MIN_VERSION || version > SPX_MAX_VERSION) {
 		CCLOGERROR("CCSPX3Loader::load: unsupported SpriteX 2011 file version: %d", s_data[s_pos]);
-		return NULL;
+		return nullptr;
 	}
 
 	// create data object

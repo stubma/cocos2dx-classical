@@ -31,7 +31,7 @@
 NS_CC_BEGIN
 
 CCTMXObjectDebugRenderer::CCTMXObjectDebugRenderer() :
-m_map(NULL) {
+m_map(nullptr) {
 }
 
 CCTMXObjectDebugRenderer::~CCTMXObjectDebugRenderer() {
@@ -43,7 +43,7 @@ CCTMXObjectDebugRenderer* CCTMXObjectDebugRenderer::create(CCTMXTiledMap* m) {
 		return (CCTMXObjectDebugRenderer*)l->autorelease();
 	}
 	l->release();
-	return NULL;
+	return nullptr;
 }
 
 bool CCTMXObjectDebugRenderer::initWithMap(CCTMXTiledMap* map) {

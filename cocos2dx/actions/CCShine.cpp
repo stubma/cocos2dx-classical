@@ -27,7 +27,7 @@
 NS_CC_BEGIN
 
 CCShine::CCShine() :
-m_oldProgram(NULL) {
+m_oldProgram(nullptr) {
 }
 
 CCShine::~CCShine() {
@@ -40,7 +40,7 @@ CCShine* CCShine::create(float duration, ccColor4B color1, ccColor4B color2, ccC
         return s;
     }
     CC_SAFE_RELEASE(s);
-    return NULL;
+    return nullptr;
 }
 
 bool CCShine::initWithColors(float duration, ccColor4B color1, ccColor4B color2, ccColor4B color3, ccVertex3F gradientPositions) {
@@ -99,8 +99,8 @@ void CCShine::stop() {
 }
 
 CCObject* CCShine::copyWithZone(CCZone* pZone) {
-    CCZone* pNewZone = NULL;
-    CCShine* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCShine* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) {
         // in case of being called at sub class
         pCopy = (CCShine*)(pZone->m_pCopyObject);
@@ -117,7 +117,7 @@ CCObject* CCShine::copyWithZone(CCZone* pZone) {
 }
 
 CCActionInterval* CCShine::reverse() {
-    return (CCActionInterval*)copyWithZone(NULL)->autorelease();
+    return (CCActionInterval*)copyWithZone(nullptr)->autorelease();
 }
 
 NS_CC_END

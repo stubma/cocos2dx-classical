@@ -65,19 +65,19 @@ CCNode::CCNode(void)
 , m_obAnchorPoint(CCPointZero)
 , m_obContentSize(CCSizeZero)
 , m_sAdditionalTransform(CCAffineTransformMakeIdentity())
-, m_pCamera(NULL)
+, m_pCamera(nullptr)
 // children (lazy allocs)
 // lazy alloc
-, m_pGrid(NULL)
+, m_pGrid(nullptr)
 , m_nZOrder(0)
-, m_pChildren(NULL)
-, m_pParent(NULL)
+, m_pChildren(nullptr)
+, m_pParent(nullptr)
 // "whole screen" objects. like Scenes and Layers, should set m_bIgnoreAnchorPointForPosition to true
 , m_nTag(kCCNodeTagInvalid)
 // userData is always inited as nil
-, m_pUserData(NULL)
-, m_pUserObject(NULL)
-, m_pShaderProgram(NULL)
+, m_pUserData(nullptr)
+, m_pUserObject(nullptr)
+, m_pShaderProgram(nullptr)
 , m_eGLServerState(ccGLServerState(0))
 , m_uOrderOfArrival(0)
 , m_bRunning(false)
@@ -89,7 +89,7 @@ CCNode::CCNode(void)
 , m_bReorderChildDirty(false)
 , m_nScriptHandler(0)
 , m_nUpdateScriptHandler(0)
-, m_pComponentContainer(NULL)
+, m_pComponentContainer(nullptr)
 {
     // set default scheduler and actionManager
     CCDirector *director = CCDirector::sharedDirector();
@@ -99,7 +99,7 @@ CCNode::CCNode(void)
     m_pScheduler->retain();
 
     CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
-    m_eScriptType = pEngine != NULL ? pEngine->getScriptType() : kScriptTypeNone;
+    m_eScriptType = pEngine != nullptr ? pEngine->getScriptType() : kScriptTypeNone;
     m_pComponentContainer = new CCComponentContainer(this);
 }
 
@@ -134,7 +134,7 @@ CCNode::~CCNode(void)
             CCNode* pChild = (CCNode*) child;
             if (pChild)
             {
-                pChild->m_pParent = NULL;
+                pChild->m_pParent = nullptr;
             }
         }
     }
@@ -585,7 +585,7 @@ CCNode* CCNode::getChildByTag(int aTag)
                 return pNode;
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 /* "add" logic MUST only be on this method
@@ -594,8 +594,8 @@ CCNode* CCNode::getChildByTag(int aTag)
 */
 void CCNode::addChild(CCNode *child, int zOrder, int tag)
 {    
-    CCAssert( child != NULL, "Argument must be non-nil");
-    CCAssert( child->m_pParent == NULL, "child already added. It can't be added again");
+    CCAssert( child != nullptr, "Argument must be non-nil");
+    CCAssert( child->m_pParent == nullptr, "child already added. It can't be added again");
 
     if( ! m_pChildren )
     {
@@ -618,13 +618,13 @@ void CCNode::addChild(CCNode *child, int zOrder, int tag)
 
 void CCNode::addChild(CCNode *child, int zOrder)
 {
-    CCAssert( child != NULL, "Argument must be non-nil");
+    CCAssert( child != nullptr, "Argument must be non-nil");
     this->addChild(child, zOrder, child->m_nTag);
 }
 
 void CCNode::addChild(CCNode *child)
 {
-    CCAssert( child != NULL, "Argument must be non-nil");
+    CCAssert( child != nullptr, "Argument must be non-nil");
     this->addChild(child, child->m_nZOrder, child->m_nTag);
 }
 
@@ -635,7 +635,7 @@ void CCNode::removeFromParent()
 
 void CCNode::removeFromParentAndCleanup(bool cleanup)
 {
-    if (m_pParent != NULL)
+    if (m_pParent != nullptr)
     {
         m_pParent->removeChild(this,cleanup);
     } 
@@ -653,7 +653,7 @@ void CCNode::removeChild(CCNode* child)
 void CCNode::removeChild(CCNode* child, bool cleanup)
 {
     // explicit nil handling
-    if (m_pChildren == NULL)
+    if (m_pChildren == nullptr)
     {
         return;
     }
@@ -675,7 +675,7 @@ void CCNode::removeChildByTag(int tag, bool cleanup)
 
     CCNode *child = this->getChildByTag(tag);
 
-    if (child == NULL)
+    if (child == nullptr)
     {
         CCLOG("cocos2d: removeChildByTag(tag = %d): child not found!", tag);
     }
@@ -715,7 +715,7 @@ void CCNode::removeAllChildrenWithCleanup(bool cleanup)
                     pNode->cleanup();
                 }
                 // set parent nil at the end
-                pNode->setParent(NULL);
+                pNode->setParent(nullptr);
             }
         }
         
@@ -743,7 +743,7 @@ void CCNode::detachChild(CCNode *child, bool doCleanup)
     }
 
     // set parent nil at the end
-    child->setParent(NULL);
+    child->setParent(nullptr);
 
     m_pChildren->removeObject(child);
 }
@@ -759,7 +759,7 @@ void CCNode::insertChild(CCNode* child, int z)
 
 void CCNode::reorderChild(CCNode *child, int zOrder)
 {
-    CCAssert( child != NULL, "Child must be non-nil");
+    CCAssert( child != nullptr, "Child must be non-nil");
     m_bReorderChildDirty = true;
     child->setOrderOfArrival(s_globalOrderOfArrival++);
     child->_setZOrder(zOrder);
@@ -819,7 +819,7 @@ void CCNode::visit()
 
     this->transform();
 
-    CCNode* pNode = NULL;
+    CCNode* pNode = nullptr;
     unsigned int i = 0;
 
     if(m_pChildren && m_pChildren->count() > 0)
@@ -870,7 +870,7 @@ void CCNode::visit()
 
 void CCNode::transformAncestors()
 {
-    if( m_pParent != NULL  )
+    if( m_pParent != nullptr  )
     {
         m_pParent->transformAncestors();
         m_pParent->transform();
@@ -892,7 +892,7 @@ void CCNode::transform()
 
 
     // XXX: Expensive calls. Camera should be integrated into the cached affine matrix
-    if ( m_pCamera != NULL && !(m_pGrid != NULL && m_pGrid->isActive()) )
+    if ( m_pCamera != nullptr && !(m_pGrid != nullptr && m_pGrid->isActive()) )
     {
         bool translate = (m_obAnchorPointInPoints.x != 0.0f || m_obAnchorPointInPoints.y != 0.0f);
 
@@ -1004,7 +1004,7 @@ CCActionManager* CCNode::getActionManager()
 
 CCAction * CCNode::runAction(CCAction* action)
 {
-    CCAssert( action != NULL, "Argument must be non-nil");
+    CCAssert( action != nullptr, "Argument must be non-nil");
     m_pActionManager->addAction(action, this, !m_bRunning);
     return action;
 }
@@ -1240,7 +1240,7 @@ CCAffineTransform CCNode::nodeToWorldTransform()
 {
     CCAffineTransform t = this->nodeToParentTransform();
 
-    for (CCNode *p = m_pParent; p != NULL; p = p->getParent())
+    for (CCNode *p = m_pParent; p != nullptr; p = p->getParent())
         t = CCAffineTransformConcat(t, p->nodeToParentTransform());
 
     return t;
@@ -1451,7 +1451,7 @@ void CCNodeRGBA::updateDisplayedColor(const ccColor3B& parentColor)
     
     if (_cascadeColorEnabled)
     {
-        CCObject *obj = NULL;
+        CCObject *obj = nullptr;
         CCARRAY_FOREACH(m_pChildren, obj)
         {
             CCRGBAProtocol *item = dynamic_cast<CCRGBAProtocol*>(obj);

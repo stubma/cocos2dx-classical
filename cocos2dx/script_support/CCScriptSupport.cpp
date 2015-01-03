@@ -128,7 +128,7 @@ bool CCTouchScriptHandlerEntry::init(bool bIsMultiTouches, int nPriority, bool b
 // #pragma mark CCScriptEngineManager
 #endif
 
-static CCScriptEngineManager* s_pSharedScriptEngineManager = NULL;
+static CCScriptEngineManager* s_pSharedScriptEngineManager = nullptr;
 
 
 CCScriptEngineManager::~CCScriptEngineManager(void)
@@ -147,7 +147,7 @@ void CCScriptEngineManager::removeScriptEngine(void)
     if (m_pScriptEngine)
     {
         delete m_pScriptEngine;
-        m_pScriptEngine = NULL;
+        m_pScriptEngine = nullptr;
     }
 }
 
@@ -165,7 +165,7 @@ void CCScriptEngineManager::purgeSharedManager(void)
     if (s_pSharedScriptEngineManager)
     {
         delete s_pSharedScriptEngineManager;
-        s_pSharedScriptEngineManager = NULL;
+        s_pSharedScriptEngineManager = nullptr;
     }
 }
 

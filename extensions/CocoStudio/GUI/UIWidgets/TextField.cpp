@@ -76,7 +76,7 @@ UICCTextField * UICCTextField::create(const char *placeholder, const char *fontN
     }
     CC_SAFE_DELETE(pRet);
     
-    return NULL;
+    return nullptr;
 }
 
 void UICCTextField::onEnter()
@@ -359,20 +359,20 @@ static const int TEXTFIELD_RENDERER_Z = (-1);
 IMPLEMENT_CLASS_GUI_INFO(TextField)
     
 TextField::TextField():
-_textFieldRenderer(NULL),
+_textFieldRenderer(nullptr),
 _touchWidth(0.0f),
 _touchHeight(0.0f),
 _useTouchArea(false),
-_textFieldEventListener(NULL),
-_textFieldEventSelector(NULL),
+_textFieldEventListener(nullptr),
+_textFieldEventSelector(nullptr),
 _passwordStyleText("")
 {
 }
 
 TextField::~TextField()
 {
-    _textFieldEventListener = NULL;
-    _textFieldEventSelector = NULL;
+    _textFieldEventListener = nullptr;
+    _textFieldEventSelector = nullptr;
 }
 
 TextField* TextField::create()
@@ -384,7 +384,7 @@ TextField* TextField::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
     
 bool TextField::init()

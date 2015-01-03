@@ -41,8 +41,8 @@ CCEditBoxImpl* __createSystemEditBox(CCEditBox* pEditBox)
 
 CCEditBoxImplAndroid::CCEditBoxImplAndroid(CCEditBox* pEditText)
 : CCEditBoxImpl(pEditText)
-, m_pLabel(NULL)
-, m_pLabelPlaceHolder(NULL)
+, m_pLabel(nullptr)
+, m_pLabelPlaceHolder(nullptr)
 , m_eEditBoxInputMode(kEditBoxInputModeSingleLine)
 , m_eEditBoxInputFlag(kEditBoxInputFlagInitialCapsAllCharacters)
 , m_eKeyboardReturnType(kKeyboardReturnTypeDefault)
@@ -89,12 +89,12 @@ bool CCEditBoxImplAndroid::initWithSize(const CCSize& size)
 
 void CCEditBoxImplAndroid::setFont(const char* pFontName, int fontSize)
 {
-	if(m_pLabel != NULL) {
+	if(m_pLabel != nullptr) {
 		m_pLabel->setFontName(pFontName);
 		m_pLabel->setFontSize(fontSize);
 	}
 	
-	if(m_pLabelPlaceHolder != NULL) {
+	if(m_pLabelPlaceHolder != nullptr) {
 		m_pLabelPlaceHolder->setFontName(pFontName);
 		m_pLabelPlaceHolder->setFontSize(fontSize);
 	}
@@ -108,7 +108,7 @@ void CCEditBoxImplAndroid::setFontColor(const ccColor3B& color)
 
 void CCEditBoxImplAndroid::setPlaceholderFont(const char* pFontName, int fontSize)
 {
-	if(m_pLabelPlaceHolder != NULL) {
+	if(m_pLabelPlaceHolder != nullptr) {
 		m_pLabelPlaceHolder->setFontName(pFontName);
 		m_pLabelPlaceHolder->setFontSize(fontSize);
 	}
@@ -152,7 +152,7 @@ bool CCEditBoxImplAndroid::isEditing()
 
 void CCEditBoxImplAndroid::setText(const char* pText)
 {
-    if (pText != NULL)
+    if (pText != nullptr)
     {
         m_strText = pText;
 		
@@ -202,7 +202,7 @@ const char*  CCEditBoxImplAndroid::getText(void)
 
 void CCEditBoxImplAndroid::setPlaceHolder(const char* pText)
 {
-    if (pText != NULL)
+    if (pText != nullptr)
     {
         m_strPlaceHolder = pText;
         if (m_strPlaceHolder.length() > 0 && m_strText.length() == 0)
@@ -249,7 +249,7 @@ static void editBoxCallbackFunc(const char* pText, void* ctx)
     CCEditBoxImplAndroid* thiz = (CCEditBoxImplAndroid*)ctx;
     thiz->setText(pText);
 	
-    if (thiz->getDelegate() != NULL)
+    if (thiz->getDelegate() != nullptr)
     {
         thiz->getDelegate()->editBoxTextChanged(thiz->getCCEditBox(), thiz->getText());
         thiz->getDelegate()->editBoxEditingDidEnd(thiz->getCCEditBox());
@@ -257,7 +257,7 @@ static void editBoxCallbackFunc(const char* pText, void* ctx)
     }
     
     CCEditBox* pEditBox = thiz->getCCEditBox();
-    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+    if (nullptr != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
         cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
         pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
@@ -268,12 +268,12 @@ static void editBoxCallbackFunc(const char* pText, void* ctx)
 
 void CCEditBoxImplAndroid::openKeyboard()
 {
-    if (m_pDelegate != NULL)
+    if (m_pDelegate != nullptr)
     {
         m_pDelegate->editBoxEditingDidBegin(m_pEditBox);
     }
     CCEditBox* pEditBox = this->getCCEditBox();
-    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+    if (nullptr != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
         cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
         pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);

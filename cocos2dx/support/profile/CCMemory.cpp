@@ -82,7 +82,7 @@ void addRecord(ccMemoryRecord* r) {
 	// get hash position
 	int hash = (uintptr_t)r->start & MEMORY_RECORD_INDEX_MASK;
 	ccMemoryRecord* pTemp = sMemoryRecord[hash];
-	ccMemoryRecord* pPrev = NULL;
+	ccMemoryRecord* pPrev = nullptr;
 
 	// find a block whose start address is larger than incoming record
 	while (pTemp) {
@@ -94,7 +94,7 @@ void addRecord(ccMemoryRecord* r) {
 	}
 
 	// insert new record into linked list
-	if (pPrev == NULL) {
+	if (pPrev == nullptr) {
 		sMemoryRecord[hash] = r;
 		if (pTemp) {
 			r->next = pTemp;
@@ -113,7 +113,7 @@ void addRecord(ccMemoryRecord* r) {
 ccMemoryRecord* findRecord(void* p) {
 	int hash = (uintptr_t)p & MEMORY_RECORD_INDEX_MASK;
 	ccMemoryRecord* pTemp = sMemoryRecord[hash];
-	ccMemoryRecord* r = NULL;
+	ccMemoryRecord* r = nullptr;
 	while (pTemp) {
 		if (pTemp->start == p) {
 			r = pTemp;
@@ -127,7 +127,7 @@ ccMemoryRecord* findRecord(void* p) {
 ccMemoryRecord* removeRecord(ccMemoryRecord* r) {
 	int hash = (uintptr_t)r->start & MEMORY_RECORD_INDEX_MASK;
 	ccMemoryRecord* pTemp = sMemoryRecord[hash];
-	ccMemoryRecord* pPrev = NULL;
+	ccMemoryRecord* pPrev = nullptr;
 	while(pTemp) {
 		if(pTemp == r) {
 			break;
@@ -139,7 +139,7 @@ ccMemoryRecord* removeRecord(ccMemoryRecord* r) {
 	// didn't find?
 	if(pTemp != r) {
 		CCLOG("[MEMRECORD] Unmatched record (%p)(record=%p):%d [%s:%d]", r->start, r, r->size, r->file, r->line);
-		return NULL;
+		return nullptr;
 	}
 
 	// remove record
@@ -154,27 +154,27 @@ ccMemoryRecord* removeRecord(ccMemoryRecord* r) {
 	sTotalFree++;
 
 	// return record
-	r->next = NULL;
+	r->next = nullptr;
 	return r;
 }
 
 void* _ccMalloc(size_t size, const char* file, int line, const char* logTag) {
 	// null pointer for zero size
 	if (size == 0)
-		return NULL;
+		return nullptr;
 
 	void* p = malloc(size);
 	if (p) {
 		ccMemoryRecord* r = (ccMemoryRecord*)malloc(sizeof(ccMemoryRecord));
 		if(!r) {
 			free(p);
-			p = NULL;
+			p = nullptr;
 		} else {
 			r->start = p;
 			r->size = size;
 			r->file = file;
 			r->line = line;
-			r->next = NULL;
+			r->next = nullptr;
 			addRecord(r);
 		}
 

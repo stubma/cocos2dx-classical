@@ -63,7 +63,7 @@ CCActionEase* CCActionEase::create(CCActionInterval *pAction)
 
 bool CCActionEase::initWithAction(CCActionInterval *pAction)
 {
-    CCAssert(pAction != NULL, "");
+    CCAssert(pAction != nullptr, "");
 
     if (CCActionInterval::initWithDuration(pAction->getDuration()))
     {
@@ -78,8 +78,8 @@ bool CCActionEase::initWithAction(CCActionInterval *pAction)
 
 CCObject* CCActionEase::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCActionEase* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCActionEase* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -166,8 +166,8 @@ bool CCEaseRateAction::initWithAction(CCActionInterval *pAction, float fRate)
 
 CCObject* CCEaseRateAction::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCEaseRateAction* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCEaseRateAction* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -218,8 +218,8 @@ CCEaseIn* CCEaseIn::create(CCActionInterval *pAction, float fRate)
 
 CCObject* CCEaseIn::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCEaseIn* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCEaseIn* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -270,8 +270,8 @@ CCEaseOut* CCEaseOut::create(CCActionInterval *pAction, float fRate)
 
 CCObject* CCEaseOut::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCEaseOut* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCEaseOut* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -322,8 +322,8 @@ CCEaseInOut* CCEaseInOut::create(CCActionInterval *pAction, float fRate)
 
 CCObject* CCEaseInOut::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCEaseInOut* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCEaseInOut* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -383,8 +383,8 @@ CCEaseExponentialIn* CCEaseExponentialIn::create(CCActionInterval* pAction)
 
 CCObject* CCEaseExponentialIn::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCEaseExponentialIn* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCEaseExponentialIn* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -435,8 +435,8 @@ CCEaseExponentialOut* CCEaseExponentialOut::create(CCActionInterval* pAction)
 
 CCObject* CCEaseExponentialOut::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCEaseExponentialOut* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCEaseExponentialOut* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -488,8 +488,8 @@ CCEaseExponentialInOut* CCEaseExponentialInOut::create(CCActionInterval *pAction
 
 CCObject* CCEaseExponentialInOut::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCEaseExponentialInOut* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCEaseExponentialInOut* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -551,8 +551,8 @@ CCEaseSineIn* CCEaseSineIn::create(CCActionInterval* pAction)
 
 CCObject* CCEaseSineIn::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCEaseSineIn* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCEaseSineIn* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject)
     {
         //in case of being called at sub class
@@ -604,8 +604,8 @@ CCEaseSineOut* CCEaseSineOut::create(CCActionInterval* pAction)
 
 CCObject* CCEaseSineOut::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCEaseSineOut* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCEaseSineOut* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -657,8 +657,8 @@ CCEaseSineInOut* CCEaseSineInOut::create(CCActionInterval* pAction)
 
 CCObject* CCEaseSineInOut::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCEaseSineInOut* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCEaseSineInOut* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -726,8 +726,8 @@ bool CCEaseElastic::initWithAction(CCActionInterval *pAction, float fPeriod/* = 
 
 CCObject* CCEaseElastic::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCEaseElastic* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCEaseElastic* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -749,7 +749,7 @@ CCActionInterval* CCEaseElastic::reverse(void)
 {
     CCAssert(0, "Override me");
 
-    return NULL;
+    return nullptr;
 }
 
 //
@@ -781,8 +781,8 @@ CCEaseElasticIn* CCEaseElasticIn::create(CCActionInterval *pAction, float fPerio
 
 CCObject* CCEaseElasticIn::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCEaseElasticIn* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCEaseElasticIn* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -851,8 +851,8 @@ CCEaseElasticOut* CCEaseElasticOut::create(CCActionInterval *pAction, float fPer
 
 CCObject *CCEaseElasticOut::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCEaseElasticOut* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCEaseElasticOut* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -920,8 +920,8 @@ CCEaseElasticInOut* CCEaseElasticInOut::create(CCActionInterval *pAction, float 
 
 CCObject* CCEaseElasticInOut::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCEaseElasticInOut* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCEaseElasticInOut* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -1000,8 +1000,8 @@ CCEaseBounce* CCEaseBounce::create(CCActionInterval* pAction)
 
 CCObject* CCEaseBounce::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCEaseBounce* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCEaseBounce* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -1069,8 +1069,8 @@ CCEaseBounceIn* CCEaseBounceIn::create(CCActionInterval* pAction)
 
 CCObject* CCEaseBounceIn::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCEaseBounceIn* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCEaseBounceIn* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -1123,8 +1123,8 @@ CCEaseBounceOut* CCEaseBounceOut::create(CCActionInterval* pAction)
 
 CCObject* CCEaseBounceOut::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCEaseBounceOut* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCEaseBounceOut* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject)
     {
         //in case of being called at sub class
@@ -1177,8 +1177,8 @@ CCEaseBounceInOut* CCEaseBounceInOut::create(CCActionInterval* pAction)
 
 CCObject* CCEaseBounceInOut::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCEaseBounceInOut* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCEaseBounceInOut* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -1241,8 +1241,8 @@ CCEaseBackIn* CCEaseBackIn::create(CCActionInterval *pAction)
 
 CCObject* CCEaseBackIn::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCEaseBackIn* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCEaseBackIn* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -1295,8 +1295,8 @@ CCEaseBackOut* CCEaseBackOut::create(CCActionInterval* pAction)
 
 CCObject* CCEaseBackOut::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCEaseBackOut* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCEaseBackOut* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -1351,8 +1351,8 @@ CCEaseBackInOut* CCEaseBackInOut::create(CCActionInterval* pAction)
 
 CCObject* CCEaseBackInOut::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCEaseBackInOut* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCEaseBackInOut* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class

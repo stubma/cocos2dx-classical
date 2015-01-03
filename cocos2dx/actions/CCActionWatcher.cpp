@@ -11,7 +11,7 @@
 NS_CC_BEGIN
 
 CCActionWatcher::CCActionWatcher() :
-m_doneFunc(NULL),
+m_doneFunc(nullptr),
 m_mustAllDone(true),
 m_valid(true) {
 	
@@ -27,7 +27,7 @@ CCActionWatcher* CCActionWatcher::create(CCCallFunc* doneFunc) {
 		return (CCActionWatcher*)l->autorelease();
 	}
 	CC_SAFE_RELEASE(l);
-	return NULL;
+	return nullptr;
 }
 
 bool CCActionWatcher::init(CCCallFunc* doneFunc) {

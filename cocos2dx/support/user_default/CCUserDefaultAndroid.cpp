@@ -57,18 +57,18 @@ bool CCUserDefault::m_sbIsFilePathInitialized = false;
 #ifdef KEEP_COMPATABILITY
 static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDocument **doc)
 {
-    tinyxml2::XMLElement* curNode = NULL;
-    tinyxml2::XMLElement* rootNode = NULL;
+    tinyxml2::XMLElement* curNode = nullptr;
+    tinyxml2::XMLElement* rootNode = nullptr;
     
     if (! CCUserDefault::isXMLFileExist())
     {
-        return NULL;
+        return nullptr;
     }
     
     // check the key value
     if (! pKey)
     {
-        return NULL;
+        return nullptr;
     }
     
     do
@@ -78,7 +78,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
         unsigned long nSize;
         const char* pXmlBuffer = (const char*)CCFileUtils::sharedFileUtils()->getFileData(CCUserDefault::sharedUserDefault()->getXMLFilePath().c_str(), "rb", &nSize);
         //const char* pXmlBuffer = (const char*)data.getBuffer();
-        if(NULL == pXmlBuffer)
+        if(nullptr == pXmlBuffer)
         {
             CCLOG("can not read xml file");
             break;
@@ -87,7 +87,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
 		delete[] pXmlBuffer;
         // get root node
         rootNode = xmlDoc->RootElement();
-        if (NULL == rootNode)
+        if (nullptr == rootNode)
         {
             CCLOG("read root node error");
             break;
@@ -99,10 +99,10 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
             // There is not xml node, delete xml file.
             remove(CCUserDefault::sharedUserDefault()->getXMLFilePath().c_str());
             
-            return NULL;
+            return nullptr;
         }
         
-        while (NULL != curNode)
+        while (nullptr != curNode)
         {
             const char* nodeName = curNode->Value();
             if (!strcmp(nodeName, pKey))
@@ -130,7 +130,7 @@ static void deleteNode(tinyxml2::XMLDocument* doc, tinyxml2::XMLElement* node)
 
 static void deleteNodeByKey(const char *pKey)
 {
-    tinyxml2::XMLDocument* doc = NULL;
+    tinyxml2::XMLDocument* doc = nullptr;
     tinyxml2::XMLElement* node = getXMLNodeForKey(pKey, &doc);
     deleteNode(doc, node);
 }
@@ -143,17 +143,17 @@ static void deleteNodeByKey(const char *pKey)
 CCUserDefault::~CCUserDefault()
 {
 	CC_SAFE_DELETE(m_spUserDefault);
-    m_spUserDefault = NULL;
+    m_spUserDefault = nullptr;
 }
 
 CCUserDefault::CCUserDefault()
 {
-	m_spUserDefault = NULL;
+	m_spUserDefault = nullptr;
 }
 
 void CCUserDefault::purgeSharedUserDefault()
 {
-    m_spUserDefault = NULL;
+    m_spUserDefault = nullptr;
 }
 
  bool CCUserDefault::getBoolForKey(const char* pKey)
@@ -164,7 +164,7 @@ void CCUserDefault::purgeSharedUserDefault()
 bool CCUserDefault::getBoolForKey(const char* pKey, bool defaultValue)
 {
 #ifdef KEEP_COMPATABILITY
-    tinyxml2::XMLDocument* doc = NULL;
+    tinyxml2::XMLDocument* doc = nullptr;
     tinyxml2::XMLElement* node = getXMLNodeForKey(pKey, &doc);
     if (node)
     {
@@ -201,7 +201,7 @@ int CCUserDefault::getIntegerForKey(const char* pKey)
 int CCUserDefault::getIntegerForKey(const char* pKey, int defaultValue)
 {
 #ifdef KEEP_COMPATABILITY
-    tinyxml2::XMLDocument* doc = NULL;
+    tinyxml2::XMLDocument* doc = nullptr;
     tinyxml2::XMLElement* node = getXMLNodeForKey(pKey, &doc);
     if (node)
     {
@@ -237,7 +237,7 @@ float CCUserDefault::getFloatForKey(const char* pKey)
 float CCUserDefault::getFloatForKey(const char* pKey, float defaultValue)
 {
 #ifdef KEEP_COMPATABILITY
-    tinyxml2::XMLDocument* doc = NULL;
+    tinyxml2::XMLDocument* doc = nullptr;
     tinyxml2::XMLElement* node = getXMLNodeForKey(pKey, &doc);
     if (node)
     {
@@ -273,7 +273,7 @@ double  CCUserDefault::getDoubleForKey(const char* pKey)
 double CCUserDefault::getDoubleForKey(const char* pKey, double defaultValue)
 {
 #ifdef KEEP_COMPATABILITY
-    tinyxml2::XMLDocument* doc = NULL;
+    tinyxml2::XMLDocument* doc = nullptr;
     tinyxml2::XMLElement* node = getXMLNodeForKey(pKey, &doc);
     if (node)
     {
@@ -309,7 +309,7 @@ std::string CCUserDefault::getStringForKey(const char* pKey)
 string CCUserDefault::getStringForKey(const char* pKey, const std::string & defaultValue)
 {
 #ifdef KEEP_COMPATABILITY
-    tinyxml2::XMLDocument* doc = NULL;
+    tinyxml2::XMLDocument* doc = nullptr;
     tinyxml2::XMLElement* node = getXMLNodeForKey(pKey, &doc);
     if (node)
     {

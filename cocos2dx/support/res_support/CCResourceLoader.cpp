@@ -42,7 +42,7 @@ void ZwoptexAnimLoadTask2::load() {
             CCSpriteFrame* sf = cache->spriteFrameByName(frames.at(i).c_str());
             float& delay = durations.at(i);
             CCAnimationFrame* af = new CCAnimationFrame();
-            af->initWithSpriteFrame(sf, delay, NULL);
+            af->initWithSpriteFrame(sf, delay, nullptr);
             af->autorelease();
             array->addObject(af);
         }
@@ -77,7 +77,7 @@ void EncryptedZwoptexLoadTask::load() {
     
     // create texture
     int decLen;
-    const char* dec = NULL;
+    const char* dec = nullptr;
     if(func) {
         dec = (*func)(data, len, &decLen);
     } else {
@@ -109,7 +109,7 @@ void EncryptedImageLoadTask::load() {
     
     // create texture
     int decLen;
-    const char* dec = NULL;
+    const char* dec = nullptr;
     if(func) {
         dec = (*func)(data, len, &decLen);
     } else {
@@ -141,7 +141,7 @@ void EncryptedBMFontLoadTask::load() {
     
     // create texture
     int decLen;
-    const char* dec = NULL;
+    const char* dec = nullptr;
     if(func) {
         dec = (*func)(data, len, &decLen);
     } else {
@@ -239,7 +239,7 @@ unsigned char* CCResourceLoader::loadRaw(const string& name, unsigned long* size
     
     // create texture
 	int decLen;
-    const char* dec = NULL;
+    const char* dec = nullptr;
 	if(decFunc) {
         dec = (*decFunc)(data, len, &decLen);
     } else {
@@ -273,7 +273,7 @@ char* CCResourceLoader::loadCString(const string& name, CC_DECRYPT_FUNC decFunc)
 
 	// create texture
 	int decLen;
-    const char* dec = NULL;
+    const char* dec = nullptr;
 	if(decFunc) {
         dec = (*decFunc)(data, len, &decLen);
     } else {
@@ -302,7 +302,7 @@ void CCResourceLoader::loadImage(const string& name, CC_DECRYPT_FUNC decFunc) {
 	
 	// create texture
 	int decLen;
-    const char* dec = NULL;
+    const char* dec = nullptr;
 	if(decFunc) {
         dec = (*decFunc)(data, len, &decLen);
     } else {
@@ -327,7 +327,7 @@ void CCResourceLoader::loadZwoptex(const string& plistName, const string& texNam
 	
 	// create texture
 	int decLen;
-	const char* dec = NULL;
+	const char* dec = nullptr;
 	if(decFunc) {
         dec = (*decFunc)(data, len, &decLen);
     } else {

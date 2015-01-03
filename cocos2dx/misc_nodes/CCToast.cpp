@@ -40,7 +40,7 @@ CCToast* CCToast::create(CCNode* owner, CCNode* content, int tag, float duration
     // tag
     if(tag != -1) {
         if(owner->getChildByTag(tag)) {
-            return NULL;
+            return nullptr;
         }
     }
     
@@ -55,20 +55,20 @@ CCToast* CCToast::create(CCNode* owner, CCNode* content, int tag, float duration
     t->addChild(content);
     
     // run action for content node
-    if(inAction == NULL) {
+    if(inAction == nullptr) {
         CCNodeRGBA* n = dynamic_cast<CCNodeRGBA*>(content);
         if(n)
             n->setOpacity(0);
         inAction = CCTreeFadeIn::create(0.5f);
     }
-    if(outAction == NULL) {
+    if(outAction == nullptr) {
         outAction = CCTreeFadeOut::create(0.5f);
     }
     content->runAction(CCSequence::create(inAction,
                                           CCDelayTime::create(duration > 0 ? duration : 3),
                                           outAction,
                                           CCCallFunc::create(t, callfunc_selector(CCNode::removeFromParent)),
-                                          NULL));
+                                          nullptr));
     
     // return
     t->autorelease();

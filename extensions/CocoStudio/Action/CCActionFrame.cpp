@@ -78,7 +78,7 @@ int ActionFrame::getEasingType()
 CCActionInterval* ActionFrame::getAction(float fDuration)
 {
 	CCLog("Need a definition of <getAction> for ActionFrame");
-	return NULL;
+	return nullptr;
 }
 
 CCActionInterval* ActionFrame::getAction(float fDuration,ActionFrame* srcFrame)
@@ -98,9 +98,9 @@ void ActionFrame::setEasingParameter(std::vector<float> parameter)
 
 CCActionInterval* ActionFrame::getEasingAction(CCActionInterval* action)
 {
-	if (action == NULL)
+	if (action == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	switch (m_easingType)
@@ -307,7 +307,7 @@ CCActionInterval* ActionRotationFrame::getAction(float fDuration)
 CCActionInterval* ActionRotationFrame::getAction(float fDuration,ActionFrame* srcFrame)
 {
 	ActionRotationFrame* srcRotationFrame = static_cast<ActionRotationFrame*>(srcFrame);
-	if (srcRotationFrame == NULL)
+	if (srcRotationFrame == nullptr)
 	{
 		return this->getAction(fDuration);
 	}

@@ -40,7 +40,7 @@ CCCurl* CCCurl::create(float duration, CCPoint center, float toRadius, float ang
         return a;
     }
     CC_SAFE_RELEASE(a);
-    return NULL;
+    return nullptr;
 }
 
 bool CCCurl::initWithDuration(float d, CCPoint center, float toRadius, float angularVelocity) {
@@ -73,8 +73,8 @@ void CCCurl::update(float time) {
 }
 
 CCObject* CCCurl::copyWithZone(CCZone *pZone) {
-    CCZone* pNewZone = NULL;
-    CCCurl* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCCurl* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) {
         // in case of being called at sub class
         pCopy = (CCCurl*)(pZone->m_pCopyObject);

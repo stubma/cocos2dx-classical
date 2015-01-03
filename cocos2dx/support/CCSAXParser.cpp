@@ -66,7 +66,7 @@ bool XmlSaxHander::VisitEnter( const tinyxml2::XMLElement& element, const tinyxm
     
     // nullptr is used in c++11
 	//attsVector.push_back(nullptr);
-    attsVector.push_back(NULL);
+    attsVector.push_back(nullptr);
 
 	CCSAXParser::startElement(m_ccsaxParserImp, (const CC_XML_CHAR *)element.Value(), (const CC_XML_CHAR **)(&attsVector[0]));
 	return true;
@@ -88,7 +88,7 @@ bool XmlSaxHander::Visit( const tinyxml2::XMLText& text )
 
 CCSAXParser::CCSAXParser()
 {
-    m_pDelegator = NULL;
+    m_pDelegator = nullptr;
 }
 
 CCSAXParser::~CCSAXParser(void)
@@ -117,7 +117,7 @@ bool CCSAXParser::parse(const char *pszFile)
     bool bRet = false;
     unsigned long size = 0;
     char* pBuffer = (char*)CCFileUtils::sharedFileUtils()->getFileData(pszFile, "rt", &size);
-    if (pBuffer != NULL && size > 0)
+    if (pBuffer != nullptr && size > 0)
     {
         bRet = parse(pBuffer, size);
     }

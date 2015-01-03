@@ -5,7 +5,7 @@
 
 NS_CC_EXT_BEGIN
 
-static LayoutReader* instanceLayoutReader = NULL;
+static LayoutReader* instanceLayoutReader = nullptr;
 
 IMPLEMENT_CLASS_WIDGET_READER_INFO(LayoutReader)
 
@@ -140,7 +140,7 @@ void LayoutReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
         {
             std::string tp_b = jsonPath;
             const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
-            const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
+            const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():nullptr;
             panel->setBackGroundImage(imageFileName_tp);
             break;
         }

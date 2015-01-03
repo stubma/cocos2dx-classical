@@ -49,7 +49,7 @@ nsecs_t systemTime(int clock)
     // we don't support the clocks here.
     struct timeval t;
     t.tv_sec = t.tv_usec = 0;
-    gettimeofday(&t, NULL);
+    gettimeofday(&t, nullptr);
     return nsecs_t(t.tv_sec)*1000000000LL + nsecs_t(t.tv_usec)*1000LL;
 #endif
 }
@@ -82,13 +82,13 @@ using namespace android;
 // Start the timer.
 void DurationTimer::start(void)
 {
-    gettimeofday(&mStartWhen, NULL);
+    gettimeofday(&mStartWhen, nullptr);
 }
 
 // Stop the timer.
 void DurationTimer::stop(void)
 {
-    gettimeofday(&mStopWhen, NULL);
+    gettimeofday(&mStopWhen, nullptr);
 }
 
 // Get the duration in microseconds.

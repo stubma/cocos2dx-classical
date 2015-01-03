@@ -29,7 +29,7 @@ NS_CC_EXT_BEGIN
 
 IMPLEMENT_CLASS_COMPONENT_INFO(CCComAttribute)
 CCComAttribute::CCComAttribute(void)
-: _dict(NULL)
+: _dict(nullptr)
 {
     m_strName = "CCComAttribute";
 }
@@ -69,7 +69,7 @@ void CCComAttribute::setCString(const char *key, const char *value)
 int CCComAttribute::getInt(const char *key, int def) const
 {
     CCObject *ret = _dict->objectForKey(key);
-	if(ret != NULL)
+	if(ret != nullptr)
     {
 		if( CCInteger *obj=dynamic_cast<CCInteger*>(ret) )
         {
@@ -89,7 +89,7 @@ int CCComAttribute::getInt(const char *key, int def) const
 float CCComAttribute::getFloat(const char *key, float def) const
 {
     CCObject *ret = _dict->objectForKey(key);
-	if(ret != NULL)
+	if(ret != nullptr)
     {
 		
 		if( CCFloat *obj=dynamic_cast<CCFloat*>(ret) )
@@ -110,7 +110,7 @@ float CCComAttribute::getFloat(const char *key, float def) const
 bool CCComAttribute::getBool(const char *key, bool def) const
 {
     CCObject *ret = _dict->objectForKey(key);
-	if(ret != NULL)
+	if(ret != nullptr)
     {
 		if( CCBool *obj = dynamic_cast<CCBool*>(ret) )
         {
@@ -130,7 +130,7 @@ bool CCComAttribute::getBool(const char *key, bool def) const
 const char* CCComAttribute::getCString(const char *key, const char *def) const
 {
     CCObject *ret = _dict->objectForKey(key);
-    if (ret != NULL)
+    if (ret != nullptr)
     {
         if( CCString *obj = dynamic_cast<CCString*>(ret) )
         {
@@ -166,42 +166,42 @@ bool CCComAttribute::serialize(void* r)
 	bool bRet = false;
 	do
 	{
-		CC_BREAK_IF(r == NULL);
+		CC_BREAK_IF(r == nullptr);
 		SerData *pSerData = (SerData *)(r);
 		const rapidjson::Value *v = pSerData->prData;
 		stExpCocoNode *pCocoNode = pSerData->pCocoNode;
 		CocoLoader *pCocoLoader = pSerData->pCocoLoader;
-		const char *pClassName = NULL;
-		const char *pComName = NULL;
-		const char *pFile = NULL;
+		const char *pClassName = nullptr;
+		const char *pComName = nullptr;
+		const char *pFile = nullptr;
 		std::string strFilePath;
 		int nResType = 0;
-		if (v != NULL)
+		if (v != nullptr)
 		{
 			pClassName = DICTOOL->getStringValue_json(*v, "classname");
-			CC_BREAK_IF(pClassName == NULL);
+			CC_BREAK_IF(pClassName == nullptr);
 			pComName = DICTOOL->getStringValue_json(*v, "name");
 			const rapidjson::Value &fileData = DICTOOL->getSubDictionary_json(*v, "fileData");
 			CC_BREAK_IF(!DICTOOL->checkObjectExist_json(fileData));
 			pFile = DICTOOL->getStringValue_json(fileData, "path");
-			CC_BREAK_IF(pFile == NULL);
+			CC_BREAK_IF(pFile == nullptr);
 			nResType = DICTOOL->getIntValue_json(fileData, "resourceType", -1);
 			CC_BREAK_IF(nResType != 0);
 		}
-		else if (pCocoNode != NULL)
+		else if (pCocoNode != nullptr)
 		{
 			pClassName = pCocoNode[1].GetValue(pCocoLoader);
-			CC_BREAK_IF(pClassName == NULL);
+			CC_BREAK_IF(pClassName == nullptr);
 			pComName = pCocoNode[2].GetValue(pCocoLoader);
 			stExpCocoNode *pfileData = pCocoNode[3].GetChildArray(pCocoLoader);
 			CC_BREAK_IF(!pfileData);
 			pFile = pfileData[0].GetValue(pCocoLoader);
-			CC_BREAK_IF(pFile == NULL);
+			CC_BREAK_IF(pFile == nullptr);
 			nResType = atoi(pfileData[2].GetValue(pCocoLoader));
 			CC_BREAK_IF(nResType != 0);
 			
 		}
-		if (pComName != NULL)
+		if (pComName != nullptr)
 		{
 			setName(pComName);
 		}
@@ -209,7 +209,7 @@ bool CCComAttribute::serialize(void* r)
 		{
 			setName(pClassName);
 		}
-		if (pFile != NULL)
+		if (pFile != nullptr)
 		{
 			strFilePath.assign(cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(pFile));
 		}
@@ -226,10 +226,10 @@ bool CCComAttribute::parse(const std::string &jsonPath)
 {
     bool bRet = false;
     unsigned long size = 0;
-    unsigned char *pBytes = NULL;
+    unsigned char *pBytes = nullptr;
     do {
           pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(jsonPath.c_str(), "r", &size);
-          CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
+          CC_BREAK_IF(pBytes == nullptr || strcmp((char*)pBytes, "") == 0);
           std::string load_str((const char*)pBytes, size);
           CC_SAFE_DELETE_ARRAY(pBytes);
           _doc.Parse<0>(load_str.c_str());

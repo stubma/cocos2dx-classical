@@ -38,11 +38,11 @@ ActionTimeline* ActionTimeline::create()
         return object;
     }
     CC_SAFE_DELETE(object);
-    return NULL;
+    return nullptr;
 }
 
 ActionTimeline::ActionTimeline()
-    : _timelineList(NULL)
+    : _timelineList(nullptr)
     , _duration(0)
     , _time(0)
     , _timeSpeed(1)
@@ -51,9 +51,9 @@ ActionTimeline::ActionTimeline()
     , _currentFrame(0)
     , _startFrame(0)
     , _endFrame(0)
-    , _frameEventCallFunc(NULL)
-    , _frameEventTarget(NULL)
-    , _scriptObjectDict(NULL)
+    , _frameEventCallFunc(nullptr)
+    , _frameEventTarget(nullptr)
+    , _scriptObjectDict(nullptr)
 {
 }
 
@@ -151,7 +151,7 @@ ActionTimeline* ActionTimeline::clone() const
     std::map<int, cocos2d::CCArray*>::const_iterator i = _timelineMap.begin();
     for (; i != _timelineMap.end(); i++)
     {
-        CCObject* object = NULL;
+        CCObject* object = nullptr;
         CCARRAY_FOREACH(i->second, object)
         {      
             Timeline* timeline = static_cast<Timeline*>(object);
@@ -190,7 +190,7 @@ void ActionTimeline::step(float delta)
 void ActionTimeline::foreachNodeDescendant(CCNode* parent)
 {
     TimelineActionData* data = dynamic_cast<TimelineActionData*>(parent->getUserObject());
-    CCObject* object = NULL;
+    CCObject* object = nullptr;
 
     if(data)
     {
@@ -249,7 +249,7 @@ void ActionTimeline::removeTimeline(Timeline* timeline)
         {
             _timelineMap[tag]->removeObject(timeline);
             _timelineList->removeObject(timeline);
-            timeline->setActionTimeline(NULL);
+            timeline->setActionTimeline(nullptr);
         }
     }
 }
@@ -262,13 +262,13 @@ void ActionTimeline::setFrameEventCallFunc  (CCObject *target, SEL_TimelineFrame
 
 void ActionTimeline::clearFrameEventCallFunc()
 {
-    _frameEventTarget   = NULL;
-    _frameEventCallFunc = NULL;
+    _frameEventTarget   = nullptr;
+    _frameEventCallFunc = nullptr;
 }
 
 void ActionTimeline::emitFrameEvent(Frame* frame)
 {
-    if (_frameEventTarget != NULL && _frameEventCallFunc != NULL)
+    if (_frameEventTarget != nullptr && _frameEventCallFunc != nullptr)
     {
         (_frameEventTarget->*_frameEventCallFunc)(frame);
     }

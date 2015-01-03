@@ -5,7 +5,7 @@
 
 NS_CC_EXT_BEGIN
 
-static LoadingBarReader* instanceLoadingBar = NULL;
+static LoadingBarReader* instanceLoadingBar = nullptr;
 
 IMPLEMENT_CLASS_WIDGET_READER_INFO(LoadingBarReader)
 
@@ -45,7 +45,7 @@ void LoadingBarReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapi
             {
                 std::string tp_i = jsonPath;
                 const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
-                const char* imageFileName_tp = NULL;
+                const char* imageFileName_tp = nullptr;
                 if (imageFileName && (strcmp(imageFileName, "") != 0))
                 {
                     imageFileName_tp = tp_i.append(imageFileName).c_str();

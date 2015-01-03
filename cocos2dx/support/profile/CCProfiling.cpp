@@ -38,7 +38,7 @@ bool kCCProfilerCategoryBatchSprite = false;
 bool kCCProfilerCategoryParticles = false;
 
 
-static CCProfiler* g_sSharedProfiler = NULL;
+static CCProfiler* g_sSharedProfiler = nullptr;
 
 CCProfiler* CCProfiler::sharedProfiler(void)
 {
@@ -84,7 +84,7 @@ CCProfiler::~CCProfiler(void)
 
 void CCProfiler::displayTimers()
 {
-    CCDictElement* pElement = NULL;
+    CCDictElement* pElement = nullptr;
     CCDICT_FOREACH(m_pActiveTimers, pElement)
     {
         CCProfilingTimer* timer = (CCProfilingTimer*)pElement->getObject();
@@ -131,7 +131,7 @@ void CCProfilingTimer::reset()
     totalTime = 0;
     minTime = 100000000;
     maxTime = 0;
-    gettimeofday((struct timeval*)&m_sStartTime, NULL);
+    gettimeofday((struct timeval*)&m_sStartTime, nullptr);
 }
 
 void CCProfilingBeginTimingBlock(const char *timerName)
@@ -145,14 +145,14 @@ void CCProfilingBeginTimingBlock(const char *timerName)
 
     // must the be last thing to execute
     timer->numberOfCalls++;
-    gettimeofday((struct timeval*)&timer->m_sStartTime, NULL);
+    gettimeofday((struct timeval*)&timer->m_sStartTime, nullptr);
 }
 
 void CCProfilingEndTimingBlock(const char *timerName)
 {
     // must the be 1st thing to execute
     struct timeval now;
-    gettimeofday( &now, NULL);
+    gettimeofday( &now, nullptr);
 
     CCProfiler* p = CCProfiler::sharedProfiler();
     CCProfilingTimer* timer = (CCProfilingTimer*)p->m_pActiveTimers->objectForKey(timerName);

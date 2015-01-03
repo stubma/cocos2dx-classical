@@ -27,7 +27,7 @@
 NS_CC_BEGIN
 
 CCStatement::CCStatement() :
-		m_statement(NULL),
+		m_statement(nullptr),
 		m_useCount(0) {
 }
 
@@ -38,13 +38,13 @@ CCStatement::~CCStatement() {
 void CCStatement::setStatement(sqlite3_stmt* s) {
     if (m_statement) {
         sqlite3_finalize(m_statement);
-        m_statement = NULL;
+        m_statement = nullptr;
     }
     m_statement = s;
 }
 
 void CCStatement::close() {
-	setStatement(NULL);
+	setStatement(nullptr);
 }
 
 void CCStatement::reset() {

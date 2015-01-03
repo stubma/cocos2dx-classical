@@ -67,7 +67,7 @@ CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture)
         return pobSprite;
     }
     CC_SAFE_DELETE(pobSprite);
-    return NULL;
+    return nullptr;
 }
 
 CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture, const CCRect& rect)
@@ -79,7 +79,7 @@ CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture, const CCRect& rect)
         return pobSprite;
     }
     CC_SAFE_DELETE(pobSprite);
-    return NULL;
+    return nullptr;
 }
 
 CCSprite* CCSprite::create(const char *pszFileName)
@@ -91,7 +91,7 @@ CCSprite* CCSprite::create(const char *pszFileName)
         return pobSprite;
     }
     CC_SAFE_DELETE(pobSprite);
-    return NULL;
+    return nullptr;
 }
 
 CCSprite* CCSprite::create(const char *pszFileName, const CCRect& rect)
@@ -103,7 +103,7 @@ CCSprite* CCSprite::create(const char *pszFileName, const CCRect& rect)
         return pobSprite;
     }
     CC_SAFE_DELETE(pobSprite);
-    return NULL;
+    return nullptr;
 }
 
 CCSprite* CCSprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
@@ -115,7 +115,7 @@ CCSprite* CCSprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
         return pobSprite;
     }
     CC_SAFE_DELETE(pobSprite);
-    return NULL;
+    return nullptr;
 }
 
 CCSprite* CCSprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
@@ -125,7 +125,7 @@ CCSprite* CCSprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
 #if COCOS2D_DEBUG > 0
     char msg[256] = {0};
     sprintf(msg, "Invalid spriteFrameName: %s", pszSpriteFrameName);
-    CCAssert(pFrame != NULL, msg);
+    CCAssert(pFrame != nullptr, msg);
 #endif
     
     return createWithSpriteFrame(pFrame);
@@ -140,12 +140,12 @@ CCSprite* CCSprite::create()
         return pSprite;
     }
     CC_SAFE_DELETE(pSprite);
-    return NULL;
+    return nullptr;
 }
 
 bool CCSprite::init(void)
 {
-    return initWithTexture(NULL, CCRectZero);
+    return initWithTexture(nullptr, CCRectZero);
 }
 
 // designated initializer
@@ -153,7 +153,7 @@ bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool r
 {
     if (CCNodeRGBA::init())
     {
-        m_pobBatchNode = NULL;
+        m_pobBatchNode = nullptr;
         
         m_bRecursiveDirty = false;
         setDirty(false);
@@ -192,7 +192,7 @@ bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool r
         
         // by default use "Self Render".
         // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
-        setBatchNode(NULL);
+        setBatchNode(nullptr);
         
         return true;
     }
@@ -209,7 +209,7 @@ bool CCSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect)
 
 bool CCSprite::initWithTexture(CCTexture2D *pTexture)
 {
-    CCAssert(pTexture != NULL, "Invalid texture for sprite");
+    CCAssert(pTexture != nullptr, "Invalid texture for sprite");
 
     CCRect rect = CCRectZero;
     rect.size = pTexture->getContentSize();
@@ -219,7 +219,7 @@ bool CCSprite::initWithTexture(CCTexture2D *pTexture)
 
 bool CCSprite::initWithFile(const char *pszFilename)
 {
-    CCAssert(pszFilename != NULL, "Invalid filename for sprite");
+    CCAssert(pszFilename != nullptr, "Invalid filename for sprite");
 
     CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage(pszFilename);
     if (pTexture)
@@ -237,7 +237,7 @@ bool CCSprite::initWithFile(const char *pszFilename)
 
 bool CCSprite::initWithFile(const char *pszFilename, const CCRect& rect)
 {
-    CCAssert(pszFilename != NULL, "");
+    CCAssert(pszFilename != nullptr, "");
 
     CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addImage(pszFilename);
     if (pTexture)
@@ -253,7 +253,7 @@ bool CCSprite::initWithFile(const char *pszFilename, const CCRect& rect)
 
 bool CCSprite::initWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 {
-    CCAssert(pSpriteFrame != NULL, "");
+    CCAssert(pSpriteFrame != nullptr, "");
 
     bool bRet = initWithTexture(pSpriteFrame->getTexture(), pSpriteFrame->getRect());
     setDisplayFrame(pSpriteFrame);
@@ -263,7 +263,7 @@ bool CCSprite::initWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 
 bool CCSprite::initWithSpriteFrameName(const char *pszSpriteFrameName)
 {
-    CCAssert(pszSpriteFrameName != NULL, "");
+    CCAssert(pszSpriteFrameName != nullptr, "");
 
     CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
     return initWithSpriteFrame(pFrame);
@@ -276,14 +276,14 @@ CCSprite* CCSprite::initWithCGImage(CGImageRef pImage)
     // todo
     // because it is deprecated, so we do not implement it
 
-    return NULL;
+    return nullptr;
 }
 */
 
 /*
 CCSprite* CCSprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
 {
-    CCAssert(pImage != NULL);
+    CCAssert(pImage != nullptr);
 
     // XXX: possible bug. See issue #349. New API should be added
     CCTexture2D *pTexture = CCTextureCache::sharedTextureCache()->addCGImage(pImage, pszKey);
@@ -297,9 +297,9 @@ CCSprite* CCSprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
 
 CCSprite::CCSprite(void) :
 m_bShouldBeHidden(false),
-m_pobTexture(NULL),
+m_pobTexture(nullptr),
 m_shouldUpdateBlendFunc(true),
-m_preDrawFunction(NULL)
+m_preDrawFunction(nullptr)
 {
 }
 
@@ -514,7 +514,7 @@ void CCSprite::updateTransform(void)
             m_sQuad.tr.vertices = vertex3( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), m_fVertexZ );
         }
 
-        // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
+        // MARMALADE CHANGE: ADDED CHECK FOR nullptr, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
         if (m_pobTextureAtlas)
 		{
             m_pobTextureAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
@@ -630,7 +630,7 @@ void CCSprite::addChild(CCNode *pChild, int zOrder)
 
 void CCSprite::addChild(CCNode *pChild, int zOrder, int tag)
 {
-    CCAssert(pChild != NULL, "Argument must be non-NULL");
+    CCAssert(pChild != nullptr, "Argument must be non-nullptr");
 
     if (m_pobBatchNode)
     {
@@ -652,7 +652,7 @@ void CCSprite::addChild(CCNode *pChild, int zOrder, int tag)
 
 void CCSprite::reorderChild(CCNode *pChild, int zOrder)
 {
-    CCAssert(pChild != NULL, "");
+    CCAssert(pChild != nullptr, "");
     CCAssert(m_pChildren->containsObject(pChild), "");
 
     if (zOrder == pChild->getZOrder())
@@ -684,7 +684,7 @@ void CCSprite::removeAllChildrenWithCleanup(bool bCleanup)
 {
     if (m_pobBatchNode)
     {
-        CCObject* pObject = NULL;
+        CCObject* pObject = nullptr;
         CCARRAY_FOREACH(m_pChildren, pObject)
         {
             CCSprite* pChild = dynamic_cast<CCSprite*>(pObject);
@@ -706,7 +706,7 @@ void CCSprite::sortAllChildren()
     {
         int i = 0,j = 0,length = m_pChildren->data->num;
         CCNode** x = (CCNode**)m_pChildren->data->arr;
-        CCNode *tempItem = NULL;
+        CCNode *tempItem = nullptr;
 
         // insertion sort
         for(i=1; i<length; i++)
@@ -760,7 +760,7 @@ void CCSprite::setDirtyRecursively(bool bValue)
     // recursively set dirty
     if (m_bHasChildren)
     {
-        CCObject* pObject = NULL;
+        CCObject* pObject = nullptr;
         CCARRAY_FOREACH(m_pChildren, pObject)
         {
             CCSprite* pChild = dynamic_cast<CCSprite*>(pObject);
@@ -990,7 +990,7 @@ void CCSprite::setDisplayFrame(CCSpriteFrame *pNewFrame)
 
 void CCSprite::setDisplayFrameWithAnimationName(const char *animationName, int frameIndex)
 {
-    CCAssert(animationName, "CCSprite#setDisplayFrameWithAnimationName. animationName must not be NULL");
+    CCAssert(animationName, "CCSprite#setDisplayFrameWithAnimationName. animationName must not be nullptr");
 
     CCAnimation *a = CCAnimationCache::sharedAnimationCache()->animationByName(animationName);
 
@@ -1033,7 +1033,7 @@ void CCSprite::setBatchNode(CCSpriteBatchNode *pobSpriteBatchNode)
     // self render
     if( ! m_pobBatchNode ) {
         m_uAtlasIndex = CCSpriteIndexNotInitialized;
-        setTextureAtlas(NULL);
+        setTextureAtlas(nullptr);
         m_bRecursiveDirty = false;
         setDirty(false);
 
@@ -1077,11 +1077,11 @@ void CCSprite::updateBlendFunc(void)
 
 /*
  * This array is the data of a white image with 2 by 2 dimension.
- * It's used for creating a default texture when sprite's texture is set to NULL.
+ * It's used for creating a default texture when sprite's texture is set to nullptr.
  * Supposing codes as follows:
  *
  *   CCSprite* sp = new CCSprite();
- *   sp->init();  // Texture was set to NULL, in order to make opacity and color to work correctly, we need to create a 2x2 white texture.
+ *   sp->init();  // Texture was set to nullptr, in order to make opacity and color to work correctly, we need to create a 2x2 white texture.
  *
  * The test is in "TestCpp/SpriteTest/Sprite without texture".
  */
@@ -1102,13 +1102,13 @@ void CCSprite::setTexture(CCTexture2D *texture)
     // accept texture==nil as argument
     CCAssert( !texture || dynamic_cast<CCTexture2D*>(texture), "setTexture expects a CCTexture2D. Invalid argument");
 
-    if (NULL == texture)
+    if (nullptr == texture)
     {
         // Gets the texture by key firstly.
         texture = CCTextureCache::sharedTextureCache()->textureForKey(CC_2x2_WHITE_IMAGE_KEY);
 
         // If texture wasn't in cache, create it from RAW data.
-        if (NULL == texture)
+        if (nullptr == texture)
         {
             CCImage* image = new CCImage();
             bool isOK = image->initWithImageData(cc_2x2_white_image, sizeof(cc_2x2_white_image), kFmtRawData, 2, 2, 8);

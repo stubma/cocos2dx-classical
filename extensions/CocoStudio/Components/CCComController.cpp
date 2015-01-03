@@ -43,7 +43,7 @@ bool CCComController::init()
 
 void CCComController::onEnter()
 {
-    if (m_pOwner != NULL)
+    if (m_pOwner != nullptr)
     { 
         m_pOwner->scheduleUpdate();
     }

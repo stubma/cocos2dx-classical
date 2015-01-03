@@ -47,7 +47,7 @@ CCGradientSprite* CCGradientSprite::create() {
         return pSprite;
     }
     CC_SAFE_DELETE(pSprite);
-    return NULL;
+    return nullptr;
 }
 
 CCGradientSprite* CCGradientSprite::create(const char *pszFileName) {
@@ -58,7 +58,7 @@ CCGradientSprite* CCGradientSprite::create(const char *pszFileName) {
         return pobSprite;
     }
     CC_SAFE_DELETE(pobSprite);
-    return NULL;
+    return nullptr;
 }
 
 CCGradientSprite* CCGradientSprite::create(const char *pszFileName, const CCRect& rect) {
@@ -69,7 +69,7 @@ CCGradientSprite* CCGradientSprite::create(const char *pszFileName, const CCRect
         return pobSprite;
     }
     CC_SAFE_DELETE(pobSprite);
-    return NULL;
+    return nullptr;
 }
 
 CCGradientSprite* CCGradientSprite::createWithTexture(CCTexture2D *pTexture) {
@@ -80,7 +80,7 @@ CCGradientSprite* CCGradientSprite::createWithTexture(CCTexture2D *pTexture) {
         return pobSprite;
     }
     CC_SAFE_DELETE(pobSprite);
-    return NULL;
+    return nullptr;
 }
 
 CCGradientSprite* CCGradientSprite::createWithTexture(CCTexture2D *pTexture, const CCRect& rect) {
@@ -91,7 +91,7 @@ CCGradientSprite* CCGradientSprite::createWithTexture(CCTexture2D *pTexture, con
         return pobSprite;
     }
     CC_SAFE_DELETE(pobSprite);
-    return NULL;
+    return nullptr;
 }
 
 CCGradientSprite* CCGradientSprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame) {
@@ -102,7 +102,7 @@ CCGradientSprite* CCGradientSprite::createWithSpriteFrame(CCSpriteFrame *pSprite
         return pobSprite;
     }
     CC_SAFE_DELETE(pobSprite);
-    return NULL;
+    return nullptr;
 }
 
 CCGradientSprite* CCGradientSprite::createWithSpriteFrameName(const char *pszSpriteFrameName) {
@@ -111,7 +111,7 @@ CCGradientSprite* CCGradientSprite::createWithSpriteFrameName(const char *pszSpr
 #if COCOS2D_DEBUG > 0
     char msg[256] = {0};
     sprintf(msg, "Invalid spriteFrameName: %s", pszSpriteFrameName);
-    CCAssert(pFrame != NULL, msg);
+    CCAssert(pFrame != nullptr, msg);
 #endif
     
     return createWithSpriteFrame(pFrame);

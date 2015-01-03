@@ -28,7 +28,7 @@ NS_CC_BEGIN
 
 CCPointList::CCPointList() :
 m_capacity(10),
-m_buffer(NULL),
+m_buffer(nullptr),
 m_count(0) {
 	m_buffer = (CCPoint*)malloc(m_capacity * sizeof(CCPoint));
 }

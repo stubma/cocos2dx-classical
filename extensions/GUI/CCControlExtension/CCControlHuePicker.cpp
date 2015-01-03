@@ -37,8 +37,8 @@ NS_CC_EXT_BEGIN
 CCControlHuePicker::CCControlHuePicker()
 : m_hue(0.0f)
 , m_huePercentage(0.0f)
-, m_background(NULL)
-, m_slider(NULL)
+, m_background(nullptr)
+, m_slider(nullptr)
 {
 
 }
@@ -120,7 +120,7 @@ void CCControlHuePicker::setHuePercentage(float hueValueInPercent)
 void CCControlHuePicker::setEnabled(bool enabled)
 {
     CCControl::setEnabled(enabled);
-    if (m_slider != NULL)
+    if (m_slider != nullptr)
     {
         m_slider->setOpacity(enabled ? 255 : 128);
     }

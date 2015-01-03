@@ -48,7 +48,7 @@ CCAtlasNode::CCAtlasNode()
 , m_uItemsPerColumn(0)
 , m_uItemWidth(0)
 , m_uItemHeight(0)
-, m_pTextureAtlas(NULL)
+, m_pTextureAtlas(nullptr)
 , m_bIsOpacityModifyRGB(false)
 , m_uQuadsToDraw(0)
 , m_nUniformColor(0)
@@ -71,12 +71,12 @@ CCAtlasNode * CCAtlasNode::create(const char *tile, unsigned int tileWidth, unsi
 		return pRet;
 	}
 	CC_SAFE_DELETE(pRet);
-	return NULL;
+	return nullptr;
 }
 
 bool CCAtlasNode::initWithTileFile(const char *tile, unsigned int tileWidth, unsigned int tileHeight, unsigned int itemsToRender)
 {
-    CCAssert(tile != NULL, "title should not be null");
+    CCAssert(tile != nullptr, "title should not be null");
     CCTexture2D *texture = CCTextureCache::sharedTextureCache()->addImage(tile);
 	return initWithTexture(texture, tileWidth, tileHeight, itemsToRender);
 }

@@ -30,7 +30,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 CCComponentContainer::CCComponentContainer(CCNode *pNode)
-: m_pComponents(NULL)
+: m_pComponents(nullptr)
 , m_pOwner(pNode)
 {
 }
@@ -42,11 +42,11 @@ CCComponentContainer::~CCComponentContainer(void)
 
 CCComponent* CCComponentContainer::get(const char *pName) const
 {
-    CCComponent* pRet = NULL;
-    CCAssert(pName != NULL, "Argument must be non-nil");
+    CCComponent* pRet = nullptr;
+    CCAssert(pName != nullptr, "Argument must be non-nil");
     do {
-        CC_BREAK_IF(NULL == pName);
-        CC_BREAK_IF(NULL == m_pComponents);
+        CC_BREAK_IF(nullptr == pName);
+        CC_BREAK_IF(nullptr == m_pComponents);
         pRet = dynamic_cast<CCComponent*>(m_pComponents->objectForKey(pName));
         
     } while (0);
@@ -56,18 +56,18 @@ CCComponent* CCComponentContainer::get(const char *pName) const
 bool CCComponentContainer::add(CCComponent *pCom)
 {
     bool bRet = false;
-    CCAssert(pCom != NULL, "Argument must be non-nil");
-    CCAssert(pCom->getOwner() == NULL, "Component already added. It can't be added again");
+    CCAssert(pCom != nullptr, "Argument must be non-nil");
+    CCAssert(pCom->getOwner() == nullptr, "Component already added. It can't be added again");
     do
     {
-        if (m_pComponents == NULL)
+        if (m_pComponents == nullptr)
         {
             m_pComponents = CCDictionary::create();
             m_pComponents->retain();
         }
         CCComponent *pComponent = dynamic_cast<CCComponent*>(m_pComponents->objectForKey(pCom->getName()));
         
-        CCAssert(pComponent == NULL, "Component already added. It can't be added again");
+        CCAssert(pComponent == nullptr, "Component already added. It can't be added again");
         CC_BREAK_IF(pComponent);
         pCom->setOwner(m_pOwner);
         m_pComponents->setObject(pCom, pCom->getName());
@@ -80,21 +80,21 @@ bool CCComponentContainer::add(CCComponent *pCom)
 bool CCComponentContainer::remove(const char *pName)
 {
     bool bRet = false;
-    CCAssert(pName != NULL, "Argument must be non-nil");
+    CCAssert(pName != nullptr, "Argument must be non-nil");
     do 
     {        
         CC_BREAK_IF(!m_pComponents);
-        CCObject* pRetObject = NULL;
-        CCDictElement *pElement = NULL;
+        CCObject* pRetObject = nullptr;
+        CCDictElement *pElement = nullptr;
         HASH_FIND_PTR(m_pComponents->m_pElements, pName, pElement);
-        if (pElement != NULL)
+        if (pElement != nullptr)
         {
            pRetObject = pElement->getObject();
         }
         CCComponent *com = dynamic_cast<CCComponent*>(pRetObject);
         CC_BREAK_IF(!com);
         com->onExit();
-        com->setOwner(NULL);
+        com->setOwner(nullptr);
         HASH_DEL(m_pComponents->m_pElements, pElement);
         pElement->getObject()->release();
         CC_SAFE_DELETE(pElement);
@@ -109,14 +109,14 @@ bool CCComponentContainer::remove(CCComponent *pCom)
     do 
     { 
         CC_BREAK_IF(!m_pComponents);
-        CCDictElement *pElement = NULL;
-        CCDictElement *tmp = NULL;
+        CCDictElement *pElement = nullptr;
+        CCDictElement *tmp = nullptr;
         HASH_ITER(hh, m_pComponents->m_pElements, pElement, tmp)
         {
             if (pElement->getObject() == pCom)
             {
                 pCom->onExit();
-                pCom->setOwner(NULL);
+                pCom->setOwner(nullptr);
                 HASH_DEL(m_pComponents->m_pElements, pElement);
                 pElement->getObject()->release();
                 CC_SAFE_DELETE(pElement);
@@ -130,14 +130,14 @@ bool CCComponentContainer::remove(CCComponent *pCom)
 
 void CCComponentContainer::removeAll()
 {
-    if (m_pComponents != NULL)
+    if (m_pComponents != nullptr)
     {
         CCDictElement *pElement, *tmp;
         HASH_ITER(hh, m_pComponents->m_pElements, pElement, tmp)
         {
             HASH_DEL(m_pComponents->m_pElements, pElement);
             ((CCComponent*)pElement->getObject())->onExit();
-            ((CCComponent*)pElement->getObject())->setOwner(NULL);
+            ((CCComponent*)pElement->getObject())->setOwner(nullptr);
             pElement->getObject()->release();
             CC_SAFE_DELETE(pElement);
         }
@@ -153,7 +153,7 @@ void CCComponentContainer::alloc(void)
 
 void CCComponentContainer::visit(float fDelta)
 {
-    if (m_pComponents != NULL)
+    if (m_pComponents != nullptr)
     {
         CCDictElement *pElement, *tmp;
         HASH_ITER(hh, m_pComponents->m_pElements, pElement, tmp)

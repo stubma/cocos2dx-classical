@@ -27,7 +27,7 @@
 
 NS_CC_BEGIN
 
-CCAuroraManager* gAuroraManager = NULL;
+CCAuroraManager* gAuroraManager = nullptr;
 
 CCAuroraManager::CCAuroraManager() :
 		m_resScale(1) {
@@ -35,11 +35,11 @@ CCAuroraManager::CCAuroraManager() :
 
 CCAuroraManager::~CCAuroraManager() {
 	releaseAllAnimationFileData();
-	gAuroraManager = NULL;
+	gAuroraManager = nullptr;
 }
 
 CCAuroraManager* CCAuroraManager::getInstance() {
-	if(gAuroraManager == NULL) {
+	if(gAuroraManager == nullptr) {
 		gAuroraManager = new CCAuroraManager();
 	}
 	return gAuroraManager;
@@ -55,12 +55,12 @@ void CCAuroraManager::releaseAllAnimationFileData() {
 CCAuroraFileData* CCAuroraManager::load(const char* spxPath) {
 	// search cache first
 	CCAuroraFileData* data = getAuroraFileData(spxPath);
-	if(data != NULL) {
+	if(data != nullptr) {
 		return data;
 	}
 
 	data = CCAuroraLoader::load(spxPath);
-	if(data != NULL) {
+	if(data != nullptr) {
 		m_auroraFileDataList.push_back(data);
 		data->retain();
 	}
@@ -74,7 +74,7 @@ CCAuroraFileData* CCAuroraManager::getAuroraFileData(const string& asPath) {
 			return *iter;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 float CCAuroraManager::resolve(short v) {
@@ -165,7 +165,7 @@ void CCAuroraManager::parseFrameModules(CCAuroraFileData* afd, CCAuroraFrame* au
 			parseFrameModules(afd, hyperFrame, afcFrame, auroraFrameModule->x, auroraFrameModule->y, mapping);
 		} else {
 			// need search clip mapping first
-			CCAFCClipMappingRule* rule = NULL;
+			CCAFCClipMappingRule* rule = nullptr;
 			if(mapping)
 				rule = mapping->findRule(index);
 			

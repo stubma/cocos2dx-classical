@@ -112,7 +112,7 @@ void CCArrayForObjectSorting::setObjectID_ofSortedObject(unsigned int tag, CCSor
 CCSortableObject* CCArrayForObjectSorting::objectWithObjectID(unsigned int tag)
 {
     if (this->count() == 0) {
-        return NULL;
+        return nullptr;
     }
     
     unsigned int  idx;
@@ -124,13 +124,13 @@ CCSortableObject* CCArrayForObjectSorting::objectWithObjectID(unsigned int tag)
     idx      = this->indexOfSortedObject(foundObj);
     
     ((CCSortedObject*)foundObj)->release();
-    foundObj = NULL;
+    foundObj = nullptr;
     
     if (idx < this->count() && idx != CC_INVALID_INDEX)
     {
         foundObj = dynamic_cast<CCSortableObject*>(this->objectAtIndex(idx));
         if (foundObj->getObjectID() != tag) {
-            foundObj = NULL;
+            foundObj = nullptr;
         }
     }
     
@@ -144,7 +144,7 @@ unsigned int CCArrayForObjectSorting::indexOfSortedObject(CCSortableObject* obje
     {
  //       CCObject* pObj = (CCObject*)bsearch((CCObject*)&object, data->arr, data->num, sizeof(CCObject*), _compareObject);
         // FIXME: need to use binary search to improve performance
-        CCObject* pObj = NULL;
+        CCObject* pObj = nullptr;
         unsigned int uPrevObjectID = 0;
         unsigned int uOfSortObjectID = object->getObjectID();
 

@@ -76,7 +76,7 @@ unsigned int CCTextureETC::getHeight() const
 
 static unsigned int sWidth = 0;
 static unsigned int sHeight = 0;
-static unsigned char *sData = NULL;
+static unsigned char *sData = nullptr;
 static unsigned int sLength = 0;
 
 extern "C"
@@ -122,7 +122,7 @@ bool CCTextureETC::loadTexture(const char* file)
             glBindTexture(GL_TEXTURE_2D, 0);
             
             delete [] sData;
-            sData = NULL;
+            sData = nullptr;
             
             GLenum err = glGetError();
             if (err != GL_NO_ERROR)

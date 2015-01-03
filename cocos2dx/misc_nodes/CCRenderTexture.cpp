@@ -46,13 +46,13 @@ NS_CC_BEGIN
 
 // implementation CCRenderTexture
 CCRenderTexture::CCRenderTexture()
-: m_pSprite(NULL)
+: m_pSprite(nullptr)
 , m_uFBO(0)
 , m_uDepthRenderBufffer(0)
 , m_nOldFBO(0)
 , m_pTexture(0)
 , m_pTextureCopy(0)
-, m_pUITextureImage(NULL)
+, m_pUITextureImage(nullptr)
 , m_ePixelFormat(kCCTexture2DPixelFormat_RGBA8888)
 , m_uClearFlags(0)
 , m_sClearColor(ccc4f(0,0,0,0))
@@ -66,12 +66,12 @@ CCRenderTexture::CCRenderTexture()
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
                                                                   callfuncO_selector(CCRenderTexture::listenToBackground),
                                                                   EVENT_COME_TO_BACKGROUND,
-                                                                  NULL);
+                                                                  nullptr);
     
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
                                                                   callfuncO_selector(CCRenderTexture::listenToForeground),
                                                                   EVENT_COME_TO_FOREGROUND, // this is misspelt
-                                                                  NULL);
+                                                                  nullptr);
 #endif
 }
 
@@ -214,7 +214,7 @@ CCRenderTexture * CCRenderTexture::create(int w, int h, CCTexture2DPixelFormat e
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 CCRenderTexture * CCRenderTexture::create(int w ,int h, CCTexture2DPixelFormat eFormat, GLuint uDepthStencilFormat)
@@ -227,7 +227,7 @@ CCRenderTexture * CCRenderTexture::create(int w ,int h, CCTexture2DPixelFormat e
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 CCRenderTexture * CCRenderTexture::create(int w, int h)
@@ -240,7 +240,7 @@ CCRenderTexture * CCRenderTexture::create(int w, int h)
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelFormat eFormat)
@@ -253,7 +253,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
     CCAssert(eFormat != kCCTexture2DPixelFormat_A8, "only RGB and RGBA formats are valid for a render texture");
 
     bool bRet = false;
-    void *data = NULL;
+    void *data = nullptr;
     do 
     {
         w = (int)(w * CC_CONTENT_SCALE_FACTOR());
@@ -653,9 +653,9 @@ CCImage* CCRenderTexture::newCCImage(bool flipImage)
 {
     CCAssert(m_ePixelFormat == kCCTexture2DPixelFormat_RGBA8888, "only RGBA8888 can be saved as image");
 
-    if (NULL == m_pTexture)
+    if (nullptr == m_pTexture)
     {
-        return NULL;
+        return nullptr;
     }
 
     const CCSize& s = m_pTexture->getContentSizeInPixels();
@@ -666,8 +666,8 @@ CCImage* CCRenderTexture::newCCImage(bool flipImage)
     int nSavedBufferWidth = (int)s.width;
     int nSavedBufferHeight = (int)s.height;
 
-    GLubyte *pBuffer = NULL;
-    GLubyte *pTempData = NULL;
+    GLubyte *pBuffer = nullptr;
+    GLubyte *pTempData = nullptr;
     CCImage *pImage = new CCImage();
 
     do
@@ -677,7 +677,7 @@ CCImage* CCRenderTexture::newCCImage(bool flipImage)
         if(! (pTempData = new GLubyte[nSavedBufferWidth * nSavedBufferHeight * 4]))
         {
             delete[] pBuffer;
-            pBuffer = NULL;
+            pBuffer = nullptr;
             break;
         }
 

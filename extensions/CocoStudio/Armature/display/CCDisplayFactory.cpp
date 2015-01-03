@@ -133,7 +133,7 @@ void CCDisplayFactory::addSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoD
 
 void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *decoDisplay)
 {
-    CCSkin *skin = NULL;
+    CCSkin *skin = nullptr;
 
     CCSpriteDisplayData *displayData = (CCSpriteDisplayData *)decoDisplay->getDisplayData();
 
@@ -157,7 +157,7 @@ void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *de
 
     decoDisplay->setDisplay(skin);
 
-    if (skin == NULL)
+    if (skin == nullptr)
     {
         return;
     }

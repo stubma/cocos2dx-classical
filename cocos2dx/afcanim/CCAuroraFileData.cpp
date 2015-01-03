@@ -35,12 +35,12 @@ CCAuroraFileData::CCAuroraFileData() :
 		m_collisionRectCount(0),
 		m_animationFrameCount(0),
 		m_animationCount(0),
-		m_modules(NULL),
-		m_frameModules(NULL),
-		m_collisionRects(NULL),
-		m_frames(NULL),
-		m_animationFrames(NULL),
-		m_animations(NULL) {
+		m_modules(nullptr),
+		m_frameModules(nullptr),
+		m_collisionRects(nullptr),
+		m_frames(nullptr),
+		m_animationFrames(nullptr),
+		m_animations(nullptr) {
 }
 
 CCAuroraFileData::~CCAuroraFileData() {

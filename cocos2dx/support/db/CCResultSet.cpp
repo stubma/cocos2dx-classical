@@ -48,7 +48,7 @@ CCResultSet::~CCResultSet() {
 	close();
 	
 	// nullify
-	m_db = NULL;
+	m_db = nullptr;
 }
 
 CCResultSet* CCResultSet::create(CCDatabase* db, CCStatement* statement) {
@@ -107,7 +107,7 @@ bool CCResultSet::hasAnotherRow() {
 void CCResultSet::close() {
 	if(m_statement) {
 		m_statement->reset();
-		m_statement = NULL;
+		m_statement = nullptr;
 		
 		// post close
 		if(m_db)
@@ -142,7 +142,7 @@ int CCResultSet::columnIndexForName(string columnName) {
 
 string CCResultSet::columnNameForIndex(int columnIdx) {
 	if(columnIdx < 0 || columnIdx >= m_columnNames.size())
-		return NULL;
+		return nullptr;
 	else
 		return m_columnNames.at(columnIdx);
 }
@@ -193,7 +193,7 @@ string CCResultSet::stringForColumn(string columnName) {
 
 string CCResultSet::stringForColumnIndex(int columnIdx) {
     if (sqlite3_column_type(m_statement->getStatement(), columnIdx) == SQLITE_NULL || (columnIdx < 0)) {
-        return NULL;
+        return nullptr;
     }
 
     return (const char*)sqlite3_column_text(m_statement->getStatement(), columnIdx);
@@ -207,7 +207,7 @@ const void* CCResultSet::dataForColumnIndex(int columnIdx, size_t* outLen) {
 	// check type
     if (sqlite3_column_type(m_statement->getStatement(), columnIdx) == SQLITE_NULL || (columnIdx < 0)) {
     	*outLen = 0;
-        return NULL;
+        return nullptr;
     }
 
     // copy data
@@ -227,7 +227,7 @@ const void* CCResultSet::dataNoCopyForColumn(string columnName, size_t* outLen) 
 const void* CCResultSet::dataNoCopyForColumnIndex(int columnIdx, size_t* outLen) {
     if (sqlite3_column_type(m_statement->getStatement(), columnIdx) == SQLITE_NULL || (columnIdx < 0)) {
     	*outLen = 0;
-        return NULL;
+        return nullptr;
     }
 
     *outLen = sqlite3_column_bytes(m_statement->getStatement(), columnIdx);

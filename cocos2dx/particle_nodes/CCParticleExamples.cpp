@@ -37,17 +37,17 @@ NS_CC_BEGIN
 
 static CCTexture2D* getDefaultTexture()
 {
-    CCTexture2D* pTexture = NULL;
-    CCImage* pImage = NULL;
+    CCTexture2D* pTexture = nullptr;
+    CCImage* pImage = nullptr;
     do 
     {
         bool bRet = false;
         const char* key = "__firePngData";
         pTexture = CCTextureCache::sharedTextureCache()->textureForKey(key);
-        CC_BREAK_IF(pTexture != NULL);
+        CC_BREAK_IF(pTexture != nullptr);
 
         pImage = new CCImage();
-        CC_BREAK_IF(NULL == pImage);
+        CC_BREAK_IF(nullptr == pImage);
         bRet = pImage->initWithImageData((void*)__firePngData, sizeof(__firePngData), kFmtPng);
         CC_BREAK_IF(!bRet);
 
@@ -149,7 +149,7 @@ bool CCParticleFire::initWithTotalParticles(unsigned int numberOfParticles)
         m_tEndColorVar.a = 0.0f;
 
         CCTexture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        if (pTexture != nullptr)
         {
             setTexture(pTexture);
         }
@@ -252,7 +252,7 @@ bool CCParticleFireworks::initWithTotalParticles(unsigned int numberOfParticles)
         m_fEndSize = kCCParticleStartSizeEqualToEndSize;
 
         CCTexture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        if (pTexture != nullptr)
         {
             setTexture(pTexture);
         }
@@ -358,7 +358,7 @@ bool CCParticleSun::initWithTotalParticles(unsigned int numberOfParticles)
         m_tEndColorVar.a = 0.0f;
 
         CCTexture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        if (pTexture != nullptr)
         {
             setTexture(pTexture);
         }
@@ -465,7 +465,7 @@ bool CCParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
         m_tEndColorVar.a = 0.0f;
 
         CCTexture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        if (pTexture != nullptr)
         {
             setTexture(pTexture);
         }
@@ -574,7 +574,7 @@ bool CCParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
         m_tEndColorVar.a = 0.0f;
 
         CCTexture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        if (pTexture != nullptr)
         {
             setTexture(pTexture);
         }
@@ -682,7 +682,7 @@ bool CCParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
         m_tEndColorVar.a = 0.0f;
 
         CCTexture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        if (pTexture != nullptr)
         {
             setTexture(pTexture);
         }
@@ -791,7 +791,7 @@ bool CCParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
         m_tEndColorVar.a = 0.0f;
 
         CCTexture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        if (pTexture != nullptr)
         {
             setTexture(pTexture);
         }
@@ -899,7 +899,7 @@ bool CCParticleExplosion::initWithTotalParticles(unsigned int numberOfParticles)
         m_tEndColorVar.a = 0.0f;
 
         CCTexture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        if (pTexture != nullptr)
         {
             setTexture(pTexture);
         }
@@ -1004,7 +1004,7 @@ bool CCParticleSmoke::initWithTotalParticles(unsigned int numberOfParticles)
         m_tEndColorVar.a = 0.0f;
 
         CCTexture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        if (pTexture != nullptr)
         {
             setTexture(pTexture);
         }
@@ -1113,7 +1113,7 @@ bool CCParticleSnow::initWithTotalParticles(unsigned int numberOfParticles)
         m_tEndColorVar.a = 0.0f;
 
         CCTexture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        if (pTexture != nullptr)
         {
             setTexture(pTexture);
         }
@@ -1221,7 +1221,7 @@ bool CCParticleRain::initWithTotalParticles(unsigned int numberOfParticles)
         m_tEndColorVar.a = 0.0f;
 
         CCTexture2D* pTexture = getDefaultTexture();
-        if (pTexture != NULL)
+        if (pTexture != nullptr)
         {
             setTexture(pTexture);
         }

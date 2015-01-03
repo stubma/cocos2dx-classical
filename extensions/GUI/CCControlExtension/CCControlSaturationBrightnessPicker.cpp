@@ -37,10 +37,10 @@ NS_CC_EXT_BEGIN
 CCControlSaturationBrightnessPicker::CCControlSaturationBrightnessPicker()
 : m_saturation(0.0f)
 , m_brightness(0.0f)
-, m_background(NULL)
-, m_overlay(NULL)
-, m_shadow(NULL)
-, m_slider(NULL)
+, m_background(nullptr)
+, m_overlay(nullptr)
+, m_shadow(nullptr)
+, m_slider(nullptr)
 , boxPos(0)
 , boxSize(0)
 {
@@ -51,10 +51,10 @@ CCControlSaturationBrightnessPicker::~CCControlSaturationBrightnessPicker()
 {
     removeAllChildrenWithCleanup(true);
 
-    m_background = NULL;
-    m_overlay    = NULL;
-    m_shadow     = NULL;
-    m_slider     = NULL;
+    m_background = nullptr;
+    m_overlay    = nullptr;
+    m_shadow     = nullptr;
+    m_slider     = nullptr;
 }
     
 bool CCControlSaturationBrightnessPicker::initWithTargetAndPos(CCNode* target, CCPoint pos)
@@ -90,7 +90,7 @@ CCControlSaturationBrightnessPicker* CCControlSaturationBrightnessPicker::create
 void CCControlSaturationBrightnessPicker::setEnabled(bool enabled)
 {
     CCControl::setEnabled(enabled);
-    if (m_slider != NULL)
+    if (m_slider != nullptr)
     {
         m_slider->setOpacity(enabled ? 255 : 128);
     }

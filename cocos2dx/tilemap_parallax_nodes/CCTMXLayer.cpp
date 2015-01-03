@@ -33,13 +33,13 @@ NS_CC_BEGIN
 
 CCTMXLayer::CCTMXLayer(int layerIndex, CCTMXMapInfo* mapInfo) :
 m_mapInfo(mapInfo),
-m_layerInfo(NULL),
-m_reusedTile(NULL),
+m_layerInfo(nullptr),
+m_reusedTile(nullptr),
 m_tileWidth(mapInfo->getTileWidth()),
 m_tileHeight(mapInfo->getTileHeight()),
-m_batchNodes(NULL),
-m_tiles(NULL),
-m_atlasInfos(NULL),
+m_batchNodes(nullptr),
+m_tiles(nullptr),
+m_atlasInfos(nullptr),
 m_useAutomaticVertexZ(false),
 m_minGid(MAX_INT),
 m_maxGid(0),
@@ -107,7 +107,7 @@ CCTMXLayer* CCTMXLayer::create(int layerIndex, CCTMXMapInfo* mapInfo) {
 		return (CCTMXLayer*)l->autorelease();
 	}
 	l->release();
-	return NULL;
+	return nullptr;
 }
 
 CCPoint CCTMXLayer::getPositionForOrthoAt(int posX, int posY) {
@@ -415,7 +415,7 @@ void CCTMXLayer::setupTiles() {
                 int tilesetIndex = m_mapInfo->getTileSetIndex(gid);
                 
                 // if corresponded batch not is not created, create it and add it
-                if(m_batchNodes[tilesetIndex] == NULL) {
+                if(m_batchNodes[tilesetIndex] == nullptr) {
                     CCTMXTileSetInfo* tileset = (CCTMXTileSetInfo*)m_mapInfo->getTileSets().objectAtIndex(tilesetIndex);
                     CCSpriteBatchNode* bn = CCSpriteBatchNode::createWithTexture(tileset->getTexture());
                     m_batchNodes[tilesetIndex] = bn;
@@ -545,7 +545,7 @@ void CCTMXLayer::removeTileAt(int x, int y) {
 	
 	// has sprite?
 	CCSprite* sprite = (CCSprite*)bn->getChildByTag(z);
-	if(sprite == NULL) {
+	if(sprite == nullptr) {
 		// remove quadratic
 		atlas->removeQuadAtIndex(index);
 	} else {
@@ -570,7 +570,7 @@ CCSprite* CCTMXLayer::reusedTile(CCRect rect, CCSpriteBatchNode* bn) {
     } else {
         // XXX HACK: Needed because if "batch node" is nil,
 		// then the Sprite'squad will be reset
-        m_reusedTile->setBatchNode(NULL);
+        m_reusedTile->setBatchNode(nullptr);
         
 		// Re-init the sprite
         m_reusedTile->setTextureRect(rect, false, rect.size);
@@ -588,7 +588,7 @@ void CCTMXLayer::setTileAt(int tilesetIndex, int gid, int x, int y, int z) {
     CCRect rect = tileset->getRect(gid);
 	
     // if coorespond batch not is not created, create it and add it
-    if(m_batchNodes[tilesetIndex] == NULL) {
+    if(m_batchNodes[tilesetIndex] == nullptr) {
         CCSpriteBatchNode* bn = CCSpriteBatchNode::createWithTexture(tileset->getTexture());
         m_batchNodes[tilesetIndex] = bn;
         addChild(bn, tilesetIndex);
@@ -617,7 +617,7 @@ void CCTMXLayer::setTileAt(int tilesetIndex, int gid, int x, int y, int z) {
     m_tiles[z] = gid;
 	
 	// update possible children
-	CCObject* pObject = NULL;
+	CCObject* pObject = nullptr;
 	CCARRAY_FOREACH(bn->getChildren(), pObject) {
 		CCSprite* pChild = (CCSprite*) pObject;
 		if(pChild && pChild != tile) {
@@ -719,7 +719,7 @@ CCSprite* CCTMXLayer::tileAt(CCPoint loc) {
 CCSprite* CCTMXLayer::tileAt(int x, int y) {
 	// get gid
 	int gid = getGidAt(x, y);
-	CCSprite* tile = NULL;
+	CCSprite* tile = nullptr;
 	
 	// if gid is zero, no tile at that location
 	if(gid != 0) {

@@ -68,7 +68,7 @@ CCMWSprite* CCMWSprite::create(const char* path, int animIndex, CCTexture2D* tex
 	sheet->retain();
 
 	// add others
-	for(CCTexture2D* t = va_arg(textures, CCTexture2D*); t != NULL; t = va_arg(textures, CCTexture2D*)) {
+	for(CCTexture2D* t = va_arg(textures, CCTexture2D*); t != nullptr; t = va_arg(textures, CCTexture2D*)) {
 		sheet = CCAFCSprite::createBatchNode(t);
 		sprite->m_sheetList.push_back(sheet);
 		sheet->retain();
@@ -85,7 +85,7 @@ CCMWSprite* CCMWSprite::create(const char* path, int animIndex, CCTexture2D* tex
 }
 
 CCMWSprite::CCMWSprite() :
-		m_mw(NULL) {
+		m_mw(nullptr) {
 }
 
 CCMWSprite::~CCMWSprite() {
@@ -94,7 +94,7 @@ CCMWSprite::~CCMWSprite() {
 
 CCAFCAnimation* CCMWSprite::getAnimationAt(int index, CCAFCClipMapping* mapping) {
 	if(index < 0 || index >= getAnimationCount())
-		return NULL;
+		return nullptr;
 	else
 		return CCMWManager::getInstance()->getAnimationData(m_mw, index, mapping);
 }

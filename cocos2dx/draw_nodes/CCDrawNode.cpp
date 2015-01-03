@@ -100,7 +100,7 @@ static inline ccTex2F __t(const ccVertex2F &v)
 CCDrawNode::CCDrawNode()
 : m_uBufferCapacity(0)
 , m_nBufferCount(0)
-, m_pBuffer(NULL)
+, m_pBuffer(nullptr)
 , m_bDirty(false)
 {
     m_sBlendFunc.src = CC_BLEND_SRC;
@@ -110,7 +110,7 @@ CCDrawNode::CCDrawNode()
 CCDrawNode::~CCDrawNode()
 {
     free(m_pBuffer);
-    m_pBuffer = NULL;
+    m_pBuffer = nullptr;
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
@@ -159,7 +159,7 @@ bool CCDrawNode::init()
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
                                                                   callfuncO_selector(CCDrawNode::listenBackToForeground),
                                                                   EVENT_COME_TO_FOREGROUND,
-                                                                  NULL);
+                                                                  nullptr);
 #endif
     
     return true;

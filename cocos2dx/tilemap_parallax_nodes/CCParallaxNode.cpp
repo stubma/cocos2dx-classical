@@ -47,7 +47,7 @@ public:
     {
         m_tRatio = ratio;
         m_tOffset = offset;
-        m_pChild = NULL;
+        m_pChild = nullptr;
         return true;
     }
 };
@@ -62,7 +62,7 @@ CCParallaxNode::~CCParallaxNode()
     if( m_pParallaxArray )
     {
         ccArrayFree(m_pParallaxArray);
-        m_pParallaxArray = NULL;
+        m_pParallaxArray = nullptr;
     }
 }
 
@@ -82,7 +82,7 @@ void CCParallaxNode::addChild(CCNode * child, unsigned int zOrder, int tag)
 }
 void CCParallaxNode::addChild(CCNode *child, unsigned int z, const CCPoint& ratio, const CCPoint& offset)
 {
-    CCAssert( child != NULL, "Argument must be non-nil");
+    CCAssert( child != nullptr, "Argument must be non-nil");
     CCPointObject *obj = CCPointObject::pointWithCCPoint(ratio, offset);
     obj->setChild(child);
     ccArrayAppendObjectWithResize(m_pParallaxArray, (CCObject*)obj);
@@ -116,7 +116,7 @@ CCPoint CCParallaxNode::absolutePosition()
 {
     CCPoint ret = m_obPosition;
     CCNode *cn = this;
-    while (cn->getParent() != NULL)
+    while (cn->getParent() != nullptr)
     {
         cn = cn->getParent();
         ret = ccpAdd( ret,  cn->getPosition());

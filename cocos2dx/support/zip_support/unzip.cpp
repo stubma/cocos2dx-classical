@@ -429,7 +429,7 @@ local ZPOS64_T unz64local_SearchCentralDir(const zlib_filefunc64_32_def* pzlib_f
         uMaxBack = uSizeFile;
 
     buf = (unsigned char*)ALLOC(BUFREADCOMMENT+4);
-    if (buf==NULL)
+    if (buf==nullptr)
         return 0;
 
     uBackRead = 4;
@@ -497,7 +497,7 @@ local ZPOS64_T unz64local_SearchCentralDir64(const zlib_filefunc64_32_def* pzlib
         uMaxBack = uSizeFile;
 
     buf = (unsigned char*)ALLOC(BUFREADCOMMENT+4);
-    if (buf==NULL)
+    if (buf==nullptr)
         return 0;
 
     uBackRead = 4;
@@ -578,7 +578,7 @@ local ZPOS64_T unz64local_SearchCentralDir64(const zlib_filefunc64_32_def* pzlib
      on a Windows NT computer "c:\\test\\zlib114.zip" or on an Unix computer
      "zlib/zlib114.zip".
      If the zipfile cannot be opened (file doesn't exist or in not valid), the
-       return value is NULL.
+       return value is nullptr.
      Else, the return value is a unzFile Handle, usable with other function
        of this unzip package.
 */
@@ -602,11 +602,11 @@ local unzFile unzOpenInternal (const void *path,
     int err=UNZ_OK;
 
     if (unz_copyright[0]!=' ')
-        return NULL;
+        return nullptr;
 
-    us.z_filefunc.zseek32_file = NULL;
-    us.z_filefunc.ztell32_file = NULL;
-    if (pzlib_filefunc64_32_def==NULL)
+    us.z_filefunc.zseek32_file = nullptr;
+    us.z_filefunc.ztell32_file = nullptr;
+    if (pzlib_filefunc64_32_def==nullptr)
         fill_fopen64_filefunc(&us.z_filefunc.zfile_func64);
     else
         us.z_filefunc = *pzlib_filefunc64_32_def;
@@ -618,8 +618,8 @@ local unzFile unzOpenInternal (const void *path,
                                                  path,
                                                  ZLIB_FILEFUNC_MODE_READ |
                                                  ZLIB_FILEFUNC_MODE_EXISTING);
-    if (us.filestream==NULL)
-        return NULL;
+    if (us.filestream==nullptr)
+        return nullptr;
 
     central_pos = unz64local_SearchCentralDir64(&us.z_filefunc,us.filestream);
     if (central_pos)
@@ -743,18 +743,18 @@ local unzFile unzOpenInternal (const void *path,
     if (err!=UNZ_OK)
     {
         ZCLOSE64(us.z_filefunc, us.filestream);
-        return NULL;
+        return nullptr;
     }
 
     us.byte_before_the_zipfile = central_pos -
                             (us.offset_central_dir+us.size_central_dir);
     us.central_pos = central_pos;
-    us.pfile_in_zip_read = NULL;
+    us.pfile_in_zip_read = nullptr;
     us.encrypted = 0;
 
 
     s=(unz64_s*)ALLOC(sizeof(unz64_s));
-    if( s != NULL)
+    if( s != nullptr)
     {
         *s=us;
         unzGoToFirstFile((unzFile)s);
@@ -766,39 +766,39 @@ local unzFile unzOpenInternal (const void *path,
 unzFile ZEXPORT unzOpen2 (const char *path,
                                         zlib_filefunc_def* pzlib_filefunc32_def)
 {
-    if (pzlib_filefunc32_def != NULL)
+    if (pzlib_filefunc32_def != nullptr)
     {
         zlib_filefunc64_32_def zlib_filefunc64_32_def_fill;
         fill_zlib_filefunc64_32_def_from_filefunc32(&zlib_filefunc64_32_def_fill,pzlib_filefunc32_def);
         return unzOpenInternal(path, &zlib_filefunc64_32_def_fill, 0);
     }
     else
-        return unzOpenInternal(path, NULL, 0);
+        return unzOpenInternal(path, nullptr, 0);
 }
 
 unzFile ZEXPORT unzOpen2_64 (const void *path,
                                      zlib_filefunc64_def* pzlib_filefunc_def)
 {
-    if (pzlib_filefunc_def != NULL)
+    if (pzlib_filefunc_def != nullptr)
     {
         zlib_filefunc64_32_def zlib_filefunc64_32_def_fill;
         zlib_filefunc64_32_def_fill.zfile_func64 = *pzlib_filefunc_def;
-        zlib_filefunc64_32_def_fill.ztell32_file = NULL;
-        zlib_filefunc64_32_def_fill.zseek32_file = NULL;
+        zlib_filefunc64_32_def_fill.ztell32_file = nullptr;
+        zlib_filefunc64_32_def_fill.zseek32_file = nullptr;
         return unzOpenInternal(path, &zlib_filefunc64_32_def_fill, 1);
     }
     else
-        return unzOpenInternal(path, NULL, 1);
+        return unzOpenInternal(path, nullptr, 1);
 }
 
 unzFile ZEXPORT unzOpen (const char *path)
 {
-    return unzOpenInternal(path, NULL, 0);
+    return unzOpenInternal(path, nullptr, 0);
 }
 
 unzFile ZEXPORT unzOpen64 (const void *path)
 {
-    return unzOpenInternal(path, NULL, 1);
+    return unzOpenInternal(path, nullptr, 1);
 }
 
 /*
@@ -809,11 +809,11 @@ unzFile ZEXPORT unzOpen64 (const void *path)
 int ZEXPORT unzClose (unzFile file)
 {
     unz64_s* s;
-    if (file==NULL)
+    if (file==nullptr)
         return UNZ_PARAMERROR;
     s=(unz64_s*)file;
 
-    if (s->pfile_in_zip_read!=NULL)
+    if (s->pfile_in_zip_read!=nullptr)
         unzCloseCurrentFile(file);
 
     ZCLOSE64(s->z_filefunc, s->filestream);
@@ -829,7 +829,7 @@ int ZEXPORT unzClose (unzFile file)
 int ZEXPORT unzGetGlobalInfo64 (unzFile file, unz_global_info64* pglobal_info)
 {
     unz64_s* s;
-    if (file==NULL)
+    if (file==nullptr)
         return UNZ_PARAMERROR;
     s=(unz64_s*)file;
     *pglobal_info=s->gi;
@@ -839,7 +839,7 @@ int ZEXPORT unzGetGlobalInfo64 (unzFile file, unz_global_info64* pglobal_info)
 int ZEXPORT unzGetGlobalInfo (unzFile file, unz_global_info* pglobal_info32)
 {
     unz64_s* s;
-    if (file==NULL)
+    if (file==nullptr)
         return UNZ_PARAMERROR;
     s=(unz64_s*)file;
     /* to do : check if number_entry is not truncated */
@@ -896,7 +896,7 @@ local int unz64local_GetCurrentFileInfoInternal (unzFile file,
     long lSeek=0;
     uLong uL;
 
-    if (file==NULL)
+    if (file==nullptr)
         return UNZ_PARAMERROR;
     s=(unz64_s*)file;
     if (ZSEEK64(s->z_filefunc, s->filestream,
@@ -966,7 +966,7 @@ local int unz64local_GetCurrentFileInfoInternal (unzFile file,
     file_info_internal.offset_curfile = uL;
 
     lSeek+=file_info.size_filename;
-    if ((err==UNZ_OK) && (szFileName!=NULL))
+    if ((err==UNZ_OK) && (szFileName!=nullptr))
     {
         uLong uSizeRead ;
         if (file_info.size_filename<fileNameBufferSize)
@@ -984,7 +984,7 @@ local int unz64local_GetCurrentFileInfoInternal (unzFile file,
     }
 
     // Read extrafield
-    if ((err==UNZ_OK) && (extraField!=NULL))
+    if ((err==UNZ_OK) && (extraField!=nullptr))
     {
         ZPOS64_T uSizeRead ;
         if (file_info.size_file_extra<extraFieldBufferSize)
@@ -1078,7 +1078,7 @@ local int unz64local_GetCurrentFileInfoInternal (unzFile file,
         }
     }
 
-    if ((err==UNZ_OK) && (szComment!=NULL))
+    if ((err==UNZ_OK) && (szComment!=nullptr))
     {
         uLong uSizeRead ;
         if (file_info.size_file_comment<commentBufferSize)
@@ -1107,10 +1107,10 @@ local int unz64local_GetCurrentFileInfoInternal (unzFile file,
     //    lSeek+=file_info.size_file_comment;
 
 
-    if ((err==UNZ_OK) && (pfile_info!=NULL))
+    if ((err==UNZ_OK) && (pfile_info!=nullptr))
         *pfile_info=file_info;
 
-    if ((err==UNZ_OK) && (pfile_info_internal!=NULL))
+    if ((err==UNZ_OK) && (pfile_info_internal!=nullptr))
         *pfile_info_internal=file_info_internal;
 
     return err;
@@ -1129,7 +1129,7 @@ int ZEXPORT unzGetCurrentFileInfo64 (unzFile file,
                                           void *extraField, uLong extraFieldBufferSize,
                                           char* szComment,  uLong commentBufferSize)
 {
-    return unz64local_GetCurrentFileInfoInternal(file,pfile_info,NULL,
+    return unz64local_GetCurrentFileInfoInternal(file,pfile_info,nullptr,
                                                 szFileName,fileNameBufferSize,
                                                 extraField,extraFieldBufferSize,
                                                 szComment,commentBufferSize);
@@ -1143,7 +1143,7 @@ int ZEXPORT unzGetCurrentFileInfo (unzFile file,
 {
     int err;
     unz_file_info64 file_info64;
-    err = unz64local_GetCurrentFileInfoInternal(file,&file_info64,NULL,
+    err = unz64local_GetCurrentFileInfoInternal(file,&file_info64,nullptr,
                                                 szFileName,fileNameBufferSize,
                                                 extraField,extraFieldBufferSize,
                                                 szComment,commentBufferSize);
@@ -1186,14 +1186,14 @@ int ZEXPORT unzGoToFirstFile64 (unzFile file,
 {
     int err=UNZ_OK;
     unz64_s* s;
-    if (file==NULL)
+    if (file==nullptr)
         return UNZ_PARAMERROR;
     s=(unz64_s*)file;
     s->pos_in_central_dir=s->offset_central_dir;
     s->num_file=0;
     err=unz64local_GetCurrentFileInfoInternal(file,&s->cur_file_info,
                                              &s->cur_file_info_internal,
-                                             szFileName,fileNameBufferSize,NULL,0,NULL,0);
+                                             szFileName,fileNameBufferSize,nullptr,0,nullptr,0);
     s->current_file_ok = (err == UNZ_OK);
     if (pfile_info)
         *pfile_info = s->cur_file_info;
@@ -1206,7 +1206,7 @@ int ZEXPORT unzGoToFirstFile64 (unzFile file,
 */
 int ZEXPORT unzGoToFirstFile (unzFile file)
 {
-    return unzGoToFirstFile64(file, NULL, NULL, 0);
+    return unzGoToFirstFile64(file, nullptr, nullptr, 0);
 }
 
 /*
@@ -1223,7 +1223,7 @@ int ZEXPORT unzGoToNextFile64 (unzFile file,
     unz64_s* s;
     int err;
 
-    if (file==NULL)
+    if (file==nullptr)
         return UNZ_PARAMERROR;
     s=(unz64_s*)file;
     if (!s->current_file_ok)
@@ -1237,7 +1237,7 @@ int ZEXPORT unzGoToNextFile64 (unzFile file,
     s->num_file++;
     err = unz64local_GetCurrentFileInfoInternal(file,&s->cur_file_info,
                                                &s->cur_file_info_internal,
-                                               szFileName,fileNameBufferSize,NULL,0,NULL,0);
+                                               szFileName,fileNameBufferSize,nullptr,0,nullptr,0);
     s->current_file_ok = (err == UNZ_OK);
     if (pfile_info)
         *pfile_info = s->cur_file_info;
@@ -1251,7 +1251,7 @@ int ZEXPORT unzGoToNextFile64 (unzFile file,
 */
 int ZEXPORT unzGoToNextFile (unzFile  file)
 {
-    return unzGoToNextFile64(file, NULL, NULL, 0);
+    return unzGoToNextFile64(file, nullptr, nullptr, 0);
 }
 
 
@@ -1277,7 +1277,7 @@ int ZEXPORT unzLocateFile (unzFile file, const char *szFileName, int iCaseSensit
     ZPOS64_T pos_in_central_dirSaved;
 
 
-    if (file==NULL)
+    if (file==nullptr)
         return UNZ_PARAMERROR;
 
     if (strlen(szFileName)>=UNZ_MAXFILENAMEINZIP)
@@ -1298,9 +1298,9 @@ int ZEXPORT unzLocateFile (unzFile file, const char *szFileName, int iCaseSensit
     while (err == UNZ_OK)
     {
         char szCurrentFileName[UNZ_MAXFILENAMEINZIP+1];
-        err = unzGetCurrentFileInfo64(file,NULL,
+        err = unzGetCurrentFileInfo64(file,nullptr,
                                     szCurrentFileName,sizeof(szCurrentFileName)-1,
-                                    NULL,0,NULL,0);
+                                    nullptr,0,nullptr,0);
         if (err == UNZ_OK)
         {
             if (unzStringFileNameCompare(szCurrentFileName,
@@ -1343,7 +1343,7 @@ int ZEXPORT unzGetFilePos64(unzFile file, unz64_file_pos*  file_pos)
 {
     unz64_s* s;
 
-    if (file==NULL || file_pos==NULL)
+    if (file==nullptr || file_pos==nullptr)
         return UNZ_PARAMERROR;
     s=(unz64_s*)file;
     if (!s->current_file_ok)
@@ -1374,7 +1374,7 @@ int ZEXPORT unzGoToFilePos64(unzFile file, const unz64_file_pos* file_pos)
     unz64_s* s;
     int err;
 
-    if (file==NULL || file_pos==NULL)
+    if (file==nullptr || file_pos==nullptr)
         return UNZ_PARAMERROR;
     s=(unz64_s*)file;
 
@@ -1385,7 +1385,7 @@ int ZEXPORT unzGoToFilePos64(unzFile file, const unz64_file_pos* file_pos)
     /* set the current file */
     err = unz64local_GetCurrentFileInfoInternal(file,&s->cur_file_info,
                                                &s->cur_file_info_internal,
-                                               NULL,0,NULL,0,NULL,0);
+                                               nullptr,0,nullptr,0,nullptr,0);
     /* return results */
     s->current_file_ok = (err == UNZ_OK);
     return err;
@@ -1396,7 +1396,7 @@ int ZEXPORT unzGoToFilePos(
     unz_file_pos* file_pos)
 {
     unz64_file_pos file_pos64;
-    if (file_pos == NULL)
+    if (file_pos == nullptr)
         return UNZ_PARAMERROR;
 
     file_pos64.pos_in_zip_directory = file_pos->pos_in_zip_directory;
@@ -1515,24 +1515,24 @@ int ZEXPORT unzOpenCurrentFile3 (unzFile file, int* method,
 #    ifndef NOUNCRYPT
     char source[12];
 #    else
-    if (password != NULL)
+    if (password != nullptr)
         return UNZ_PARAMERROR;
 #    endif
 
-    if (file==NULL)
+    if (file==nullptr)
         return UNZ_PARAMERROR;
     s=(unz64_s*)file;
     if (!s->current_file_ok)
         return UNZ_PARAMERROR;
 
-    if (s->pfile_in_zip_read != NULL)
+    if (s->pfile_in_zip_read != nullptr)
         unzCloseCurrentFile(file);
 
     if (unz64local_CheckCurrentFileCoherencyHeader(s,&iSizeVar, &offset_local_extrafield,&size_local_extrafield)!=UNZ_OK)
         return UNZ_BADZIPFILE;
 
     pfile_in_zip_read_info = (file_in_zip64_read_info_s*)ALLOC(sizeof(file_in_zip64_read_info_s));
-    if (pfile_in_zip_read_info==NULL)
+    if (pfile_in_zip_read_info==nullptr)
         return UNZ_INTERNALERROR;
 
     pfile_in_zip_read_info->read_buffer=(char*)ALLOC(UNZ_BUFSIZE);
@@ -1541,7 +1541,7 @@ int ZEXPORT unzOpenCurrentFile3 (unzFile file, int* method,
     pfile_in_zip_read_info->pos_local_extrafield=0;
     pfile_in_zip_read_info->raw=raw;
 
-    if (pfile_in_zip_read_info->read_buffer==NULL)
+    if (pfile_in_zip_read_info->read_buffer==nullptr)
     {
         TRYFREE(pfile_in_zip_read_info);
         return UNZ_INTERNALERROR;
@@ -1549,10 +1549,10 @@ int ZEXPORT unzOpenCurrentFile3 (unzFile file, int* method,
 
     pfile_in_zip_read_info->stream_initialised=0;
 
-    if (method!=NULL)
+    if (method!=nullptr)
         *method = (int)s->cur_file_info.compression_method;
 
-    if (level!=NULL)
+    if (level!=nullptr)
     {
         *level = 6;
         switch (s->cur_file_info.flag & 0x06)
@@ -1647,7 +1647,7 @@ int ZEXPORT unzOpenCurrentFile3 (unzFile file, int* method,
                 s->encrypted = 0;
 
 #    ifndef NOUNCRYPT
-    if (password != NULL)
+    if (password != nullptr)
     {
         int i;
         s->pcrc_32_tab = get_crc_table();
@@ -1674,17 +1674,17 @@ int ZEXPORT unzOpenCurrentFile3 (unzFile file, int* method,
 
 int ZEXPORT unzOpenCurrentFile (unzFile file)
 {
-    return unzOpenCurrentFile3(file, NULL, NULL, 0, NULL);
+    return unzOpenCurrentFile3(file, nullptr, nullptr, 0, nullptr);
 }
 
 int ZEXPORT unzOpenCurrentFilePassword (unzFile file, const char*  password)
 {
-    return unzOpenCurrentFile3(file, NULL, NULL, 0, password);
+    return unzOpenCurrentFile3(file, nullptr, nullptr, 0, password);
 }
 
 int ZEXPORT unzOpenCurrentFile2 (unzFile file, int* method, int* level, int raw)
 {
-    return unzOpenCurrentFile3(file, method, level, raw, NULL);
+    return unzOpenCurrentFile3(file, method, level, raw, nullptr);
 }
 
 /** Addition for GDAL : START */
@@ -1694,10 +1694,10 @@ ZPOS64_T ZEXPORT unzGetCurrentFileZStreamPos64( unzFile file)
     unz64_s* s;
     file_in_zip64_read_info_s* pfile_in_zip_read_info;
     s=(unz64_s*)file;
-    if (file==NULL)
+    if (file==nullptr)
         return 0; //UNZ_PARAMERROR;
     pfile_in_zip_read_info=s->pfile_in_zip_read;
-    if (pfile_in_zip_read_info==NULL)
+    if (pfile_in_zip_read_info==nullptr)
         return 0; //UNZ_PARAMERROR;
     return pfile_in_zip_read_info->pos_in_zipfile +
                          pfile_in_zip_read_info->byte_before_the_zipfile;
@@ -1721,16 +1721,16 @@ int ZEXPORT unzReadCurrentFile  (unzFile file, voidp buf, unsigned len)
     uInt iRead = 0;
     unz64_s* s;
     file_in_zip64_read_info_s* pfile_in_zip_read_info;
-    if (file==NULL)
+    if (file==nullptr)
         return UNZ_PARAMERROR;
     s=(unz64_s*)file;
     pfile_in_zip_read_info=s->pfile_in_zip_read;
 
-    if (pfile_in_zip_read_info==NULL)
+    if (pfile_in_zip_read_info==nullptr)
         return UNZ_PARAMERROR;
 
 
-    if (pfile_in_zip_read_info->read_buffer == NULL)
+    if (pfile_in_zip_read_info->read_buffer == nullptr)
         return UNZ_END_OF_LIST_OF_FILE;
     if (len==0)
         return 0;
@@ -1887,7 +1887,7 @@ int ZEXPORT unzReadCurrentFile  (unzFile file, voidp buf, unsigned len)
             */
             err=inflate(&pfile_in_zip_read_info->stream,flush);
 
-            if ((err>=0) && (pfile_in_zip_read_info->stream.msg!=NULL))
+            if ((err>=0) && (pfile_in_zip_read_info->stream.msg!=nullptr))
               err = Z_DATA_ERROR;
 
             uTotalOutAfter = pfile_in_zip_read_info->stream.total_out;
@@ -1924,12 +1924,12 @@ z_off_t ZEXPORT unztell (unzFile file)
 {
     unz64_s* s;
     file_in_zip64_read_info_s* pfile_in_zip_read_info;
-    if (file==NULL)
+    if (file==nullptr)
         return UNZ_PARAMERROR;
     s=(unz64_s*)file;
     pfile_in_zip_read_info=s->pfile_in_zip_read;
 
-    if (pfile_in_zip_read_info==NULL)
+    if (pfile_in_zip_read_info==nullptr)
         return UNZ_PARAMERROR;
 
     return (z_off_t)pfile_in_zip_read_info->stream.total_out;
@@ -1940,12 +1940,12 @@ ZPOS64_T ZEXPORT unztell64 (unzFile file)
 
     unz64_s* s;
     file_in_zip64_read_info_s* pfile_in_zip_read_info;
-    if (file==NULL)
+    if (file==nullptr)
         return (ZPOS64_T)-1;
     s=(unz64_s*)file;
     pfile_in_zip_read_info=s->pfile_in_zip_read;
 
-    if (pfile_in_zip_read_info==NULL)
+    if (pfile_in_zip_read_info==nullptr)
         return (ZPOS64_T)-1;
 
     return pfile_in_zip_read_info->total_out_64;
@@ -1959,12 +1959,12 @@ int ZEXPORT unzeof (unzFile file)
 {
     unz64_s* s;
     file_in_zip64_read_info_s* pfile_in_zip_read_info;
-    if (file==NULL)
+    if (file==nullptr)
         return UNZ_PARAMERROR;
     s=(unz64_s*)file;
     pfile_in_zip_read_info=s->pfile_in_zip_read;
 
-    if (pfile_in_zip_read_info==NULL)
+    if (pfile_in_zip_read_info==nullptr)
         return UNZ_PARAMERROR;
 
     if (pfile_in_zip_read_info->rest_read_uncompressed == 0)
@@ -1980,9 +1980,9 @@ Read extra field from the current file (opened by unzOpenCurrentFile)
 This is the local-header version of the extra field (sometimes, there is
 more info in the local-header version than in the central-header)
 
-  if buf==NULL, it return the size of the local extra field that can be read
+  if buf==nullptr, it return the size of the local extra field that can be read
 
-  if buf!=NULL, len is the size of the buffer, the extra header is copied in
+  if buf!=nullptr, len is the size of the buffer, the extra header is copied in
     buf.
   the return value is the number of bytes copied in buf, or (if <0)
     the error code
@@ -1994,18 +1994,18 @@ int ZEXPORT unzGetLocalExtrafield (unzFile file, voidp buf, unsigned len)
     uInt read_now;
     ZPOS64_T size_to_read;
 
-    if (file==NULL)
+    if (file==nullptr)
         return UNZ_PARAMERROR;
     s=(unz64_s*)file;
     pfile_in_zip_read_info=s->pfile_in_zip_read;
 
-    if (pfile_in_zip_read_info==NULL)
+    if (pfile_in_zip_read_info==nullptr)
         return UNZ_PARAMERROR;
 
     size_to_read = (pfile_in_zip_read_info->size_local_extrafield -
                 pfile_in_zip_read_info->pos_local_extrafield);
 
-    if (buf==NULL)
+    if (buf==nullptr)
         return (int)size_to_read;
 
     if (len>size_to_read)
@@ -2041,12 +2041,12 @@ int ZEXPORT unzCloseCurrentFile (unzFile file)
 
     unz64_s* s;
     file_in_zip64_read_info_s* pfile_in_zip_read_info;
-    if (file==NULL)
+    if (file==nullptr)
         return UNZ_PARAMERROR;
     s=(unz64_s*)file;
     pfile_in_zip_read_info=s->pfile_in_zip_read;
 
-    if (pfile_in_zip_read_info==NULL)
+    if (pfile_in_zip_read_info==nullptr)
         return UNZ_PARAMERROR;
 
 
@@ -2059,7 +2059,7 @@ int ZEXPORT unzCloseCurrentFile (unzFile file)
 
 
     TRYFREE(pfile_in_zip_read_info->read_buffer);
-    pfile_in_zip_read_info->read_buffer = NULL;
+    pfile_in_zip_read_info->read_buffer = nullptr;
     if (pfile_in_zip_read_info->stream_initialised == Z_DEFLATED)
         inflateEnd(&pfile_in_zip_read_info->stream);
 #ifdef HAVE_BZIP2
@@ -2071,7 +2071,7 @@ int ZEXPORT unzCloseCurrentFile (unzFile file)
     pfile_in_zip_read_info->stream_initialised = 0;
     TRYFREE(pfile_in_zip_read_info);
 
-    s->pfile_in_zip_read=NULL;
+    s->pfile_in_zip_read=nullptr;
 
     return err;
 }
@@ -2086,7 +2086,7 @@ int ZEXPORT unzGetGlobalComment (unzFile file, char * szComment, uLong uSizeBuf)
 {
     unz64_s* s;
     uLong uReadThis ;
-    if (file==NULL)
+    if (file==nullptr)
         return (int)UNZ_PARAMERROR;
     s=(unz64_s*)file;
 
@@ -2104,7 +2104,7 @@ int ZEXPORT unzGetGlobalComment (unzFile file, char * szComment, uLong uSizeBuf)
         return UNZ_ERRNO;
     }
 
-    if ((szComment != NULL) && (uSizeBuf > s->gi.size_comment))
+    if ((szComment != nullptr) && (uSizeBuf > s->gi.size_comment))
         *(szComment+s->gi.size_comment)='\0';
     return (int)uReadThis;
 }
@@ -2114,7 +2114,7 @@ ZPOS64_T ZEXPORT unzGetOffset64(unzFile file)
 {
     unz64_s* s;
 
-    if (file==NULL)
+    if (file==nullptr)
           return 0; //UNZ_PARAMERROR;
     s=(unz64_s*)file;
     if (!s->current_file_ok)
@@ -2129,7 +2129,7 @@ uLong ZEXPORT unzGetOffset (unzFile file)
 {
     ZPOS64_T offset64;
 
-    if (file==NULL)
+    if (file==nullptr)
           return 0; //UNZ_PARAMERROR;
     offset64 = unzGetOffset64(file);
     return (uLong)offset64;
@@ -2140,7 +2140,7 @@ int ZEXPORT unzSetOffset64(unzFile file, ZPOS64_T pos)
     unz64_s* s;
     int err;
 
-    if (file==NULL)
+    if (file==nullptr)
         return UNZ_PARAMERROR;
     s=(unz64_s*)file;
 
@@ -2148,7 +2148,7 @@ int ZEXPORT unzSetOffset64(unzFile file, ZPOS64_T pos)
     s->num_file = s->gi.number_entry;      /* hack */
     err = unz64local_GetCurrentFileInfoInternal(file,&s->cur_file_info,
                                               &s->cur_file_info_internal,
-                                              NULL,0,NULL,0,NULL,0);
+                                              nullptr,0,nullptr,0,nullptr,0);
     s->current_file_ok = (err == UNZ_OK);
     return err;
 }

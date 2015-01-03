@@ -61,7 +61,7 @@ SharedBuffer* SharedBuffer::editResize(size_t newSize) const
         SharedBuffer* buf = const_cast<SharedBuffer*>(this);
         if (buf->mSize == newSize) return buf;
         buf = (SharedBuffer*)realloc(buf, sizeof(SharedBuffer) + newSize);
-        if (buf != NULL) {
+        if (buf != nullptr) {
             buf->mSize = newSize;
             return buf;
         }

@@ -29,12 +29,12 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-TriggerMng* TriggerMng::_sharedTriggerMng = NULL;
+TriggerMng* TriggerMng::_sharedTriggerMng = nullptr;
 
 TriggerMng::TriggerMng(void)
-: _eventTriggers(NULL)
-,_triggerObjs(NULL)
-,_movementDispatches(NULL)
+: _eventTriggers(nullptr)
+,_triggerObjs(nullptr)
+,_movementDispatches(nullptr)
 {
 	_triggerObjs = CCDictionary::create();
 	_triggerObjs->retain();
@@ -58,7 +58,7 @@ const char* TriggerMng::triggerMngVersion()
 
 TriggerMng* TriggerMng::getInstance()
 {
-    if (NULL == _sharedTriggerMng)
+    if (nullptr == _sharedTriggerMng)
     {
         _sharedTriggerMng = new TriggerMng();
     }
@@ -76,7 +76,7 @@ void TriggerMng::parse(const rapidjson::Value &root)
     int count = DICTOOL->getArrayCount_json(root, "Triggers");
     
     CCScriptEngineProtocol* engine = CCScriptEngineManager::sharedManager()->getScriptEngine();
-    bool useBindings = engine != NULL;    
+    bool useBindings = engine != nullptr;    
     
     if (useBindings)
     {
@@ -102,7 +102,7 @@ void TriggerMng::parse(const rapidjson::Value &root)
             {
                 add((unsigned int)(*iter), obj);
             }
-            if (_triggerObjs != NULL)
+            if (_triggerObjs != nullptr)
             {
                 _triggerObjs->setObject(obj, obj->getId());
             }
@@ -118,7 +118,7 @@ void TriggerMng::parse(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::ext
 	stExpCocoNode *pTriggersArray = pCocoNode[13].GetChildArray(pCocoLoader);
 
 	CCScriptEngineProtocol* engine = CCScriptEngineManager::sharedManager()->getScriptEngine();
-	bool useBindings = engine != NULL;    
+	bool useBindings = engine != nullptr;    
 
 	if (useBindings)
 	{
@@ -144,7 +144,7 @@ void TriggerMng::parse(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::ext
 			{
 				add((unsigned int)(*iter), obj);
 			}
-			if (_triggerObjs != NULL)
+			if (_triggerObjs != nullptr)
 			{
 				_triggerObjs->setObject(obj, obj->getId());
 			}
@@ -154,10 +154,10 @@ void TriggerMng::parse(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::ext
 
 CCArray* TriggerMng::get(unsigned int event) const
 {
-    CCArray* pRet = NULL;
+    CCArray* pRet = nullptr;
     CCAssert(event >= 0, "Argument must be larger than 0");
     do {
-        CC_BREAK_IF(NULL == _eventTriggers);
+        CC_BREAK_IF(nullptr == _eventTriggers);
         pRet = dynamic_cast<CCArray*>(_eventTriggers->objectForKey(event));
         
     } while (0);
@@ -166,9 +166,9 @@ CCArray* TriggerMng::get(unsigned int event) const
 
 TriggerObj* TriggerMng::getTriggerObj(unsigned int id) const
 {
-	if (_triggerObjs == NULL)
+	if (_triggerObjs == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 	TriggerObj *obj = dynamic_cast<TriggerObj *>(_triggerObjs->objectForKey(id));
 
@@ -178,15 +178,15 @@ TriggerObj* TriggerMng::getTriggerObj(unsigned int id) const
 bool TriggerMng::add(unsigned int event, TriggerObj *pObj)
 {
     bool bRet = false;
-    CCAssert(pObj != NULL, "Argument must be non-nil");
+    CCAssert(pObj != nullptr, "Argument must be non-nil");
     do
     {
-        if (_eventTriggers == NULL)
+        if (_eventTriggers == nullptr)
         {
             alloc();
         }
         CCArray *pArray = dynamic_cast<CCArray*>(_eventTriggers->objectForKey(event));
-        if (pArray == NULL)
+        if (pArray == nullptr)
         {
             pArray = CCArray::create();
         }
@@ -202,17 +202,17 @@ bool TriggerMng::add(unsigned int event, TriggerObj *pObj)
 
 void TriggerMng::removeAll(void)
 {
-    if(_eventTriggers != NULL)
+    if(_eventTriggers != nullptr)
     {
         CCDictElement *pElement, *tmp;
         HASH_ITER(hh, _eventTriggers->m_pElements, pElement, tmp)
         {
             HASH_DEL(_eventTriggers->m_pElements, pElement);
-            CCObject* pObj = NULL;
+            CCObject* pObj = nullptr;
             CCARRAY_FOREACH(((CCArray*)pElement->getObject()), pObj)
             {
                 TriggerObj* triobj = dynamic_cast<TriggerObj*>(pObj);
-                if (triobj != NULL)
+                if (triobj != nullptr)
                 {
                     triobj->removeAll();
                 }
@@ -230,16 +230,16 @@ bool TriggerMng::remove(unsigned int event)
     do 
     {        
         CC_BREAK_IF(!_eventTriggers);
-        CCObject* pRetObject = NULL;
+        CCObject* pRetObject = nullptr;
         pRetObject = _eventTriggers->objectForKey(event);
         CC_BREAK_IF(!pRetObject);
         CCArray *array = dynamic_cast<CCArray*>(pRetObject);
         CC_BREAK_IF(!array);
-        CCObject* pObj = NULL;
+        CCObject* pObj = nullptr;
         CCARRAY_FOREACH(array, pObj)
         {
             TriggerObj* triobj = dynamic_cast<TriggerObj*>(pObj);
-            if (triobj != NULL)
+            if (triobj != nullptr)
             {
                 triobj->removeAll();
             }
@@ -258,16 +258,16 @@ bool TriggerMng::remove(unsigned int event, TriggerObj *Obj)
 	do 
 	{        
 		CC_BREAK_IF(!_eventTriggers);
-		CCObject* pRetObject = NULL;
+		CCObject* pRetObject = nullptr;
 		pRetObject = _eventTriggers->objectForKey(event);
 		CC_BREAK_IF(!pRetObject);
 		CCArray *array = dynamic_cast<CCArray*>(pRetObject);
 		CC_BREAK_IF(!array);
-		CCObject* pObj = NULL;
+		CCObject* pObj = nullptr;
 		CCARRAY_FOREACH(array, pObj)
 		{
 			TriggerObj* triobj = dynamic_cast<TriggerObj*>(pObj);
-			if (triobj != NULL && triobj == Obj)
+			if (triobj != nullptr && triobj == Obj)
 			{
 				triobj->removeAll();
 			}
@@ -282,7 +282,7 @@ bool TriggerMng::remove(unsigned int event, TriggerObj *Obj)
 bool TriggerMng::removeTriggerObj(unsigned int id)
 {
 	TriggerObj *obj = getTriggerObj(id);
-	if (obj == NULL)
+	if (obj == nullptr)
 	{
 		return false;
 	}
@@ -315,7 +315,7 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocos2d::extension::Co
 	int extent = 0;
 	int border = 0;
 	std::string key;
-	const char *str = NULL;
+	const char *str = nullptr;
 	stExpCocoNode *pTriggersArray = pCocoNode[13].GetChildArray(pCocoLoader);
 
 	document.SetArray();
@@ -351,7 +351,7 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocos2d::extension::Co
 						const char *str = pActionArray[i].GetValue(pCocoLoader);
 						if (key.compare("classname") == 0)
 						{
-							if (str != NULL)
+							if (str != nullptr)
 							{
 								action.AddMember("classname", str, allocator);
 							}
@@ -372,7 +372,7 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocos2d::extension::Co
 									const char *str = pDataItemArray[i].GetValue(pCocoLoader);
 									if (key.compare("key") == 0)
 									{
-										if (str != NULL)
+										if (str != nullptr)
 										{
 											dataitem.AddMember("key", str, allocator);
 										}
@@ -427,7 +427,7 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocos2d::extension::Co
 						const char *str = pConditionArray[i].GetValue(pCocoLoader);
 						if (key.compare("classname") == 0)
 						{
-							if (str != NULL)
+							if (str != nullptr)
 							{
 								cond.AddMember("classname", str, allocator);
 							}
@@ -448,7 +448,7 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocos2d::extension::Co
 									const char *str = pDataItemArray[i].GetValue(pCocoLoader);
 									if (key.compare("key") == 0)
 									{
-										if (str != NULL)
+										if (str != nullptr)
 										{
 											dataitem.AddMember("key", str, allocator);
 										}
@@ -497,7 +497,7 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocos2d::extension::Co
 					stExpCocoNode *pEventArray = pEventsArray->GetChildArray(pCocoLoader);
 					std::string key = pEventArray[0].GetName(pCocoLoader);
 					const char *str = pEventArray[0].GetValue(pCocoLoader);
-					if (key.compare("id") == 0 && str != NULL)
+					if (key.compare("id") == 0 && str != nullptr)
 					{
 						event.AddMember("id", atoi(str), allocator);
 						eventsItem.PushBack(event, allocator);
@@ -507,7 +507,7 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocos2d::extension::Co
 			}
 			else if (key.compare("id") == 0)
 			{
-				if (str != NULL)
+				if (str != nullptr)
 				{
 					vElemItem.AddMember("id", atoi(str), allocator);
 				}
@@ -519,13 +519,13 @@ void TriggerMng::buildJson(rapidjson::Document &document, cocos2d::extension::Co
 
 void TriggerMng::addArmatureMovementCallBack(CCArmature *pAr, CCObject *pTarget, SEL_MovementEventCallFunc mecf)
 {
-	if (pAr == NULL || _movementDispatches == NULL || pTarget == NULL || mecf == NULL)
+	if (pAr == nullptr || _movementDispatches == nullptr || pTarget == nullptr || mecf == nullptr)
 	{
 		return;
 	}
 
 	std::map<CCArmature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->find(pAr);
-	ArmatureMovementDispatcher *amd = NULL;
+	ArmatureMovementDispatcher *amd = nullptr;
 	if (iter == _movementDispatches->end())
 	{
 		amd = new ArmatureMovementDispatcher();
@@ -542,13 +542,13 @@ void TriggerMng::addArmatureMovementCallBack(CCArmature *pAr, CCObject *pTarget,
 
 void TriggerMng::removeArmatureMovementCallBack(CCArmature *pAr, CCObject *pTarget, SEL_MovementEventCallFunc mecf)
 {
-	if (pAr == NULL || _movementDispatches == NULL || pTarget == NULL || mecf == NULL)
+	if (pAr == nullptr || _movementDispatches == nullptr || pTarget == nullptr || mecf == nullptr)
 	{
 		return;
 	}
 
 	std::map<CCArmature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->find(pAr);
-	ArmatureMovementDispatcher *amd = NULL;
+	ArmatureMovementDispatcher *amd = nullptr;
 	if (iter == _movementDispatches->end())
 	{
 		return;
@@ -562,7 +562,7 @@ void TriggerMng::removeArmatureMovementCallBack(CCArmature *pAr, CCObject *pTarg
 
 void TriggerMng::removeArmatureAllMovementCallBack(CCArmature *pAr)
 {
-	if (pAr == NULL)
+	if (pAr == nullptr)
 	{
 		return;
 	}
@@ -591,7 +591,7 @@ void TriggerMng::removeAllArmatureMovementCallBack()
 }
 
 ArmatureMovementDispatcher::ArmatureMovementDispatcher(void)
-: _mapEventAnimation(NULL)
+: _mapEventAnimation(nullptr)
 {
 	_mapEventAnimation = new std::map<CCObject*, SEL_MovementEventCallFunc> ;
 }

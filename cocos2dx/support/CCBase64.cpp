@@ -37,17 +37,17 @@ static void initBase64DecodeTable() {
 }
 
 static char* strDup(char const* str) {
-    if (str == NULL) return NULL;
+    if (str == nullptr) return nullptr;
     size_t len = strlen(str) + 1;
     char* copy = new char[len];
-    if (copy != NULL) {
+    if (copy != nullptr) {
         memcpy(copy, str, len);
     }
     return copy;
 }
 
 static char* strDupSize(const char* str) {
-    if (str == NULL) return NULL;
+    if (str == nullptr) return nullptr;
     size_t len = strlen(str) + 1;
     char* copy = new char[len];
     return copy;
@@ -55,7 +55,7 @@ static char* strDupSize(const char* str) {
 
 string CCBase64::encode(const void* data, int len) {
 	unsigned char const* orig = (unsigned char const*)data; // in case any input bytes have the MSB set
-	if (orig == NULL || len <= 0)
+	if (orig == nullptr || len <= 0)
 		return "";
 	
 	int numOrig24BitValues = len / 3;
@@ -122,7 +122,7 @@ int CCBase64::decode(unsigned char* in, unsigned int inLen, unsigned char** pOut
     
     // prepare
     int k = 0;
-    unsigned char* result = NULL;
+    unsigned char* result = nullptr;
     unsigned char* out = (unsigned char*)strDupSize((const char*)in); // ensures we have enough space
     
     // decode
@@ -177,7 +177,7 @@ int CCBase64::decode(unsigned char* in, unsigned int inLen, unsigned char** pOut
 }
 
 const char* CCBase64::decode(const string& data, int* outLen) {
-    unsigned char* buffer = NULL;
+    unsigned char* buffer = nullptr;
     int len = decode((unsigned char*)data.c_str(), (unsigned int)data.length(), &buffer);
     if(outLen)
         *outLen = len;

@@ -63,8 +63,8 @@ bool CCShake::initWithDynamicRing(float d, float startMaxR, float endMaxR, float
 }
 
 CCObject* CCShake::copyWithZone(CCZone *pZone) {
-    CCZone* pNewZone = NULL;
-    CCShake* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCShake* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) {
         // in case of being called at sub class
         pCopy = (CCShake*)(pZone->m_pCopyObject);

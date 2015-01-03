@@ -5,7 +5,7 @@
 
 NS_CC_EXT_BEGIN
 
-static TextFieldReader* instanceTextFieldReader = NULL;
+static TextFieldReader* instanceTextFieldReader = nullptr;
 
 IMPLEMENT_CLASS_WIDGET_READER_INFO(TextFieldReader)
 

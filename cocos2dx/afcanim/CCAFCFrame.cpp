@@ -72,7 +72,7 @@ CCAFCClip* CCAFCFrame::getClipAt(CCAFCClipType type, int index) {
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 NS_CC_END

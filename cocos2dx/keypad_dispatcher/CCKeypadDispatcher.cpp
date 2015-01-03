@@ -105,8 +105,8 @@ void CCKeypadDispatcher::forceAddDelegate(CCKeypadDelegate* pDelegate)
 
 void CCKeypadDispatcher::forceRemoveDelegate(CCKeypadDelegate* pDelegate)
 {
-    CCKeypadHandler* pHandler = NULL;
-    CCObject* pObj = NULL;
+    CCKeypadHandler* pHandler = nullptr;
+    CCObject* pObj = nullptr;
     CCARRAY_FOREACH(m_pDelegates, pObj)
     {
         pHandler = (CCKeypadHandler*)pObj;
@@ -120,14 +120,14 @@ void CCKeypadDispatcher::forceRemoveDelegate(CCKeypadDelegate* pDelegate)
 
 bool CCKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
 {
-    CCKeypadHandler*  pHandler = NULL;
-    CCKeypadDelegate* pDelegate = NULL;
+    CCKeypadHandler*  pHandler = nullptr;
+    CCKeypadDelegate* pDelegate = nullptr;
 
     m_bLocked = true;
 
     if (m_pDelegates->count() > 0)
     {
-        CCObject* pObj = NULL;
+        CCObject* pObj = nullptr;
         CCARRAY_FOREACH(m_pDelegates, pObj)
         {
             CC_BREAK_IF(!pObj);

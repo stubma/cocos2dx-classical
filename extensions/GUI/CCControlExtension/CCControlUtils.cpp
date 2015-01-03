@@ -32,7 +32,7 @@ CCSprite* CCControlUtils::addSpriteToTargetWithPosAndAnchor(const char* spriteNa
     CCSprite *sprite =CCSprite::createWithSpriteFrameName(spriteName);
     
     if (!sprite)
-        return NULL;
+        return nullptr;
 
     sprite->setPosition(pos);
     sprite->setAnchorPoint(anchor);

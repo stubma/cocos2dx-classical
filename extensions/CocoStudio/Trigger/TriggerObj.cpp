@@ -90,8 +90,8 @@ void BaseTriggerAction::removeAll()
 }
 
 TriggerObj::TriggerObj(void)
-:_cons(NULL)
-,_acts(NULL)
+:_cons(nullptr)
+,_acts(nullptr)
 ,_id(UINT_MAX)
 ,_bEnable(true)
 {
@@ -111,7 +111,7 @@ bool TriggerObj::init()
     do {
          _cons = CCArray::create();
          _acts = CCArray::create();
-         CC_BREAK_IF(_cons == NULL || _acts == NULL);
+         CC_BREAK_IF(_cons == nullptr || _acts == nullptr);
          _cons->retain();
          _acts->retain();
          bRet = true;
@@ -135,12 +135,12 @@ TriggerObj* TriggerObj::create()
 
 bool TriggerObj::detect()
 {
-	if (!_bEnable || _cons == NULL || _cons->count() == 0)
+	if (!_bEnable || _cons == nullptr || _cons->count() == 0)
 	{
 		return true;
 	}
     bool bRet = false;  
-    CCObject* pObj = NULL;
+    CCObject* pObj = nullptr;
     CCARRAY_FOREACH(_cons, pObj)
     {
         BaseTriggerCondition* con = (BaseTriggerCondition*)pObj;
@@ -152,12 +152,12 @@ bool TriggerObj::detect()
 
 void TriggerObj::done()
 {
-	if (!_bEnable || _acts == NULL || _acts->count() == 0)
+	if (!_bEnable || _acts == nullptr || _acts->count() == 0)
 	{
 		return;
 	}
 
-    CCObject* pObj = NULL;
+    CCObject* pObj = nullptr;
     CCARRAY_FOREACH(_acts, pObj)
     {
         BaseTriggerAction *act = (BaseTriggerAction*)pObj;
@@ -167,8 +167,8 @@ void TriggerObj::done()
 
 void TriggerObj::removeAll()
 {
-    CCObject* pObj = NULL;
-    if (_cons != NULL)
+    CCObject* pObj = nullptr;
+    if (_cons != nullptr)
     {
         CCARRAY_FOREACH(_cons, pObj)
         {
@@ -177,7 +177,7 @@ void TriggerObj::removeAll()
         }
         _cons->removeAllObjects();
     }
-    if (_acts != NULL)
+    if (_acts != nullptr)
     {
         CCARRAY_FOREACH(_acts, pObj)
         {
@@ -196,12 +196,12 @@ void TriggerObj::serialize(const rapidjson::Value &val)
     {
         const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(val, "conditions", i);
         const char *classname = DICTOOL->getStringValue_json(subDict, "classname");
-        if (classname == NULL)
+        if (classname == nullptr)
         {
             continue;
         }
         BaseTriggerCondition *con = dynamic_cast<BaseTriggerCondition*>(ObjectFactory::getInstance()->createObject(classname));
-        CCAssert(con != NULL, "class named classname can not implement!");
+        CCAssert(con != nullptr, "class named classname can not implement!");
         con->serialize(subDict);
 		con->init();
         con->autorelease();
@@ -213,12 +213,12 @@ void TriggerObj::serialize(const rapidjson::Value &val)
 	{
 		const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(val, "actions", i);
 		const char *classname = DICTOOL->getStringValue_json(subDict, "classname");
-		if (classname == NULL)
+		if (classname == nullptr)
 		{
 			continue;
 		}
 		BaseTriggerAction *act = dynamic_cast<BaseTriggerAction*>(ObjectFactory::getInstance()->createObject(classname));
-		CCAssert(act != NULL, "class named classname can not implement!");
+		CCAssert(act != nullptr, "class named classname can not implement!");
 		act->serialize(subDict);
 		act->init();
 		act->autorelease();
@@ -250,7 +250,7 @@ void TriggerObj::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d:
 		const char* str = pTriggerObjArray[i].GetValue(pCocoLoader);
 		if (key.compare("id") == 0)
 		{
-			if (str != NULL)
+			if (str != nullptr)
 			{
 				_id = atoi(str); //(unsigned int)(DICTOOL->getIntValue_json(val, "id"));
 			}
@@ -264,12 +264,12 @@ void TriggerObj::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d:
 				num = pConditionsArray[i].GetChildNum();
 				stExpCocoNode *pConditionArray = pConditionsArray[i].GetChildArray(pCocoLoader);
 				const char *classname = pConditionArray[0].GetValue(pCocoLoader);
-				if (classname == NULL)
+				if (classname == nullptr)
 				{
 					continue;
 				}
 				BaseTriggerCondition *con = dynamic_cast<BaseTriggerCondition*>(ObjectFactory::getInstance()->createObject(classname));
-				CCAssert(con != NULL, "class named classname can not implement!");
+				CCAssert(con != nullptr, "class named classname can not implement!");
 				con->serialize(pCocoLoader, &pConditionArray[1]);
 				con->init();
 				con->autorelease();
@@ -285,12 +285,12 @@ void TriggerObj::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d:
 				num = pActionsArray[i].GetChildNum();
 				stExpCocoNode *pActionArray = pActionsArray[i].GetChildArray(pCocoLoader);
 				const char *classname = pActionArray[0].GetValue(pCocoLoader);
-				if (classname == NULL)
+				if (classname == nullptr)
 				{
 					continue;
 				}
 				BaseTriggerAction *act = dynamic_cast<BaseTriggerAction*>(ObjectFactory::getInstance()->createObject(classname));
-				CCAssert(act != NULL, "class named classname can not implement!");
+				CCAssert(act != nullptr, "class named classname can not implement!");
 				act->serialize(pCocoLoader, &pActionArray[1]);
 				act->init();
 				act->autorelease();
@@ -306,7 +306,7 @@ void TriggerObj::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d:
 				num = pEventsArray[i].GetChildNum();
 				stExpCocoNode *pEventArray = pEventsArray[i].GetChildArray(pCocoLoader);
 				const char *str = pEventArray[0].GetValue(pCocoLoader);
-				if (str == NULL)
+				if (str == nullptr)
 				{
 					continue;
 				}

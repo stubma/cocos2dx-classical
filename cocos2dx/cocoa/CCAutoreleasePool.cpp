@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-static CCPoolManager* s_pPoolManager = NULL;
+static CCPoolManager* s_pPoolManager = nullptr;
 
 CCAutoreleasePool::CCAutoreleasePool(void)
 {
@@ -65,7 +65,7 @@ void CCAutoreleasePool::clear()
         int nIndex = m_pManagedObjectArray->count() - 1;
 #endif
 
-        CCObject* pObj = NULL;
+        CCObject* pObj = nullptr;
         CCARRAY_FOREACH_REVERSE(m_pManagedObjectArray, pObj)
         {
             if(!pObj)
@@ -92,7 +92,7 @@ void CCAutoreleasePool::clear()
 
 CCPoolManager* CCPoolManager::sharedPoolManager()
 {
-    if (s_pPoolManager == NULL)
+    if (s_pPoolManager == nullptr)
     {
         s_pPoolManager = new CCPoolManager();
     }
@@ -128,7 +128,7 @@ void CCPoolManager::finalize()
     if(m_pReleasePoolStack->count() > 0)
     {
         //CCAutoreleasePool* pReleasePool;
-        CCObject* pObj = NULL;
+        CCObject* pObj = nullptr;
         CCARRAY_FOREACH(m_pReleasePoolStack, pObj)
         {
             if(!pObj)
@@ -172,7 +172,7 @@ void CCPoolManager::pop()
         m_pCurReleasePool = (CCAutoreleasePool*)m_pReleasePoolStack->objectAtIndex(nCount - 2);
     }
 
-    /*m_pCurReleasePool = NULL;*/
+    /*m_pCurReleasePool = nullptr;*/
 }
 
 void CCPoolManager::removeObject(CCObject* pObject)

@@ -49,25 +49,25 @@ public:
     }
 };
 
-static CCFileDownloader* sInstance = NULL;
+static CCFileDownloader* sInstance = nullptr;
 
 CCFileDownloader::CCFileDownloader() :
 m_downloading(false),
 m_totalSize(0),
 m_totalDownloadedSize(0),
-m_fos(NULL) {
+m_fos(nullptr) {
     m_client = CCHttpClient::create();
     CC_SAFE_RETAIN(m_client);
     
     // listener
-    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(CCFileDownloader::onHttpDone), kCCNotificationHttpRequestCompleted, NULL);
-    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(CCFileDownloader::onHttpData), kCCNotificationHttpDataReceived, NULL);
-    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(CCFileDownloader::onHttpHeaders), kCCNotificationHttpDidReceiveResponse, NULL);
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(CCFileDownloader::onHttpDone), kCCNotificationHttpRequestCompleted, nullptr);
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(CCFileDownloader::onHttpData), kCCNotificationHttpDataReceived, nullptr);
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(CCFileDownloader::onHttpHeaders), kCCNotificationHttpDidReceiveResponse, nullptr);
 }
 
 CCFileDownloader::~CCFileDownloader() {
 	CC_SAFE_RELEASE(m_client);
-    sInstance = NULL;
+    sInstance = nullptr;
 }
 
 CCFileDownloader* CCFileDownloader::getInstance() {
@@ -143,7 +143,7 @@ void CCFileDownloader::abort() {
     if(m_downloading) {
         m_client->cancelAll();
         CC_SAFE_RELEASE_NULL(m_fos);
-        m_entry = NULL;
+        m_entry = nullptr;
         m_entries.removeAllObjects();
         m_downloading = false;
     }
@@ -177,7 +177,7 @@ void CCFileDownloader::onHttpDone(CCHttpResponse* response) {
     
     // close stream
     CC_SAFE_RELEASE_NULL(m_fos);
-    m_entry = NULL;
+    m_entry = nullptr;
     
     // remove first entry
     m_entries.removeObjectAtIndex(0);

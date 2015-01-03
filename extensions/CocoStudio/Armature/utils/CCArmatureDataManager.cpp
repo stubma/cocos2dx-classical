@@ -31,11 +31,11 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-static CCArmatureDataManager *s_sharedArmatureDataManager = NULL;
+static CCArmatureDataManager *s_sharedArmatureDataManager = nullptr;
 
 CCArmatureDataManager *CCArmatureDataManager::sharedArmatureDataManager()
 {
-    if (s_sharedArmatureDataManager == NULL)
+    if (s_sharedArmatureDataManager == nullptr)
     {
         s_sharedArmatureDataManager = new CCArmatureDataManager();
         if (!s_sharedArmatureDataManager || !s_sharedArmatureDataManager->init())
@@ -55,9 +55,9 @@ void CCArmatureDataManager::purge()
 
 CCArmatureDataManager::CCArmatureDataManager(void)
 {
-    m_pArmarureDatas = NULL;
-    m_pAnimationDatas = NULL;
-    m_pTextureDatas = NULL;
+    m_pArmarureDatas = nullptr;
+    m_pAnimationDatas = nullptr;
+    m_pTextureDatas = nullptr;
     m_bAutoLoadSpriteFile = false;
 }
 
@@ -155,7 +155,7 @@ void CCArmatureDataManager::addArmatureData(const char *id, CCArmatureData *arma
 
 CCArmatureData *CCArmatureDataManager::getArmatureData(const char *id)
 {
-    CCArmatureData *armatureData = NULL;
+    CCArmatureData *armatureData = nullptr;
     if (m_pArmarureDatas)
     {
         armatureData = (CCArmatureData *)m_pArmarureDatas->objectForKey(id);
@@ -186,7 +186,7 @@ void CCArmatureDataManager::addAnimationData(const char *id, CCAnimationData *an
 
 CCAnimationData *CCArmatureDataManager::getAnimationData(const char *id)
 {
-    CCAnimationData *animationData = NULL;
+    CCAnimationData *animationData = nullptr;
     if (m_pAnimationDatas)
     {
         animationData = (CCAnimationData *)m_pAnimationDatas->objectForKey(id);
@@ -218,7 +218,7 @@ void CCArmatureDataManager::addTextureData(const char *id, CCTextureData *textur
 
 CCTextureData *CCArmatureDataManager::getTextureData(const char *id)
 {
-    CCTextureData *textureData = NULL;
+    CCTextureData *textureData = nullptr;
     if (m_pTextureDatas)
     {
         textureData = (CCTextureData *)m_pTextureDatas->objectForKey(id);

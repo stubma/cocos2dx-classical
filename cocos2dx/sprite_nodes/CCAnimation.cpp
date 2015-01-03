@@ -33,9 +33,9 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 CCAnimationFrame::CCAnimationFrame()
-: m_pSpriteFrame(NULL)
+: m_pSpriteFrame(nullptr)
 , m_fDelayUnits(0.0f)
-, m_pUserInfo(NULL)
+, m_pUserInfo(nullptr)
 {
 
 }
@@ -59,8 +59,8 @@ CCAnimationFrame::~CCAnimationFrame()
 
 CCObject* CCAnimationFrame::copyWithZone(CCZone* pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCAnimationFrame* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCAnimationFrame* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -73,7 +73,7 @@ CCObject* CCAnimationFrame::copyWithZone(CCZone* pZone)
     }
 
     pCopy->initWithSpriteFrame((CCSpriteFrame*)m_pSpriteFrame->copy()->autorelease(),
-        m_fDelayUnits, m_pUserInfo != NULL ? (CCDictionary*)m_pUserInfo->copy()->autorelease() : NULL);
+        m_fDelayUnits, m_pUserInfo != nullptr ? (CCDictionary*)m_pUserInfo->copy()->autorelease() : nullptr);
 
     CC_SAFE_DELETE(pNewZone);
     return pCopy;
@@ -109,7 +109,7 @@ CCAnimation* CCAnimation::create(CCArray* arrayOfAnimationFrameNames, float dela
 
 bool CCAnimation::init()
 {
-    return initWithSpriteFrames(NULL, 0.0f);
+    return initWithSpriteFrames(nullptr, 0.0f);
 }
 
 bool CCAnimation::initWithSpriteFrames(CCArray *pFrames, float delay/* = 0.0f*/)
@@ -121,14 +121,14 @@ bool CCAnimation::initWithSpriteFrames(CCArray *pFrames, float delay/* = 0.0f*/)
     CCArray* pTmpFrames = CCArray::create();
     setFrames(pTmpFrames);
 
-    if (pFrames != NULL)
+    if (pFrames != nullptr)
     {
-        CCObject* pObj = NULL;
+        CCObject* pObj = nullptr;
         CCARRAY_FOREACH(pFrames, pObj)
         {
             CCSpriteFrame* frame = (CCSpriteFrame*)pObj;
             CCAnimationFrame *animFrame = new CCAnimationFrame();
-            animFrame->initWithSpriteFrame(frame, 1, NULL);
+            animFrame->initWithSpriteFrame(frame, 1, nullptr);
             m_pFrames->addObject(animFrame);
             animFrame->release();
 
@@ -148,7 +148,7 @@ bool CCAnimation::initWithAnimationFrames(CCArray* arrayOfAnimationFrames, float
 
     setFrames(CCArray::createWithArray(arrayOfAnimationFrames));
 
-    CCObject* pObj = NULL;
+    CCObject* pObj = nullptr;
     CCARRAY_FOREACH(m_pFrames, pObj)
     {
         CCAnimationFrame* animFrame = (CCAnimationFrame*)pObj;
@@ -161,7 +161,7 @@ CCAnimation::CCAnimation()
 : m_fTotalDelayUnits(0.0f)
 , m_fDelayPerUnit(0.0f)
 , m_fDuration(0.0f)
-, m_pFrames(NULL)
+, m_pFrames(nullptr)
 , m_bRestoreOriginalFrame(false)
 , m_uLoops(0)
 {
@@ -177,7 +177,7 @@ CCAnimation::~CCAnimation(void)
 void CCAnimation::addSpriteFrame(CCSpriteFrame *pFrame)
 {
     CCAnimationFrame *animFrame = new CCAnimationFrame();
-    animFrame->initWithSpriteFrame(pFrame, 1.0f, NULL);
+    animFrame->initWithSpriteFrame(pFrame, 1.0f, nullptr);
     m_pFrames->addObject(animFrame);
     animFrame->release();
 
@@ -207,8 +207,8 @@ float CCAnimation::getDuration(void)
 
 CCObject* CCAnimation::copyWithZone(CCZone* pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCAnimation* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCAnimation* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class

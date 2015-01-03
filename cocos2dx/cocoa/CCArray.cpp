@@ -30,13 +30,13 @@ NS_CC_BEGIN
 
 
 CCArray::CCArray()
-: data(NULL)
+: data(nullptr)
 {
     init();
 }
 
 CCArray::CCArray(unsigned int capacity)
-: data(NULL)
+: data(nullptr)
 {
     initWithCapacity(capacity);
 }
@@ -125,7 +125,7 @@ CCArray* CCArray::createWithCapacity(unsigned int capacity)
 CCArray* CCArray::createWithContentsOfFile(const char* pFileName)
 {
     CCArray* pRet = CCArray::createWithContentsOfFileThreadSafe(pFileName);
-    if (pRet != NULL)
+    if (pRet != nullptr)
     {
         pRet->autorelease();
     }
@@ -160,7 +160,7 @@ bool CCArray::initWithObjects(CCObject* pObject, ...)
     bool bRet = false;
     do 
     {
-        CC_BREAK_IF(pObject == NULL);
+        CC_BREAK_IF(pObject == nullptr);
 
         va_list args;
         va_start(args, pObject);
@@ -232,14 +232,14 @@ CCObject* CCArray::lastObject()
     if( data->num > 0 )
         return data->arr[data->num-1];
 
-    return NULL;
+    return nullptr;
 }
 
 CCObject* CCArray::randomObject()
 {
     if (data->num==0)
     {
-        return NULL;
+        return nullptr;
     }
 
     float r = CCRANDOM_0_1();
@@ -376,12 +376,12 @@ CCArray::~CCArray()
 
 CCObject* CCArray::copyWithZone(CCZone* pZone)
 {
-    CCAssert(pZone == NULL, "CCArray should not be inherited.");
+    CCAssert(pZone == nullptr, "CCArray should not be inherited.");
     CCArray* pArray = new CCArray();
     pArray->initWithCapacity(this->data->num > 0 ? this->data->num : 1);
 
-    CCObject* pObj = NULL;
-    CCObject* pTmpObj = NULL;
+    CCObject* pObj = nullptr;
+    CCObject* pTmpObj = nullptr;
     CCARRAY_FOREACH(this, pObj)
     {
         pTmpObj = pObj->copy();

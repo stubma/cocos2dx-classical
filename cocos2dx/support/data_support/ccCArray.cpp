@@ -42,10 +42,10 @@ ccArray* ccArrayNew(unsigned int capacity)
 	return arr;
 }
 
-/** Frees array after removing all remaining objects. Silently ignores NULL arr. */
+/** Frees array after removing all remaining objects. Silently ignores nullptr arr. */
 void ccArrayFree(ccArray*& arr)
 {
-    if( arr == NULL ) 
+    if( arr == nullptr ) 
     {
         return;
     }
@@ -54,7 +54,7 @@ void ccArrayFree(ccArray*& arr)
 	free(arr->arr);
 	free(arr);
 
-    arr = NULL;
+    arr = nullptr;
 }
 
 void ccArrayDoubleCapacity(ccArray *arr)
@@ -93,7 +93,7 @@ void ccArrayShrink(ccArray *arr)
 		}
 		
 		arr->arr = (CCObject**)realloc(arr->arr,newSize * sizeof(CCObject*) );
-		CCAssert(arr->arr!=NULL,"could not reallocate the memory");
+		CCAssert(arr->arr!=nullptr,"could not reallocate the memory");
 	}
 }
 
@@ -119,7 +119,7 @@ bool ccArrayContainsObject(ccArray *arr, CCObject* object)
 /** Appends an object. Behavior undefined if array doesn't have enough capacity. */
 void ccArrayAppendObject(ccArray *arr, CCObject* object)
 {
-    CCAssert(object != NULL, "Invalid parameter!");
+    CCAssert(object != nullptr, "Invalid parameter!");
     object->retain();
 	arr->arr[arr->num] = object;
 	arr->num++;
@@ -153,7 +153,7 @@ void ccArrayAppendArrayWithResize(ccArray *arr, ccArray *plusArr)
 void ccArrayInsertObjectAtIndex(ccArray *arr, CCObject* object, unsigned int index)
 {
 	CCAssert(index<=arr->num, "Invalid index. Out of bounds");
-	CCAssert(object != NULL, "Invalid parameter!");
+	CCAssert(object != nullptr, "Invalid parameter!");
 
 	ccArrayEnsureExtraCapacity(arr, 1);
 	
@@ -292,10 +292,10 @@ ccCArray* ccCArrayNew(unsigned int capacity)
 	return arr;
 }
 
-/** Frees C array after removing all remaining values. Silently ignores NULL arr. */
+/** Frees C array after removing all remaining values. Silently ignores nullptr arr. */
 void ccCArrayFree(ccCArray *arr)
 {
-    if( arr == NULL ) 
+    if( arr == nullptr ) 
     {
         return;
     }

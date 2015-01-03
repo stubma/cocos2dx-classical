@@ -188,8 +188,8 @@ static int reformat_end_array(void* ctx) {
 static yajl_callbacks callbacks = {
     reformat_null,
     reformat_boolean,
-    NULL,
-    NULL,
+    nullptr,
+    nullptr,
     reformat_number,
     reformat_string,
     reformat_start_map,
@@ -207,15 +207,15 @@ CCObject* CCJSONParser::load(const char* json, size_t length) {
 	yajl_status stat;
 
 	// get gen instance
-	yajl_gen g = yajl_gen_alloc(NULL);
+	yajl_gen g = yajl_gen_alloc(nullptr);
 
 	// register callback
 	ccJSONContext ctx;
     ctx.g = g;
-    ctx.root = NULL;
+    ctx.root = nullptr;
     ctx.objStack = new vector<CCObject*>();
     ctx.flagStack = new vector<bool>();
-	yajl_handle hand = yajl_alloc(&callbacks, NULL, (void*)&ctx);
+	yajl_handle hand = yajl_alloc(&callbacks, nullptr, (void*)&ctx);
 
 	// config yajl
 	yajl_gen_config(g, yajl_gen_beautify, 1);
@@ -248,7 +248,7 @@ CCObject* CCJSONParser::load(const char* json, size_t length) {
 		yajl_free_error(hand, str);
 
 		// when error, doesn't return anything
-		ctx.root = NULL;
+		ctx.root = nullptr;
 	}
 
 	// free

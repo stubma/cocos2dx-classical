@@ -70,14 +70,14 @@ CCControlSwitchSprite::CCControlSwitchSprite()
 : m_fSliderXPosition(0.0f)
 , m_fOnPosition(0.0f)
 , m_fOffPosition(0.0f)
-, m_pMaskTexture(NULL)
+, m_pMaskTexture(nullptr)
 , m_uTextureLocation(0)
 , m_uMaskLocation(0)
-, m_pOnSprite(NULL)
-, m_pOffSprite(NULL)
-, m_ThumbSprite(NULL)
-, m_pOnLabel(NULL)
-, m_pOffLabel(NULL)
+, m_pOnSprite(nullptr)
+, m_pOffSprite(nullptr)
+, m_ThumbSprite(nullptr)
+, m_pOnLabel(nullptr)
+, m_pOffLabel(nullptr)
 {
 
 }
@@ -266,7 +266,7 @@ float CCControlSwitchSprite::offSideWidth()
 // CCControlSwitch
 
 CCControlSwitch::CCControlSwitch()
-: m_pSwitchSprite(NULL)
+: m_pSwitchSprite(nullptr)
 , m_fInitialTouchXPosition(0.0f)
 , m_bMoved(false)
 , m_bOn(false)
@@ -281,13 +281,13 @@ CCControlSwitch::~CCControlSwitch()
 
 bool CCControlSwitch::initWithMaskSprite(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite)
 {
-    return initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, NULL, NULL);
+    return initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, nullptr, nullptr);
 }
 
 CCControlSwitch* CCControlSwitch::create(CCSprite *maskSprite, CCSprite * onSprite, CCSprite * offSprite, CCSprite * thumbSprite)
 {
     CCControlSwitch* pRet = new CCControlSwitch();
-    if (pRet && pRet->initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, NULL, NULL))
+    if (pRet && pRet->initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, nullptr, nullptr))
     {
         pRet->autorelease();
     }
@@ -373,7 +373,7 @@ void CCControlSwitch::setOn(bool isOn, bool animated)
 void CCControlSwitch::setEnabled(bool enabled)
 {
     m_bEnabled = enabled;
-    if (m_pSwitchSprite != NULL)
+    if (m_pSwitchSprite != nullptr)
     {
         m_pSwitchSprite->setOpacity((enabled) ? 255 : 128);
     } 

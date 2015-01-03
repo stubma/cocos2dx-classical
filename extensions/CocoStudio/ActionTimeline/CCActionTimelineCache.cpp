@@ -90,12 +90,12 @@ FrameCreateCallFunc* FrameCreateCallFunc::create(CCObject* target, FrameCreateCa
         return func;
     }
     CC_SAFE_DELETE(func);
-    return NULL;
+    return nullptr;
 }
 
 FrameCreateCallFunc::FrameCreateCallFunc()
-    : _target(NULL)
-    , _callback(NULL)
+    : _target(nullptr)
+    , _callback(nullptr)
 {
 }
 
@@ -106,7 +106,7 @@ FrameCreateCallFunc::~FrameCreateCallFunc()
 
 bool FrameCreateCallFunc::init(CCObject* target, FrameCreateCallback callback)
 {
-    if(target == NULL)
+    if(target == nullptr)
         return false;
 
     _target = target;
@@ -125,7 +125,7 @@ Frame* FrameCreateCallFunc::excute(const rapidjson::Value& json)
 
 // ActionTimelineCache
 
-static ActionTimelineCache* _sharedActionCache = NULL;
+static ActionTimelineCache* _sharedActionCache = nullptr;
 
 ActionTimelineCache* ActionTimelineCache::getInstance()
 {
@@ -183,7 +183,7 @@ void ActionTimelineCache::removeAction(const std::string& fileName)
 ActionTimeline* ActionTimelineCache::createAction(const std::string& fileName)
 {
     ActionTimeline* action = static_cast<ActionTimeline*>(_timelineActions->objectForKey(fileName));
-    if (action == NULL)
+    if (action == nullptr)
     {
         action = loadAnimationActionWithFile(fileName);
     }
@@ -239,12 +239,12 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithContent(const std::s
 
 Timeline* ActionTimelineCache::loadTimeline(const rapidjson::Value& json)
 {
-    Timeline* timeline = NULL;
+    Timeline* timeline = nullptr;
 
     // get frame type 
     const char* frameType = DICTOOL->getStringValue_json(json, FRAME_TYPE);
-	if(frameType == NULL)
-		return NULL;
+	if(frameType == nullptr)
+		return nullptr;
 
     FrameCreateCallFunc* func = static_cast<FrameCreateCallFunc*>(_funcs->objectForKey(frameType));
 
@@ -261,7 +261,7 @@ Timeline* ActionTimelineCache::loadTimeline(const rapidjson::Value& json)
         {
             const rapidjson::Value& dic = DICTOOL->getSubDictionary_json(json, FRAMES, i);
 
-            Frame* frame = NULL;
+            Frame* frame = nullptr;
             frame = func->excute(dic);
 
             int frameIndex = DICTOOL->getIntValue_json(dic, FRAME_INDEX);
@@ -394,7 +394,7 @@ Frame* ActionTimelineCache::loadTextureFrame(const rapidjson::Value& json)
 
     const char* texture = DICTOOL->getStringValue_json(json, Value);
 
-    if(texture != NULL)
+    if(texture != nullptr)
         frame->setTextureName(texture);
 
     return frame;
@@ -406,7 +406,7 @@ Frame* ActionTimelineCache::loadEventFrame(const rapidjson::Value& json)
 
     const char* evnt = DICTOOL->getStringValue_json(json, Value);
 
-    if(evnt != NULL)
+    if(evnt != nullptr)
         frame->setEvent(evnt);
 
     return frame;

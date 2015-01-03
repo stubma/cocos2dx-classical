@@ -50,16 +50,16 @@ CCScale9Sprite::CCScale9Sprite()
 , m_bSpritesGenerated(false)
 , m_bSpriteFrameRotated(false)
 , m_positionsAreDirty(false)
-, _scale9Image(NULL)
-, _topLeft(NULL)
-, _top(NULL)
-, _topRight(NULL)
-, _left(NULL)
-, _centre(NULL)
-, _right(NULL)
-, _bottomLeft(NULL)
-, _bottom(NULL)
-, _bottomRight(NULL)
+, _scale9Image(nullptr)
+, _topLeft(nullptr)
+, _top(nullptr)
+, _topRight(nullptr)
+, _left(nullptr)
+, _centre(nullptr)
+, _right(nullptr)
+, _bottomLeft(nullptr)
+, _bottom(nullptr)
+, _bottomRight(nullptr)
 , _opacityModifyRGB(false)
 , _opacity(255)
 , _color(ccWHITE)
@@ -83,7 +83,7 @@ CCScale9Sprite::~CCScale9Sprite()
 
 bool CCScale9Sprite::init()
 {
-    return this->initWithBatchNode(NULL, CCRectZero, CCRectZero);
+    return this->initWithBatchNode(nullptr, CCRectZero, CCRectZero);
 }
 
 bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, CCRect capInsets)
@@ -401,13 +401,13 @@ void CCScale9Sprite::setContentSize(const CCSize &size)
 
 void CCScale9Sprite::updatePositions()
 {
-    // Check that instances are non-NULL
+    // Check that instances are non-nullptr
     if(!((_topLeft) &&
          (_topRight) &&
          (_bottomRight) &&
          (_bottomLeft) &&
          (_centre))) {
-        // if any of the above sprites are NULL, return
+        // if any of the above sprites are nullptr, return
         return;
     }
 
@@ -460,7 +460,7 @@ void CCScale9Sprite::updatePositions()
 
 bool CCScale9Sprite::initWithFile(const char* file, CCRect rect,  CCRect capInsets)
 {
-    CCAssert(file != NULL, "Invalid file for sprite");
+    CCAssert(file != nullptr, "Invalid file for sprite");
     
     CCSpriteBatchNode *batchnode = CCSpriteBatchNode::create(file, 9);
     bool pReturn = this->initWithBatchNode(batchnode, rect, capInsets);
@@ -476,12 +476,12 @@ CCScale9Sprite* CCScale9Sprite::create(const char* file, CCRect rect,  CCRect ca
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
-    return NULL;
+    return nullptr;
 }
 
 bool CCScale9Sprite::initWithFile(const char* file, CCRect rect)
 {
-    CCAssert(file != NULL, "Invalid file for sprite");
+    CCAssert(file != nullptr, "Invalid file for sprite");
     bool pReturn = this->initWithFile(file, rect, CCRectZero);
     return pReturn;
 }
@@ -495,7 +495,7 @@ CCScale9Sprite* CCScale9Sprite::create(const char* file, CCRect rect)
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
-    return NULL;
+    return nullptr;
 }
 
 
@@ -514,7 +514,7 @@ CCScale9Sprite* CCScale9Sprite::create(CCRect capInsets, const char* file)
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
-    return NULL;
+    return nullptr;
 }
 
 bool CCScale9Sprite::initWithFile(const char* file)
@@ -533,16 +533,16 @@ CCScale9Sprite* CCScale9Sprite::create(const char* file)
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
-    return NULL;
+    return nullptr;
 }
 
 bool CCScale9Sprite::initWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capInsets)
 {
     CCTexture2D* texture = spriteFrame->getTexture();
-    CCAssert(texture != NULL, "CCTexture must be not nil");
+    CCAssert(texture != nullptr, "CCTexture must be not nil");
 
     CCSpriteBatchNode *batchnode = CCSpriteBatchNode::createWithTexture(texture, 9);
-    CCAssert(batchnode != NULL, "CCSpriteBatchNode must be not nil");
+    CCAssert(batchnode != nullptr, "CCSpriteBatchNode must be not nil");
 
     bool pReturn = this->initWithBatchNode(batchnode, spriteFrame->getRect(), spriteFrame->isRotated(), capInsets);
     return pReturn;
@@ -557,11 +557,11 @@ CCScale9Sprite* CCScale9Sprite::createWithSpriteFrame(CCSpriteFrame* spriteFrame
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
-    return NULL;
+    return nullptr;
 }
 bool CCScale9Sprite::initWithSpriteFrame(CCSpriteFrame* spriteFrame)
 {
-    CCAssert(spriteFrame != NULL, "Invalid spriteFrame for sprite");
+    CCAssert(spriteFrame != nullptr, "Invalid spriteFrame for sprite");
     bool pReturn = this->initWithSpriteFrame(spriteFrame, CCRectZero);
     return pReturn;
 }
@@ -575,17 +575,17 @@ CCScale9Sprite* CCScale9Sprite::createWithSpriteFrame(CCSpriteFrame* spriteFrame
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
-    return NULL;
+    return nullptr;
 }
 
 bool CCScale9Sprite::initWithSpriteFrameName(const char* spriteFrameName, CCRect capInsets)
 {
-    CCAssert((CCSpriteFrameCache::sharedSpriteFrameCache()) != NULL, "sharedSpriteFrameCache must be non-NULL");
+    CCAssert((CCSpriteFrameCache::sharedSpriteFrameCache()) != nullptr, "sharedSpriteFrameCache must be non-nullptr");
 
     CCSpriteFrame *frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(spriteFrameName);
-    CCAssert(frame != NULL, "CCSpriteFrame must be non-NULL");
+    CCAssert(frame != nullptr, "CCSpriteFrame must be non-nullptr");
 
-    if (NULL == frame) return false;
+    if (nullptr == frame) return false;
 
     bool pReturn = this->initWithSpriteFrame(frame, capInsets);
     return pReturn;
@@ -600,7 +600,7 @@ CCScale9Sprite* CCScale9Sprite::createWithSpriteFrameName(const char* spriteFram
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
-    return NULL;
+    return nullptr;
 }
 
 bool CCScale9Sprite::initWithSpriteFrameName(const char* spriteFrameName)
@@ -611,7 +611,7 @@ bool CCScale9Sprite::initWithSpriteFrameName(const char* spriteFrameName)
 
 CCScale9Sprite* CCScale9Sprite::createWithSpriteFrameName(const char* spriteFrameName)
 {
-    CCAssert(spriteFrameName != NULL, "spriteFrameName must be non-NULL");
+    CCAssert(spriteFrameName != nullptr, "spriteFrameName must be non-nullptr");
 
     CCScale9Sprite* pReturn = new CCScale9Sprite();
     if ( pReturn && pReturn->initWithSpriteFrameName(spriteFrameName) )
@@ -622,7 +622,7 @@ CCScale9Sprite* CCScale9Sprite::createWithSpriteFrameName(const char* spriteFram
     CC_SAFE_DELETE(pReturn);
 
     CCLog("Could not allocate CCScale9Sprite()");
-    return NULL;
+    return nullptr;
     
 }
 
@@ -635,7 +635,7 @@ CCScale9Sprite* CCScale9Sprite::resizableSpriteWithCapInsets(CCRect capInsets)
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
-    return NULL;
+    return nullptr;
 }
 
 CCScale9Sprite* CCScale9Sprite::create()
@@ -647,7 +647,7 @@ CCScale9Sprite* CCScale9Sprite::create()
         return pReturn;
     } 
     CC_SAFE_DELETE(pReturn);
-    return NULL;
+    return nullptr;
 }
 
 /** sets the opacity.

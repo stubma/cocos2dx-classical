@@ -52,7 +52,7 @@ NS_CC_BEGIN
 CCLabelTTF::CCLabelTTF() :
 m_hAlignment(kCCTextAlignmentCenter),
 m_vAlignment(kCCVerticalTextAlignmentTop),
-m_pFontName(NULL),
+m_pFontName(nullptr),
 m_fFontSize(0.0),
 m_realLength(0),
 m_lineSpacing(0),
@@ -64,11 +64,11 @@ m_shadowColor(0xff333333),
 m_strokeEnabled(false),
 m_textFillColor(ccWHITE),
 m_globalImageScaleFactor(1),
-m_stateListener(NULL),
+m_stateListener(nullptr),
 m_toCharIndex(-1),
-m_defaultTarget(NULL),
-m_loopFunc(NULL),
-m_decryptFunc(NULL),
+m_defaultTarget(nullptr),
+m_loopFunc(nullptr),
+m_decryptFunc(nullptr),
 m_textChanging(true) {
     m_stateListener = new CCLabelTTFLinkStateSynchronizer(this);
 }
@@ -115,7 +115,7 @@ CCLabelTTF * CCLabelTTF::createWithFontDefinition(const char *string, ccFontDefi
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 CCLabelTTF * CCLabelTTF::create(const char *string, const char *fontName, float fontSize, CC_DECRYPT_FUNC decryptFunc)
@@ -141,7 +141,7 @@ CCLabelTTF* CCLabelTTF::create(const char *string, const char *fontName, float f
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 bool CCLabelTTF::init(CC_DECRYPT_FUNC decryptFunc)
@@ -210,7 +210,7 @@ bool CCLabelTTF::initWithStringAndTextDefinition(const char *string, ccFontDefin
 
 void CCLabelTTF::setString(const char *string)
 {
-    CCAssert(string != NULL, "Invalid string");
+    CCAssert(string != nullptr, "Invalid string");
     
     if (m_string.compare(string))
     {
@@ -388,7 +388,7 @@ bool CCLabelTTF::updateTexture()
         // delete old menu if has
         if(menu) {
             menu->removeFromParent();
-            menu = NULL;
+            menu = nullptr;
         }
         
         // now create items for every link

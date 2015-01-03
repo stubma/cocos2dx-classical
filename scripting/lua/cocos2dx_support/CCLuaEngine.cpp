@@ -30,7 +30,7 @@
 
 NS_CC_BEGIN
 
-CCLuaEngine* CCLuaEngine::m_defaultEngine = NULL;
+CCLuaEngine* CCLuaEngine::m_defaultEngine = nullptr;
 
 CCLuaEngine* CCLuaEngine::defaultEngine(void)
 {
@@ -45,7 +45,7 @@ CCLuaEngine* CCLuaEngine::defaultEngine(void)
 CCLuaEngine::~CCLuaEngine(void)
 {
     CC_SAFE_RELEASE(m_stack);
-    m_defaultEngine = NULL;
+    m_defaultEngine = nullptr;
 }
 
 bool CCLuaEngine::init(void)
@@ -154,7 +154,7 @@ int CCLuaEngine::executeNotificationEvent(CCNotificationCenter* pNotificationCen
     return ret;
 }
 
-int CCLuaEngine::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget/* = NULL*/)
+int CCLuaEngine::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget/* = nullptr*/)
 {
     int nHandler = pAction->getScriptHandler();
     if (!nHandler) return 0;
@@ -168,7 +168,7 @@ int CCLuaEngine::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarg
     return ret;
 }
 
-int CCLuaEngine::executeSchedule(int nHandler, float dt, CCNode* pNode/* = NULL*/)
+int CCLuaEngine::executeSchedule(int nHandler, float dt, CCNode* pNode/* = nullptr*/)
 {
     if (!nHandler) return 0;
     m_stack->pushFloat(dt);
@@ -306,7 +306,7 @@ int CCLuaEngine::executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAcc
     return ret;
 }
 
-int CCLuaEngine::executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource /* = NULL*/, const char* pEventSourceClassName /* = NULL*/)
+int CCLuaEngine::executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource /* = nullptr*/, const char* pEventSourceClassName /* = nullptr*/)
 {
     m_stack->pushString(pEventName);
     if (pEventSource)
@@ -334,7 +334,7 @@ int CCLuaEngine::reallocateScriptHandler(int nHandler)
 
 int CCLuaEngine::executeTableViewEvent(int nEventType,cocos2d::extension::CCTableView* pTableView,void* pValue, CCArray* pResultArray)
 {
-    if (NULL == pTableView)
+    if (nullptr == pTableView)
         return 0;
     
     int nHanlder = pTableView->getScriptHandler(nEventType);
@@ -389,48 +389,48 @@ int CCLuaEngine::executeTableViewEvent(int nEventType,cocos2d::extension::CCTabl
 
 int CCLuaEngine::executeEventWithArgs(int nHandler, CCArray* pArgs)
 {
-    if (NULL == pArgs)
+    if (nullptr == pArgs)
         return 0;
     
-    CCObject*   pObject = NULL;
+    CCObject*   pObject = nullptr;
     
-    CCInteger*  pIntVal = NULL;
-    CCString*   pStrVal = NULL;
-    CCDouble*   pDoubleVal = NULL;
-    CCFloat*    pFloatVal = NULL;
-    CCBool*     pBoolVal = NULL;
+    CCInteger*  pIntVal = nullptr;
+    CCString*   pStrVal = nullptr;
+    CCDouble*   pDoubleVal = nullptr;
+    CCFloat*    pFloatVal = nullptr;
+    CCBool*     pBoolVal = nullptr;
    
 
     int nArgNums = 0;
     for (unsigned int i = 0; i < pArgs->count(); i++)
     {
         pObject = pArgs->objectAtIndex(i);
-        if (NULL != (pIntVal = dynamic_cast<CCInteger*>(pObject)))
+        if (nullptr != (pIntVal = dynamic_cast<CCInteger*>(pObject)))
         {
             m_stack->pushInt(pIntVal->getValue());
             nArgNums++;
         }
-        else if (NULL != (pStrVal = dynamic_cast<CCString*>(pObject)))
+        else if (nullptr != (pStrVal = dynamic_cast<CCString*>(pObject)))
         {
             m_stack->pushString(pStrVal->getCString());
             nArgNums++;
         }
-        else if (NULL != (pDoubleVal = dynamic_cast<CCDouble*>(pObject)))
+        else if (nullptr != (pDoubleVal = dynamic_cast<CCDouble*>(pObject)))
         {
             m_stack->pushFloat(pDoubleVal->getValue());
             nArgNums++;
         }
-        else if (NULL != (pFloatVal = dynamic_cast<CCFloat*>(pObject)))
+        else if (nullptr != (pFloatVal = dynamic_cast<CCFloat*>(pObject)))
         {
             m_stack->pushFloat(pFloatVal->getValue());
             nArgNums++;
         }
-        else if (NULL != (pBoolVal = dynamic_cast<CCBool*>(pObject)))
+        else if (nullptr != (pBoolVal = dynamic_cast<CCBool*>(pObject)))
         {
             m_stack->pushBoolean(pBoolVal->getValue());
             nArgNums++;
         }
-        else if(NULL != pObject)
+        else if(nullptr != pObject)
         {
             m_stack->pushCCObject(pObject, "CCObject");
             nArgNums++;

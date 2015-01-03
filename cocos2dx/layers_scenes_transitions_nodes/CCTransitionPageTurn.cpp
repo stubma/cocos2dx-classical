@@ -94,7 +94,7 @@ void CCTransitionPageTurn::onEnter()
                 action,
                 CCCallFunc::create(this, callfunc_selector(CCTransitionScene::finish)),
                 CCStopGrid::create(),
-                NULL
+                nullptr
             )
         );
     }
@@ -110,7 +110,7 @@ void CCTransitionPageTurn::onEnter()
                 action,
                 CCCallFunc::create(this, callfunc_selector(CCTransitionScene::finish)),
                 CCStopGrid::create(),
-                NULL
+                nullptr
             )
         );
     }

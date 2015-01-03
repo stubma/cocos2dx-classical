@@ -126,7 +126,7 @@ VelocityTracker::~VelocityTracker() {
 
 bool VelocityTracker::configureStrategy(const char* strategy) {
     mStrategy = createStrategy(strategy);
-    return mStrategy != NULL;
+    return mStrategy != nullptr;
 }
 
 VelocityTrackerStrategy* VelocityTracker::createStrategy(const char* strategy) {
@@ -186,7 +186,7 @@ VelocityTrackerStrategy* VelocityTracker::createStrategy(const char* strategy) {
         // time to adjust to changes in direction.
         return new LegacyVelocityTrackerStrategy();
     }
-    return NULL;
+    return nullptr;
 }
 
 void VelocityTracker::clear() {

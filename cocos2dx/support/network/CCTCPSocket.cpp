@@ -33,7 +33,7 @@ CCTCPSocket::CCTCPSocket() :
 m_socket(kCCSocketInvalid),
 m_connected(false),
 m_stop(false) {
-    pthread_mutex_init(&m_mutex, NULL);
+    pthread_mutex_init(&m_mutex, nullptr);
     memset(m_inBuf, 0, sizeof(m_inBuf));
 }
 
@@ -49,7 +49,7 @@ CCTCPSocket* CCTCPSocket::create(const string& hostname, int port, int tag, int 
 	}
 	
 	s->release();
-	return NULL;
+	return nullptr;
 }
 
 void CCTCPSocket::closeSocket() {
@@ -110,7 +110,7 @@ void* CCTCPSocket::tcpThreadEntry(void* arg) {
         FD_ZERO(&exceptset);
         FD_SET(s->m_socket, &writeset);
         FD_SET(s->m_socket, &exceptset);
-        int ret = select(FD_SETSIZE, NULL, &writeset, &exceptset, &timeout);
+        int ret = select(FD_SETSIZE, nullptr, &writeset, &exceptset, &timeout);
         if (ret < 0) {
             s->closeSocket();
         } else {
@@ -126,12 +126,12 @@ void* CCTCPSocket::tcpThreadEntry(void* arg) {
     }
     
     // read/write loop
-    CCPacket* p = NULL;
+    CCPacket* p = nullptr;
     ssize_t sent = 0;
     while(!s->m_stop && s->m_connected && s->getSocket() != kCCSocketInvalid) {
         s->recvFromSock();
         if(s->m_inBufLen > 0) {
-            CCPacket* p = NULL;
+            CCPacket* p = nullptr;
             if(s->m_hub->isRawPolicy()) {
                 p = CCPacket::createRawPacket(s->m_inBuf, s->m_inBufLen);
             } else {
@@ -162,7 +162,7 @@ void* CCTCPSocket::tcpThreadEntry(void* arg) {
                 // any more?
                 if (sent >= p->getPacketLength()) {
                     CC_SAFE_RELEASE(p);
-                    p = NULL;
+                    p = nullptr;
                 }
             } else {
                 if (s->hasError()) {
@@ -183,9 +183,9 @@ void* CCTCPSocket::tcpThreadEntry(void* arg) {
 	s->autorelease();
     
     // exit
-    pthread_exit(NULL);
+    pthread_exit(nullptr);
 	
-	return NULL;
+	return nullptr;
 }
 
 bool CCTCPSocket::init(const string& hostname, int port, int tag, int blockSec, bool keepAlive) {
@@ -233,7 +233,7 @@ bool CCTCPSocket::init(const string& hostname, int port, int tag, int blockSec, 
     // should hold it to avoid wrong pointer
 	CC_SAFE_RETAIN(this);
     pthread_t thread;
-	pthread_create(&thread, NULL, tcpThreadEntry, (void*)this);
+	pthread_create(&thread, nullptr, tcpThreadEntry, (void*)this);
 	pthread_detach(thread);
     
     return true;

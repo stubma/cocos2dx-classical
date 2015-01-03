@@ -5,7 +5,7 @@
 
 NS_CC_EXT_BEGIN
 
-static ListViewReader* instanceListViewReader = NULL;
+static ListViewReader* instanceListViewReader = nullptr;
 
 IMPLEMENT_CLASS_WIDGET_READER_INFO(ListViewReader)
 

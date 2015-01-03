@@ -30,7 +30,7 @@ NS_CC_BEGIN
 namespace ui {
 
 TouchGroup::TouchGroup():
-m_pRootWidget(NULL)
+m_pRootWidget(nullptr)
 {
 }
 
@@ -66,7 +66,7 @@ TouchGroup* TouchGroup::create(void)
     else
     {
         CC_SAFE_DELETE(pRet);
-        return NULL;
+        return nullptr;
     }
 }
 
@@ -129,7 +129,7 @@ Widget* TouchGroup::getWidgetByTag(int tag)
 {
     if (!m_pRootWidget)
     {
-        return NULL;
+        return nullptr;
     }
     return UIHelper::seekWidgetByTag(m_pRootWidget, tag);
 }
@@ -138,7 +138,7 @@ Widget* TouchGroup::getWidgetByName(const char* name)
 {
     if (!m_pRootWidget)
     {
-        return NULL;
+        return nullptr;
     }
     return UIHelper::seekWidgetByName(m_pRootWidget, name);
 }

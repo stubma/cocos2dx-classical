@@ -46,7 +46,7 @@ CCTileMapAtlas * CCTileMapAtlas::create(const char *tile, const char *mapFile, i
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 bool CCTileMapAtlas::initWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight)
@@ -66,8 +66,8 @@ bool CCTileMapAtlas::initWithTileFile(const char *tile, const char *mapFile, int
 }
 
 CCTileMapAtlas::CCTileMapAtlas()
-    :m_pTGAInfo(NULL)
-    ,m_pPosToAtlasIndex(NULL)
+    :m_pTGAInfo(nullptr)
+    ,m_pPosToAtlasIndex(nullptr)
     ,m_nItemsToRender(0)
 {
 }
@@ -87,14 +87,14 @@ void CCTileMapAtlas::releaseMap()
     {
         tgaDestroy(m_pTGAInfo);
     }
-    m_pTGAInfo = NULL;
+    m_pTGAInfo = nullptr;
 
     CC_SAFE_RELEASE_NULL(m_pPosToAtlasIndex);
 }
 
 void CCTileMapAtlas::calculateItemsToRender()
 {
-    CCAssert( m_pTGAInfo != NULL, "tgaInfo must be non-nil");
+    CCAssert( m_pTGAInfo != nullptr, "tgaInfo must be non-nil");
 
     m_nItemsToRender = 0;
     for(int x=0;x < m_pTGAInfo->width; x++ ) 
@@ -113,7 +113,7 @@ void CCTileMapAtlas::calculateItemsToRender()
 
 void CCTileMapAtlas::loadTGAfile(const char *file)
 {
-    CCAssert( file != NULL, "file must be non-nil");
+    CCAssert( file != nullptr, "file must be non-nil");
 
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(file);
 
@@ -134,8 +134,8 @@ void CCTileMapAtlas::loadTGAfile(const char *file)
 // CCTileMapAtlas - Atlas generation / updates
 void CCTileMapAtlas::setTile(const ccColor3B& tile, const CCPoint& position)
 {
-    CCAssert(m_pTGAInfo != NULL, "tgaInfo must not be nil");
-    CCAssert(m_pPosToAtlasIndex != NULL, "posToAtlasIndex must not be nil");
+    CCAssert(m_pTGAInfo != nullptr, "tgaInfo must not be nil");
+    CCAssert(m_pPosToAtlasIndex != nullptr, "posToAtlasIndex must not be nil");
     CCAssert(position.x < m_pTGAInfo->width, "Invalid position.x");
     CCAssert(position.y < m_pTGAInfo->height, "Invalid position.x");
     CCAssert(tile.r != 0, "R component must be non 0");
@@ -161,7 +161,7 @@ void CCTileMapAtlas::setTile(const ccColor3B& tile, const CCPoint& position)
 
 ccColor3B CCTileMapAtlas::tileAt(const CCPoint& position)
 {
-    CCAssert( m_pTGAInfo != NULL, "tgaInfo must not be nil");
+    CCAssert( m_pTGAInfo != nullptr, "tgaInfo must not be nil");
     CCAssert( position.x < m_pTGAInfo->width, "Invalid position.x");
     CCAssert( position.y < m_pTGAInfo->height, "Invalid position.y");
 
@@ -237,7 +237,7 @@ void CCTileMapAtlas::updateAtlasValueAt(const CCPoint& pos, const ccColor3B& val
 
 void CCTileMapAtlas::updateAtlasValues()
 {
-    CCAssert( m_pTGAInfo != NULL, "tgaInfo must be non-nil");
+    CCAssert( m_pTGAInfo != nullptr, "tgaInfo must be non-nil");
 
     int total = 0;
 

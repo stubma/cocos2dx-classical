@@ -36,13 +36,13 @@ static const int SLIDBALL_RENDERER_Z = (-1);
 IMPLEMENT_CLASS_GUI_INFO(Slider)
 
 Slider::Slider():
-_barRenderer(NULL),
-_progressBarRenderer(NULL),
+_barRenderer(nullptr),
+_progressBarRenderer(nullptr),
 _progressBarTextureSize(CCSizeZero),
-_slidBallNormalRenderer(NULL),
-_slidBallPressedRenderer(NULL),
-_slidBallDisabledRenderer(NULL),
-_slidBallRenderer(NULL),
+_slidBallNormalRenderer(nullptr),
+_slidBallPressedRenderer(nullptr),
+_slidBallDisabledRenderer(nullptr),
+_slidBallRenderer(nullptr),
 _barLength(0.0),
 _percent(0),
 _scale9Enabled(false),
@@ -54,8 +54,8 @@ _slidBallPressedTextureFile(""),
 _slidBallDisabledTextureFile(""),
 _capInsetsBarRenderer(CCRectZero),
 _capInsetsProgressBarRenderer(CCRectZero),
-_sliderEventListener(NULL),
-_sliderEventSelector(NULL),
+_sliderEventListener(nullptr),
+_sliderEventSelector(nullptr),
 _barTexType(UI_TEX_TYPE_LOCAL),
 _progressBarTexType(UI_TEX_TYPE_LOCAL),
 _ballNTexType(UI_TEX_TYPE_LOCAL),
@@ -66,8 +66,8 @@ _ballDTexType(UI_TEX_TYPE_LOCAL)
 
 Slider::~Slider()
 {
-    _sliderEventListener = NULL;
-    _sliderEventSelector = NULL;
+    _sliderEventListener = nullptr;
+    _sliderEventSelector = nullptr;
 }
 
 Slider* Slider::create()
@@ -79,7 +79,7 @@ Slider* Slider::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
     
 bool Slider::init()
@@ -198,8 +198,8 @@ void Slider::setScale9Enabled(bool able)
     _scale9Enabled = able;
     CCNode::removeChild(_barRenderer, true);
     CCNode::removeChild(_progressBarRenderer, true);
-    _barRenderer = NULL;
-    _progressBarRenderer = NULL;
+    _barRenderer = nullptr;
+    _progressBarRenderer = nullptr;
     if (_scale9Enabled)
     {
         _barRenderer = extension::CCScale9Sprite::create();

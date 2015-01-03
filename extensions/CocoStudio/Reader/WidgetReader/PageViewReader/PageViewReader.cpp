@@ -5,7 +5,7 @@
 
 NS_CC_EXT_BEGIN
 
-static PageViewReader* instancePageViewReader = NULL;
+static PageViewReader* instancePageViewReader = nullptr;
 
 IMPLEMENT_CLASS_WIDGET_READER_INFO(PageViewReader)
 

@@ -60,13 +60,13 @@ CCOrbitCamera * CCOrbitCamera::create(float t, float radius, float deltaRadius, 
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 CCObject * CCOrbitCamera::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCOrbitCamera* pRet = NULL;
+    CCZone* pNewZone = nullptr;
+    CCOrbitCamera* pRet = nullptr;
     if(pZone && pZone->m_pCopyObject) //in case of being called at sub class
         pRet = (CCOrbitCamera*)(pZone->m_pCopyObject);
     else

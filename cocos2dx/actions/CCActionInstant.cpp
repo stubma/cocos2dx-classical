@@ -37,8 +37,8 @@ CCActionInstant::CCActionInstant() {
 }
 
 CCObject * CCActionInstant::copyWithZone(CCZone *pZone) {
-    CCZone *pNewZone = NULL;
-    CCActionInstant *pRet = NULL;
+    CCZone *pNewZone = nullptr;
+    CCActionInstant *pRet = nullptr;
 
     if (pZone && pZone->m_pCopyObject) {
         pRet = (CCActionInstant*) (pZone->m_pCopyObject);
@@ -96,8 +96,8 @@ CCFiniteTimeAction* CCShow::reverse() {
 
 CCObject* CCShow::copyWithZone(CCZone *pZone) {
 
-    CCZone *pNewZone = NULL;
-    CCShow *pRet = NULL;
+    CCZone *pNewZone = nullptr;
+    CCShow *pRet = nullptr;
     if (pZone && pZone->m_pCopyObject) {
         pRet = (CCShow*) (pZone->m_pCopyObject);
     } else {
@@ -134,8 +134,8 @@ CCFiniteTimeAction *CCHide::reverse() {
 }
 
 CCObject* CCHide::copyWithZone(CCZone *pZone) {
-    CCZone *pNewZone = NULL;
-    CCHide *pRet = NULL;
+    CCZone *pNewZone = nullptr;
+    CCHide *pRet = nullptr;
 
     if (pZone && pZone->m_pCopyObject) {
         pRet = (CCHide*) (pZone->m_pCopyObject);
@@ -172,8 +172,8 @@ void CCToggleVisibility::update(float time)
 
 CCObject* CCToggleVisibility::copyWithZone(CCZone *pZone)
 {
-    CCZone *pNewZone = NULL;
-    CCToggleVisibility *pRet = NULL;
+    CCZone *pNewZone = nullptr;
+    CCToggleVisibility *pRet = nullptr;
 
     if (pZone && pZone->m_pCopyObject) {
         pRet = (CCToggleVisibility*) (pZone->m_pCopyObject);
@@ -216,8 +216,8 @@ CCFiniteTimeAction *CCRemoveSelf::reverse() {
 }
 
 CCObject* CCRemoveSelf::copyWithZone(CCZone *pZone) {
-	CCZone *pNewZone = NULL;
-	CCRemoveSelf *pRet = NULL;
+	CCZone *pNewZone = nullptr;
+	CCRemoveSelf *pRet = nullptr;
 
 	if (pZone && pZone->m_pCopyObject) {
 		pRet = (CCRemoveSelf*) (pZone->m_pCopyObject);
@@ -246,7 +246,7 @@ CCFlipX *CCFlipX::create(bool x)
     }
 
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 bool CCFlipX::initWithFlipX(bool x) {
@@ -264,8 +264,8 @@ CCFiniteTimeAction* CCFlipX::reverse() {
 }
 
 CCObject * CCFlipX::copyWithZone(CCZone *pZone) {
-    CCZone *pNewZone = NULL;
-    CCFlipX *pRet = NULL;
+    CCZone *pNewZone = nullptr;
+    CCFlipX *pRet = nullptr;
 
     if (pZone && pZone->m_pCopyObject) {
         pRet = (CCFlipX*) (pZone->m_pCopyObject);
@@ -294,7 +294,7 @@ CCFlipY * CCFlipY::create(bool y)
     }
 
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 bool CCFlipY::initWithFlipY(bool y) {
@@ -312,8 +312,8 @@ CCFiniteTimeAction* CCFlipY::reverse() {
 }
 
 CCObject* CCFlipY::copyWithZone(CCZone *pZone) {
-    CCZone *pNewZone = NULL;
-    CCFlipY *pRet = NULL;
+    CCZone *pNewZone = nullptr;
+    CCFlipY *pRet = nullptr;
 
     if (pZone && pZone->m_pCopyObject) {
         pRet = (CCFlipY*) (pZone->m_pCopyObject);
@@ -342,7 +342,7 @@ CCPlace* CCPlace::create(const CCPoint& pos)
     }
 
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 bool CCPlace::initWithPosition(const CCPoint& pos) {
@@ -351,8 +351,8 @@ bool CCPlace::initWithPosition(const CCPoint& pos) {
 }
 
 CCObject * CCPlace::copyWithZone(CCZone *pZone) {
-    CCZone *pNewZone = NULL;
-    CCPlace *pRet = NULL;
+    CCZone *pNewZone = nullptr;
+    CCPlace *pRet = nullptr;
 
     if (pZone && pZone->m_pCopyObject) {
         pRet = (CCPlace*) (pZone->m_pCopyObject);
@@ -386,7 +386,7 @@ CCCallFunc * CCCallFunc::create(CCObject* pSelectorTarget, SEL_CallFunc selector
     }
 
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 CCCallFunc * CCCallFunc::create(ccScriptFunction nHandler)
@@ -428,8 +428,8 @@ CCCallFunc::~CCCallFunc(void)
 }
 
 CCObject * CCCallFunc::copyWithZone(CCZone *pZone) {
-    CCZone* pNewZone = NULL;
-    CCCallFunc* pRet = NULL;
+    CCZone* pNewZone = nullptr;
+    CCCallFunc* pRet = nullptr;
 
     if (pZone && pZone->m_pCopyObject) {
         //in case of being called at sub class
@@ -486,7 +486,7 @@ CCCallFuncN * CCCallFuncN::create(CCObject* pSelectorTarget, SEL_CallFuncN selec
     }
 
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 CCCallFuncN * CCCallFuncN::create(ccScriptFunction nHandler)
@@ -514,8 +514,8 @@ bool CCCallFuncN::initWithTarget(CCObject* pSelectorTarget,
 }
 
 CCObject * CCCallFuncN::copyWithZone(CCZone* zone) {
-    CCZone* pNewZone = NULL;
-    CCCallFuncN* pRet = NULL;
+    CCZone* pNewZone = nullptr;
+    CCCallFuncN* pRet = nullptr;
 
     if (zone && zone->m_pCopyObject) {
         //in case of being called at sub class
@@ -545,7 +545,7 @@ CCCallFuncND * CCCallFuncND::create(CCObject* pSelectorTarget, SEL_CallFuncND se
     }
 
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 bool CCCallFuncND::initWithTarget(CCObject* pSelectorTarget,
@@ -560,8 +560,8 @@ bool CCCallFuncND::initWithTarget(CCObject* pSelectorTarget,
 }
 
 CCObject * CCCallFuncND::copyWithZone(CCZone* zone) {
-    CCZone* pNewZone = NULL;
-    CCCallFuncND* pRet = NULL;
+    CCZone* pNewZone = nullptr;
+    CCCallFuncND* pRet = nullptr;
 
     if (zone && zone->m_pCopyObject) {
         //in case of being called at sub class
@@ -587,7 +587,7 @@ void CCCallFuncND::execute() {
 // CCCallFuncO
 //
 CCCallFuncO::CCCallFuncO() :
-        m_pObject(NULL) {
+        m_pObject(nullptr) {
 }
 
 CCCallFuncO::~CCCallFuncO() {
@@ -610,7 +610,7 @@ CCCallFuncO * CCCallFuncO::create(CCObject* pSelectorTarget, SEL_CallFuncO selec
     }
 
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 bool CCCallFuncO::initWithTarget(CCObject* pSelectorTarget,
@@ -627,8 +627,8 @@ bool CCCallFuncO::initWithTarget(CCObject* pSelectorTarget,
 }
 
 CCObject * CCCallFuncO::copyWithZone(CCZone* zone) {
-    CCZone* pNewZone = NULL;
-    CCCallFuncO* pRet = NULL;
+    CCZone* pNewZone = nullptr;
+    CCCallFuncO* pRet = nullptr;
 
     if (zone && zone->m_pCopyObject) {
         //in case of being called at sub class

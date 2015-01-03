@@ -31,8 +31,8 @@ NS_CC_BEGIN
 
 CCMissile::CCMissile() :
 m_done(false),
-m_aimed(NULL),
-m_doneCallFunc(NULL) {
+m_aimed(nullptr),
+m_doneCallFunc(nullptr) {
 }
 
 CCMissile::~CCMissile() {
@@ -56,8 +56,8 @@ bool CCMissile::initWithVelocity(float velocity, CCNode* aimed, float targetPres
 }
 
 CCObject* CCMissile::copyWithZone(CCZone *pZone) {
-    CCZone* pNewZone = NULL;
-    CCMissile* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCMissile* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) {
         // in case of being called at sub class
         pCopy = (CCMissile*)(pZone->m_pCopyObject);

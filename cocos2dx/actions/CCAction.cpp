@@ -37,8 +37,8 @@ NS_CC_BEGIN
 //
 
 CCAction::CCAction()
-:m_pOriginalTarget(NULL)
-,m_pTarget(NULL)
+:m_pOriginalTarget(nullptr)
+,m_pTarget(nullptr)
 ,m_nTag(kCCActionTagInvalid)
 {
 }
@@ -62,8 +62,8 @@ const char* CCAction::description()
 
 CCObject* CCAction::copyWithZone(CCZone *pZone)
 {
-    CCZone *pNewZone = NULL;
-    CCAction *pRet = NULL;
+    CCZone *pNewZone = nullptr;
+    CCAction *pRet = nullptr;
     if (pZone && pZone->m_pCopyObject)
     {
         pRet = (CCAction*)(pZone->m_pCopyObject);
@@ -86,7 +86,7 @@ void CCAction::startWithTarget(CCNode *aTarget)
 
 void CCAction::stop()
 {
-    m_pTarget = NULL;
+    m_pTarget = nullptr;
 }
 
 bool CCAction::isDone()
@@ -113,7 +113,7 @@ void CCAction::update(float time)
 CCFiniteTimeAction *CCFiniteTimeAction::reverse()
 {
     CCLOG("cocos2d: FiniteTimeAction#reverse: Implement me");
-    return NULL;
+    return nullptr;
 }
 
 //
@@ -133,12 +133,12 @@ CCSpeed* CCSpeed::create(CCActionInterval* pAction, float fSpeed)
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 bool CCSpeed::initWithAction(CCActionInterval *pAction, float fSpeed)
 {
-    CCAssert(pAction != NULL, "");
+    CCAssert(pAction != nullptr, "");
     pAction->retain();
     m_pInnerAction = pAction;
     m_fSpeed = fSpeed;    
@@ -147,8 +147,8 @@ bool CCSpeed::initWithAction(CCActionInterval *pAction, float fSpeed)
 
 CCObject *CCSpeed::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCSpeed* pRet = NULL;
+    CCZone* pNewZone = nullptr;
+    CCSpeed* pRet = nullptr;
     if(pZone && pZone->m_pCopyObject) //in case of being called at sub class
     {
         pRet = (CCSpeed*)(pZone->m_pCopyObject);
@@ -220,12 +220,12 @@ CCFollow* CCFollow::create(CCNode *pFollowedNode, const CCRect& rect/* = CCRectZ
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 bool CCFollow::initWithTarget(CCNode *pFollowedNode, const CCRect& rect/* = CCRectZero*/)
 {
-    CCAssert(pFollowedNode != NULL, "");
+    CCAssert(pFollowedNode != nullptr, "");
  
     pFollowedNode->retain();
     m_pobFollowedNode = pFollowedNode;
@@ -275,8 +275,8 @@ bool CCFollow::initWithTarget(CCNode *pFollowedNode, const CCRect& rect/* = CCRe
 
 CCObject *CCFollow::copyWithZone(CCZone *pZone)
 {
-    CCZone *pNewZone = NULL;
-    CCFollow *pRet = NULL;
+    CCZone *pNewZone = nullptr;
+    CCFollow *pRet = nullptr;
     if(pZone && pZone->m_pCopyObject) //in case of being called at sub class
     {
         pRet = (CCFollow*)(pZone->m_pCopyObject);
@@ -321,7 +321,7 @@ bool CCFollow::isDone()
 
 void CCFollow::stop()
 {
-    m_pTarget = NULL;
+    m_pTarget = nullptr;
     CCAction::stop();
 }
 

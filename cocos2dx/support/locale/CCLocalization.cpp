@@ -29,7 +29,7 @@
 NS_CC_BEGIN
 
 // init static
-CCLocalization* CCLocalization::s_instance = NULL;
+CCLocalization* CCLocalization::s_instance = nullptr;
 
 CCLocalization::CCLocalization() {
 }
@@ -38,7 +38,7 @@ CCLocalization::~CCLocalization() {
     // release singleton
     if(s_instance) {
         s_instance->release();
-        s_instance = NULL;
+        s_instance = nullptr;
     }
 }
 

@@ -9,7 +9,7 @@ NS_CC_EXT_BEGIN
 
 using namespace cocos2d::ui;
 
-static LabelReader* instanceLabelReader = NULL;
+static LabelReader* instanceLabelReader = nullptr;
 
 IMPLEMENT_CLASS_WIDGET_READER_INFO(LabelReader)
 

@@ -26,7 +26,7 @@
 
 NS_CC_BEGIN
 
-lua_State *CCLuaBridge::s_luaState = NULL;
+lua_State *CCLuaBridge::s_luaState = nullptr;
 int        CCLuaBridge::s_newFunctionId = 0;
 
 CCLuaStack *CCLuaBridge::getStack(void)

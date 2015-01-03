@@ -75,8 +75,8 @@ bool CCShakyTiles3D::initWithDuration(float duration, const CCSize& gridSize, in
 
 CCObject* CCShakyTiles3D::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCShakyTiles3D* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCShakyTiles3D* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -169,8 +169,8 @@ bool CCShatteredTiles3D::initWithDuration(float duration, const CCSize& gridSize
 
 CCObject* CCShatteredTiles3D::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCShatteredTiles3D* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCShatteredTiles3D* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject)
     {
         pCopy = (CCShatteredTiles3D*)(pZone->m_pCopyObject);
@@ -257,8 +257,8 @@ bool CCShuffleTiles::initWithDuration(float duration, const CCSize& gridSize, un
     if (CCTiledGrid3DAction::initWithDuration(duration, gridSize))
     {
         m_nSeed = seed;
-        m_pTilesOrder = NULL;
-        m_pTiles = NULL;
+        m_pTilesOrder = nullptr;
+        m_pTiles = nullptr;
 
         return true;
     }
@@ -268,8 +268,8 @@ bool CCShuffleTiles::initWithDuration(float duration, const CCSize& gridSize, un
 
 CCObject* CCShuffleTiles::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCShuffleTiles* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCShuffleTiles* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject)
     {
         pCopy = (CCShuffleTiles*)(pZone->m_pCopyObject);
@@ -633,7 +633,7 @@ bool CCTurnOffTiles::initWithDuration(float duration, const CCSize& gridSize, un
     if (CCTiledGrid3DAction::initWithDuration(duration, gridSize))
     {
         m_nSeed = seed;
-        m_pTilesOrder = NULL;
+        m_pTilesOrder = nullptr;
 
         return true;
     }
@@ -643,8 +643,8 @@ bool CCTurnOffTiles::initWithDuration(float duration, const CCSize& gridSize, un
 
 CCObject* CCTurnOffTiles::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCTurnOffTiles* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCTurnOffTiles* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         pCopy = (CCTurnOffTiles*)(pZone->m_pCopyObject);
@@ -774,8 +774,8 @@ bool CCWavesTiles3D::initWithDuration(float duration, const CCSize& gridSize, un
 
 CCObject* CCWavesTiles3D::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCWavesTiles3D* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCWavesTiles3D* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject)
     {
         pCopy = (CCWavesTiles3D*)(pZone->m_pCopyObject);
@@ -852,8 +852,8 @@ bool CCJumpTiles3D::initWithDuration(float duration, const CCSize& gridSize, uns
 
 CCObject* CCJumpTiles3D::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCJumpTiles3D* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCJumpTiles3D* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         pCopy = (CCJumpTiles3D*)(pZone->m_pCopyObject);
@@ -934,8 +934,8 @@ bool CCSplitRows::initWithDuration(float duration, unsigned int nRows)
 
 CCObject* CCSplitRows::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCSplitRows* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCSplitRows* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         pCopy = (CCSplitRows*)(pZone->m_pCopyObject);
@@ -1012,8 +1012,8 @@ bool CCSplitCols::initWithDuration(float duration, unsigned int nCols)
 
 CCObject* CCSplitCols::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCSplitCols* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCSplitCols* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         pCopy = (CCSplitCols*)(pZone->m_pCopyObject);

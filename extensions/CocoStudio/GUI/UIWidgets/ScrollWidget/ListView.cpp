@@ -33,22 +33,22 @@ namespace ui {
 IMPLEMENT_CLASS_GUI_INFO(ListView)
 
 ListView::ListView():
-_model(NULL),
+_model(nullptr),
 _gravity(LISTVIEW_GRAVITY_CENTER_HORIZONTAL),
 _itemsMargin(0.0f),
-_listViewEventListener(NULL),
-_listViewEventSelector(NULL),
+_listViewEventListener(nullptr),
+_listViewEventSelector(nullptr),
 _curSelectedIndex(0),
 _refreshViewDirty(true),
-_items(NULL)
+_items(nullptr)
 {
     
 }
 
 ListView::~ListView()
 {
-    _listViewEventListener = NULL;
-    _listViewEventSelector = NULL;
+    _listViewEventListener = nullptr;
+    _listViewEventSelector = nullptr;
     _items->removeAllObjects();
     CC_SAFE_RELEASE(_items);
     CC_SAFE_RELEASE(_model);
@@ -63,7 +63,7 @@ ListView* ListView::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
 bool ListView::init()
@@ -254,7 +254,7 @@ void ListView::remedyLayoutParameter(Widget *item)
 Widget* ListView::pushBackDefaultItem() {
     if (!_model)
     {
-        return NULL;
+        return nullptr;
     }
     Widget* newItem = _model->clone();
     _items->addObject(newItem);
@@ -320,7 +320,7 @@ Widget* ListView::getItem(unsigned int index)
 {
     if ((int)index < 0 || index >= _items->count())
     {
-        return NULL;
+        return nullptr;
     }
     return static_cast<Widget*>(_items->objectAtIndex(index));
 }

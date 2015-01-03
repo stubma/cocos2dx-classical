@@ -47,7 +47,7 @@ ScrollInnerContainer* ScrollInnerContainer::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
     
 const CCSize& ScrollInnerContainer::getLayoutSize()
@@ -73,7 +73,7 @@ const CCPoint SCROLLDIR_RIGHT = CCPoint(1.0f, 0.0f);
 IMPLEMENT_CLASS_GUI_INFO(ScrollView)
 
 ScrollView::ScrollView():
-_innerContainer(NULL),
+_innerContainer(nullptr),
 _direction(SCROLLVIEW_DIR_VERTICAL),
 _touchBeganPoint(CCPointZero),
 _touchMovedPoint(CCPointZero),
@@ -108,15 +108,15 @@ _bouncing(false),
 _bounceDir(CCPointZero),
 _bounceOriginalSpeed(0.0f),
 _inertiaScrollEnabled(true),
-_scrollViewEventListener(NULL),
-_scrollViewEventSelector(NULL)
+_scrollViewEventListener(nullptr),
+_scrollViewEventSelector(nullptr)
 {
 }
 
 ScrollView::~ScrollView()
 {
-    _scrollViewEventListener = NULL;
-    _scrollViewEventSelector = NULL;
+    _scrollViewEventListener = nullptr;
+    _scrollViewEventSelector = nullptr;
 }
 
 ScrollView* ScrollView::create()
@@ -128,7 +128,7 @@ ScrollView* ScrollView::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
     
 void ScrollView::onEnter()

@@ -39,7 +39,7 @@ LayoutParameter* LayoutParameter::create()
         return parameter;
     }
     CC_SAFE_DELETE(parameter);
-    return NULL;
+    return nullptr;
 }
 
 void LayoutParameter::setMargin(const Margin &margin)
@@ -83,7 +83,7 @@ LinearLayoutParameter* LinearLayoutParameter::create()
         return parameter;
     }
     CC_SAFE_DELETE(parameter);
-    return NULL;
+    return nullptr;
 }
 
 void LinearLayoutParameter::setGravity(LinearGravity gravity)
@@ -120,7 +120,7 @@ RelativeLayoutParameter* RelativeLayoutParameter::create()
         return parameter;
     }
     CC_SAFE_DELETE(parameter);
-    return NULL;
+    return nullptr;
 }
 
 void RelativeLayoutParameter::setAlign(RelativeAlign align)

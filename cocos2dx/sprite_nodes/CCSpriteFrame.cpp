@@ -101,7 +101,7 @@ bool CCSpriteFrame::initWithTexture(CCTexture2D* pobTexture, const CCRect& rect,
 
 bool CCSpriteFrame::initWithTextureFilename(const char* filename, const CCRect& rect, bool rotated, const CCPoint& offset, const CCSize& originalSize)
 {
-    m_pobTexture = NULL;
+    m_pobTexture = nullptr;
     m_strTextureFilename = filename;
     m_obRectInPixels = rect;
     m_obRect = CC_RECT_PIXELS_TO_POINTS( rect );
@@ -183,7 +183,7 @@ CCTexture2D* CCSpriteFrame::getTexture(void)
         return CCTextureCache::sharedTextureCache()->addImage(m_strTextureFilename.c_str());
     }
     // no texture or texture filename
-    return NULL;
+    return nullptr;
 }
 
 NS_CC_END

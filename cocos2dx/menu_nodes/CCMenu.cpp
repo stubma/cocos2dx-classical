@@ -61,7 +61,7 @@ enum
 
 CCMenu* CCMenu::create()
 {
-    return CCMenu::create(NULL, NULL);
+    return CCMenu::create(nullptr, nullptr);
 }
 
 CCMenu * CCMenu::create(CCMenuItem* item, ...)
@@ -93,10 +93,10 @@ CCMenu* CCMenu::createWithArray(CCArray* pArrayOfItems)
 
 CCMenu* CCMenu::createWithItems(CCMenuItem* item, va_list args)
 {
-    CCArray* pArray = NULL;
+    CCArray* pArray = nullptr;
     if( item )
     {
-        pArray = CCArray::create(item, NULL);
+        pArray = CCArray::create(item, nullptr);
         CCMenuItem *i = va_arg(args, CCMenuItem*);
         while(i)
         {
@@ -110,12 +110,12 @@ CCMenu* CCMenu::createWithItems(CCMenuItem* item, va_list args)
 
 CCMenu* CCMenu::createWithItem(CCMenuItem* item)
 {
-    return CCMenu::create(item, NULL);
+    return CCMenu::create(item, nullptr);
 }
 
 bool CCMenu::init()
 {
-    return initWithArray(NULL);
+    return initWithArray(nullptr);
 }
 
 bool CCMenu::initWithArray(CCArray* pArrayOfItems)
@@ -136,10 +136,10 @@ bool CCMenu::initWithArray(CCArray* pArrayOfItems)
 
         setPosition(ccp(s.width/2, s.height/2));
         
-        if (pArrayOfItems != NULL)
+        if (pArrayOfItems != nullptr)
         {
             int z=0;
-            CCObject* pObj = NULL;
+            CCObject* pObj = nullptr;
             CCARRAY_FOREACH(pArrayOfItems, pObj)
             {
                 CCMenuItem* item = (CCMenuItem*)pObj;
@@ -149,7 +149,7 @@ bool CCMenu::initWithArray(CCArray* pArrayOfItems)
         }
     
         //    [self alignItemsVertically];
-        m_pSelectedItem = NULL;
+        m_pSelectedItem = nullptr;
         m_eState = kCCMenuStateWaiting;
         
         // enable cascade color and opacity on menus
@@ -176,7 +176,7 @@ void CCMenu::addChild(CCNode * child, int zOrder)
 
 void CCMenu::addChild(CCNode * child, int zOrder, int tag)
 {
-    CCAssert( dynamic_cast<CCMenuItem*>(child) != NULL, "Menu only supports MenuItem objects as children");
+    CCAssert( dynamic_cast<CCMenuItem*>(child) != nullptr, "Menu only supports MenuItem objects as children");
     CCLayer::addChild(child, zOrder, tag);
 }
 
@@ -187,7 +187,7 @@ void CCMenu::onExit()
         if (m_pSelectedItem)
         {
             m_pSelectedItem->unselected();
-            m_pSelectedItem = NULL;
+            m_pSelectedItem = nullptr;
         }
         
         m_eState = kCCMenuStateWaiting;
@@ -199,11 +199,11 @@ void CCMenu::onExit()
 void CCMenu::removeChild(CCNode* child, bool cleanup)
 {
     CCMenuItem *pMenuItem = dynamic_cast<CCMenuItem*>(child);
-    CCAssert(pMenuItem != NULL, "Menu only supports MenuItem objects as children");
+    CCAssert(pMenuItem != nullptr, "Menu only supports MenuItem objects as children");
     
     if (m_pSelectedItem == pMenuItem)
     {
-        m_pSelectedItem = NULL;
+        m_pSelectedItem = nullptr;
     }
     
     CCNode::removeChild(child, cleanup);
@@ -231,7 +231,7 @@ bool CCMenu::ccTouchBegan(CCTouch* touch, CCEvent* event)
         return false;
     }
 
-    for (CCNode *c = this->m_pParent; c != NULL; c = c->getParent())
+    for (CCNode *c = this->m_pParent; c != nullptr; c = c->getParent())
     {
         if (c->isVisible() == false)
         {
@@ -304,7 +304,7 @@ void CCMenu::alignItemsVerticallyWithPadding(float padding)
     float height = -padding;
     if (m_pChildren && m_pChildren->count() > 0)
     {
-        CCObject* pObject = NULL;
+        CCObject* pObject = nullptr;
         CCARRAY_FOREACH(m_pChildren, pObject)
         {
             CCNode* pChild = dynamic_cast<CCNode*>(pObject);
@@ -318,7 +318,7 @@ void CCMenu::alignItemsVerticallyWithPadding(float padding)
     float y = height / 2.0f;
     if (m_pChildren && m_pChildren->count() > 0)
     {
-        CCObject* pObject = NULL;
+        CCObject* pObject = nullptr;
         CCARRAY_FOREACH(m_pChildren, pObject)
         {
             CCNode* pChild = dynamic_cast<CCNode*>(pObject);
@@ -342,7 +342,7 @@ void CCMenu::alignItemsHorizontallyWithPadding(float padding)
     float width = -padding;
     if (m_pChildren && m_pChildren->count() > 0)
     {
-        CCObject* pObject = NULL;
+        CCObject* pObject = nullptr;
         CCARRAY_FOREACH(m_pChildren, pObject)
         {
             CCNode* pChild = dynamic_cast<CCNode*>(pObject);
@@ -356,7 +356,7 @@ void CCMenu::alignItemsHorizontallyWithPadding(float padding)
     float x = -width / 2.0f;
     if (m_pChildren && m_pChildren->count() > 0)
     {
-        CCObject* pObject = NULL;
+        CCObject* pObject = nullptr;
         CCARRAY_FOREACH(m_pChildren, pObject)
         {
             CCNode* pChild = dynamic_cast<CCNode*>(pObject);
@@ -402,7 +402,7 @@ void CCMenu::alignItemsInColumnsWithArray(CCArray* rowsArray)
 
     if (m_pChildren && m_pChildren->count() > 0)
     {
-        CCObject* pObject = NULL;
+        CCObject* pObject = nullptr;
         CCARRAY_FOREACH(m_pChildren, pObject)
         {
             CCNode* pChild = dynamic_cast<CCNode*>(pObject);
@@ -444,7 +444,7 @@ void CCMenu::alignItemsInColumnsWithArray(CCArray* rowsArray)
 
     if (m_pChildren && m_pChildren->count() > 0)
     {
-        CCObject* pObject = NULL;
+        CCObject* pObject = nullptr;
         CCARRAY_FOREACH(m_pChildren, pObject)
         {
             CCNode* pChild = dynamic_cast<CCNode*>(pObject);
@@ -517,7 +517,7 @@ void CCMenu::alignItemsInRowsWithArray(CCArray* columnArray)
 
     if (m_pChildren && m_pChildren->count() > 0)
     {
-        CCObject* pObject = NULL;
+        CCObject* pObject = nullptr;
         CCARRAY_FOREACH(m_pChildren, pObject)
         {
             CCNode* pChild = dynamic_cast<CCNode*>(pObject);
@@ -565,7 +565,7 @@ void CCMenu::alignItemsInRowsWithArray(CCArray* columnArray)
 
     if (m_pChildren && m_pChildren->count() > 0)
     {
-        CCObject* pObject = NULL;
+        CCObject* pObject = nullptr;
         CCARRAY_FOREACH(m_pChildren, pObject)
         {
             CCNode* pChild = dynamic_cast<CCNode*>(pObject);
@@ -606,7 +606,7 @@ CCMenuItem* CCMenu::itemForTouch(CCTouch *touch)
 
     if (m_pChildren && m_pChildren->count() > 0)
     {
-        CCObject* pObject = NULL;
+        CCObject* pObject = nullptr;
         CCARRAY_FOREACH(m_pChildren, pObject)
         {
             CCMenuItem* pChild = dynamic_cast<CCMenuItem*>(pObject);
@@ -624,7 +624,7 @@ CCMenuItem* CCMenu::itemForTouch(CCTouch *touch)
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 NS_CC_END

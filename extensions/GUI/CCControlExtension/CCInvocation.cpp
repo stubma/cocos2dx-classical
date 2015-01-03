@@ -31,7 +31,7 @@ NS_CC_EXT_BEGIN
 CCInvocation* CCInvocation::create(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvent)
 {
     CCInvocation* pRet = new CCInvocation(target, action, controlEvent);
-    if (pRet != NULL)
+    if (pRet != nullptr)
     {
         pRet->autorelease();
     }

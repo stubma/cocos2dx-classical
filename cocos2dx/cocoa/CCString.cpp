@@ -39,7 +39,7 @@ bool CCString::initWithFormatAndValist(const char* format, va_list ap)
 {
     bool bRet = false;
     char* pBuf = (char*)malloc(kMaxStringLen);
-    if (pBuf != NULL)
+    if (pBuf != nullptr)
     {
         vsnprintf(pBuf, kMaxStringLen, format, ap);
         m_sString = pBuf;
@@ -131,7 +131,7 @@ int CCString::compare(const char * pStr) const
 
 CCObject* CCString::copyWithZone(CCZone* pZone)
 {
-    CCAssert(pZone == NULL, "CCString should not be inherited.");
+    CCAssert(pZone == nullptr, "CCString should not be inherited.");
     CCString* pStr = new CCString(m_sString.c_str());
     return pStr;
 }
@@ -140,7 +140,7 @@ bool CCString::isEqual(const CCObject* pObject)
 {
     bool bRet = false;
     const CCString* pStr = dynamic_cast<const CCString*>(pObject);
-    if (pStr != NULL)
+    if (pStr != nullptr)
     {
         if (0 == m_sString.compare(pStr->m_sString))
         {
@@ -159,11 +159,11 @@ CCString* CCString::create(const std::string& str)
 
 CCString* CCString::createWithData(const unsigned char* pData, unsigned long nLen)
 {
-    CCString* pRet = NULL;
-    if (pData != NULL)
+    CCString* pRet = nullptr;
+    if (pData != nullptr)
     {
         char* pStr = (char*)malloc(nLen+1);
-        if (pStr != NULL)
+        if (pStr != nullptr)
         {
             pStr[nLen] = '\0';
             if (nLen > 0)
@@ -193,7 +193,7 @@ CCString* CCString::createWithContentsOfFile(const char* pszFileName)
 {
     unsigned long size = 0;
     unsigned char* pData = 0;
-    CCString* pRet = NULL;
+    CCString* pRet = nullptr;
     pData = CCFileUtils::sharedFileUtils()->getFileData(pszFileName, "rb", &size);
     pRet = CCString::createWithData(pData, size);
     CC_SAFE_DELETE_ARRAY(pData);

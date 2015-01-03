@@ -30,12 +30,12 @@ void sendEvent(unsigned int event)
 {
     CCArray *array = TriggerMng::getInstance()->get(event);
     do {
-        CC_BREAK_IF(array == NULL);
-        CCObject* pObj = NULL;
+        CC_BREAK_IF(array == nullptr);
+        CCObject* pObj = nullptr;
         CCARRAY_FOREACH(array, pObj)
         {
             TriggerObj* triobj = dynamic_cast<TriggerObj*>(pObj);
-            if (triobj != NULL && triobj->detect())
+            if (triobj != nullptr && triobj->detect())
             {
                 triobj->done();
             }

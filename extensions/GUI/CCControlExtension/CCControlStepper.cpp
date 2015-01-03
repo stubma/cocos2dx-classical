@@ -39,10 +39,10 @@ NS_CC_EXT_BEGIN
 #define kAutorepeatIncreaseTimeIncrement    12
 
 CCControlStepper::CCControlStepper()
-: m_pMinusSprite(NULL)
-, m_pPlusSprite(NULL)
-, m_pMinusLabel(NULL)
-, m_pPlusLabel(NULL)
+: m_pMinusSprite(nullptr)
+, m_pPlusSprite(nullptr)
+, m_pMinusLabel(nullptr)
+, m_pPlusLabel(nullptr)
 , m_dValue(0.0)
 , m_bContinuous(false)
 , m_bAutorepeat(false)
@@ -118,7 +118,7 @@ bool CCControlStepper::initWithMinusSpriteAndPlusSprite(CCSprite *minusSprite, C
 CCControlStepper* CCControlStepper::create(CCSprite *minusSprite, CCSprite *plusSprite)
 {
     CCControlStepper* pRet = new CCControlStepper();
-    if (pRet != NULL && pRet->initWithMinusSpriteAndPlusSprite(minusSprite, plusSprite))
+    if (pRet != nullptr && pRet->initWithMinusSpriteAndPlusSprite(minusSprite, plusSprite))
     {
         pRet->autorelease();
     }

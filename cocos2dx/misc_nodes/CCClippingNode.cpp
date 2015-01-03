@@ -42,7 +42,7 @@ static void setProgram(CCNode *n, CCGLProgram *p)
     n->setShaderProgram(p);
     if (!n->getChildren()) return;
     
-    CCObject* pObj = NULL;
+    CCObject* pObj = nullptr;
     CCARRAY_FOREACH(n->getChildren(), pObj)
     {
         setProgram((CCNode*)pObj, p);
@@ -50,7 +50,7 @@ static void setProgram(CCNode *n, CCGLProgram *p)
 }
 
 CCClippingNode::CCClippingNode()
-: m_pStencil(NULL)
+: m_pStencil(nullptr)
 , m_fAlphaThreshold(0.0f)
 , m_bInverted(false)
 {}
@@ -92,7 +92,7 @@ CCClippingNode* CCClippingNode::create(CCNode *pStencil)
 
 bool CCClippingNode::init()
 {
-    return init(NULL);
+    return init(nullptr);
 }
 
 bool CCClippingNode::init(CCNode *pStencil)

@@ -43,24 +43,24 @@ CCTween *CCTween::create(CCBone *bone)
         return pTween;
     }
     CC_SAFE_DELETE(pTween);
-    return NULL;
+    return nullptr;
 
 }
 
 
 
 CCTween::CCTween()
-    : m_pMovementBoneData(NULL)
-    , m_pTweenData(NULL)
-    , m_pFrom(NULL)
-    , m_pTo(NULL)
-    , m_pBetween(NULL)
-    , m_pBone(NULL)
+    : m_pMovementBoneData(nullptr)
+    , m_pTweenData(nullptr)
+    , m_pFrom(nullptr)
+    , m_pTo(nullptr)
+    , m_pBetween(nullptr)
+    , m_pBone(nullptr)
 
     , m_eFrameTweenEasing(Linear)
     , m_iFromIndex(0)
     , m_iToIndex(0)
-    , m_pAnimation(NULL)
+    , m_pAnimation(nullptr)
     , m_bPassLastFrame(false)
 {
 
@@ -86,7 +86,7 @@ bool CCTween::init(CCBone *bone)
         m_pTweenData = m_pBone->getTweenData();
         m_pTweenData->displayIndex = -1;
 
-        m_pAnimation = m_pBone->getArmature() != NULL ? m_pBone->getArmature()->getAnimation() : NULL;
+        m_pAnimation = m_pBone->getArmature() != nullptr ? m_pBone->getArmature()->getAnimation() : nullptr;
 
         bRet = true;
     }
@@ -357,7 +357,7 @@ void CCTween::arriveKeyFrame(CCFrameData *keyFrameData)
 
 CCFrameData *CCTween::tweenNodeTo(float percent, CCFrameData *node)
 {
-    node = node == NULL ? m_pTweenData : node;
+    node = node == nullptr ? m_pTweenData : node;
     if (!m_pFrom->isTween)
     {
         percent = 0;
@@ -410,8 +410,8 @@ float CCTween::updateFrameData(float currentPercent)
         int length = m_pMovementBoneData->frameList.count();
         CCFrameData **frames = (CCFrameData **)m_pMovementBoneData->frameList.data->arr;
 
-        CCFrameData *from = NULL;
-        CCFrameData *to = NULL;
+        CCFrameData *from = nullptr;
+        CCFrameData *to = nullptr;
 
         if (playedTime < frames[0]->frameID)
         {

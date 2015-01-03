@@ -45,7 +45,7 @@ m_mapHeight(0),
 m_tileWidth(0),
 m_tileHeight(0),
 m_debugDrawObjects(false),
-m_mapInfo(NULL) {
+m_mapInfo(nullptr) {
 }
 
 CCTMXTiledMap* CCTMXTiledMap::create(const string& file) {
@@ -55,7 +55,7 @@ CCTMXTiledMap* CCTMXTiledMap::create(const string& file) {
 	}
 	
 	tmx->release();
-	return NULL;
+	return nullptr;
 }
 
 bool CCTMXTiledMap::initWithXMLFile(const string& file) {
@@ -114,12 +114,12 @@ CCTMXLayer* CCTMXTiledMap::getLayer(const string& name) {
 	for(int i = 0; i < cc; i++) {
 		CCNode* child = (CCNode*)children->objectAtIndex(i);
 		CCTMXLayer* layer = dynamic_cast<CCTMXLayer*>(child);
-		if(layer != NULL) {
+		if(layer != nullptr) {
 			if(layer->getLayerInfo()->getName() == name)
 				return layer;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 CCTMXLayer* CCTMXTiledMap::getLayerAt(int index) {
@@ -128,13 +128,13 @@ CCTMXLayer* CCTMXTiledMap::getLayerAt(int index) {
 	for(int i = 0; i < cc; i++) {
 		CCNode* child = (CCNode*)children->objectAtIndex(i);
 		CCTMXLayer* layer = dynamic_cast<CCTMXLayer*>(child);
-		if(layer != NULL) {
+		if(layer != nullptr) {
 			index--;
 			if(index < 0)
 				return layer;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 CCTMXObjectGroup* CCTMXTiledMap::getObjectGroup(const string& name) {
@@ -145,7 +145,7 @@ CCTMXObjectGroup* CCTMXTiledMap::getObjectGroup(const string& name) {
 			return og;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 string CCTMXTiledMap::getProperty(const string& name) {

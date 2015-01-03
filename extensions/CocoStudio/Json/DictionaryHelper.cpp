@@ -26,7 +26,7 @@
 
 NS_CC_EXT_BEGIN
     
-static DictionaryHelper* sharedHelper = NULL;
+static DictionaryHelper* sharedHelper = nullptr;
 
 DictionaryHelper::DictionaryHelper()
 {
@@ -54,11 +54,11 @@ void DictionaryHelper::purgeDictionaryHelper()
 cocos2d::CCDictionary* DictionaryHelper::getSubDictionary(cocos2d::CCDictionary* root,const char* key)
 {
     if (!root) {
-        return NULL;
+        return nullptr;
     }
     cocos2d::CCObject* obj = root->objectForKey(key);
     if (!obj) {
-        return NULL;
+        return nullptr;
     }
     return (cocos2d::CCDictionary*)(obj);
 }
@@ -93,11 +93,11 @@ float DictionaryHelper::getFloatValue(cocos2d::CCDictionary* root,const char* ke
 const char* DictionaryHelper::getStringValue(cocos2d::CCDictionary* root,const char* key)
 {
     if (!root) {
-        return NULL;
+        return nullptr;
     }
     cocos2d::CCObject* obj = root->objectForKey(key);
     if (!obj) {
-        return NULL;
+        return nullptr;
     }
     cocos2d::CCString* cstr = (cocos2d::CCString*)(obj);
     return cstr->m_sString.c_str();
@@ -111,11 +111,11 @@ bool DictionaryHelper::getBooleanValue(cocos2d::CCDictionary* root,const char* k
 cocos2d::CCArray* DictionaryHelper::getArrayValue(cocos2d::CCDictionary *root, const char *key)
 {
     if (!root) {
-        return NULL;
+        return nullptr;
     }
     cocos2d::CCObject* obj = root->objectForKey(key);
     if (!obj) {
-        return NULL;
+        return nullptr;
     }
     cocos2d::CCArray* array = (cocos2d::CCArray*)(obj);
     return array;
@@ -124,7 +124,7 @@ cocos2d::CCArray* DictionaryHelper::getArrayValue(cocos2d::CCDictionary *root, c
 cocos2d::CCObject* DictionaryHelper::checkObjectExist(cocos2d::CCDictionary *root, const char *key)
 {
     if (!root) {
-        return NULL;
+        return nullptr;
     }
     return root->objectForKey(key);
 }
@@ -153,7 +153,7 @@ const char* DictionaryHelper::objectToStringValue(cocos2d::CCObject *obj)
 {
     if (!obj)
     {
-        return NULL;
+        return nullptr;
     }
     cocos2d::CCString* cstr = (cocos2d::CCString*)(obj);
     return cstr->m_sString.c_str();
@@ -172,7 +172,7 @@ cocos2d::CCArray* DictionaryHelper::objectToCCArray(cocos2d::CCObject *obj)
 {
     if (!obj)
     {
-        return NULL;
+        return nullptr;
     }
     cocos2d::CCArray* array = (cocos2d::CCArray*)(obj);
     return array;

@@ -40,13 +40,13 @@ IMPLEMENT_CLASS_GUI_INFO(Layout)
 Layout::Layout():
 _clippingEnabled(false),
 _backGroundScale9Enabled(false),
-_backGroundImage(NULL),
+_backGroundImage(nullptr),
 _backGroundImageFileName(""),
 _backGroundImageCapInsets(CCRectZero),
 _colorType(LAYOUT_COLOR_NONE),
 _bgImageTexType(UI_TEX_TYPE_LOCAL),
-_colorRender(NULL),
-_gradientRender(NULL),
+_colorRender(nullptr),
+_gradientRender(nullptr),
 _cColor(ccWHITE),
 _gStartColor(ccWHITE),
 _gEndColor(ccWHITE),
@@ -55,11 +55,11 @@ _cOpacity(255),
 _backGroundImageTextureSize(CCSizeZero),
 _layoutType(LAYOUT_ABSOLUTE),
 _clippingType(LAYOUT_CLIPPING_SCISSOR),
-_clippingStencil(NULL),
+_clippingStencil(nullptr),
 _handleScissor(false),
 _scissorRectDirty(false),
 _clippingRect(CCRectZero),
-_clippingParent(NULL),
+_clippingParent(nullptr),
 _doLayoutDirty(true),
 _clippingRectDirty(true),
 _backGroundImageColor(ccWHITE),
@@ -82,7 +82,7 @@ Layout* Layout::create()
         return layout;
     }
     CC_SAFE_DELETE(layout);
-    return NULL;
+    return nullptr;
 }
     
 void Layout::onEnter()
@@ -343,7 +343,7 @@ void Layout::setClippingEnabled(bool able)
                     _clippingStencil->onExit();
                 }
                 _clippingStencil->release();
-                _clippingStencil = NULL;
+                _clippingStencil = nullptr;
             }
             break;
         default:
@@ -504,7 +504,7 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
         return;
     }
     CCNode::removeChild(_backGroundImage, true);
-    _backGroundImage = NULL;
+    _backGroundImage = nullptr;
     _backGroundScale9Enabled = able;
     if (_backGroundScale9Enabled)
     {
@@ -531,7 +531,7 @@ void Layout::setBackGroundImage(const char* fileName,TextureResType texType)
     {
         return;
     }
-    if (_backGroundImage == NULL)
+    if (_backGroundImage == nullptr)
     {
         addBackGroundImage();
     }
@@ -643,7 +643,7 @@ void Layout::removeBackGroundImage()
         return;
     }
     CCNode::removeChild(_backGroundImage, true);
-    _backGroundImage = NULL;
+    _backGroundImage = nullptr;
     _backGroundImageFileName = "";
     _backGroundImageTextureSize = CCSizeZero;
 }
@@ -660,26 +660,26 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
             if (_colorRender)
             {
                 CCNode::removeChild(_colorRender, true);
-                _colorRender = NULL;
+                _colorRender = nullptr;
             }
             if (_gradientRender)
             {
                 CCNode::removeChild(_gradientRender, true);
-                _gradientRender = NULL;
+                _gradientRender = nullptr;
             }
             break;
         case LAYOUT_COLOR_SOLID:
             if (_colorRender)
             {
                 CCNode::removeChild(_colorRender, true);
-                _colorRender = NULL;
+                _colorRender = nullptr;
             }
             break;
         case LAYOUT_COLOR_GRADIENT:
             if (_gradientRender)
             {
                 CCNode::removeChild(_gradientRender, true);
-                _gradientRender = NULL;
+                _gradientRender = nullptr;
             }
             break;
         default:
@@ -990,8 +990,8 @@ void Layout::doLayout()
                         CCSize cs = child->getSize();
                         RelativeAlign align = layoutParameter->getAlign();
                         const char* relativeName = layoutParameter->getRelativeToWidgetName();
-                        Widget* relativeWidget = NULL;
-                        RelativeLayoutParameter* relativeWidgetLP = NULL;
+                        Widget* relativeWidget = nullptr;
+                        RelativeLayoutParameter* relativeWidgetLP = nullptr;
                         float finalPosX = 0.0f;
                         float finalPosY = 0.0f;
                         if (relativeName && strcmp(relativeName, ""))

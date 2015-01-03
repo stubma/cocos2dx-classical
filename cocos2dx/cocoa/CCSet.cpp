@@ -65,7 +65,7 @@ CCSet * CCSet::create()
 {
     CCSet * pRet = new CCSet();
     
-    if (pRet != NULL)
+    if (pRet != nullptr)
     {
         pRet->autorelease();
     }

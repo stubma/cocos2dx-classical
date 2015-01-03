@@ -29,7 +29,7 @@
 NS_CC_BEGIN
 
 CCSPX3Sprite::CCSPX3Sprite() :
-		m_spx(NULL) {
+		m_spx(nullptr) {
 }
 
 CCSPX3Sprite::~CCSPX3Sprite() {
@@ -76,7 +76,7 @@ CCSPX3Sprite* CCSPX3Sprite::create(const char* spxPath, int actionIndex, CCTextu
 	sheet->retain();
 
 	// add others
-	for(CCTexture2D* t = va_arg(textures, CCTexture2D*); t != NULL; t = va_arg(textures, CCTexture2D*)) {
+	for(CCTexture2D* t = va_arg(textures, CCTexture2D*); t != nullptr; t = va_arg(textures, CCTexture2D*)) {
 		sheet = CCAFCSprite::createBatchNode(t);
 		sprite->m_sheetList.push_back(sheet);
 		sheet->retain();
@@ -94,7 +94,7 @@ CCSPX3Sprite* CCSPX3Sprite::create(const char* spxPath, int actionIndex, CCTextu
 
 CCAFCAnimation* CCSPX3Sprite::getAnimationAt(int index, CCAFCClipMapping* mapping) {
 	if(index < 0 || index >= getAnimationCount())
-		return NULL;
+		return nullptr;
 	else
 		return CCSPX3Manager::getInstance()->getAnimationData(m_spx, index, mapping);
 }

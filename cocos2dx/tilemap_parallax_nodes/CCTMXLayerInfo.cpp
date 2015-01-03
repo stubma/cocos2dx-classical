@@ -26,7 +26,7 @@
 NS_CC_BEGIN
 
 CCTMXLayerInfo::CCTMXLayerInfo() :
-m_tiles(NULL),
+m_tiles(nullptr),
 m_layerHeight(0),
 m_layerWidth(0),
 m_alpha(255),

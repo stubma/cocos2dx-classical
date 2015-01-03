@@ -28,7 +28,7 @@
 
 NS_CC_EXT_BEGIN
 
-static ActionManager* sharedActionManager = NULL;
+static ActionManager* sharedActionManager = nullptr;
 
 ActionManager* ActionManager::shareManager()
 {
@@ -44,7 +44,7 @@ void ActionManager::purge()
 }
 
 ActionManager::ActionManager()
-: m_pActionDic(NULL)
+: m_pActionDic(nullptr)
 {
 	m_pActionDic = CCDictionary::create();
     m_pActionDic->retain();
@@ -83,7 +83,7 @@ void ActionManager::initWithBinary(const char* file, cocos2d::CCObject *root,  C
 	CCArray* actionList = CCArray::create();
     
     stExpCocoNode *stChildArray = pCocoNode->GetChildArray(pCocoLoader);
-    stExpCocoNode *actionNode = NULL;
+    stExpCocoNode *actionNode = nullptr;
     for (int i=0; i < pCocoNode->GetChildNum(); ++i) {
         std::string key = stChildArray[i].GetName(pCocoLoader);
         if (key == "actionlist") {
@@ -91,7 +91,7 @@ void ActionManager::initWithBinary(const char* file, cocos2d::CCObject *root,  C
             break;
         }
     }
-	if (NULL != actionNode)
+	if (nullptr != actionNode)
     {
 		int actionCount = actionNode->GetChildNum();
         for (int i = 0; i < actionCount; ++i) {
@@ -113,7 +113,7 @@ ActionObject* ActionManager::getActionByName(const char* jsonName,const char* ac
 	CCArray* actionList = (CCArray*)(m_pActionDic->objectForKey(jsonName));
 	if (!actionList)
 	{
-		return NULL;
+		return nullptr;
 	}
 	for (unsigned int i=0; i<actionList->count(); i++)
 	{
@@ -123,7 +123,7 @@ ActionObject* ActionManager::getActionByName(const char* jsonName,const char* ac
 			return action;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 ActionObject* ActionManager::playActionByName(const char* jsonName,const char* actionName)

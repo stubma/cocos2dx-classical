@@ -53,8 +53,8 @@ bool CCProgressTo::initWithDuration(float duration, float fPercent)
 
 CCObject* CCProgressTo::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCProgressTo* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCProgressTo* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -120,8 +120,8 @@ bool CCProgressFromTo::initWithDuration(float duration, float fFromPercentage, f
 
 CCObject* CCProgressFromTo::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = NULL;
-    CCProgressFromTo* pCopy = NULL;
+    CCZone* pNewZone = nullptr;
+    CCProgressFromTo* pCopy = nullptr;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class

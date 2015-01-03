@@ -41,7 +41,7 @@ ImageView::ImageView():
 _scale9Enabled(false),
 _prevIgnoreSize(true),
 _capInsets(CCRectZero),
-_imageRenderer(NULL),
+_imageRenderer(nullptr),
 _textureFile(""),
 _imageTexType(UI_TEX_TYPE_LOCAL),
 _imageTextureSize(_size)
@@ -63,7 +63,7 @@ ImageView* ImageView::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
 void ImageView::initRenderer()
@@ -166,7 +166,7 @@ void ImageView::setScale9Enabled(bool able)
     
     _scale9Enabled = able;
     CCNode::removeChild(_imageRenderer, true);
-    _imageRenderer = NULL;
+    _imageRenderer = nullptr;
     if (_scale9Enabled)
     {
         _imageRenderer = extension::CCScale9Sprite::create();

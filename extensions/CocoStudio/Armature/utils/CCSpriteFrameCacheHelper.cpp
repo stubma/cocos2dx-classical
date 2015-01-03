@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::s_SpriteFrameCacheHelper = NULL;
+CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::s_SpriteFrameCacheHelper = nullptr;
 
 CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()
 {
@@ -42,7 +42,7 @@ CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper
 void CCSpriteFrameCacheHelper::purge()
 {
     delete s_SpriteFrameCacheHelper;
-    s_SpriteFrameCacheHelper = NULL;
+    s_SpriteFrameCacheHelper = nullptr;
 }
 
 void CCSpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)

@@ -42,7 +42,7 @@ CCControl::CCControl()
 , m_bEnabled(false)
 , m_bSelected(false)
 , m_bHighlighted(false)
-, m_pDispatchTable(NULL)
+, m_pDispatchTable(nullptr)
 {
 
 }
@@ -58,7 +58,7 @@ CCControl* CCControl::create()
     else
     {
         CC_SAFE_DELETE(pRet);
-        return NULL;
+        return nullptr;
     }
 }
 
@@ -121,7 +121,7 @@ void CCControl::sendActionsForControlEvents(CCControlEvent controlEvents)
             // Call invocations
             // <CCInvocation*>
             CCArray* invocationList = this->dispatchListforControlEvent(1<<i);
-            CCObject* pObj = NULL;
+            CCObject* pObj = nullptr;
             CCARRAY_FOREACH(invocationList, pObj)
             {
                 CCInvocation* invocation = (CCInvocation*)pObj;
@@ -166,7 +166,7 @@ void CCControl::addTargetWithActionForControlEvents(CCObject* target, SEL_CCCont
  *
  * @param target The target object that is, the object to which the action 
  * message is sent. It cannot be nil. The target is not retained.
- * @param action A selector identifying an action message. It cannot be NULL.
+ * @param action A selector identifying an action message. It cannot be nullptr.
  * @param controlEvent A control event for which the action message is sent.
  * See "CCControlEvent" for constants.
  */
@@ -210,7 +210,7 @@ void CCControl::removeTargetWithActionForControlEvent(CCObject* target, SEL_CCCo
     else
     {
             //normally we would use a predicate, but this won't work here. Have to do it manually
-            CCObject* pObj = NULL;
+            CCObject* pObj = nullptr;
             CCARRAY_FOREACH(eventInvocationList, pObj)
             {
                 CCInvocation *invocation = (CCInvocation*)pObj;
@@ -276,7 +276,7 @@ CCArray* CCControl::dispatchListforControlEvent(CCControlEvent controlEvent)
     CCArray* invocationList = static_cast<CCArray*>(m_pDispatchTable->objectForKey((int)controlEvent));
 
     // If the invocation list does not exist for the  dispatch table, we create it
-    if (invocationList == NULL)
+    if (invocationList == nullptr)
     {
         invocationList = CCArray::createWithCapacity(1);
         m_pDispatchTable->setObject(invocationList, controlEvent);
@@ -330,7 +330,7 @@ bool CCControl::isHighlighted()
 bool CCControl::hasVisibleParents()
 {
     CCNode* pParent = this->getParent();
-    for( CCNode *c = pParent; c != NULL; c = c->getParent() )
+    for( CCNode *c = pParent; c != nullptr; c = c->getParent() )
     {
         if( !c->isVisible() )
         {

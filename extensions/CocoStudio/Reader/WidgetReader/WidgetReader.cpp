@@ -6,7 +6,7 @@
 
 NS_CC_EXT_BEGIN
 
-static WidgetReader* instanceWidgetReader = NULL;
+static WidgetReader* instanceWidgetReader = nullptr;
 
 IMPLEMENT_CLASS_WIDGET_READER_INFO(WidgetReader)
 
@@ -109,7 +109,7 @@ void WidgetReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     {
         const rapidjson::Value& layoutParameterDic = DICTOOL->getSubDictionary_json(options, "layoutParameter");
         int paramType = DICTOOL->getIntValue_json(layoutParameterDic, "type");
-        cocos2d::ui::LayoutParameter* parameter = NULL;
+        cocos2d::ui::LayoutParameter* parameter = nullptr;
         switch (paramType)
         {
             case 0:
