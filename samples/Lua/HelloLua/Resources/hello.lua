@@ -9,6 +9,11 @@ cclog = function(...)
     print(string.format(...))
 end
 
+-- try inheritance
+local SpriteEx = class("SpriteEx", function(f)
+                            return CCSprite:create(f)
+                       end)
+
 -- for CCLuaEngine traceback
 function __G__TRACKBACK__(msg)
     cclog("----------------------------------------")
@@ -78,7 +83,7 @@ local function main()
         local layerFarm = CCLayer:create()
 
         -- add in farm background
-        local bg = CCSprite:create("farm.jpg")
+        local bg = SpriteEx.new("farm.jpg")
         bg:setPosition(origin.x + visibleSize.width / 2 + 80, origin.y + visibleSize.height / 2)
         layerFarm:addChild(bg)
 

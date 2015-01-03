@@ -16,7 +16,8 @@ function clone(object)
     return _copy(object)
 end
 
---Create an class.
+local CC_INHERITED_FROM_NATIVE_CLASS = 1
+local CC_INHERITED_FROM_LUA = 2
 function class(classname, super)
     local superType = type(super)
     local cls
@@ -26,7 +27,7 @@ function class(classname, super)
         super = nil
     end
 
-    if superType == "function" or (super and super.__ctype == 1) then
+    if superType == "function" or (super and super.__ctype == CC_INHERITED_FROM_NATIVE_CLASS) then
         -- inherited from native C++ Object
         cls = {}
 
@@ -41,7 +42,7 @@ function class(classname, super)
 
         cls.ctor    = function() end
         cls.__cname = classname
-        cls.__ctype = 1
+        cls.__ctype = CC_INHERITED_FROM_NATIVE_CLASS
 
         function cls.new(...)
             local instance = cls.__create(...)
@@ -62,7 +63,7 @@ function class(classname, super)
         end
 
         cls.__cname = classname
-        cls.__ctype = 2 -- lua
+        cls.__ctype = CC_INHERITED_FROM_LUA
         cls.__index = cls
 
         function cls.new(...)
