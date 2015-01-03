@@ -15,7 +15,7 @@
 		78947C7014EBB9B100DBD5A6 /* dog.png in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6114EBB9B000DBD5A6 /* dog.png */; };
 		78947C7114EBB9B100DBD5A6 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6214EBB9B000DBD5A6 /* effect1.wav */; };
 		78947C7214EBB9B100DBD5A6 /* farm.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6314EBB9B000DBD5A6 /* farm.jpg */; };
-		78947C7414EBB9B100DBD5A6 /* hello.lua in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6614EBB9B000DBD5A6 /* hello.lua */; };
+		78947C7414EBB9B100DBD5A6 /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6614EBB9B000DBD5A6 /* main.lua */; };
 		78947C7714EBB9B100DBD5A6 /* land.png in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6914EBB9B000DBD5A6 /* land.png */; };
 		78947C7814EBB9B100DBD5A6 /* menu1.png in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6A14EBB9B000DBD5A6 /* menu1.png */; };
 		78947C7914EBB9B100DBD5A6 /* menu2.png in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6B14EBB9B000DBD5A6 /* menu2.png */; };
@@ -78,7 +78,7 @@
 		78947C6114EBB9B000DBD5A6 /* dog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog.png; sourceTree = "<group>"; };
 		78947C6214EBB9B000DBD5A6 /* effect1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = effect1.wav; sourceTree = "<group>"; };
 		78947C6314EBB9B000DBD5A6 /* farm.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = farm.jpg; sourceTree = "<group>"; };
-		78947C6614EBB9B000DBD5A6 /* hello.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hello.lua; sourceTree = "<group>"; };
+		78947C6614EBB9B000DBD5A6 /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.lua; sourceTree = "<group>"; };
 		78947C6914EBB9B000DBD5A6 /* land.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = land.png; sourceTree = "<group>"; };
 		78947C6A14EBB9B000DBD5A6 /* menu1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu1.png; sourceTree = "<group>"; };
 		78947C6B14EBB9B000DBD5A6 /* menu2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu2.png; sourceTree = "<group>"; };
@@ -224,7 +224,7 @@
 				924AD7471A5807D000DED6FF /* json.lua */,
 				924AD7481A5807D000DED6FF /* Opengl.lua */,
 				924AD7491A5807D000DED6FF /* OpenglConstants.lua */,
-				78947C6614EBB9B000DBD5A6 /* hello.lua */,
+				78947C6614EBB9B000DBD5A6 /* main.lua */,
 				78947C6914EBB9B000DBD5A6 /* land.png */,
 				78947C6A14EBB9B000DBD5A6 /* menu1.png */,
 				78947C6B14EBB9B000DBD5A6 /* menu2.png */,
@@ -320,7 +320,7 @@
 				78947C7114EBB9B100DBD5A6 /* effect1.wav in Resources */,
 				78947C7214EBB9B100DBD5A6 /* farm.jpg in Resources */,
 				924AD74A1A5807D000DED6FF /* AudioEngine.lua in Resources */,
-				78947C7414EBB9B100DBD5A6 /* hello.lua in Resources */,
+				78947C7414EBB9B100DBD5A6 /* main.lua in Resources */,
 				78947C7714EBB9B100DBD5A6 /* land.png in Resources */,
 				78947C7814EBB9B100DBD5A6 /* menu1.png in Resources */,
 				924AD7501A5807D000DED6FF /* json.lua in Resources */,
