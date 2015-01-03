@@ -395,6 +395,35 @@ bool luaval_to_quad3(lua_State* L, int lo, cocos2d::ccQuad3* outValue, const cha
     return ok;
 }
 
+bool luaval_to_vertex2f(lua_State* L, int lo, cocos2d::ccVertex2F* outValue, const char* funcName) {
+    // null checking
+    if (NULL == L || NULL == outValue)
+        return false;
+    bool ok = true;
+    
+    // top should be table
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err)) {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok) {
+        lua_pushstring(L, "x");
+        lua_gettable(L, lo);
+        outValue->x = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "y");
+        lua_gettable(L, lo);
+        outValue->y = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+    }
+    return ok;
+}
+
 bool luaval_to_vertex3f(lua_State* L, int lo, cocos2d::ccVertex3F* outValue, const char* funcName) {
     // null checking
     if (NULL == L || NULL == outValue)
@@ -544,6 +573,195 @@ bool luaval_to_cpoint(lua_State* L, int lo, cocos2d::ccPoint* outValue, const ch
         lua_pushstring(L, "y");
         lua_gettable(L, lo);
         outValue->y = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+    }
+    return ok;
+}
+
+bool luaval_to_v2fc4bt2fquad(lua_State* L, int lo, cocos2d::ccV2F_C4B_T2F_Quad* outValue, const char* funcName) {
+    // null checking
+    if (NULL == L || NULL == outValue)
+        return false;
+    bool ok = true;
+    
+    // top should be a table
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err)) {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok) {
+        lua_pushstring(L, "bl");
+        lua_gettable(L, lo);
+        if(lua_isnil(L, -1))
+            luaval_to_v2fc4bt2f(L, -1, &outValue->bl);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "br");
+        lua_gettable(L, lo);
+        if(lua_isnil(L, -1))
+            luaval_to_v2fc4bt2f(L, -1, &outValue->br);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "tl");
+        lua_gettable(L, lo);
+        if(lua_isnil(L, -1))
+            luaval_to_v2fc4bt2f(L, -1, &outValue->tl);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "tr");
+        lua_gettable(L, lo);
+        if(lua_isnil(L, -1))
+            luaval_to_v2fc4bt2f(L, -1, &outValue->tr);
+        lua_pop(L, 1);
+    }
+    return ok;
+}
+
+bool luaval_to_v3fc4bt2fquad(lua_State* L, int lo, cocos2d::ccV3F_C4B_T2F_Quad* outValue, const char* funcName) {
+    // null checking
+    if (NULL == L || NULL == outValue)
+        return false;
+    bool ok = true;
+    
+    // top should be a table
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err)) {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok) {
+        lua_pushstring(L, "bl");
+        lua_gettable(L, lo);
+        if(lua_isnil(L, -1))
+            luaval_to_v3fc4bt2f(L, -1, &outValue->bl);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "br");
+        lua_gettable(L, lo);
+        if(lua_isnil(L, -1))
+            luaval_to_v3fc4bt2f(L, -1, &outValue->br);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "tl");
+        lua_gettable(L, lo);
+        if(lua_isnil(L, -1))
+            luaval_to_v3fc4bt2f(L, -1, &outValue->tl);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "tr");
+        lua_gettable(L, lo);
+        if(lua_isnil(L, -1))
+            luaval_to_v3fc4bt2f(L, -1, &outValue->tr);
+        lua_pop(L, 1);
+    }
+    return ok;
+}
+
+bool luaval_to_v2fc4bt2f(lua_State* L, int lo, cocos2d::ccV2F_C4B_T2F* outValue, const char* funcName) {
+    // null checking
+    if (NULL == L || NULL == outValue)
+        return false;
+    bool ok = true;
+    
+    // top should be a table
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err)) {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok) {
+        lua_pushstring(L, "vertices");
+        lua_gettable(L, lo);
+        if(lua_isnil(L, -1))
+            luaval_to_vertex2f(L, -1, &outValue->vertices);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "colors");
+        lua_gettable(L, lo);
+        if(lua_isnil(L, -1))
+            luaval_to_color4b(L, -1, &outValue->colors);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "texCoords");
+        lua_gettable(L, lo);
+        if(lua_isnil(L, -1))
+            luaval_to_tex2f(L, -1, &outValue->texCoords);
+        lua_pop(L, 1);
+    }
+    return ok;
+}
+
+bool luaval_to_v3fc4bt2f(lua_State* L, int lo, cocos2d::ccV3F_C4B_T2F* outValue, const char* funcName) {
+    // null checking
+    if (NULL == L || NULL == outValue)
+        return false;
+    bool ok = true;
+    
+    // top should be a table
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err)) {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok) {
+        lua_pushstring(L, "vertices");
+        lua_gettable(L, lo);
+        if(lua_isnil(L, -1))
+            luaval_to_vertex3f(L, -1, &outValue->vertices);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "colors");
+        lua_gettable(L, lo);
+        if(lua_isnil(L, -1))
+            luaval_to_color4b(L, -1, &outValue->colors);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "texCoords");
+        lua_gettable(L, lo);
+        if(lua_isnil(L, -1))
+            luaval_to_tex2f(L, -1, &outValue->texCoords);
+        lua_pop(L, 1);
+    }
+    return ok;
+}
+
+bool luaval_to_tex2f(lua_State* L, int lo, cocos2d::ccTex2F* outValue, const char* funcName) {
+    // null checking
+    if (NULL == L || NULL == outValue)
+        return false;
+    bool ok = true;
+    
+    // top should be a table
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err)) {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok) {
+        lua_pushstring(L, "u");
+        lua_gettable(L, lo);
+        outValue->u = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "v");
+        lua_gettable(L, lo);
+        outValue->v = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
         lua_pop(L, 1);
     }
     return ok;
@@ -1741,6 +1959,18 @@ void quad3_to_luaval(lua_State* L, const cocos2d::ccQuad3& q) {
     lua_rawset(L, -3);
 }
 
+void vertex2f_to_luaval(lua_State* L, const cocos2d::ccVertex2F& v) {
+    if (NULL == L)
+        return;
+    lua_newtable(L);
+    lua_pushstring(L, "x");
+    lua_pushnumber(L, (lua_Number)v.x);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "y");
+    lua_pushnumber(L, (lua_Number)v.y);
+    lua_rawset(L, -3);
+}
+
 void vertex3f_to_luaval(lua_State* L, const cocos2d::ccVertex3F& v) {
     if (NULL == L)
         return;
@@ -1792,6 +2022,84 @@ void cpoint_to_luaval(lua_State* L, const cocos2d::ccPoint& p) {
     lua_rawset(L, -3);
     lua_pushstring(L, "y");
     lua_pushnumber(L, (lua_Number)p.y);
+    lua_rawset(L, -3);
+}
+
+void v2fc4bt2f_to_luaval(lua_State* L, const cocos2d::ccV2F_C4B_T2F& t) {
+    if (NULL == L)
+        return;
+    lua_newtable(L);
+    lua_pushstring(L, "vertices");
+    vertex2f_to_luaval(L, t.vertices);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "colors");
+    color4b_to_luaval(L, t.colors);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "texCoords");
+    tex2f_to_luaval(L, t.texCoords);
+    lua_rawset(L, -3);
+}
+
+void v3fc4bt2f_to_luaval(lua_State* L, const cocos2d::ccV3F_C4B_T2F& t) {
+    if (NULL == L)
+        return;
+    lua_newtable(L);
+    lua_pushstring(L, "vertices");
+    vertex3f_to_luaval(L, t.vertices);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "colors");
+    color4b_to_luaval(L, t.colors);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "texCoords");
+    tex2f_to_luaval(L, t.texCoords);
+    lua_rawset(L, -3);
+}
+
+void v2fc4bt2fquad_to_luaval(lua_State* L, const cocos2d::ccV2F_C4B_T2F_Quad& t) {
+    if (NULL == L)
+        return;
+    lua_newtable(L);
+    lua_pushstring(L, "bl");
+    v2fc4bt2f_to_luaval(L, t.bl);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "br");
+    v2fc4bt2f_to_luaval(L, t.br);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "tl");
+    v2fc4bt2f_to_luaval(L, t.tl);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "tr");
+    v2fc4bt2f_to_luaval(L, t.tr);
+    lua_rawset(L, -3);
+}
+
+void v3fc4bt2fquad_to_luaval(lua_State* L, const cocos2d::ccV3F_C4B_T2F_Quad& t) {
+    if (NULL == L)
+        return;
+    lua_newtable(L);
+    lua_pushstring(L, "bl");
+    v3fc4bt2f_to_luaval(L, t.bl);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "br");
+    v3fc4bt2f_to_luaval(L, t.br);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "tl");
+    v3fc4bt2f_to_luaval(L, t.tl);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "tr");
+    v3fc4bt2f_to_luaval(L, t.tr);
+    lua_rawset(L, -3);
+}
+
+void tex2f_to_luaval(lua_State* L, const cocos2d::ccTex2F& t) {
+    if (NULL == L)
+        return;
+    lua_newtable(L);                                    /* L: table */
+    lua_pushstring(L, "u");                             /* L: table key */
+    lua_pushnumber(L, (lua_Number)t.u);               /* L: table key value*/
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    lua_pushstring(L, "v");                             /* L: table key */
+    lua_pushnumber(L, (lua_Number)t.v);               /* L: table key value*/
     lua_rawset(L, -3);
 }
 
