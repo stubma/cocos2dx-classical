@@ -71,7 +71,7 @@ private:
 	 * @param afcFrame \link CCAFCFrame CCAFCFrame\endlink
 	 * @param offsetX x offset, only used for hyper frame
 	 * @param offsetY y offset, only used for hyper frame
-	 * @param mapping clip mapping rules, can be NULL
+	 * @param mapping clip mapping rules, can be nullptr
 	 */
 	void parseFrameModules(CCAuroraFileData* afd, CCAuroraFrame* auroraFrame, CCAFCFrame* afcFrame, int offsetX, int offsetY, CCAFCClipMapping* mapping);
 
@@ -107,7 +107,7 @@ public:
 	 *
 	 * @param afd \link CCAuroraFileData CCAuroraFileData\endlink
 	 * @param animIndex animation index
-	 * @param mapping clip mapping rules, can be NULL
+	 * @param mapping clip mapping rules, can be nullptr
 	 * @return \link CCAFCAnimation CCAFCAnimation\endlink
 	 */
 	CCAFCAnimation* getAnimationData(CCAuroraFileData* afd, int animIndex, CCAFCClipMapping* mapping);

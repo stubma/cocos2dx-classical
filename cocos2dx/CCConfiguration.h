@@ -111,7 +111,7 @@ public:
 
 	/** returns the value of a given key as a string.
 	 If the key is not found, it will return the default value */
-	const char* getCString( const char *key, const char *default_value=NULL ) const;
+	const char* getCString( const char *key, const char *default_value=nullptr ) const;
 
 	/** returns the value of a given key as a boolean.
 	 If the key is not found, it will return the default value */

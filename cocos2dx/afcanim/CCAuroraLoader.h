@@ -41,7 +41,7 @@ private:
 	 * @param data BSprite file raw data
 	 * @param length length of \c data
 	 * @param resScale resource scale of BSprite file data
-	 * @return \link CCAuroraFileData CCAuroraFileData\endlink, or NULL if loading failed
+	 * @return \link CCAuroraFileData CCAuroraFileData\endlink, or nullptr if loading failed
 	 */
 	static CCAuroraFileData* load(const char* data, size_t length, float resScale = 1.f);
 

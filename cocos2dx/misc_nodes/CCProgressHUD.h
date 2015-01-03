@@ -95,7 +95,7 @@ public:
     /// hide current instance of CCProgressHUD, or do nothing if no instance
     static void hide();
     
-    /// return current instance or NULL if no
+    /// return current instance or nullptr if no
     static CCProgressHUD* current();
     
     /// cancelable or not
@@ -108,7 +108,7 @@ public:
     CC_SYNTHESIZE_PASS_BY_REF_SETTER(ccColor4B, m_panelColor, PanelColor);
     
     /// icon sprite, it will be retained by HUD
-	/// if NULL, default progress indicator will be used
+	/// if nullptr, default progress indicator will be used
     CC_SYNTHESIZE_SETTER(CCSprite*, m_icon, Icon);
     
     /// message

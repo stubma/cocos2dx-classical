@@ -295,9 +295,9 @@ public:
      *  @js ctor
      */
     CCCallFunc()
-        : m_pSelectorTarget(NULL)
+        : m_pSelectorTarget(nullptr)
 		, m_nScriptHandler(0)
-        , m_pCallFunc(NULL)
+        , m_pCallFunc(nullptr)
     {
     }
     /**

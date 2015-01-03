@@ -190,7 +190,7 @@ public:
      * create a edit box with size.
      * @return An autorelease pointer of CCEditBox, you don't need to release it only if you retain it again.
      */
-    static CCEditBox* create(const CCSize& size, CCScale9Sprite* pNormal9SpriteBg, CCScale9Sprite* pPressed9SpriteBg = NULL, CCScale9Sprite* pDisabled9SpriteBg = NULL);
+    static CCEditBox* create(const CCSize& size, CCScale9Sprite* pNormal9SpriteBg, CCScale9Sprite* pPressed9SpriteBg = nullptr, CCScale9Sprite* pDisabled9SpriteBg = nullptr);
     
     /**
      * Init edit box with specified size. This method should be invoked right after constructor.

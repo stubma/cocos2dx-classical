@@ -252,9 +252,9 @@ public:
 	 * Get animation at specified index
 	 *
 	 * @param index animation index
-	 * @param mapping clip mapping, default is NULL
+	 * @param mapping clip mapping, default is nullptr
 	 */
-	virtual CCAFCAnimation* getAnimationAt(int index, CCAFCClipMapping* mapping = NULL) = 0;
+	virtual CCAFCAnimation* getAnimationAt(int index, CCAFCClipMapping* mapping = nullptr) = 0;
 
 	/**
 	 * Get animation count
@@ -277,10 +277,10 @@ public:
 	 * Currently, clip mapping doesn't support SpriteX 2011 and Motion Welder
 	 *
 	 * @param index index of animation
-	 * @param mapping clip mapping, default is NULL. A clip mapping must be added
+	 * @param mapping clip mapping, default is nullptr. A clip mapping must be added
 	 * 		to \link CCAFCSprite CCAFCSprite\endlink before use it in \c playAnimation
 	 */
-	void playAnimation(int index, CCAFCClipMapping* mapping = NULL);
+	void playAnimation(int index, CCAFCClipMapping* mapping = nullptr);
 
 	/**
 	 * Play an animation and apply a clip mapping to it
@@ -336,7 +336,7 @@ public:
 	/**
 	 * Set animation event callback
 	 *
-	 * @param callback \link CCAFCSpriteCallback CCAFCSpriteCallback\endlink, if NULL, means clear callback
+	 * @param callback \link CCAFCSpriteCallback CCAFCSpriteCallback\endlink, if nullptr, means clear callback
 	 */
 	void setAFCSpriteCallback(CCAFCSpriteCallback* callback) { m_callback = callback; }
 
@@ -566,7 +566,7 @@ public:
 	 * Get a clip mapping by tag
 	 *
 	 * @param tag tag of clip mapping
-	 * @return clip mapping or NULL if not found
+	 * @return clip mapping or nullptr if not found
 	 */
 	CCAFCClipMapping* getClipMappingByTag(int tag);
 
@@ -574,16 +574,16 @@ public:
 	 * Replace current textures with another set of textures. You must ensure
 	 * the new set of textures has same size and quantity as old set.
 	 *
-	 * @param tex texture 1, other textures can follow it and NULL ends
+	 * @param tex texture 1, other textures can follow it and nullptr ends
 	 */
 	void replaceTextures(CCTexture2D* tex, ...);
 
 	/**
 	 * Replace current textures with another set of textures. You must ensure
 	 * the new set of textures has same size and quantity as old set. Texture
-	 * can be set to NULL.
+	 * can be set to nullptr.
 	 *
-	 * @param tex texture list, can have NULL in the list
+	 * @param tex texture list, can have nullptr in the list
 	 * @param count texture count in \c tex
 	 */
 	void replaceTextures(CCTexture2D** tex, int count);

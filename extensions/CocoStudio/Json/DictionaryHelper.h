@@ -63,13 +63,13 @@ public:
 	int   getIntValue_json(const rapidjson::Value& root, const char* key, int def = 0);
 	float getFloatValue_json(const rapidjson::Value& root,const char* key, float def = 0.0f);
     bool  getBooleanValue_json(const rapidjson::Value& root,const char* key, bool def = false);
-    const char* getStringValue_json(const rapidjson::Value& root,const char* key, const char *def = NULL);
+    const char* getStringValue_json(const rapidjson::Value& root,const char* key, const char *def = nullptr);
     int   getArrayCount_json(const rapidjson::Value& root,const char* key, int def = 0);
 	
     int   getIntValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx, int def = 0);
 	float getFloatValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx, float def = 0.0f);
 	bool  getBoolValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx, bool def = false);
-	const char* getStringValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx, const char *def = NULL);
+	const char* getStringValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx, const char *def = nullptr);
 	const rapidjson::Value &getDictionaryFromArray_json(const rapidjson::Value &root, const char* key,int idx);
 	bool checkObjectExist_json(const rapidjson::Value &root);
     bool checkObjectExist_json(const rapidjson::Value &root, const char* key);

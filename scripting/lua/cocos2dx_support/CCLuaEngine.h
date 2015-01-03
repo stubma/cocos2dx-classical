@@ -115,16 +115,16 @@ public:
     virtual int executeNodeEvent(CCNode* pNode, int nAction);
     virtual int executeMenuItemEvent(CCMenuItem* pMenuItem);
     virtual int executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName);
-    virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = NULL);
-    virtual int executeSchedule(int nHandler, float dt, CCNode* pNode = NULL);
+    virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = nullptr);
+    virtual int executeSchedule(int nHandler, float dt, CCNode* pNode = nullptr);
     virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches);
     virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch);
     virtual int executeLayerKeypadEvent(CCLayer* pLayer, int eventType);
     /** execute a accelerometer event */
     virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue);
-    virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = NULL, const char* pEventSourceClassName = NULL);
+    virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = nullptr, const char* pEventSourceClassName = nullptr);
     
-    int executeTableViewEvent(int nEventType,cocos2d::extension::CCTableView* pTableView,void* pValue = NULL, CCArray* pResultArray = NULL);
+    int executeTableViewEvent(int nEventType,cocos2d::extension::CCTableView* pTableView,void* pValue = nullptr, CCArray* pResultArray = nullptr);
     
     virtual int executeEventWithArgs(int nHandler, CCArray* pArgs);
 
@@ -133,7 +133,7 @@ public:
     
 private:
     CCLuaEngine(void)
-    : m_stack(NULL)
+    : m_stack(nullptr)
     {
     }
     

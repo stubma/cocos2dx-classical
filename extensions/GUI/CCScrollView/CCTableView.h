@@ -163,7 +163,7 @@ public:
     void setDelegate(CCTableViewDelegate* pDelegate) { m_pTableViewDelegate = pDelegate; }
     
     
-    bool initWithViewSize(CCSize size, CCNode* container = NULL);
+    bool initWithViewSize(CCSize size, CCNode* container = nullptr);
     /**
      * Updates the content of the cell at a given index.
      *

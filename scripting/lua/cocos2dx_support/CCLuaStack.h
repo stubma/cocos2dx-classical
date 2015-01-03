@@ -123,7 +123,7 @@ public:
     
 protected:
     CCLuaStack(void)
-    : m_state(NULL)
+    : m_state(nullptr)
     , m_callFromLua(0)
     {
     }

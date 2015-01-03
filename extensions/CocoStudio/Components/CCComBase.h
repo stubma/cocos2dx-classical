@@ -56,9 +56,9 @@ struct SerData
 	cocos2d::extension::CocoLoader *pCocoLoader;
 	SerData()
 	{
-		prData = NULL;
-		pCocoNode = NULL;
-		pCocoLoader = NULL;
+		prData = nullptr;
+		pCocoNode = nullptr;
+		pCocoLoader = nullptr;
 	}
 };
 

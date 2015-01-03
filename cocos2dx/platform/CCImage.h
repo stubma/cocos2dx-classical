@@ -156,7 +156,7 @@ public:
      * pixel
      */
     static CCSize measureString(const char* pText,
-                                const char* pFontName = NULL,
+                                const char* pFontName = nullptr,
                                 int nSize = 0,
                                 int maxWidth = 0,
                                 float shadowOffsetX = 0,
@@ -164,7 +164,7 @@ public:
                                 float strokeSize = 0,
                                 float lineSpacing = 0,
                                 float globalImageScaleFactor = 1,
-                                CC_DECRYPT_FUNC decryptFunc = NULL);
+                                CC_DECRYPT_FUNC decryptFunc = nullptr);
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     /**
@@ -194,7 +194,7 @@ public:
                                     float globalImageScaleFactor = 1,
                                     int toCharIndex = -1,
                                     float elapsedTime = 0,
-                                    CC_DECRYPT_FUNC decryptFunc = NULL);
+                                    CC_DECRYPT_FUNC decryptFunc = nullptr);
 #endif
     
 

@@ -41,7 +41,7 @@ private:
 	 * @param data ASprite file raw data
 	 * @param length length of \c data
 	 * @param resScale resource scale of ASprite file data
-	 * @return \link CCArcticFileData CCArcticFileData\endlink, or NULL if loading failed
+	 * @return \link CCArcticFileData CCArcticFileData\endlink, or nullptr if loading failed
 	 */
 	static CCArcticFileData* load(const char* data, size_t length, float resScale = 1.f);
 

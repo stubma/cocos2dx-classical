@@ -57,7 +57,7 @@ public:
 	 * Query property of object group
 	 *
 	 * @param name property name
-	 * @return property value, or NULL if not found
+	 * @return property value, or nullptr if not found
 	 */
 	string getProperty(const string& name);
 	
@@ -72,7 +72,7 @@ public:
 	 * Get object by name
 	 *
 	 * @param name object name
-	 * @return CCTMXObject instance, or NULL if not found
+	 * @return CCTMXObject instance, or nullptr if not found
 	 */
 	CCTMXObject* getObject(const string& name);
 	
@@ -81,7 +81,7 @@ public:
 	 * by index. The index increases from zero and follow the order object appears in TMX file
 	 *
 	 * @param index index of object
-	 * @return CCTMXObject instance, or NULL if index is invalid
+	 * @return CCTMXObject instance, or nullptr if index is invalid
 	 */
 	CCTMXObject* getObjectAt(int index);
 	

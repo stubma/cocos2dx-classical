@@ -128,10 +128,10 @@ public:
      * @lua NA
      */
     CCTouchDispatcher()
-        : m_pTargetedHandlers(NULL)
-        , m_pStandardHandlers(NULL)
-        , m_pHandlersToAdd(NULL)
-        , m_pHandlersToRemove(NULL)
+        : m_pTargetedHandlers(nullptr)
+        , m_pStandardHandlers(nullptr)
+        , m_pHandlersToAdd(nullptr)
+        , m_pHandlersToRemove(nullptr)
         
     {}
 

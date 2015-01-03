@@ -103,7 +103,7 @@ public:
 	 * Get clip at specified index
 	 *
 	 * @param index index, starts from 0
-	 * @return \link CCAFCClip CCAFCClip\endlink object, or NULL if index is invalid
+	 * @return \link CCAFCClip CCAFCClip\endlink object, or nullptr if index is invalid
 	 */
 	CCAFCClip* getClipAt(int index) { return m_clipList.at(index); }
 
@@ -113,7 +113,7 @@ public:
 	 * @param type clip type
 	 * @para index index of clip with same types, so it may not reflect actuall position
 	 * 		in clip array
-	 * @return \link CCAFCClip CCAFCClip\endlink, or NULL if not found
+	 * @return \link CCAFCClip CCAFCClip\endlink, or nullptr if not found
 	 */
 	CCAFCClip* getClipAt(CCAFCClipType type, int index);
 

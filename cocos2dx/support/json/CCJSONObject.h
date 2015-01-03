@@ -251,7 +251,7 @@ public:
 	 * Get json object of a key
 	 *
 	 * @param key key string
-	 * @return json object, or NULL if key is not found
+	 * @return json object, or nullptr if key is not found
 	 */
 	CCJSONObject* optJSONObject(const char* key);
 
@@ -259,7 +259,7 @@ public:
 	 * Get json array of a key
 	 *
 	 * @param key key string
-	 * @return json array, or NULL if key is not found
+	 * @return json array, or nullptr if key is not found
 	 */
 	CCJSONArray* optJSONArray(const char* key);
 
@@ -271,7 +271,7 @@ public:
 	 * @return value string, this string should not released by caller, it is managed by json object and you must
 	 * 		copy it if you want to save it
 	 */
-	string optString(const char* key, const char* def = NULL);
+	string optString(const char* key, const char* def = nullptr);
 
 	/**
 	 * Get boolean value at given index
@@ -342,7 +342,7 @@ public:
 	 * @return value string, this string should not released by caller, it is managed by json object and you must
 	 * 		copy it if you want to save it
 	 */
-	string optString(int index, const char* def = NULL);
+	string optString(int index, const char* def = nullptr);
 
 	/**
 	 * Get count of elements in json object
@@ -355,7 +355,7 @@ public:
 	 * get key by index
 	 *
 	 * @param index index of element
-	 * @return key, or NULL if index is invalid, returned key is not a copy, caller should NOT release it
+	 * @return key, or nullptr if index is invalid, returned key is not a copy, caller should NOT release it
 	 */
 	const char* keyAt(int index);
 };

@@ -93,7 +93,7 @@ public:
     
     CCLuaValue(void)
     : m_type(CCLuaValueTypeInt)
-    , m_ccobjectType(NULL)
+    , m_ccobjectType(nullptr)
     {
         memset(&m_field, 0, sizeof(m_field));
     }

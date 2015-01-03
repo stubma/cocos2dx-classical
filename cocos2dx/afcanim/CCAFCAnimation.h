@@ -69,7 +69,7 @@ public:
 	 * Get frame at specified index
 	 *
 	 * @param index index, starts from 0
-	 * @return \link CCAFCFrame CCAFCFrame\endlink object, or NULL if index is invalid
+	 * @return \link CCAFCFrame CCAFCFrame\endlink object, or nullptr if index is invalid
 	 */
 	CCAFCFrame* getFrameAt(int index) { return m_frameList.at(index); }
 };

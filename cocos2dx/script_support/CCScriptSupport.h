@@ -118,7 +118,7 @@ public:
 private:
     CCSchedulerScriptHandlerEntry(int nHandler)
     : CCScriptHandlerEntry(nHandler)
-    , m_pTimer(NULL)
+    , m_pTimer(nullptr)
     , m_bPaused(false)
     , m_bMarkedForDeletion(false)
     {
@@ -228,9 +228,9 @@ public:
     virtual int executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName) = 0;
     
     /** execute a callfun event */
-    virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = NULL) = 0;
+    virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = nullptr) = 0;
     /** execute a schedule function */
-    virtual int executeSchedule(int nHandler, float dt, CCNode* pNode = NULL) = 0;
+    virtual int executeSchedule(int nHandler, float dt, CCNode* pNode = nullptr) = 0;
     
     /** functions for executing touch event */
     virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches) = 0;
@@ -243,7 +243,7 @@ public:
     virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue) = 0;
 
     /** function for common event */
-    virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = NULL, const char* pEventSourceClassName = NULL) = 0;
+    virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = nullptr, const char* pEventSourceClassName = nullptr) = 0;
     
     /** function for c++ call back lua funtion */
     virtual int executeEventWithArgs(int nHandler, CCArray* pArgs) { return 0; }
@@ -287,7 +287,7 @@ public:
     
 private:
     CCScriptEngineManager(void)
-    : m_pScriptEngine(NULL)
+    : m_pScriptEngine(nullptr)
     {
     }
     

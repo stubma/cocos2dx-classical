@@ -66,8 +66,8 @@ public:
     CCMenuItem()
     : m_bSelected(false)
     , m_bEnabled(false)            
-    , m_pListener(NULL)            
-    , m_pfnSelector(NULL)
+    , m_pListener(nullptr)            
+    , m_pfnSelector(nullptr)
     , m_nScriptTapHandler(0)
     {}
     /**
@@ -133,7 +133,7 @@ public:
      *  @js ctor
      */
     CCMenuItemLabel()
-    : m_pLabel(NULL)
+    : m_pLabel(nullptr)
     , m_fOriginalScale(0.0)
     {}
     /**
@@ -303,16 +303,16 @@ public:
      *  @js ctor
      */
     CCMenuItemSprite()
-    :m_pNormalImage(NULL)
-    ,m_pSelectedImage(NULL)
-    ,m_pDisabledImage(NULL)
+    :m_pNormalImage(nullptr)
+    ,m_pSelectedImage(nullptr)
+    ,m_pDisabledImage(nullptr)
     ,m_focus(false)
     ,m_focusIsAttachment(false)
-    ,m_focusImage(NULL)
-    ,m_selectedEventTarget(NULL)
-    ,m_selectedEventSelector(NULL)
-    ,m_unselectedEventTarget(NULL)
-    ,m_unselectedEventSelector(NULL)
+    ,m_focusImage(nullptr)
+    ,m_selectedEventTarget(nullptr)
+    ,m_selectedEventSelector(nullptr)
+    ,m_unselectedEventTarget(nullptr)
+    ,m_unselectedEventSelector(nullptr)
     {}
     
     /**
@@ -325,7 +325,7 @@ public:
     static CCMenuItemSprite* create(CCNode* sprite, CCObject* target, SEL_MenuHandler selector);
 
     /** creates a menu item with a normal, selected and disabled image*/
-    static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite = NULL);
+    static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite = nullptr);
     /** creates a menu item with a normal and selected image with target/selector 
      * @lua NA
      */
@@ -454,7 +454,7 @@ public:
      */
     CCMenuItemToggle()
     : m_uSelectedIndex(0)
-    , m_pSubItems(NULL)            
+    , m_pSubItems(nullptr)            
     {}
     /**
      * @js NA

@@ -115,7 +115,7 @@ public:
 	 * Get animation at an index
 	 *
 	 * @param index animation index
-	 * @return \link CCSPX3Action CCSPX3Action\endlink, or NULL if index is not valid
+	 * @return \link CCSPX3Action CCSPX3Action\endlink, or nullptr if index is not valid
 	 */
 	CCSPX3Action* getActionAt(int index) { return m_actions.at(index); }
 };

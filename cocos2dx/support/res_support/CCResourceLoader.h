@@ -228,7 +228,7 @@ struct CustomTask : public CCResourceLoadTask {
     CCCallFunc* func;
     
     CustomTask() :
-    func(NULL) {
+    func(nullptr) {
     }
     
     virtual ~CustomTask() {
@@ -303,28 +303,28 @@ public:
      * load a file and return raw data
      *
      * @param name file path
-     * @param decFunc decrypt function or NULL if file is not encrypted
+     * @param decFunc decrypt function or nullptr if file is not encrypted
      * @return raw data of file, caller should release it
      */
-    static unsigned char* loadRaw(const string& name, unsigned long* size, CC_DECRYPT_FUNC decFunc = NULL);
+    static unsigned char* loadRaw(const string& name, unsigned long* size, CC_DECRYPT_FUNC decFunc = nullptr);
     
     /**
      * load a file and return a c string
      *
      * @param name file path
-     * @param decFunc decrypt function or NULL if file is not encrypted
+     * @param decFunc decrypt function or nullptr if file is not encrypted
      * @return c string of file content, caller should release it
      */
-    static char* loadCString(const string& name, CC_DECRYPT_FUNC decFunc = NULL);
+    static char* loadCString(const string& name, CC_DECRYPT_FUNC decFunc = nullptr);
     
     /**
      * load a file and return a c++ string
      *
      * @param name file path
-     * @param decFunc decrypt function or NULL if file is not encrypted
+     * @param decFunc decrypt function or nullptr if file is not encrypted
      * @return c string of file content, caller should release it
      */
-    static string loadString(const string& name, CC_DECRYPT_FUNC decFunc = NULL);
+    static string loadString(const string& name, CC_DECRYPT_FUNC decFunc = nullptr);
     
 	/**
 	 * a static method used to load an encrypted image
@@ -526,10 +526,10 @@ public:
      * @param plist path of atlas plist file
      * @param tex path of atlas image file
      * @param config path of armature config file
-     * @param func decrypte func, default is NULL
+     * @param func decrypte func, default is nullptr
      * @param idle idle time after task is completed
      */
-    void addArmatureTask(string plist, string tex, string config, CC_DECRYPT_FUNC func = NULL, float idle = 0);
+    void addArmatureTask(string plist, string tex, string config, CC_DECRYPT_FUNC func = nullptr, float idle = 0);
     
     /**
      * add an armature config file task, also load related image files. Decryption is
@@ -540,10 +540,10 @@ public:
      * @param start start parameter in pattern
      * @param end end parameter in pattern
      * @param config path of armature config file
-     * @param func decrypte func, default is NULL
+     * @param func decrypte func, default is nullptr
      * @param idle idle time after task is completed
      */
-    void addArmatureTask(string plistPattern, string texPattern, int start, int end, string config, CC_DECRYPT_FUNC func = NULL, float idle = 0);
+    void addArmatureTask(string plistPattern, string texPattern, int start, int end, string config, CC_DECRYPT_FUNC func = nullptr, float idle = 0);
 	
 	/// delay time before start to load
 	CC_SYNTHESIZE(float, m_delay, Delay);

@@ -76,7 +76,7 @@ public:
      *
      * @param xmlPath The cache of the xml
      */
-    static void addDataFromCache(const char *pFileContent, DataInfo *dataInfo = NULL);
+    static void addDataFromCache(const char *pFileContent, DataInfo *dataInfo = nullptr);
 
 
 
@@ -108,7 +108,7 @@ public:
     static CCContourData *decodeContour(tinyxml2::XMLElement *contourXML, DataInfo *dataInfo);
 
 public:
-    static void addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo = NULL);
+    static void addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo = nullptr);
 
 	static CCArmatureData *decodeArmature(const rapidjson::Value &json, DataInfo *dataInfo);
 	static CCBoneData *decodeBone(const rapidjson::Value &json, DataInfo *dataInfo);
@@ -125,7 +125,7 @@ public:
 	static void decodeNode(CCBaseData *node, const rapidjson::Value &json, DataInfo *dataInfo);
 
 public:
-	static void addDataFromBinaryCache(const char *fileContent, DataInfo *dataInfo = NULL);
+	static void addDataFromBinaryCache(const char *fileContent, DataInfo *dataInfo = nullptr);
 	static CCArmatureData *decodeArmature(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
 	static CCBoneData *decodeBone(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
 	static CCDisplayData *decodeBoneDisplay(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);

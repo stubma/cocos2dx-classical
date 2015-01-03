@@ -205,7 +205,7 @@ protected:
 /** @brief CCStopGrid action.
  @warning Don't call this action if another grid action is active.
  Call if you want to remove the the grid effect. Example:
- CCSequence::actions(Lens::action(...), CCStopGrid::action(...), NULL);
+ CCSequence::actions(Lens::action(...), CCStopGrid::action(...), nullptr);
  */
 class CC_DLL CCStopGrid : public CCActionInstant
 {

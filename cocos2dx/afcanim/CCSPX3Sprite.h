@@ -62,7 +62,7 @@ public:
 	 * @param spxPath path of sprite file
 	 * @param actionIndex animation index
 	 * @param tex related textures, if more than one, can follow this argument. Must ends
-	 * 		with NULL.
+	 * 		with nullptr.
 	 * @return \link CCSPX3Sprite CCSPX3Sprite\endlink
 	 */
 	static CCSPX3Sprite* create(const char* spxPath, int actionIndex, CCTexture2D* tex, ...);
@@ -81,7 +81,7 @@ public:
 	virtual CCAFCFileData* getFileData() { return m_spx; }
 
 	/// @see CCAFCSprite::getAnimationAt
-	virtual CCAFCAnimation* getAnimationAt(int index, CCAFCClipMapping* mapping = NULL);
+	virtual CCAFCAnimation* getAnimationAt(int index, CCAFCClipMapping* mapping = nullptr);
 
 	/// @see CCAFCSprite::getAnimationCount
 	virtual int getAnimationCount();

@@ -48,8 +48,8 @@ public:
 	 * decode base64 string
 	 *
 	 * @param data base64 string
-	 * @param outLen if not NULL, it will return decoded data length
-	 * @return raw data, caller should release returned data pointer. It returns NULL if data can't be decoded
+	 * @param outLen if not nullptr, it will return decoded data length
+	 * @return raw data, caller should release returned data pointer. It returns nullptr if data can't be decoded
 	 */
 	static const char* decode(const string& data, int* outLen);
     

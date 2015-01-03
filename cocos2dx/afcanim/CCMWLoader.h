@@ -41,7 +41,7 @@ private:
 	 * @param data Motion Welder file raw data
 	 * @param length length of \c data
 	 * @param resScale resource scale of Motion Welder file data
-	 * @return \link CCMWFileData CCMWFileData\endlink, or NULL if loading failed
+	 * @return \link CCMWFileData CCMWFileData\endlink, or nullptr if loading failed
 	 */
 	static CCMWFileData* load(const char* data, size_t length, float resScale = 1.f);
 

@@ -41,7 +41,7 @@ private:
 	 * @param data SpriteX 2011 file raw data
 	 * @param length length of \c data
 	 * @param resScale resource scale of SpriteX 2011 file data
-	 * @return \link CCSPX3FileData CCSPX3FileData\endlink, or NULL if loading failed
+	 * @return \link CCSPX3FileData CCSPX3FileData\endlink, or nullptr if loading failed
 	 */
 	static CCSPX3FileData* load(const char* data, size_t length, float resScale = 1.f);
 

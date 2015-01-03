@@ -176,7 +176,7 @@ public:
      */
     CCSpeed()
         : m_fSpeed(0.0)
-        , m_pInnerAction(NULL)
+        , m_pInnerAction(nullptr)
     {}
     /**
      *  @js NA
@@ -232,7 +232,7 @@ public:
      *  @js ctor
      */
     CCFollow()
-        : m_pobFollowedNode(NULL)
+        : m_pobFollowedNode(nullptr)
         , m_bBoundarySet(false)
         , m_bBoundaryFullyCovered(false)        
         , m_fLeftBoundary(0.0)

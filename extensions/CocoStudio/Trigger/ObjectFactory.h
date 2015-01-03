@@ -52,7 +52,7 @@ public:
     struct CC_DLL TInfo
     {
         TInfo(void);
-        TInfo(const std::string& type, Instance ins = NULL);
+        TInfo(const std::string& type, Instance ins = nullptr);
         TInfo(const TInfo &t);
         ~TInfo(void);
         TInfo& operator= (const TInfo &t);

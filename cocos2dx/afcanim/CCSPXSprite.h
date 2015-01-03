@@ -68,7 +68,7 @@ public:
 	virtual CCAFCFileData* getFileData() { return m_spx; }
 
 	/// @see CCAFCSprite::getAnimationAt
-	virtual CCAFCAnimation* getAnimationAt(int index, CCAFCClipMapping* mapping = NULL);
+	virtual CCAFCAnimation* getAnimationAt(int index, CCAFCClipMapping* mapping = nullptr);
 
 	/// @see CCAFCSprite::getAnimationCount
 	virtual int getAnimationCount();

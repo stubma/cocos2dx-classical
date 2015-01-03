@@ -124,7 +124,7 @@ public:
     /** Returns a reverse of ActionTimeline. 
      *  Not implement yet.
      */
-    virtual ActionTimeline* reverse() const { return NULL; }
+    virtual ActionTimeline* reverse() const { return nullptr; }
 
     virtual void step(float delta); 
     virtual void startWithTarget(cocos2d::CCNode *target);  

@@ -54,7 +54,7 @@ public:
 	 * @param path path of BSprite file
 	 * @param animIndex animation index
 	 * @param tex related textures, if more than one, can follow this argument. Must ends
-	 * 		with NULL.
+	 * 		with nullptr.
 	 */
 	static CCAuroraSprite* create(const char* path, int animIndex, CCTexture2D* tex, ...);
 
@@ -72,7 +72,7 @@ public:
 	virtual CCAFCFileData* getFileData() { return m_aurora; }
 
 	/// @see CCAFCSprite::getAnimationAt
-	virtual CCAFCAnimation* getAnimationAt(int index, CCAFCClipMapping* mapping = NULL);
+	virtual CCAFCAnimation* getAnimationAt(int index, CCAFCClipMapping* mapping = nullptr);
 
 	/// @see CCAFCSprite::getAnimationCount
 	virtual int getAnimationCount();

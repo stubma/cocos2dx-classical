@@ -86,7 +86,7 @@ public:
      * Add a CCBone to this CCArmature,
      *
      * @param bone  The CCBone you want to add to CCArmature
-     * @param parentName   The parent CCBone's name you want to add to . If it's  NULL, then set CCArmature to its parent
+     * @param parentName   The parent CCBone's name you want to add to . If it's  nullptr, then set CCArmature to its parent
      */
     virtual void addBone(CCBone *bone, const char *parentName);
     /**

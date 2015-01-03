@@ -82,7 +82,7 @@ protected:
     
 public:
     virtual ~CCTCPSocketHub();
-	static CCTCPSocketHub* create(CC_MULTI_ENCRYPT_FUNC encryptFunc = NULL, CC_MULTI_DECRYPT_FUNC decryptFunc = NULL);
+	static CCTCPSocketHub* create(CC_MULTI_ENCRYPT_FUNC encryptFunc = nullptr, CC_MULTI_DECRYPT_FUNC decryptFunc = nullptr);
     static CC_MULTI_ENCRYPT_FUNC getEncryptFunc();
     static CC_MULTI_DECRYPT_FUNC getDecryptFunc();
 	
@@ -94,7 +94,7 @@ public:
 	 * @param tag tag of socket
 	 * @param blockSec block time when create this socket, 0 means not block
 	 * @param keepAlive true means keep socket alive
-	 * @return instance or NULL if failed
+	 * @return instance or nullptr if failed
 	 */
     CCTCPSocket* createSocket(const string& hostname, int port, int tag, int blockSec = kCCSocketDefaultTimeout, bool keepAlive = false);
 	

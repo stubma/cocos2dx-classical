@@ -47,8 +47,8 @@ static __TYPE__* create() \
     else \
     { \
         delete pRet; \
-        pRet = NULL; \
-        return NULL; \
+        pRet = nullptr; \
+        return nullptr; \
     } \
 }
 
@@ -69,8 +69,8 @@ CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
     else \
     { \
         delete pRet; \
-        pRet = NULL; \
-        return NULL; \
+        pRet = nullptr; \
+        return nullptr; \
     } \
 }
 

@@ -70,7 +70,7 @@ CCCallFuncNT<T>* CCCallFuncNT<T>::create(CCObject* pSelectorTarget, SEL_CallFunc
     }
     
     c->release();
-    return NULL;
+    return nullptr;
 }
 
 template <typename T>
@@ -86,8 +86,8 @@ bool CCCallFuncNT<T>::initWithTarget(CCObject* pSelectorTarget, SEL_CallFuncNT s
 
 template <typename T>
 CCObject* CCCallFuncNT<T>::copyWithZone(CCZone* pZone) {
-    CCZone* pNewZone = NULL;
-    CCCallFuncNT* pRet = NULL;
+    CCZone* pNewZone = nullptr;
+    CCCallFuncNT* pRet = nullptr;
     
     if (pZone && pZone->m_pCopyObject) {
         //in case of being called at sub class

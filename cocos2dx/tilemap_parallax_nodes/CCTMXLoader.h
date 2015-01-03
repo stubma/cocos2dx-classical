@@ -119,10 +119,10 @@ public:
     virtual void endElement(void* ctx, const char* name);
     virtual void textHandler(void* ctx, const char* s, int len);
 	
-	/// load a tmx map from a tmx file relative path, return NULL if failed
+	/// load a tmx map from a tmx file relative path, return nullptr if failed
 	CCTMXMapInfo* load(const string& tmxFile);
 	
-	/// load a tmx map from a tmx raw data, so you must specify a resource base path, return NULL if failed
+	/// load a tmx map from a tmx raw data, so you must specify a resource base path, return nullptr if failed
 	CCTMXMapInfo* load(const char* tmxData, int length, const string& resourcePath);
 };
 

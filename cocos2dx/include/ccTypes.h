@@ -575,7 +575,7 @@ public:
     m_alignment(kCCTextAlignmentCenter),
     m_vertAlignment(kCCVerticalTextAlignmentTop),
     m_fontFillColor(ccWHITE),
-    decryptFunc(NULL),
+    decryptFunc(nullptr),
     m_globalImageScaleFactor(1),
     m_lineSpacing(0),
     m_shadowColor(0),

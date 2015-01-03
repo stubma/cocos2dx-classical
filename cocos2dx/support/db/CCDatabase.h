@@ -65,7 +65,7 @@ private:
 	/// cache statement
 	void setCachedStatement(const char* sql, CCStatement* statement);
 
-	/// execute a sql query statement, return result set if query is ok, or NULL if failed
+	/// execute a sql query statement, return result set if query is ok, or nullptr if failed
 	CCResultSet* _executeQuery(const char* sql);
 
 	/// execute a sql non-query statement, return true if execution is ok
@@ -223,7 +223,7 @@ public:
      * @param func you can provide a decrypt function if the sql file is encrypted
 	 * @return true means execution is ok
 	 */
-	bool executeSQL(string path, CC_DECRYPT_FUNC func = NULL);
+	bool executeSQL(string path, CC_DECRYPT_FUNC func = nullptr);
 
 	/**
 	 * execute a sql file in a transaction

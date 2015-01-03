@@ -118,7 +118,7 @@ public:
 	 * Get frame at an index
 	 *
 	 * @param index frame index
-	 * @return \link CCSPXFrame CCSPXFrame\endlink, or NULL if index is not valid
+	 * @return \link CCSPXFrame CCSPXFrame\endlink, or nullptr if index is not valid
 	 */
 	CCSPXFrame* getFrameAt(int index) { return m_frames.at(index); }
 
@@ -126,7 +126,7 @@ public:
 	 * Get animation at an index
 	 *
 	 * @param index animation index
-	 * @return \link CCSPXAction CCSPXAction\endlink, or NULL if index is not valid
+	 * @return \link CCSPXAction CCSPXAction\endlink, or nullptr if index is not valid
 	 */
 	CCSPXAction* getActionAt(int index) { return m_actions.at(index); }
 };

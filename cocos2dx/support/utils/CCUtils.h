@@ -67,7 +67,7 @@ public:
 	 * @param src source string
 	 * @param start start position to copy
 	 * @param len length to copy
-	 * @return copied string, caller should release it. returns NULL if \c src is NULL
+	 * @return copied string, caller should release it. returns nullptr if \c src is nullptr
 	 */
 	static const char* copy(const char* src, int start, size_t len);
     
@@ -482,7 +482,7 @@ public:
      * pixel
      *
      * @param pText rich text string supported by CCLabelTTF
-     * @param pFontName font name, optional. If NULL, use default font
+     * @param pFontName font name, optional. If nullptr, use default font
      * @param nSize font size, optional. If zero, use default size
      * @param maxWidth max line width, or zero if single line text. optional
      * @param shadowOffsetX shadow x offset, optional
@@ -493,7 +493,7 @@ public:
      * @param decryptFunc if label has embedded images and they are encrypted, you must provide a decrypt function
      */
     static CCSize measureString(const char* pText,
-                                const char* pFontName = NULL,
+                                const char* pFontName = nullptr,
                                 int nSize = 0,
                                 int maxWidth = 0,
                                 float shadowOffsetX = 0,
@@ -501,7 +501,7 @@ public:
                                 float strokeSize = 0,
                                 float lineSpacing = 0,
                                 float globalImageScaleFactor = 1,
-                                CC_DECRYPT_FUNC decryptFunc = NULL);
+                                CC_DECRYPT_FUNC decryptFunc = nullptr);
 	
 	/**
 	 * capture screen and save it to a image file. The file type will auto determined by extension, and 
@@ -509,7 +509,7 @@ public:
 	 * same size as window size (also known as design size).
 	 *
 	 * @param root the start node to be captured, so that you can only capture part of screen. However, final image
-	 *		file is always window size. If root is NULL, whole screen will be captured.
+	 *		file is always window size. If root is nullptr, whole screen will be captured.
 	 * @param path the relative path of image file, it will be mapped to platform writable path. In iOS, it is ~/Documents,
 	 *		in Android, it is cache dir
 	 * @param needStencil true if you want a stencil attachment, by default it is false
@@ -522,12 +522,12 @@ public:
 	 *
 	 * @param title title text
 	 * @param msg content text
-	 * @param positiveButton text of positive button, default is NULL which means it is "OK"
-	 * @param negativeButton text of negative button, default is NULL which means it is "Cancel"
+	 * @param positiveButton text of positive button, default is nullptr which means it is "OK"
+	 * @param negativeButton text of negative button, default is nullptr which means it is "Cancel"
 	 * @param onOK callback when ok button is clicked
 	 * @param onCancel callback when cancel button is clicked
 	 */
-	static void showSystemConfirmDialog(const char* title, const char* msg, const char* positiveButton = NULL, const char* negativeButton = NULL, CCCallFunc* onOK = NULL, CCCallFunc* onCancel = NULL);
+	static void showSystemConfirmDialog(const char* title, const char* msg, const char* positiveButton = nullptr, const char* negativeButton = nullptr, CCCallFunc* onOK = nullptr, CCCallFunc* onCancel = nullptr);
 	
 	/**
 	 * open app in platform-specific store

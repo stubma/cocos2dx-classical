@@ -85,7 +85,7 @@ public:
      * @param container parent object
      * @return autoreleased scroll view object
      */
-    static CCScrollView* create(CCSize size, CCNode* container = NULL);
+    static CCScrollView* create(CCSize size, CCNode* container = nullptr);
 
     /**
      * Returns an autoreleased scroll view object.
@@ -103,7 +103,7 @@ public:
      * @param container parent object
      * @return scroll view object
      */
-    bool initWithViewSize(CCSize size, CCNode* container = NULL);
+    bool initWithViewSize(CCSize size, CCNode* container = nullptr);
 
 
     /**

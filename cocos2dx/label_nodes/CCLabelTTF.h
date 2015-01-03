@@ -114,25 +114,25 @@ public:
     /**
      * Creates an label.
      */
-    static CCLabelTTF* create(CC_DECRYPT_FUNC decryptFunc = NULL);
+    static CCLabelTTF* create(CC_DECRYPT_FUNC decryptFunc = nullptr);
     
     /**
      * creates a CCLabelTTF with a font name and font size in points
      */
-    static CCLabelTTF* create(const char *s, const char *fontName, float fontSize, CC_DECRYPT_FUNC decryptFunc = NULL);
+    static CCLabelTTF* create(const char *s, const char *fontName, float fontSize, CC_DECRYPT_FUNC decryptFunc = nullptr);
     
     /**
      * creates a CCLabelTTF from a fontname, horizontal alignment, dimension in points,  and font size in points.
      */
     static CCLabelTTF* create(const char *s, const char *fontName, float fontSize,
-                                  const CCSize& dimensions, CCTextAlignment hAlignment, CC_DECRYPT_FUNC decryptFunc = NULL);
+                                  const CCSize& dimensions, CCTextAlignment hAlignment, CC_DECRYPT_FUNC decryptFunc = nullptr);
     
     /**
      * creates a CCLabelTTF from a fontname, alignment, dimension in points and font size in points
      */
     static CCLabelTTF* create(const char *s, const char *fontName, float fontSize,
                                   const CCSize& dimensions, CCTextAlignment hAlignment,
-                                  CCVerticalTextAlignment vAlignment, CC_DECRYPT_FUNC decryptFunc = NULL);
+                                  CCVerticalTextAlignment vAlignment, CC_DECRYPT_FUNC decryptFunc = nullptr);
     
     /** Create a lable with string and a font definition*/
     static CCLabelTTF* createWithFontDefinition(const char* s, ccFontDefinition &textDefinition);
@@ -140,16 +140,16 @@ public:
     const char* description();
     
     /** initializes the CCLabelTTF with a font name and font size */
-    virtual bool initWithString(const char * s, const char *fontName, float fontSize, CC_DECRYPT_FUNC decryptFunc = NULL);
+    virtual bool initWithString(const char * s, const char *fontName, float fontSize, CC_DECRYPT_FUNC decryptFunc = nullptr);
     
     /** initializes the CCLabelTTF with a font name, alignment, dimension and font size */
     virtual bool initWithString(const char * s, const char *fontName, float fontSize,
-                        const CCSize& dimensions, CCTextAlignment hAlignment, CC_DECRYPT_FUNC decryptFunc = NULL);
+                        const CCSize& dimensions, CCTextAlignment hAlignment, CC_DECRYPT_FUNC decryptFunc = nullptr);
     
     /** initializes the CCLabelTTF with a font name, alignment, dimension and font size */
     virtual bool initWithString(const char * s, const char *fontName, float fontSize,
                         const CCSize& dimensions, CCTextAlignment hAlignment,
-                        CCVerticalTextAlignment vAlignment, CC_DECRYPT_FUNC decryptFunc = NULL);
+                        CCVerticalTextAlignment vAlignment, CC_DECRYPT_FUNC decryptFunc = nullptr);
     
     /** initializes the CCLabelTTF with a font name, alignment, dimension and font size */
     virtual bool initWithStringAndTextDefinition(const char * s, ccFontDefinition &textDefinition);
@@ -175,7 +175,7 @@ public:
     void disableStroke(bool mustUpdateTexture = true);
     
     /** initializes the CCLabelTTF */
-    virtual bool init(CC_DECRYPT_FUNC decryptFunc = NULL);
+    virtual bool init(CC_DECRYPT_FUNC decryptFunc = nullptr);
     
     /** changes the string to render
      * @warning Changing the string is as expensive as creating a new CCLabelTTF. To obtain better performance use CCLabelAtlas
@@ -254,9 +254,9 @@ public:
      * @param interval the interval of char display speed
      * @param repeat repeat times, by default it is zero, means no repeat. kCCRepeatForever means repeat forever
      * @param delay delay time before this animation, by default it is zero
-     * @param loopFunc function to be called when all characters are displayed, invoked for every loop. by default it is NULL
+     * @param loopFunc function to be called when all characters are displayed, invoked for every loop. by default it is nullptr
      */
-    void startLoopDisplay(float interval, unsigned int repeat = 0, int delay = 0, CCCallFunc* loopFunc = NULL);
+    void startLoopDisplay(float interval, unsigned int repeat = 0, int delay = 0, CCCallFunc* loopFunc = nullptr);
     
     /// stop displaying label char by char, reset to normal state
     void stopLoopDisplay();
