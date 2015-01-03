@@ -156,7 +156,7 @@ void CCLuaStack::addLuaLoader(lua_CFunction func)
     
     // insert loader into index 2
     lua_pushcfunction(m_state, func);                                   /* L: package, loaders, func */
-    for (int i = lua_objlen(m_state, -2) + 1; i > 2; --i)
+    for (int i = (int)lua_objlen(m_state, -2) + 1; i > 2; --i)
     {
         lua_rawgeti(m_state, -2, i - 1);                                /* L: package, loaders, func, function */
         // we call lua_rawgeti, so the loader table now is at -3
@@ -376,7 +376,7 @@ int CCLuaStack::executeFunction(int numArgs)
     int ret = 0;
     if (lua_isnumber(m_state, -1))
     {
-        ret = lua_tointeger(m_state, -1);
+        ret = (int)lua_tointeger(m_state, -1);
     }
     else if (lua_isboolean(m_state, -1))
     {
