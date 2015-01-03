@@ -61,7 +61,7 @@ int ${signature}(lua_State* tolua_S) {
 
         // if conversion is not ok, print error and return
         if(!ok) {
-            tolua_error(tolua_S,"invalid arguments in function '${signature}'", NULL);
+            tolua_error(tolua_S,"invalid arguments in function '${signature}'", nullptr);
             return 0;
         }
         #end if

@@ -8,7 +8,7 @@
 int ${signature}(lua_State* tolua_S) {
     // variables
     int argc = 0;
-    ${qualified_name}* cobj = NULL;
+    ${qualified_name}* cobj = nullptr;
     bool ok = true;
 \#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -25,7 +25,7 @@ int ${signature}(lua_State* tolua_S) {
     cobj = (${qualified_name}*)tolua_tousertype(tolua_S, 1, 0);
 \#if COCOS2D_DEBUG >= 1
     if (!cobj) {
-        tolua_error(tolua_S, "invalid 'cobj' in function '${signature}'", NULL);
+        tolua_error(tolua_S, "invalid 'cobj' in function '${signature}'", nullptr);
         return 0;
     }
 \#endif

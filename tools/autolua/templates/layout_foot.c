@@ -5,8 +5,8 @@ TOLUA_API int register_all_${target_module_fullname}(lua_State* tolua_S) {
 	tolua_module(tolua_S, "${target_module}", 0);
 	tolua_beginmodule(tolua_S, "${target_module}");
 	#else
-	tolua_module(tolua_S, NULL, 0);
-	tolua_beginmodule(tolua_S, NULL);
+	tolua_module(tolua_S, nullptr, 0);
+	tolua_beginmodule(tolua_S, nullptr);
 	#end if
 
 	#for jsclass in $sorted_classes
