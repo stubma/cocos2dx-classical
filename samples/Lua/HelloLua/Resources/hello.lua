@@ -3,6 +3,10 @@ require("json")
 require("Cocos2d")
 require("AudioEngine")
 require("CocoStudio")
+require("OpenglConstants")
+require("Opengl")
+require("bitExtend")
+require("DrawPrimitives")
 
 -- cclog
 cclog = function(...)
@@ -27,17 +31,9 @@ local function main()
     collectgarbage("setpause", 100)
     collectgarbage("setstepmul", 5000)
 
-    require "hello2"
-    cclog("result is " .. myadd(1, 1))
-
     ---------------
-
     local visibleSize = CCDirector:sharedDirector():getVisibleSize()
     local origin = CCDirector:sharedDirector():getVisibleOrigin()
-
-    local function CCRectMake(x, y, w, h)
-        return { x = x, y = y, width = w, height = h }
-    end
 
     -- add the moving dog
     local function creatDog()
@@ -46,9 +42,9 @@ local function main()
 
         -- create dog animate
         local textureDog = CCTextureCache:sharedTextureCache():addImage("dog.png")
-        local rect = CCRectMake(0, 0, frameWidth, frameHeight)
+        local rect = cc.rect(0, 0, frameWidth, frameHeight)
         local frame0 = CCSpriteFrame:createWithTexture(textureDog, rect)
-        rect = CCRectMake(frameWidth, 0, frameWidth, frameHeight)
+        rect = cc.rect(frameWidth, 0, frameWidth, frameHeight)
         local frame1 = CCSpriteFrame:createWithTexture(textureDog, rect)
 
         local spriteDog = CCSprite:createWithSpriteFrame(frame0)
@@ -97,7 +93,7 @@ local function main()
         end
 
         -- add crop
-        local frameCrop = CCSpriteFrame:create("crop.png", CCRectMake(0, 0, 105, 95))
+        local frameCrop = CCSpriteFrame:create("crop.png", cc.rect(0, 0, 105, 95))
         for i = 0, 3 do
             for j = 0, 1 do
                 local spriteCrop = CCSprite:createWithSpriteFrame(frameCrop);
