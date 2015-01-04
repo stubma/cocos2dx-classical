@@ -41,15 +41,15 @@ inline void* operator new[](size_t n, const char* file, int line) {
 	return _ccMalloc(n, file, line, "NEW[]");
 }
 
-inline void operator delete(void* p, const char* file, int line) {
+void operator delete(void* p, const char* file, int line) {
 	_ccFree(p, file, line);
 }
 
-inline void operator delete(void* p) throw() {
+void operator delete(void* p) throw() {
 	_ccFree(p, __FILE__, __LINE__);
 }
 
-inline void operator delete[](void* p) throw() {
+void operator delete[](void* p) throw() {
 	_ccFree(p, __FILE__, __LINE__);
 }
 
@@ -58,9 +58,7 @@ inline void operator delete[](void* p) throw() {
 #define ccRealloc(ptr, size) _ccRealloc(ptr, size, __FILE__, __LINE__)
 #define ccFree(ptr) _ccFree(ptr, __FILE__, __LINE__)
 #define CCNEW new(__FILE__, __LINE__)
-#define CCDELETE(object) delete object
 #define CCNEWARR(t, s) new(__FILE__, __LINE__) t[(s)]
-#define CCDELETEARR(object) delete[] (object)
 
 #else
 
@@ -69,9 +67,7 @@ inline void operator delete[](void* p) throw() {
 #define ccRealloc realloc
 #define ccFree free
 #define CCNEW new
-#define CCDELETE(object) delete object
 #define CCNEWARR(t, s) new t[(s)]
-#define CCDELETEARR(object) delete[] (object)
 
 #endif // #if CC_CFLAG_MEMORY_TRACKING
 
