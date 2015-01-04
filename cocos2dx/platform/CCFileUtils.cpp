@@ -129,7 +129,7 @@ public:
             {
                 // Because it will call m_pCurDict->release() later, so retain here.
                 m_pRootDict = m_pCurDict;
-                m_pRootDict->retain();
+                CC_SAFE_RETAIN(m_pRootDict);
             }
             m_tState = SAX_DICT;
 
@@ -181,7 +181,7 @@ public:
             if (m_eResultType == SAX_RESULT_ARRAY && m_pRootArray == nullptr)
             {
                 m_pRootArray = m_pArray;
-                m_pRootArray->retain();
+                CC_SAFE_RETAIN(m_pRootArray);
             }
             CCSAXState preState = SAX_NONE;
             if (! m_tStateStack.empty())

@@ -48,7 +48,7 @@ CCAFCFrame* CCAFCFrame::create() {
 void CCAFCFrame::addClip(CCAFCClip* clip) {
 	if(clip) {
 		m_clipList.push_back(clip);
-		clip->retain();
+		CC_SAFE_RETAIN(clip);
 	}
 }
 

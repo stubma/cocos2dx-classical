@@ -73,7 +73,7 @@ CCMWFileData* CCMWManager::load(const char* path) {
 	data = CCMWLoader::load(path);
 	if(data != nullptr) {
 		m_animationFileDataList.push_back(data);
-		data->retain();
+		CC_SAFE_RETAIN(data);
 	}
 
 	// return

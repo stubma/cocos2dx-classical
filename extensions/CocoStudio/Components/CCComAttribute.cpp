@@ -42,7 +42,7 @@ CCComAttribute::~CCComAttribute(void)
 bool CCComAttribute::init()
 {
     _dict = CCDictionary::create();
-	_dict->retain();
+	CC_SAFE_RETAIN(_dict);
     return true;
 }
 

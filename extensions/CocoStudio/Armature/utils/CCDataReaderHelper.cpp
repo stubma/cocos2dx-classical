@@ -480,7 +480,7 @@ void CCDataReaderHelper::addDataFromFileAsync(const char *imagePath, const char 
 
     if (target)
     {
-        target->retain();
+        CC_SAFE_RETAIN(target);
     }
 
     // generate async struct

@@ -2377,7 +2377,7 @@ void array_to_luaval(lua_State* L,CCArray* inValue)
                 int* luaID = (obj) ? &obj->m_nLuaID : nullptr;
                 toluafix_pushusertype_ccobject(L, ID, luaID, (void*)obj,className.c_str());
                 lua_rawset(L, -3);
-                obj->retain();
+                CC_SAFE_RETAIN(obj);
                 ++indexTable;
             }
         }
@@ -2467,7 +2467,7 @@ void dictionary_to_luaval(lua_State* L, CCDictionary* dict)
                 int* luaID = (element->getObject()) ? &(element->getObject()->m_nLuaID) : nullptr;
                 toluafix_pushusertype_ccobject(L, ID, luaID, (void*)element->getObject(),className.c_str());
                 lua_rawset(L, -3);
-                element->getObject()->retain();
+                CC_SAFE_RETAIN(element->getObject());
             }
         }
         else if((strVal = dynamic_cast<CCString *>(element->getObject())))

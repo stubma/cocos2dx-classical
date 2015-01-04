@@ -159,7 +159,7 @@ bool CCColliderDetector::init()
 {
     m_pColliderBodyList = CCArray::create();
     CCAssert(m_pColliderBodyList, "create m_pColliderBodyList failed!");
-    m_pColliderBodyList->retain();
+    CC_SAFE_RETAIN(m_pColliderBodyList);
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     m_pFilter = new CCColliderFilter();

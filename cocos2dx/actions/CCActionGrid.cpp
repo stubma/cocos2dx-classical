@@ -229,7 +229,7 @@ bool CCAccelDeccelAmplitude::initWithAction(CCAction *pAction, float duration)
     {
         m_fRate = 1.0f;
         m_pOther = (CCActionInterval*)(pAction);
-        pAction->retain();
+        CC_SAFE_RETAIN(pAction);
 
         return true;
     }
@@ -292,7 +292,7 @@ bool CCAccelAmplitude::initWithAction(CCAction *pAction, float duration)
     {
         m_fRate = 1.0f;
         m_pOther = (CCActionInterval*)(pAction);
-        pAction->retain();
+        CC_SAFE_RETAIN(pAction);
 
         return true;
     }
@@ -349,7 +349,7 @@ bool CCDeccelAmplitude::initWithAction(CCAction *pAction, float duration)
     {
         m_fRate = 1.0f;
         m_pOther = (CCActionInterval*)(pAction);
-        pAction->retain();
+        CC_SAFE_RETAIN(pAction);
 
         return true;
     }

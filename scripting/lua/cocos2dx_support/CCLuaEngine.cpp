@@ -51,7 +51,7 @@ CCLuaEngine::~CCLuaEngine(void)
 bool CCLuaEngine::init(void)
 {
     m_stack = CCLuaStack::create();
-    m_stack->retain();
+    CC_SAFE_RETAIN(m_stack);
     return true;
 }
 

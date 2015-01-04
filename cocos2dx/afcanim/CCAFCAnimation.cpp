@@ -42,7 +42,7 @@ CCAFCAnimation* CCAFCAnimation::create() {
 void CCAFCAnimation::addFrame(CCAFCFrame* f) {
 	if(f) {
 		m_frameList.push_back(f);
-		f->retain();
+		CC_SAFE_RETAIN(f);
 	}
 }
 

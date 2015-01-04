@@ -482,7 +482,7 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
             return false;
         }
         
-        newConf->retain();
+        CC_SAFE_RETAIN(newConf);
         CC_SAFE_RELEASE(m_pConfiguration);
         m_pConfiguration = newConf;
         

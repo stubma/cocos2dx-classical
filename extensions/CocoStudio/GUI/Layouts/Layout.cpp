@@ -333,7 +333,7 @@ void Layout::setClippingEnabled(bool able)
                 {
                     _clippingStencil->onEnter();
                 }
-                _clippingStencil->retain();
+                CC_SAFE_RETAIN(_clippingStencil);
                 setStencilClippingSize(_size);
             }
             else

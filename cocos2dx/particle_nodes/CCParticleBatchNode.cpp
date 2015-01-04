@@ -260,7 +260,7 @@ void CCParticleBatchNode::reorderChild(CCNode * child, int zOrder)
         {
 
             // reorder m_pChildren->array
-            pChild->retain();
+            CC_SAFE_RETAIN(pChild);
             m_pChildren->removeObjectAtIndex(oldIndex);
             m_pChildren->insertObject(pChild, newIndex);
             pChild->release();

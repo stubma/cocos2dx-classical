@@ -41,12 +41,12 @@ CCSPXSprite* CCSPXSprite::create(const char* spxPath, CCTexture2D* tex, int acti
 
 	// get spx file data
 	s->m_spx = CCSPXManager::getInstance()->load(spxPath);
-	s->m_spx->retain();
+	CC_SAFE_RETAIN(s->m_spx);
 
 	// create batch node for texture
 	CCSpriteBatchNode* sheet = CCAFCSprite::createBatchNode(tex);
 	s->m_sheetList.push_back(sheet);
-	sheet->retain();
+	CC_SAFE_RETAIN(sheet);
 
 	// start action
 	s->playAnimation(actionIndex);

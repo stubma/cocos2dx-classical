@@ -406,7 +406,7 @@ CCCallFunc * CCCallFunc::create(ccScriptFunction nHandler)
 bool CCCallFunc::initWithTarget(CCObject* pSelectorTarget) {
     if (pSelectorTarget) 
     {
-        pSelectorTarget->retain();
+        CC_SAFE_RETAIN(pSelectorTarget);
     }
 
     if (m_pSelectorTarget) 

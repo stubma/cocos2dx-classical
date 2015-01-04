@@ -85,7 +85,7 @@ bool CCSpriteFrame::initWithTexture(CCTexture2D* pobTexture, const CCRect& rect,
 
     if (pobTexture)
     {
-        pobTexture->retain();
+        CC_SAFE_RETAIN(pobTexture);
     }
 
     m_obRectInPixels = rect;

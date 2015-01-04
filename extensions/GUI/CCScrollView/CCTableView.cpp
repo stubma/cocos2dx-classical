@@ -225,7 +225,7 @@ CCTableViewCell *CCTableView::dequeueCell(const string& name)
     } else {
         if(name.empty()) {
             cell = (CCTableViewCell*)m_pCellsFreed->objectAtIndex(0);
-            cell->retain();
+            CC_SAFE_RETAIN(cell);
             m_pCellsFreed->removeObjectAtIndex(0);
             cell->autorelease();
         } else {
@@ -233,7 +233,7 @@ CCTableViewCell *CCTableView::dequeueCell(const string& name)
             CCARRAY_FOREACH(m_pCellsFreed, obj) {
                 CCTableViewCell* c = (CCTableViewCell*)obj;
                 if(c->getName() == name) {
-                    c->retain();
+                    CC_SAFE_RETAIN(c);
                     m_pCellsFreed->removeObject(c);
                     c->autorelease();
                     cell = c;

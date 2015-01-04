@@ -62,7 +62,7 @@ CCArcticFileData* CCArcticManager::load(const char* spxPath) {
 	data = CCArcticLoader::load(spxPath);
 	if(data != nullptr) {
 		m_arcticFileDataList.push_back(data);
-		data->retain();
+		CC_SAFE_RETAIN(data);
 	}
 
 	return data;

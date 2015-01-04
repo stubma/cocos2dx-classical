@@ -94,9 +94,9 @@ CCNode::CCNode(void)
     // set default scheduler and actionManager
     CCDirector *director = CCDirector::sharedDirector();
     m_pActionManager = director->getActionManager();
-    m_pActionManager->retain();
+    CC_SAFE_RETAIN(m_pActionManager);
     m_pScheduler = director->getScheduler();
-    m_pScheduler->retain();
+    CC_SAFE_RETAIN(m_pScheduler);
 
     CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
     m_eScriptType = pEngine != nullptr ? pEngine->getScriptType() : kScriptTypeNone;
@@ -568,7 +568,7 @@ const char* CCNode::description()
 void CCNode::childrenAlloc(void)
 {
     m_pChildren = CCArray::createWithCapacity(4);
-    m_pChildren->retain();
+    CC_SAFE_RETAIN(m_pChildren);
 }
 
 CCNode* CCNode::getChildByTag(int aTag)

@@ -118,7 +118,7 @@ bool RichElementCustomNode::init(int tag, const ccColor3B &color, GLubyte opacit
     if (RichElement::init(tag, color, opacity))
     {
         _customNode = customNode;
-        _customNode->retain();
+        CC_SAFE_RETAIN(_customNode);
         return true;
     }
     return false;
@@ -156,7 +156,7 @@ bool RichText::init()
     if (Widget::init())
     {
         _richElements = CCArray::create();
-        _richElements->retain();
+        CC_SAFE_RETAIN(_richElements);
         return true;
     }
     return false;

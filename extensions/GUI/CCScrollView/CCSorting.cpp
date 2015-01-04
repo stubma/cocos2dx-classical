@@ -96,7 +96,7 @@ void CCArrayForObjectSorting::setObjectID_ofSortedObject(unsigned int tag, CCSor
     {
         foundObj = dynamic_cast<CCSortableObject*>(this->objectAtIndex(idx));
         CCObject* pObj = dynamic_cast<CCObject*>(foundObj);
-        pObj->retain();
+        CC_SAFE_RETAIN(pObj);
         
         if(foundObj->getObjectID() == object->getObjectID()) {
             this->removeObjectAtIndex(idx);

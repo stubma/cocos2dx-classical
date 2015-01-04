@@ -324,7 +324,7 @@ void CCTrailMoveTo::cleanTrails() {
                 pos = ccpAdd(origin, pos);
                 
                 // move trail to target's parent
-                trail->retain();
+                CC_SAFE_RETAIN(trail);
                 trail->removeFromParent();
                 trail->setPosition(pos);
                 trail->setScaleX(m_pTarget->getScaleX());

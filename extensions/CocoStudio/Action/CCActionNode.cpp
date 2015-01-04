@@ -45,7 +45,7 @@ NS_CC_EXT_BEGIN
 	, frameArrayNum(0)
 {
 	m_FrameArray = CCArray::create();
-	m_FrameArray->retain();
+	CC_SAFE_RETAIN(m_FrameArray);
 
 	frameArrayNum = (int)kKeyframeMax;
 	for(int i = 0; i < frameArrayNum; i++)
@@ -480,7 +480,7 @@ void ActionNode::playAction()
 	}
 
 	m_action = CCSequence::create(m_actionSpawn,nullptr);
-	m_action->retain();
+	CC_SAFE_RETAIN(m_action);
 
 	this->runAction();
 

@@ -275,10 +275,10 @@ bool CCSequence::initWithTwoActions(CCFiniteTimeAction *pActionOne, CCFiniteTime
     CCActionInterval::initWithDuration(d);
 
     m_pActions[0] = pActionOne;
-    pActionOne->retain();
+    CC_SAFE_RETAIN(pActionOne);
 
     m_pActions[1] = pActionTwo;
-    pActionTwo->retain();
+    CC_SAFE_RETAIN(pActionTwo);
 
     return true;
 }
@@ -419,7 +419,7 @@ bool CCRepeat::initWithAction(CCFiniteTimeAction *pAction, unsigned int times)
     {
         m_uTimes = times;
         m_pInnerAction = pAction;
-        pAction->retain();
+        CC_SAFE_RETAIN(pAction);
 
         m_bActionInstant = dynamic_cast<CCActionInstant*>(pAction) ? true : false;
         //an instant action needs to be executed one time less in the update method since it uses startWithTarget to execute the action
@@ -555,7 +555,7 @@ CCRepeatForever *CCRepeatForever::create(CCActionInterval *pAction)
 bool CCRepeatForever::initWithAction(CCActionInterval *pAction)
 {
     CCAssert(pAction != nullptr, "");
-    pAction->retain();
+    CC_SAFE_RETAIN(pAction);
     m_pInnerAction = pAction;
     return true;
 }
@@ -717,8 +717,8 @@ bool CCSpawn:: initWithTwoActions(CCFiniteTimeAction *pAction1, CCFiniteTimeActi
             m_pOne = CCSequence::createWithTwoActions(pAction1, CCDelayTime::create(d2 - d1));
         }
 
-        m_pOne->retain();
-        m_pTwo->retain();
+        CC_SAFE_RETAIN(m_pOne);
+        CC_SAFE_RETAIN(m_pTwo);
 
         bRet = true;
     }
@@ -2245,7 +2245,7 @@ bool CCReverseTime::initWithAction(CCFiniteTimeAction *pAction)
         CC_SAFE_RELEASE(m_pOther);
 
         m_pOther = pAction;
-        pAction->retain();
+        CC_SAFE_RETAIN(pAction);
 
         return true;
     }
@@ -2407,7 +2407,7 @@ void CCAnimate::startWithTarget(CCNode *pTarget)
     if (m_pAnimation->getRestoreOriginalFrame())
     {
         m_pOrigFrame = pSprite->displayFrame();
-        m_pOrigFrame->retain();
+        CC_SAFE_RETAIN(m_pOrigFrame);
     }
     m_nNextFrame = 0;
     m_uExecutedLoops = 0;

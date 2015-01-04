@@ -47,7 +47,7 @@ ActionManager::ActionManager()
 : m_pActionDic(nullptr)
 {
 	m_pActionDic = CCDictionary::create();
-    m_pActionDic->retain();
+    CC_SAFE_RETAIN(m_pActionDic);
 }
 
 ActionManager::~ActionManager()

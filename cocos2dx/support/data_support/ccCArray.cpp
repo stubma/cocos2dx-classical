@@ -120,7 +120,7 @@ bool ccArrayContainsObject(ccArray *arr, CCObject* object)
 void ccArrayAppendObject(ccArray *arr, CCObject* object)
 {
     CCAssert(object != nullptr, "Invalid parameter!");
-    object->retain();
+    CC_SAFE_RETAIN(object);
 	arr->arr[arr->num] = object;
 	arr->num++;
 }
@@ -163,7 +163,7 @@ void ccArrayInsertObjectAtIndex(ccArray *arr, CCObject* object, unsigned int ind
 		memmove((void *)&arr->arr[index+1], (void *)&arr->arr[index], sizeof(CCObject*) * remaining );
     }
 
-    object->retain();
+    CC_SAFE_RETAIN(object);
 	arr->arr[index] = object;
 	arr->num++;
 }

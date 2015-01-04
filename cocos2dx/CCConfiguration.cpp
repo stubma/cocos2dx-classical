@@ -58,7 +58,7 @@ CCConfiguration::CCConfiguration(void)
 bool CCConfiguration::init(void)
 {
 	m_pValueDict = CCDictionary::create();
-	m_pValueDict->retain();
+	CC_SAFE_RETAIN(m_pValueDict);
 
 	m_pValueDict->setObject( CCString::create( cocos2dVersion() ), "cocos2d.x.version");
 

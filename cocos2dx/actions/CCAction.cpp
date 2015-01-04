@@ -139,7 +139,7 @@ CCSpeed* CCSpeed::create(CCActionInterval* pAction, float fSpeed)
 bool CCSpeed::initWithAction(CCActionInterval *pAction, float fSpeed)
 {
     CCAssert(pAction != nullptr, "");
-    pAction->retain();
+    CC_SAFE_RETAIN(pAction);
     m_pInnerAction = pAction;
     m_fSpeed = fSpeed;    
     return true;
@@ -227,7 +227,7 @@ bool CCFollow::initWithTarget(CCNode *pFollowedNode, const CCRect& rect/* = CCRe
 {
     CCAssert(pFollowedNode != nullptr, "");
  
-    pFollowedNode->retain();
+    CC_SAFE_RETAIN(pFollowedNode);
     m_pobFollowedNode = pFollowedNode;
     if (rect.equals(CCRectZero))
     {

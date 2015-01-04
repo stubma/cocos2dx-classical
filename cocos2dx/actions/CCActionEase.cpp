@@ -68,7 +68,7 @@ bool CCActionEase::initWithAction(CCActionInterval *pAction)
     if (CCActionInterval::initWithDuration(pAction->getDuration()))
     {
         m_pInner = pAction;
-        pAction->retain();
+        CC_SAFE_RETAIN(pAction);
 
         return true;
     }

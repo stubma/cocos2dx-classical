@@ -63,7 +63,7 @@ bool CCComponentContainer::add(CCComponent *pCom)
         if (m_pComponents == nullptr)
         {
             m_pComponents = CCDictionary::create();
-            m_pComponents->retain();
+            CC_SAFE_RETAIN(m_pComponents);
         }
         CCComponent *pComponent = dynamic_cast<CCComponent*>(m_pComponents->objectForKey(pCom->getName()));
         
@@ -148,7 +148,7 @@ void CCComponentContainer::removeAll()
 void CCComponentContainer::alloc(void)
 {
     m_pComponents = CCDictionary::create();
-    m_pComponents->retain();
+    CC_SAFE_RETAIN(m_pComponents);
 }
 
 void CCComponentContainer::visit(float fDelta)

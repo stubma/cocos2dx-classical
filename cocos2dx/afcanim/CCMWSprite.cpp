@@ -34,13 +34,13 @@ CCMWSprite* CCMWSprite::create(const char* path, int animIndex, CCTexture2D** te
 
 	// load anu file data
 	sprite->m_mw = CCMWManager::getInstance()->load(path);
-	sprite->m_mw->retain();
+	CC_SAFE_RETAIN(sprite->m_mw);
 
 	// add others
 	for(int i = 0; i < count; i++) {
 		CCSpriteBatchNode* sheet = CCAFCSprite::createBatchNode(tex[i]);
 		sprite->m_sheetList.push_back(sheet);
-		sheet->retain();
+		CC_SAFE_RETAIN(sheet);
 	}
 
 	// start animation
@@ -57,7 +57,7 @@ CCMWSprite* CCMWSprite::create(const char* path, int animIndex, CCTexture2D* tex
 
 	// load anu file data
 	sprite->m_mw = CCMWManager::getInstance()->load(path);
-	sprite->m_mw->retain();
+	CC_SAFE_RETAIN(sprite->m_mw);
 
 	va_list textures;
 	va_start(textures, tex);
@@ -65,13 +65,13 @@ CCMWSprite* CCMWSprite::create(const char* path, int animIndex, CCTexture2D* tex
 	// add first
 	CCSpriteBatchNode* sheet = CCAFCSprite::createBatchNode(tex);
 	sprite->m_sheetList.push_back(sheet);
-	sheet->retain();
+	CC_SAFE_RETAIN(sheet);
 
 	// add others
 	for(CCTexture2D* t = va_arg(textures, CCTexture2D*); t != nullptr; t = va_arg(textures, CCTexture2D*)) {
 		sheet = CCAFCSprite::createBatchNode(t);
 		sprite->m_sheetList.push_back(sheet);
-		sheet->retain();
+		CC_SAFE_RETAIN(sheet);
 	}
 
 	va_end(textures);

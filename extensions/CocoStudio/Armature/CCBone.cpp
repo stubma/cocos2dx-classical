@@ -306,7 +306,7 @@ void CCBone::addChildBone(CCBone *child)
     if(!m_pChildren)
     {
         m_pChildren = CCArray::createWithCapacity(4);
-        m_pChildren->retain();
+        CC_SAFE_RETAIN(m_pChildren);
     }
 
     if (m_pChildren->indexOfObject(child) == UINT_MAX)

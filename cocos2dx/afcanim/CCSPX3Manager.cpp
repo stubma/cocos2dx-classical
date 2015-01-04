@@ -61,7 +61,7 @@ CCSPX3FileData* CCSPX3Manager::load(const char* spxPath) {
 	data = CCSPX3Loader::load(spxPath);
 	if(data != nullptr) {
 		m_spxFileDataList.push_back(data);
-		data->retain();
+		CC_SAFE_RETAIN(data);
 	}
 
 	return data;

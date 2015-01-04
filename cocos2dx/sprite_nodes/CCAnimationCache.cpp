@@ -109,7 +109,7 @@ void CCAnimationCache::parseVersion1(CCDictionary* animations)
         }
 
         CCArray* frames = CCArray::createWithCapacity(frameNames->count());
-        frames->retain();
+        CC_SAFE_RETAIN(frames);
 
         CCObject* pObj = nullptr;
         CCARRAY_FOREACH(frameNames, pObj)
@@ -165,7 +165,7 @@ void CCAnimationCache::parseVersion2(CCDictionary* animations)
 
         // Array of AnimationFrames
         CCArray* array = CCArray::createWithCapacity(frameArray->count());
-        array->retain();
+        CC_SAFE_RETAIN(array);
 
         CCObject* pObj = nullptr;
         CCARRAY_FOREACH(frameArray, pObj)

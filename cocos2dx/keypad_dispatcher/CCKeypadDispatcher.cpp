@@ -38,7 +38,7 @@ CCKeypadDispatcher::CCKeypadDispatcher()
 , m_bToRemove(false)
 {
     m_pDelegates = CCArray::create();
-    m_pDelegates->retain();
+    CC_SAFE_RETAIN(m_pDelegates);
 
     m_pHandlersToAdd    = ccCArrayNew(8);
     m_pHandlersToRemove = ccCArrayNew(8);

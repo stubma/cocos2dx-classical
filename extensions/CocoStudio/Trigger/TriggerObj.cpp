@@ -112,8 +112,8 @@ bool TriggerObj::init()
          _cons = CCArray::create();
          _acts = CCArray::create();
          CC_BREAK_IF(_cons == nullptr || _acts == nullptr);
-         _cons->retain();
-         _acts->retain();
+         CC_SAFE_RETAIN(_cons);
+         CC_SAFE_RETAIN(_acts);
          bRet = true;
     } while (0);
     return bRet;

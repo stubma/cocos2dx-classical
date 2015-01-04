@@ -309,7 +309,7 @@ void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallF
 
     if (target)
     {
-        target->retain();
+        CC_SAFE_RETAIN(target);
     }
 
     // generate async struct
@@ -780,7 +780,7 @@ void VolatileTexture::addImageTexture(CCTexture2D *tt, const char* imageFileName
 void VolatileTexture::addCCImage(CCTexture2D *tt, CCImage *image)
 {
     VolatileTexture *vt = findVolotileTexture(tt);
-    image->retain();
+    CC_SAFE_RETAIN(image);
     vt->uiImage = image;
     vt->m_eCashedImageType = kImage;
 }

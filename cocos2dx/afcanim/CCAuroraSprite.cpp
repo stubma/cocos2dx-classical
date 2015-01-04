@@ -42,13 +42,13 @@ CCAuroraSprite* CCAuroraSprite::create(const char* path, int animIndex, CCTextur
 
 	// load anu file data
 	sprite->m_aurora = CCAuroraManager::getInstance()->load(path);
-	sprite->m_aurora->retain();
+	CC_SAFE_RETAIN(sprite->m_aurora);
 
 	// add others
 	for(int i = 0; i < count; i++) {
 		CCSpriteBatchNode* sheet = CCAFCSprite::createBatchNode(tex[i]);
 		sprite->m_sheetList.push_back(sheet);
-		sheet->retain();
+		CC_SAFE_RETAIN(sheet);
 	}
 
 	// start animation
@@ -65,7 +65,7 @@ CCAuroraSprite* CCAuroraSprite::create(const char* path, int animIndex, CCTextur
 
 	// load anu file data
 	sprite->m_aurora = CCAuroraManager::getInstance()->load(path);
-	sprite->m_aurora->retain();
+	CC_SAFE_RETAIN(sprite->m_aurora);
 
 	va_list textures;
 	va_start(textures, tex);
@@ -73,13 +73,13 @@ CCAuroraSprite* CCAuroraSprite::create(const char* path, int animIndex, CCTextur
 	// add first
 	CCSpriteBatchNode* sheet = CCAFCSprite::createBatchNode(tex);
 	sprite->m_sheetList.push_back(sheet);
-	sheet->retain();
+	CC_SAFE_RETAIN(sheet);
 
 	// add others
 	for(CCTexture2D* t = va_arg(textures, CCTexture2D*); t != nullptr; t = va_arg(textures, CCTexture2D*)) {
 		sheet = CCAFCSprite::createBatchNode(t);
 		sprite->m_sheetList.push_back(sheet);
-		sheet->retain();
+		CC_SAFE_RETAIN(sheet);
 	}
 
 	va_end(textures);

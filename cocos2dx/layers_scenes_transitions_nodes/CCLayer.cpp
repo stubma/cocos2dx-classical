@@ -131,7 +131,7 @@ void CCLayer::registerScriptTouchHandler(ccScriptFunction nHandler, bool bIsMult
 {
     unregisterScriptTouchHandler();
     m_pScriptTouchHandlerEntry = CCTouchScriptHandlerEntry::create(nHandler.handler, bIsMultiTouches, nPriority, bSwallowsTouches);
-    m_pScriptTouchHandlerEntry->retain();
+    CC_SAFE_RETAIN(m_pScriptTouchHandlerEntry);
 }
 
 void CCLayer::unregisterScriptTouchHandler(void)
@@ -280,7 +280,7 @@ void CCLayer::registerScriptAccelerateHandler(int nHandler)
 {
     unregisterScriptAccelerateHandler();
     m_pScriptAccelerateHandlerEntry = CCScriptHandlerEntry::create(nHandler);
-    m_pScriptAccelerateHandlerEntry->retain();
+    CC_SAFE_RETAIN(m_pScriptAccelerateHandlerEntry);
 }
 
 void CCLayer::unregisterScriptAccelerateHandler(void)
@@ -319,7 +319,7 @@ void CCLayer::registerScriptKeypadHandler(int nHandler)
 {
     unregisterScriptKeypadHandler();
     m_pScriptKeypadHandlerEntry = CCScriptHandlerEntry::create(nHandler);
-    m_pScriptKeypadHandlerEntry->retain();
+    CC_SAFE_RETAIN(m_pScriptKeypadHandlerEntry);
 }
 
 void CCLayer::unregisterScriptKeypadHandler(void)
@@ -1074,7 +1074,7 @@ void CCLayerMultiplex::addLayer(CCLayer* layer) {
 bool CCLayerMultiplex::initWithLayers(CCLayer *layer, va_list params) {
     if (CCLayer::init()) {
         m_pLayers = CCArray::createWithCapacity(5);
-        m_pLayers->retain();
+        CC_SAFE_RETAIN(m_pLayers);
         m_pLayers->addObject(layer);
         addChild(layer);
         layer->setVisible(false);
@@ -1100,7 +1100,7 @@ bool CCLayerMultiplex::initWithArray(CCArray* arrayOfLayers) {
     if (CCLayer::init()) {
         m_pLayers = CCArray::createWithCapacity(arrayOfLayers->count());
         m_pLayers->addObjectsFromArray(arrayOfLayers);
-        m_pLayers->retain();
+        CC_SAFE_RETAIN(m_pLayers);
         
         CCObject* obj;
         CCARRAY_FOREACH(m_pLayers, obj) {

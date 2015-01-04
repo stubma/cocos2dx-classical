@@ -46,9 +46,9 @@ bool TouchGroup::init()
     if (CCLayer::init())
     {
         m_pSelectedWidgets = CCArray::create();
-        m_pSelectedWidgets->retain();
+        CC_SAFE_RETAIN(m_pSelectedWidgets);
         m_pRootWidget = Widget::create();
-        m_pRootWidget->retain();
+        CC_SAFE_RETAIN(m_pRootWidget);
         addChild(m_pRootWidget);
         return true;
     }

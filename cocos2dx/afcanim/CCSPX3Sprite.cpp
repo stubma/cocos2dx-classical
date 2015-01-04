@@ -42,13 +42,13 @@ CCSPX3Sprite* CCSPX3Sprite::create(const char* spxPath, int actionIndex, CCTextu
 
 	// load anu file data
 	sprite->m_spx = CCSPX3Manager::getInstance()->load(spxPath);
-	sprite->m_spx->retain();
+	CC_SAFE_RETAIN(sprite->m_spx);
 
 	// add others
 	for(int i = 0; i < count; i++) {
 		CCSpriteBatchNode* sheet = CCAFCSprite::createBatchNode(tex[i]);
 		sprite->m_sheetList.push_back(sheet);
-		sheet->retain();
+		CC_SAFE_RETAIN(sheet);
 	}
 
 	// start animation
@@ -65,7 +65,7 @@ CCSPX3Sprite* CCSPX3Sprite::create(const char* spxPath, int actionIndex, CCTextu
 
 	// load anu file data
 	sprite->m_spx = CCSPX3Manager::getInstance()->load(spxPath);
-	sprite->m_spx->retain();
+	CC_SAFE_RETAIN(sprite->m_spx);
 
 	va_list textures;
 	va_start(textures, tex);
@@ -73,13 +73,13 @@ CCSPX3Sprite* CCSPX3Sprite::create(const char* spxPath, int actionIndex, CCTextu
 	// add first
 	CCSpriteBatchNode* sheet = CCAFCSprite::createBatchNode(tex);
 	sprite->m_sheetList.push_back(sheet);
-	sheet->retain();
+	CC_SAFE_RETAIN(sheet);
 
 	// add others
 	for(CCTexture2D* t = va_arg(textures, CCTexture2D*); t != nullptr; t = va_arg(textures, CCTexture2D*)) {
 		sheet = CCAFCSprite::createBatchNode(t);
 		sprite->m_sheetList.push_back(sheet);
-		sheet->retain();
+		CC_SAFE_RETAIN(sheet);
 	}
 
 	va_end(textures);

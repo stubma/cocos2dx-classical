@@ -41,7 +41,7 @@ CCComRender::CCComRender(cocos2d::CCNode *node, const char *comName)
     if (node != nullptr)
     {		
         m_pRender = node;
-        m_pRender->retain();    
+        CC_SAFE_RETAIN(m_pRender);    
     }
     m_strName.assign(comName);
 }
@@ -82,7 +82,7 @@ void CCComRender::setNode(cocos2d::CCNode *pNode)
     if (pNode != nullptr)
     {		
 		m_pRender = pNode;
-        m_pRender->retain();    
+        CC_SAFE_RETAIN(m_pRender);    
     }
 }
 
@@ -149,14 +149,14 @@ bool CCComRender::serialize(void* r)
 			if (strcmp(pClassName, "CCSprite") == 0 && (strFilePath.find(".png") != strFilePath.npos || strFilePath.find(".pvr.ccz") != strFilePath.npos))
 			{
 				m_pRender = CCSprite::create(strFilePath.c_str());
-				m_pRender->retain();
+				CC_SAFE_RETAIN(m_pRender);
 
                 bRet = true;
 			}
 			else if(strcmp(pClassName, "CCTMXTiledMap") == 0 && strFilePath.find(".tmx") != strFilePath.npos)
 			{
 				m_pRender = CCTMXTiledMap::create(strFilePath);
-				m_pRender->retain();
+				CC_SAFE_RETAIN(m_pRender);
 
                 bRet = true;
 			}
@@ -164,7 +164,7 @@ bool CCComRender::serialize(void* r)
 			{
 				m_pRender = CCParticleSystemQuad::create(strFilePath.c_str());
 				m_pRender->setPosition(ccp(0.0f, 0.0f));
-				m_pRender->retain();
+				CC_SAFE_RETAIN(m_pRender);
 
                 bRet = true;
 			}
@@ -190,7 +190,7 @@ bool CCComRender::serialize(void* r)
 					CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(strFilePath.c_str());
 					CCArmature *pAr = CCArmature::create(name);
 					m_pRender = pAr;
-					m_pRender->retain();
+					CC_SAFE_RETAIN(m_pRender);
 					const char *actionName = nullptr;
 					if (pCocoNode != nullptr)
 					{
@@ -248,7 +248,7 @@ bool CCComRender::serialize(void* r)
                                                 CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(strFilePath.c_str());
                                                 CCArmature *pAr = CCArmature::create(str);
                                                 m_pRender = pAr;
-                                                m_pRender->retain();
+                                                CC_SAFE_RETAIN(m_pRender);
                                                 const char *actionName = nullptr;
                                                 if (pCocoNode != nullptr)
                                                 {
@@ -295,7 +295,7 @@ bool CCComRender::serialize(void* r)
 					cocos2d::ui::Widget* widget = cocos2d::extension::GUIReader::shareReader()->widgetFromJsonFile(strFilePath.c_str());
 					tg->addWidget(widget);
 					m_pRender = tg;
-					m_pRender->retain();
+					CC_SAFE_RETAIN(m_pRender);
 
                     bRet = true;
 				}
@@ -305,7 +305,7 @@ bool CCComRender::serialize(void* r)
                     cocos2d::ui::Widget* widget = cocos2d::extension::GUIReader::shareReader()->widgetFromBinaryFile(strFilePath.c_str());
                     tg->addWidget(widget);
                     m_pRender = tg;
-                    m_pRender->retain();
+                    CC_SAFE_RETAIN(m_pRender);
 
                     bRet = true;
 				}
@@ -328,7 +328,7 @@ bool CCComRender::serialize(void* r)
 				strPngFile.replace(pos, strPngFile.length(), ".png");
 				CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(strPlistPath.c_str(), strPngFile.c_str());
 				m_pRender = CCSprite::createWithSpriteFrameName(strFilePath.c_str());
-				m_pRender->retain();
+				CC_SAFE_RETAIN(m_pRender);
 
                 bRet = true;
 			}

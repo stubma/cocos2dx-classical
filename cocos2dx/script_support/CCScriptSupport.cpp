@@ -76,7 +76,7 @@ bool CCSchedulerScriptHandlerEntry::init(float fInterval, bool bPaused)
     m_pTimer = new CCTimer();
     m_pTimer->initWithScriptHandler(m_nHandler, fInterval);
     m_pTimer->autorelease();
-    m_pTimer->retain();
+    CC_SAFE_RETAIN(m_pTimer);
     m_bPaused = bPaused;
     LUALOG("[LUA] ADD script schedule: %d, entryID: %d", m_nHandler, m_nEntryId);
     return true;

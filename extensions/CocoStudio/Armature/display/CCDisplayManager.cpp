@@ -312,7 +312,7 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
             rgbaProtocaol->setOpacity(m_pBone->getDisplayedOpacity());
         }
 
-        m_pDisplayRenderNode->retain();
+        CC_SAFE_RETAIN(m_pDisplayRenderNode);
         m_pDisplayRenderNode->setVisible(m_bVisible);
 
         m_eDisplayType = m_pCurrentDecoDisplay->getDisplayData()->displayType;
@@ -353,7 +353,7 @@ void CCDisplayManager::initDisplayList(CCBoneData *boneData)
 {
     CC_SAFE_DELETE(m_pDecoDisplayList);
     m_pDecoDisplayList = CCArray::create();
-    m_pDecoDisplayList->retain();
+    CC_SAFE_RETAIN(m_pDecoDisplayList);
 
     CS_RETURN_IF(!boneData);
 

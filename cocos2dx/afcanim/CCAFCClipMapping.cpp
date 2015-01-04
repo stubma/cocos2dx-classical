@@ -193,7 +193,7 @@ void CCAFCClipMapping::mapClip(int fromClipIndex, CCTexture2D* tex, ccPoint pos,
 		m_rules[insertion].type = AFC_CMR_EXTERNAL_ATLAS;
 		m_rules[insertion].sourceClipIndex = fromClipIndex;
 		m_rules[insertion].ear.sheet = CCAFCSprite::createBatchNode(tex);
-		m_rules[insertion].ear.sheet->retain();
+		CC_SAFE_RETAIN(m_rules[insertion].ear.sheet);
 		if(texRect.width == 0 || texRect.height == 0) {
 			CCSize size = tex->getContentSizeInPixels();
 			m_rules[insertion].ear.texRect = ccr(0, 0, size.width, size.height);

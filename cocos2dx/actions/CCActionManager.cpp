@@ -105,7 +105,7 @@ void CCActionManager::removeActionAtIndex(unsigned int uIndex, tHashElement *pEl
 
     if (pAction == pElement->currentAction && (! pElement->currentActionSalvaged))
     {
-        pElement->currentAction->retain();
+        CC_SAFE_RETAIN(pElement->currentAction);
         pElement->currentActionSalvaged = true;
     }
 
@@ -194,7 +194,7 @@ void CCActionManager::addAction(CCAction *pAction, CCNode *pTarget, bool paused)
     {
         pElement = (tHashElement*)calloc(sizeof(*pElement), 1);
         pElement->paused = paused;
-        pTarget->retain();
+        CC_SAFE_RETAIN(pTarget);
         pElement->target = pTarget;
         HASH_ADD_INT(m_pTargets, target, pElement);
     }
@@ -233,7 +233,7 @@ void CCActionManager::removeAllActionsFromTarget(CCObject *pTarget)
     {
         if (ccArrayContainsObject(pElement->actions, pElement->currentAction) && (! pElement->currentActionSalvaged))
         {
-            pElement->currentAction->retain();
+            CC_SAFE_RETAIN(pElement->currentAction);
             pElement->currentActionSalvaged = true;
         }
         

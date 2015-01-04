@@ -226,7 +226,7 @@ void CCDictionary::setObject(CCObject* pObject, const std::string& key)
     else if (pElement->m_pObject != pObject)
     {
         CCObject* pTmpObj = pElement->m_pObject;
-        pTmpObj->retain();
+        CC_SAFE_RETAIN(pTmpObj);
         removeObjectForElememt(pElement);
         setObjectUnSafe(pObject, key);
         pTmpObj->release();
@@ -252,7 +252,7 @@ void CCDictionary::setObject(CCObject* pObject, intptr_t key)
     else if (pElement->m_pObject != pObject)
     {
         CCObject* pTmpObj = pElement->m_pObject;
-        pTmpObj->retain();
+        CC_SAFE_RETAIN(pTmpObj);
         removeObjectForElememt(pElement);
         setObjectUnSafe(pObject, key);
         pTmpObj->release();
@@ -289,14 +289,14 @@ void CCDictionary::removeObjectForKey(intptr_t key)
 
 void CCDictionary::setObjectUnSafe(CCObject* pObject, const std::string& key)
 {
-    pObject->retain();
+    CC_SAFE_RETAIN(pObject);
     CCDictElement* pElement = new CCDictElement(key.c_str(), pObject);
     HASH_ADD_STR(m_pElements, m_szKey, pElement);
 }
 
 void CCDictionary::setObjectUnSafe(CCObject* pObject, const intptr_t key)
 {
-    pObject->retain();
+    CC_SAFE_RETAIN(pObject);
     CCDictElement* pElement = new CCDictElement(key, pObject);
     HASH_ADD_PTR(m_pElements, m_iKey, pElement);
 }

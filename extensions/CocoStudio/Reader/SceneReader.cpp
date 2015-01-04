@@ -295,7 +295,7 @@ CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode*
             else
             {
                 gb = pRender->getNode();
-                gb->retain();
+                CC_SAFE_RETAIN(gb);
                 pRender->setNode(nullptr);
                 CC_SAFE_RELEASE_NULL(pRender);
             }
@@ -402,7 +402,7 @@ cocos2d::CCNode* SceneReader::createObject(CocoLoader *pCocoLoader, stExpCocoNod
 			else
 			{
 				gb = pRender->getNode();
-				gb->retain();
+				CC_SAFE_RETAIN(gb);
 				pRender->setNode(nullptr);
 				CC_SAFE_RELEASE_NULL(pRender);
 			}

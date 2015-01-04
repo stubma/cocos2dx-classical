@@ -93,15 +93,15 @@ bool CCArmatureDataManager::init()
     {
         m_pArmarureDatas = CCDictionary::create();
         CCAssert(m_pArmarureDatas, "create CCArmatureDataManager::m_pArmarureDatas fail!");
-        m_pArmarureDatas->retain();
+        CC_SAFE_RETAIN(m_pArmarureDatas);
 
         m_pAnimationDatas = CCDictionary::create();
         CCAssert(m_pAnimationDatas, "create CCArmatureDataManager::m_pAnimationDatas fail!");
-        m_pAnimationDatas->retain();
+        CC_SAFE_RETAIN(m_pAnimationDatas);
 
         m_pTextureDatas = CCDictionary::create();
         CCAssert(m_pTextureDatas, "create CCArmatureDataManager::m_pTextureDatas fail!");
-        m_pTextureDatas->retain();
+        CC_SAFE_RETAIN(m_pTextureDatas);
 
         bRet = true;
     }

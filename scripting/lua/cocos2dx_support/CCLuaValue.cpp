@@ -88,7 +88,7 @@ const CCLuaValue CCLuaValue::ccobjectValue(CCObject* ccobjectValue, const char* 
     CCLuaValue value;
     value.m_type = CCLuaValueTypeCCObject;
     value.m_field.ccobjectValue = ccobjectValue;
-    ccobjectValue->retain();
+    CC_SAFE_RETAIN(ccobjectValue);
     value.m_ccobjectType = new std::string(objectTypename);
     return value;
 }
@@ -149,7 +149,7 @@ void CCLuaValue::copy(const CCLuaValue& rhs)
     else if (m_type == CCLuaValueTypeCCObject)
     {
         m_field.ccobjectValue = rhs.m_field.ccobjectValue;
-        m_field.ccobjectValue->retain();
+        CC_SAFE_RETAIN(m_field.ccobjectValue);
         m_ccobjectType = new std::string(*rhs.m_ccobjectType);
     }
 }

@@ -62,7 +62,7 @@ CCAuroraFileData* CCAuroraManager::load(const char* spxPath) {
 	data = CCAuroraLoader::load(spxPath);
 	if(data != nullptr) {
 		m_auroraFileDataList.push_back(data);
-		data->retain();
+		CC_SAFE_RETAIN(data);
 	}
 
 	return data;

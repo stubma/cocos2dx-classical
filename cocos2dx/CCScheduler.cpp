@@ -289,7 +289,7 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, 
         pElement->target = pTarget;
         if (pTarget)
         {
-            pTarget->retain();
+            CC_SAFE_RETAIN(pTarget);
         }
         HASH_ADD_INT(m_pHashForTimers, target, pElement);
 
@@ -351,7 +351,7 @@ void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget
             {
                 if (pTimer == pElement->currentTimer && (! pElement->currentTimerSalvaged))
                 {
-                    pElement->currentTimer->retain();
+                    CC_SAFE_RETAIN(pElement->currentTimer);
                     pElement->currentTimerSalvaged = true;
                 }
 
@@ -432,7 +432,7 @@ void CCScheduler::priorityIn(tListEntry **ppList, CCObject *pTarget, int nPriori
     // update hash entry for quick access
     tHashUpdateEntry *pHashElement = (tHashUpdateEntry *)calloc(sizeof(*pHashElement), 1);
     pHashElement->target = pTarget;
-    pTarget->retain();
+    CC_SAFE_RETAIN(pTarget);
     pHashElement->list = ppList;
     pHashElement->entry = pListElement;
     HASH_ADD_INT(m_pHashForUpdates, target, pHashElement);
@@ -451,7 +451,7 @@ void CCScheduler::appendIn(_listEntry **ppList, CCObject *pTarget, bool bPaused)
     // update hash entry for quicker access
     tHashUpdateEntry *pHashElement = (tHashUpdateEntry *)calloc(sizeof(*pHashElement), 1);
     pHashElement->target = pTarget;
-    pTarget->retain();
+    CC_SAFE_RETAIN(pTarget);
     pHashElement->list = ppList;
     pHashElement->entry = pListElement;
     HASH_ADD_INT(m_pHashForUpdates, target, pHashElement);
@@ -605,7 +605,7 @@ void CCScheduler::unscheduleAllForTarget(CCObject *pTarget)
         if (ccArrayContainsObject(pElement->timers, pElement->currentTimer)
             && (! pElement->currentTimerSalvaged))
         {
-            pElement->currentTimer->retain();
+            CC_SAFE_RETAIN(pElement->currentTimer);
             pElement->currentTimerSalvaged = true;
         }
         ccArrayRemoveAllObjects(pElement->timers);
@@ -630,7 +630,7 @@ unsigned int CCScheduler::scheduleScriptFunc(ccScriptFunction nHandler, float fI
     if (!m_pScriptHandlerEntries)
     {
         m_pScriptHandlerEntries = CCArray::createWithCapacity(20);
-        m_pScriptHandlerEntries->retain();
+        CC_SAFE_RETAIN(m_pScriptHandlerEntries);
     }
     m_pScriptHandlerEntries->addObject(pEntry);
     return pEntry->getEntryId();

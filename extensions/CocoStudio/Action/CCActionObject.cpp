@@ -42,7 +42,7 @@ NS_CC_EXT_BEGIN
 	, m_fTotalTime(0.0f)
 {
 	m_ActionNodeList = CCArray::create();
-	m_ActionNodeList->retain();
+	CC_SAFE_RETAIN(m_ActionNodeList);
 
 	m_pScheduler = CCDirector::sharedDirector()->getScheduler();
 	CC_SAFE_RETAIN(m_pScheduler);

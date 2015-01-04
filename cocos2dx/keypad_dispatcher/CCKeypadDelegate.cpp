@@ -49,7 +49,7 @@ void CCKeypadHandler::setDelegate(CCKeypadDelegate *pDelegate)
 {
     if (pDelegate)
     {
-        dynamic_cast<CCObject*>(pDelegate)->retain();
+        CC_SAFE_RETAIN(dynamic_cast<CCObject*>(pDelegate));
     }
 
     if (m_pDelegate)
@@ -64,7 +64,7 @@ bool CCKeypadHandler::initWithDelegate(CCKeypadDelegate *pDelegate)
     CCAssert(pDelegate != nullptr, "It's a wrong delegate!");
 
     m_pDelegate = pDelegate;
-    dynamic_cast<CCObject*>(pDelegate)->retain();
+    CC_SAFE_RETAIN(dynamic_cast<CCObject*>(pDelegate));
 
     return true;
 }

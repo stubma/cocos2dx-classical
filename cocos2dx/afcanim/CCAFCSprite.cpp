@@ -123,7 +123,7 @@ void CCAFCSprite::initSpriteFromAnimationData() {
 		CCSprite* sprite = CCSprite::create();
 		sprite->setColor(getColor());
 		m_spriteList.push_back(sprite);
-		sprite->retain();
+		CC_SAFE_RETAIN(sprite);
 	}
 }
 
@@ -259,7 +259,7 @@ void CCAFCSprite::replaceTextures(CCTexture2D* tex, ...) {
 	// for first texture
 	CCSpriteBatchNode* sheet = CCAFCSprite::createBatchNode(tex);
 	m_sheetList.push_back(sheet);
-	sheet->retain();
+	CC_SAFE_RETAIN(sheet);
 
 	// create new sprite batch node for new set of textures
 	va_list textures;
@@ -267,7 +267,7 @@ void CCAFCSprite::replaceTextures(CCTexture2D* tex, ...) {
 	for(CCTexture2D* t = va_arg(textures, CCTexture2D*); t != nullptr; t = va_arg(textures, CCTexture2D*)) {
 		sheet = CCAFCSprite::createBatchNode(t);
 		m_sheetList.push_back(sheet);
-		sheet->retain();
+		CC_SAFE_RETAIN(sheet);
 	}
 	va_end(textures);
     
@@ -288,7 +288,7 @@ void CCAFCSprite::replaceTextures(CCTexture2D** tex, int count) {
 	for(int i = 0; i < count; i++) {
 		CCSpriteBatchNode* sheet = CCAFCSprite::createBatchNode(tex[i]);
 		tmp.push_back(sheet);
-		sheet->retain();
+		CC_SAFE_RETAIN(sheet);
 	}
 	
 	// release old batch nodes
@@ -675,7 +675,7 @@ CCRect CCAFCSprite::getFrameRectRelativeToWorld() {
 void CCAFCSprite::addClipMapping(CCAFCClipMapping* mapping) {
 	if(mapping) {
         m_mappingList.push_back(mapping);
-		mapping->retain();
+		CC_SAFE_RETAIN(mapping);
 	}
 }
 

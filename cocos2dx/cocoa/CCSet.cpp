@@ -46,7 +46,7 @@ CCSet::CCSet(const CCSet &rSetObject)
             break;
         }
 
-        (*iter)->retain();
+        CC_SAFE_RETAIN((*iter));
     }
 }
 

@@ -831,7 +831,7 @@ CCMenuItemToggle * CCMenuItemToggle::createWithTarget(CCObject* target, SEL_Menu
     CCMenuItemToggle *pRet = new CCMenuItemToggle();
     pRet->CCMenuItem::initWithTarget(target, selector);
     pRet->m_pSubItems = CCArray::create();
-    pRet->m_pSubItems->retain();
+    CC_SAFE_RETAIN(pRet->m_pSubItems);
     
     for (unsigned int z=0; z < menuItems->count(); z++)
     {
@@ -867,7 +867,7 @@ bool CCMenuItemToggle::initWithTarget(CCObject* target, SEL_MenuHandler selector
 {
     CCMenuItem::initWithTarget(target, selector);
     this->m_pSubItems = CCArray::create();
-    this->m_pSubItems->retain();
+    CC_SAFE_RETAIN(this->m_pSubItems);
     int z = 0;
     CCMenuItem *i = item;
     while(i) 

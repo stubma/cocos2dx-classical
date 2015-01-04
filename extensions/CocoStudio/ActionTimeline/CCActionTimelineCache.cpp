@@ -110,7 +110,7 @@ bool FrameCreateCallFunc::init(CCObject* target, FrameCreateCallback callback)
         return false;
 
     _target = target;
-    _target->retain();
+    CC_SAFE_RETAIN(_target);
     _callback = callback;
 
     return true;

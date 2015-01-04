@@ -781,7 +781,7 @@ void CCDirector::setNextScene(void)
         m_pRunningScene->release();
     }
     m_pRunningScene = m_pNextScene;
-    m_pNextScene->retain();
+    CC_SAFE_RETAIN(m_pNextScene);
     m_pNextScene = nullptr;
 
     if ((! runningIsTransition) && m_pRunningScene)

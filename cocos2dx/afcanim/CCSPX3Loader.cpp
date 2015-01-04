@@ -148,7 +148,7 @@ CCSPX3FileData* CCSPX3Loader::load(const char* data, size_t length, float resSca
 
 		// add tile set
 		spx->m_tileSets.push_back(ts);
-		ts->retain();
+		CC_SAFE_RETAIN(ts);
 	}
 
 	// free
@@ -213,7 +213,7 @@ CCSPX3FileData* CCSPX3Loader::load(const char* data, size_t length, float resSca
 
 		// add frame
 		spx->m_frames.push_back(f);
-		f->retain();
+		CC_SAFE_RETAIN(f);
 	}
 
 	// read all actions
@@ -258,7 +258,7 @@ CCSPX3FileData* CCSPX3Loader::load(const char* data, size_t length, float resSca
 
 		// add action
 		spx->m_actions.push_back(a);
-		a->retain();
+		CC_SAFE_RETAIN(a);
 	}
 
 	return spx;

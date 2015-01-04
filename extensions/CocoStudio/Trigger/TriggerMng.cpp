@@ -37,7 +37,7 @@ TriggerMng::TriggerMng(void)
 ,_movementDispatches(nullptr)
 {
 	_triggerObjs = CCDictionary::create();
-	_triggerObjs->retain();
+	CC_SAFE_RETAIN(_triggerObjs);
 	_movementDispatches = new std::map<CCArmature*, ArmatureMovementDispatcher*>;
 }
 
@@ -303,7 +303,7 @@ bool TriggerMng::isEmpty(void) const
 void TriggerMng::alloc(void)
 {
     _eventTriggers = CCDictionary::create();
-    _eventTriggers->retain();
+    CC_SAFE_RETAIN(_eventTriggers);
 }
 
 void TriggerMng::buildJson(rapidjson::Document &document, cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode)
