@@ -326,7 +326,7 @@ void CCMemory::dumpRecord() {
         while(r) {
             ccRefRecord* rr = r->firstOp;
             if(rr) {
-                CCLOG("[REFRECORD of %s]", typeid(r->obj).name());
+                CCLOG("[REFRECORD of %s]", typeid(*r->obj).name());
             }
             while(rr) {
                 CCLOG("    %s: [%s:%d]", ccRefOpStrings[rr->op], rr->file, rr->line);
