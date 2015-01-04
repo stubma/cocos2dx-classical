@@ -102,7 +102,6 @@ CCArray* CCArray::create(CCObject* pObject, ...)
 CCArray* CCArray::createWithArray(CCArray* otherArray)
 {
     CCArray* pRet = (CCArray*)otherArray->copy();
-    pRet->autorelease();
     return pRet;
 }
 
@@ -379,14 +378,14 @@ CCObject* CCArray::copyWithZone(CCZone* pZone)
     CCAssert(pZone == nullptr, "CCArray should not be inherited.");
     CCArray* pArray = new CCArray();
     pArray->initWithCapacity(this->data->num > 0 ? this->data->num : 1);
-
+    CC_SAFE_AUTORELEASE(pArray);
+    
     CCObject* pObj = nullptr;
     CCObject* pTmpObj = nullptr;
     CCARRAY_FOREACH(this, pObj)
     {
         pTmpObj = pObj->copy();
         pArray->addObject(pTmpObj);
-        CC_SAFE_RELEASE(pTmpObj);
     }
     return pArray;
 }

@@ -86,6 +86,7 @@ CCObject* CCShakyTiles3D::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCShakyTiles3D();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
     
     CCTiledGrid3DAction::copyWithZone(pZone);
@@ -179,6 +180,7 @@ CCObject* CCShatteredTiles3D::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCShatteredTiles3D();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     //copy super class's member
@@ -278,6 +280,7 @@ CCObject* CCShuffleTiles::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCShuffleTiles();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCTiledGrid3DAction::copyWithZone(pZone);
@@ -653,6 +656,7 @@ CCObject* CCTurnOffTiles::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCTurnOffTiles();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCTiledGrid3DAction::copyWithZone(pZone);
@@ -784,6 +788,7 @@ CCObject* CCWavesTiles3D::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCWavesTiles3D();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCTiledGrid3DAction::copyWithZone(pZone);
@@ -862,6 +867,7 @@ CCObject* CCJumpTiles3D::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCJumpTiles3D();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCTiledGrid3DAction::copyWithZone(pZone);
@@ -944,6 +950,7 @@ CCObject* CCSplitRows::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCSplitRows();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCTiledGrid3DAction::copyWithZone(pZone);
@@ -1022,6 +1029,7 @@ CCObject* CCSplitCols::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCSplitCols();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCTiledGrid3DAction::copyWithZone(pZone);

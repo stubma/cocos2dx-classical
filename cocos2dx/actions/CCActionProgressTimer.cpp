@@ -64,6 +64,7 @@ CCObject* CCProgressTo::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCProgressTo();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCActionInterval::copyWithZone(pZone);
@@ -131,6 +132,7 @@ CCObject* CCProgressFromTo::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCProgressFromTo();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCActionInterval::copyWithZone(pZone);

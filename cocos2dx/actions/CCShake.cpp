@@ -71,6 +71,7 @@ CCObject* CCShake::copyWithZone(CCZone *pZone) {
     } else {
         pCopy = new CCShake();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 	
     CCActionInterval::copyWithZone(pZone);

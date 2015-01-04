@@ -77,9 +77,10 @@ CCObject* CCEaseBezierAction::copyWithZone(CCZone *pZone)
 	{
 		pCopy = new CCEaseBezierAction();
 		pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
 	}
 
-	pCopy->initWithAction((CCActionInterval *)(m_pInner->copy()->autorelease()));
+	pCopy->initWithAction((CCActionInterval *)m_pInner->copy());
 
 	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
@@ -132,9 +133,10 @@ CCObject* CCEaseQuadraticActionIn::copyWithZone(CCZone *pZone)
 	{
 		pCopy = new CCEaseQuadraticActionIn();
 		pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
 	}
 
-	pCopy->initWithAction((CCActionInterval *)(m_pInner->copy()->autorelease()));
+	pCopy->initWithAction((CCActionInterval *)m_pInner->copy());
 
 	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
@@ -185,9 +187,10 @@ CCObject* CCEaseQuadraticActionOut::copyWithZone(CCZone *pZone)
 	{
 		pCopy = new CCEaseQuadraticActionOut();
 		pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
 	}
 
-	pCopy->initWithAction((CCActionInterval *)(m_pInner->copy()->autorelease()));
+	pCopy->initWithAction((CCActionInterval *)m_pInner->copy());
 
 	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
@@ -238,9 +241,10 @@ CCObject* CCEaseQuadraticActionInOut::copyWithZone(CCZone *pZone)
 	{
 		pCopy = new CCEaseQuadraticActionInOut();
 		pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
 	}
 
-	pCopy->initWithAction((CCActionInterval *)(m_pInner->copy()->autorelease()));
+	pCopy->initWithAction((CCActionInterval *)m_pInner->copy());
 
 	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
@@ -303,9 +307,10 @@ CCObject* CCEaseQuarticActionIn::copyWithZone(CCZone *pZone)
 	{
 		pCopy = new CCEaseQuarticActionIn();
 		pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
 	}
 
-	pCopy->initWithAction((CCActionInterval *)(m_pInner->copy()->autorelease()));
+	pCopy->initWithAction((CCActionInterval *)m_pInner->copy());
 
 	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
@@ -356,9 +361,10 @@ CCObject* CCEaseQuarticActionOut::copyWithZone(CCZone *pZone)
 	{
 		pCopy = new CCEaseQuarticActionOut();
 		pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
 	}
 
-	pCopy->initWithAction((CCActionInterval *)(m_pInner->copy()->autorelease()));
+	pCopy->initWithAction((CCActionInterval *)m_pInner->copy());
 
 	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
@@ -410,9 +416,10 @@ CCObject* CCEaseQuarticActionInOut::copyWithZone(CCZone *pZone)
 	{
 		pCopy = new CCEaseQuarticActionInOut();
 		pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
 	}
 
-	pCopy->initWithAction((CCActionInterval *)(m_pInner->copy()->autorelease()));
+	pCopy->initWithAction((CCActionInterval *)m_pInner->copy());
 
 	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
@@ -472,9 +479,10 @@ CCObject* CCEaseQuinticActionIn::copyWithZone(CCZone *pZone)
 	{
 		pCopy = new CCEaseQuinticActionIn();
 		pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
 	}
 
-	pCopy->initWithAction((CCActionInterval *)(m_pInner->copy()->autorelease()));
+	pCopy->initWithAction((CCActionInterval *)m_pInner->copy());
 
 	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
@@ -525,9 +533,10 @@ CCObject* CCEaseQuinticActionOut::copyWithZone(CCZone *pZone)
 	{
 		pCopy = new CCEaseQuinticActionOut();
 		pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
 	}
 
-	pCopy->initWithAction((CCActionInterval *)(m_pInner->copy()->autorelease()));
+	pCopy->initWithAction((CCActionInterval *)m_pInner->copy());
 
 	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
@@ -579,9 +588,10 @@ CCObject* CCEaseQuinticActionInOut::copyWithZone(CCZone *pZone)
 	{
 		pCopy = new CCEaseQuinticActionInOut();
 		pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
 	}
 
-	pCopy->initWithAction((CCActionInterval *)(m_pInner->copy()->autorelease()));
+	pCopy->initWithAction((CCActionInterval *)m_pInner->copy());
 
 	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
@@ -641,9 +651,10 @@ CCObject* CCEaseCircleActionIn::copyWithZone(CCZone *pZone)
 	{
 		pCopy = new CCEaseCircleActionIn();
 		pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
 	}
 
-	pCopy->initWithAction((CCActionInterval *)(m_pInner->copy()->autorelease()));
+	pCopy->initWithAction((CCActionInterval *)m_pInner->copy());
 
 	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
@@ -694,9 +705,10 @@ CCObject* CCEaseCircleActionOut::copyWithZone(CCZone *pZone)
 	{
 		pCopy = new CCEaseCircleActionOut();
 		pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
 	}
 
-	pCopy->initWithAction((CCActionInterval *)(m_pInner->copy()->autorelease()));
+	pCopy->initWithAction((CCActionInterval *)m_pInner->copy());
 
 	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
@@ -748,9 +760,10 @@ CCObject* CCEaseCircleActionInOut::copyWithZone(CCZone *pZone)
 	{
 		pCopy = new CCEaseCircleActionInOut();
 		pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
 	}
 
-	pCopy->initWithAction((CCActionInterval *)(m_pInner->copy()->autorelease()));
+	pCopy->initWithAction((CCActionInterval *)m_pInner->copy());
 
 	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
@@ -810,9 +823,10 @@ CCObject* CCEaseCubicActionIn::copyWithZone(CCZone *pZone)
 	{
 		pCopy = new CCEaseCubicActionIn();
 		pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
 	}
 
-	pCopy->initWithAction((CCActionInterval *)(m_pInner->copy()->autorelease()));
+	pCopy->initWithAction((CCActionInterval *)m_pInner->copy());
 
 	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
@@ -863,9 +877,10 @@ CCObject* CCEaseCubicActionOut::copyWithZone(CCZone *pZone)
 	{
 		pCopy = new CCEaseCubicActionOut();
 		pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
 	}
 
-	pCopy->initWithAction((CCActionInterval *)(m_pInner->copy()->autorelease()));
+	pCopy->initWithAction((CCActionInterval *)m_pInner->copy());
 
 	CC_SAFE_DELETE(pNewZone);
 	return pCopy;
@@ -917,9 +932,10 @@ CCObject* CCEaseCubicActionInOut::copyWithZone(CCZone *pZone)
 	{
 		pCopy = new CCEaseCubicActionInOut();
 		pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
 	}
 
-	pCopy->initWithAction((CCActionInterval *)(m_pInner->copy()->autorelease()));
+	pCopy->initWithAction((CCActionInterval *)m_pInner->copy());
 
 	CC_SAFE_DELETE(pNewZone);
 	return pCopy;

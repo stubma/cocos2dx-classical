@@ -91,6 +91,7 @@ CCObject* CCCallFuncT<T>::copyWithZone(CCZone* pZone) {
     } else {
         pRet = new CCCallFuncT();
         pZone = pNewZone = new CCZone(pRet);
+        CC_SAFE_AUTORELEASE(pRet);
     }
     
     CCCallFunc::copyWithZone(pZone);

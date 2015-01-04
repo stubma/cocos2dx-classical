@@ -153,6 +153,7 @@ CCObject* CCTrailMoveTo::copyWithZone(CCZone* pZone) {
     } else {
         pCopy = new CCTrailMoveTo();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
     
     CCMoveBy::copyWithZone(pZone);

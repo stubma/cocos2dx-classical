@@ -98,6 +98,7 @@ CCObject* CCCount::copyWithZone(CCZone *pZone) {
     } else {
         pCopy = new CCCount();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 	
     CCActionInterval::copyWithZone(pZone);

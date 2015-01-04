@@ -79,6 +79,7 @@ CCObject* CCBlur::copyWithZone(CCZone *pZone) {
     } else {
         pCopy = new CCBlur();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 	
     CCActionInterval::copyWithZone(pZone);

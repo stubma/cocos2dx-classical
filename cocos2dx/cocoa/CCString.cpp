@@ -133,6 +133,7 @@ CCObject* CCString::copyWithZone(CCZone* pZone)
 {
     CCAssert(pZone == nullptr, "CCString should not be inherited.");
     CCString* pStr = new CCString(m_sString.c_str());
+    CC_SAFE_AUTORELEASE(pStr);
     return pStr;
 }
 

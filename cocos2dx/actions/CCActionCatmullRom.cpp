@@ -84,6 +84,7 @@ CCObject* CCPointArray::copyWithZone(cocos2d::CCZone *zone)
     CCPointArray *points = new CCPointArray();
     points->initWithCapacity(10);
     points->setControlPoints(newArray);
+    CC_SAFE_AUTORELEASE(points);
     
     return points;
 }
@@ -291,6 +292,7 @@ CCCardinalSplineTo* CCCardinalSplineTo::copyWithZone(cocos2d::CCZone *pZone)
     {
         pRet = new CCCardinalSplineTo();
         pZone = pNewZone = new CCZone(pRet);
+        CC_SAFE_AUTORELEASE(pRet);
     }
 
     CCActionInterval::copyWithZone(pZone);
@@ -408,7 +410,6 @@ CCActionInterval* CCCardinalSplineBy::reverse()
 	// convert to "diffs" to "reverse absolute"
 	
     CCPointArray *pReverse = copyConfig->reverse();
-    CC_SAFE_RELEASE(copyConfig);
 	
 	// 1st element (which should be 0,0) should be here too
     

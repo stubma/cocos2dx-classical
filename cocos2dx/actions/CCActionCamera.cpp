@@ -73,6 +73,7 @@ CCObject * CCOrbitCamera::copyWithZone(CCZone *pZone)
     {
         pRet = new CCOrbitCamera();
         pZone = pNewZone = new CCZone(pRet);
+        CC_SAFE_AUTORELEASE(pRet);
     }
 
     CCActionInterval::copyWithZone(pZone);

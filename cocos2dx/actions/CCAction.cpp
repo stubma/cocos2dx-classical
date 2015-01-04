@@ -72,6 +72,7 @@ CCObject* CCAction::copyWithZone(CCZone *pZone)
     {
         pRet = new CCAction();
         pNewZone = new CCZone(pRet);
+        CC_SAFE_AUTORELEASE(pRet);
     }
     //copy member data
     pRet->m_nTag = m_nTag;
@@ -157,10 +158,11 @@ CCObject *CCSpeed::copyWithZone(CCZone *pZone)
     {
         pRet = new CCSpeed();
         pZone = pNewZone = new CCZone(pRet);
+        CC_SAFE_AUTORELEASE(pRet);
     }
     CCAction::copyWithZone(pZone);
 
-    pRet->initWithAction( (CCActionInterval*)(m_pInnerAction->copy()->autorelease()) , m_fSpeed );
+    pRet->initWithAction((CCActionInterval*)m_pInnerAction->copy() , m_fSpeed );
     
     CC_SAFE_DELETE(pNewZone);
     return pRet;
@@ -285,6 +287,7 @@ CCObject *CCFollow::copyWithZone(CCZone *pZone)
     {
         pRet = new CCFollow();
         pZone = pNewZone = new CCZone(pRet);
+        CC_SAFE_AUTORELEASE(pRet);
     }
     CCAction::copyWithZone(pZone);
     // copy member data

@@ -96,6 +96,7 @@ CCObject* CCFlash::copyWithZone(CCZone *pZone) {
     } else {
         pCopy = new CCFlash();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 	
     CCActionInterval::copyWithZone(pZone);

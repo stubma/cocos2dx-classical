@@ -107,6 +107,7 @@ CCObject* CCShine::copyWithZone(CCZone* pZone) {
     } else {
         pCopy = new CCShine();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 	
     CCActionInterval::copyWithZone(pZone);
@@ -117,7 +118,7 @@ CCObject* CCShine::copyWithZone(CCZone* pZone) {
 }
 
 CCActionInterval* CCShine::reverse() {
-    return (CCActionInterval*)copyWithZone(nullptr)->autorelease();
+    return (CCActionInterval*)copyWithZone(nullptr);
 }
 
 NS_CC_END

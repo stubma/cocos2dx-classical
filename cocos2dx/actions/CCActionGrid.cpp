@@ -119,6 +119,7 @@ CCObject* CCGridAction::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCGridAction();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCActionInterval::copyWithZone(pZone);

@@ -60,6 +60,7 @@ CCObject* ExtraAction::copyWithZone(CCZone* pZone)
 {
     CC_UNUSED_PARAM(pZone);
     ExtraAction* pRet = new ExtraAction();
+    CC_SAFE_AUTORELEASE(pRet);
     return pRet;
 }
 
@@ -121,6 +122,7 @@ CCObject* CCActionInterval::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCActionInterval();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     
@@ -296,12 +298,13 @@ CCObject* CCSequence::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCSequence();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCActionInterval::copyWithZone(pZone);
 
-    pCopy->initWithTwoActions((CCFiniteTimeAction*)(m_pActions[0]->copy()->autorelease()), 
-                (CCFiniteTimeAction*)(m_pActions[1]->copy()->autorelease()));
+    pCopy->initWithTwoActions((CCFiniteTimeAction*)m_pActions[0]->copy(),
+                (CCFiniteTimeAction*)m_pActions[1]->copy());
 
     CC_SAFE_DELETE(pNewZone);
     return pCopy;
@@ -449,11 +452,12 @@ CCObject* CCRepeat::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCRepeat();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCActionInterval::copyWithZone(pZone);
 
-    pCopy->initWithAction((CCFiniteTimeAction*)(m_pInnerAction->copy()->autorelease()), m_uTimes);
+    pCopy->initWithAction((CCFiniteTimeAction*)m_pInnerAction->copy(), m_uTimes);
 
     CC_SAFE_DELETE(pNewZone);
     return pCopy;
@@ -571,10 +575,11 @@ CCObject* CCRepeatForever::copyWithZone(CCZone *pZone)
     {
         pRet = new CCRepeatForever();
         pZone = pNewZone = new CCZone(pRet);
+        CC_SAFE_AUTORELEASE(pRet);
     }
     CCActionInterval::copyWithZone(pZone);
     // win32 : use the m_pOther's copy object.
-    pRet->initWithAction((CCActionInterval*)(m_pInnerAction->copy()->autorelease())); 
+    pRet->initWithAction((CCActionInterval*)m_pInnerAction->copy());
     CC_SAFE_DELETE(pNewZone);
     return pRet;
 }
@@ -741,12 +746,13 @@ CCObject* CCSpawn::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCSpawn();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCActionInterval::copyWithZone(pZone);
 
-    pCopy->initWithTwoActions((CCFiniteTimeAction*)(m_pOne->copy()->autorelease()), 
-                    (CCFiniteTimeAction*)(m_pTwo->copy()->autorelease()));
+    pCopy->initWithTwoActions((CCFiniteTimeAction*)m_pOne->copy(),
+                    (CCFiniteTimeAction*)m_pTwo->copy());
 
     CC_SAFE_DELETE(pNewZone);
     return pCopy;
@@ -848,6 +854,7 @@ CCObject* CCRotateTo::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCRotateTo();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCActionInterval::copyWithZone(pZone);
@@ -975,6 +982,7 @@ CCObject* CCRotateBy::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCRotateBy();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCActionInterval::copyWithZone(pZone);
@@ -1046,6 +1054,7 @@ CCObject* CCMoveBy::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCMoveBy();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCActionInterval::copyWithZone(pZone);
@@ -1133,6 +1142,7 @@ CCObject* CCMoveTo::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCMoveTo();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCMoveBy::copyWithZone(pZone);
@@ -1199,6 +1209,7 @@ CCObject* CCSkewTo::copyWithZone(CCZone* pZone)
     {
         pCopy = new CCSkewTo();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCActionInterval::copyWithZone(pZone);
@@ -1368,6 +1379,7 @@ CCObject* CCJumpBy::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCJumpBy();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCActionInterval::copyWithZone(pZone);
@@ -1450,6 +1462,7 @@ CCObject* CCJumpTo::copyWithZone(CCZone* pZone)
     {
         pCopy = new CCJumpTo();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCJumpBy::copyWithZone(pZone);
@@ -1521,6 +1534,7 @@ CCObject* CCBezierBy::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCBezierBy();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCActionInterval::copyWithZone(pZone);
@@ -1613,6 +1627,7 @@ CCObject* CCBezierTo::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCBezierTo();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCBezierBy::copyWithZone(pZone);
@@ -1691,6 +1706,7 @@ CCObject* CCScaleTo::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCScaleTo();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCActionInterval::copyWithZone(pZone);
@@ -1755,6 +1771,7 @@ CCObject* CCScaleBy::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCScaleBy();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCScaleTo::copyWithZone(pZone);
@@ -1828,6 +1845,7 @@ CCObject* CCBlink::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCBlink();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCActionInterval::copyWithZone(pZone);
@@ -1881,6 +1899,7 @@ CCObject* CCFadeIn::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCFadeIn();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
     
     CCActionInterval::copyWithZone(pZone);
@@ -1932,6 +1951,7 @@ CCObject* CCFadeOut::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCFadeOut();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCActionInterval::copyWithZone(pZone);
@@ -1993,6 +2013,7 @@ CCObject* CCFadeTo::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCFadeTo();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCActionInterval::copyWithZone(pZone);
@@ -2061,6 +2082,7 @@ CCObject* CCTintTo::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCTintTo();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCActionInterval::copyWithZone(pZone);
@@ -2133,6 +2155,7 @@ CCObject* CCTintBy::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCTintBy();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCActionInterval::copyWithZone(pZone);
@@ -2199,6 +2222,7 @@ CCObject* CCDelayTime::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCDelayTime();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     
@@ -2266,11 +2290,12 @@ CCObject* CCReverseTime::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCReverseTime();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCActionInterval::copyWithZone(pZone);
 
-    pCopy->initWithAction((CCFiniteTimeAction*)(m_pOther->copy()->autorelease()));
+    pCopy->initWithAction((CCFiniteTimeAction*)m_pOther->copy());
 
     CC_SAFE_DELETE(pNewZone);
     return pCopy;
@@ -2308,7 +2333,7 @@ void CCReverseTime::update(float time)
 
 CCActionInterval* CCReverseTime::reverse(void)
 {
-    return (CCActionInterval*)(m_pOther->copy()->autorelease());
+    return (CCActionInterval*)m_pOther->copy();
 }
 
 //
@@ -2370,11 +2395,12 @@ CCObject* CCAnimate::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCAnimate();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCActionInterval::copyWithZone(pZone);
 
-    pCopy->initWithAnimation((CCAnimation*)m_pAnimation->copy()->autorelease());
+    pCopy->initWithAnimation((CCAnimation*)m_pAnimation->copy());
 
     CC_SAFE_DELETE(pNewZone);
     return pCopy;
@@ -2484,7 +2510,7 @@ CCActionInterval* CCAnimate::reverse(void)
                 break;
             }
 
-            pNewArray->addObject((CCAnimationFrame*)(pElement->copy()->autorelease()));
+            pNewArray->addObject((CCAnimationFrame*)pElement->copy());
         }
     }
 
@@ -2542,10 +2568,11 @@ CCObject* CCTargetedAction::copyWithZone(CCZone* pZone)
     {
         pRet = new CCTargetedAction();
         pZone = pNewZone = new CCZone(pRet);
+        CC_SAFE_AUTORELEASE(pRet);
     }
     CCActionInterval::copyWithZone(pZone);
     // win32 : use the m_pOther's copy object.
-    pRet->initWithTarget(m_pForcedTarget, (CCFiniteTimeAction*)m_pAction->copy()->autorelease()); 
+    pRet->initWithTarget(m_pForcedTarget, (CCFiniteTimeAction*)m_pAction->copy()); 
     CC_SAFE_DELETE(pNewZone);
     return pRet;
 }

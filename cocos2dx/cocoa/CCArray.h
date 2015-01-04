@@ -117,7 +117,7 @@ public:
     /**
      * @lua NA
      */
-    ~CCArray();
+    virtual ~CCArray();
 
     /** Create an array */
     static CCArray* create();

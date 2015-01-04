@@ -45,6 +45,7 @@ CCObject * CCActionInstant::copyWithZone(CCZone *pZone) {
     } else {
         pRet = new CCActionInstant();
         pZone = pNewZone = new CCZone(pRet);
+        CC_SAFE_AUTORELEASE(pRet);
     }
 
     CCFiniteTimeAction::copyWithZone(pZone);
@@ -67,7 +68,7 @@ void CCActionInstant::update(float time) {
 }
 
 CCFiniteTimeAction * CCActionInstant::reverse() {
-    return (CCFiniteTimeAction*) (copy()->autorelease());
+    return (CCFiniteTimeAction*)copy();
 }
 
 //
@@ -103,6 +104,7 @@ CCObject* CCShow::copyWithZone(CCZone *pZone) {
     } else {
         pRet = new CCShow();
         pZone = pNewZone = new CCZone(pRet);
+        CC_SAFE_AUTORELEASE(pRet);
     }
 
     CCActionInstant::copyWithZone(pZone);
@@ -142,6 +144,7 @@ CCObject* CCHide::copyWithZone(CCZone *pZone) {
     } else {
         pRet = new CCHide();
         pZone = pNewZone = new CCZone(pRet);
+        CC_SAFE_AUTORELEASE(pRet);
     }
 
     CCActionInstant::copyWithZone(pZone);
@@ -180,6 +183,7 @@ CCObject* CCToggleVisibility::copyWithZone(CCZone *pZone)
     } else {
         pRet = new CCToggleVisibility();
         pZone = pNewZone = new CCZone(pRet);
+        CC_SAFE_AUTORELEASE(pRet);
     }
 
     CCActionInstant::copyWithZone(pZone);
@@ -224,6 +228,7 @@ CCObject* CCRemoveSelf::copyWithZone(CCZone *pZone) {
 	} else {
 		pRet = new CCRemoveSelf();
 		pZone = pNewZone = new CCZone(pRet);
+        CC_SAFE_AUTORELEASE(pRet);
 	}
 
 	CCActionInstant::copyWithZone(pZone);
@@ -272,6 +277,7 @@ CCObject * CCFlipX::copyWithZone(CCZone *pZone) {
     } else {
         pRet = new CCFlipX();
         pZone = pNewZone = new CCZone(pRet);
+        CC_SAFE_AUTORELEASE(pRet);
     }
 
     CCActionInstant::copyWithZone(pZone);
@@ -320,6 +326,7 @@ CCObject* CCFlipY::copyWithZone(CCZone *pZone) {
     } else {
         pRet = new CCFlipY();
         pZone = pNewZone = new CCZone(pRet);
+        CC_SAFE_AUTORELEASE(pRet);
     }
 
     CCActionInstant::copyWithZone(pZone);
@@ -359,6 +366,7 @@ CCObject * CCPlace::copyWithZone(CCZone *pZone) {
     } else {
         pRet = new CCPlace();
         pZone = pNewZone = new CCZone(pRet);
+        CC_SAFE_AUTORELEASE(pRet);
     }
 
     CCActionInstant::copyWithZone(pZone);
@@ -437,6 +445,7 @@ CCObject * CCCallFunc::copyWithZone(CCZone *pZone) {
     } else {
         pRet = new CCCallFunc();
         pZone = pNewZone = new CCZone(pRet);
+        CC_SAFE_AUTORELEASE(pRet);
     }
 
     CCActionInstant::copyWithZone(pZone);
@@ -523,6 +532,7 @@ CCObject * CCCallFuncN::copyWithZone(CCZone* zone) {
     } else {
         pRet = new CCCallFuncN();
         zone = pNewZone = new CCZone(pRet);
+        CC_SAFE_AUTORELEASE(pRet);
     }
 
     CCCallFunc::copyWithZone(zone);
@@ -569,6 +579,7 @@ CCObject * CCCallFuncND::copyWithZone(CCZone* zone) {
     } else {
         pRet = new CCCallFuncND();
         zone = pNewZone = new CCZone(pRet);
+        CC_SAFE_AUTORELEASE(pRet);
     }
 
     CCCallFunc::copyWithZone(zone);
@@ -636,6 +647,7 @@ CCObject * CCCallFuncO::copyWithZone(CCZone* zone) {
     } else {
         pRet = new CCCallFuncO();
         zone = pNewZone = new CCZone(pRet);
+        CC_SAFE_AUTORELEASE(pRet);
     }
 
     CCCallFunc::copyWithZone(zone);

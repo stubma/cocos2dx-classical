@@ -70,10 +70,11 @@ CCObject* CCAnimationFrame::copyWithZone(CCZone* pZone)
     {
         pCopy = new CCAnimationFrame();
         pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
-    pCopy->initWithSpriteFrame((CCSpriteFrame*)m_pSpriteFrame->copy()->autorelease(),
-        m_fDelayUnits, m_pUserInfo != nullptr ? (CCDictionary*)m_pUserInfo->copy()->autorelease() : nullptr);
+    pCopy->initWithSpriteFrame((CCSpriteFrame*)m_pSpriteFrame->copy(),
+        m_fDelayUnits, m_pUserInfo != nullptr ? (CCDictionary*)m_pUserInfo->copy() : nullptr);
 
     CC_SAFE_DELETE(pNewZone);
     return pCopy;
@@ -218,6 +219,7 @@ CCObject* CCAnimation::copyWithZone(CCZone* pZone)
     {
         pCopy = new CCAnimation();
         pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     pCopy->initWithAnimationFrames(m_pFrames, m_fDelayPerUnit, m_uLoops);

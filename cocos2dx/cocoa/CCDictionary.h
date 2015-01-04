@@ -184,7 +184,7 @@ public:
      * The destructor of CCDictionary
      * @lua NA
      */
-    ~CCDictionary();
+    virtual ~CCDictionary();
 
     /**
      *  Get the count of elements in CCDictionary.

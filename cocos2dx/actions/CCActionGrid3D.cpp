@@ -77,6 +77,7 @@ CCObject* CCWaves3D::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCWaves3D();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCGrid3DAction::copyWithZone(pZone);
@@ -155,6 +156,7 @@ CCObject* CCFlipX3D::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCFlipX3D();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCGrid3DAction::copyWithZone(pZone);
@@ -263,6 +265,7 @@ CCObject* CCFlipY3D::copyWithZone(CCZone* pZone)
     {
         pCopy = new CCFlipY3D();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCFlipX3D::copyWithZone(pZone);
@@ -389,6 +392,7 @@ CCObject* CCLens3D::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCLens3D();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCGrid3DAction::copyWithZone(pZone);
@@ -506,6 +510,7 @@ CCObject* CCRipple3D::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCRipple3D();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCGrid3DAction::copyWithZone(pZone);
@@ -587,6 +592,7 @@ CCObject* CCShaky3D::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCShaky3D();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCGrid3DAction::copyWithZone(pZone);
@@ -667,6 +673,7 @@ CCObject* CCLiquid::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCLiquid();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCGrid3DAction::copyWithZone(pZone);
@@ -743,6 +750,7 @@ CCObject* CCWaves::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCWaves();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCGrid3DAction::copyWithZone(pZone);
@@ -832,6 +840,7 @@ CCObject* CCTwirl::copyWithZone(CCZone *pZone)
     {
         pCopy = new CCTwirl();
         pZone = pNewZone = new CCZone(pCopy);
+        CC_SAFE_AUTORELEASE(pCopy);
     }
 
     CCGrid3DAction::copyWithZone(pZone);

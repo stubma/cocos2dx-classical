@@ -337,7 +337,8 @@ CCObject* CCDictionary::copyWithZone(CCZone* pZone)
 {
     CCAssert(pZone == nullptr, "CCDictionary should not be inherited.");
     CCDictionary* pNewDict = new CCDictionary();
-
+    CC_SAFE_AUTORELEASE(pNewDict);
+    
     CCDictElement* pElement = nullptr;
     CCObject* pTmpObj = nullptr;
 
@@ -347,7 +348,6 @@ CCObject* CCDictionary::copyWithZone(CCZone* pZone)
         {
             pTmpObj = pElement->getObject()->copy();
             pNewDict->setObject(pTmpObj, pElement->getIntKey());
-            CC_SAFE_RELEASE(pTmpObj);
         }
     }
     else if (m_eDictType == kCCDictStr)
@@ -356,7 +356,6 @@ CCObject* CCDictionary::copyWithZone(CCZone* pZone)
         {
             pTmpObj = pElement->getObject()->copy();
             pNewDict->setObject(pTmpObj, pElement->getStrKey());
-            CC_SAFE_RELEASE(pTmpObj);
         }
     }
 
@@ -399,7 +398,6 @@ CCDictionary* CCDictionary::create()
 CCDictionary* CCDictionary::createWithDictionary(CCDictionary* srcDict)
 {
     CCDictionary* pNewDict = (CCDictionary*)srcDict->copy();
-    pNewDict->autorelease();
     return pNewDict;
 }
 
