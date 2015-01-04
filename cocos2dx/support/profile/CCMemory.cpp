@@ -23,6 +23,7 @@
  ****************************************************************************/
 #include "CCMemory.h"
 #include <memory.h>
+#include "platform/CCCommon.h"
 
 #ifdef CC_CFLAG_MEMORY_TRACKING
 
