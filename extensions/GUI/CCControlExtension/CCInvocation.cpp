@@ -33,7 +33,7 @@ CCInvocation* CCInvocation::create(CCObject* target, SEL_CCControlHandler action
     CCInvocation* pRet = new CCInvocation(target, action, controlEvent);
     if (pRet != nullptr)
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     return pRet;
 }

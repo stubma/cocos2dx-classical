@@ -351,7 +351,7 @@ CCComRender* CCComRender::create(cocos2d::CCNode *pNode, const char *comName)
     CCComRender * pRet = new CCComRender(pNode, comName);
     if (pRet != nullptr && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -365,7 +365,7 @@ CCComRender* CCComRender::create(void)
     CCComRender * pRet = new CCComRender();
     if (pRet != nullptr && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {

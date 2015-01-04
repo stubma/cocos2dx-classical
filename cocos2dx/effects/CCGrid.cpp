@@ -47,7 +47,7 @@ CCGridBase* CCGridBase::create(const CCSize& gridSize)
     {
         if (pGridBase->initWithSize(gridSize))
         {
-            pGridBase->autorelease();
+            CC_SAFE_AUTORELEASE(pGridBase);
         }
         else
         {
@@ -66,7 +66,7 @@ CCGridBase* CCGridBase::create(const CCSize& gridSize, CCTexture2D *texture, boo
     {
         if (pGridBase->initWithSize(gridSize, texture, flipped))
         {
-            pGridBase->autorelease();
+            CC_SAFE_AUTORELEASE(pGridBase);
         }
         else
         {
@@ -262,7 +262,7 @@ CCGrid3D* CCGrid3D::create(const CCSize& gridSize, CCTexture2D *pTexture, bool b
     {
         if (pRet->initWithSize(gridSize, pTexture, bFlipped))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -282,7 +282,7 @@ CCGrid3D* CCGrid3D::create(const CCSize& gridSize)
     {
         if (pRet->initWithSize(gridSize))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -495,7 +495,7 @@ CCTiledGrid3D* CCTiledGrid3D::create(const CCSize& gridSize, CCTexture2D *pTextu
     {
         if (pRet->initWithSize(gridSize, pTexture, bFlipped))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -515,7 +515,7 @@ CCTiledGrid3D* CCTiledGrid3D::create(const CCSize& gridSize)
     {
         if (pRet->initWithSize(gridSize))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {

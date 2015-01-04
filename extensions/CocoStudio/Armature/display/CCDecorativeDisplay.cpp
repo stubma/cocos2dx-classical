@@ -31,7 +31,7 @@ CCDecorativeDisplay *CCDecorativeDisplay::create()
     CCDecorativeDisplay *pDisplay = new CCDecorativeDisplay();
     if (pDisplay && pDisplay->init())
     {
-        pDisplay->autorelease();
+        CC_SAFE_AUTORELEASE(pDisplay);
         return pDisplay;
     }
     CC_SAFE_DELETE(pDisplay);

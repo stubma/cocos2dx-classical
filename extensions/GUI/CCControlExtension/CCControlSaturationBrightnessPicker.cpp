@@ -83,7 +83,7 @@ CCControlSaturationBrightnessPicker* CCControlSaturationBrightnessPicker::create
 {
     CCControlSaturationBrightnessPicker *pRet = new CCControlSaturationBrightnessPicker();
     pRet->initWithTargetAndPos(target, pos);
-    pRet->autorelease();
+    CC_SAFE_AUTORELEASE(pRet);
     return pRet;
 }
 

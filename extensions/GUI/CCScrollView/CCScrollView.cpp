@@ -71,7 +71,7 @@ CCScrollView* CCScrollView::create(CCSize size, CCNode* container/* = nullptr*/)
     CCScrollView* pRet = new CCScrollView();
     if (pRet && pRet->initWithViewSize(size, container))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -85,7 +85,7 @@ CCScrollView* CCScrollView::create()
     CCScrollView* pRet = new CCScrollView();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {

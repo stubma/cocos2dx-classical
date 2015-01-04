@@ -50,7 +50,7 @@ CCSpriteBatchNode* CCSpriteBatchNode::createWithTexture(CCTexture2D* tex, unsign
 {
     CCSpriteBatchNode *batchNode = new CCSpriteBatchNode();
     batchNode->initWithTexture(tex, capacity);
-    batchNode->autorelease();
+    CC_SAFE_AUTORELEASE(batchNode);
 
     return batchNode;
 }
@@ -63,7 +63,7 @@ CCSpriteBatchNode* CCSpriteBatchNode::create(const char *fileImage, unsigned int
 {
     CCSpriteBatchNode *batchNode = new CCSpriteBatchNode();
     batchNode->initWithFile(fileImage, capacity);
-    batchNode->autorelease();
+    CC_SAFE_AUTORELEASE(batchNode);
 
     return batchNode;
 }
@@ -100,7 +100,7 @@ bool CCSpriteBatchNode::initWithTexture(CCTexture2D *tex, unsigned int capacity)
 bool CCSpriteBatchNode::init()
 {
     CCTexture2D * texture = new CCTexture2D();
-    texture->autorelease();
+    CC_SAFE_AUTORELEASE(texture);
     return this->initWithTexture(texture, 0);
 }
 

@@ -81,7 +81,7 @@ CCMenu* CCMenu::createWithArray(CCArray* pArrayOfItems)
     CCMenu *pRet = new CCMenu();
     if (pRet && pRet->initWithArray(pArrayOfItems))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {

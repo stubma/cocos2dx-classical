@@ -92,7 +92,7 @@ void CCNotificationCenter::addObserver(CCObject *target,
     if (!observer)
         return;
     
-    observer->autorelease();
+    CC_SAFE_AUTORELEASE(observer);
     m_observers->addObject(observer);
 }
 
@@ -145,7 +145,7 @@ void CCNotificationCenter::registerScriptObserver( CCObject *target, ccScriptFun
         return;
     
     observer->setHandler(handler.handler);
-    observer->autorelease();
+    CC_SAFE_AUTORELEASE(observer);
     m_observers->addObject(observer);
 }
 

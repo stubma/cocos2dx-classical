@@ -64,7 +64,7 @@ VisibleFrame* VisibleFrame::create()
     VisibleFrame* frame = new VisibleFrame();
     if (frame)
     {
-        frame->autorelease();
+        CC_SAFE_AUTORELEASE(frame);
         return frame;
     }
     CC_SAFE_DELETE(frame);
@@ -99,7 +99,7 @@ TextureFrame* TextureFrame::create()
     TextureFrame* frame = new TextureFrame();
     if (frame)
     {
-        frame->autorelease();
+        CC_SAFE_AUTORELEASE(frame);
         return frame;
     }
     CC_SAFE_DELETE(frame);
@@ -149,7 +149,7 @@ RotationFrame* RotationFrame::create()
     RotationFrame* frame = new RotationFrame();
     if (frame)
     {
-        frame->autorelease();
+        CC_SAFE_AUTORELEASE(frame);
         return frame;
     }
     CC_SAFE_DELETE(frame);
@@ -198,7 +198,7 @@ SkewFrame* SkewFrame::create()
     SkewFrame* frame = new SkewFrame();
     if (frame)
     {
-        frame->autorelease();
+        CC_SAFE_AUTORELEASE(frame);
         return frame;
     }
     CC_SAFE_DELETE(frame);
@@ -256,7 +256,7 @@ RotationSkewFrame* RotationSkewFrame::create()
     RotationSkewFrame* frame = new RotationSkewFrame();
     if (frame)
     {
-        frame->autorelease();
+        CC_SAFE_AUTORELEASE(frame);
         return frame;
     }
     CC_SAFE_DELETE(frame);
@@ -309,7 +309,7 @@ PositionFrame* PositionFrame::create()
     PositionFrame* frame = new PositionFrame();
     if (frame)
     {
-        frame->autorelease();
+        CC_SAFE_AUTORELEASE(frame);
         return frame;
     }
     CC_SAFE_DELETE(frame);
@@ -361,7 +361,7 @@ ScaleFrame* ScaleFrame::create()
     ScaleFrame* frame = new ScaleFrame();
     if (frame)
     {
-        frame->autorelease();
+        CC_SAFE_AUTORELEASE(frame);
         return frame;
     }
     CC_SAFE_DELETE(frame);
@@ -416,7 +416,7 @@ AnchorPointFrame* AnchorPointFrame::create()
     AnchorPointFrame* frame = new AnchorPointFrame();
     if (frame)
     {
-        frame->autorelease();
+        CC_SAFE_AUTORELEASE(frame);
         return frame;
     }
     CC_SAFE_DELETE(frame);
@@ -452,7 +452,7 @@ InnerActionFrame* InnerActionFrame::create()
     InnerActionFrame* frame = new InnerActionFrame();
     if (frame)
     {
-        frame->autorelease();
+        CC_SAFE_AUTORELEASE(frame);
         return frame;
     }
     CC_SAFE_DELETE(frame);
@@ -488,7 +488,7 @@ ColorFrame* ColorFrame::create()
     ColorFrame* frame = new ColorFrame();
     if (frame)
     {
-        frame->autorelease();
+        CC_SAFE_AUTORELEASE(frame);
         return frame;
     }
     CC_SAFE_DELETE(frame);
@@ -562,7 +562,7 @@ EventFrame* EventFrame::create()
     EventFrame* frame = new EventFrame();
     if (frame)
     {
-        frame->autorelease();
+        CC_SAFE_AUTORELEASE(frame);
         return frame;
     }
     CC_SAFE_DELETE(frame);
@@ -597,7 +597,7 @@ ZOrderFrame* ZOrderFrame::create()
     ZOrderFrame* frame = new ZOrderFrame();
     if (frame)
     {
-        frame->autorelease();
+        CC_SAFE_AUTORELEASE(frame);
         return frame;
     }
     CC_SAFE_DELETE(frame);

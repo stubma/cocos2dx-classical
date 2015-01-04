@@ -41,7 +41,7 @@ static __TYPE__* create() \
     __TYPE__ *pRet = new __TYPE__(); \
     if (pRet && pRet->init()) \
     { \
-        pRet->autorelease(); \
+        CC_SAFE_AUTORELEASE(pRet); \
         return pRet; \
     } \
     else \
@@ -63,7 +63,7 @@ CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
     __TYPE__ *pRet = new __TYPE__(); \
     if (pRet && pRet->init()) \
     { \
-        pRet->autorelease(); \
+        CC_SAFE_AUTORELEASE(pRet); \
         return pRet; \
     } \
     else \
@@ -243,6 +243,15 @@ public: virtual void set##funName(varType var)   \
 #define CC_SAFE_FREE(p)                do { if(p) { free(p); (p) = 0; } } while(0)
 #define CC_SAFE_RELEASE(p)            do { if(p) { (p)->release(); } } while(0)
 #define CC_SAFE_AUTORELEASE(p)            do { if(p) { (p)->autorelease(); } } while(0)
+#define CC_SAFE_AUTORELEASE_AND_RETURN(p, t) \
+    do { \
+        if(p) { \
+            return (t)(p)->autorelease(); \
+        } else { \
+            return nullptr; \
+        } \
+    } while(0)
+
 #define CC_SAFE_RELEASE_NULL(p)        do { if(p) { (p)->release(); (p) = 0; } } while(0)
 #define CC_SAFE_RETAIN(p)            do { if(p) { (p)->retain(); } } while(0)
 #define CC_BREAK_IF(cond)            if(cond) break

@@ -43,7 +43,7 @@ ScrollInnerContainer* ScrollInnerContainer::create()
     ScrollInnerContainer* widget = new ScrollInnerContainer();
     if (widget && widget->init())
     {
-        widget->autorelease();
+        CC_SAFE_AUTORELEASE(widget);
         return widget;
     }
     CC_SAFE_DELETE(widget);
@@ -124,7 +124,7 @@ ScrollView* ScrollView::create()
     ScrollView* widget = new ScrollView();
     if (widget && widget->init())
     {
-        widget->autorelease();
+        CC_SAFE_AUTORELEASE(widget);
         return widget;
     }
     CC_SAFE_DELETE(widget);

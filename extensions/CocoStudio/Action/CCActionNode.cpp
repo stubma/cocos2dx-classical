@@ -99,7 +99,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,CCObject* root)
 			float positionX = DICTOOL->getFloatValue_json(actionFrameDic, "positionx");
 			float positionY = DICTOOL->getFloatValue_json(actionFrameDic, "positiony");
 			ActionMoveFrame* actionFrame = new ActionMoveFrame();
-			actionFrame->autorelease();
+			CC_SAFE_AUTORELEASE(actionFrame);
             actionFrame->setEasingType(frameTweenType);
             actionFrame->setEasingParameter(frameTweenParameter);
 			actionFrame->setFrameIndex(frameInex);
@@ -114,7 +114,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,CCObject* root)
 			float scaleX = DICTOOL->getFloatValue_json(actionFrameDic, "scalex");
 			float scaleY = DICTOOL->getFloatValue_json(actionFrameDic, "scaley");
 			ActionScaleFrame* actionFrame = new ActionScaleFrame();
-			actionFrame->autorelease();
+			CC_SAFE_AUTORELEASE(actionFrame);
             actionFrame->setEasingType(frameTweenType);
             actionFrame->setEasingParameter(frameTweenParameter);
 			actionFrame->setFrameIndex(frameInex);
@@ -129,7 +129,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,CCObject* root)
 		{
 			float rotation = DICTOOL->getFloatValue_json(actionFrameDic, "rotation");
 			ActionRotationFrame* actionFrame = new ActionRotationFrame();
-			actionFrame->autorelease();
+			CC_SAFE_AUTORELEASE(actionFrame);
             actionFrame->setEasingType(frameTweenType);
             actionFrame->setEasingParameter(frameTweenParameter);
 			actionFrame->setFrameIndex(frameInex);
@@ -143,7 +143,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,CCObject* root)
 		{
 			int opacity = DICTOOL->getIntValue_json(actionFrameDic, "opacity");
 			ActionFadeFrame* actionFrame = new ActionFadeFrame();
-			actionFrame->autorelease();
+			CC_SAFE_AUTORELEASE(actionFrame);
             actionFrame->setEasingType(frameTweenType);
             actionFrame->setEasingParameter(frameTweenParameter);
 			actionFrame->setFrameIndex(frameInex);
@@ -159,7 +159,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,CCObject* root)
 			int colorG = DICTOOL->getIntValue_json(actionFrameDic, "colorg");
 			int colorB = DICTOOL->getIntValue_json(actionFrameDic, "colorb");
 			ActionTintFrame* actionFrame = new ActionTintFrame();
-			actionFrame->autorelease();
+			CC_SAFE_AUTORELEASE(actionFrame);
             actionFrame->setEasingType(frameTweenType);
             actionFrame->setEasingParameter(frameTweenParameter);
 			actionFrame->setFrameIndex(frameInex);
@@ -230,7 +230,7 @@ void ActionNode::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, coc
             }else if (key == "positiony"){
                 positionY = valueToFloat(value);
                 ActionMoveFrame* actionFrame = new ActionMoveFrame();
-                actionFrame->autorelease();
+                CC_SAFE_AUTORELEASE(actionFrame);
                 actionFrame->setEasingType(frameTweenType);
                 actionFrame->setEasingParameter(frameTweenParameter);
                 actionFrame->setFrameIndex(frameIndex);
@@ -242,7 +242,7 @@ void ActionNode::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, coc
             }else if(key == "scaley"){
                 scaleY = valueToFloat(value);
                 ActionScaleFrame* actionFrame = new ActionScaleFrame();
-                actionFrame->autorelease();
+                CC_SAFE_AUTORELEASE(actionFrame);
                 actionFrame->setEasingType(frameTweenType);
                 actionFrame->setEasingParameter(frameTweenParameter);
                 actionFrame->setFrameIndex(frameIndex);
@@ -253,7 +253,7 @@ void ActionNode::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, coc
             }else if (key == "rotation"){
                 rotation = valueToFloat(value);
                 ActionRotationFrame* actionFrame = new ActionRotationFrame();
-                actionFrame->autorelease();
+                CC_SAFE_AUTORELEASE(actionFrame);
                 actionFrame->setEasingType(frameTweenType);
                 actionFrame->setEasingParameter(frameTweenParameter);
                 actionFrame->setFrameIndex(frameIndex);
@@ -263,7 +263,7 @@ void ActionNode::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, coc
             }else if (key == "opacity"){
                 opacity = valueToInt(value);
                 ActionFadeFrame* actionFrame = new ActionFadeFrame();
-                actionFrame->autorelease();
+                CC_SAFE_AUTORELEASE(actionFrame);
                 actionFrame->setEasingType(frameTweenType);
                 actionFrame->setEasingParameter(frameTweenParameter);
                 actionFrame->setFrameIndex(frameIndex);
@@ -278,7 +278,7 @@ void ActionNode::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, coc
                 colorR = valueToInt(value);
                 
                 ActionTintFrame* actionFrame = new ActionTintFrame();
-                actionFrame->autorelease();
+                CC_SAFE_AUTORELEASE(actionFrame);
                 actionFrame->setEasingType(frameTweenType);
                 actionFrame->setEasingParameter(frameTweenParameter);
                 actionFrame->setFrameIndex(frameIndex);

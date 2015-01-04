@@ -51,7 +51,7 @@ CCAction::~CCAction()
 CCAction* CCAction::create()
 {
     CCAction * pRet = new CCAction();
-    pRet->autorelease();
+    CC_SAFE_AUTORELEASE(pRet);
     return pRet;
 }
 
@@ -130,7 +130,7 @@ CCSpeed* CCSpeed::create(CCActionInterval* pAction, float fSpeed)
     CCSpeed *pRet = new CCSpeed();
     if (pRet && pRet->initWithAction(pAction, fSpeed))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
@@ -218,7 +218,7 @@ CCFollow* CCFollow::create(CCNode *pFollowedNode, const CCRect& rect/* = CCRectZ
     CCFollow *pRet = new CCFollow();
     if (pRet && pRet->initWithTarget(pFollowedNode, rect))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
     CC_SAFE_DELETE(pRet);

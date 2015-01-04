@@ -180,7 +180,7 @@ void* CCTCPSocket::tcpThreadEntry(void* arg) {
     }
 	
 	// release
-	s->autorelease();
+	CC_SAFE_AUTORELEASE(s);
     
     // exit
     pthread_exit(nullptr);

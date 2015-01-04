@@ -47,7 +47,7 @@ void CCShaders::loadCustomShader(const string& key) {
     if(!CCShaderCache::sharedShaderCache()->programForKey(key.c_str())) {
 		// load shader
         CCGLProgram* p = new CCGLProgram();
-		p->autorelease();
+		CC_SAFE_AUTORELEASE(p);
 		LOAD_PROGRAM_IF(flash);
 		LOAD_PROGRAM_IF(blur);
 		LOAD_PROGRAM_IF(laser);

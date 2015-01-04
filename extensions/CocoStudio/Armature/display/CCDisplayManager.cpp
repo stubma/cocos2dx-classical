@@ -35,7 +35,7 @@ CCDisplayManager *CCDisplayManager::create(CCBone *bone)
     CCDisplayManager *pDisplayManager = new CCDisplayManager();
     if (pDisplayManager && pDisplayManager->init(bone))
     {
-        pDisplayManager->autorelease();
+        CC_SAFE_AUTORELEASE(pDisplayManager);
         return pDisplayManager;
     }
     CC_SAFE_DELETE(pDisplayManager);

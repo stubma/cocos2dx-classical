@@ -125,7 +125,7 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
         // Initialize the dispatch table
         
         CCString* tempString = CCString::create(label->getString());
-        //tempString->autorelease();
+        //CC_SAFE_AUTORELEASE(tempString);
         setTitleForState(tempString, CCControlStateNormal);
         setTitleColorForState(rgbaLabel->getColor(), CCControlStateNormal);
         setTitleLabelForState(node, CCControlStateNormal);
@@ -149,7 +149,7 @@ CCControlButton* CCControlButton::create(CCNode* label, CCScale9Sprite* backgrou
 {
     CCControlButton *pRet = new CCControlButton();
     pRet->initWithLabelAndBackgroundSprite(label, backgroundSprite);
-    pRet->autorelease();
+    CC_SAFE_AUTORELEASE(pRet);
     return pRet;
 }
 
@@ -163,7 +163,7 @@ CCControlButton* CCControlButton::create(string title, const char * fontName, fl
 {
     CCControlButton *pRet = new CCControlButton();
     pRet->initWithTitleAndFontNameAndFontSize(title, fontName, fontSize);
-    pRet->autorelease();
+    CC_SAFE_AUTORELEASE(pRet);
     return pRet;
 }
 
@@ -177,7 +177,7 @@ CCControlButton* CCControlButton::create(CCScale9Sprite* sprite)
 {
     CCControlButton *pRet = new CCControlButton();
     pRet->initWithBackgroundSprite(sprite);
-    pRet->autorelease();
+    CC_SAFE_AUTORELEASE(pRet);
     return pRet;
 }
 
@@ -349,7 +349,7 @@ void CCControlButton::setTitleColorForState(ccColor3B color, CCControlState stat
     //ccColor3B* colorValue=&color;
     m_titleColorDispatchTable->removeObjectForKey(state); 
     CCColor3bObject* pColor3bObject = new CCColor3bObject(color);
-    pColor3bObject->autorelease();
+    CC_SAFE_AUTORELEASE(pColor3bObject);
     m_titleColorDispatchTable->setObject(pColor3bObject, state);
       
     // If the current state if equal to the given state we update the layout
@@ -758,7 +758,7 @@ CCControlButton* CCControlButton::create()
     CCControlButton *pControlButton = new CCControlButton();
     if (pControlButton && pControlButton->init())
     {
-        pControlButton->autorelease();
+        CC_SAFE_AUTORELEASE(pControlButton);
         return pControlButton;
     }
     CC_SAFE_DELETE(pControlButton);

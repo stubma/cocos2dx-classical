@@ -42,7 +42,7 @@ CCTileMapAtlas * CCTileMapAtlas::create(const char *tile, const char *mapFile, i
     CCTileMapAtlas *pRet = new CCTileMapAtlas();
     if (pRet->initWithTileFile(tile, mapFile, tileWidth, tileHeight))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
     CC_SAFE_DELETE(pRet);

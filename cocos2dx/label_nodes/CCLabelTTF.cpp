@@ -98,7 +98,7 @@ CCLabelTTF * CCLabelTTF::create(CC_DECRYPT_FUNC decryptFunc)
     CCLabelTTF * pRet = new CCLabelTTF();
     if (pRet && pRet->init(decryptFunc))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -111,7 +111,7 @@ CCLabelTTF * CCLabelTTF::createWithFontDefinition(const char *string, ccFontDefi
     CCLabelTTF *pRet = new CCLabelTTF();
     if(pRet && pRet->initWithStringAndTextDefinition(string, textDefinition))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
@@ -137,7 +137,7 @@ CCLabelTTF* CCLabelTTF::create(const char *string, const char *fontName, float f
     CCLabelTTF *pRet = new CCLabelTTF();
     if(pRet && pRet->initWithString(string, strcmp(fontName, "") == 0 ? "Helvetica" : fontName , fontSize, dimensions, hAlignment, vAlignment, decryptFunc))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
     CC_SAFE_DELETE(pRet);

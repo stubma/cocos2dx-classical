@@ -37,7 +37,7 @@ CCArmatureAnimation *CCArmatureAnimation::create(CCArmature *armature)
     CCArmatureAnimation *pArmatureAnimation = new CCArmatureAnimation();
     if (pArmatureAnimation && pArmatureAnimation->init(armature))
     {
-        pArmatureAnimation->autorelease();
+        CC_SAFE_AUTORELEASE(pArmatureAnimation);
         return pArmatureAnimation;
     }
     CC_SAFE_DELETE(pArmatureAnimation);

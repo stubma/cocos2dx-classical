@@ -37,7 +37,7 @@ m_recursivelyExclude(true) {
 CCTreeFadeIn* CCTreeFadeIn::create(float d) {
     CCTreeFadeIn* pAction = new CCTreeFadeIn();
     pAction->initWithDuration(d);
-    pAction->autorelease();
+    CC_SAFE_AUTORELEASE(pAction);
     return pAction;
 }
 

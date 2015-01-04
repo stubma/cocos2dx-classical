@@ -55,7 +55,7 @@ CCSPX3Sprite* CCSPX3Sprite::create(const char* spxPath, int actionIndex, CCTextu
 	sprite->playAnimation(actionIndex);
 
 	// return
-	sprite->autorelease();
+	CC_SAFE_AUTORELEASE(sprite);
 	return sprite;
 }
 
@@ -88,7 +88,7 @@ CCSPX3Sprite* CCSPX3Sprite::create(const char* spxPath, int actionIndex, CCTextu
 	sprite->playAnimation(actionIndex);
 
 	// return
-	sprite->autorelease();
+	CC_SAFE_AUTORELEASE(sprite);
 	return sprite;
 }
 

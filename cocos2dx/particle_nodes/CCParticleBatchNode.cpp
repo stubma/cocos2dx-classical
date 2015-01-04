@@ -64,7 +64,7 @@ CCParticleBatchNode* CCParticleBatchNode::createWithTexture(CCTexture2D *tex, un
     CCParticleBatchNode * p = new CCParticleBatchNode();
     if( p && p->initWithTexture(tex, capacity))
     {
-        p->autorelease();
+        CC_SAFE_AUTORELEASE(p);
         return p;
     }
     CC_SAFE_DELETE(p);
@@ -80,7 +80,7 @@ CCParticleBatchNode* CCParticleBatchNode::create(const char* imageFile, unsigned
     CCParticleBatchNode * p = new CCParticleBatchNode();
     if( p && p->initWithFile(imageFile, capacity))
     {
-        p->autorelease();
+        CC_SAFE_AUTORELEASE(p);
         return p;
     }
     CC_SAFE_DELETE(p);

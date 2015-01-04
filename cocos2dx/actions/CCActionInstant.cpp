@@ -80,7 +80,7 @@ CCShow* CCShow::create()
     CCShow* pRet = new CCShow();
 
     if (pRet) {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
 
     return pRet;
@@ -120,7 +120,7 @@ CCHide * CCHide::create()
     CCHide *pRet = new CCHide();
 
     if (pRet) {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
 
     return pRet;
@@ -161,7 +161,7 @@ CCToggleVisibility * CCToggleVisibility::create()
 
     if (pRet)
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
 
     return pRet;
@@ -199,7 +199,7 @@ CCRemoveSelf * CCRemoveSelf::create(bool isNeedCleanUp /*= true*/)
 	CCRemoveSelf *pRet = new CCRemoveSelf();
 
 	if (pRet && pRet->init(isNeedCleanUp)) {
-		pRet->autorelease();
+		CC_SAFE_AUTORELEASE(pRet);
 	}
 
 	return pRet;
@@ -246,7 +246,7 @@ CCFlipX *CCFlipX::create(bool x)
     CCFlipX *pRet = new CCFlipX();
 
     if (pRet && pRet->initWithFlipX(x)) {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
 
@@ -295,7 +295,7 @@ CCFlipY * CCFlipY::create(bool y)
     CCFlipY *pRet = new CCFlipY();
 
     if (pRet && pRet->initWithFlipY(y)) {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
 
@@ -344,7 +344,7 @@ CCPlace* CCPlace::create(const CCPoint& pos)
     CCPlace *pRet = new CCPlace();
 
     if (pRet && pRet->initWithPosition(pos)) {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
 
@@ -389,7 +389,7 @@ CCCallFunc * CCCallFunc::create(CCObject* pSelectorTarget, SEL_CallFunc selector
 
     if (pRet && pRet->initWithTarget(pSelectorTarget)) {
         pRet->m_pCallFunc = selector;
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
 
@@ -403,7 +403,7 @@ CCCallFunc * CCCallFunc::create(ccScriptFunction nHandler)
 
 	if (pRet) {
 		pRet->m_nScriptHandler = nHandler.handler;
-		pRet->autorelease();
+		CC_SAFE_AUTORELEASE(pRet);
 	}
 	else{
 		CC_SAFE_DELETE(pRet);
@@ -490,7 +490,7 @@ CCCallFuncN * CCCallFuncN::create(CCObject* pSelectorTarget, SEL_CallFuncN selec
 
     if (pRet && pRet->initWithTarget(pSelectorTarget, selector))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
 
@@ -504,7 +504,7 @@ CCCallFuncN * CCCallFuncN::create(ccScriptFunction nHandler)
 
 	if (pRet) {
 		pRet->m_nScriptHandler = nHandler.handler;
-		pRet->autorelease();
+		CC_SAFE_AUTORELEASE(pRet);
 	}
 	else{
 		CC_SAFE_DELETE(pRet);
@@ -550,7 +550,7 @@ CCCallFuncND * CCCallFuncND::create(CCObject* pSelectorTarget, SEL_CallFuncND se
     CCCallFuncND* pRet = new CCCallFuncND();
 
     if (pRet && pRet->initWithTarget(pSelectorTarget, selector, d)) {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
 
@@ -616,7 +616,7 @@ CCCallFuncO * CCCallFuncO::create(CCObject* pSelectorTarget, SEL_CallFuncO selec
     CCCallFuncO *pRet = new CCCallFuncO();
 
     if (pRet && pRet->initWithTarget(pSelectorTarget, selector, pObject)) {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
 

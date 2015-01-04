@@ -67,7 +67,7 @@ UICCTextField * UICCTextField::create(const char *placeholder, const char *fontN
     
     if(pRet && pRet->initWithString("", fontName, fontSize))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         if (placeholder)
         {
             pRet->setPlaceHolder(placeholder);
@@ -380,7 +380,7 @@ TextField* TextField::create()
     TextField* widget = new TextField();
     if (widget && widget->init())
     {
-        widget->autorelease();
+        CC_SAFE_AUTORELEASE(widget);
         return widget;
     }
     CC_SAFE_DELETE(widget);

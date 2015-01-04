@@ -71,7 +71,7 @@ CCEditBox* CCEditBox::create(const CCSize& size, CCScale9Sprite* pNormal9SpriteB
         {
             pRet->setBackgroundSpriteForState(pDisabled9SpriteBg, CCControlStateDisabled);
         }
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {

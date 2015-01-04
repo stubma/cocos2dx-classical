@@ -1087,7 +1087,7 @@ static bool _initWithString(const char * pText, CCImage::ETextAlign eAlign, cons
                                             const char* dec = (*decryptFunc)(data, (int)len, &decLen);
                                             CCImage* image = new CCImage();
                                             image->initWithImageData((void*)dec, decLen);
-                                            image->autorelease();
+                                            CC_SAFE_AUTORELEASE(image);
                                             CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addUIImage(image, span.atlas);
                                             
                                             // add

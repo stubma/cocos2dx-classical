@@ -66,7 +66,7 @@ void ActionManager::initWithDictionary(const char* jsonName,const rapidjson::Val
 	int actionCount = DICTOOL->getArrayCount_json(dic, "actionlist");
     for (int i=0; i< actionCount; i++) {
         ActionObject* action = new ActionObject();
-		action->autorelease();
+		CC_SAFE_AUTORELEASE(action);
 		const rapidjson::Value &actionDic = DICTOOL->getDictionaryFromArray_json(dic, "actionlist", i);
         action->initWithDictionary(actionDic,root);
         actionList->addObject(action);
@@ -96,7 +96,7 @@ void ActionManager::initWithBinary(const char* file, cocos2d::CCObject *root,  C
 		int actionCount = actionNode->GetChildNum();
         for (int i = 0; i < actionCount; ++i) {
             ActionObject* action = new ActionObject();
-            action->autorelease();
+            CC_SAFE_AUTORELEASE(action);
             
             action->initWithBinary(pCocoLoader, actionNode->GetChildArray(pCocoLoader), root);
             

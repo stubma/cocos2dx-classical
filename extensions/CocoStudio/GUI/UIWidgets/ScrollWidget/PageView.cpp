@@ -68,7 +68,7 @@ PageView* PageView::create()
     PageView* widget = new PageView();
     if (widget && widget->init())
     {
-        widget->autorelease();
+        CC_SAFE_AUTORELEASE(widget);
         return widget;
     }
     CC_SAFE_DELETE(widget);
@@ -545,7 +545,7 @@ Widget* PageView::dequeuePageItem(const string& itemId) {
             item->setScale(1);
             item->setOpacity(255);
             item->setRotation(0);
-            item->autorelease();
+            CC_SAFE_AUTORELEASE(item);
             return item;
         }
     }

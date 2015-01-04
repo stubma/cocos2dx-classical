@@ -128,7 +128,7 @@ CCControlColourPicker* CCControlColourPicker::create()
 {
     CCControlColourPicker *pRet = new CCControlColourPicker();
     pRet->init();
-    pRet->autorelease();
+    CC_SAFE_AUTORELEASE(pRet);
     return pRet;
 }
 

@@ -40,7 +40,7 @@ public:
     {
         CCPointObject *pRet = new CCPointObject();
         pRet->initWithCCPoint(ratio, offset);
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
     bool initWithCCPoint(CCPoint ratio, CCPoint offset)
@@ -69,7 +69,7 @@ CCParallaxNode::~CCParallaxNode()
 CCParallaxNode * CCParallaxNode::create()
 {
     CCParallaxNode *pRet = new CCParallaxNode();
-    pRet->autorelease();
+    CC_SAFE_AUTORELEASE(pRet);
     return pRet;
 }
 

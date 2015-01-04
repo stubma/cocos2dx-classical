@@ -35,7 +35,7 @@ CCSpriteFrame* CCSpriteFrame::create(const char* filename, const CCRect& rect)
 {
     CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
     pSpriteFrame->initWithTextureFilename(filename, rect);
-    pSpriteFrame->autorelease();
+    CC_SAFE_AUTORELEASE(pSpriteFrame);
 
     return pSpriteFrame;
 }
@@ -44,7 +44,7 @@ CCSpriteFrame* CCSpriteFrame::createWithTexture(CCTexture2D *pobTexture, const C
 {
     CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
     pSpriteFrame->initWithTexture(pobTexture, rect);
-    pSpriteFrame->autorelease();
+    CC_SAFE_AUTORELEASE(pSpriteFrame);
     
     return pSpriteFrame;
 }
@@ -53,7 +53,7 @@ CCSpriteFrame* CCSpriteFrame::createWithTexture(CCTexture2D* pobTexture, const C
 {
     CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
     pSpriteFrame->initWithTexture(pobTexture, rect, rotated, offset, originalSize);
-    pSpriteFrame->autorelease();
+    CC_SAFE_AUTORELEASE(pSpriteFrame);
 
     return pSpriteFrame;
 }
@@ -62,7 +62,7 @@ CCSpriteFrame* CCSpriteFrame::create(const char* filename, const CCRect& rect, b
 {
     CCSpriteFrame *pSpriteFrame = new CCSpriteFrame();;
     pSpriteFrame->initWithTextureFilename(filename, rect, rotated, offset, originalSize);
-    pSpriteFrame->autorelease();
+    CC_SAFE_AUTORELEASE(pSpriteFrame);
 
     return pSpriteFrame;
 }

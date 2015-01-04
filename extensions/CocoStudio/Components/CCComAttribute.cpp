@@ -152,7 +152,7 @@ CCComAttribute* CCComAttribute::create(void)
     CCComAttribute * pRet = new CCComAttribute();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {

@@ -86,7 +86,7 @@ FrameCreateCallFunc* FrameCreateCallFunc::create(CCObject* target, FrameCreateCa
     FrameCreateCallFunc* func = new FrameCreateCallFunc();
     if (func && func->init(target, callback))
     {
-        func->autorelease();
+        CC_SAFE_AUTORELEASE(func);
         return func;
     }
     CC_SAFE_DELETE(func);

@@ -52,7 +52,7 @@ CCControl* CCControl::create()
     CCControl* pRet = new CCControl();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
     else

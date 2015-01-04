@@ -39,7 +39,7 @@ CCWaves3D* CCWaves3D::create(float duration, const CCSize& gridSize, unsigned in
     {
         if (pAction->initWithDuration(duration, gridSize, waves, amplitude))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {
@@ -114,7 +114,7 @@ CCFlipX3D* CCFlipX3D::create(float duration)
     {
         if (pAction->initWithDuration(duration))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {
@@ -241,7 +241,7 @@ CCFlipY3D* CCFlipY3D::create(float duration)
     {
         if (pAction->initWithDuration(duration))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {
@@ -351,7 +351,7 @@ CCLens3D* CCLens3D::create(float duration, const CCSize& gridSize, const CCPoint
     {
         if (pAction->initWithDuration(duration, gridSize, position, radius))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {
@@ -465,7 +465,7 @@ CCRipple3D* CCRipple3D::create(float duration, const CCSize& gridSize, const CCP
     {
         if (pAction->initWithDuration(duration, gridSize, position, radius, waves, amplitude))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {
@@ -555,7 +555,7 @@ CCShaky3D* CCShaky3D::create(float duration, const CCSize& gridSize, int range, 
     {
         if (pAction->initWithDuration(duration, gridSize, range, shakeZ))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {
@@ -635,7 +635,7 @@ CCLiquid* CCLiquid::create(float duration, const CCSize& gridSize, unsigned int 
     {
         if (pAction->initWithDuration(duration, gridSize, waves, amplitude))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {
@@ -710,7 +710,7 @@ CCWaves* CCWaves::create(float duration, const CCSize& gridSize, unsigned int wa
     {
         if (pAction->initWithDuration(duration, gridSize, waves, amplitude, horizontal, vertical))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {
@@ -796,7 +796,7 @@ CCTwirl* CCTwirl::create(float duration, const CCSize& gridSize, CCPoint positio
     {
         if (pAction->initWithDuration(duration, gridSize, position, twirls, amplitude))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {

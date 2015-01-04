@@ -51,7 +51,7 @@ ExtraAction* ExtraAction::create()
     ExtraAction* pRet = new ExtraAction();
     if (pRet)
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     return pRet;
 }
@@ -86,7 +86,7 @@ CCActionInterval* CCActionInterval::create(float d)
 {
     CCActionInterval *pAction = new CCActionInterval();
     pAction->initWithDuration(d);
-    pAction->autorelease();
+    CC_SAFE_AUTORELEASE(pAction);
 
     return pAction;
 }
@@ -196,7 +196,7 @@ CCSequence* CCSequence::createWithTwoActions(CCFiniteTimeAction *pActionOne, CCF
 {
     CCSequence *pSequence = new CCSequence();
     pSequence->initWithTwoActions(pActionOne, pActionTwo);
-    pSequence->autorelease();
+    CC_SAFE_AUTORELEASE(pSequence);
 
     return pSequence;
 }
@@ -409,7 +409,7 @@ CCRepeat* CCRepeat::create(CCFiniteTimeAction *pAction, unsigned int times)
 {
     CCRepeat* pRepeat = new CCRepeat();
     pRepeat->initWithAction(pAction, times);
-    pRepeat->autorelease();
+    CC_SAFE_AUTORELEASE(pRepeat);
 
     return pRepeat;
 }
@@ -549,7 +549,7 @@ CCRepeatForever *CCRepeatForever::create(CCActionInterval *pAction)
     CCRepeatForever *pRet = new CCRepeatForever();
     if (pRet && pRet->initWithAction(pAction))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
@@ -693,7 +693,7 @@ CCSpawn* CCSpawn::createWithTwoActions(CCFiniteTimeAction *pAction1, CCFiniteTim
 {
     CCSpawn *pSpawn = new CCSpawn();
     pSpawn->initWithTwoActions(pAction1, pAction2);
-    pSpawn->autorelease();
+    CC_SAFE_AUTORELEASE(pSpawn);
 
     return pSpawn;
 }
@@ -803,7 +803,7 @@ CCRotateTo* CCRotateTo::create(float fDuration, float fDeltaAngle)
 {
     CCRotateTo* pRotateTo = new CCRotateTo();
     pRotateTo->initWithDuration(fDuration, fDeltaAngle);
-    pRotateTo->autorelease();
+    CC_SAFE_AUTORELEASE(pRotateTo);
 
     return pRotateTo;
 }
@@ -823,7 +823,7 @@ CCRotateTo* CCRotateTo::create(float fDuration, float fDeltaAngleX, float fDelta
 {
     CCRotateTo* pRotateTo = new CCRotateTo();
     pRotateTo->initWithDuration(fDuration, fDeltaAngleX, fDeltaAngleY);
-    pRotateTo->autorelease();
+    CC_SAFE_AUTORELEASE(pRotateTo);
     
     return pRotateTo;
 }
@@ -932,7 +932,7 @@ CCRotateBy* CCRotateBy::create(float fDuration, float fDeltaAngle)
 {
     CCRotateBy *pRotateBy = new CCRotateBy();
     pRotateBy->initWithDuration(fDuration, fDeltaAngle);
-    pRotateBy->autorelease();
+    CC_SAFE_AUTORELEASE(pRotateBy);
 
     return pRotateBy;
 }
@@ -952,7 +952,7 @@ CCRotateBy* CCRotateBy::create(float fDuration, float fDeltaAngleX, float fDelta
 {
     CCRotateBy *pRotateBy = new CCRotateBy();
     pRotateBy->initWithDuration(fDuration, fDeltaAngleX, fDeltaAngleY);
-    pRotateBy->autorelease();
+    CC_SAFE_AUTORELEASE(pRotateBy);
     
     return pRotateBy;
 }
@@ -1023,7 +1023,7 @@ CCMoveBy* CCMoveBy::create(float duration, const CCPoint& deltaPosition, bool au
 {
     CCMoveBy *pRet = new CCMoveBy();
     pRet->initWithDuration(duration, deltaPosition, autoHeadOn, initAngle);
-    pRet->autorelease();
+    CC_SAFE_AUTORELEASE(pRet);
 
     return pRet;
 }
@@ -1111,7 +1111,7 @@ CCMoveTo* CCMoveTo::create(float duration, const CCPoint& position, bool autoHea
 {
     CCMoveTo *pRet = new CCMoveTo();
     pRet->initWithDuration(duration, position, autoHeadOn, initAngle);
-    pRet->autorelease();
+    CC_SAFE_AUTORELEASE(pRet);
 
     return pRet;
 }
@@ -1170,7 +1170,7 @@ CCSkewTo* CCSkewTo::create(float t, float sx, float sy)
     {
         if (pSkewTo->initWithDuration(t, sx, sy))
         {
-            pSkewTo->autorelease();
+            CC_SAFE_AUTORELEASE(pSkewTo);
         }
         else
         {
@@ -1297,7 +1297,7 @@ CCSkewBy* CCSkewBy::create(float t, float sx, float sy)
     {
         if (pSkewBy->initWithDuration(t, sx, sy))
         {
-            pSkewBy->autorelease();
+            CC_SAFE_AUTORELEASE(pSkewBy);
         }
         else
         {
@@ -1345,7 +1345,7 @@ CCJumpBy* CCJumpBy::create(float duration, const CCPoint& position, float height
 {
     CCJumpBy *pJumpBy = new CCJumpBy();
     pJumpBy->initWithDuration(duration, position, height, jumps, autoHeadOn, initAngle);
-    pJumpBy->autorelease();
+    CC_SAFE_AUTORELEASE(pJumpBy);
 
     return pJumpBy;
 }
@@ -1444,7 +1444,7 @@ CCJumpTo* CCJumpTo::create(float duration, const CCPoint& position, float height
 {
     CCJumpTo *pJumpTo = new CCJumpTo();
     pJumpTo->initWithDuration(duration, position, height, jumps, autoHeadOn, initAngle);
-    pJumpTo->autorelease();
+    CC_SAFE_AUTORELEASE(pJumpTo);
 
     return pJumpTo;
 }
@@ -1499,7 +1499,7 @@ CCBezierBy* CCBezierBy::create(float t, const ccBezierConfig& c)
 {
     CCBezierBy *pBezierBy = new CCBezierBy();
     pBezierBy->initWithDuration(t, c);
-    pBezierBy->autorelease();
+    CC_SAFE_AUTORELEASE(pBezierBy);
 
     return pBezierBy;
 }
@@ -1597,7 +1597,7 @@ CCBezierTo* CCBezierTo::create(float t, const ccBezierConfig& c)
 {
     CCBezierTo *pBezierTo = new CCBezierTo();
     pBezierTo->initWithDuration(t, c);
-    pBezierTo->autorelease();
+    CC_SAFE_AUTORELEASE(pBezierTo);
 
     return pBezierTo;
 }
@@ -1653,7 +1653,7 @@ CCScaleTo* CCScaleTo::create(float duration, float s)
 {
     CCScaleTo *pScaleTo = new CCScaleTo();
     pScaleTo->initWithDuration(duration, s);
-    pScaleTo->autorelease();
+    CC_SAFE_AUTORELEASE(pScaleTo);
 
     return pScaleTo;
 }
@@ -1675,7 +1675,7 @@ CCScaleTo* CCScaleTo::create(float duration, float sx, float sy)
 {
     CCScaleTo *pScaleTo = new CCScaleTo();
     pScaleTo->initWithDuration(duration, sx, sy);
-    pScaleTo->autorelease();
+    CC_SAFE_AUTORELEASE(pScaleTo);
 
     return pScaleTo;
 }
@@ -1744,7 +1744,7 @@ CCScaleBy* CCScaleBy::create(float duration, float s)
 {
     CCScaleBy *pScaleBy = new CCScaleBy();
     pScaleBy->initWithDuration(duration, s);
-    pScaleBy->autorelease();
+    CC_SAFE_AUTORELEASE(pScaleBy);
 
     return pScaleBy;
 }
@@ -1753,7 +1753,7 @@ CCScaleBy* CCScaleBy::create(float duration, float sx, float sy)
 {
     CCScaleBy *pScaleBy = new CCScaleBy();
     pScaleBy->initWithDuration(duration, sx, sy);
-    pScaleBy->autorelease();
+    CC_SAFE_AUTORELEASE(pScaleBy);
 
     return pScaleBy;
 }
@@ -1803,7 +1803,7 @@ CCBlink* CCBlink::create(float duration, unsigned int uBlinks)
 {
     CCBlink *pBlink = new CCBlink();
     pBlink->initWithDuration(duration, uBlinks);
-    pBlink->autorelease();
+    CC_SAFE_AUTORELEASE(pBlink);
 
     return pBlink;
 }
@@ -1881,7 +1881,7 @@ CCFadeIn* CCFadeIn::create(float d)
     CCFadeIn* pAction = new CCFadeIn();
 
     pAction->initWithDuration(d);
-    pAction->autorelease();
+    CC_SAFE_AUTORELEASE(pAction);
 
     return pAction;
 }
@@ -1933,7 +1933,7 @@ CCFadeOut* CCFadeOut::create(float d)
     CCFadeOut* pAction = new CCFadeOut();
 
     pAction->initWithDuration(d);
-    pAction->autorelease();
+    CC_SAFE_AUTORELEASE(pAction);
 
     return pAction;
 }
@@ -1984,7 +1984,7 @@ CCFadeTo* CCFadeTo::create(float duration, GLubyte opacity)
 {
     CCFadeTo *pFadeTo = new CCFadeTo();
     pFadeTo->initWithDuration(duration, opacity);
-    pFadeTo->autorelease();
+    CC_SAFE_AUTORELEASE(pFadeTo);
 
     return pFadeTo;
 }
@@ -2053,7 +2053,7 @@ CCTintTo* CCTintTo::create(float duration, GLubyte red, GLubyte green, GLubyte b
 {
     CCTintTo *pTintTo = new CCTintTo();
     pTintTo->initWithDuration(duration, red, green, blue);
-    pTintTo->autorelease();
+    CC_SAFE_AUTORELEASE(pTintTo);
 
     return pTintTo;
 }
@@ -2123,7 +2123,7 @@ CCTintBy* CCTintBy::create(float duration, GLshort deltaRed, GLshort deltaGreen,
 {
     CCTintBy *pTintBy = new CCTintBy();
     pTintBy->initWithDuration(duration, deltaRed, deltaGreen, deltaBlue);
-    pTintBy->autorelease();
+    CC_SAFE_AUTORELEASE(pTintBy);
 
     return pTintBy;
 }
@@ -2204,7 +2204,7 @@ CCDelayTime* CCDelayTime::create(float d)
     CCDelayTime* pAction = new CCDelayTime();
 
     pAction->initWithDuration(d);
-    pAction->autorelease();
+    CC_SAFE_AUTORELEASE(pAction);
 
     return pAction;
 }
@@ -2253,7 +2253,7 @@ CCReverseTime* CCReverseTime::create(CCFiniteTimeAction *pAction)
     // casting to prevent warnings
     CCReverseTime *pReverseTime = new CCReverseTime();
     pReverseTime->initWithAction(pAction);
-    pReverseTime->autorelease();
+    CC_SAFE_AUTORELEASE(pReverseTime);
 
     return pReverseTime;
 }
@@ -2343,7 +2343,7 @@ CCAnimate* CCAnimate::create(CCAnimation *pAnimation)
 {
     CCAnimate *pAnimate = new CCAnimate();
     pAnimate->initWithAnimation(pAnimation);
-    pAnimate->autorelease();
+    CC_SAFE_AUTORELEASE(pAnimate);
 
     return pAnimate;
 }
@@ -2538,7 +2538,7 @@ CCTargetedAction* CCTargetedAction::create(CCNode* pTarget, CCFiniteTimeAction* 
 {
     CCTargetedAction* p = new CCTargetedAction();
     p->initWithTarget(pTarget, pAction);
-    p->autorelease();
+    CC_SAFE_AUTORELEASE(p);
     return p;
 }
 

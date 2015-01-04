@@ -48,7 +48,7 @@ public:
         CCDouble* pRet = new CCDouble(v);
         if (pRet)
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         return pRet;
     }

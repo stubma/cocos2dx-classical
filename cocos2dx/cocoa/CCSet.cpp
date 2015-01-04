@@ -67,7 +67,7 @@ CCSet * CCSet::create()
     
     if (pRet != nullptr)
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     
     return pRet;

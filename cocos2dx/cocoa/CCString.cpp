@@ -154,7 +154,7 @@ bool CCString::isEqual(const CCObject* pObject)
 CCString* CCString::create(const std::string& str)
 {
     CCString* pRet = new CCString(str);
-    pRet->autorelease();
+    CC_SAFE_AUTORELEASE(pRet);
     return pRet;
 }
 

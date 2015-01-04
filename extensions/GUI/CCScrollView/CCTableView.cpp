@@ -35,7 +35,7 @@ CCTableView* CCTableView::create(CCTableViewDataSource* dataSource, CCSize size,
 {
     CCTableView *table = new CCTableView();
     table->initWithViewSize(size, container);
-    table->autorelease();
+    CC_SAFE_AUTORELEASE(table);
     table->setDataSource(dataSource);
     table->_updateCellPositions();
     table->_updateContentSize();
@@ -227,7 +227,7 @@ CCTableViewCell *CCTableView::dequeueCell(const string& name)
             cell = (CCTableViewCell*)m_pCellsFreed->objectAtIndex(0);
             CC_SAFE_RETAIN(cell);
             m_pCellsFreed->removeObjectAtIndex(0);
-            cell->autorelease();
+            CC_SAFE_AUTORELEASE(cell);
         } else {
             CCObject* obj;
             CCARRAY_FOREACH(m_pCellsFreed, obj) {
@@ -235,7 +235,7 @@ CCTableViewCell *CCTableView::dequeueCell(const string& name)
                 if(c->getName() == name) {
                     CC_SAFE_RETAIN(c);
                     m_pCellsFreed->removeObject(c);
-                    c->autorelease();
+                    CC_SAFE_AUTORELEASE(c);
                     cell = c;
                     break;
                 }

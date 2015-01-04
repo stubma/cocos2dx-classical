@@ -63,7 +63,7 @@ CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture)
     CCSprite *pobSprite = new CCSprite();
     if (pobSprite && pobSprite->initWithTexture(pTexture))
     {
-        pobSprite->autorelease();
+        CC_SAFE_AUTORELEASE(pobSprite);
         return pobSprite;
     }
     CC_SAFE_DELETE(pobSprite);
@@ -75,7 +75,7 @@ CCSprite* CCSprite::createWithTexture(CCTexture2D *pTexture, const CCRect& rect)
     CCSprite *pobSprite = new CCSprite();
     if (pobSprite && pobSprite->initWithTexture(pTexture, rect))
     {
-        pobSprite->autorelease();
+        CC_SAFE_AUTORELEASE(pobSprite);
         return pobSprite;
     }
     CC_SAFE_DELETE(pobSprite);
@@ -87,7 +87,7 @@ CCSprite* CCSprite::create(const char *pszFileName)
     CCSprite *pobSprite = new CCSprite();
     if (pobSprite && pobSprite->initWithFile(pszFileName))
     {
-        pobSprite->autorelease();
+        CC_SAFE_AUTORELEASE(pobSprite);
         return pobSprite;
     }
     CC_SAFE_DELETE(pobSprite);
@@ -99,7 +99,7 @@ CCSprite* CCSprite::create(const char *pszFileName, const CCRect& rect)
     CCSprite *pobSprite = new CCSprite();
     if (pobSprite && pobSprite->initWithFile(pszFileName, rect))
     {
-        pobSprite->autorelease();
+        CC_SAFE_AUTORELEASE(pobSprite);
         return pobSprite;
     }
     CC_SAFE_DELETE(pobSprite);
@@ -111,7 +111,7 @@ CCSprite* CCSprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
     CCSprite *pobSprite = new CCSprite();
     if (pSpriteFrame && pobSprite && pobSprite->initWithSpriteFrame(pSpriteFrame))
     {
-        pobSprite->autorelease();
+        CC_SAFE_AUTORELEASE(pobSprite);
         return pobSprite;
     }
     CC_SAFE_DELETE(pobSprite);
@@ -136,7 +136,7 @@ CCSprite* CCSprite::create()
     CCSprite *pSprite = new CCSprite();
     if (pSprite && pSprite->init())
     {
-        pSprite->autorelease();
+        CC_SAFE_AUTORELEASE(pSprite);
         return pSprite;
     }
     CC_SAFE_DELETE(pSprite);

@@ -390,7 +390,7 @@ CCDictionary* CCDictionary::create()
     CCDictionary* pRet = new CCDictionary();
     if (pRet != nullptr)
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     return pRet;
 }
@@ -414,7 +414,7 @@ void CCDictionary::acceptVisitor(CCDataVisitor &visitor)
 CCDictionary* CCDictionary::createWithContentsOfFile(const char *pFileName)
 {
     CCDictionary* pRet = createWithContentsOfFileThreadSafe(pFileName);
-    pRet->autorelease();
+    CC_SAFE_AUTORELEASE(pRet);
     return pRet;
 }
 

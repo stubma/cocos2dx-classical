@@ -77,7 +77,7 @@ CCKeypadHandler* CCKeypadHandler::handlerWithDelegate(CCKeypadDelegate *pDelegat
     {
         if (pHandler->initWithDelegate(pDelegate))
         {
-            pHandler->autorelease();
+            CC_SAFE_AUTORELEASE(pHandler);
         }
         else
         {

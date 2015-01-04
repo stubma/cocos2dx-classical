@@ -76,7 +76,7 @@ CCTouchHandler* CCTouchHandler::handlerWithDelegate(CCTouchDelegate *pDelegate, 
     {
         if (pHandler->initWithDelegate(pDelegate, nPriority))
         {
-            pHandler->autorelease();
+            CC_SAFE_AUTORELEASE(pHandler);
         }
         else
         {
@@ -128,7 +128,7 @@ CCStandardTouchHandler* CCStandardTouchHandler::handlerWithDelegate(CCTouchDeleg
     {
         if (pHandler->initWithDelegate(pDelegate, nPriority))
         {
-            pHandler->autorelease();
+            CC_SAFE_AUTORELEASE(pHandler);
         }
         else
         {
@@ -163,7 +163,7 @@ CCTargetedTouchHandler* CCTargetedTouchHandler::handlerWithDelegate(CCTouchDeleg
     {
         if (pHandler->initWithDelegate(pDelegate, nPriority, bSwallow))
         {
-            pHandler->autorelease();
+            CC_SAFE_AUTORELEASE(pHandler);
         }
         else
         {

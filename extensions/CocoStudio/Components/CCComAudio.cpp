@@ -158,7 +158,7 @@ CCComAudio* CCComAudio::create(void)
     CCComAudio * pRet = new CCComAudio();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {

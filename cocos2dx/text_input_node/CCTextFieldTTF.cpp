@@ -75,7 +75,7 @@ CCTextFieldTTF * CCTextFieldTTF::textFieldWithPlaceHolder(const char *placeholde
     CCTextFieldTTF *pRet = new CCTextFieldTTF();
     if(pRet && pRet->initWithPlaceHolder("", dimensions, alignment, fontName, fontSize))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         if (placeholder)
         {
             pRet->setPlaceHolder(placeholder);
@@ -91,7 +91,7 @@ CCTextFieldTTF * CCTextFieldTTF::textFieldWithPlaceHolder(const char *placeholde
     CCTextFieldTTF *pRet = new CCTextFieldTTF();
     if(pRet && pRet->initWithString("", fontName, fontSize))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         if (placeholder)
         {
             pRet->setPlaceHolder(placeholder);

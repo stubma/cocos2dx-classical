@@ -37,7 +37,7 @@ CCGridAction* CCGridAction::create(float duration, const CCSize& gridSize)
     {
         if (pAction->initWithDuration(duration, gridSize))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {
@@ -135,7 +135,7 @@ CCObject* CCGridAction::copyWithZone(CCZone *pZone)
 CCGrid3DAction* CCGrid3DAction::create(float duration, const CCSize& gridSize) {
     CCGrid3DAction* a = new CCGrid3DAction();
     if(a->initWithDuration(duration, gridSize)) {
-        a->autorelease();
+        CC_SAFE_AUTORELEASE(a);
         return a;
     }
     CC_SAFE_RELEASE(a);
@@ -195,7 +195,7 @@ CCTiledGrid3DAction* CCTiledGrid3DAction::create(float duration, const CCSize& g
     CCTiledGrid3DAction* pRet = new CCTiledGrid3DAction();
     if (pRet && pRet->initWithDuration(duration, gridSize))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -213,7 +213,7 @@ CCAccelDeccelAmplitude* CCAccelDeccelAmplitude::create(CCAction *pAction, float 
     {
         if (pRet->initWithAction(pAction, duration))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -276,7 +276,7 @@ CCAccelAmplitude* CCAccelAmplitude::create(CCAction *pAction, float duration)
     {
         if (pRet->initWithAction(pAction, duration))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -332,7 +332,7 @@ CCDeccelAmplitude* CCDeccelAmplitude::create(CCAction *pAction, float duration)
     {
         if (pRet->initWithAction(pAction, duration))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -396,7 +396,7 @@ void CCStopGrid::startWithTarget(CCNode *pTarget)
 CCStopGrid* CCStopGrid::create(void)
 {
     CCStopGrid* pAction = new CCStopGrid();
-    pAction->autorelease();
+    CC_SAFE_AUTORELEASE(pAction);
 
     return pAction;
 }
@@ -409,7 +409,7 @@ CCReuseGrid* CCReuseGrid::create(int times)
     {
         if (pAction->initWithTimes(times))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {

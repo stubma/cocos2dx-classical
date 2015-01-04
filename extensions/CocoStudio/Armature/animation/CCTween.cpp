@@ -39,7 +39,7 @@ CCTween *CCTween::create(CCBone *bone)
     CCTween *pTween = new CCTween();
     if (pTween && pTween->init(bone))
     {
-        pTween->autorelease();
+        CC_SAFE_AUTORELEASE(pTween);
         return pTween;
     }
     CC_SAFE_DELETE(pTween);

@@ -112,7 +112,7 @@ CCTextureAtlas * CCTextureAtlas::create(const char* file, unsigned int capacity)
     CCTextureAtlas * pTextureAtlas = new CCTextureAtlas();
     if(pTextureAtlas && pTextureAtlas->initWithFile(file, capacity))
     {
-        pTextureAtlas->autorelease();
+        CC_SAFE_AUTORELEASE(pTextureAtlas);
         return pTextureAtlas;
     }
     CC_SAFE_DELETE(pTextureAtlas);
@@ -124,7 +124,7 @@ CCTextureAtlas * CCTextureAtlas::createWithTexture(CCTexture2D *texture, unsigne
     CCTextureAtlas * pTextureAtlas = new CCTextureAtlas();
     if (pTextureAtlas && pTextureAtlas->initWithTexture(texture, capacity))
     {
-        pTextureAtlas->autorelease();
+        CC_SAFE_AUTORELEASE(pTextureAtlas);
         return pTextureAtlas;
     }
     CC_SAFE_DELETE(pTextureAtlas);

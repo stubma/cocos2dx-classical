@@ -52,7 +52,7 @@ CCPointArray* CCPointArray::create(unsigned int capacity)
     {
         if (ret->initWithCapacity(capacity))
         {
-            ret->autorelease();
+            CC_SAFE_AUTORELEASE(ret);
         }
         else 
         {
@@ -229,7 +229,7 @@ CCCardinalSplineTo* CCCardinalSplineTo::create(float duration, cocos2d::CCPointA
     {
         if (ret->initWithDuration(duration, points, tension))
         {
-            ret->autorelease();
+            CC_SAFE_AUTORELEASE(ret);
         }
         else 
         {
@@ -367,7 +367,7 @@ CCCardinalSplineBy* CCCardinalSplineBy::create(float duration, cocos2d::CCPointA
     {
         if (ret->initWithDuration(duration, points, tension))
         {
-            ret->autorelease();
+            CC_SAFE_AUTORELEASE(ret);
         }
         else 
         {
@@ -448,7 +448,7 @@ CCCatmullRomTo* CCCatmullRomTo::create(float dt, cocos2d::CCPointArray *points)
     {
         if (ret->initWithDuration(dt, points))
         {
-            ret->autorelease();
+            CC_SAFE_AUTORELEASE(ret);
         }
         else 
         {
@@ -479,7 +479,7 @@ CCCatmullRomBy* CCCatmullRomBy::create(float dt, cocos2d::CCPointArray *points)
     {
         if (ret->initWithDuration(dt, points))
         {
-            ret->autorelease();
+            CC_SAFE_AUTORELEASE(ret);
         }
         else 
         {

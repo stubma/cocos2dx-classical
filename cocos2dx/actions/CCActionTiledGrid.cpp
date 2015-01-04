@@ -49,7 +49,7 @@ CCShakyTiles3D* CCShakyTiles3D::create(float duration, const CCSize& gridSize, i
     {
         if (pAction->initWithDuration(duration, gridSize, nRange, bShakeZ))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {
@@ -143,7 +143,7 @@ CCShatteredTiles3D* CCShatteredTiles3D::create(float duration, const CCSize& gri
     {
         if (pAction->initWithDuration(duration, gridSize, nRange, bShatterZ))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {
@@ -243,7 +243,7 @@ CCShuffleTiles* CCShuffleTiles::create(float duration, const CCSize& gridSize, u
     {
         if (pAction->initWithDuration(duration, gridSize, seed))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {
@@ -408,7 +408,7 @@ CCFadeOutTRTiles* CCFadeOutTRTiles::create(float duration, const CCSize& gridSiz
     {
         if (pAction->initWithDuration(duration, gridSize))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {
@@ -497,7 +497,7 @@ CCFadeOutBLTiles* CCFadeOutBLTiles::create(float duration, const CCSize& gridSiz
     {
         if (pAction->initWithDuration(duration, gridSize))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {
@@ -529,7 +529,7 @@ CCFadeOutUpTiles* CCFadeOutUpTiles::create(float duration, const CCSize& gridSiz
     {
         if (pAction->initWithDuration(duration, gridSize))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {
@@ -574,7 +574,7 @@ CCFadeOutDownTiles* CCFadeOutDownTiles::create(float duration, const CCSize& gri
     {
         if (pAction->initWithDuration(duration, gridSize))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {
@@ -603,7 +603,7 @@ CCTurnOffTiles* CCTurnOffTiles::create(float duration, const CCSize& gridSize)
     CCTurnOffTiles* pAction = new CCTurnOffTiles();
     if (pAction->initWithDuration(duration, gridSize, 0))
     {
-        pAction->autorelease();
+        CC_SAFE_AUTORELEASE(pAction);
     }
     else
     {
@@ -620,7 +620,7 @@ CCTurnOffTiles* CCTurnOffTiles::create(float duration, const CCSize& gridSize, u
     {
         if (pAction->initWithDuration(duration, gridSize, seed))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {
@@ -751,7 +751,7 @@ CCWavesTiles3D* CCWavesTiles3D::create(float duration, const CCSize& gridSize, u
     {
         if (pAction->initWithDuration(duration, gridSize, waves, amplitude))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {
@@ -830,7 +830,7 @@ CCJumpTiles3D* CCJumpTiles3D::create(float duration, const CCSize& gridSize, uns
     {
         if (pAction->initWithDuration(duration, gridSize, numberOfJumps, amplitude))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {
@@ -920,7 +920,7 @@ CCSplitRows* CCSplitRows::create(float duration, unsigned int nRows)
     {
         if (pAction->initWithDuration(duration, nRows))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {
@@ -1000,7 +1000,7 @@ CCSplitCols* CCSplitCols::create(float duration, unsigned int nCols)
     {
         if (pAction->initWithDuration(duration, nCols))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {

@@ -43,7 +43,7 @@ void ZwoptexAnimLoadTask2::load() {
             float& delay = durations.at(i);
             CCAnimationFrame* af = new CCAnimationFrame();
             af->initWithSpriteFrame(sf, delay, nullptr);
-            af->autorelease();
+            CC_SAFE_AUTORELEASE(af);
             array->addObject(af);
         }
         CCAnimation* anim = CCAnimation::create(array, 1);
@@ -86,7 +86,7 @@ void EncryptedZwoptexLoadTask::load() {
     }
     CCImage* image = new CCImage();
     image->initWithImageData((void*)dec, decLen);
-    image->autorelease();
+    CC_SAFE_AUTORELEASE(image);
     CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addUIImage(image, texName.c_str());
     
     // free
@@ -118,7 +118,7 @@ void EncryptedImageLoadTask::load() {
     }
     CCImage* image = new CCImage();
     image->initWithImageData((void*)dec, decLen);
-    image->autorelease();
+    CC_SAFE_AUTORELEASE(image);
     CCTextureCache::sharedTextureCache()->addUIImage(image, name.c_str());
     
     // free
@@ -150,7 +150,7 @@ void EncryptedBMFontLoadTask::load() {
     }
     CCImage* image = new CCImage();
     image->initWithImageData((void*)dec, decLen);
-    image->autorelease();
+    CC_SAFE_AUTORELEASE(image);
     CCTextureCache::sharedTextureCache()->addUIImage(image, conf->getAtlasName());
     
     // free
@@ -311,7 +311,7 @@ void CCResourceLoader::loadImage(const string& name, CC_DECRYPT_FUNC decFunc) {
     }
 	CCImage* image = new CCImage();
 	image->initWithImageData((void*)dec, decLen);
-	image->autorelease();
+	CC_SAFE_AUTORELEASE(image);
 	CCTextureCache::sharedTextureCache()->addUIImage(image, name.c_str());
 	
 	// free
@@ -336,7 +336,7 @@ void CCResourceLoader::loadZwoptex(const string& plistName, const string& texNam
     }
     CCImage* image = new CCImage();
 	image->initWithImageData((void*)dec, decLen);
-	image->autorelease();
+	CC_SAFE_AUTORELEASE(image);
 	CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addUIImage(image, texName.c_str());
 	
 	// free

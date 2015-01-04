@@ -34,7 +34,7 @@ ActionTimeline* ActionTimeline::create()
     ActionTimeline* object = new ActionTimeline();
     if (object && object->init())
     {
-        object->autorelease();
+        CC_SAFE_AUTORELEASE(object);
         return object;
     }
     CC_SAFE_DELETE(object);

@@ -35,7 +35,7 @@ LayoutParameter* LayoutParameter::create()
     LayoutParameter* parameter = new LayoutParameter();
     if (parameter)
     {
-        parameter->autorelease();
+        CC_SAFE_AUTORELEASE(parameter);
         return parameter;
     }
     CC_SAFE_DELETE(parameter);
@@ -79,7 +79,7 @@ LinearLayoutParameter* LinearLayoutParameter::create()
     LinearLayoutParameter* parameter = new LinearLayoutParameter();
     if (parameter)
     {
-        parameter->autorelease();
+        CC_SAFE_AUTORELEASE(parameter);
         return parameter;
     }
     CC_SAFE_DELETE(parameter);
@@ -116,7 +116,7 @@ RelativeLayoutParameter* RelativeLayoutParameter::create()
     RelativeLayoutParameter* parameter = new RelativeLayoutParameter();
     if (parameter)
     {
-        parameter->autorelease();
+        CC_SAFE_AUTORELEASE(parameter);
         return parameter;
     }
     CC_SAFE_DELETE(parameter);

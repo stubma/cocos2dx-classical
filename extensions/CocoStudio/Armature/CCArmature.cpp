@@ -45,7 +45,7 @@ CCArmature *CCArmature::create()
     CCArmature *armature = new CCArmature();
     if (armature && armature->init())
     {
-        armature->autorelease();
+        CC_SAFE_AUTORELEASE(armature);
         return armature;
     }
     CC_SAFE_DELETE(armature);
@@ -58,7 +58,7 @@ CCArmature *CCArmature::create(const char *name)
     CCArmature *armature = new CCArmature();
     if (armature && armature->init(name))
     {
-        armature->autorelease();
+        CC_SAFE_AUTORELEASE(armature);
         return armature;
     }
     CC_SAFE_DELETE(armature);
@@ -70,7 +70,7 @@ CCArmature *CCArmature::create(const char *name, CCBone *parentBone)
     CCArmature *armature = new CCArmature();
     if (armature && armature->init(name, parentBone))
     {
-        armature->autorelease();
+        CC_SAFE_AUTORELEASE(armature);
         return armature;
     }
     CC_SAFE_DELETE(armature);

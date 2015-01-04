@@ -266,7 +266,7 @@ CCMWFileData* CCMWLoader::load(const char* data, size_t length, float resScale) 
 	returnAnimeData->m_positionerRectangleClipPool = positionerRectangleClipPool;
 	returnAnimeData->m_frameTableIndex = frameTableIndex;
 	returnAnimeData->m_imageIndex = imageIndex;
-	returnAnimeData->autorelease();
+	CC_SAFE_AUTORELEASE(returnAnimeData);
 	return returnAnimeData;
 }
 

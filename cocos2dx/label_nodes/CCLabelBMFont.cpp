@@ -104,7 +104,7 @@ CCBMFontConfiguration * CCBMFontConfiguration::create(const char *FNTfile)
     CCBMFontConfiguration * pRet = new CCBMFontConfiguration();
     if (pRet->initWithFNTfile(FNTfile))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
@@ -425,7 +425,7 @@ CCLabelBMFont * CCLabelBMFont::create()
     CCLabelBMFont * pRet = new CCLabelBMFont();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
@@ -453,7 +453,7 @@ CCLabelBMFont *CCLabelBMFont::create(const char *str, const char *fntFile, float
     CCLabelBMFont *pRet = new CCLabelBMFont();
     if(pRet && pRet->initWithString(str, fntFile, width, alignment, imageOffset))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
@@ -493,7 +493,7 @@ bool CCLabelBMFont::initWithString(const char *theString, const char *fntFile, f
     else 
     {
         texture = new CCTexture2D();
-        texture->autorelease();
+        CC_SAFE_AUTORELEASE(texture);
     }
 
     if (theString == nullptr)

@@ -34,7 +34,7 @@ CCProgressTo* CCProgressTo::create(float duration, float fPercent)
 {
     CCProgressTo *pProgressTo = new CCProgressTo();
     pProgressTo->initWithDuration(duration, fPercent);
-    pProgressTo->autorelease();
+    CC_SAFE_AUTORELEASE(pProgressTo);
 
     return pProgressTo;
 }
@@ -101,7 +101,7 @@ CCProgressFromTo* CCProgressFromTo::create(float duration, float fFromPercentage
 {
     CCProgressFromTo *pProgressFromTo = new CCProgressFromTo();
     pProgressFromTo->initWithDuration(duration, fFromPercentage, fToPercentage);
-    pProgressFromTo->autorelease();
+    CC_SAFE_AUTORELEASE(pProgressFromTo);
 
     return pProgressFromTo;
 }

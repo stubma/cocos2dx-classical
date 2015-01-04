@@ -120,7 +120,7 @@ CCControlStepper* CCControlStepper::create(CCSprite *minusSprite, CCSprite *plus
     CCControlStepper* pRet = new CCControlStepper();
     if (pRet != nullptr && pRet->initWithMinusSpriteAndPlusSprite(minusSprite, plusSprite))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {

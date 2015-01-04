@@ -45,7 +45,7 @@ NS_CC_BEGIN
 CCScriptHandlerEntry* CCScriptHandlerEntry::create(int nHandler)
 {
     CCScriptHandlerEntry* entry = new CCScriptHandlerEntry(nHandler);
-    entry->autorelease();
+    CC_SAFE_AUTORELEASE(entry);
     return entry;
 }
 
@@ -67,7 +67,7 @@ CCSchedulerScriptHandlerEntry* CCSchedulerScriptHandlerEntry::create(int nHandle
 {
     CCSchedulerScriptHandlerEntry* pEntry = new CCSchedulerScriptHandlerEntry(nHandler);
     pEntry->init(fInterval, bPaused);
-    pEntry->autorelease();
+    CC_SAFE_AUTORELEASE(pEntry);
     return pEntry;
 }
 
@@ -75,7 +75,7 @@ bool CCSchedulerScriptHandlerEntry::init(float fInterval, bool bPaused)
 {
     m_pTimer = new CCTimer();
     m_pTimer->initWithScriptHandler(m_nHandler, fInterval);
-    m_pTimer->autorelease();
+    CC_SAFE_AUTORELEASE(m_pTimer);
     CC_SAFE_RETAIN(m_pTimer);
     m_bPaused = bPaused;
     LUALOG("[LUA] ADD script schedule: %d, entryID: %d", m_nHandler, m_nEntryId);
@@ -100,7 +100,7 @@ CCTouchScriptHandlerEntry* CCTouchScriptHandlerEntry::create(int nHandler,
 {
     CCTouchScriptHandlerEntry* pEntry = new CCTouchScriptHandlerEntry(nHandler);
     pEntry->init(bIsMultiTouches, nPriority, bSwallowsTouches);
-    pEntry->autorelease();
+    CC_SAFE_AUTORELEASE(pEntry);
     return pEntry;
 }
 

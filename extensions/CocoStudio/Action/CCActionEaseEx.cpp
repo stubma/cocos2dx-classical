@@ -45,7 +45,7 @@ CCEaseBezierAction* CCEaseBezierAction::create(CCActionInterval* pAction)
 	{
 		if (pRet->initWithAction(pAction))
 		{
-			pRet->autorelease();
+			CC_SAFE_AUTORELEASE(pRet);
 		}
 		else
 		{
@@ -109,7 +109,7 @@ CCEaseQuadraticActionIn* CCEaseQuadraticActionIn::create(CCActionInterval* pActi
 	{
 		if (pRet->initWithAction(pAction))
 		{
-			pRet->autorelease();
+			CC_SAFE_AUTORELEASE(pRet);
 		}
 		else
 		{
@@ -163,7 +163,7 @@ CCEaseQuadraticActionOut* CCEaseQuadraticActionOut::create(CCActionInterval* pAc
 	{
 		if (pRet->initWithAction(pAction))
 		{
-			pRet->autorelease();
+			CC_SAFE_AUTORELEASE(pRet);
 		}
 		else
 		{
@@ -217,7 +217,7 @@ CCEaseQuadraticActionInOut* CCEaseQuadraticActionInOut::create(CCActionInterval*
 	{
 		if (pRet->initWithAction(pAction))
 		{
-			pRet->autorelease();
+			CC_SAFE_AUTORELEASE(pRet);
 		}
 		else
 		{
@@ -283,7 +283,7 @@ CCEaseQuarticActionIn* CCEaseQuarticActionIn::create(CCActionInterval* pAction)
 	{
 		if (pRet->initWithAction(pAction))
 		{
-			pRet->autorelease();
+			CC_SAFE_AUTORELEASE(pRet);
 		}
 		else
 		{
@@ -337,7 +337,7 @@ CCEaseQuarticActionOut* CCEaseQuarticActionOut::create(CCActionInterval* pAction
 	{
 		if (pRet->initWithAction(pAction))
 		{
-			pRet->autorelease();
+			CC_SAFE_AUTORELEASE(pRet);
 		}
 		else
 		{
@@ -392,7 +392,7 @@ CCEaseQuarticActionInOut* CCEaseQuarticActionInOut::create(CCActionInterval* pAc
 	{
 		if (pRet->initWithAction(pAction))
 		{
-			pRet->autorelease();
+			CC_SAFE_AUTORELEASE(pRet);
 		}
 		else
 		{
@@ -455,7 +455,7 @@ CCEaseQuinticActionIn* CCEaseQuinticActionIn::create(CCActionInterval* pAction)
 	{
 		if (pRet->initWithAction(pAction))
 		{
-			pRet->autorelease();
+			CC_SAFE_AUTORELEASE(pRet);
 		}
 		else
 		{
@@ -509,7 +509,7 @@ CCEaseQuinticActionOut* CCEaseQuinticActionOut::create(CCActionInterval* pAction
 	{
 		if (pRet->initWithAction(pAction))
 		{
-			pRet->autorelease();
+			CC_SAFE_AUTORELEASE(pRet);
 		}
 		else
 		{
@@ -564,7 +564,7 @@ CCEaseQuinticActionInOut* CCEaseQuinticActionInOut::create(CCActionInterval* pAc
 	{
 		if (pRet->initWithAction(pAction))
 		{
-			pRet->autorelease();
+			CC_SAFE_AUTORELEASE(pRet);
 		}
 		else
 		{
@@ -627,7 +627,7 @@ CCEaseCircleActionIn* CCEaseCircleActionIn::create(CCActionInterval* pAction)
 	{
 		if (pRet->initWithAction(pAction))
 		{
-			pRet->autorelease();
+			CC_SAFE_AUTORELEASE(pRet);
 		}
 		else
 		{
@@ -681,7 +681,7 @@ CCEaseCircleActionOut* CCEaseCircleActionOut::create(CCActionInterval* pAction)
 	{
 		if (pRet->initWithAction(pAction))
 		{
-			pRet->autorelease();
+			CC_SAFE_AUTORELEASE(pRet);
 		}
 		else
 		{
@@ -736,7 +736,7 @@ CCEaseCircleActionInOut* CCEaseCircleActionInOut::create(CCActionInterval* pActi
 	{
 		if (pRet->initWithAction(pAction))
 		{
-			pRet->autorelease();
+			CC_SAFE_AUTORELEASE(pRet);
 		}
 		else
 		{
@@ -799,7 +799,7 @@ CCEaseCubicActionIn* CCEaseCubicActionIn::create(CCActionInterval* pAction)
 	{
 		if (pRet->initWithAction(pAction))
 		{
-			pRet->autorelease();
+			CC_SAFE_AUTORELEASE(pRet);
 		}
 		else
 		{
@@ -853,7 +853,7 @@ CCEaseCubicActionOut* CCEaseCubicActionOut::create(CCActionInterval* pAction)
 	{
 		if (pRet->initWithAction(pAction))
 		{
-			pRet->autorelease();
+			CC_SAFE_AUTORELEASE(pRet);
 		}
 		else
 		{
@@ -908,7 +908,7 @@ CCEaseCubicActionInOut* CCEaseCubicActionInOut::create(CCActionInterval* pAction
 	{
 		if (pRet->initWithAction(pAction))
 		{
-			pRet->autorelease();
+			CC_SAFE_AUTORELEASE(pRet);
 		}
 		else
 		{

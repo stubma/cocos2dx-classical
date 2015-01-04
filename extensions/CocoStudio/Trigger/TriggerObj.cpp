@@ -124,7 +124,7 @@ TriggerObj* TriggerObj::create()
     TriggerObj * pRet = new TriggerObj();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -204,7 +204,7 @@ void TriggerObj::serialize(const rapidjson::Value &val)
         CCAssert(con != nullptr, "class named classname can not implement!");
         con->serialize(subDict);
 		con->init();
-        con->autorelease();
+        CC_SAFE_AUTORELEASE(con);
         _cons->addObject(con);
     }
     
@@ -221,7 +221,7 @@ void TriggerObj::serialize(const rapidjson::Value &val)
 		CCAssert(act != nullptr, "class named classname can not implement!");
 		act->serialize(subDict);
 		act->init();
-		act->autorelease();
+		CC_SAFE_AUTORELEASE(act);
 		_acts->addObject(act);
 	}
 
@@ -272,7 +272,7 @@ void TriggerObj::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d:
 				CCAssert(con != nullptr, "class named classname can not implement!");
 				con->serialize(pCocoLoader, &pConditionArray[1]);
 				con->init();
-				con->autorelease();
+				CC_SAFE_AUTORELEASE(con);
 				_cons->addObject(con);
 			}
 		}
@@ -293,7 +293,7 @@ void TriggerObj::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d:
 				CCAssert(act != nullptr, "class named classname can not implement!");
 				act->serialize(pCocoLoader, &pActionArray[1]);
 				act->init();
-				act->autorelease();
+				CC_SAFE_AUTORELEASE(act);
 				_acts->addObject(act);
 			}
 		}

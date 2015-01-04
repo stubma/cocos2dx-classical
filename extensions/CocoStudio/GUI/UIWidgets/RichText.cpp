@@ -60,7 +60,7 @@ RichElementText* RichElementText::create(int tag, const ccColor3B &color, GLubyt
     RichElementText* element = new RichElementText();
     if (element && element->init(tag, color, opacity, text, fontName, fontSize))
     {
-        element->autorelease();
+        CC_SAFE_AUTORELEASE(element);
         return element;
     }
     CC_SAFE_DELETE(element);
@@ -84,7 +84,7 @@ RichElementImage* RichElementImage::create(int tag, const ccColor3B &color, GLub
     RichElementImage* element = new RichElementImage();
     if (element && element->init(tag, color, opacity, filePath))
     {
-        element->autorelease();
+        CC_SAFE_AUTORELEASE(element);
         return element;
     }
     CC_SAFE_DELETE(element);
@@ -106,7 +106,7 @@ RichElementCustomNode* RichElementCustomNode::create(int tag, const ccColor3B &c
     RichElementCustomNode* element = new RichElementCustomNode();
     if (element && element->init(tag, color, opacity, customNode))
     {
-        element->autorelease();
+        CC_SAFE_AUTORELEASE(element);
         return element;
     }
     CC_SAFE_DELETE(element);
@@ -144,7 +144,7 @@ RichText* RichText::create()
     RichText* widget = new RichText();
     if (widget && widget->init())
     {
-        widget->autorelease();
+        CC_SAFE_AUTORELEASE(widget);
         return widget;
     }
     CC_SAFE_DELETE(widget);

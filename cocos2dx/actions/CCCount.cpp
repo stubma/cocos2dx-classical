@@ -42,7 +42,7 @@ CCCount::~CCCount() {
 CCCount* CCCount::create(float duration, int from, int to, const string& pattern) {
     CCCount* a = new CCCount();
     if(a->initWithDuration(duration, from, to, pattern)) {
-        a->autorelease();
+        CC_SAFE_AUTORELEASE(a);
         return a;
     }
     CC_SAFE_RELEASE(a);

@@ -48,7 +48,7 @@ CCLabelAtlas* CCLabelAtlas::create(const char *string, const char *charMapFile, 
     CCLabelAtlas *pRet = new CCLabelAtlas();
     if(pRet && pRet->initWithString(string, charMapFile, itemWidth, itemHeight, startCharMap))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
@@ -80,7 +80,7 @@ CCLabelAtlas* CCLabelAtlas::create(const char *string, const char *fntFile)
     {
         if (ret->initWithString(string, fntFile))
         {
-            ret->autorelease();
+            CC_SAFE_AUTORELEASE(ret);
         }
         else 
         {

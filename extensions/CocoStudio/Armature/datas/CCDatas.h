@@ -35,7 +35,7 @@ public: \
 	varType *var = new varType();\
 	if (var)\
 {\
-	var->autorelease();\
+	CC_SAFE_AUTORELEASE(var);\
 	return var;\
 }\
 	CC_SAFE_DELETE(var);\
@@ -48,7 +48,7 @@ public: \
 	varType *var = new varType();\
 	if (var && var->init())\
 {\
-	var->autorelease();\
+	CC_SAFE_AUTORELEASE(var);\
 	return var;\
 }\
 	CC_SAFE_DELETE(var);\

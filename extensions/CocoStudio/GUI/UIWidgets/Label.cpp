@@ -53,7 +53,7 @@ Label* Label::create()
     Label* widget = new Label();
     if (widget && widget->init())
     {
-        widget->autorelease();
+        CC_SAFE_AUTORELEASE(widget);
         return widget;
     }
     CC_SAFE_DELETE(widget);

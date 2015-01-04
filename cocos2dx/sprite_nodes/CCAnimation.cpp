@@ -86,7 +86,7 @@ CCAnimation* CCAnimation::create(void)
 {
     CCAnimation *pAnimation = new CCAnimation();
     pAnimation->init();
-    pAnimation->autorelease();
+    CC_SAFE_AUTORELEASE(pAnimation);
 
     return pAnimation;
 } 
@@ -95,7 +95,7 @@ CCAnimation* CCAnimation::createWithSpriteFrames(CCArray *frames, float delay/* 
 {
     CCAnimation *pAnimation = new CCAnimation();
     pAnimation->initWithSpriteFrames(frames, delay);
-    pAnimation->autorelease();
+    CC_SAFE_AUTORELEASE(pAnimation);
 
     return pAnimation;
 }
@@ -104,7 +104,7 @@ CCAnimation* CCAnimation::create(CCArray* arrayOfAnimationFrameNames, float dela
 {
     CCAnimation *pAnimation = new CCAnimation();
     pAnimation->initWithAnimationFrames(arrayOfAnimationFrameNames, delayPerUnit, loops);
-    pAnimation->autorelease();
+    CC_SAFE_AUTORELEASE(pAnimation);
     return pAnimation;
 }
 

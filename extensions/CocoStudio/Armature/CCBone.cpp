@@ -37,7 +37,7 @@ CCBone *CCBone::create()
     CCBone *pBone = new CCBone();
     if (pBone && pBone->init())
     {
-        pBone->autorelease();
+        CC_SAFE_AUTORELEASE(pBone);
         return pBone;
     }
     CC_SAFE_DELETE(pBone);
@@ -51,7 +51,7 @@ CCBone *CCBone::create(const char *name)
     CCBone *pBone = new CCBone();
     if (pBone && pBone->init(name))
     {
-        pBone->autorelease();
+        CC_SAFE_AUTORELEASE(pBone);
         return pBone;
     }
     CC_SAFE_DELETE(pBone);

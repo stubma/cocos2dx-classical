@@ -54,7 +54,7 @@ CCControlHuePicker* CCControlHuePicker::create(CCNode* target, CCPoint pos)
 {
     CCControlHuePicker *pRet = new CCControlHuePicker();
     pRet->initWithTargetAndPos(target, pos);
-    pRet->autorelease();
+    CC_SAFE_AUTORELEASE(pRet);
     return pRet;
 }
 

@@ -51,7 +51,7 @@ LabelBMFont* LabelBMFont::create()
     LabelBMFont* widget = new LabelBMFont();
     if (widget && widget->init())
     {
-        widget->autorelease();
+        CC_SAFE_AUTORELEASE(widget);
         return widget;
     }
     CC_SAFE_DELETE(widget);

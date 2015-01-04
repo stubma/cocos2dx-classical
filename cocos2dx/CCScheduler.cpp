@@ -88,7 +88,7 @@ CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector)
     CCTimer *pTimer = new CCTimer();
 
     pTimer->initWithTarget(pTarget, pfnSelector, 0.0f, kCCRepeatForever, 0.0f);
-    pTimer->autorelease();
+    CC_SAFE_AUTORELEASE(pTimer);
 
     return pTimer;
 }
@@ -98,7 +98,7 @@ CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, f
     CCTimer *pTimer = new CCTimer();
 
     pTimer->initWithTarget(pTarget, pfnSelector, fSeconds, kCCRepeatForever, 0.0f);
-    pTimer->autorelease();
+    CC_SAFE_AUTORELEASE(pTimer);
 
     return pTimer;
 }
@@ -108,7 +108,7 @@ CCTimer* CCTimer::timerWithScriptHandler(ccScriptFunction nHandler, float fSecon
     CCTimer *pTimer = new CCTimer();
 
     pTimer->initWithScriptHandler(nHandler.handler, fSeconds);
-    pTimer->autorelease();
+    CC_SAFE_AUTORELEASE(pTimer);
 
     return pTimer;
 }
@@ -724,7 +724,7 @@ CCSet* CCScheduler::pauseAllTargets()
 CCSet* CCScheduler::pauseAllTargetsWithMinPriority(int nMinPriority)
 {
     CCSet* idsWithSelectors = new CCSet();// setWithCapacity:50];
-    idsWithSelectors->autorelease();
+    CC_SAFE_AUTORELEASE(idsWithSelectors);
 
     // Custom Selectors
     for(tHashTimerEntry *element = m_pHashForTimers; element != nullptr;

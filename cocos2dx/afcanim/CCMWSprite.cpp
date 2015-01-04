@@ -47,7 +47,7 @@ CCMWSprite* CCMWSprite::create(const char* path, int animIndex, CCTexture2D** te
 	sprite->playAnimation(animIndex);
 
 	// return
-	sprite->autorelease();
+	CC_SAFE_AUTORELEASE(sprite);
 	return sprite;
 }
 
@@ -80,7 +80,7 @@ CCMWSprite* CCMWSprite::create(const char* path, int animIndex, CCTexture2D* tex
 	sprite->playAnimation(animIndex);
 
 	// return
-	sprite->autorelease();
+	CC_SAFE_AUTORELEASE(sprite);
 	return sprite;
 }
 

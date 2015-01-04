@@ -21,7 +21,7 @@ public:
     static CCInteger* create(int v)
     {
         CCInteger* pRet = new CCInteger(v);
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
 

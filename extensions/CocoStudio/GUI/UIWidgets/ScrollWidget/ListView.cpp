@@ -59,7 +59,7 @@ ListView* ListView::create()
     ListView* widget = new ListView();
     if (widget && widget->init())
     {
-        widget->autorelease();
+        CC_SAFE_AUTORELEASE(widget);
         return widget;
     }
     CC_SAFE_DELETE(widget);

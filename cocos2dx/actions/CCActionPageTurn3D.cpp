@@ -36,7 +36,7 @@ CCPageTurn3D* CCPageTurn3D::create(float duration, const CCSize& gridSize)
     {
         if (pAction->initWithDuration(duration, gridSize))
         {
-            pAction->autorelease();
+            CC_SAFE_AUTORELEASE(pAction);
         }
         else
         {

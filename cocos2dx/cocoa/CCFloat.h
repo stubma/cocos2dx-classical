@@ -48,7 +48,7 @@ public:
         CCFloat* pRet = new CCFloat(v);
         if (pRet)
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         return pRet;
     }

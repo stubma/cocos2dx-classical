@@ -34,7 +34,7 @@ CCBatchNode *CCBatchNode::create()
     CCBatchNode *batchNode = new CCBatchNode();
     if (batchNode && batchNode->init())
     {
-        batchNode->autorelease();
+        CC_SAFE_AUTORELEASE(batchNode);
         return batchNode;
     }
     CC_SAFE_DELETE(batchNode);

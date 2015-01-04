@@ -67,7 +67,7 @@ CCAtlasNode * CCAtlasNode::create(const char *tile, unsigned int tileWidth, unsi
 	CCAtlasNode * pRet = new CCAtlasNode();
 	if (pRet->initWithTileFile(tile, tileWidth, tileHeight, itemsToRender))
 	{
-		pRet->autorelease();
+		CC_SAFE_AUTORELEASE(pRet);
 		return pRet;
 	}
 	CC_SAFE_DELETE(pRet);

@@ -48,7 +48,7 @@ public:
         CCBool* pRet = new CCBool(v);
         if (pRet)
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         return pRet;
     }

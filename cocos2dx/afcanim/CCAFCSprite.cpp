@@ -88,7 +88,7 @@ CCSpriteBatchNode* CCAFCSprite::createBatchNode(CCTexture2D* tex) {
 	CCSpriteBatchNode* bn = CCSpriteBatchNode::createWithTexture(tex);
 	CCTextureAtlas* atlas = new CCTextureAtlas();
 	atlas->initWithTexture(tex, kDefaultSpriteBatchCapacity);
-	atlas->autorelease();
+	CC_SAFE_AUTORELEASE(atlas);
 	bn->setTextureAtlas(atlas);
 	return bn;
 }

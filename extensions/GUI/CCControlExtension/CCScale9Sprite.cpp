@@ -472,7 +472,7 @@ CCScale9Sprite* CCScale9Sprite::create(const char* file, CCRect rect,  CCRect ca
     CCScale9Sprite* pReturn = new CCScale9Sprite();
     if ( pReturn && pReturn->initWithFile(file, rect, capInsets) )
     {
-        pReturn->autorelease();
+        CC_SAFE_AUTORELEASE(pReturn);
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
@@ -491,7 +491,7 @@ CCScale9Sprite* CCScale9Sprite::create(const char* file, CCRect rect)
     CCScale9Sprite* pReturn = new CCScale9Sprite();
     if ( pReturn && pReturn->initWithFile(file, rect) )
     {
-        pReturn->autorelease();
+        CC_SAFE_AUTORELEASE(pReturn);
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
@@ -510,7 +510,7 @@ CCScale9Sprite* CCScale9Sprite::create(CCRect capInsets, const char* file)
     CCScale9Sprite* pReturn = new CCScale9Sprite();
     if ( pReturn && pReturn->initWithFile(capInsets, file) )
     {
-        pReturn->autorelease();
+        CC_SAFE_AUTORELEASE(pReturn);
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
@@ -529,7 +529,7 @@ CCScale9Sprite* CCScale9Sprite::create(const char* file)
     CCScale9Sprite* pReturn = new CCScale9Sprite();
     if ( pReturn && pReturn->initWithFile(file) )
     {
-        pReturn->autorelease();
+        CC_SAFE_AUTORELEASE(pReturn);
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
@@ -553,7 +553,7 @@ CCScale9Sprite* CCScale9Sprite::createWithSpriteFrame(CCSpriteFrame* spriteFrame
     CCScale9Sprite* pReturn = new CCScale9Sprite();
     if ( pReturn && pReturn->initWithSpriteFrame(spriteFrame, capInsets) )
     {
-        pReturn->autorelease();
+        CC_SAFE_AUTORELEASE(pReturn);
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
@@ -571,7 +571,7 @@ CCScale9Sprite* CCScale9Sprite::createWithSpriteFrame(CCSpriteFrame* spriteFrame
     CCScale9Sprite* pReturn = new CCScale9Sprite();
     if ( pReturn && pReturn->initWithSpriteFrame(spriteFrame) )
     {
-        pReturn->autorelease();
+        CC_SAFE_AUTORELEASE(pReturn);
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
@@ -596,7 +596,7 @@ CCScale9Sprite* CCScale9Sprite::createWithSpriteFrameName(const char* spriteFram
     CCScale9Sprite* pReturn = new CCScale9Sprite();
     if ( pReturn && pReturn->initWithSpriteFrameName(spriteFrameName, capInsets) )
     {
-        pReturn->autorelease();
+        CC_SAFE_AUTORELEASE(pReturn);
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
@@ -616,7 +616,7 @@ CCScale9Sprite* CCScale9Sprite::createWithSpriteFrameName(const char* spriteFram
     CCScale9Sprite* pReturn = new CCScale9Sprite();
     if ( pReturn && pReturn->initWithSpriteFrameName(spriteFrameName) )
     {
-        pReturn->autorelease();
+        CC_SAFE_AUTORELEASE(pReturn);
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
@@ -631,7 +631,7 @@ CCScale9Sprite* CCScale9Sprite::resizableSpriteWithCapInsets(CCRect capInsets)
     CCScale9Sprite* pReturn = new CCScale9Sprite();
     if ( pReturn && pReturn->initWithBatchNode(_scale9Image, m_spriteRect, capInsets) )
     {
-        pReturn->autorelease();
+        CC_SAFE_AUTORELEASE(pReturn);
         return pReturn;
     }
     CC_SAFE_DELETE(pReturn);
@@ -643,7 +643,7 @@ CCScale9Sprite* CCScale9Sprite::create()
     CCScale9Sprite *pReturn = new CCScale9Sprite();
     if (pReturn && pReturn->init())
     { 
-        pReturn->autorelease();   
+        CC_SAFE_AUTORELEASE(pReturn);   
         return pReturn;
     } 
     CC_SAFE_DELETE(pReturn);

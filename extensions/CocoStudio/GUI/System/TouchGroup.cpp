@@ -60,7 +60,7 @@ TouchGroup* TouchGroup::create(void)
     TouchGroup *pRet = new TouchGroup();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
     else

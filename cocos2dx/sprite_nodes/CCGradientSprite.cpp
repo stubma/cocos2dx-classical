@@ -43,7 +43,7 @@ CCGradientSprite* CCGradientSprite::create() {
 	CCGradientSprite *pSprite = new CCGradientSprite();
     if (pSprite && pSprite->init())
     {
-        pSprite->autorelease();
+        CC_SAFE_AUTORELEASE(pSprite);
         return pSprite;
     }
     CC_SAFE_DELETE(pSprite);
@@ -54,7 +54,7 @@ CCGradientSprite* CCGradientSprite::create(const char *pszFileName) {
 	CCGradientSprite *pobSprite = new CCGradientSprite();
     if (pobSprite && pobSprite->initWithFile(pszFileName))
     {
-        pobSprite->autorelease();
+        CC_SAFE_AUTORELEASE(pobSprite);
         return pobSprite;
     }
     CC_SAFE_DELETE(pobSprite);
@@ -65,7 +65,7 @@ CCGradientSprite* CCGradientSprite::create(const char *pszFileName, const CCRect
 	CCGradientSprite *pobSprite = new CCGradientSprite();
     if (pobSprite && pobSprite->initWithFile(pszFileName, rect))
     {
-        pobSprite->autorelease();
+        CC_SAFE_AUTORELEASE(pobSprite);
         return pobSprite;
     }
     CC_SAFE_DELETE(pobSprite);
@@ -76,7 +76,7 @@ CCGradientSprite* CCGradientSprite::createWithTexture(CCTexture2D *pTexture) {
 	CCGradientSprite *pobSprite = new CCGradientSprite();
     if (pobSprite && pobSprite->initWithTexture(pTexture))
     {
-        pobSprite->autorelease();
+        CC_SAFE_AUTORELEASE(pobSprite);
         return pobSprite;
     }
     CC_SAFE_DELETE(pobSprite);
@@ -87,7 +87,7 @@ CCGradientSprite* CCGradientSprite::createWithTexture(CCTexture2D *pTexture, con
     CCGradientSprite *pobSprite = new CCGradientSprite();
     if (pobSprite && pobSprite->initWithTexture(pTexture, rect))
     {
-        pobSprite->autorelease();
+        CC_SAFE_AUTORELEASE(pobSprite);
         return pobSprite;
     }
     CC_SAFE_DELETE(pobSprite);
@@ -98,7 +98,7 @@ CCGradientSprite* CCGradientSprite::createWithSpriteFrame(CCSpriteFrame *pSprite
 	CCGradientSprite *pobSprite = new CCGradientSprite();
     if (pSpriteFrame && pobSprite && pobSprite->initWithSpriteFrame(pSpriteFrame))
     {
-        pobSprite->autorelease();
+        CC_SAFE_AUTORELEASE(pobSprite);
         return pobSprite;
     }
     CC_SAFE_DELETE(pobSprite);

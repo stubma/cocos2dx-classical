@@ -62,7 +62,7 @@ CCControlPotentiometer* CCControlPotentiometer::create(const char* backgroundFil
         //progressTimer.type              = kCCProgressTimerTypeRadialCW;
         if (pRet->initWithTrackSprite_ProgressTimer_ThumbSprite(backgroundSprite, progressTimer, thumbSprite))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {

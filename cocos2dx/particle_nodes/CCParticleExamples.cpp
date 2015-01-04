@@ -64,7 +64,7 @@ CCParticleFire* CCParticleFire::create()
     CCParticleFire* pRet = new CCParticleFire();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -78,7 +78,7 @@ CCParticleFire* CCParticleFire::createWithTotalParticles(unsigned int numberOfPa
     CCParticleFire* pRet = new CCParticleFire();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -169,7 +169,7 @@ CCParticleFireworks* CCParticleFireworks::create()
     CCParticleFireworks* pRet = new CCParticleFireworks();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -183,7 +183,7 @@ CCParticleFireworks* CCParticleFireworks::createWithTotalParticles(unsigned int 
     CCParticleFireworks* pRet = new CCParticleFireworks();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -270,7 +270,7 @@ CCParticleSun* CCParticleSun::create()
     CCParticleSun* pRet = new CCParticleSun();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -284,7 +284,7 @@ CCParticleSun* CCParticleSun::createWithTotalParticles(unsigned int numberOfPart
     CCParticleSun* pRet = new CCParticleSun();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -377,7 +377,7 @@ CCParticleGalaxy* CCParticleGalaxy::create()
     CCParticleGalaxy* pRet = new CCParticleGalaxy();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -391,7 +391,7 @@ CCParticleGalaxy* CCParticleGalaxy::createWithTotalParticles(unsigned int number
     CCParticleGalaxy* pRet = new CCParticleGalaxy();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -486,7 +486,7 @@ CCParticleFlower* CCParticleFlower::create()
     CCParticleFlower* pRet = new CCParticleFlower();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -500,7 +500,7 @@ CCParticleFlower* CCParticleFlower::createWithTotalParticles(unsigned int number
     CCParticleFlower* pRet = new CCParticleFlower();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -594,7 +594,7 @@ CCParticleMeteor * CCParticleMeteor::create()
     CCParticleMeteor *pRet = new CCParticleMeteor();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -608,7 +608,7 @@ CCParticleMeteor* CCParticleMeteor::createWithTotalParticles(unsigned int number
     CCParticleMeteor* pRet = new CCParticleMeteor();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -703,7 +703,7 @@ CCParticleSpiral* CCParticleSpiral::create()
     CCParticleSpiral* pRet = new CCParticleSpiral();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -717,7 +717,7 @@ CCParticleSpiral* CCParticleSpiral::createWithTotalParticles(unsigned int number
     CCParticleSpiral* pRet = new CCParticleSpiral();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -812,7 +812,7 @@ CCParticleExplosion* CCParticleExplosion::create()
     CCParticleExplosion* pRet = new CCParticleExplosion();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -826,7 +826,7 @@ CCParticleExplosion* CCParticleExplosion::createWithTotalParticles(unsigned int 
     CCParticleExplosion* pRet = new CCParticleExplosion();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -920,7 +920,7 @@ CCParticleSmoke* CCParticleSmoke::create()
     CCParticleSmoke* pRet = new CCParticleSmoke();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -934,7 +934,7 @@ CCParticleSmoke* CCParticleSmoke::createWithTotalParticles(unsigned int numberOf
     CCParticleSmoke* pRet = new CCParticleSmoke();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -1025,7 +1025,7 @@ CCParticleSnow* CCParticleSnow::create()
     CCParticleSnow* pRet = new CCParticleSnow();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -1039,7 +1039,7 @@ CCParticleSnow* CCParticleSnow::createWithTotalParticles(unsigned int numberOfPa
     CCParticleSnow* pRet = new CCParticleSnow();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -1133,7 +1133,7 @@ CCParticleRain* CCParticleRain::create()
     CCParticleRain* pRet = new CCParticleRain();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -1147,7 +1147,7 @@ CCParticleRain* CCParticleRain::createWithTotalParticles(unsigned int numberOfPa
     CCParticleRain* pRet = new CCParticleRain();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {

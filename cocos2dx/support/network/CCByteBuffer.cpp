@@ -72,7 +72,7 @@ CCByteBuffer::~CCByteBuffer() {
 
 CCByteBuffer* CCByteBuffer::create() {
 	CCByteBuffer* b = new CCByteBuffer();
-	return (CCByteBuffer*)b->autorelease();
+    CC_SAFE_AUTORELEASE_AND_RETURN(b, CCByteBuffer*);
 }
 
 CCByteBuffer* CCByteBuffer::create(size_t res) {

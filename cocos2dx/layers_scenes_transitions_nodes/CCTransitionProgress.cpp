@@ -53,7 +53,7 @@ CCTransitionProgress* CCTransitionProgress::create(float t, CCScene* scene)
     CCTransitionProgress* pScene = new CCTransitionProgress();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -157,7 +157,7 @@ CCTransitionProgressRadialCCW* CCTransitionProgressRadialCCW::create(float t, CC
     CCTransitionProgressRadialCCW* pScene = new CCTransitionProgressRadialCCW();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -170,7 +170,7 @@ CCTransitionProgressRadialCW* CCTransitionProgressRadialCW::create(float t, CCSc
     CCTransitionProgressRadialCW* pScene = new CCTransitionProgressRadialCW();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -202,7 +202,7 @@ CCTransitionProgressHorizontal* CCTransitionProgressHorizontal::create(float t, 
     CCTransitionProgressHorizontal* pScene = new CCTransitionProgressHorizontal();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -235,7 +235,7 @@ CCTransitionProgressVertical* CCTransitionProgressVertical::create(float t, CCSc
     CCTransitionProgressVertical* pScene = new CCTransitionProgressVertical();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -269,7 +269,7 @@ CCTransitionProgressInOut* CCTransitionProgressInOut::create(float t, CCScene* s
     CCTransitionProgressInOut* pScene = new CCTransitionProgressInOut();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -315,7 +315,7 @@ CCTransitionProgressOutIn* CCTransitionProgressOutIn::create(float t, CCScene* s
     CCTransitionProgressOutIn* pScene = new CCTransitionProgressOutIn();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);

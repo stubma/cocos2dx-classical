@@ -54,7 +54,7 @@ CCArcticSprite* CCArcticSprite::create(const char* path, int animIndex, CCTextur
 	sprite->playAnimation(animIndex);
 
 	// return
-	sprite->autorelease();
+	CC_SAFE_AUTORELEASE(sprite);
 	return sprite;
 }
 
@@ -87,7 +87,7 @@ CCArcticSprite* CCArcticSprite::create(const char* path, int animIndex, CCTextur
 	sprite->playAnimation(animIndex);
 
 	// return
-	sprite->autorelease();
+	CC_SAFE_AUTORELEASE(sprite);
 	return sprite;
 }
 

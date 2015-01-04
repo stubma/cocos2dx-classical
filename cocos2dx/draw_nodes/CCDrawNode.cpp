@@ -122,7 +122,7 @@ CCDrawNode* CCDrawNode::create()
     CCDrawNode* pRet = new CCDrawNode();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {

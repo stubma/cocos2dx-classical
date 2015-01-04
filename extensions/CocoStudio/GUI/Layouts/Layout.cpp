@@ -78,7 +78,7 @@ Layout* Layout::create()
     Layout* layout = new Layout();
     if (layout && layout->init())
     {
-        layout->autorelease();
+        CC_SAFE_AUTORELEASE(layout);
         return layout;
     }
     CC_SAFE_DELETE(layout);

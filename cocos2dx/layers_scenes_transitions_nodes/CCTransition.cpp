@@ -57,7 +57,7 @@ CCTransitionScene * CCTransitionScene::create(float t, CCScene *scene)
     CCTransitionScene * pScene = new CCTransitionScene();
     if(pScene && pScene->initWithDuration(t,scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -211,7 +211,7 @@ CCTransitionSceneOriented * CCTransitionSceneOriented::create(float t, CCScene *
 {
     CCTransitionSceneOriented * pScene = new CCTransitionSceneOriented();
     pScene->initWithDuration(t,scene,orientation);
-    pScene->autorelease();
+    CC_SAFE_AUTORELEASE(pScene);
     return pScene;
 }
 
@@ -236,7 +236,7 @@ CCTransitionRotoZoom* CCTransitionRotoZoom::create(float t, CCScene* scene)
     CCTransitionRotoZoom* pScene = new CCTransitionRotoZoom();                                
     if(pScene && pScene->initWithDuration(t, scene))            
     {                                                           
-        pScene->autorelease();                                  
+        CC_SAFE_AUTORELEASE(pScene);                                  
         return pScene;                                          
     }                                                           
     CC_SAFE_DELETE(pScene);                                     
@@ -296,7 +296,7 @@ CCTransitionJumpZoom* CCTransitionJumpZoom::create(float t, CCScene* scene)
     CCTransitionJumpZoom* pScene = new CCTransitionJumpZoom();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -351,7 +351,7 @@ CCTransitionMoveInL* CCTransitionMoveInL::create(float t, CCScene* scene)
     CCTransitionMoveInL* pScene = new CCTransitionMoveInL();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -408,7 +408,7 @@ CCTransitionMoveInR* CCTransitionMoveInR::create(float t, CCScene* scene)
     CCTransitionMoveInR* pScene = new CCTransitionMoveInR();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -436,7 +436,7 @@ CCTransitionMoveInT* CCTransitionMoveInT::create(float t, CCScene* scene)
     CCTransitionMoveInT* pScene = new CCTransitionMoveInT();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -464,7 +464,7 @@ CCTransitionMoveInB* CCTransitionMoveInB::create(float t, CCScene* scene)
     CCTransitionMoveInB* pScene = new CCTransitionMoveInB();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -541,7 +541,7 @@ CCTransitionSlideInL* CCTransitionSlideInL::create(float t, CCScene* scene)
     CCTransitionSlideInL* pScene = new CCTransitionSlideInL();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -563,7 +563,7 @@ CCTransitionSlideInR* CCTransitionSlideInR::create(float t, CCScene* scene)
     CCTransitionSlideInR* pScene = new CCTransitionSlideInR();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -604,7 +604,7 @@ CCTransitionSlideInT* CCTransitionSlideInT::create(float t, CCScene* scene)
     CCTransitionSlideInT* pScene = new CCTransitionSlideInT();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -644,7 +644,7 @@ CCTransitionSlideInB* CCTransitionSlideInB::create(float t, CCScene* scene)
     CCTransitionSlideInB* pScene = new CCTransitionSlideInB();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -684,7 +684,7 @@ CCTransitionShrinkGrow* CCTransitionShrinkGrow::create(float t, CCScene* scene)
     CCTransitionShrinkGrow* pScene = new CCTransitionShrinkGrow();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -781,7 +781,7 @@ CCTransitionFlipX* CCTransitionFlipX::create(float t, CCScene* s, tOrientation o
 {
     CCTransitionFlipX* pScene = new CCTransitionFlipX();
     pScene->initWithDuration(t, s, o);
-    pScene->autorelease();
+    CC_SAFE_AUTORELEASE(pScene);
 
     return pScene;
 }
@@ -851,7 +851,7 @@ CCTransitionFlipY* CCTransitionFlipY::create(float t, CCScene* s, tOrientation o
 {
     CCTransitionFlipY* pScene = new CCTransitionFlipY();
     pScene->initWithDuration(t, s, o);
-    pScene->autorelease();
+    CC_SAFE_AUTORELEASE(pScene);
 
     return pScene;
 }
@@ -921,7 +921,7 @@ CCTransitionFlipAngular* CCTransitionFlipAngular::create(float t, CCScene* s, tO
 {
     CCTransitionFlipAngular* pScene = new CCTransitionFlipAngular();
     pScene->initWithDuration(t, s, o);
-    pScene->autorelease();
+    CC_SAFE_AUTORELEASE(pScene);
 
     return pScene;
 }
@@ -999,7 +999,7 @@ CCTransitionZoomFlipX* CCTransitionZoomFlipX::create(float t, CCScene* s, tOrien
 {
     CCTransitionZoomFlipX* pScene = new CCTransitionZoomFlipX();
     pScene->initWithDuration(t, s, o);
-    pScene->autorelease();
+    CC_SAFE_AUTORELEASE(pScene);
 
     return pScene;
 }
@@ -1078,7 +1078,7 @@ CCTransitionZoomFlipY* CCTransitionZoomFlipY::create(float t, CCScene* s, tOrien
 {
     CCTransitionZoomFlipY* pScene = new CCTransitionZoomFlipY();
     pScene->initWithDuration(t, s, o);
-    pScene->autorelease();
+    CC_SAFE_AUTORELEASE(pScene);
 
     return pScene;
 }
@@ -1159,7 +1159,7 @@ CCTransitionZoomFlipAngular* CCTransitionZoomFlipAngular::create(float t, CCScen
 {
     CCTransitionZoomFlipAngular* pScene = new CCTransitionZoomFlipAngular();
     pScene->initWithDuration(t, s, o);
-    pScene->autorelease();
+    CC_SAFE_AUTORELEASE(pScene);
 
     return pScene;
 }
@@ -1183,7 +1183,7 @@ CCTransitionFade * CCTransitionFade::create(float duration, CCScene *scene, cons
 {
     CCTransitionFade * pTransition = new CCTransitionFade();
     pTransition->initWithDuration(duration, scene, color);
-    pTransition->autorelease();
+    CC_SAFE_AUTORELEASE(pTransition);
     return pTransition;
 }
 
@@ -1252,7 +1252,7 @@ CCTransitionCrossFade* CCTransitionCrossFade::create(float t, CCScene* scene)
     CCTransitionCrossFade* pScene = new CCTransitionCrossFade();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -1360,7 +1360,7 @@ CCTransitionTurnOffTiles* CCTransitionTurnOffTiles::create(float t, CCScene* sce
     CCTransitionTurnOffTiles* pScene = new CCTransitionTurnOffTiles();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -1416,7 +1416,7 @@ CCTransitionSplitCols* CCTransitionSplitCols::create(float t, CCScene* scene)
     CCTransitionSplitCols* pScene = new CCTransitionSplitCols();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -1482,7 +1482,7 @@ CCTransitionSplitRows* CCTransitionSplitRows::create(float t, CCScene* scene)
     CCTransitionSplitRows* pScene = new CCTransitionSplitRows();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -1504,7 +1504,7 @@ CCTransitionFadeTR* CCTransitionFadeTR::create(float t, CCScene* scene)
     CCTransitionFadeTR* pScene = new CCTransitionFadeTR();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -1567,7 +1567,7 @@ CCTransitionFadeBL* CCTransitionFadeBL::create(float t, CCScene* scene)
     CCTransitionFadeBL* pScene = new CCTransitionFadeBL();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -1595,7 +1595,7 @@ CCTransitionFadeUp* CCTransitionFadeUp::create(float t, CCScene* scene)
     CCTransitionFadeUp* pScene = new CCTransitionFadeUp();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
@@ -1622,7 +1622,7 @@ CCTransitionFadeDown* CCTransitionFadeDown::create(float t, CCScene* scene)
     CCTransitionFadeDown* pScene = new CCTransitionFadeDown();
     if(pScene && pScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
+        CC_SAFE_AUTORELEASE(pScene);
         return pScene;
     }
     CC_SAFE_DELETE(pScene);

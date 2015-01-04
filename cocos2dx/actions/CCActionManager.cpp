@@ -156,7 +156,7 @@ void CCActionManager::resumeTarget(CCObject *pTarget)
 CCSet* CCActionManager::pauseAllRunningActions()
 {
     CCSet *idsWithActions = new CCSet();
-    idsWithActions->autorelease();
+    CC_SAFE_AUTORELEASE(idsWithActions);
     
     for (tHashElement *element=m_pTargets; element != nullptr; element = (tHashElement *)element->hh.next) 
     {

@@ -56,7 +56,7 @@ CCOrbitCamera * CCOrbitCamera::create(float t, float radius, float deltaRadius, 
     CCOrbitCamera * pRet = new CCOrbitCamera();
     if(pRet->initWithDuration(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
     CC_SAFE_DELETE(pRet);

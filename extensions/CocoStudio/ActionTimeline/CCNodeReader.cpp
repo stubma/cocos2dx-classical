@@ -96,7 +96,7 @@ NodeCreateCallFunc* NodeCreateCallFunc::create(CCObject* target, NodeCreateCallb
     NodeCreateCallFunc* func = new NodeCreateCallFunc();
     if (func && func->init(target, callback))
     {
-        func->autorelease();
+        CC_SAFE_AUTORELEASE(func);
         return func;
     }
     CC_SAFE_DELETE(func);
@@ -139,7 +139,7 @@ TimelineActionData* TimelineActionData::create(int actionTag)
     TimelineActionData * ret = new TimelineActionData();
     if (ret && ret->init(actionTag))
     {
-        ret->autorelease();
+        CC_SAFE_AUTORELEASE(ret);
     }
     else
     {

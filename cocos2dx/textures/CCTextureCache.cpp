@@ -247,7 +247,7 @@ CCDictionary* CCTextureCache::snapshotTextures()
     {
         pRet->setObject(pElement->getObject(), pElement->getStrKey());
     }
-    pRet->autorelease();
+    CC_SAFE_AUTORELEASE(pRet);
     return pRet;
 }
 
@@ -371,7 +371,7 @@ void CCTextureCache::addImageAsyncCallBack(float dt)
 
         // cache the texture
         m_pTextures->setObject(texture, filename);
-        texture->autorelease();
+        CC_SAFE_AUTORELEASE(texture);
 
         if (target && selector)
         {
@@ -506,7 +506,7 @@ CCTexture2D * CCTextureCache::addPVRImage(const char* path)
         VolatileTexture::addImageTexture(texture, fullpath.c_str(), kFmtRawData);
 #endif
         m_pTextures->setObject(texture, key.c_str());
-        texture->autorelease();
+        CC_SAFE_AUTORELEASE(texture);
     }
     else
     {
@@ -535,7 +535,7 @@ CCTexture2D* CCTextureCache::addETCImage(const char* path)
     if(texture != nullptr && texture->initWithETCFile(fullpath.c_str()))
     {
         m_pTextures->setObject(texture, key.c_str());
-        texture->autorelease();
+        CC_SAFE_AUTORELEASE(texture);
     }
     else
     {
@@ -576,7 +576,7 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
         if(key && texture)
         {
             m_pTextures->setObject(texture, forKey.c_str());
-            texture->autorelease();
+            CC_SAFE_AUTORELEASE(texture);
         }
         else
         {

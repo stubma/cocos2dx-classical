@@ -35,7 +35,7 @@ Timeline* Timeline::create()
     Timeline* object = new Timeline();
     if (object && object->init())
     {
-        object->autorelease();
+        CC_SAFE_AUTORELEASE(object);
         return object;
     }
     CC_SAFE_DELETE(object);

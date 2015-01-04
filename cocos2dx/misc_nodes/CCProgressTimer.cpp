@@ -61,7 +61,7 @@ CCProgressTimer* CCProgressTimer::create(CCSprite* sp)
     CCProgressTimer *pProgressTimer = new CCProgressTimer();
     if (pProgressTimer->initWithSprite(sp))
     {
-        pProgressTimer->autorelease();
+        CC_SAFE_AUTORELEASE(pProgressTimer);
     }
     else
     {

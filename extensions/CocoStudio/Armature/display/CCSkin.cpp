@@ -44,7 +44,7 @@ CCSkin *CCSkin::create()
     CCSkin *skin = new CCSkin();
     if(skin && skin->init())
     {
-        skin->autorelease();
+        CC_SAFE_AUTORELEASE(skin);
         return skin;
     }
     CC_SAFE_DELETE(skin);
@@ -56,7 +56,7 @@ CCSkin *CCSkin::createWithSpriteFrameName(const char *pszSpriteFrameName)
     CCSkin *skin = new CCSkin();
     if(skin && skin->initWithSpriteFrameName(pszSpriteFrameName))
     {
-        skin->autorelease();
+        CC_SAFE_AUTORELEASE(skin);
         return skin;
     }
     CC_SAFE_DELETE(skin);
@@ -68,7 +68,7 @@ CCSkin *CCSkin::create(const char *pszFileName)
     CCSkin *skin = new CCSkin();
     if(skin && skin->initWithFile(pszFileName))
     {
-        skin->autorelease();
+        CC_SAFE_AUTORELEASE(skin);
         return skin;
     }
     CC_SAFE_DELETE(skin);

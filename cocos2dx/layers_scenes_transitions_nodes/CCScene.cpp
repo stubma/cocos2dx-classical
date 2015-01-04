@@ -59,7 +59,7 @@ CCScene *CCScene::create()
     CCScene *pRet = new CCScene();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
     else

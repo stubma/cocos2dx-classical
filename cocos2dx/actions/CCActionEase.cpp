@@ -50,7 +50,7 @@ CCActionEase* CCActionEase::create(CCActionInterval *pAction)
     {
         if (pRet->initWithAction(pAction))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -143,7 +143,7 @@ CCEaseRateAction* CCEaseRateAction::create(CCActionInterval *pAction, float fRat
     {
         if (pRet->initWithAction(pAction, fRate))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -207,7 +207,7 @@ CCEaseIn* CCEaseIn::create(CCActionInterval *pAction, float fRate)
     {
         if (pRet->initWithAction(pAction, fRate))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -260,7 +260,7 @@ CCEaseOut* CCEaseOut::create(CCActionInterval *pAction, float fRate)
     {
         if (pRet->initWithAction(pAction, fRate))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -313,7 +313,7 @@ CCEaseInOut* CCEaseInOut::create(CCActionInterval *pAction, float fRate)
     {
         if (pRet->initWithAction(pAction, fRate))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -375,7 +375,7 @@ CCEaseExponentialIn* CCEaseExponentialIn::create(CCActionInterval* pAction)
     {
         if (pRet->initWithAction(pAction))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -428,7 +428,7 @@ CCEaseExponentialOut* CCEaseExponentialOut::create(CCActionInterval* pAction)
     {
         if (pRet->initWithAction(pAction))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -482,7 +482,7 @@ CCEaseExponentialInOut* CCEaseExponentialInOut::create(CCActionInterval *pAction
     {
         if (pRet->initWithAction(pAction))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -546,7 +546,7 @@ CCEaseSineIn* CCEaseSineIn::create(CCActionInterval* pAction)
     {
         if (pRet->initWithAction(pAction))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -600,7 +600,7 @@ CCEaseSineOut* CCEaseSineOut::create(CCActionInterval* pAction)
     {
         if (pRet->initWithAction(pAction))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -654,7 +654,7 @@ CCEaseSineInOut* CCEaseSineInOut::create(CCActionInterval* pAction)
     {
         if (pRet->initWithAction(pAction))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -713,7 +713,7 @@ CCEaseElastic* CCEaseElastic::create(CCActionInterval *pAction, float fPeriod/* 
     {
         if (pRet->initWithAction(pAction, fPeriod))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -780,7 +780,7 @@ CCEaseElasticIn* CCEaseElasticIn::create(CCActionInterval *pAction, float fPerio
     {
         if (pRet->initWithAction(pAction, fPeriod))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -851,7 +851,7 @@ CCEaseElasticOut* CCEaseElasticOut::create(CCActionInterval *pAction, float fPer
     {
         if (pRet->initWithAction(pAction, fPeriod))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -921,7 +921,7 @@ CCEaseElasticInOut* CCEaseElasticInOut::create(CCActionInterval *pAction, float 
     {
         if (pRet->initWithAction(pAction, fPeriod))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -1002,7 +1002,7 @@ CCEaseBounce* CCEaseBounce::create(CCActionInterval* pAction)
     {
         if (pRet->initWithAction(pAction))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -1072,7 +1072,7 @@ CCEaseBounceIn* CCEaseBounceIn::create(CCActionInterval* pAction)
     {
         if (pRet->initWithAction(pAction))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -1127,7 +1127,7 @@ CCEaseBounceOut* CCEaseBounceOut::create(CCActionInterval* pAction)
     {
         if (pRet->initWithAction(pAction))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -1182,7 +1182,7 @@ CCEaseBounceInOut* CCEaseBounceInOut::create(CCActionInterval* pAction)
     {
         if (pRet->initWithAction(pAction))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -1247,7 +1247,7 @@ CCEaseBackIn* CCEaseBackIn::create(CCActionInterval *pAction)
     {
         if (pRet->initWithAction(pAction))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -1302,7 +1302,7 @@ CCEaseBackOut* CCEaseBackOut::create(CCActionInterval* pAction)
     {
         if (pRet->initWithAction(pAction))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {
@@ -1359,7 +1359,7 @@ CCEaseBackInOut* CCEaseBackInOut::create(CCActionInterval* pAction)
     {
         if (pRet->initWithAction(pAction))
         {
-            pRet->autorelease();
+            CC_SAFE_AUTORELEASE(pRet);
         }
         else
         {

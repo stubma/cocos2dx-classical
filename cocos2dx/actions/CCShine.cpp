@@ -36,7 +36,7 @@ CCShine::~CCShine() {
 CCShine* CCShine::create(float duration, ccColor4B color1, ccColor4B color2, ccColor4B color3, ccVertex3F gradientPositions) {
     CCShine* s = new CCShine();
     if(s->initWithColors(duration, color1, color2, color3, gradientPositions)) {
-        s->autorelease();
+        CC_SAFE_AUTORELEASE(s);
         return s;
     }
     CC_SAFE_RELEASE(s);

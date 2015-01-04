@@ -120,7 +120,7 @@ void ActionObject::initWithDictionary(const rapidjson::Value& dic,CCObject* root
 	int maxLength = 0;
 	for (int i=0; i<actionNodeCount; i++) {
 		ActionNode* actionNode = new ActionNode();
-		actionNode->autorelease();
+		CC_SAFE_AUTORELEASE(actionNode);
 		const rapidjson::Value& actionNodeDic = DICTOOL->getDictionaryFromArray_json(dic, "actionnodelist", i);
 		actionNode->initWithDictionary(actionNodeDic,root);
 		actionNode->setUnitTime(getUnitTime());
@@ -162,7 +162,7 @@ void ActionObject::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, c
         int maxLength = 0;
         for (int i=0; i<actionNodeCount; i++) {
             ActionNode* actionNode = new ActionNode();
-            actionNode->autorelease();
+            CC_SAFE_AUTORELEASE(actionNode);
             
             actionNode->initWithBinary(pCocoLoader, &actionNodeArray[i] , root);
             

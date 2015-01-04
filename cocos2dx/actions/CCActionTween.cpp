@@ -32,7 +32,7 @@ CCActionTween* CCActionTween::create(float aDuration, const char* key, float fro
     CCActionTween* pRet = new CCActionTween();
     if (pRet && pRet->initWithDuration(aDuration, key, from, to))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {

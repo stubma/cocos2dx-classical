@@ -671,7 +671,7 @@ CCTexturePVR * CCTexturePVR::create(const char* path)
     {
         if (pTexture->initWithContentsOfFile(path))
         {
-            pTexture->autorelease();
+            CC_SAFE_AUTORELEASE(pTexture);
         }
         else
         {

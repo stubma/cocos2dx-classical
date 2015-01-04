@@ -71,7 +71,7 @@ CCToast* CCToast::create(CCNode* owner, CCNode* content, int tag, float duration
                                           nullptr));
     
     // return
-    t->autorelease();
+    CC_SAFE_AUTORELEASE(t);
     return t;
 }
 

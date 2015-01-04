@@ -65,7 +65,7 @@ CCClippingNode* CCClippingNode::create()
     CCClippingNode *pRet = new CCClippingNode();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -80,7 +80,7 @@ CCClippingNode* CCClippingNode::create(CCNode *pStencil)
     CCClippingNode *pRet = new CCClippingNode();
     if (pRet && pRet->init(pStencil))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {

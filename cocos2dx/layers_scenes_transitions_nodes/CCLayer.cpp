@@ -85,7 +85,7 @@ CCLayer *CCLayer::create()
     CCLayer *pRet = new CCLayer();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
     else
@@ -673,7 +673,7 @@ CCLayerColor* CCLayerColor::create()
     CCLayerColor* pRet = new CCLayerColor();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -687,7 +687,7 @@ CCLayerColor * CCLayerColor::create(const ccColor4B& color, GLfloat width, GLflo
     CCLayerColor * pLayer = new CCLayerColor();
     if( pLayer && pLayer->initWithColor(color,width,height))
     {
-        pLayer->autorelease();
+        CC_SAFE_AUTORELEASE(pLayer);
         return pLayer;
     }
     CC_SAFE_DELETE(pLayer);
@@ -699,7 +699,7 @@ CCLayerColor * CCLayerColor::create(const ccColor4B& color)
     CCLayerColor * pLayer = new CCLayerColor();
     if(pLayer && pLayer->initWithColor(color))
     {
-        pLayer->autorelease();
+        CC_SAFE_AUTORELEASE(pLayer);
         return pLayer;
     }
     CC_SAFE_DELETE(pLayer);
@@ -832,7 +832,7 @@ CCLayerGradient* CCLayerGradient::create(const ccColor4B& start, const ccColor4B
     CCLayerGradient * pLayer = new CCLayerGradient();
     if( pLayer && pLayer->initWithColor(start, end))
     {
-        pLayer->autorelease();
+        CC_SAFE_AUTORELEASE(pLayer);
         return pLayer;
     }
     CC_SAFE_DELETE(pLayer);
@@ -844,7 +844,7 @@ CCLayerGradient* CCLayerGradient::create(const ccColor4B& start, const ccColor4B
     CCLayerGradient * pLayer = new CCLayerGradient();
     if( pLayer && pLayer->initWithColor(start, end, v))
     {
-        pLayer->autorelease();
+        CC_SAFE_AUTORELEASE(pLayer);
         return pLayer;
     }
     CC_SAFE_DELETE(pLayer);
@@ -856,7 +856,7 @@ CCLayerGradient* CCLayerGradient::create()
     CCLayerGradient* pRet = new CCLayerGradient();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -1029,7 +1029,7 @@ CCLayerMultiplex* CCLayerMultiplex::create(CCLayer * layer, ...) {
     CCLayerMultiplex* pMultiplexLayer = new CCLayerMultiplex();
     if(pMultiplexLayer && pMultiplexLayer->initWithLayers(layer, args))
     {
-        pMultiplexLayer->autorelease();
+        CC_SAFE_AUTORELEASE(pMultiplexLayer);
         va_end(args);
         return pMultiplexLayer;
     }
@@ -1046,7 +1046,7 @@ CCLayerMultiplex* CCLayerMultiplex::createWithLayer(CCLayer* layer) {
 CCLayerMultiplex* CCLayerMultiplex::create() {
     CCLayerMultiplex* pRet = new CCLayerMultiplex();
     if (pRet && pRet->init()) {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     } else {
         CC_SAFE_DELETE(pRet);
     }
@@ -1057,7 +1057,7 @@ CCLayerMultiplex* CCLayerMultiplex::createWithArray(CCArray* arrayOfLayers)
 {
     CCLayerMultiplex* pRet = new CCLayerMultiplex();
     if (pRet && pRet->initWithArray(arrayOfLayers)) {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     } else {
         CC_SAFE_DELETE(pRet);
     }

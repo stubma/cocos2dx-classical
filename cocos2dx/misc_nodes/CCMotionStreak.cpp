@@ -70,7 +70,7 @@ CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, c
     CCMotionStreak *pRet = new CCMotionStreak();
     if (pRet && pRet->initWithFade(fade, minSeg, stroke, color, path))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
 
@@ -83,7 +83,7 @@ CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, c
     CCMotionStreak *pRet = new CCMotionStreak();
     if (pRet && pRet->initWithFade(fade, minSeg, stroke, color, texture))
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
 

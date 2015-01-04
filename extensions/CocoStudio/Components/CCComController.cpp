@@ -72,7 +72,7 @@ CCComController* CCComController::create(void)
     CCComController * pRet = new CCComController();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {

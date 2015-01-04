@@ -92,7 +92,7 @@ CCLuaStack *CCLuaStack::create(void)
 {
     CCLuaStack *stack = new CCLuaStack();
     stack->init();
-    stack->autorelease();
+    CC_SAFE_AUTORELEASE(stack);
     return stack;
 }
 
@@ -100,7 +100,7 @@ CCLuaStack *CCLuaStack::attach(lua_State *L)
 {
     CCLuaStack *stack = new CCLuaStack();
     stack->initWithLuaState(L);
-    stack->autorelease();
+    CC_SAFE_AUTORELEASE(stack);
     return stack;
 }
 

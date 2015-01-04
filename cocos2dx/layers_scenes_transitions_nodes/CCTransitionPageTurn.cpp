@@ -45,7 +45,7 @@ CCTransitionPageTurn * CCTransitionPageTurn::create(float t, CCScene *scene, boo
 {
     CCTransitionPageTurn * pTransition = new CCTransitionPageTurn();
     pTransition->initWithDuration(t,scene,backwards);
-    pTransition->autorelease();
+    CC_SAFE_AUTORELEASE(pTransition);
     return pTransition;
 }
 

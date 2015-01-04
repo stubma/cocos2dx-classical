@@ -113,7 +113,7 @@ CCColliderDetector *CCColliderDetector::create()
     CCColliderDetector *pColliderDetector = new CCColliderDetector();
     if (pColliderDetector && pColliderDetector->init())
     {
-        pColliderDetector->autorelease();
+        CC_SAFE_AUTORELEASE(pColliderDetector);
         return pColliderDetector;
     }
     CC_SAFE_DELETE(pColliderDetector);
@@ -125,7 +125,7 @@ CCColliderDetector *CCColliderDetector::create(CCBone *bone)
     CCColliderDetector *pColliderDetector = new CCColliderDetector();
     if (pColliderDetector && pColliderDetector->init(bone))
     {
-        pColliderDetector->autorelease();
+        CC_SAFE_AUTORELEASE(pColliderDetector);
         return pColliderDetector;
     }
     CC_SAFE_DELETE(pColliderDetector);

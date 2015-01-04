@@ -47,7 +47,7 @@ CCArray* CCArray::create()
 
     if (pArray && pArray->init())
     {
-        pArray->autorelease();
+        CC_SAFE_AUTORELEASE(pArray);
     }
     else
     {
@@ -63,7 +63,7 @@ CCArray* CCArray::createWithObject(CCObject* pObject)
 
     if (pArray && pArray->initWithObject(pObject))
     {
-        pArray->autorelease();
+        CC_SAFE_AUTORELEASE(pArray);
     }
     else
     {
@@ -111,7 +111,7 @@ CCArray* CCArray::createWithCapacity(unsigned int capacity)
     
     if (pArray && pArray->initWithCapacity(capacity))
     {
-        pArray->autorelease();
+        CC_SAFE_AUTORELEASE(pArray);
     }
     else
     {
@@ -126,7 +126,7 @@ CCArray* CCArray::createWithContentsOfFile(const char* pFileName)
     CCArray* pRet = CCArray::createWithContentsOfFileThreadSafe(pFileName);
     if (pRet != nullptr)
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     return pRet;
 }

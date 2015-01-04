@@ -534,7 +534,7 @@ CCNode * CCNode::create(void)
 	CCNode * pRet = new CCNode();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {
@@ -1353,7 +1353,7 @@ CCNodeRGBA * CCNodeRGBA::create(void)
 	CCNodeRGBA * pRet = new CCNodeRGBA();
     if (pRet && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {

@@ -65,7 +65,7 @@ CCComponent* CCComponent::create(void)
     CCComponent * pRet = new CCComponent();
     if (pRet != nullptr && pRet->init())
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
     }
     else
     {

@@ -36,7 +36,7 @@ CCCurl::~CCCurl() {
 CCCurl* CCCurl::create(float duration, CCPoint center, float toRadius, float angularVelocity) {
     CCCurl* a = new CCCurl();
     if(a->initWithDuration(duration, center, toRadius, angularVelocity)) {
-        a->autorelease();
+        CC_SAFE_AUTORELEASE(a);
         return a;
     }
     CC_SAFE_RELEASE(a);

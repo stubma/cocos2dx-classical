@@ -45,7 +45,7 @@ UICCLabelAtlas* UICCLabelAtlas::create()
     UICCLabelAtlas *pRet = new UICCLabelAtlas();
     if(pRet)
     {
-        pRet->autorelease();
+        CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
@@ -105,7 +105,7 @@ LabelAtlas* LabelAtlas::create()
     LabelAtlas* widget = new LabelAtlas();
     if (widget && widget->init())
     {
-        widget->autorelease();
+        CC_SAFE_AUTORELEASE(widget);
         return widget;
     }
     CC_SAFE_DELETE(widget);
