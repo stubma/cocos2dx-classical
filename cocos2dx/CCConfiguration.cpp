@@ -80,7 +80,7 @@ bool CCConfiguration::init(void)
 
 CCConfiguration::~CCConfiguration(void)
 {
-	m_pValueDict->release();
+	CC_SAFE_RELEASE(m_pValueDict);
 }
 
 void CCConfiguration::dumpInfo(void) const

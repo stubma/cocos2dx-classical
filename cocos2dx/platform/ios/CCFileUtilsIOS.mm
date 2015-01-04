@@ -48,7 +48,7 @@ static void addItemToCCArray(id item, CCArray *pArray)
         CCString* pValue = new CCString([item UTF8String]);
         
         pArray->addObject(pValue);
-        pValue->release();
+        CC_SAFE_RELEASE(pValue);
         return;
     }
     
@@ -58,7 +58,7 @@ static void addItemToCCArray(id item, CCArray *pArray)
         CCString* pValue = new CCString([pStr UTF8String]);
         
         pArray->addObject(pValue);
-        pValue->release();
+        CC_SAFE_RELEASE(pValue);
         return;
     }
     
@@ -70,7 +70,7 @@ static void addItemToCCArray(id item, CCArray *pArray)
             addValueToCCDict(subKey, subValue, pDictItem);
         }
         pArray->addObject(pDictItem);
-        pDictItem->release();
+        CC_SAFE_RELEASE(pDictItem);
         return;
     }
     
@@ -82,7 +82,7 @@ static void addItemToCCArray(id item, CCArray *pArray)
             addItemToCCArray(subItem, pArrayItem);
         }
         pArray->addObject(pArrayItem);
-        pArrayItem->release();
+        CC_SAFE_RELEASE(pArrayItem);
         return;
     }
 }
@@ -135,7 +135,7 @@ static void addValueToCCDict(id key, id value, CCDictionary* pDict)
             addValueToCCDict(subKey, subValue, pSubDict);
         }
         pDict->setObject(pSubDict, pKey.c_str());
-        pSubDict->release();
+        CC_SAFE_RELEASE(pSubDict);
         return;
     }
     
@@ -144,7 +144,7 @@ static void addValueToCCDict(id key, id value, CCDictionary* pDict)
         CCString* pValue = new CCString([value UTF8String]);
         
         pDict->setObject(pValue, pKey.c_str());
-        pValue->release();
+        CC_SAFE_RELEASE(pValue);
         return;
     }
     
@@ -154,7 +154,7 @@ static void addValueToCCDict(id key, id value, CCDictionary* pDict)
         CCString* pValue = new CCString([pStr UTF8String]);
         
         pDict->setObject(pValue, pKey.c_str());
-        pValue->release();
+        CC_SAFE_RELEASE(pValue);
         return;
     }
     
@@ -166,7 +166,7 @@ static void addValueToCCDict(id key, id value, CCDictionary* pDict)
             addItemToCCArray(item, pArray);
         }
         pDict->setObject(pArray, pKey.c_str());
-        pArray->release();
+        CC_SAFE_RELEASE(pArray);
         return;
     }
 }

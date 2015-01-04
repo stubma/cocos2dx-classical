@@ -102,9 +102,9 @@ void CCArrayForObjectSorting::setObjectID_ofSortedObject(unsigned int tag, CCSor
             this->removeObjectAtIndex(idx);
             foundObj->setObjectID(tag);
             this->insertSortedObject(foundObj);
-            pObj->release();
+            CC_SAFE_RELEASE(pObj);
         } else {
-            pObj->release();
+            CC_SAFE_RELEASE(pObj);
         }
     }
 }
@@ -123,7 +123,7 @@ CCSortableObject* CCArrayForObjectSorting::objectWithObjectID(unsigned int tag)
     
     idx      = this->indexOfSortedObject(foundObj);
     
-    ((CCSortedObject*)foundObj)->release();
+    CC_SAFE_RELEASE(((CCSortedObject*)foundObj));
     foundObj = nullptr;
     
     if (idx < this->count() && idx != CC_INVALID_INDEX)

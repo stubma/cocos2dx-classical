@@ -70,7 +70,7 @@ void CCActionManager::deleteHashElement(tHashElement *pElement)
 {
     ccArrayFree(pElement->actions);
     HASH_DEL(m_pTargets, pElement);
-    pElement->target->release();
+    CC_SAFE_RELEASE(pElement->target);
     free(pElement);
 }
 
@@ -381,7 +381,7 @@ void CCActionManager::update(float dt)
                     // The currentAction told the node to remove it. To prevent the action from
                     // accidentally deallocating itself before finishing its step, we retained
                     // it. Now that step is done, it's safe to release it.
-                    m_pCurrentTarget->currentAction->release();
+                    CC_SAFE_RELEASE(m_pCurrentTarget->currentAction);
                 } else
                 if (m_pCurrentTarget->currentAction->isDone())
                 {

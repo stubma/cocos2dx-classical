@@ -68,7 +68,7 @@ public:
     inline void addHeader(const string& name, const string& value) {
         CCString* v = new CCString(CCUtils::trim(value));
         m_headers.setObject(v, name);
-        v->release();
+        CC_SAFE_RELEASE(v);
     }
     
     /// get header

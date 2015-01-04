@@ -96,7 +96,7 @@ bool CCComponentContainer::remove(const char *pName)
         com->onExit();
         com->setOwner(nullptr);
         HASH_DEL(m_pComponents->m_pElements, pElement);
-        pElement->getObject()->release();
+        CC_SAFE_RELEASE(pElement->getObject());
         CC_SAFE_DELETE(pElement);
         bRet = true;
     } while(0);
@@ -118,7 +118,7 @@ bool CCComponentContainer::remove(CCComponent *pCom)
                 pCom->onExit();
                 pCom->setOwner(nullptr);
                 HASH_DEL(m_pComponents->m_pElements, pElement);
-                pElement->getObject()->release();
+                CC_SAFE_RELEASE(pElement->getObject());
                 CC_SAFE_DELETE(pElement);
                 break;
             }
@@ -138,7 +138,7 @@ void CCComponentContainer::removeAll()
             HASH_DEL(m_pComponents->m_pElements, pElement);
             ((CCComponent*)pElement->getObject())->onExit();
             ((CCComponent*)pElement->getObject())->setOwner(nullptr);
-            pElement->getObject()->release();
+            CC_SAFE_RELEASE(pElement->getObject());
             CC_SAFE_DELETE(pElement);
         }
         m_pOwner->unscheduleUpdate();

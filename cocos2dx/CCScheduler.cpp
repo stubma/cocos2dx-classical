@@ -266,7 +266,7 @@ void CCScheduler::removeHashElement(_hashSelectorEntry *pElement)
     // make sure the target is released after we have removed the hash element
     // otherwise we access invalid memory when the release call deletes the target
     // and the target calls removeAllSelectors() during its destructor
-    target->release();
+    CC_SAFE_RELEASE(target);
 
 }
 
@@ -324,7 +324,7 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, 
     CCTimer *pTimer = new CCTimer();
     pTimer->initWithTarget(pTarget, pfnSelector, fInterval, repeat, delay);
     ccArrayAppendObject(pElement->timers, pTimer);
-    pTimer->release();    
+    CC_SAFE_RELEASE(pTimer);    
 }
 
 void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget)
@@ -508,7 +508,7 @@ void CCScheduler::removeUpdateFromHash(struct _listEntry *entry)
 
         // target#release should be the last one to prevent
         // a possible double-free. eg: If the [target dealloc] might want to remove it itself from there
-        pTarget->release();
+        CC_SAFE_RELEASE(pTarget);
     }
 }
 
@@ -839,7 +839,7 @@ void CCScheduler::update(float dt)
                     // The currentTimer told the remove itself. To prevent the timer from
                     // accidentally deallocating itself before finishing its step, we retained
                     // it. Now that step is done, it's safe to release it.
-                    elt->currentTimer->release();
+                    CC_SAFE_RELEASE(elt->currentTimer);
                 }
 
                 elt->currentTimer = nullptr;

@@ -57,7 +57,7 @@ CCControlSlider* CCControlSlider::create(CCSprite* bg, CCSprite* thumb, CCSprite
         return (CCControlSlider*)s->autorelease();
     }
     
-    s->release();
+    CC_SAFE_RELEASE(s);
     return nullptr;
 }
 

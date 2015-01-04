@@ -376,10 +376,10 @@ void CCTextureCache::addImageAsyncCallBack(float dt)
         if (target && selector)
         {
             (target->*selector)(texture);
-            target->release();
+            CC_SAFE_RELEASE(target);
         }        
 
-        pImage->release();
+        CC_SAFE_RELEASE(pImage);
         delete pAsyncStruct;
         delete pImageInfo;
 
@@ -468,7 +468,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                     VolatileTexture::addImageTexture(texture, fullpath.c_str(), eImageFormat);
 #endif
                     m_pTextures->setObject(texture, pathKey.c_str());
-                    texture->release();
+                    CC_SAFE_RELEASE(texture);
                 }
                 else
                 {

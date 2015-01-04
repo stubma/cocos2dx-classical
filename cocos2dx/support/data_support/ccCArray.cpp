@@ -185,7 +185,7 @@ void ccArrayRemoveAllObjects(ccArray *arr)
 {
 	while( arr->num > 0 )
     {
-		(arr->arr[--arr->num])->release();
+		CC_SAFE_RELEASE((arr->arr[--arr->num]));
     }
 }
 

@@ -53,7 +53,7 @@ ActionManager::ActionManager()
 ActionManager::~ActionManager()
 {
 	m_pActionDic->removeAllObjects();
-    m_pActionDic->release();
+    CC_SAFE_RELEASE(m_pActionDic);
 }
 
 void ActionManager::initWithDictionary(const char* jsonName,const rapidjson::Value &dic,CCObject* root)

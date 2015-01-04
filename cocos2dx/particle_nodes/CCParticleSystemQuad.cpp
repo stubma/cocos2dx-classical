@@ -52,7 +52,7 @@ bool CCParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles
     {
         // allocating data space
         if( ! this->allocMemory() ) {
-            this->release();
+            CC_SAFE_RELEASE(this);
             return false;
         }
 

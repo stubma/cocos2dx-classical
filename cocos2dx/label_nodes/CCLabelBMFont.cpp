@@ -676,7 +676,7 @@ void CCLabelBMFont::createFontChars()
                 fontChar = new CCSprite();
                 fontChar->initWithTexture(m_pobTextureAtlas->getTexture(), rect);
                 addChild(fontChar, i, i);
-                fontChar->release();
+                CC_SAFE_RELEASE(fontChar);
 			}
             
             // Apply label properties

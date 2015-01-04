@@ -42,7 +42,7 @@ CCNotificationCenter::CCNotificationCenter()
 
 CCNotificationCenter::~CCNotificationCenter()
 {
-    m_observers->release();
+    CC_SAFE_RELEASE(m_observers);
 }
 
 CCNotificationCenter *CCNotificationCenter::sharedNotificationCenter(void)

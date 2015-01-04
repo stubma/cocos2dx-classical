@@ -120,7 +120,7 @@ CCShaderCache::CCShaderCache()
 CCShaderCache::~CCShaderCache()
 {
     CCLOGINFO("cocos2d deallocing 0x%X", this);
-    m_pPrograms->release();
+    CC_SAFE_RELEASE(m_pPrograms);
 }
 
 
@@ -139,14 +139,14 @@ void CCShaderCache::loadDefaultShaders()
     loadDefaultShader(p, kCCShaderType_PositionTextureColor);
 
     m_pPrograms->setObject(p, kCCShader_PositionTextureColor);
-    p->release();
+    CC_SAFE_RELEASE(p);
 
     // Position Texture Color alpha test
     p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionTextureColorAlphaTest);
 
     m_pPrograms->setObject(p, kCCShader_PositionTextureColorAlphaTest);
-    p->release();
+    CC_SAFE_RELEASE(p);
 
     //
     // Position, Color shader
@@ -155,7 +155,7 @@ void CCShaderCache::loadDefaultShaders()
     loadDefaultShader(p, kCCShaderType_PositionColor);
 
     m_pPrograms->setObject(p, kCCShader_PositionColor);
-    p->release();
+    CC_SAFE_RELEASE(p);
 
     //
     // Position Texture shader
@@ -164,7 +164,7 @@ void CCShaderCache::loadDefaultShaders()
     loadDefaultShader(p, kCCShaderType_PositionTexture);
 
     m_pPrograms->setObject(p, kCCShader_PositionTexture);
-    p->release();
+    CC_SAFE_RELEASE(p);
 
     //
     // Position, Texture attribs, 1 Color as uniform shader
@@ -173,7 +173,7 @@ void CCShaderCache::loadDefaultShaders()
     loadDefaultShader(p, kCCShaderType_PositionTexture_uColor);
 
     m_pPrograms->setObject(p ,kCCShader_PositionTexture_uColor);
-    p->release();
+    CC_SAFE_RELEASE(p);
 
     //
     // Position Texture A8 Color shader
@@ -182,7 +182,7 @@ void CCShaderCache::loadDefaultShaders()
     loadDefaultShader(p, kCCShaderType_PositionTextureA8Color);
     
     m_pPrograms->setObject(p, kCCShader_PositionTextureA8Color);
-    p->release();
+    CC_SAFE_RELEASE(p);
 
     //
     // Position and 1 color passed as a uniform (to simulate glColor4ub )
@@ -191,7 +191,7 @@ void CCShaderCache::loadDefaultShaders()
     loadDefaultShader(p, kCCShaderType_Position_uColor);
     
     m_pPrograms->setObject(p, kCCShader_Position_uColor);
-    p->release();
+    CC_SAFE_RELEASE(p);
     
     //
 	// Position, Legth(TexCoords, Color (used by Draw Node basically )
@@ -200,7 +200,7 @@ void CCShaderCache::loadDefaultShaders()
     loadDefaultShader(p, kCCShaderType_PositionLengthTexureColor);
     
     m_pPrograms->setObject(p, kCCShader_PositionLengthTexureColor);
-    p->release();
+    CC_SAFE_RELEASE(p);
 
     //
 	// ControlSwitch
@@ -209,7 +209,7 @@ void CCShaderCache::loadDefaultShaders()
     loadDefaultShader(p, kCCShaderType_ControlSwitch);
     
     m_pPrograms->setObject(p, kCCShader_ControlSwitch);
-    p->release();
+    CC_SAFE_RELEASE(p);
 }
 
 

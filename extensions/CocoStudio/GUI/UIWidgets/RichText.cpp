@@ -136,7 +136,7 @@ _elementRenderersContainer(nullptr)
     
 RichText::~RichText()
 {
-    _richElements->release();
+    CC_SAFE_RELEASE(_richElements);
 }
     
 RichText* RichText::create()

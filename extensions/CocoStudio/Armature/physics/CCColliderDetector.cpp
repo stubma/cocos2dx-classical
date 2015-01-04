@@ -180,7 +180,7 @@ void CCColliderDetector::addContourData(CCContourData *contourData)
 {
     ColliderBody *colliderBody = new ColliderBody(contourData);
     m_pColliderBodyList->addObject(colliderBody);
-    colliderBody->release();
+    CC_SAFE_RELEASE(colliderBody);
 
 #if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     CCArray *calculatedVertexList = colliderBody->getCalculatedVertexList();
@@ -190,7 +190,7 @@ void CCColliderDetector::addContourData(CCContourData *contourData)
     {
         CCContourVertex2 *newVertex = new CCContourVertex2(0, 0);
         calculatedVertexList->addObject(newVertex);
-        newVertex->release();
+        CC_SAFE_RELEASE(newVertex);
     }
 #endif
 }

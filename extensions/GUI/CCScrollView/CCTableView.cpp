@@ -101,7 +101,7 @@ void CCTableView::reloadData()
     }
     
     m_pIndices->clear();
-    m_pCellsUsed->release();
+    CC_SAFE_RELEASE(m_pCellsUsed);
     m_pCellsUsed = new CCArrayForObjectSorting();
     
     _updateCellPositions();

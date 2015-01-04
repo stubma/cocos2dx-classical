@@ -106,7 +106,7 @@ CCTMXLayer* CCTMXLayer::create(int layerIndex, CCTMXMapInfo* mapInfo) {
 	if(l->init()) {
 		return (CCTMXLayer*)l->autorelease();
 	}
-	l->release();
+	CC_SAFE_RELEASE(l);
 	return nullptr;
 }
 
@@ -749,7 +749,7 @@ CCSprite* CCTMXLayer::tileAt(int x, int y) {
 			
             int index = m_atlasInfos[z].atlasIndex;
             bn->addSpriteWithoutQuad(tile, index, z);
-            tile->release();
+            CC_SAFE_RELEASE(tile);
 		}
 	}
 	

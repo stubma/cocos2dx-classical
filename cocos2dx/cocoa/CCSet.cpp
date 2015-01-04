@@ -112,7 +112,7 @@ void CCSet::removeAllObjects()
             break;
         }
 
-        (*it)->release();
+        CC_SAFE_RELEASE((*it));
     }
 }
 

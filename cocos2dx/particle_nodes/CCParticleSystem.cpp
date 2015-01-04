@@ -185,7 +185,7 @@ bool CCParticleSystem::initWithFile(const char *plistFile)
         bRet = this->initWithDictionary(dict, "");
     }
     
-    dict->release();
+    CC_SAFE_RELEASE(dict);
 
     return bRet;
 }
@@ -376,7 +376,7 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary, const char *
                         
                         setTexture(CCTextureCache::sharedTextureCache()->addUIImage(image, textureName.c_str()));
 
-                        image->release();
+                        CC_SAFE_RELEASE(image);
                     }
                 }
                 CCAssert( this->m_pTexture != nullptr, "CCParticleSystem: error loading the texture");
@@ -400,7 +400,7 @@ bool CCParticleSystem::initWithTotalParticles(unsigned int numberOfParticles)
     if( ! m_pParticles )
     {
         CCLOG("Particle system: not enough memory");
-        this->release();
+        CC_SAFE_RELEASE(this);
         return false;
     }
     m_uAllocatedParticles = numberOfParticles;

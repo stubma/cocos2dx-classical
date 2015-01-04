@@ -36,10 +36,10 @@ CCSPXFileData::~CCSPXFileData() {
 	free(m_tiles);
 
 	for(SPXFramePtrList::iterator iter = m_frames.begin(); iter != m_frames.end(); iter++) {
-		(*iter)->release();
+		CC_SAFE_RELEASE(*iter);
 	}
 	for(SPXActionPtrList::iterator iter = m_actions.begin(); iter != m_actions.end(); iter++) {
-		(*iter)->release();
+		CC_SAFE_RELEASE(*iter);
 	}
 }
 

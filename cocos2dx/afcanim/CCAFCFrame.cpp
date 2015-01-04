@@ -36,7 +36,7 @@ CCAFCFrame::CCAFCFrame() :
 
 CCAFCFrame::~CCAFCFrame() {
 	for(AFCClipPtrList::iterator iter = m_clipList.begin(); iter != m_clipList.end(); iter++) {
-		(*iter)->release();
+		CC_SAFE_RELEASE((*iter));
 	}
 }
 

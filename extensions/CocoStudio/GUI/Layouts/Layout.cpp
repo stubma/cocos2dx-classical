@@ -342,7 +342,7 @@ void Layout::setClippingEnabled(bool able)
                 {
                     _clippingStencil->onExit();
                 }
-                _clippingStencil->release();
+                CC_SAFE_RELEASE(_clippingStencil);
                 _clippingStencil = nullptr;
             }
             break;

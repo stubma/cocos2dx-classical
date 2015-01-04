@@ -47,7 +47,7 @@ CCAuroraManager* CCAuroraManager::getInstance() {
 
 void CCAuroraManager::releaseAllAnimationFileData() {
 	for(AuroraFileDataPtrList::iterator iter = m_auroraFileDataList.begin(); iter != m_auroraFileDataList.end(); iter++) {
-		(*iter)->release();
+		CC_SAFE_RELEASE((*iter));
 	}
 	m_auroraFileDataList.clear();
 }

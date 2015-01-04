@@ -710,7 +710,7 @@ void CCDirector::purgeDirector()
         m_pRunningScene->onExitTransitionDidStart();
         m_pRunningScene->onExit();
         m_pRunningScene->cleanup();
-        m_pRunningScene->release();
+        CC_SAFE_RELEASE(m_pRunningScene);
     }
     
     m_pRunningScene = nullptr;
@@ -778,7 +778,7 @@ void CCDirector::setNextScene(void)
 
     if (m_pRunningScene)
     {
-        m_pRunningScene->release();
+        CC_SAFE_RELEASE(m_pRunningScene);
     }
     m_pRunningScene = m_pNextScene;
     CC_SAFE_RETAIN(m_pNextScene);

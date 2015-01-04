@@ -41,7 +41,7 @@ CCKeypadHandler::~CCKeypadHandler()
 {
     if (m_pDelegate)
     {
-        dynamic_cast<CCObject*>(m_pDelegate)->release();
+        CC_SAFE_RELEASE(dynamic_cast<CCObject*>(m_pDelegate));
     }  
 }
 
@@ -54,7 +54,7 @@ void CCKeypadHandler::setDelegate(CCKeypadDelegate *pDelegate)
 
     if (m_pDelegate)
     {
-        dynamic_cast<CCObject*>(m_pDelegate)->release();
+        CC_SAFE_RELEASE(dynamic_cast<CCObject*>(m_pDelegate));
     }
     m_pDelegate = pDelegate;
 }

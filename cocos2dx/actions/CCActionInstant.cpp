@@ -411,7 +411,7 @@ bool CCCallFunc::initWithTarget(CCObject* pSelectorTarget) {
 
     if (m_pSelectorTarget) 
     {
-        m_pSelectorTarget->release();
+        CC_SAFE_RELEASE(m_pSelectorTarget);
     }
 
     m_pSelectorTarget = pSelectorTarget;

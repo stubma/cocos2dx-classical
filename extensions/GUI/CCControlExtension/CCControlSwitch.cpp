@@ -120,7 +120,7 @@ bool CCControlSwitchSprite::initWithMaskSprite(
         CCGLProgram* pProgram = new CCGLProgram();
         pProgram->initWithVertexShaderByteArray(ccPositionTextureColor_vert, ccExSwitchMask_frag);
         setShaderProgram(pProgram);
-        pProgram->release();
+        CC_SAFE_RELEASE(pProgram);
 
         CHECK_GL_ERROR_DEBUG();
 

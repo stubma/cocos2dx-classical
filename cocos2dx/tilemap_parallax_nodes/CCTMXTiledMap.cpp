@@ -54,7 +54,7 @@ CCTMXTiledMap* CCTMXTiledMap::create(const string& file) {
 		return (CCTMXTiledMap*)tmx->autorelease();
 	}
 	
-	tmx->release();
+	CC_SAFE_RELEASE(tmx);
 	return nullptr;
 }
 

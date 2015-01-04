@@ -226,7 +226,7 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float
             CCInteger* pInterObj = new CCInteger(nUnusedIndex);
             s_TouchesIntergerDict.setObject(pInterObj, id);
             set.addObject(pTouch);
-            pInterObj->release();
+            CC_SAFE_RELEASE(pInterObj);
         }
     }
 
@@ -305,7 +305,7 @@ void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, int ids[
             set.addObject(pTouch);
 
             // release the object
-            pTouch->release();
+            CC_SAFE_RELEASE(pTouch);
             s_pTouches[pIndex->getValue()] = nullptr;
             removeUsedIndexBit(pIndex->getValue());
 

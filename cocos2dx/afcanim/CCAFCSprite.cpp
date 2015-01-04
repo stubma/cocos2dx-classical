@@ -68,13 +68,13 @@ CCAFCSprite::CCAFCSprite() :
 
 CCAFCSprite::~CCAFCSprite() {
 	for(SpritePtrList::iterator iter = m_spriteList.begin(); iter != m_spriteList.end(); iter++) {
-		(*iter)->release();
+		CC_SAFE_RELEASE(*iter);
 	}
 	for(SpriteBatchNodePtrList::iterator iter = m_sheetList.begin(); iter != m_sheetList.end(); iter++) {
-		(*iter)->release();
+		CC_SAFE_RELEASE(*iter);
 	}
 	for(AFCClipMappingPtrList::iterator iter = m_mappingList.begin(); iter != m_mappingList.end(); iter++) {
-		(*iter)->release();
+		CC_SAFE_RELEASE(*iter);
 	}
 	CC_SAFE_RELEASE(m_animationData);
     
@@ -248,11 +248,11 @@ void CCAFCSprite::setColor(const ccColor3B& color) {
 void CCAFCSprite::replaceTextures(CCTexture2D* tex, ...) {
 	// release old batch nodes
 	for(SpritePtrList::iterator iter = m_spriteList.begin(); iter != m_spriteList.end(); iter++) {
-		(*iter)->release();
+		CC_SAFE_RELEASE(*iter);
 	}
 	m_spriteList.clear();
 	for(SpriteBatchNodePtrList::iterator iter = m_sheetList.begin(); iter != m_sheetList.end(); iter++) {
-		(*iter)->release();
+		CC_SAFE_RELEASE(*iter);
 	}
 	m_sheetList.clear();
 
@@ -293,11 +293,11 @@ void CCAFCSprite::replaceTextures(CCTexture2D** tex, int count) {
 	
 	// release old batch nodes
 	for(SpritePtrList::iterator iter = m_spriteList.begin(); iter != m_spriteList.end(); iter++) {
-		(*iter)->release();
+		CC_SAFE_RELEASE(*iter);
 	}
 	m_spriteList.clear();
 	for(SpriteBatchNodePtrList::iterator iter = m_sheetList.begin(); iter != m_sheetList.end(); iter++) {
-		(*iter)->release();
+		CC_SAFE_RELEASE(*iter);
 	}
 	m_sheetList.clear();
 	m_sheetList = tmp;
@@ -684,7 +684,7 @@ void CCAFCSprite::removeClipMappingByTag(int tag) {
         CCAFCClipMapping* mapping = *iter;
 		if(mapping->getTag() == tag) {
             m_mappingList.erase(iter);
-			mapping->release();
+			CC_SAFE_RELEASE(mapping);
 			break;
 		}
 	}

@@ -46,7 +46,7 @@ CCLayerClip* CCLayerClip::create() {
         return (CCLayerClip*)l->autorelease();
     }
     
-    l->release();
+    CC_SAFE_RELEASE(l);
     return nullptr;
 }
 
@@ -56,7 +56,7 @@ CCLayerClip* CCLayerClip::create(const ccColor4B& color) {
         return (CCLayerClip*)l->autorelease();
     }
     
-    l->release();
+    CC_SAFE_RELEASE(l);
     return nullptr;
 }
 

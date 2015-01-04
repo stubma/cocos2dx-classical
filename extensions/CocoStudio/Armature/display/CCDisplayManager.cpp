@@ -289,7 +289,7 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
             m_pBone->setChildArmature(nullptr);
         }
         m_pDisplayRenderNode->removeFromParentAndCleanup(true);
-        m_pDisplayRenderNode->release();
+        CC_SAFE_RELEASE(m_pDisplayRenderNode);
     }
 
     m_pDisplayRenderNode = displayRenderNode;

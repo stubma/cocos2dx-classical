@@ -56,7 +56,7 @@ CCProfilingTimer* CCProfiler::createAndAddTimerWithName(const char* timerName)
     CCProfilingTimer *t = new CCProfilingTimer();
     t->initWithName(timerName);
     m_pActiveTimers->setObject(t, timerName);
-    t->release();
+    CC_SAFE_RELEASE(t);
 
     return t;
 }

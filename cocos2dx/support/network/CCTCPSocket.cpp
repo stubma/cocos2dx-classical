@@ -48,7 +48,7 @@ CCTCPSocket* CCTCPSocket::create(const string& hostname, int port, int tag, int 
 		return (CCTCPSocket*)s->autorelease();
 	}
 	
-	s->release();
+	CC_SAFE_RELEASE(s);
 	return nullptr;
 }
 

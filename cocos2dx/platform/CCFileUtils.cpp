@@ -127,7 +127,7 @@ public:
             m_pCurDict = new CCDictionary();
             if(m_eResultType == SAX_RESULT_DICT && m_pRootDict == nullptr)
             {
-                // Because it will call m_pCurDict->release() later, so retain here.
+                // Because it will call CC_SAFE_RELEASE(m_pCurDict) later, so retain here.
                 m_pRootDict = m_pCurDict;
                 CC_SAFE_RETAIN(m_pRootDict);
             }
@@ -152,7 +152,7 @@ public:
                 pPreDict->setObject(m_pCurDict, m_sCurKey.c_str());
             }
 
-            m_pCurDict->release();
+            CC_SAFE_RELEASE(m_pCurDict);
 
             // record the dict state
             m_tStateStack.push(m_tState);
@@ -199,7 +199,7 @@ public:
                 CCArray* pPreArray = m_tArrayStack.top();
                 pPreArray->addObject(m_pArray);
             }
-            m_pArray->release();
+            CC_SAFE_RELEASE(m_pArray);
             // record the array state
             m_tStateStack.push(m_tState);
             m_tArrayStack.push(m_pArray);
@@ -244,7 +244,7 @@ public:
             {
                 m_pCurDict->setObject(str, m_sCurKey.c_str());
             }
-            str->release();
+            CC_SAFE_RELEASE(str);
         }
         else if (sName == "false")
         {
@@ -257,7 +257,7 @@ public:
             {
                 m_pCurDict->setObject(str, m_sCurKey.c_str());
             }
-            str->release();
+            CC_SAFE_RELEASE(str);
         }
         else if (sName == "string" || sName == "integer" || sName == "real")
         {
@@ -272,7 +272,7 @@ public:
                 m_pCurDict->setObject(pStrValue, m_sCurKey.c_str());
             }
 
-            pStrValue->release();
+            CC_SAFE_RELEASE(pStrValue);
             m_sCurValue.clear();
         }
         
@@ -310,7 +310,7 @@ public:
         default:
             break;
         }
-        pText->release();
+        CC_SAFE_RELEASE(pText);
     }
 };
 

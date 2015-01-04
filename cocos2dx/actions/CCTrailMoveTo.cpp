@@ -330,7 +330,7 @@ void CCTrailMoveTo::cleanTrails() {
                 trail->setScaleX(m_pTarget->getScaleX());
                 trail->setScaleY(m_pTarget->getScaleY());
                 parent->addChild(trail);
-                trail->release();
+                CC_SAFE_RELEASE(trail);
             }
             
             // run a action to make trail to target current position

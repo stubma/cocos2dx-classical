@@ -386,7 +386,7 @@ CCObject* CCArray::copyWithZone(CCZone* pZone)
     {
         pTmpObj = pObj->copy();
         pArray->addObject(pTmpObj);
-        pTmpObj->release();
+        CC_SAFE_RELEASE(pTmpObj);
     }
     return pArray;
 }

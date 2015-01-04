@@ -48,8 +48,8 @@ CCTransitionScene::CCTransitionScene()
 }
 CCTransitionScene::~CCTransitionScene()
 {
-    m_pInScene->release();
-    m_pOutScene->release();
+    CC_SAFE_RELEASE(m_pInScene);
+    CC_SAFE_RELEASE(m_pOutScene);
 }
 
 CCTransitionScene * CCTransitionScene::create(float t, CCScene *scene)

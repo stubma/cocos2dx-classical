@@ -48,7 +48,7 @@ CCMWManager* CCMWManager::getInstance() {
 
 void CCMWManager::releaseAllAnimationFileData() {
 	for(MWFileDataPtrList::iterator iter = m_animationFileDataList.begin(); iter != m_animationFileDataList.end(); iter++) {
-		(*iter)->release();
+		CC_SAFE_RELEASE((*iter));
 	}
 	m_animationFileDataList.clear();
 }

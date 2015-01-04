@@ -185,7 +185,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
 
                 m_pSpriteFramesAliases->setObject(frameKey, oneAlias.c_str());
             }
-            frameKey->release();
+            CC_SAFE_RELEASE(frameKey);
             // create frame
             spriteFrame = new CCSpriteFrame();
             spriteFrame->initWithTexture(pobTexture,
@@ -197,7 +197,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
 
         // add sprite frame
         m_pSpriteFrames->setObject(spriteFrame, spriteFrameName);
-        spriteFrame->release();
+        CC_SAFE_RELEASE(spriteFrame);
     }
 }
 
@@ -213,7 +213,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist, CCTexture
     addSpriteFramesWithDictionary(dict, pobTexture);
     m_pLoadedFileNames->insert(pszPlist);
 
-    dict->release();
+    CC_SAFE_RELEASE(dict);
 }
 
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char* plist, const char* textureFileName)
@@ -281,7 +281,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
             CCLOG("cocos2d: CCSpriteFrameCache: Couldn't load texture");
         }
 
-        dict->release();
+        CC_SAFE_RELEASE(dict);
     }
 
 }
@@ -360,7 +360,7 @@ void CCSpriteFrameCache::removeSpriteFramesFromFile(const char* plist)
         m_pLoadedFileNames->erase(ret);
     }
 
-    dict->release();
+    CC_SAFE_RELEASE(dict);
 }
 
 void CCSpriteFrameCache::removeSpriteFramesFromDictionary(CCDictionary* dictionary)

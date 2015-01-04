@@ -125,7 +125,7 @@ CCLuaValue::~CCLuaValue(void)
     }
     else if (m_type == CCLuaValueTypeCCObject)
     {
-        m_field.ccobjectValue->release();
+        CC_SAFE_RELEASE(m_field.ccobjectValue);
         delete m_ccobjectType;
     }
 }

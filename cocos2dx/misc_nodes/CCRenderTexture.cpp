@@ -337,7 +337,7 @@ bool CCRenderTexture::initWithWidthAndHeight(int w, int h, CCTexture2DPixelForma
         // retained
         setSprite(CCSprite::createWithTexture(m_pTexture));
 
-        m_pTexture->release();
+        CC_SAFE_RELEASE(m_pTexture);
         m_pSprite->setScaleY(-1);
 
         ccBlendFunc tBlendFunc = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA };

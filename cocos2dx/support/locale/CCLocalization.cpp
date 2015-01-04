@@ -37,7 +37,7 @@ CCLocalization::CCLocalization() {
 CCLocalization::~CCLocalization() {
     // release singleton
     if(s_instance) {
-        s_instance->release();
+        CC_SAFE_RELEASE(s_instance);
         s_instance = nullptr;
     }
 }

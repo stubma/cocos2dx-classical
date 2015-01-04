@@ -711,7 +711,7 @@ bool CCTexture2D::initWithPVRFile(const char* file)
         m_ePixelFormat = pvr->getFormat();
         m_bHasMipmaps = pvr->getNumberOfMipmaps() > 1;       
 
-        pvr->release();
+        CC_SAFE_RELEASE(pvr);
     }
     else
     {
@@ -739,7 +739,7 @@ bool CCTexture2D::initWithETCFile(const char* file)
         m_tContentSize = CCSizeMake((float)m_uPixelsWide, (float)m_uPixelsHigh);
         m_bHasPremultipliedAlpha = true;
         
-        etc->release();
+        CC_SAFE_RELEASE(etc);
     }
     else
     {

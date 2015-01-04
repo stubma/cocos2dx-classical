@@ -637,7 +637,7 @@ bool CCTexturePVR::initWithContentsOfFile(const char* path)
     
     if (pvrlen < 0)
     {
-        this->release();
+        CC_SAFE_RELEASE(this);
         return false;
     }
     
@@ -655,7 +655,7 @@ bool CCTexturePVR::initWithContentsOfFile(const char* path)
     if (! ((unpackPVRv2Data(pvrdata, pvrlen)  || unpackPVRv3Data(pvrdata, pvrlen)) && createGLTexture()) )
     {
         CC_SAFE_DELETE_ARRAY(pvrdata);
-        this->release();
+        CC_SAFE_RELEASE(this);
         return false;
     }
 

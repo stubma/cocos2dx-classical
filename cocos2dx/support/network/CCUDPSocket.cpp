@@ -45,7 +45,7 @@ CCUDPSocket* CCUDPSocket::create(const string& hostname, int port, int tag, int 
 		return (CCUDPSocket*)s->autorelease();
 	}
 	
-	s->release();
+	CC_SAFE_RELEASE(s);
 	return nullptr;
 }
 

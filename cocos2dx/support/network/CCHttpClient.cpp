@@ -169,7 +169,7 @@ public:
                 if(c == ':') {
                     CCString* s = new CCString(header.substr(compStart, i - compStart));
                     pair->addObject(s);
-                    s->release();
+                    CC_SAFE_RELEASE(s);
                     compStart = i + 1;
                 } else if(c == ' ' || c == '\t' || c == '\r' || c == '\n') {
                     if(compStart == i) {
@@ -183,11 +183,11 @@ public:
             if(compStart <= end) {
                 CCString* s = new CCString(header.substr(compStart, end - compStart + 1));
                 pair->addObject(s);
-                s->release();
+                CC_SAFE_RELEASE(s);
             } else if(header[end] == ':') {
                 CCString* s = new CCString("");
                 pair->addObject(s);
-                s->release();
+                CC_SAFE_RELEASE(s);
             }
         }
         
@@ -198,7 +198,7 @@ public:
         }
         
         // release array
-        pair->release();
+        CC_SAFE_RELEASE(pair);
         
         // unlock
         pthread_mutex_unlock(&handler->m_mutex);

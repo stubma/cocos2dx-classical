@@ -42,7 +42,7 @@ void CCTouchHandler::setDelegate(CCTouchDelegate *pDelegate)
 
     if (m_pDelegate)
     {
-        dynamic_cast<CCObject*>(m_pDelegate)->release();
+        CC_SAFE_RELEASE(dynamic_cast<CCObject*>(m_pDelegate));
     }
 
     m_pDelegate = pDelegate;
@@ -105,7 +105,7 @@ CCTouchHandler::~CCTouchHandler(void)
 {
     if (m_pDelegate)
     {
-        dynamic_cast<CCObject*>(m_pDelegate)->release();
+        CC_SAFE_RELEASE(dynamic_cast<CCObject*>(m_pDelegate));
     }   
 }
 

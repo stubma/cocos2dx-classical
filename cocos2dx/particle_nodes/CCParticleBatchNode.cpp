@@ -263,7 +263,7 @@ void CCParticleBatchNode::reorderChild(CCNode * child, int zOrder)
             CC_SAFE_RETAIN(pChild);
             m_pChildren->removeObjectAtIndex(oldIndex);
             m_pChildren->insertObject(pChild, newIndex);
-            pChild->release();
+            CC_SAFE_RELEASE(pChild);
 
             // save old altasIndex
             unsigned int oldAtlasIndex = pChild->getAtlasIndex();

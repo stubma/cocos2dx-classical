@@ -124,7 +124,7 @@ bool CCGridBase::initWithSize(const CCSize& gridSize)
     if (! data)
     {
         CCLOG("cocos2d: CCGrid: not enough memory.");
-        this->release();
+        CC_SAFE_RELEASE(this);
         return false;
     }
 
@@ -141,7 +141,7 @@ bool CCGridBase::initWithSize(const CCSize& gridSize)
 
     initWithSize(gridSize, pTexture, false);
 
-    pTexture->release();
+    CC_SAFE_RELEASE(pTexture);
 
     return true;
 }

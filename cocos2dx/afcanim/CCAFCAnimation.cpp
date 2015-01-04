@@ -30,7 +30,7 @@ CCAFCAnimation::CCAFCAnimation() {
 
 CCAFCAnimation::~CCAFCAnimation() {
 	for(AFCFramePtrList::iterator iter = m_frameList.begin(); iter != m_frameList.end(); iter++) {
-		(*iter)->release();
+		CC_SAFE_RELEASE((*iter));
 	}
 }
 

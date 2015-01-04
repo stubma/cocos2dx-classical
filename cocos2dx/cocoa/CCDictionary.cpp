@@ -229,7 +229,7 @@ void CCDictionary::setObject(CCObject* pObject, const std::string& key)
         CC_SAFE_RETAIN(pTmpObj);
         removeObjectForElememt(pElement);
         setObjectUnSafe(pObject, key);
-        pTmpObj->release();
+        CC_SAFE_RELEASE(pTmpObj);
     }
 }
 
@@ -255,7 +255,7 @@ void CCDictionary::setObject(CCObject* pObject, intptr_t key)
         CC_SAFE_RETAIN(pTmpObj);
         removeObjectForElememt(pElement);
         setObjectUnSafe(pObject, key);
-        pTmpObj->release();
+        CC_SAFE_RELEASE(pTmpObj);
     }
 
 }
@@ -316,7 +316,7 @@ void CCDictionary::removeObjectForElememt(CCDictElement* pElement)
     if (pElement != nullptr)
     {
         HASH_DEL(m_pElements, pElement);
-        pElement->m_pObject->release();
+        CC_SAFE_RELEASE(pElement->m_pObject);
         CC_SAFE_DELETE(pElement);
     }
 }
@@ -327,7 +327,7 @@ void CCDictionary::removeAllObjects()
     HASH_ITER(hh, m_pElements, pElement, tmp) 
     {
         HASH_DEL(m_pElements, pElement);
-        pElement->m_pObject->release();
+        CC_SAFE_RELEASE(pElement->m_pObject);
         CC_SAFE_DELETE(pElement);
 
     }
@@ -347,7 +347,7 @@ CCObject* CCDictionary::copyWithZone(CCZone* pZone)
         {
             pTmpObj = pElement->getObject()->copy();
             pNewDict->setObject(pTmpObj, pElement->getIntKey());
-            pTmpObj->release();
+            CC_SAFE_RELEASE(pTmpObj);
         }
     }
     else if (m_eDictType == kCCDictStr)
@@ -356,7 +356,7 @@ CCObject* CCDictionary::copyWithZone(CCZone* pZone)
         {
             pTmpObj = pElement->getObject()->copy();
             pNewDict->setObject(pTmpObj, pElement->getStrKey());
-            pTmpObj->release();
+            CC_SAFE_RELEASE(pTmpObj);
         }
     }
 

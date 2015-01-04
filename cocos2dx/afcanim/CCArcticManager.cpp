@@ -47,7 +47,7 @@ CCArcticManager* CCArcticManager::getInstance() {
 
 void CCArcticManager::releaseAllAnimationFileData() {
 	for(ArcticFileDataPtrList::iterator iter = m_arcticFileDataList.begin(); iter != m_arcticFileDataList.end(); iter++) {
-		(*iter)->release();
+		CC_SAFE_RELEASE((*iter));
 	}
 	m_arcticFileDataList.clear();
 }

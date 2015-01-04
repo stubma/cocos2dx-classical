@@ -34,15 +34,15 @@ CCSPX3FileData::CCSPX3FileData() :
 
 CCSPX3FileData::~CCSPX3FileData() {
 	for(SPX3TileSetPtrList::iterator iter = m_tileSets.begin(); iter != m_tileSets.end(); iter++) {
-		(*iter)->release();
+		CC_SAFE_RELEASE(*iter);
 	}
 
 	for(SPX3FramePtrList::iterator iter = m_frames.begin(); iter != m_frames.end(); iter++) {
-		(*iter)->release();
+		CC_SAFE_RELEASE(*iter);
 	}
 
 	for(SPX3ActionPtrList::iterator iter = m_actions.begin(); iter != m_actions.end(); iter++) {
-		(*iter)->release();
+		CC_SAFE_RELEASE(*iter);
 	}
 }
 

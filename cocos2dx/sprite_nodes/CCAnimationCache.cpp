@@ -126,7 +126,7 @@ void CCAnimationCache::parseVersion1(CCDictionary* animations)
             CCAnimationFrame* animFrame = new CCAnimationFrame();
             animFrame->initWithSpriteFrame(spriteFrame, 1, nullptr);
             frames->addObject(animFrame);
-            animFrame->release();
+            CC_SAFE_RELEASE(animFrame);
         }
 
         if ( frames->count() == 0 ) {
@@ -139,7 +139,7 @@ void CCAnimationCache::parseVersion1(CCDictionary* animations)
         animation = CCAnimation::create(frames, delay, 1);
 
         CCAnimationCache::sharedAnimationCache()->addAnimation(animation, pElement->getStrKey());
-        frames->release();
+        CC_SAFE_RELEASE(frames);
     }    
 }
 
@@ -188,18 +188,18 @@ void CCAnimationCache::parseVersion2(CCDictionary* animations)
             animFrame->initWithSpriteFrame(spriteFrame, delayUnits, userInfo);
 
             array->addObject(animFrame);
-            animFrame->release();
+            CC_SAFE_RELEASE(animFrame);
         }
 
         float delayPerUnit = animationDict->valueForKey("delayPerUnit")->floatValue();
         CCAnimation *animation = new CCAnimation();
         animation->initWithAnimationFrames(array, delayPerUnit, 0 != loops->length() ? loops->intValue() : 1);
-        array->release();
+        CC_SAFE_RELEASE(array);
 
         animation->setRestoreOriginalFrame(restoreOriginalFrame);
 
         CCAnimationCache::sharedAnimationCache()->addAnimation(animation, name);
-        animation->release();
+        CC_SAFE_RELEASE(animation);
     }
 }
 

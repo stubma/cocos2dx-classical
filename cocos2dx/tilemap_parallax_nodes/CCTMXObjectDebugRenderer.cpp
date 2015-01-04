@@ -42,7 +42,7 @@ CCTMXObjectDebugRenderer* CCTMXObjectDebugRenderer::create(CCTMXTiledMap* m) {
 	if(l->initWithMap(m)) {
 		return (CCTMXObjectDebugRenderer*)l->autorelease();
 	}
-	l->release();
+	CC_SAFE_RELEASE(l);
 	return nullptr;
 }
 

@@ -47,7 +47,7 @@ CCDatabase::~CCDatabase() {
 	
 	// release statements
 	for(StatementMap::iterator iter = m_cachedStatements.begin(); iter != m_cachedStatements.end(); iter++) {
-		iter->second->release();
+		CC_SAFE_RELEASE(iter->second);
 	}
 }
 
@@ -150,7 +150,7 @@ bool CCDatabase::goodConnection() {
 
 	// if we can get result from sqlite_mast, return true
 	if(rs) {
-		rs->release();
+		CC_SAFE_RELEASE(rs);
 		return true;
 	}
 
@@ -159,7 +159,7 @@ bool CCDatabase::goodConnection() {
 
 void CCDatabase::clearCachedStatements() {
 	for(StatementMap::iterator iter = m_cachedStatements.begin(); iter != m_cachedStatements.end(); iter++) {
-		iter->second->release();
+		CC_SAFE_RELEASE(iter->second);
 	}
 	m_cachedStatements.clear();
 }
@@ -417,7 +417,7 @@ void CCDatabase::postResultSetClosed(CCResultSet* rs) {
 		// decrease use count and release it if it is zero as well as cache flag is false
 		iter->second->m_useCount--;
 		if(iter->second->m_useCount <= 0 && !m_shouldCacheStatements) {
-			iter->second->release();
+			CC_SAFE_RELEASE(iter->second);
 			m_cachedStatements.erase(iter);
 		}
 	}
@@ -493,7 +493,7 @@ void CCDatabase::setCachedStatement(const char* sql, CCStatement* statement) {
 	// release old
 	StatementMap::iterator iter = m_cachedStatements.find(sql);
 	if(iter != m_cachedStatements.end()) {
-		iter->second->release();
+		CC_SAFE_RELEASE(iter->second);
 		m_cachedStatements.erase(iter);
 	}
 	

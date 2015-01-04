@@ -476,7 +476,7 @@ void ActionNode::playAction()
 
 	if (m_action!=nullptr)
 	{
-		m_action->release();
+		CC_SAFE_RELEASE(m_action);
 	}
 
 	m_action = CCSequence::create(m_actionSpawn,nullptr);

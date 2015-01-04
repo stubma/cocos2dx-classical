@@ -84,7 +84,7 @@ bool CCSchedulerScriptHandlerEntry::init(float fInterval, bool bPaused)
 
 CCSchedulerScriptHandlerEntry::~CCSchedulerScriptHandlerEntry(void)
 {
-    m_pTimer->release();
+    CC_SAFE_RELEASE(m_pTimer);
     LUALOG("[LUA] DEL script schedule %d, entryID: %d", m_nHandler, m_nEntryId);
 }
 

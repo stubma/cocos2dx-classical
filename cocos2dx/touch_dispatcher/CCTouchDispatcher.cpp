@@ -433,7 +433,7 @@ void CCTouchDispatcher::touches(CCSet *pTouches, CCEvent *pEvent, unsigned int u
 
     if (bNeedsMutableSet)
     {
-        pMutableTouches->release();
+        CC_SAFE_RELEASE(pMutableTouches);
     }
 
     //

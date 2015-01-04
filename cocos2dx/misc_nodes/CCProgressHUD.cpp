@@ -78,8 +78,8 @@ bool CCProgressHUD::initWithMessage(const string& message) {
     tex->initWithImage(image);
     m_indicator = CCSprite::createWithTexture(tex);
     CC_SAFE_RETAIN(m_indicator);
-    image->release();
-    tex->release();
+    CC_SAFE_RELEASE(image);
+    CC_SAFE_RELEASE(tex);
     
     // layout
     relayout();

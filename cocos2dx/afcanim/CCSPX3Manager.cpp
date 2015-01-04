@@ -46,7 +46,7 @@ CCSPX3Manager* CCSPX3Manager::getInstance() {
 
 void CCSPX3Manager::releaseAllAnimationFileData() {
 	for(SPX3FileDataPtrList::iterator iter = m_spxFileDataList.begin(); iter != m_spxFileDataList.end(); iter++) {
-		(*iter)->release();
+		CC_SAFE_RELEASE(*iter);
 	}
 	m_spxFileDataList.clear();
 }

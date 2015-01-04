@@ -408,7 +408,7 @@ CCActionInterval* CCCardinalSplineBy::reverse()
 	// convert to "diffs" to "reverse absolute"
 	
     CCPointArray *pReverse = copyConfig->reverse();
-    copyConfig->release();
+    CC_SAFE_RELEASE(copyConfig);
 	
 	// 1st element (which should be 0,0) should be here too
     

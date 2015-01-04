@@ -76,7 +76,7 @@ void CCComRender::setNode(cocos2d::CCNode *pNode)
 {
 	if (m_pRender != nullptr)
 	{
-		m_pRender->release();
+		CC_SAFE_RELEASE(m_pRender);
 		m_pRender = nullptr;
 	}
     if (pNode != nullptr)

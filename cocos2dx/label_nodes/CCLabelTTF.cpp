@@ -90,7 +90,7 @@ CCLabelTTF::~CCLabelTTF() {
     }
     
     // release other
-    m_stateListener->release();
+    CC_SAFE_RELEASE(m_stateListener);
 }
 
 CCLabelTTF * CCLabelTTF::create(CC_DECRYPT_FUNC decryptFunc)
@@ -359,7 +359,7 @@ bool CCLabelTTF::updateTexture()
     this->setTexture(tex);
     
     // release it
-    tex->release();
+    CC_SAFE_RELEASE(tex);
     
     // set the size in the sprite
     CCRect rect =CCRectZero;

@@ -65,7 +65,7 @@ CCCallFuncT<T>* CCCallFuncT<T>::create(CCObject* pSelectorTarget, SEL_CallFuncT 
         return (CCCallFuncT*)c->autorelease();
     }
     
-    c->release();
+    CC_SAFE_RELEASE(c);
     return nullptr;
 }
 

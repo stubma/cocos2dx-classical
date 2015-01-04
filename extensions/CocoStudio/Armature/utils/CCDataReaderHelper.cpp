@@ -571,7 +571,7 @@ void CCDataReaderHelper::addDataAsyncCallBack(float dt)
         if (target && selector)
         {
             (target->*selector)((s_nAsyncRefTotalCount - s_nAsyncRefCount) / (float)s_nAsyncRefTotalCount);
-            target->release();
+            CC_SAFE_RELEASE(target);
         }
 
 
@@ -631,7 +631,7 @@ void CCDataReaderHelper::addDataFromCache(const char *pFileContent, DataInfo *da
             pthread_mutex_lock(&s_addDataMutex);
         }
         CCArmatureDataManager::sharedArmatureDataManager()->addArmatureData(armatureData->name.c_str(), armatureData, dataInfo->filename.c_str());
-        armatureData->release();
+        CC_SAFE_RELEASE(armatureData);
         if (dataInfo->asyncStruct)
         {
             pthread_mutex_unlock(&s_addDataMutex);
@@ -654,7 +654,7 @@ void CCDataReaderHelper::addDataFromCache(const char *pFileContent, DataInfo *da
             pthread_mutex_lock(&s_addDataMutex);
         }
         CCArmatureDataManager::sharedArmatureDataManager()->addAnimationData(animationData->name.c_str(), animationData, dataInfo->filename.c_str());
-        animationData->release();
+        CC_SAFE_RELEASE(animationData);
         if (dataInfo->asyncStruct)
         {
             pthread_mutex_unlock(&s_addDataMutex);
@@ -677,7 +677,7 @@ void CCDataReaderHelper::addDataFromCache(const char *pFileContent, DataInfo *da
             pthread_mutex_lock(&s_addDataMutex);
         }
         CCArmatureDataManager::sharedArmatureDataManager()->addTextureData(textureData->name.c_str(), textureData, dataInfo->filename.c_str());
-        textureData->release();
+        CC_SAFE_RELEASE(textureData);
         if (dataInfo->asyncStruct)
         {
             pthread_mutex_unlock(&s_addDataMutex);
@@ -720,7 +720,7 @@ CCArmatureData *CCDataReaderHelper::decodeArmature(tinyxml2::XMLElement *armatur
 
         CCBoneData *boneData = decodeBone(boneXML, parentXML, dataInfo);
         armatureData->addBoneData(boneData);
-        boneData->release();
+        CC_SAFE_RELEASE(boneData);
 
         boneXML = boneXML->NextSiblingElement(BONE);
     }
@@ -748,7 +748,7 @@ CCBoneData *CCDataReaderHelper::decodeBone(tinyxml2::XMLElement *boneXML, tinyxm
     {
         CCDisplayData *displayData = decodeBoneDisplay(displayXML, dataInfo);
         boneData->addDisplayData(displayData);
-        displayData->release();
+        CC_SAFE_RELEASE(displayData);
 
         displayXML = displayXML->NextSiblingElement(DISPLAY);
     }
@@ -815,7 +815,7 @@ CCAnimationData *CCDataReaderHelper::decodeAnimation(tinyxml2::XMLElement *anima
     {
         CCMovementData *movementData = decodeMovement(movementXML, armatureData, dataInfo);
         aniData->addMovement(movementData);
-        movementData->release();
+        CC_SAFE_RELEASE(movementData);
 
         movementXML = movementXML->NextSiblingElement(MOVEMENT);
 
@@ -902,7 +902,7 @@ CCMovementData *CCDataReaderHelper::decodeMovement(tinyxml2::XMLElement *movemen
 
         CCMovementBoneData *moveBoneData = decodeMovementBone(movBoneXml, parentXml, boneData, dataInfo);
         movementData->addMovementBoneData(moveBoneData);
-        moveBoneData->release();
+        CC_SAFE_RELEASE(moveBoneData);
 
         movBoneXml = movBoneXml->NextSiblingElement(BONE);
     }
@@ -988,7 +988,7 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(tinyxml2::XMLElement 
 
         CCFrameData *frameData = decodeFrame( frameXML, parentFrameXML, boneData, dataInfo);
         movBoneData->addFrameData(frameData);
-        frameData->release();
+        CC_SAFE_RELEASE(frameData);
 
         frameData->frameID = totalDuration;
         totalDuration += frameData->duration;
@@ -1025,7 +1025,7 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(tinyxml2::XMLElement 
     frameData->copy((CCFrameData *)movBoneData->frameList.lastObject());
     frameData->frameID = movBoneData->duration;
     movBoneData->addFrameData(frameData);
-    frameData->release();
+    CC_SAFE_RELEASE(frameData);
 
     return movBoneData;
 }
@@ -1266,7 +1266,7 @@ CCTextureData *CCDataReaderHelper::decodeTexture(tinyxml2::XMLElement *textureXM
     {
         CCContourData *contourData = decodeContour(contourXML, dataInfo);
         textureData->addContourData(contourData);
-        contourData->release();
+        CC_SAFE_RELEASE(contourData);
 
         contourXML = contourXML->NextSiblingElement(CONTOUR);
     }
@@ -1284,7 +1284,7 @@ CCContourData *CCDataReaderHelper::decodeContour(tinyxml2::XMLElement *contourXM
     while (vertexDataXML)
     {
         CCContourVertex2 *vertex = new CCContourVertex2(0, 0);
-        vertex->release();
+        CC_SAFE_RELEASE(vertex);
 
         vertexDataXML->QueryFloatAttribute(A_X, &vertex->x);
         vertexDataXML->QueryFloatAttribute(A_Y, &vertex->y);
@@ -1322,7 +1322,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
             pthread_mutex_lock(&s_addDataMutex);
         }
         CCArmatureDataManager::sharedArmatureDataManager()->addArmatureData(armatureData->name.c_str(), armatureData, dataInfo->filename.c_str());
-        armatureData->release();
+        CC_SAFE_RELEASE(armatureData);
         if (dataInfo->asyncStruct)
         {
             pthread_mutex_unlock(&s_addDataMutex);
@@ -1342,7 +1342,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
             pthread_mutex_lock(&s_addDataMutex);
         }
         CCArmatureDataManager::sharedArmatureDataManager()->addAnimationData(animationData->name.c_str(), animationData, dataInfo->filename.c_str());
-        animationData->release();
+        CC_SAFE_RELEASE(animationData);
         if (dataInfo->asyncStruct)
         {
             pthread_mutex_unlock(&s_addDataMutex);
@@ -1361,7 +1361,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
             pthread_mutex_lock(&s_addDataMutex);
         }
         CCArmatureDataManager::sharedArmatureDataManager()->addTextureData(textureData->name.c_str(), textureData, dataInfo->filename.c_str());
-        textureData->release();
+        CC_SAFE_RELEASE(textureData);
         if (dataInfo->asyncStruct)
         {
             pthread_mutex_unlock(&s_addDataMutex);
@@ -1422,7 +1422,7 @@ CCArmatureData *CCDataReaderHelper::decodeArmature(const rapidjson::Value &json,
         const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, BONE_DATA, i); //json[BONE_DATA][i];
         CCBoneData *boneData = decodeBone(dic,dataInfo);
         armatureData->addBoneData(boneData);  
-        boneData->release();
+        CC_SAFE_RELEASE(boneData);
     }
 
     return armatureData;
@@ -1454,7 +1454,7 @@ CCBoneData *CCDataReaderHelper::decodeBone(const rapidjson::Value &json, DataInf
         const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, DISPLAY_DATA, i); 
         CCDisplayData *displayData = decodeBoneDisplay(dic, dataInfo);
         boneData->addDisplayData(displayData);
-        displayData->release();
+        CC_SAFE_RELEASE(displayData);
     }
 
     return boneData;
@@ -1558,7 +1558,7 @@ CCAnimationData *CCDataReaderHelper::decodeAnimation(const rapidjson::Value &jso
         const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, MOVEMENT_DATA, i);
         CCMovementData *movementData = decodeMovement(dic,dataInfo);
         aniData->addMovement(movementData);
-        movementData->release();
+        CC_SAFE_RELEASE(movementData);
 
     }
 
@@ -1595,7 +1595,7 @@ CCMovementData *CCDataReaderHelper::decodeMovement(const rapidjson::Value &json,
 		const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, MOVEMENT_BONE_DATA, i);
         CCMovementBoneData *movementBoneData = decodeMovementBone(dic,dataInfo);
         movementData->addMovementBoneData(movementBoneData);
-        movementBoneData->release();
+        CC_SAFE_RELEASE(movementBoneData);
     }
 
     return movementData;
@@ -1620,7 +1620,7 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(const rapidjson::Valu
         CCFrameData *frameData = decodeFrame(dic,dataInfo);
 
         movementBoneData->addFrameData(frameData);
-        frameData->release();
+        CC_SAFE_RELEASE(frameData);
 		
         if (dataInfo->cocoStudioVersion < VERSION_COMBINED)
         {
@@ -1661,7 +1661,7 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(const rapidjson::Valu
             CCFrameData *frameData = new CCFrameData();
             frameData->copy((CCFrameData *)movementBoneData->frameList.lastObject());
             movementBoneData->addFrameData(frameData);
-            frameData->release();
+            CC_SAFE_RELEASE(frameData);
 
             frameData->frameID = movementBoneData->duration;
         }
@@ -1734,7 +1734,7 @@ CCTextureData *CCDataReaderHelper::decodeTexture(const rapidjson::Value &json)
         const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, CONTOUR_DATA, i);
         CCContourData *contourData = decodeContour(dic);
         textureData->contourDataList.addObject(contourData);
-        contourData->release();
+        CC_SAFE_RELEASE(contourData);
 
     }
 
@@ -1756,7 +1756,7 @@ CCContourData *CCDataReaderHelper::decodeContour(const rapidjson::Value &json)
         vertex->y = DICTOOL->getFloatValue_json(dic, A_Y);
 
         contourData->vertexList.addObject(vertex);
-        vertex->release();
+        CC_SAFE_RELEASE(vertex);
     }
 
     return contourData;
@@ -1839,7 +1839,7 @@ void CCDataReaderHelper::addDataFromBinaryCache(const char *fileContent, DataInf
 							pthread_mutex_lock(&s_addDataMutex);
 						}
 						CCArmatureDataManager::sharedArmatureDataManager()->addArmatureData(armatureData->name.c_str(), armatureData, dataInfo->filename.c_str());
-						armatureData->release();
+						CC_SAFE_RELEASE(armatureData);
 						if (dataInfo->asyncStruct)
 						{
 							pthread_mutex_unlock(&s_addDataMutex);
@@ -1859,7 +1859,7 @@ void CCDataReaderHelper::addDataFromBinaryCache(const char *fileContent, DataInf
 							pthread_mutex_lock(&s_addDataMutex);
 						}
 						CCArmatureDataManager::sharedArmatureDataManager()->addAnimationData(animationData->name.c_str(), animationData, dataInfo->filename.c_str());
-						animationData->release();
+						CC_SAFE_RELEASE(animationData);
 						if (dataInfo->asyncStruct)
 						{
 							pthread_mutex_unlock(&s_addDataMutex);
@@ -1878,7 +1878,7 @@ void CCDataReaderHelper::addDataFromBinaryCache(const char *fileContent, DataInf
 							pthread_mutex_lock(&s_addDataMutex);
 						}
 						CCArmatureDataManager::sharedArmatureDataManager()->addTextureData(textureData->name.c_str(), textureData, dataInfo->filename.c_str());
-						textureData->release();
+						CC_SAFE_RELEASE(textureData);
 						if (dataInfo->asyncStruct)
 						{
 							pthread_mutex_unlock(&s_addDataMutex);
@@ -1952,7 +1952,7 @@ CCArmatureData* CCDataReaderHelper::decodeArmature(CocoLoader *pCocoLoader, stEx
 		child = &pBoneChildren[i];
 		CCBoneData *boneData = decodeBone(pCocoLoader, child, dataInfo);
 		armatureData->addBoneData(boneData);  
-		boneData->release();
+		CC_SAFE_RELEASE(boneData);
 	}
 
 	return armatureData;
@@ -2001,7 +2001,7 @@ CCBoneData* CCDataReaderHelper::decodeBone(CocoLoader *pCocoLoader, stExpCocoNod
 				if(displayData == nullptr)
 					continue;
 				boneData->addDisplayData(displayData);
-					displayData->release();
+					CC_SAFE_RELEASE(displayData);
 			}
 		}
 	}
@@ -2161,7 +2161,7 @@ CCAnimationData* CCDataReaderHelper::decodeAnimation(CocoLoader *pCocoLoader, st
 			{
 				movementData = decodeMovement(pCocoLoader, &movArray[movnum], dataInfo);
 				aniData->addMovement(movementData);
-				movementData->release();
+				CC_SAFE_RELEASE(movementData);
 			}
 		}
 	}
@@ -2251,7 +2251,7 @@ CCMovementData* CCDataReaderHelper::decodeMovement(CocoLoader *pCocoLoader, stEx
 			{
 				movementBoneData = decodeMovementBone(pCocoLoader, &pMoveBoneData[i],dataInfo);
 				movementData->addMovementBoneData(movementBoneData);
-				movementBoneData->release();
+				CC_SAFE_RELEASE(movementBoneData);
 			}
 		}
 	}
@@ -2294,7 +2294,7 @@ CCMovementBoneData* CCDataReaderHelper::decodeMovementBone(CocoLoader *pCocoLoad
 			{
 				CCFrameData *frameData = decodeFrame(pCocoLoader, &pFrameDataArray[i], dataInfo);
 				movementBoneData->addFrameData(frameData);
-				frameData->release();
+				CC_SAFE_RELEASE(frameData);
 
 				if (dataInfo->cocoStudioVersion < VERSION_COMBINED)
 				{
@@ -2339,7 +2339,7 @@ CCMovementBoneData* CCDataReaderHelper::decodeMovementBone(CocoLoader *pCocoLoad
 			CCFrameData *frameData = new CCFrameData();
 			frameData->copy((CCFrameData *)movementBoneData->frameList.lastObject());
 			movementBoneData->addFrameData(frameData);
-			frameData->release();
+			CC_SAFE_RELEASE(frameData);
 
 			frameData->frameID = movementBoneData->duration;
 		}
@@ -2512,7 +2512,7 @@ CCTextureData* CCDataReaderHelper::decodeTexture(CocoLoader *pCocoLoader, stExpC
 			{
 				CCContourData *contourData = decodeContour(pCocoLoader, &pContourArray[i]);
 				textureData->contourDataList.addObject(contourData);
-				contourData->release();
+				CC_SAFE_RELEASE(contourData);
 			}
 		}
 	}
@@ -2543,7 +2543,7 @@ CCContourData* CCDataReaderHelper::decodeContour(CocoLoader *pCocoLoader, stExpC
 				vertex->x = atof(pVerTexPoint[0].GetValue(pCocoLoader));
 				vertex->y = atof(pVerTexPoint[1].GetValue(pCocoLoader));
 				contourData->vertexList.addObject(vertex);
-					vertex->release();
+					CC_SAFE_RELEASE(vertex);
 			}
 			break;
 		}
