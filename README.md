@@ -46,6 +46,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 ===
 
 * 修正工程的64位编译设置
+* 使用c++11编译所有代码
 * 重新实现CCLabelTTF(来自cocos2dx-better的CCRichLabelTTF):
 	* 完全兼容CCLabelTTF的原有功能
 	* 支持字符串中嵌入格式控制, 包括颜色, 字体, 大小, 样式, 图片, 链接等 
@@ -77,6 +78,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 * CCSpriteBatchNode的insertQuadFromSprite, updateQuadFromSprite, addSpriteWithoutQuad改为public
 * CCScrollView增加getTouchPoint方法获得最后一次点击位置
 * CCRepeatForever覆盖stop方法, 停掉内部动作
+* copy()返回的对象不再需要release
 
 cocos2dx-better新加的其它功能我就不列举了, 目前cocos2dx-better的代码已经合并完成, 有一部分代码我感觉写的用处不大就没有合并了, 不过只是一小部分, 95%的cocos2dx-better代码已经合并.
 
