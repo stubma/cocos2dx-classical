@@ -24,7 +24,7 @@ CCActionWatcher::~CCActionWatcher() {
 CCActionWatcher* CCActionWatcher::create(CCCallFunc* doneFunc) {
 	CCActionWatcher* l = new CCActionWatcher();
 	if(l->init(doneFunc)) {
-		return (CCActionWatcher*)l->autorelease();
+		CC_SAFE_AUTORELEASE_RETURN(l, CCActionWatcher*);
 	}
 	CC_SAFE_RELEASE(l);
 	return nullptr;

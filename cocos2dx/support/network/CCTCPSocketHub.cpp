@@ -49,7 +49,7 @@ CCTCPSocketHub* CCTCPSocketHub::create(CC_MULTI_ENCRYPT_FUNC encryptFunc, CC_MUL
 	CCTCPSocketHub* h = new CCTCPSocketHub();
     sEncryptFunc = encryptFunc;
     sDecryptFunc = decryptFunc;
-	return (CCTCPSocketHub*)h->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(h, CCTCPSocketHub*);
 }
 
 CC_MULTI_ENCRYPT_FUNC CCTCPSocketHub::getEncryptFunc() {

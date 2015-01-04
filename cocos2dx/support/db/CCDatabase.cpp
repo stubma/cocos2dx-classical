@@ -53,7 +53,7 @@ CCDatabase::~CCDatabase() {
 
 CCDatabase* CCDatabase::create(string path) {
 	CCDatabase* d = new CCDatabase(path);
-	return (CCDatabase*)d->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(d, CCDatabase*);
 }
 
 bool CCDatabase::isThreadSafe() {

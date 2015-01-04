@@ -187,7 +187,7 @@ CCVelocityTracker::~CCVelocityTracker() {
 
 CCVelocityTracker* CCVelocityTracker::create() {
 	CCVelocityTracker* t = new CCVelocityTracker();
-	return (CCVelocityTracker*)t->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(t, CCVelocityTracker*);
 }
 
 void CCVelocityTracker::addTouchBegan(const CCPoint& pos) {

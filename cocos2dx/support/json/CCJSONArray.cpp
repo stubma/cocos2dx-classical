@@ -44,7 +44,7 @@ CCJSONArray::~CCJSONArray() {
 
 CCJSONArray* CCJSONArray::create() {
 	CCJSONArray* a = new CCJSONArray();
-	return (CCJSONArray*)a->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(a, CCJSONArray*);
 }
 
 CCJSONArray* CCJSONArray::create(const string& path) {

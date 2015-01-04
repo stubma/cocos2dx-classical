@@ -48,7 +48,7 @@ CCSPX3FileData::~CCSPX3FileData() {
 
 CCSPX3FileData* CCSPX3FileData::create() {
 	CCSPX3FileData* fd = new CCSPX3FileData();
-	return (CCSPX3FileData*)fd->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(fd, CCSPX3FileData*);
 }
 
 NS_CC_END

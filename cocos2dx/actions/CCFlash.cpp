@@ -36,7 +36,7 @@ CCFlash::~CCFlash() {
 CCFlash* CCFlash::create(float duration, ccColor3B c) {
     CCFlash* f = new CCFlash();
     f->initWithDurationAndColor(duration, c);
-    return (CCFlash*)f->autorelease();
+    CC_SAFE_AUTORELEASE_RETURN(f, CCFlash*);
 }
 
 bool CCFlash::initWithDurationAndColor(float d, ccColor3B c) {

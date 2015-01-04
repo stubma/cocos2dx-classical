@@ -42,7 +42,7 @@ CCMissile::~CCMissile() {
 CCMissile* CCMissile::create(float velocity, CCNode* aimed, float targetPresetDegree, CCCallFunc* doneCallFunc) {
 	CCMissile* a = new CCMissile();
 	a->initWithVelocity(velocity, aimed, targetPresetDegree, doneCallFunc);
-	return (CCMissile*)a->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(a, CCMissile*);
 }
 
 bool CCMissile::initWithVelocity(float velocity, CCNode* aimed, float targetPresetDegree, CCCallFunc* doneCallFunc) {

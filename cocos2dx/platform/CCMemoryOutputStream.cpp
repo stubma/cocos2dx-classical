@@ -53,13 +53,13 @@ CCMemoryOutputStream::~CCMemoryOutputStream() {
 CCMemoryOutputStream* CCMemoryOutputStream::create() {
 	char* buffer = (char*)malloc(16 * 1024 * sizeof(char));
 	CCMemoryOutputStream* s = new CCMemoryOutputStream(buffer, 16 * 1024, true);
-	return (CCMemoryOutputStream*)s->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(s, CCMemoryOutputStream*);
 }
 
 CCMemoryOutputStream* CCMemoryOutputStream::create(size_t capacity, bool release) {
 	char* buffer = (char*)malloc(capacity);
 	CCMemoryOutputStream* s = new CCMemoryOutputStream(buffer, capacity, release);
-	return (CCMemoryOutputStream*)s->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(s, CCMemoryOutputStream*);
 }
 
 void CCMemoryOutputStream::ensureCapacity(size_t len) {

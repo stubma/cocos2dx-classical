@@ -36,7 +36,7 @@ CCTMXObject::~CCTMXObject() {
 
 CCTMXObject* CCTMXObject::create() {
 	CCTMXObject* o = new CCTMXObject();
-	return (CCTMXObject*)o->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(o, CCTMXObject*);
 }
 
 string CCTMXObject::getProperty(const string& key) {

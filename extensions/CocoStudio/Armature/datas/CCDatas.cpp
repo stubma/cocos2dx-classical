@@ -397,7 +397,7 @@ bool CCContourData::init()
 void CCContourData::addVertex(CCPoint *vertex)
 {
     CCContourVertex2 *vertex2 = new CCContourVertex2(vertex->x, vertex->y);
-    vertex2->autorelease();
+    CC_SAFE_AUTORELEASE(vertex2);
 
     vertexList.addObject(vertex2);
 }

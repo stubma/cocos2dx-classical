@@ -61,7 +61,7 @@ public:
     
     static CCHttpRequest* create() {
         CCHttpRequest* req = new CCHttpRequest();
-        return (CCHttpRequest*)req->autorelease();
+        CC_SAFE_AUTORELEASE_RETURN(req, CCHttpRequest*);
     }
     
     /// http method

@@ -55,7 +55,7 @@ CCScroller::~CCScroller() {
 
 CCScroller* CCScroller::create() {
 	CCScroller* s = new CCScroller();
-	return (CCScroller*)s->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(s, CCScroller*);
 }
 
 int CCScroller::timePassed() const {

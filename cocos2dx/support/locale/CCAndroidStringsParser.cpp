@@ -33,7 +33,7 @@ CCAndroidStringsParser::~CCAndroidStringsParser() {
 
 CCAndroidStringsParser* CCAndroidStringsParser::create() {
     CCAndroidStringsParser* p = new CCAndroidStringsParser();
-    return (CCAndroidStringsParser*)p->autorelease();
+    CC_SAFE_AUTORELEASE_RETURN(p, CCAndroidStringsParser*);
 }
 
 void CCAndroidStringsParser::parse(const string& path, const CCDictionary& dict) {

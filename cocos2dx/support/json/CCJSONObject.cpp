@@ -79,7 +79,7 @@ CCJSONObject* CCJSONObject::safeCast(CCObject* obj) {
 
 CCJSONObject* CCJSONObject::create() {
 	CCJSONObject* jo = new CCJSONObject();
-	return (CCJSONObject*)jo->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(jo, CCJSONObject*);
 }
 
 CCJSONObject* CCJSONObject::create(const string& path) {

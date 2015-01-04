@@ -60,7 +60,7 @@ CCAuroraFileData::~CCAuroraFileData() {
 
 CCAuroraFileData* CCAuroraFileData::create() {
 	CCAuroraFileData* d = new CCAuroraFileData();
-	return (CCAuroraFileData*)d->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(d, CCAuroraFileData*);
 }
 
 NS_CC_END

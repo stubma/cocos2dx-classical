@@ -37,7 +37,7 @@ CCTMXObjectGroup::~CCTMXObjectGroup() {
 
 CCTMXObjectGroup* CCTMXObjectGroup::create() {
 	CCTMXObjectGroup* g = new CCTMXObjectGroup();
-	return (CCTMXObjectGroup*)g->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(g, CCTMXObjectGroup*);
 }
 
 void CCTMXObjectGroup::addProperty(const string& key, const string& value) {

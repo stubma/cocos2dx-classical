@@ -45,7 +45,7 @@ CCTCPSocket::~CCTCPSocket() {
 CCTCPSocket* CCTCPSocket::create(const string& hostname, int port, int tag, int blockSec, bool keepAlive) {
 	CCTCPSocket* s = new CCTCPSocket();
 	if(s->init(hostname, port, tag, blockSec, keepAlive)) {
-		return (CCTCPSocket*)s->autorelease();
+		CC_SAFE_AUTORELEASE_RETURN(s, CCTCPSocket*);
 	}
 	
 	CC_SAFE_RELEASE(s);

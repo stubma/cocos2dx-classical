@@ -52,7 +52,7 @@ CCSPXSprite* CCSPXSprite::create(const char* spxPath, CCTexture2D* tex, int acti
 	s->playAnimation(actionIndex);
 
 	// return
-	return (CCSPXSprite*)s->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(s, CCSPXSprite*);
 }
 
 CCAFCAnimation* CCSPXSprite::getAnimationAt(int index, CCAFCClipMapping* mapping) {

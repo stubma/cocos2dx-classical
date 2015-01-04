@@ -32,7 +32,7 @@ NS_CC_BEGIN
 
 CCAssetOutputStream* CCAssetOutputStream::create(const string& path, bool append) {
 	CCAssetOutputStream* aos = new CCAssetOutputStream_ios(path, append);
-	return (CCAssetOutputStream*)aos->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(aos, CCAssetOutputStream*);
 }
 
 CCAssetOutputStream_ios::CCAssetOutputStream_ios(const string& path, bool append) :

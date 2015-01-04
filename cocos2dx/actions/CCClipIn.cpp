@@ -39,7 +39,7 @@ CCClipIn::~CCClipIn() {
 CCClipIn* CCClipIn::create(float duration, CCPoint v) {
     CCClipIn* c = new CCClipIn();
     c->initWithDuration(duration, v);
-    return (CCClipIn*)c->autorelease();
+    CC_SAFE_AUTORELEASE_RETURN(c, CCClipIn*);
 }
 
 bool CCClipIn::initWithDuration(float d, const CCPoint& v) {

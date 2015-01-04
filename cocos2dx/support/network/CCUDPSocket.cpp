@@ -42,7 +42,7 @@ CCUDPSocket::~CCUDPSocket() {
 CCUDPSocket* CCUDPSocket::create(const string& hostname, int port, int tag, int blockSec) {
 	CCUDPSocket* s = new CCUDPSocket();
 	if(s->init(hostname, port, tag)) {
-		return (CCUDPSocket*)s->autorelease();
+		CC_SAFE_AUTORELEASE_RETURN(s, CCUDPSocket*);
 	}
 	
 	CC_SAFE_RELEASE(s);
@@ -144,7 +144,7 @@ void* CCUDPSocket::udpThreadEntry(void* arg) {
     }
 	
 	// release
-	s->autorelease();
+	CC_SAFE_AUTORELEASE(s);
     
     // exit
     pthread_exit(nullptr);

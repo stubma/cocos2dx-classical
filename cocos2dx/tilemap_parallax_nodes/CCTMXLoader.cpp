@@ -48,7 +48,7 @@ CCTMXLoader::~CCTMXLoader() {
 
 CCTMXLoader* CCTMXLoader::create() {
 	CCTMXLoader* l = new CCTMXLoader();
-	return (CCTMXLoader*)l->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(l, CCTMXLoader*);
 }
 
 CCTMXLoader::TMXTag CCTMXLoader::getTag(const char* name) {

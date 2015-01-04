@@ -36,7 +36,7 @@ CCAFCAnimation::~CCAFCAnimation() {
 
 CCAFCAnimation* CCAFCAnimation::create() {
 	CCAFCAnimation* a = new CCAFCAnimation();
-	return (CCAFCAnimation*)a->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(a, CCAFCAnimation*);
 }
 
 void CCAFCAnimation::addFrame(CCAFCFrame* f) {

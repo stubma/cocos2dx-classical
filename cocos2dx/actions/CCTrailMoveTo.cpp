@@ -47,7 +47,7 @@ CCTrailMoveTo* CCTrailMoveTo::createWithSpriteFrameName(float duration, const CC
     CCTrailMoveTo* m = new CCTrailMoveTo();
     if(m->initWithDurationAndSpriteTrail(duration, position, trailFrameName, trailDistance, trailSegments, trailColor, trailColorScale, removeWhenDone)) {
         m->m_mode = SPRITE_FRAME_NAME;
-        return (CCTrailMoveTo*)m->autorelease();
+        CC_SAFE_AUTORELEASE_RETURN(m, CCTrailMoveTo*);
     }
     CC_SAFE_RELEASE(m);
     return nullptr;
@@ -59,7 +59,7 @@ CCTrailMoveTo* CCTrailMoveTo::createWithFileName(float duration, const CCPoint& 
     CCTrailMoveTo* m = new CCTrailMoveTo();
     if(m->initWithDurationAndSpriteTrail(duration, position, fileName, trailDistance, trailSegments, trailColor, trailColorScale, removeWhenDone)) {
         m->m_mode = FILE_NAME;
-        return (CCTrailMoveTo*)m->autorelease();
+        CC_SAFE_AUTORELEASE_RETURN(m, CCTrailMoveTo*);
     }
     CC_SAFE_RELEASE(m);
     return nullptr;
@@ -71,7 +71,7 @@ CCTrailMoveTo* CCTrailMoveTo::createWithArmature(float duration, const CCPoint& 
     CCTrailMoveTo* m = new CCTrailMoveTo();
     if(m->initWithDurationAndArmatureTrail(duration, position, armatureName, animationIndex, trailDistance, trailSegments, trailColor, trailColorScale, removeWhenDone)) {
         m->m_mode = ARMATURE;
-        return (CCTrailMoveTo*)m->autorelease();
+        CC_SAFE_AUTORELEASE_RETURN(m, CCTrailMoveTo*);
     }
     CC_SAFE_RELEASE(m);
     return nullptr;
@@ -83,7 +83,7 @@ CCTrailMoveTo* CCTrailMoveTo::createWithArmature(float duration, const CCPoint& 
     CCTrailMoveTo* m = new CCTrailMoveTo();
     if(m->initWithDurationAndArmatureTrail(duration, position, armatureName, animationName, trailDistance, trailSegments, trailColor, trailColorScale, removeWhenDone)) {
         m->m_mode = ARMATURE;
-        return (CCTrailMoveTo*)m->autorelease();
+        CC_SAFE_AUTORELEASE_RETURN(m, CCTrailMoveTo*);
     }
     CC_SAFE_RELEASE(m);
     return nullptr;

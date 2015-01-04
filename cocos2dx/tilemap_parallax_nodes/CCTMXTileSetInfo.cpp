@@ -42,7 +42,7 @@ CCTMXTileSetInfo::~CCTMXTileSetInfo() {
 
 CCTMXTileSetInfo* CCTMXTileSetInfo::create() {
 	CCTMXTileSetInfo* t = new CCTMXTileSetInfo();
-	return (CCTMXTileSetInfo*)t->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(t, CCTMXTileSetInfo*);
 }
 
 CCRect CCTMXTileSetInfo::getRect(int gid) {

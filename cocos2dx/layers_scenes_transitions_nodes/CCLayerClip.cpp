@@ -43,7 +43,7 @@ CCLayerClip::~CCLayerClip() {
 CCLayerClip* CCLayerClip::create() {
     CCLayerClip* l = new CCLayerClip();
     if(l->initWithColor(cc4TRANSPARENT)) {
-        return (CCLayerClip*)l->autorelease();
+        CC_SAFE_AUTORELEASE_RETURN(l, CCLayerClip*);
     }
     
     CC_SAFE_RELEASE(l);
@@ -53,7 +53,7 @@ CCLayerClip* CCLayerClip::create() {
 CCLayerClip* CCLayerClip::create(const ccColor4B& color) {
     CCLayerClip* l = new CCLayerClip();
     if(l->initWithColor(color)) {
-        return (CCLayerClip*)l->autorelease();
+        CC_SAFE_AUTORELEASE_RETURN(l, CCLayerClip*);
     }
     
     CC_SAFE_RELEASE(l);

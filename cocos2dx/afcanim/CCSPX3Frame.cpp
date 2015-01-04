@@ -54,7 +54,7 @@ CCSPX3Frame::~CCSPX3Frame() {
 
 CCSPX3Frame* CCSPX3Frame::create() {
 	CCSPX3Frame* ts = new CCSPX3Frame();
-	return (CCSPX3Frame*)ts->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(ts, CCSPX3Frame*);
 }
 
 NS_CC_END

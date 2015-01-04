@@ -104,7 +104,7 @@ CCTMXLayer::~CCTMXLayer() {
 CCTMXLayer* CCTMXLayer::create(int layerIndex, CCTMXMapInfo* mapInfo) {
 	CCTMXLayer* l = new CCTMXLayer(layerIndex, mapInfo);
 	if(l->init()) {
-		return (CCTMXLayer*)l->autorelease();
+		CC_SAFE_AUTORELEASE_RETURN(l, CCTMXLayer*);
 	}
 	CC_SAFE_RELEASE(l);
 	return nullptr;

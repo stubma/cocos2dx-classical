@@ -36,7 +36,7 @@ CCAFCClip::~CCAFCClip() {
 
 CCAFCClip* CCAFCClip::create() {
 	CCAFCClip* c = new CCAFCClip();
-	return (CCAFCClip*)c->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(c, CCAFCClip*);
 }
 
 NS_CC_END

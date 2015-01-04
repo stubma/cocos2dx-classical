@@ -48,17 +48,17 @@ CCData::~CCData() {
 
 CCData* CCData::create() {
     CCData* d = new CCData();
-    return (CCData*)d->autorelease();
+    CC_SAFE_AUTORELEASE_RETURN(d, CCData*);
 }
 
 CCData* CCData::createWithBytes(uint8_t* bytes, size_t size) {
     CCData* d = new CCData(bytes, size);
-    return (CCData*)d->autorelease();
+    CC_SAFE_AUTORELEASE_RETURN(d, CCData*);
 }
 
 CCData* CCData::createWithData(CCData* data) {
     CCData* d = new CCData(data);
-    return (CCData*)d->autorelease();
+    CC_SAFE_AUTORELEASE_RETURN(d, CCData*);
 }
 
 void CCData::appendData(CCData* data) {

@@ -43,7 +43,7 @@ CCSPX3Action::~CCSPX3Action() {
 
 CCSPX3Action* CCSPX3Action::create() {
 	CCSPX3Action* a = new CCSPX3Action();
-	return (CCSPX3Action*)a->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(a, CCSPX3Action*);
 }
 
 NS_CC_END

@@ -48,7 +48,7 @@ CCUDPSocketHub* CCUDPSocketHub::create(CC_MULTI_ENCRYPT_FUNC encryptFunc, CC_MUL
 	CCUDPSocketHub* h = new CCUDPSocketHub();
     sEncryptFunc = encryptFunc;
     sDecryptFunc = decryptFunc;
-	return (CCUDPSocketHub*)h->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(h, CCUDPSocketHub*);
 }
 
 CC_MULTI_ENCRYPT_FUNC CCUDPSocketHub::getEncryptFunc() {

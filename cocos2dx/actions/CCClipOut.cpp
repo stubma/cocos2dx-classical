@@ -39,7 +39,7 @@ CCClipOut::~CCClipOut() {
 CCClipOut* CCClipOut::create(float duration, CCPoint v) {
     CCClipOut* c = new CCClipOut();
     c->initWithDuration(duration, v);
-    return (CCClipOut*)c->autorelease();
+    CC_SAFE_AUTORELEASE_RETURN(c, CCClipOut*);
 }
 
 bool CCClipOut::initWithDuration(float d, const CCPoint& v) {

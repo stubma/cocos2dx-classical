@@ -41,7 +41,7 @@ CCTMXLayerInfo::~CCTMXLayerInfo() {
 
 CCTMXLayerInfo* CCTMXLayerInfo::create() {
 	CCTMXLayerInfo* li = new CCTMXLayerInfo();
-	return (CCTMXLayerInfo*)li->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(li, CCTMXLayerInfo*);
 }
 
 void CCTMXLayerInfo::addProperty(const string& key, const string& value) {

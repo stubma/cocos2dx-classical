@@ -33,13 +33,13 @@ CCShake::~CCShake() {
 CCShake* CCShake::create(float duration, float maxRadius, float minRadius) {
 	CCShake* a = new CCShake();
 	a->initWithRing(duration, maxRadius, minRadius);
-	return (CCShake*)a->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(a, CCShake*);
 }
 
 CCShake* CCShake::create(float duration, float startMaxR, float endMaxR, float startMinR, float endMinR) {
     CCShake* a = new CCShake();
 	a->initWithDynamicRing(duration, startMaxR, endMaxR, startMinR, endMinR);
-	return (CCShake*)a->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(a, CCShake*);
 }
 
 bool CCShake::initWithRing(float d, float maxR, float minR) {

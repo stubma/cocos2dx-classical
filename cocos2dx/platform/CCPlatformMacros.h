@@ -243,7 +243,7 @@ public: virtual void set##funName(varType var)   \
 #define CC_SAFE_FREE(p)                do { if(p) { free(p); (p) = 0; } } while(0)
 #define CC_SAFE_RELEASE(p)            do { if(p) { (p)->release(); } } while(0)
 #define CC_SAFE_AUTORELEASE(p)            do { if(p) { (p)->autorelease(); } } while(0)
-#define CC_SAFE_AUTORELEASE_AND_RETURN(p, t) \
+#define CC_SAFE_AUTORELEASE_RETURN(p, t) \
     do { \
         if(p) { \
             return (t)(p)->autorelease(); \

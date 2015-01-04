@@ -82,7 +82,7 @@ CCCatmullRomSprite* CCCatmullRomSprite::createWithSpriteFrame(CCSpriteFrame* fra
 
 CCCatmullRomSprite* CCCatmullRomSprite::createWithSprite(CCSprite* sprite) {
 	CCCatmullRomSprite* s = new CCCatmullRomSprite(sprite);
-	return (CCCatmullRomSprite*)s->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(s, CCCatmullRomSprite*);
 }
 
 void CCCatmullRomSprite::setOpacity(GLubyte opacity) {

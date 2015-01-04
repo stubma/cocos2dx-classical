@@ -31,7 +31,7 @@ NS_CC_BEGIN
 
 CCAssetInputStream* CCAssetInputStream::create(const string& path) {
 	CCAssetInputStream* ais = new CCAssetInputStream_ios(path);
-	return (CCAssetInputStream*)ais->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(ais, CCAssetInputStream*);
 }
 
 CCAssetInputStream_ios::CCAssetInputStream_ios(const string& path) :

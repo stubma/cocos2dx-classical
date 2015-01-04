@@ -53,7 +53,7 @@ CCResultSet::~CCResultSet() {
 
 CCResultSet* CCResultSet::create(CCDatabase* db, CCStatement* statement) {
 	CCResultSet* rs = new CCResultSet(db, statement);
-	return (CCResultSet*)rs->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(rs, CCResultSet*);
 }
 
 bool CCResultSet::next() {

@@ -45,7 +45,7 @@ CCSPXFileData::~CCSPXFileData() {
 
 CCSPXFileData* CCSPXFileData::create() {
 	CCSPXFileData* fd = new CCSPXFileData();
-	return (CCSPXFileData*)fd->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(fd, CCSPXFileData*);
 }
 
 NS_CC_END

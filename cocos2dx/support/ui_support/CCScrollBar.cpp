@@ -51,13 +51,13 @@ CCScrollBar::~CCScrollBar() {
 CCScrollBar* CCScrollBar::create(CCScale9Sprite* track, CCScale9Sprite* thumb) {
 	CCScrollBar* sb = new CCScrollBar();
 	sb->initWithTrackAndThumb(track, thumb);
-	return (CCScrollBar*)sb->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(sb, CCScrollBar*);
 }
 
 CCScrollBar* CCScrollBar::create(CCScale9Sprite* track, CCSprite* thumb) {
 	CCScrollBar* sb = new CCScrollBar();
 	sb->initWithTrackAndFixedThumb(track, thumb);
-	return (CCScrollBar*)sb->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(sb, CCScrollBar*);
 }
 
 bool CCScrollBar::initWithTrackAndFixedThumb(CCScale9Sprite* track, CCSprite* thumb) {

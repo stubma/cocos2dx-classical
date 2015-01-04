@@ -45,7 +45,7 @@ CCPacket* CCPacket::createStandardPacket(const char* buf, size_t len) {
     
     CCPacket* p = new CCPacket();
     if(p->initWithStandardBuf(buf, len)) {
-        return (CCPacket*)p->autorelease();
+        CC_SAFE_AUTORELEASE_RETURN(p, CCPacket*);
     }
     CC_SAFE_RELEASE(p);
     return nullptr;
@@ -54,7 +54,7 @@ CCPacket* CCPacket::createStandardPacket(const char* buf, size_t len) {
 CCPacket* CCPacket::createRawPacket(const char* buf, size_t len, int algorithm) {
     CCPacket* p = new CCPacket();
     if(p->initWithRawBuf(buf, len, algorithm)) {
-        return (CCPacket*)p->autorelease();
+        CC_SAFE_AUTORELEASE_RETURN(p, CCPacket*);
     }
     CC_SAFE_RELEASE(p);
     return nullptr;
@@ -63,7 +63,7 @@ CCPacket* CCPacket::createRawPacket(const char* buf, size_t len, int algorithm) 
 CCPacket* CCPacket::createStandardPacket(const string& magic, int command, CCJSONObject* json, int algorithm) {
     CCPacket* p = new CCPacket();
     if(p->initWithJson(magic, command, json, 0, 0, algorithm)) {
-        return (CCPacket*)p->autorelease();
+        CC_SAFE_AUTORELEASE_RETURN(p, CCPacket*);
     }
     CC_SAFE_RELEASE(p);
     return nullptr;
@@ -72,7 +72,7 @@ CCPacket* CCPacket::createStandardPacket(const string& magic, int command, CCJSO
 CCPacket* CCPacket::createStandardPacket(const string& magic, int command, CCJSONObject* json, int protocolVersion, int serverVersion, int algorithm) {
     CCPacket* p = new CCPacket();
     if(p->initWithJson(magic, command, json, protocolVersion, serverVersion, algorithm)) {
-        return (CCPacket*)p->autorelease();
+        CC_SAFE_AUTORELEASE_RETURN(p, CCPacket*);
     }
     CC_SAFE_RELEASE(p);
     return nullptr;

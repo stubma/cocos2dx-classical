@@ -39,7 +39,7 @@ CCPointList::~CCPointList() {
 
 CCPointList* CCPointList::create() {
     CCPointList* pl = new CCPointList();
-    return (CCPointList*)pl->autorelease();
+    CC_SAFE_AUTORELEASE_RETURN(pl, CCPointList*);
 }
 
 void CCPointList::addPoint(float x, float y) {

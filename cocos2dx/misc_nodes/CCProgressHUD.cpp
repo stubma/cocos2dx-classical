@@ -101,7 +101,7 @@ bool CCProgressHUD::initWithMessage(const string& message) {
 CCProgressHUD* CCProgressHUD::create(const string& message) {
     CCProgressHUD* hud = new CCProgressHUD();
     hud->initWithMessage(message);
-    return (CCProgressHUD*)hud->autorelease();
+    CC_SAFE_AUTORELEASE_RETURN(hud, CCProgressHUD*);
 }
 
 CCProgressHUD* CCProgressHUD::show(const string& message) {

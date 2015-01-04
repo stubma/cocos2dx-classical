@@ -76,7 +76,7 @@ CCAFCClipMapping::~CCAFCClipMapping() {
 
 CCAFCClipMapping* CCAFCClipMapping::create(int tag) {
 	CCAFCClipMapping* m = new CCAFCClipMapping(tag);
-	return (CCAFCClipMapping*)m->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(m, CCAFCClipMapping*);
 }
 
 CCAFCClipMapping* CCAFCClipMapping::createWithAuroraGT(int tag, const char* data, size_t length) {

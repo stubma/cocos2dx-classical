@@ -74,7 +74,7 @@ CCTiledSprite* CCTiledSprite::createWithSpriteFrame(CCSpriteFrame* frame) {
 CCTiledSprite* CCTiledSprite::createWithSprite(CCSprite* sprite) {
 	CCTiledSprite* s = new CCTiledSprite(sprite);
     if(s->initWithTexture(sprite->getTexture(), sprite->getTextureRect(), sprite->isTextureRectRotated())) {
-        return (CCTiledSprite*)s->autorelease();
+        CC_SAFE_AUTORELEASE_RETURN(s, CCTiledSprite*);
     }
 	CC_SAFE_RELEASE(s);
     return nullptr;

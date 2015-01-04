@@ -51,7 +51,7 @@ m_mapInfo(nullptr) {
 CCTMXTiledMap* CCTMXTiledMap::create(const string& file) {
 	CCTMXTiledMap* tmx = new CCTMXTiledMap();
 	if(tmx->initWithXMLFile(file)) {
-		return (CCTMXTiledMap*)tmx->autorelease();
+		CC_SAFE_AUTORELEASE_RETURN(tmx, CCTMXTiledMap*);
 	}
 	
 	CC_SAFE_RELEASE(tmx);

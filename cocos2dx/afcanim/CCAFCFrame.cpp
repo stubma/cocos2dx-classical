@@ -42,7 +42,7 @@ CCAFCFrame::~CCAFCFrame() {
 
 CCAFCFrame* CCAFCFrame::create() {
 	CCAFCFrame* f = new CCAFCFrame();
-	return (CCAFCFrame*)f->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(f, CCAFCFrame*);
 }
 
 void CCAFCFrame::addClip(CCAFCClip* clip) {

@@ -56,7 +56,7 @@ CCMenuItemColor* CCMenuItemColor::create(ccColor4B normal) {
                                  ccc4(0, 0, 0, 0),
                                  nullptr,
                                  nullptr);
-    return (CCMenuItemColor*)item->autorelease();
+    CC_SAFE_AUTORELEASE_RETURN(item, CCMenuItemColor*);
 }
 
 CCMenuItemColor* CCMenuItemColor::create(ccColor4B normal, ccColor4B focus) {
@@ -67,7 +67,7 @@ CCMenuItemColor* CCMenuItemColor::create(ccColor4B normal, ccColor4B focus) {
                                  ccc4(0, 0, 0, 0),
                                  nullptr,
                                  nullptr);
-    return (CCMenuItemColor*)item->autorelease();
+    CC_SAFE_AUTORELEASE_RETURN(item, CCMenuItemColor*);
 }
 
 CCMenuItemColor* CCMenuItemColor::create(ccColor4B normal, ccColor4B selected, ccColor4B focus) {
@@ -78,7 +78,7 @@ CCMenuItemColor* CCMenuItemColor::create(ccColor4B normal, ccColor4B selected, c
                                  ccc4(0, 0, 0, 0),
                                  nullptr,
                                  nullptr);
-    return (CCMenuItemColor*)item->autorelease();
+    CC_SAFE_AUTORELEASE_RETURN(item, CCMenuItemColor*);
 }
 
 CCMenuItemColor* CCMenuItemColor::create(ccColor4B normal, ccColor4B selected, ccColor4B focus, ccColor4B disabled) {
@@ -89,7 +89,7 @@ CCMenuItemColor* CCMenuItemColor::create(ccColor4B normal, ccColor4B selected, c
                                  disabled,
                                  nullptr,
                                  nullptr);
-    return (CCMenuItemColor*)item->autorelease();
+    CC_SAFE_AUTORELEASE_RETURN(item, CCMenuItemColor*);
 }
 
 CCMenuItemColor* CCMenuItemColor::create(ccColor4B normal, CCObject* target, SEL_MenuHandler selector) {
@@ -100,7 +100,7 @@ CCMenuItemColor* CCMenuItemColor::create(ccColor4B normal, CCObject* target, SEL
                                  ccc4(0, 0, 0, 0),
                                  target,
                                  selector);
-    return (CCMenuItemColor*)item->autorelease();
+    CC_SAFE_AUTORELEASE_RETURN(item, CCMenuItemColor*);
 }
 
 CCMenuItemColor* CCMenuItemColor::create(ccColor4B normal, ccColor4B focus, CCObject* target, SEL_MenuHandler selector) {
@@ -111,7 +111,7 @@ CCMenuItemColor* CCMenuItemColor::create(ccColor4B normal, ccColor4B focus, CCOb
                                  ccc4(0, 0, 0, 0),
                                  target,
                                  selector);
-    return (CCMenuItemColor*)item->autorelease();
+    CC_SAFE_AUTORELEASE_RETURN(item, CCMenuItemColor*);
 }
 
 CCMenuItemColor* CCMenuItemColor::create(ccColor4B normal, ccColor4B selected, ccColor4B focus, CCObject* target, SEL_MenuHandler selector) {
@@ -122,7 +122,7 @@ CCMenuItemColor* CCMenuItemColor::create(ccColor4B normal, ccColor4B selected, c
                                  ccc4(0, 0, 0, 0),
                                  target,
                                  selector);
-    return (CCMenuItemColor*)item->autorelease();
+    CC_SAFE_AUTORELEASE_RETURN(item, CCMenuItemColor*);
 }
 
 CCMenuItemColor* CCMenuItemColor::create(ccColor4B normal, ccColor4B selected, ccColor4B focus, ccColor4B disabled, CCObject* target, SEL_MenuHandler selector) {
@@ -133,7 +133,7 @@ CCMenuItemColor* CCMenuItemColor::create(ccColor4B normal, ccColor4B selected, c
                                      disabled,
                                      target,
                                      selector);
-        return (CCMenuItemColor*)item->autorelease();
+        CC_SAFE_AUTORELEASE_RETURN(item, CCMenuItemColor*);
 }
 
 void CCMenuItemColor::initWithColorAndTarget(ccColor4B normal, ccColor4B selected, ccColor4B focus, ccColor4B disabled, CCObject* target, SEL_MenuHandler selector) {

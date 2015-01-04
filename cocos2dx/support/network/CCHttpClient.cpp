@@ -421,7 +421,7 @@ CCHttpClient::~CCHttpClient() {
 CCHttpClient* CCHttpClient::create() {
     CCHttpClient* c = new CCHttpClient();
     if(c->init()) {
-        return (CCHttpClient*)c->autorelease();
+        CC_SAFE_AUTORELEASE_RETURN(c, CCHttpClient*);
     }
     CC_SAFE_RELEASE(c);
     return nullptr;

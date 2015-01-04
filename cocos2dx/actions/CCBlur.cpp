@@ -36,7 +36,7 @@ CCBlur::~CCBlur() {
 CCBlur* CCBlur::create(float duration, CCSize startBlurSize, CCSize endBlurSize) {
     CCBlur* a = new CCBlur();
     a->initWithBlurSize(duration, startBlurSize, endBlurSize);
-    return (CCBlur*)a->autorelease();
+    CC_SAFE_AUTORELEASE_RETURN(a, CCBlur*);
 }
 
 bool CCBlur::initWithBlurSize(float d, CCSize startBlurSize, CCSize endBlurSize) {

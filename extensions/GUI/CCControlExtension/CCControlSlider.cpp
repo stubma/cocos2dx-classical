@@ -54,7 +54,7 @@ CCControlSlider::~CCControlSlider() {
 CCControlSlider* CCControlSlider::create(CCSprite* bg, CCSprite* thumb, CCSprite* progress) {
     CCControlSlider* s = new CCControlSlider();
     if(s->initWithSprites(bg, thumb, progress)) {
-        return (CCControlSlider*)s->autorelease();
+        CC_SAFE_AUTORELEASE_RETURN(s, CCControlSlider*);
     }
     
     CC_SAFE_RELEASE(s);

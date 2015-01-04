@@ -43,7 +43,7 @@ CCSPX3TileSet::~CCSPX3TileSet() {
 
 CCSPX3TileSet* CCSPX3TileSet::create() {
 	CCSPX3TileSet* ts = new CCSPX3TileSet();
-	return (CCSPX3TileSet*)ts->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(ts, CCSPX3TileSet*);
 }
 
 NS_CC_END

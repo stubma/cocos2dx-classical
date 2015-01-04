@@ -45,7 +45,7 @@ CCMemoryInputStream::~CCMemoryInputStream() {
 
 CCMemoryInputStream* CCMemoryInputStream::create(char* buffer, size_t length, bool release) {
     CCMemoryInputStream* s = new CCMemoryInputStream(buffer, length, release);
-    return (CCMemoryInputStream*)s->autorelease();
+    CC_SAFE_AUTORELEASE_RETURN(s, CCMemoryInputStream*);
 }
 
 char* CCMemoryInputStream::getBuffer() {

@@ -34,7 +34,7 @@ CCTMXMapInfo::~CCTMXMapInfo() {
 
 CCTMXMapInfo* CCTMXMapInfo::create() {
 	CCTMXMapInfo* m = new CCTMXMapInfo();
-	return (CCTMXMapInfo*)m->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(m, CCTMXMapInfo*);
 }
 
 string CCTMXMapInfo::getProperty(const string& key) {

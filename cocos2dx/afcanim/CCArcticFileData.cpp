@@ -60,7 +60,7 @@ CCArcticFileData::~CCArcticFileData() {
 
 CCArcticFileData* CCArcticFileData::create() {
 	CCArcticFileData* d = new CCArcticFileData();
-	return (CCArcticFileData*)d->autorelease();
+	CC_SAFE_AUTORELEASE_RETURN(d, CCArcticFileData*);
 }
 
 NS_CC_END

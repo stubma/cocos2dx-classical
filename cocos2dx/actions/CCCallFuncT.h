@@ -62,7 +62,7 @@ template <typename T>
 CCCallFuncT<T>* CCCallFuncT<T>::create(CCObject* pSelectorTarget, SEL_CallFuncT selector, T arg) {
     CCCallFuncT* c = new CCCallFuncT();
     if(c->initWithTarget(pSelectorTarget, selector, arg)) {
-        return (CCCallFuncT*)c->autorelease();
+        CC_SAFE_AUTORELEASE_RETURN(c, CCCallFuncT*);
     }
     
     CC_SAFE_RELEASE(c);
