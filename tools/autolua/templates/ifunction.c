@@ -82,7 +82,7 @@ int ${signature}(lua_State* tolua_S) {
         // if not, register gc in lua
         cobj = new ${qualified_name}($arg_list);
             #if $is_ccobject
-        cobj->autorelease();
+        CC_SAFE_AUTORELEASE(cobj);
         int ID = (int)cobj->m_uID ;
         int* luaID = &cobj->m_nLuaID ;
         toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj, "${lua_type}");
