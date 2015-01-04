@@ -577,6 +577,18 @@
 		928F64FD1A342E5900178235 /* CCProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 928F64FB1A342E5900178235 /* CCProgressHUD.h */; };
 		928F65001A342FB000178235 /* CCCatmullRomSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 928F64FE1A342FB000178235 /* CCCatmullRomSprite.cpp */; };
 		928F65011A342FB000178235 /* CCCatmullRomSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 928F64FF1A342FB000178235 /* CCCatmullRomSprite.h */; };
+		929213881A59775F00F7FCE7 /* autolink.h in Headers */ = {isa = PBXBuildFile; fileRef = 929213791A59775F00F7FCE7 /* autolink.h */; };
+		929213891A59775F00F7FCE7 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 9292137A1A59775F00F7FCE7 /* config.h */; };
+		9292138A1A59775F00F7FCE7 /* features.h in Headers */ = {isa = PBXBuildFile; fileRef = 9292137B1A59775F00F7FCE7 /* features.h */; };
+		9292138B1A59775F00F7FCE7 /* forwards.h in Headers */ = {isa = PBXBuildFile; fileRef = 9292137C1A59775F00F7FCE7 /* forwards.h */; };
+		9292138C1A59775F00F7FCE7 /* jc_reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 9292137D1A59775F00F7FCE7 /* jc_reader.h */; };
+		9292138D1A59775F00F7FCE7 /* jc_writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9292137E1A59775F00F7FCE7 /* jc_writer.h */; };
+		9292138E1A59775F00F7FCE7 /* json_batchallocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 9292137F1A59775F00F7FCE7 /* json_batchallocator.h */; };
+		9292138F1A59775F00F7FCE7 /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929213821A59775F00F7FCE7 /* json_reader.cpp */; };
+		929213901A59775F00F7FCE7 /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929213831A59775F00F7FCE7 /* json_value.cpp */; };
+		929213911A59775F00F7FCE7 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929213851A59775F00F7FCE7 /* json_writer.cpp */; };
+		929213921A59775F00F7FCE7 /* jsoncpp.h in Headers */ = {isa = PBXBuildFile; fileRef = 929213861A59775F00F7FCE7 /* jsoncpp.h */; };
+		929213931A59775F00F7FCE7 /* value.h in Headers */ = {isa = PBXBuildFile; fileRef = 929213871A59775F00F7FCE7 /* value.h */; };
 		929D53351A2755B300560A2E /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53331A2755B300560A2E /* CCSAXParser.cpp */; };
 		929D53361A2755B300560A2E /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53341A2755B300560A2E /* CCSAXParser.h */; };
 		929D53391A27575400560A2E /* CCPinyinUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53371A27575400560A2E /* CCPinyinUtils.cpp */; };
@@ -1467,6 +1479,21 @@
 		928F64FB1A342E5900178235 /* CCProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProgressHUD.h; sourceTree = "<group>"; };
 		928F64FE1A342FB000178235 /* CCCatmullRomSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCatmullRomSprite.cpp; sourceTree = "<group>"; };
 		928F64FF1A342FB000178235 /* CCCatmullRomSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCatmullRomSprite.h; sourceTree = "<group>"; };
+		929213791A59775F00F7FCE7 /* autolink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = autolink.h; sourceTree = "<group>"; };
+		9292137A1A59775F00F7FCE7 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		9292137B1A59775F00F7FCE7 /* features.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = features.h; sourceTree = "<group>"; };
+		9292137C1A59775F00F7FCE7 /* forwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = forwards.h; sourceTree = "<group>"; };
+		9292137D1A59775F00F7FCE7 /* jc_reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jc_reader.h; sourceTree = "<group>"; };
+		9292137E1A59775F00F7FCE7 /* jc_writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jc_writer.h; sourceTree = "<group>"; };
+		9292137F1A59775F00F7FCE7 /* json_batchallocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json_batchallocator.h; sourceTree = "<group>"; };
+		929213801A59775F00F7FCE7 /* json_internalarray.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_internalarray.inl; sourceTree = "<group>"; };
+		929213811A59775F00F7FCE7 /* json_internalmap.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_internalmap.inl; sourceTree = "<group>"; };
+		929213821A59775F00F7FCE7 /* json_reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_reader.cpp; sourceTree = "<group>"; };
+		929213831A59775F00F7FCE7 /* json_value.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_value.cpp; sourceTree = "<group>"; };
+		929213841A59775F00F7FCE7 /* json_valueiterator.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_valueiterator.inl; sourceTree = "<group>"; };
+		929213851A59775F00F7FCE7 /* json_writer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_writer.cpp; sourceTree = "<group>"; };
+		929213861A59775F00F7FCE7 /* jsoncpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsoncpp.h; sourceTree = "<group>"; };
+		929213871A59775F00F7FCE7 /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
 		929D53331A2755B300560A2E /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
 		929D53341A2755B300560A2E /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
 		929D53371A27575400560A2E /* CCPinyinUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPinyinUtils.cpp; sourceTree = "<group>"; };
@@ -2313,6 +2340,7 @@
 				929F3A601A26163500DE78AC /* utils */,
 				929F3A691A26187B00DE78AC /* locale */,
 				928F64C41A33EF7600178235 /* json */,
+				929213781A59775F00F7FCE7 /* jsoncpp */,
 				928F649D1A33EE6900178235 /* network */,
 				921110051A2B45AB003FE653 /* profile */,
 				37EEEBF3175DDF3A003C1193 /* component */,
@@ -3145,6 +3173,28 @@
 			path = db;
 			sourceTree = "<group>";
 		};
+		929213781A59775F00F7FCE7 /* jsoncpp */ = {
+			isa = PBXGroup;
+			children = (
+				929213791A59775F00F7FCE7 /* autolink.h */,
+				9292137A1A59775F00F7FCE7 /* config.h */,
+				9292137B1A59775F00F7FCE7 /* features.h */,
+				9292137C1A59775F00F7FCE7 /* forwards.h */,
+				9292137D1A59775F00F7FCE7 /* jc_reader.h */,
+				9292137E1A59775F00F7FCE7 /* jc_writer.h */,
+				9292137F1A59775F00F7FCE7 /* json_batchallocator.h */,
+				929213801A59775F00F7FCE7 /* json_internalarray.inl */,
+				929213811A59775F00F7FCE7 /* json_internalmap.inl */,
+				929213821A59775F00F7FCE7 /* json_reader.cpp */,
+				929213831A59775F00F7FCE7 /* json_value.cpp */,
+				929213841A59775F00F7FCE7 /* json_valueiterator.inl */,
+				929213851A59775F00F7FCE7 /* json_writer.cpp */,
+				929213861A59775F00F7FCE7 /* jsoncpp.h */,
+				929213871A59775F00F7FCE7 /* value.h */,
+			);
+			path = jsoncpp;
+			sourceTree = "<group>";
+		};
 		929D533F1A27582F00560A2E /* aosp */ = {
 			isa = PBXGroup;
 			children = (
@@ -3532,6 +3582,7 @@
 			files = (
 				1551A629158F2ADE00E66CFE /* CCAction.h in Headers */,
 				9211122F1A2B4D89003FE653 /* CCControlSaturationBrightnessPicker.h in Headers */,
+				929213931A59775F00F7FCE7 /* value.h in Headers */,
 				1551A62B158F2ADE00E66CFE /* CCActionCamera.h in Headers */,
 				929D53361A2755B300560A2E /* CCSAXParser.h in Headers */,
 				1551A62D158F2ADE00E66CFE /* CCActionCatmullRom.h in Headers */,
@@ -3558,6 +3609,7 @@
 				1551A63D158F2ADE00E66CFE /* CCActionProgressTimer.h in Headers */,
 				927FE57A1A45708A0065F052 /* stack.h in Headers */,
 				929D53941A27595700560A2E /* yajl_bytestack.h in Headers */,
+				9292138B1A59775F00F7FCE7 /* forwards.h in Headers */,
 				929D535D1A27582F00560A2E /* Input.h in Headers */,
 				1551A63F158F2ADE00E66CFE /* CCActionTiledGrid.h in Headers */,
 				92A7AFE11A3C6DE0001C830B /* CCClipOut.h in Headers */,
@@ -3595,6 +3647,7 @@
 				1551A65A158F2ADE00E66CFE /* CCInteger.h in Headers */,
 				1551A65C158F2ADE00E66CFE /* CCNS.h in Headers */,
 				921112391A2B4D89003FE653 /* CCInvocation.h in Headers */,
+				929213921A59775F00F7FCE7 /* jsoncpp.h in Headers */,
 				9243084D1A2F5FEC00BE2476 /* CCAssetInputStream_ios.h in Headers */,
 				1551A65E158F2ADE00E66CFE /* CCObject.h in Headers */,
 				928F64DD1A33F43200178235 /* CCDatabase.h in Headers */,
@@ -3665,6 +3718,7 @@
 				929D53991A27595700560A2E /* yajl_lex.h in Headers */,
 				9211123D1A2B4D89003FE653 /* CCEditBox.h in Headers */,
 				1551A6C5158F2ADE00E66CFE /* vec4.h in Headers */,
+				929213881A59775F00F7FCE7 /* autolink.h in Headers */,
 				1551A6D4158F2ADE00E66CFE /* CCKeypadDelegate.h in Headers */,
 				927FE5821A45708A0065F052 /* GUIReader.h in Headers */,
 				927FE55F1A45708A0065F052 /* LabelAtlas.h in Headers */,
@@ -3720,6 +3774,7 @@
 				1551A6F8158F2ADE00E66CFE /* CCParticleSystemQuad.h in Headers */,
 				929D533A1A27575400560A2E /* CCPinyinUtils.h in Headers */,
 				1551A719158F2ADE00E66CFE /* CCAccelerometerDelegate.h in Headers */,
+				929213891A59775F00F7FCE7 /* config.h in Headers */,
 				92A7AF7D1A3C4038001C830B /* CCSPX3Loader.h in Headers */,
 				1551A71A158F2ADE00E66CFE /* CCApplicationProtocol.h in Headers */,
 				927FE5061A45708A0065F052 /* CCActionManager.h in Headers */,
@@ -3847,12 +3902,14 @@
 				9211123E1A2B4D89003FE653 /* CCEditBoxImpl.h in Headers */,
 				92E3CE221A54E5CB008520DB /* LuaBasicConversions.h in Headers */,
 				9211124D1A2B4D89003FE653 /* CCTableViewCell.h in Headers */,
+				9292138C1A59775F00F7FCE7 /* jc_reader.h in Headers */,
 				927FE5861A45708A0065F052 /* ButtonReader.h in Headers */,
 				1551A845158F2ADF00E66CFE /* CCVertex.h in Headers */,
 				927FE51B1A45708A0065F052 /* CCTween.h in Headers */,
 				92A7AF8A1A3C4038001C830B /* CCSPXFrame.h in Headers */,
 				927FE5271A45708A0065F052 /* CCDisplayFactory.h in Headers */,
 				927FE5A01A45708A0065F052 /* WidgetReader.h in Headers */,
+				9292138A1A59775F00F7FCE7 /* features.h in Headers */,
 				921112351A2B4D89003FE653 /* CCControlSwitch.h in Headers */,
 				92A7AFC71A3C456F001C830B /* ccShader_PositionTexture_uColor_frag.h in Headers */,
 				1551A847158F2ADF00E66CFE /* ccCArray.h in Headers */,
@@ -3870,6 +3927,7 @@
 				929D538C1A27595700560A2E /* yajl_parse.h in Headers */,
 				1551A84B158F2ADF00E66CFE /* TGAlib.h in Headers */,
 				927FE5A11A45708A0065F052 /* WidgetReaderProtocol.h in Headers */,
+				9292138E1A59775F00F7FCE7 /* json_batchallocator.h in Headers */,
 				92A7AFC31A3C456F001C830B /* ccShader_PositionColor_vert.h in Headers */,
 				929D53721A2758D400560A2E /* entities.h in Headers */,
 				927FE54D1A45708A0065F052 /* LayoutDefine.h in Headers */,
@@ -3900,6 +3958,7 @@
 				92B9B9C31A43240400443F4A /* ltable.h in Headers */,
 				927FE57D1A45708A0065F052 /* rapidjson.h in Headers */,
 				929D535B1A27582F00560A2E /* Errors.h in Headers */,
+				9292138D1A59775F00F7FCE7 /* jc_writer.h in Headers */,
 				1551A85C158F2ADF00E66CFE /* CCTextureAtlas.h in Headers */,
 				92CF92FA1A523D6000441150 /* CCLuaObjcBridge.h in Headers */,
 				92A7AF631A3C4038001C830B /* CCArcticSprite.h in Headers */,
@@ -4161,6 +4220,7 @@
 				927FE50F1A45708A0065F052 /* CCFrame.cpp in Sources */,
 				928F64F21A341F4D00178235 /* CCTreeFadeIn.cpp in Sources */,
 				928F64FC1A342E5900178235 /* CCProgressHUD.cpp in Sources */,
+				929213911A59775F00F7FCE7 /* json_writer.cpp in Sources */,
 				92CF92F61A523D6000441150 /* Cocos2dxLuaLoader.cpp in Sources */,
 				1551A65D158F2ADE00E66CFE /* CCObject.cpp in Sources */,
 				927FE53F1A45708A0065F052 /* CCComAudio.cpp in Sources */,
@@ -4180,6 +4240,7 @@
 				92A7AFB61A3C456F001C830B /* ccGLStateCache.cpp in Sources */,
 				1551A661158F2ADE00E66CFE /* CCString.cpp in Sources */,
 				92A7AFEC1A3C713A001C830B /* CCCurl.cpp in Sources */,
+				9292138F1A59775F00F7FCE7 /* json_reader.cpp in Sources */,
 				928F64D31A33EF7600178235 /* CCJSONValue.cpp in Sources */,
 				921110151A2B4A22003FE653 /* CCUUID.mm in Sources */,
 				1551A663158F2ADE00E66CFE /* CCZone.cpp in Sources */,
@@ -4339,6 +4400,7 @@
 				921112271A2B4D89003FE653 /* CCControlColourPicker.cpp in Sources */,
 				927FE5311A45708A0065F052 /* CCArmatureDefine.cpp in Sources */,
 				921112341A2B4D89003FE653 /* CCControlSwitch.cpp in Sources */,
+				929213901A59775F00F7FCE7 /* json_value.cpp in Sources */,
 				929D53351A2755B300560A2E /* CCSAXParser.cpp in Sources */,
 				92CF92F41A523D6000441150 /* CCLuaValue.cpp in Sources */,
 				928F64DC1A33F43200178235 /* CCDatabase.cpp in Sources */,

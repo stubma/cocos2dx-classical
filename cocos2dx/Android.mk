@@ -70,7 +70,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
     $(LOCAL_PATH)/support/tinyxml2 \
     $(LOCAL_PATH)/support/yajl/include
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_C_INCLUDES)
-LOCAL_LDLIBS := -lGLESv2 -llog -lz
+LOCAL_LDLIBS := -lGLESv2 -llog -lz -latomic
 LOCAL_EXPORT_LDLIBS := $(LOCAL_LDLIBS)
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_libpng_static \
 	cocos_jpeg_static \
