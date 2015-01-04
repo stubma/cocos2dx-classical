@@ -27,9 +27,17 @@
 #include "cocoa/CCObject.h"
 #include <vector>
 #include <map>
+#include "support/utils/CCUtils.h"
 
 #ifdef CC_CFLAG_MEMORY_TRACKING
 #include <typeinfo>
+#include <cxxabi.h>
+
+// get normal class nmae
+static inline std::string demangled_type_info_name(const std::type_info &ti) {
+    int status = 0;
+    return abi::__cxa_demangle(ti.name(), 0, 0, &status);
+}
 
 // uncomment if you want to log every allocation in console
 //#define CC_CFLAG_ALLOCATION_LOG
@@ -326,7 +334,7 @@ void CCMemory::dumpRecord() {
         while(r) {
             ccRefRecord* rr = r->firstOp;
             if(rr) {
-                CCLOG("[REFRECORD of %s]", typeid(*r->obj).name());
+                CCLOG("[REFRECORD of %s]", demangled_type_info_name(typeid(*r->obj)).c_str());
             }
             while(rr) {
                 CCLOG("    %s: [%s:%d]", ccRefOpStrings[rr->op], rr->file, rr->line);
@@ -342,6 +350,11 @@ void CCMemory::trackCCObject(CCObject* obj) {
 #ifdef CC_CFLAG_MEMORY_TRACKING
     // null checking
     if(!obj)
+        return;
+    
+    // skip cocos2d class
+    string classname = demangled_type_info_name(typeid(*obj));
+    if(CCUtils::startsWith(classname, "cocos2d::"))
         return;
     
     // create record
@@ -381,6 +394,11 @@ void CCMemory::untrackCCObject(CCObject* obj) {
 #ifdef CC_CFLAG_MEMORY_TRACKING
     // null checking
     if(!obj)
+        return;
+    
+    // skip cocos2d class
+    string classname = demangled_type_info_name(typeid(*obj));
+    if(CCUtils::startsWith(classname, "cocos2d::"))
         return;
     
     // get hash
@@ -424,10 +442,16 @@ void CCMemory::trackRetain(CCObject* obj, const char* file, int line) {
     if(!obj)
         return;
     
+    // skip cocos2d class
+    string classname = demangled_type_info_name(typeid(*obj));
+    if(CCUtils::startsWith(classname, "cocos2d::"))
+        return;
+    
     // find record
     ccObjRecord* r = findObjRecord(obj);
     if(!r) {
         CCLOG("retain on an object which is not in registry, impossible");
+        return;
     }
     
     // new records
@@ -446,10 +470,16 @@ void CCMemory::trackRelease(CCObject* obj, const char* file, int line) {
     if(!obj)
         return;
     
+    // skip cocos2d class
+    string classname = demangled_type_info_name(typeid(*obj));
+    if(CCUtils::startsWith(classname, "cocos2d::"))
+        return;
+    
     // find record
     ccObjRecord* r = findObjRecord(obj);
     if(!r) {
         CCLOG("retain on an object which is not in registry, impossible");
+        return;
     }
     
     // new records
@@ -468,10 +498,16 @@ void CCMemory::trackAutorelease(CCObject* obj, const char* file, int line) {
     if(!obj)
         return;
     
+    // skip cocos2d class
+    string classname = demangled_type_info_name(typeid(*obj));
+    if(CCUtils::startsWith(classname, "cocos2d::"))
+        return;
+    
     // find record
     ccObjRecord* r = findObjRecord(obj);
     if(!r) {
         CCLOG("retain on an object which is not in registry, impossible");
+        return;
     }
     
     // new records
