@@ -26,7 +26,6 @@ THE SOFTWARE.
 #define __CCOBJECT_H__
 
 #include "CCDataVisitor.h"
-
 #ifdef EMSCRIPTEN
 #include <GLES2/gl2.h>
 #endif // EMSCRIPTEN
@@ -75,9 +74,9 @@ public:
      */
     virtual ~CCObject(void);
     
-    void release(void);
-    void retain(void);
-    CCObject* autorelease(void);
+    void release(const char* file = nullptr, int line = 0);
+    void retain(const char* file = nullptr, int line = 0);
+    CCObject* autorelease(const char* file = nullptr, int line = 0);
     CCObject* copy(void);
     bool isSingleReference(void) const;
     unsigned int retainCount(void) const;

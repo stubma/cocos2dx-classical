@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "CCAutoreleasePool.h"
 #include "ccMacros.h"
 #include "script_support/CCScriptSupport.h"
+#include "CCMemory.h"
 
 NS_CC_BEGIN
 
@@ -45,10 +46,20 @@ CCObject::CCObject(void)
     static unsigned int uObjectCount = 0;
 
     m_uID = ++uObjectCount;
+    
+    // for memory debugging
+#ifdef CC_CFLAG_MEMORY_TRACKING
+    CCMemory::trackCCObject(this);
+#endif
 }
 
 CCObject::~CCObject(void)
 {
+    // for memory debugging
+#ifdef CC_CFLAG_MEMORY_TRACKING
+    CCMemory::untrackCCObject(this);
+#endif
+    
     // if the object is managed, we should remove it
     // from pool manager
     if (m_uAutoReleaseCount > 0)
@@ -76,8 +87,13 @@ CCObject* CCObject::copy()
     return copyWithZone(0);
 }
 
-void CCObject::release(void)
+void CCObject::release(const char* file, int line)
 {
+    // for memory debugging
+#ifdef CC_CFLAG_MEMORY_TRACKING
+    CCMemory::trackRelease(this, file, line);
+#endif
+    
     CCAssert(m_uReference > 0, "reference count should greater than 0");
     --m_uReference;
 
@@ -87,15 +103,25 @@ void CCObject::release(void)
     }
 }
 
-void CCObject::retain(void)
+void CCObject::retain(const char* file, int line)
 {
+    // for memory debugging
+#ifdef CC_CFLAG_MEMORY_TRACKING
+    CCMemory::trackRetain(this, file, line);
+#endif
+    
     CCAssert(m_uReference > 0, "reference count should greater than 0");
 
     ++m_uReference;
 }
 
-CCObject* CCObject::autorelease(void)
+CCObject* CCObject::autorelease(const char* file, int line)
 {
+    // for memory debugging
+#ifdef CC_CFLAG_MEMORY_TRACKING
+    CCMemory::trackAutorelease(this, file, line);
+#endif
+    
     CCPoolManager::sharedPoolManager()->addObject(this);
     return this;
 }

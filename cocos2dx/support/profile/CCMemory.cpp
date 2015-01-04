@@ -24,8 +24,12 @@
 #include "CCMemory.h"
 #include <memory.h>
 #include "platform/CCCommon.h"
+#include "cocoa/CCObject.h"
+#include <vector>
+#include <map>
 
 #ifdef CC_CFLAG_MEMORY_TRACKING
+#include <typeinfo>
 
 // uncomment if you want to log every allocation in console
 //#define CC_CFLAG_ALLOCATION_LOG
@@ -110,7 +114,7 @@ void addRecord(ccMemoryRecord* r) {
 	sMaxUsedMemory = (sMaxUsedMemory > sTotalUsedMemory ? sMaxUsedMemory : sTotalUsedMemory);
 	sTotalAlloc++;
 }
-
+    
 ccMemoryRecord* findRecord(void* p) {
 	int hash = (uintptr_t)p & MEMORY_RECORD_INDEX_MASK;
 	ccMemoryRecord* pTemp = sMemoryRecord[hash];
@@ -238,6 +242,58 @@ void _ccFree(void* ptr, const char* file, int line) {
 
 NS_CC_BEGIN
 
+/// reference count operation record
+typedef enum {
+    kCC_RETAIN,
+    kCC_RELEASE,
+    kCC_AUTORELEASE
+} ccRefOp;
+typedef struct ccRefRecord {
+    ccRefOp op;
+    const char* file;
+    int line;
+    struct ccRefRecord* next;
+} ccRefRecord;
+typedef struct ccObjRecord{
+    CCObject* obj;
+    struct ccObjRecord* next;
+    ccRefRecord* firstOp;
+} ccObjRecord;
+static const char* ccRefOpStrings[] = {
+    "RETAIN",
+    "RELEASE",
+    "AUTORELEASE"
+};
+
+// record buffer
+static ccObjRecord* sObjRecord[MEMORY_RECORD_INDEX_SIZE] = { 0 };
+
+// find obj record
+static ccObjRecord* findObjRecord(CCObject* obj) {
+    int hash = (uintptr_t)obj & MEMORY_RECORD_INDEX_MASK;
+    ccObjRecord* pTemp = sObjRecord[hash];
+    while (pTemp) {
+        if (pTemp->obj == obj) {
+            break;
+        }
+        pTemp = pTemp->next;
+    }
+    return pTemp;
+}
+
+// append ref record
+static void appendRefRecord(ccObjRecord* r, ccRefRecord* newrr) {
+    if(r->firstOp) {
+        ccRefRecord* rr = r->firstOp;
+        while(rr->next) {
+            rr = rr->next;
+        }
+        rr->next = newrr;
+    } else {
+        r->firstOp = newrr;
+    }
+}
+
 void CCMemory::usageReport() {
 #ifdef CC_CFLAG_MEMORY_TRACKING
 	CCLOG("[MEMREPORT] peak %d bytes, now %d bytes, alloc %d times, free %d times",
@@ -263,6 +319,168 @@ void CCMemory::dumpRecord() {
 	} else {
 		CCLOG("[MEMRECORD] no memory leak, congratulations!");
 	}
+    
+    // reference count records
+    for (int i = 0; i < MEMORY_RECORD_INDEX_SIZE; i++) {
+        ccObjRecord* r = sObjRecord[i];
+        while(r) {
+            ccRefRecord* rr = r->firstOp;
+            if(rr) {
+                CCLOG("[REFRECORD of %s]", typeid(r->obj).name());
+            }
+            while(rr) {
+                CCLOG("    %s: [%s:%d]", ccRefOpStrings[rr->op], rr->file, rr->line);
+                rr = rr->next;
+            }
+            r = r->next;
+        }
+    }
+#endif
+}
+
+void CCMemory::trackCCObject(CCObject* obj) {
+#ifdef CC_CFLAG_MEMORY_TRACKING
+    // null checking
+    if(!obj)
+        return;
+    
+    // create record
+    ccObjRecord* r = (ccObjRecord*)malloc(sizeof(ccObjRecord));
+    r->obj = obj;
+    r->next = nullptr;
+    r->firstOp = nullptr;
+    
+    // get hash position
+    int hash = (uintptr_t)r->obj & MEMORY_RECORD_INDEX_MASK;
+    ccObjRecord* pTemp = sObjRecord[hash];
+    ccObjRecord* pPrev = nullptr;
+    
+    // find a block whose start address is larger than incoming record
+    while (pTemp) {
+        if (pTemp->obj > r->obj) {
+            break;
+        }
+        pPrev = pTemp;
+        pTemp = pTemp->next;
+    }
+    
+    // insert new record into linked list
+    if (pPrev == nullptr) {
+        sObjRecord[hash] = r;
+        if (pTemp) {
+            r->next = pTemp;
+        }
+    } else {
+        r->next = pPrev->next;
+        pPrev->next = r;
+    }
+#endif
+}
+
+void CCMemory::untrackCCObject(CCObject* obj) {
+#ifdef CC_CFLAG_MEMORY_TRACKING
+    // null checking
+    if(!obj)
+        return;
+    
+    // get hash
+    int hash = (uintptr_t)obj & MEMORY_RECORD_INDEX_MASK;
+    ccObjRecord* pTemp = sObjRecord[hash];
+    ccObjRecord* pPrev = nullptr;
+    while(pTemp) {
+        if(pTemp->obj == obj) {
+            break;
+        }
+        pPrev = pTemp;
+        pTemp = pTemp->next;
+    }
+    
+    // didn't find?
+    if(!pTemp) {
+        return;
+    }
+    
+    // remove record
+    if(pTemp == sObjRecord[hash]) {
+        sObjRecord[hash] = pTemp->next;
+    } else {
+        pPrev->next = pTemp->next;
+    }
+    
+    // free
+    ccRefRecord* rr = pTemp->firstOp;
+    while(rr) {
+        ccRefRecord* next = rr->next;
+        free(rr);
+        rr = next;
+    }
+    free(pTemp);
+#endif
+}
+
+void CCMemory::trackRetain(CCObject* obj, const char* file, int line) {
+#ifdef CC_CFLAG_MEMORY_TRACKING
+    // null checking
+    if(!obj)
+        return;
+    
+    // find record
+    ccObjRecord* r = findObjRecord(obj);
+    if(!r) {
+        CCLOG("retain on an object which is not in registry, impossible");
+    }
+    
+    // new records
+    ccRefRecord* newrr = (ccRefRecord*)malloc(sizeof(ccRefRecord));
+    newrr->op = kCC_RETAIN;
+    newrr->file = file;
+    newrr->line = line;
+    newrr->next = nullptr;
+    appendRefRecord(r, newrr);
+#endif
+}
+
+void CCMemory::trackRelease(CCObject* obj, const char* file, int line) {
+#ifdef CC_CFLAG_MEMORY_TRACKING
+    // null checking
+    if(!obj)
+        return;
+    
+    // find record
+    ccObjRecord* r = findObjRecord(obj);
+    if(!r) {
+        CCLOG("retain on an object which is not in registry, impossible");
+    }
+    
+    // new records
+    ccRefRecord* newrr = (ccRefRecord*)malloc(sizeof(ccRefRecord));
+    newrr->op = kCC_RELEASE;
+    newrr->file = file;
+    newrr->line = line;
+    newrr->next = nullptr;
+    appendRefRecord(r, newrr);
+#endif
+}
+
+void CCMemory::trackAutorelease(CCObject* obj, const char* file, int line) {
+#ifdef CC_CFLAG_MEMORY_TRACKING
+    // null checking
+    if(!obj)
+        return;
+    
+    // find record
+    ccObjRecord* r = findObjRecord(obj);
+    if(!r) {
+        CCLOG("retain on an object which is not in registry, impossible");
+    }
+    
+    // new records
+    ccRefRecord* newrr = (ccRefRecord*)malloc(sizeof(ccRefRecord));
+    newrr->op = kCC_AUTORELEASE;
+    newrr->file = file;
+    newrr->line = line;
+    newrr->next = nullptr;
+    appendRefRecord(r, newrr);
 #endif
 }
 

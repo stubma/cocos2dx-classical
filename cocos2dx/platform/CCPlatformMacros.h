@@ -238,23 +238,22 @@ public: virtual void set##funName(varType var)   \
     public: virtual varType get##funName(void) const; \
     public: virtual void set##funName(varType var) { varName = var; }
 
+#define CC_BREAK_IF(cond)            if(cond) break
 #define CC_SAFE_DELETE(p)            do { if(p) { delete (p); (p) = 0; } } while(0)
 #define CC_SAFE_DELETE_ARRAY(p)     do { if(p) { delete[] (p); (p) = 0; } } while(0)
 #define CC_SAFE_FREE(p)                do { if(p) { free(p); (p) = 0; } } while(0)
-#define CC_SAFE_RELEASE(p)            do { if(p) { (p)->release(); } } while(0)
-#define CC_SAFE_AUTORELEASE(p)            do { if(p) { (p)->autorelease(); } } while(0)
+#define CC_SAFE_RETAIN(p)            do { if(p) { (p)->retain(__FILE__, __LINE__); } } while(0)
+#define CC_SAFE_RELEASE(p)            do { if(p) { (p)->release(__FILE__, __LINE__); } } while(0)
+#define CC_SAFE_RELEASE_NULL(p)        do { if(p) { (p)->release(__FILE__, __LINE__); (p) = 0; } } while(0)
+#define CC_SAFE_AUTORELEASE(p)            do { if(p) { (p)->autorelease(__FILE__, __LINE__); } } while(0)
 #define CC_SAFE_AUTORELEASE_RETURN(p, t) \
     do { \
         if(p) { \
-            return (t)(p)->autorelease(); \
+            return (t)(p)->autorelease(__FILE__, __LINE__); \
         } else { \
             return nullptr; \
         } \
     } while(0)
-
-#define CC_SAFE_RELEASE_NULL(p)        do { if(p) { (p)->release(); (p) = 0; } } while(0)
-#define CC_SAFE_RETAIN(p)            do { if(p) { (p)->retain(); } } while(0)
-#define CC_BREAK_IF(cond)            if(cond) break
 
 #define __CCLOGWITHFUNCTION(s, ...) \
     CCLog("%s : %s",__FUNCTION__, CCString::createWithFormat(s, ##__VA_ARGS__)->getCString())

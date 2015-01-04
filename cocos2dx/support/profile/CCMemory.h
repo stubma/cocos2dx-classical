@@ -24,7 +24,9 @@
 #ifndef __CCMemory_h__
 #define __CCMemory_h__
 
-#include "ccTypes.h"
+#include "ccMacros.h"
+
+using namespace std;
 
 #ifdef CC_CFLAG_MEMORY_TRACKING
 
@@ -73,16 +75,33 @@ void operator delete[](void* p) throw() {
 
 NS_CC_BEGIN
 
+class CCObject;
+
 /**
  * Memory profile helper class
  */
-class CCMemory {
+class CCMemory {    
 public:
     /// print a summary memory usage
     static void usageReport();
     
     /// print all leaked memory record
     static void dumpRecord();
+    
+    /// register CCObject
+    static void trackCCObject(CCObject* obj);
+    
+    /// unregister CCObject
+    static void untrackCCObject(CCObject* obj);
+    
+    /// tracking retain
+    static void trackRetain(CCObject* obj, const char* file, int line);
+    
+    /// tracking release
+    static void trackRelease(CCObject* obj, const char* file, int line);
+    
+    /// tracking autorelease
+    static void trackAutorelease(CCObject* obj, const char* file, int line);
 };
 
 NS_CC_END
