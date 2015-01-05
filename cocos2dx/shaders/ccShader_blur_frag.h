@@ -26,9 +26,6 @@
 
 NS_CC_BEGIN
 
-#define kCCUniform_blurSize "CC_blurSize"
-#define kCCUniform_blurSubtract "CC_blurSubtract"
-
 static GLint sUniform_pos_CC_blurSize = -1;
 static GLint sUniform_pos_CC_blurSubtract = -1;
 

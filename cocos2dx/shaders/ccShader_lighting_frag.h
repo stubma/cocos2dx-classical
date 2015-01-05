@@ -26,9 +26,6 @@
 
 NS_CC_BEGIN
 
-#define kCCUniform_lightingMul "CC_lightingMul"
-#define kCCUniform_lightingAdd "CC_lightingAdd"
-
 static GLint sUniform_pos_CC_lightingMul = -1;
 static GLint sUniform_pos_CC_lightingAdd = -1;
 

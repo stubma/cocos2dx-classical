@@ -24,15 +24,6 @@
 #ifndef __ccShader_shine_frag_h__
 #define __ccShader_shine_frag_h__
 
-#define kCCUniform_shineWidth "CC_shineWidth"
-#define kCCUniform_shineXY1 "CC_shineXY1"
-#define kCCUniform_shineXY2 "CC_shineXY2"
-#define kCCUniform_shineColor1 "CC_shineColor1"
-#define kCCUniform_shineColor2 "CC_shineColor2"
-#define kCCUniform_shineColor3 "CC_shineColor3"
-#define kCCUniform_shinePositions "CC_shinePositions"
-#define kCCUniform_shineTime "CC_shineTime"
-
 static GLint sUniform_pos_CC_shineWidth = -1;
 static GLint sUniform_pos_CC_shineTime = -1;
 static GLint sUniform_pos_CC_shineXY1 = -1;

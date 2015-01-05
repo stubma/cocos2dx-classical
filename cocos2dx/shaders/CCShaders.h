@@ -32,14 +32,6 @@ using namespace std;
 
 NS_CC_BEGIN
 
-// shader keys
-#define kCCShader_flash "kCCShader_flash"
-#define kCCShader_blur "kCCShader_blur"
-#define kCCShader_laser "kCCShader_laser"
-#define kCCShader_lighting "kCCShader_lighting"
-#define kCCShader_matrix "kCCShader_matrix"
-#define kCCShader_shine "kCCShader_shine"
-
 /// a custom shader management helper
 class CC_DLL CCShaders {
 private:
@@ -47,6 +39,9 @@ private:
 	static void loadCustomShader(const string& key);
 	
 public:
+    /// load all custom shaders
+    static void loadCustomShaders();
+    
 	/// program for key
 	static CCGLProgram* programForKey(const string& key);
 	

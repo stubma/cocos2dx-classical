@@ -26,9 +26,6 @@
 
 NS_CC_BEGIN
 
-#define kCCUniform_flashColor "CC_flashColor"
-#define kCCUniform_flashTime "CC_flashTime"
-
 static GLint sUniform_pos_CC_flashColor = -1;
 static GLint sUniform_pos_CC_flashTime = -1;
 

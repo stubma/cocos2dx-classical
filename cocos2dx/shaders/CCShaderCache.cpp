@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "CCShaderCache.h"
 #include "CCGLProgram.h"
 #include "ccMacros.h"
+#include "shaders/CCShaders.h"
 
 NS_CC_BEGIN
 
@@ -123,12 +124,11 @@ CCShaderCache::~CCShaderCache()
     CC_SAFE_RELEASE(m_pPrograms);
 }
 
-
-
 bool CCShaderCache::init()
 {
     m_pPrograms = new CCDictionary();
     loadDefaultShaders();
+    CCShaders::loadCustomShaders();
     return true;
 }
 

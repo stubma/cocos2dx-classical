@@ -71,6 +71,14 @@ enum {
 #define kCCShader_PositionLengthTexureColor         "ShaderPositionLengthTextureColor"
 #define kCCShader_ControlSwitch                     "Shader_ControlSwitch"
 
+// extension shader keys
+#define kCCShader_flash "kCCShader_flash"
+#define kCCShader_blur "kCCShader_blur"
+#define kCCShader_laser "kCCShader_laser"
+#define kCCShader_lighting "kCCShader_lighting"
+#define kCCShader_matrix "kCCShader_matrix"
+#define kCCShader_shine "kCCShader_shine"
+
 // uniform names
 #define kCCUniformPMatrix_s				"CC_PMatrix"
 #define kCCUniformMVMatrix_s			"CC_MVMatrix"
@@ -81,6 +89,23 @@ enum {
 #define kCCUniformRandom01_s			"CC_Random01"
 #define kCCUniformSampler_s				"CC_Texture0"
 #define kCCUniformAlphaTestValue		"CC_alpha_value"
+
+// extension shader uniforms
+#define kCCUniform_blurSize "CC_blurSize"
+#define kCCUniform_blurSubtract "CC_blurSubtract"
+#define kCCUniform_flashColor "CC_flashColor"
+#define kCCUniform_flashTime "CC_flashTime"
+#define kCCUniform_lightingMul "CC_lightingMul"
+#define kCCUniform_lightingAdd "CC_lightingAdd"
+#define kCCUniform_colorMatrix "CC_colorMatrix"
+#define kCCUniform_shineWidth "CC_shineWidth"
+#define kCCUniform_shineXY1 "CC_shineXY1"
+#define kCCUniform_shineXY2 "CC_shineXY2"
+#define kCCUniform_shineColor1 "CC_shineColor1"
+#define kCCUniform_shineColor2 "CC_shineColor2"
+#define kCCUniform_shineColor3 "CC_shineColor3"
+#define kCCUniform_shinePositions "CC_shinePositions"
+#define kCCUniform_shineTime "CC_shineTime"
 
 // Attribute names
 #define    kCCAttributeNameColor           "a_color"

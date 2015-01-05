@@ -34,6 +34,7 @@
 #include "shaders/ccShader_matrix_frag.h"
 #include "shaders/ccShader_shine_vert.h"
 #include "shaders/ccShader_shine_frag.h"
+#include "shaders/CCGLProgram.h"
 
 #define LOAD_PROGRAM_IF(name) \
 	if(key == kCCShader_##name) \
@@ -98,13 +99,20 @@ void CCShaders::loadCustomShader(const string& key) {
     }
 }
 
+void CCShaders::loadCustomShaders() {
+    loadCustomShader(kCCShader_flash);
+    loadCustomShader(kCCShader_blur);
+    loadCustomShader(kCCShader_lighting);
+    loadCustomShader(kCCShader_matrix);
+    loadCustomShader(kCCShader_shine);
+    loadCustomShader(kCCShader_laser);
+}
+
 CCGLProgram* CCShaders::programForKey(const string& key) {
-	loadCustomShader(key);
 	return CCShaderCache::sharedShaderCache()->programForKey(key.c_str());
 }
 
 void CCShaders::setFlash(float r, float g, float b, float t) {
-	loadCustomShader(kCCShader_flash);
     CCGLProgram* p = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_flash);
     p->use();
     p->setUniformLocationWith3f(sUniform_pos_CC_flashColor, r, g, b);
@@ -112,7 +120,6 @@ void CCShaders::setFlash(float r, float g, float b, float t) {
 }
 
 void CCShaders::setBlur(CCSize nodeSize, CCSize blurSize, ccColor4F blurSubtract) {
-	loadCustomShader(kCCShader_blur);
     CCGLProgram* p = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_blur);
     p->use();
 	p->setUniformLocationWith2f(sUniform_pos_CC_blurSize, blurSize.width / nodeSize.width, blurSize.height / nodeSize.height);
@@ -120,7 +127,6 @@ void CCShaders::setBlur(CCSize nodeSize, CCSize blurSize, ccColor4F blurSubtract
 }
 
 void CCShaders::setLighting(ccColor4B mul, ccColor3B add) {
-    loadCustomShader(kCCShader_lighting);
     CCGLProgram* p = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_lighting);
     p->use();
 	p->setUniformLocationWith4f(sUniform_pos_CC_lightingMul, mul.r / 255.0f, mul.g / 255.0f, mul.b / 255.0f, mul.a / 255.0f);
@@ -128,7 +134,6 @@ void CCShaders::setLighting(ccColor4B mul, ccColor3B add) {
 }
 
 void CCShaders::setColorMatrix(const kmMat4& mat4) {
-    loadCustomShader(kCCShader_matrix);
     CCGLProgram* p = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_matrix);
     p->use();
     p->setUniformLocationWithMatrix4fv(sUniform_pos_CC_colorMatrix, (GLfloat*)mat4.mat, 1);
@@ -147,7 +152,6 @@ void CCShaders::setGray() {
 }
 
 void CCShaders::setShine(float width, CCPoint lb, CCPoint rt, ccColor4B color1, ccColor4B color2, ccColor4B color3, ccVertex3F gradientPositions, float time) {
-    loadCustomShader(kCCShader_shine);
     CCGLProgram* p = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_shine);
     p->use();
     p->setUniformLocationWith1f(sUniform_pos_CC_shineWidth, width);
