@@ -301,7 +301,7 @@ static void appendRefRecord(ccObjRecord* r, ccRefRecord* newrr) {
 
 static void dumpOneObjRecord(ccObjRecord* r) {
     while(r) {
-        CCLOG("[REFRECORD of %p]", r->obj);
+        CCLOG("[REFRECORD of %s]", r->classname);
         ccRefRecord* rr = r->firstOp;
         while(rr) {
             CCLOG("    %s:%d [%s:%d]", ccRefOpStrings[rr->op], rr->retainCount, rr->file, rr->line);
@@ -438,7 +438,7 @@ void CCMemory::untrackCCObject(CCObject* obj) {
 void CCMemory::trackRetain(CCObject* obj, const char* file, int line) {
 #ifdef CC_CFLAG_MEMORY_TRACKING
     // null checking
-    if(!obj || !obj->m_tracked)
+    if(!obj || !obj->m_tracked || !file)
         return;
     
     // find record
@@ -463,7 +463,7 @@ void CCMemory::trackRetain(CCObject* obj, const char* file, int line) {
 void CCMemory::trackRelease(CCObject* obj, const char* file, int line) {
 #ifdef CC_CFLAG_MEMORY_TRACKING
     // null checking
-    if(!obj || !obj->m_tracked)
+    if(!obj || !obj->m_tracked || !file)
         return;
     
     // find record
@@ -488,7 +488,7 @@ void CCMemory::trackRelease(CCObject* obj, const char* file, int line) {
 void CCMemory::trackAutorelease(CCObject* obj, const char* file, int line) {
 #ifdef CC_CFLAG_MEMORY_TRACKING
     // null checking
-    if(!obj || !obj->m_tracked)
+    if(!obj || !obj->m_tracked || !file)
         return;
     
     // find record

@@ -418,6 +418,13 @@ bool CCCallFunc::initWithTarget(CCObject* pSelectorTarget) {
     return true;
 }
 
+CCCallFunc::CCCallFunc()
+: m_pSelectorTarget(nullptr)
+, m_nScriptHandler(0)
+, m_pCallFunc(nullptr)
+{
+}
+
 CCCallFunc::~CCCallFunc(void)
 {
     if (m_nScriptHandler)

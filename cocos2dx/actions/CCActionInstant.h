@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "ccTypeInfo.h"
 #include "CCAction.h"
 #include "script_support/CCScriptSupport.h"
+#include "support/profile/CCMemory.h"
 
 NS_CC_BEGIN
 
@@ -294,12 +295,8 @@ public:
     /**
      *  @js ctor
      */
-    CCCallFunc()
-        : m_pSelectorTarget(nullptr)
-		, m_nScriptHandler(0)
-        , m_pCallFunc(nullptr)
-    {
-    }
+    CCCallFunc();
+    
     /**
      * @js NA
      * @lua NA
