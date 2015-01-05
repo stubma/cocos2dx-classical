@@ -42,15 +42,13 @@ CCObject::CCObject(void)
 : m_nLuaID(0)
 , m_uReference(1) // when the object is created, the reference count of it is 1
 , m_uAutoReleaseCount(0)
+#if CC_CFLAG_MEMORY_TRACKING
+, m_tracked(false)
+#endif
 {
     static unsigned int uObjectCount = 0;
 
     m_uID = ++uObjectCount;
-    
-    // for memory debugging
-#ifdef CC_CFLAG_MEMORY_TRACKING
-    CCMemory::trackCCObject(this);
-#endif
 }
 
 CCObject::~CCObject(void)

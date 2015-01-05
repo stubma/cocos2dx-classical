@@ -25,8 +25,6 @@
 #include <memory.h>
 #include "platform/CCCommon.h"
 #include "cocoa/CCObject.h"
-#include <vector>
-#include <map>
 #include "support/utils/CCUtils.h"
 
 using namespace std;
@@ -260,6 +258,7 @@ typedef struct ccRefRecord {
 } ccRefRecord;
 typedef struct ccObjRecord{
     CCObject* obj;
+    const char* classname;
     struct ccObjRecord* next;
     ccRefRecord* firstOp;
 } ccObjRecord;
@@ -272,15 +271,14 @@ static const char* ccRefOpStrings[] = {
 // record buffer
 static ccObjRecord* sObjRecord[MEMORY_RECORD_INDEX_SIZE] = { 0 };
 
-// function to check object type
-static CCMemory::ccObjTypeChecker sObjTypeChecker;
+// static
 
 // find obj record
 static ccObjRecord* findObjRecord(CCObject* obj) {
-    int hash = (uintptr_t)obj & MEMORY_RECORD_INDEX_MASK;
+    int hash = obj->m_uID & MEMORY_RECORD_INDEX_MASK;
     ccObjRecord* pTemp = sObjRecord[hash];
     while (pTemp) {
-        if (pTemp->obj == obj) {
+        if (pTemp->obj->m_uID == obj->m_uID) {
             break;
         }
         pTemp = pTemp->next;
@@ -345,37 +343,27 @@ void CCMemory::dumpRecord() {
 #endif
 }
 
-void CCMemory::watchClass(ccObjTypeChecker func) {
-#ifdef CC_CFLAG_MEMORY_TRACKING
-    sObjTypeChecker = func;
-#endif
-}
-
-void CCMemory::trackCCObject(CCObject* obj) {
+void CCMemory::trackCCObject(CCObject* obj, string name) {
 #ifdef CC_CFLAG_MEMORY_TRACKING
     // null checking
-    if(!obj || !sObjTypeChecker)
+    if(!obj)
         return;
-    
-    // check object type
-    if(!(*sObjTypeChecker)(obj)) {
-        return;
-    }
     
     // create record
     ccObjRecord* r = (ccObjRecord*)malloc(sizeof(ccObjRecord));
     r->obj = obj;
     r->next = nullptr;
     r->firstOp = nullptr;
+    r->classname = CCUtils::copy(name.c_str());
     
     // get hash position
-    int hash = (uintptr_t)r->obj & MEMORY_RECORD_INDEX_MASK;
+    int hash = r->obj->m_uID & MEMORY_RECORD_INDEX_MASK;
     ccObjRecord* pTemp = sObjRecord[hash];
     ccObjRecord* pPrev = nullptr;
     
     // find a block whose start address is larger than incoming record
     while (pTemp) {
-        if (pTemp->obj > r->obj) {
+        if (pTemp->obj->m_uID > r->obj->m_uID) {
             break;
         }
         pPrev = pTemp;
@@ -392,26 +380,25 @@ void CCMemory::trackCCObject(CCObject* obj) {
         r->next = pPrev->next;
         pPrev->next = r;
     }
+    
+    // set track flag
+    obj->m_tracked = true;
+    
 #endif
 }
 
 void CCMemory::untrackCCObject(CCObject* obj) {
 #ifdef CC_CFLAG_MEMORY_TRACKING
     // null checking
-    if(!obj || !sObjTypeChecker)
+    if(!obj || !obj->m_tracked)
         return;
-    
-    // check object type
-    if(!(*sObjTypeChecker)(obj)) {
-        return;
-    }
     
     // get hash
-    int hash = (uintptr_t)obj & MEMORY_RECORD_INDEX_MASK;
+    int hash = obj->m_uID & MEMORY_RECORD_INDEX_MASK;
     ccObjRecord* pTemp = sObjRecord[hash];
     ccObjRecord* pPrev = nullptr;
     while(pTemp) {
-        if(pTemp->obj == obj) {
+        if(pTemp->obj->m_uID == obj->m_uID) {
             break;
         }
         pPrev = pTemp;
@@ -437,6 +424,7 @@ void CCMemory::untrackCCObject(CCObject* obj) {
         free(rr);
         rr = next;
     }
+    free((void*)pTemp->classname);
     free(pTemp);
 #endif
 }
@@ -444,13 +432,8 @@ void CCMemory::untrackCCObject(CCObject* obj) {
 void CCMemory::trackRetain(CCObject* obj, const char* file, int line) {
 #ifdef CC_CFLAG_MEMORY_TRACKING
     // null checking
-    if(!obj || !sObjTypeChecker)
+    if(!obj || !obj->m_tracked)
         return;
-    
-    // check object type
-    if(!(*sObjTypeChecker)(obj)) {
-        return;
-    }
     
     // find record
     ccObjRecord* r = findObjRecord(obj);
@@ -472,13 +455,8 @@ void CCMemory::trackRetain(CCObject* obj, const char* file, int line) {
 void CCMemory::trackRelease(CCObject* obj, const char* file, int line) {
 #ifdef CC_CFLAG_MEMORY_TRACKING
     // null checking
-    if(!obj || !sObjTypeChecker)
+    if(!obj || !obj->m_tracked)
         return;
-    
-    // check object type
-    if(!(*sObjTypeChecker)(obj)) {
-        return;
-    }
     
     // find record
     ccObjRecord* r = findObjRecord(obj);
@@ -500,13 +478,8 @@ void CCMemory::trackRelease(CCObject* obj, const char* file, int line) {
 void CCMemory::trackAutorelease(CCObject* obj, const char* file, int line) {
 #ifdef CC_CFLAG_MEMORY_TRACKING
     // null checking
-    if(!obj || !sObjTypeChecker)
+    if(!obj || !obj->m_tracked)
         return;
-    
-    // check object type
-    if(!(*sObjTypeChecker)(obj)) {
-        return;
-    }
     
     // find record
     ccObjRecord* r = findObjRecord(obj);

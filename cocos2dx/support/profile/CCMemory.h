@@ -25,6 +25,7 @@
 #define __CCMemory_h__
 
 #include "ccMacros.h"
+#include <string>
 
 #ifdef CC_CFLAG_MEMORY_TRACKING
 
@@ -80,9 +81,6 @@ class CCObject;
  */
 class CCMemory {
 public:
-    typedef bool (*ccObjTypeChecker)(CCObject*);
-    
-public:
     /// print a summary memory usage
     static void usageReport();
     
@@ -90,15 +88,9 @@ public:
     static void dumpRecord();
     
     /**
-     * set what object you want to track, the class you want to track
-     * should override getQualifiedName to return a proper class name.
-     * we don't want to track all class because it will be slow, it is better
-     * to let user specify class names
+     * start to track an object reference count
      */
-    static void watchClass(ccObjTypeChecker func);
-    
-    /// register CCObject
-    static void trackCCObject(CCObject* obj);
+    static void trackCCObject(CCObject* obj, std::string name);
     
     /// unregister CCObject
     static void untrackCCObject(CCObject* obj);
