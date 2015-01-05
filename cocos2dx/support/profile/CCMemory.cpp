@@ -304,7 +304,7 @@ static void dumpOneObjRecord(ccObjRecord* r) {
         CCLOG("[REFRECORD of %p]", r->obj);
         ccRefRecord* rr = r->firstOp;
         while(rr) {
-            CCLOG("    %s:%d,%d [%s:%d]", ccRefOpStrings[rr->op], rr->retainCount, rr->autoReleaseCount, rr->file, rr->line);
+            CCLOG("    %s:%d [%s:%d]", ccRefOpStrings[rr->op], rr->retainCount, rr->file, rr->line);
             rr = rr->next;
         }
         r = r->next;

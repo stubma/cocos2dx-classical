@@ -45,7 +45,7 @@ void CCAutoreleasePool::addObject(CCObject* pObject)
 
     CCAssert(pObject->m_uReference > 1, "reference count should be greater than 1");
     ++(pObject->m_uAutoReleaseCount);
-    CC_SAFE_RELEASE(pObject); // no ref count, in this case autorelease pool added.
+    pObject->release(); // no ref count, in this case autorelease pool added.
 }
 
 void CCAutoreleasePool::removeObject(CCObject* pObject)
