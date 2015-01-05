@@ -25,8 +25,7 @@
 #define __CCMemory_h__
 
 #include "ccMacros.h"
-
-using namespace std;
+#include <functional>
 
 #ifdef CC_CFLAG_MEMORY_TRACKING
 
@@ -87,6 +86,14 @@ public:
     
     /// print all leaked memory record
     static void dumpRecord();
+    
+    /**
+     * set what object you want to track, the class you want to track
+     * should override getQualifiedName to return a proper class name.
+     * we don't want to track all class because it will be slow, it is better
+     * to let user specify class names
+     */
+    static void watchClass(std::function<bool(CCObject*)> func);
     
     /// register CCObject
     static void trackCCObject(CCObject* obj);

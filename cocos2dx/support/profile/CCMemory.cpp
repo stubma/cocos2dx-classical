@@ -29,15 +29,9 @@
 #include <map>
 #include "support/utils/CCUtils.h"
 
-#ifdef CC_CFLAG_MEMORY_TRACKING
-#include <typeinfo>
-#include <cxxabi.h>
+using namespace std;
 
-// get normal class nmae
-static inline std::string demangled_type_info_name(const std::type_info &ti) {
-    int status = 0;
-    return abi::__cxa_demangle(ti.name(), 0, 0, &status);
-}
+#ifdef CC_CFLAG_MEMORY_TRACKING
 
 // uncomment if you want to log every allocation in console
 //#define CC_CFLAG_ALLOCATION_LOG
@@ -250,6 +244,8 @@ void _ccFree(void* ptr, const char* file, int line) {
 
 NS_CC_BEGIN
 
+#if CC_CFLAG_MEMORY_TRACKING
+
 /// reference count operation record
 typedef enum {
     kCC_RETAIN,
@@ -272,6 +268,10 @@ static const char* ccRefOpStrings[] = {
     "RELEASE",
     "AUTORELEASE"
 };
+
+// class watch name map
+static int sWatchedClassCount = 0;
+static string sWatchedClasses[100];
 
 // record buffer
 static ccObjRecord* sObjRecord[MEMORY_RECORD_INDEX_SIZE] = { 0 };
@@ -301,6 +301,8 @@ static void appendRefRecord(ccObjRecord* r, ccRefRecord* newrr) {
         r->firstOp = newrr;
     }
 }
+
+#endif // #if CC_CFLAG_MEMORY_TRACKING
 
 void CCMemory::usageReport() {
 #ifdef CC_CFLAG_MEMORY_TRACKING
@@ -332,10 +334,8 @@ void CCMemory::dumpRecord() {
     for (int i = 0; i < MEMORY_RECORD_INDEX_SIZE; i++) {
         ccObjRecord* r = sObjRecord[i];
         while(r) {
+            CCLOG("[REFRECORD of %s]", r->obj->getQualifiedName().c_str());
             ccRefRecord* rr = r->firstOp;
-            if(rr) {
-                CCLOG("[REFRECORD of %s]", demangled_type_info_name(typeid(*r->obj)).c_str());
-            }
             while(rr) {
                 CCLOG("    %s: [%s:%d]", ccRefOpStrings[rr->op], rr->file, rr->line);
                 rr = rr->next;
@@ -346,15 +346,27 @@ void CCMemory::dumpRecord() {
 #endif
 }
 
+void CCMemory::watchClass(function<bool(CCObject*)> name) {
+#ifdef CC_CFLAG_MEMORY_TRACKING
+#endif
+}
+
 void CCMemory::trackCCObject(CCObject* obj) {
 #ifdef CC_CFLAG_MEMORY_TRACKING
     // null checking
     if(!obj)
         return;
     
-    // skip cocos2d class
-    string classname = demangled_type_info_name(typeid(*obj));
-    if(CCUtils::startsWith(classname, "cocos2d::"))
+    // skip not watched class
+    bool match = false;
+    string classname = obj->getQualifiedName();
+    for(int i = 0; i < sWatchedClassCount; i++) {
+        if(sWatchedClasses[i] == classname) {
+            match = true;
+            break;
+        }
+    }
+    if(!match)
         return;
     
     // create record
@@ -396,9 +408,16 @@ void CCMemory::untrackCCObject(CCObject* obj) {
     if(!obj)
         return;
     
-    // skip cocos2d class
-    string classname = demangled_type_info_name(typeid(*obj));
-    if(CCUtils::startsWith(classname, "cocos2d::"))
+    // skip not watched class
+    bool match = false;
+    string classname = obj->getQualifiedName();
+    for(int i = 0; i < sWatchedClassCount; i++) {
+        if(sWatchedClasses[i] == classname) {
+            match = true;
+            break;
+        }
+    }
+    if(!match)
         return;
     
     // get hash
@@ -442,9 +461,16 @@ void CCMemory::trackRetain(CCObject* obj, const char* file, int line) {
     if(!obj)
         return;
     
-    // skip cocos2d class
-    string classname = demangled_type_info_name(typeid(*obj));
-    if(CCUtils::startsWith(classname, "cocos2d::"))
+    // skip not watched class
+    bool match = false;
+    string classname = obj->getQualifiedName();
+    for(int i = 0; i < sWatchedClassCount; i++) {
+        if(sWatchedClasses[i] == classname) {
+            match = true;
+            break;
+        }
+    }
+    if(!match)
         return;
     
     // find record
@@ -470,9 +496,16 @@ void CCMemory::trackRelease(CCObject* obj, const char* file, int line) {
     if(!obj)
         return;
     
-    // skip cocos2d class
-    string classname = demangled_type_info_name(typeid(*obj));
-    if(CCUtils::startsWith(classname, "cocos2d::"))
+    // skip not watched class
+    bool match = false;
+    string classname = obj->getQualifiedName();
+    for(int i = 0; i < sWatchedClassCount; i++) {
+        if(sWatchedClasses[i] == classname) {
+            match = true;
+            break;
+        }
+    }
+    if(!match)
         return;
     
     // find record
@@ -498,9 +531,16 @@ void CCMemory::trackAutorelease(CCObject* obj, const char* file, int line) {
     if(!obj)
         return;
     
-    // skip cocos2d class
-    string classname = demangled_type_info_name(typeid(*obj));
-    if(CCUtils::startsWith(classname, "cocos2d::"))
+    // skip not watched class
+    bool match = false;
+    string classname = obj->getQualifiedName();
+    for(int i = 0; i < sWatchedClassCount; i++) {
+        if(sWatchedClasses[i] == classname) {
+            match = true;
+            break;
+        }
+    }
+    if(!match)
         return;
     
     // find record
