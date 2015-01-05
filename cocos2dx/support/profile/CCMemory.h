@@ -25,7 +25,6 @@
 #define __CCMemory_h__
 
 #include "ccMacros.h"
-#include <functional>
 
 #ifdef CC_CFLAG_MEMORY_TRACKING
 
@@ -79,7 +78,10 @@ class CCObject;
 /**
  * Memory profile helper class
  */
-class CCMemory {    
+class CCMemory {
+public:
+    typedef bool (*ccObjTypeChecker)(CCObject*);
+    
 public:
     /// print a summary memory usage
     static void usageReport();
@@ -93,7 +95,7 @@ public:
      * we don't want to track all class because it will be slow, it is better
      * to let user specify class names
      */
-    static void watchClass(std::function<bool(CCObject*)> func);
+    static void watchClass(ccObjTypeChecker func);
     
     /// register CCObject
     static void trackCCObject(CCObject* obj);

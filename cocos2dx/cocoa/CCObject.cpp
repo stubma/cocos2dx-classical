@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "CCAutoreleasePool.h"
 #include "ccMacros.h"
 #include "script_support/CCScriptSupport.h"
-#include "CCMemory.h"
+#include "support/profile/CCMemory.h"
 
 NS_CC_BEGIN
 

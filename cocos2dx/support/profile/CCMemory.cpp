@@ -269,12 +269,11 @@ static const char* ccRefOpStrings[] = {
     "AUTORELEASE"
 };
 
-// class watch name map
-static int sWatchedClassCount = 0;
-static string sWatchedClasses[100];
-
 // record buffer
 static ccObjRecord* sObjRecord[MEMORY_RECORD_INDEX_SIZE] = { 0 };
+
+// function to check object type
+static CCMemory::ccObjTypeChecker sObjTypeChecker;
 
 // find obj record
 static ccObjRecord* findObjRecord(CCObject* obj) {
@@ -334,7 +333,7 @@ void CCMemory::dumpRecord() {
     for (int i = 0; i < MEMORY_RECORD_INDEX_SIZE; i++) {
         ccObjRecord* r = sObjRecord[i];
         while(r) {
-            CCLOG("[REFRECORD of %s]", r->obj->getQualifiedName().c_str());
+            CCLOG("[REFRECORD of %p]", r->obj);
             ccRefRecord* rr = r->firstOp;
             while(rr) {
                 CCLOG("    %s: [%s:%d]", ccRefOpStrings[rr->op], rr->file, rr->line);
@@ -346,28 +345,22 @@ void CCMemory::dumpRecord() {
 #endif
 }
 
-void CCMemory::watchClass(function<bool(CCObject*)> name) {
+void CCMemory::watchClass(ccObjTypeChecker func) {
 #ifdef CC_CFLAG_MEMORY_TRACKING
+    sObjTypeChecker = func;
 #endif
 }
 
 void CCMemory::trackCCObject(CCObject* obj) {
 #ifdef CC_CFLAG_MEMORY_TRACKING
     // null checking
-    if(!obj)
+    if(!obj || !sObjTypeChecker)
         return;
     
-    // skip not watched class
-    bool match = false;
-    string classname = obj->getQualifiedName();
-    for(int i = 0; i < sWatchedClassCount; i++) {
-        if(sWatchedClasses[i] == classname) {
-            match = true;
-            break;
-        }
-    }
-    if(!match)
+    // check object type
+    if(!(*sObjTypeChecker)(obj)) {
         return;
+    }
     
     // create record
     ccObjRecord* r = (ccObjRecord*)malloc(sizeof(ccObjRecord));
@@ -405,20 +398,13 @@ void CCMemory::trackCCObject(CCObject* obj) {
 void CCMemory::untrackCCObject(CCObject* obj) {
 #ifdef CC_CFLAG_MEMORY_TRACKING
     // null checking
-    if(!obj)
+    if(!obj || !sObjTypeChecker)
         return;
     
-    // skip not watched class
-    bool match = false;
-    string classname = obj->getQualifiedName();
-    for(int i = 0; i < sWatchedClassCount; i++) {
-        if(sWatchedClasses[i] == classname) {
-            match = true;
-            break;
-        }
-    }
-    if(!match)
+    // check object type
+    if(!(*sObjTypeChecker)(obj)) {
         return;
+    }
     
     // get hash
     int hash = (uintptr_t)obj & MEMORY_RECORD_INDEX_MASK;
@@ -458,20 +444,13 @@ void CCMemory::untrackCCObject(CCObject* obj) {
 void CCMemory::trackRetain(CCObject* obj, const char* file, int line) {
 #ifdef CC_CFLAG_MEMORY_TRACKING
     // null checking
-    if(!obj)
+    if(!obj || !sObjTypeChecker)
         return;
     
-    // skip not watched class
-    bool match = false;
-    string classname = obj->getQualifiedName();
-    for(int i = 0; i < sWatchedClassCount; i++) {
-        if(sWatchedClasses[i] == classname) {
-            match = true;
-            break;
-        }
-    }
-    if(!match)
+    // check object type
+    if(!(*sObjTypeChecker)(obj)) {
         return;
+    }
     
     // find record
     ccObjRecord* r = findObjRecord(obj);
@@ -493,20 +472,13 @@ void CCMemory::trackRetain(CCObject* obj, const char* file, int line) {
 void CCMemory::trackRelease(CCObject* obj, const char* file, int line) {
 #ifdef CC_CFLAG_MEMORY_TRACKING
     // null checking
-    if(!obj)
+    if(!obj || !sObjTypeChecker)
         return;
     
-    // skip not watched class
-    bool match = false;
-    string classname = obj->getQualifiedName();
-    for(int i = 0; i < sWatchedClassCount; i++) {
-        if(sWatchedClasses[i] == classname) {
-            match = true;
-            break;
-        }
-    }
-    if(!match)
+    // check object type
+    if(!(*sObjTypeChecker)(obj)) {
         return;
+    }
     
     // find record
     ccObjRecord* r = findObjRecord(obj);
@@ -528,20 +500,13 @@ void CCMemory::trackRelease(CCObject* obj, const char* file, int line) {
 void CCMemory::trackAutorelease(CCObject* obj, const char* file, int line) {
 #ifdef CC_CFLAG_MEMORY_TRACKING
     // null checking
-    if(!obj)
+    if(!obj || !sObjTypeChecker)
         return;
     
-    // skip not watched class
-    bool match = false;
-    string classname = obj->getQualifiedName();
-    for(int i = 0; i < sWatchedClassCount; i++) {
-        if(sWatchedClasses[i] == classname) {
-            match = true;
-            break;
-        }
-    }
-    if(!match)
+    // check object type
+    if(!(*sObjTypeChecker)(obj)) {
         return;
+    }
     
     // find record
     ccObjRecord* r = findObjRecord(obj);
