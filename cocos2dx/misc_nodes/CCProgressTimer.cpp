@@ -503,7 +503,7 @@ void CCProgressTimer::draw(void)
     if( ! m_pVertexData || ! m_pSprite)
         return;
 
-    CC_NODE_DRAW_SETUP();
+    CC_NODE_DRAW_SETUP(this);
 
     ccGLBlendFunc( m_pSprite->getBlendFunc().src, m_pSprite->getBlendFunc().dst );
 

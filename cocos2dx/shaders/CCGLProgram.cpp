@@ -248,13 +248,13 @@ void CCGLProgram::addAttribute(const char* attributeName, GLuint index)
 
 void CCGLProgram::updateUniforms()
 {
-    m_uUniforms[kCCUniformPMatrix] = glGetUniformLocation(m_uProgram, kCCUniformPMatrix_s);
-	m_uUniforms[kCCUniformMVMatrix] = glGetUniformLocation(m_uProgram, kCCUniformMVMatrix_s);
-	m_uUniforms[kCCUniformMVPMatrix] = glGetUniformLocation(m_uProgram, kCCUniformMVPMatrix_s);
+    m_uUniforms[kCCUniformPMatrix] = glGetUniformLocation(m_uProgram, kCCUniformNames[kCCUniformPMatrix]);
+	m_uUniforms[kCCUniformMVMatrix] = glGetUniformLocation(m_uProgram, kCCUniformNames[kCCUniformMVMatrix]);
+	m_uUniforms[kCCUniformMVPMatrix] = glGetUniformLocation(m_uProgram, kCCUniformNames[kCCUniformMVPMatrix]);
 	
-	m_uUniforms[kCCUniformTime] = glGetUniformLocation(m_uProgram, kCCUniformTime_s);
-	m_uUniforms[kCCUniformSinTime] = glGetUniformLocation(m_uProgram, kCCUniformSinTime_s);
-	m_uUniforms[kCCUniformCosTime] = glGetUniformLocation(m_uProgram, kCCUniformCosTime_s);
+	m_uUniforms[kCCUniformTime] = glGetUniformLocation(m_uProgram, kCCUniformNames[kCCUniformTime]);
+	m_uUniforms[kCCUniformSinTime] = glGetUniformLocation(m_uProgram, kCCUniformNames[kCCUniformSinTime]);
+	m_uUniforms[kCCUniformCosTime] = glGetUniformLocation(m_uProgram, kCCUniformNames[kCCUniformCosTime]);
 	
 	m_bUsesTime = (
                  m_uUniforms[kCCUniformTime] != -1 ||
@@ -262,9 +262,9 @@ void CCGLProgram::updateUniforms()
                  m_uUniforms[kCCUniformCosTime] != -1
                  );
     
-	m_uUniforms[kCCUniformRandom01] = glGetUniformLocation(m_uProgram, kCCUniformRandom01_s);
+	m_uUniforms[kCCUniformRandom01] = glGetUniformLocation(m_uProgram, kCCUniformNames[kCCUniformRandom01]);
 
-    m_uUniforms[kCCUniformSampler] = glGetUniformLocation(m_uProgram, kCCUniformSampler_s);
+    m_uUniforms[kCCUniformSampler] = glGetUniformLocation(m_uProgram, kCCUniformNames[kCCUniformSampler]);
 
     this->use();
     
@@ -562,6 +562,10 @@ void CCGLProgram::setUniformLocationWithMatrix4fv(GLint location, GLfloat* matri
     {
         glUniformMatrix4fv( (GLint)location, (GLsizei)numberOfMatrices, GL_FALSE, matrixArray);
     }
+}
+
+void CCGLProgram::setCustomUniforms(CCNode* n) {
+    
 }
 
 void CCGLProgram::setUniformsForBuiltins()

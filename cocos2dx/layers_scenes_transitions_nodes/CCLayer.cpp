@@ -786,7 +786,7 @@ void CCLayerColor::updateColor()
 
 void CCLayerColor::draw()
 {
-    CC_NODE_DRAW_SETUP();
+    CC_NODE_DRAW_SETUP(this);
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_Color );
 

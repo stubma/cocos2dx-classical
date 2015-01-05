@@ -105,7 +105,7 @@ void CCCatmullRomSprite::draw() {
 	CC_PROFILER_START_CATEGORY(kCCProfilerCategorySprite, "CCCatmullRomSprite - draw");
 	
 	// setup
-    CC_NODE_DRAW_SETUP();
+    CC_NODE_DRAW_SETUP(this);
 	
 	// blend func
 	ccBlendFunc bf = m_sprite->getBlendFunc();

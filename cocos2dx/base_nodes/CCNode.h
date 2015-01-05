@@ -855,8 +855,9 @@ public:
      * @endcode
      * 
      * @param The shader program which fetchs from CCShaderCache.
+     * @param uniformValues the uniform values used for this program
      */
-    virtual void setShaderProgram(CCGLProgram *pShaderProgram);
+    virtual void setShaderProgram(CCGLProgram *pShaderProgram, CCDictionary* uniformValues = nullptr);
     /// @} end of Shader Program
     
     
@@ -1463,7 +1464,7 @@ protected:
     ccScriptType m_eScriptType;         ///< type of script binding, lua or javascript
     
     CCComponentContainer *m_pComponentContainer;        ///< Dictionary of components
-
+    CCDictionary* m_uniformValues; /// uniform values for node shader program
 };
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)

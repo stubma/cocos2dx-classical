@@ -395,7 +395,7 @@ void CCSpriteBatchNode::draw(void)
         return;
     }
 
-    CC_NODE_DRAW_SETUP();
+    CC_NODE_DRAW_SETUP(this);
 
     arrayMakeObjectsPerformSelector(m_pChildren, updateTransform, CCSprite*);
 

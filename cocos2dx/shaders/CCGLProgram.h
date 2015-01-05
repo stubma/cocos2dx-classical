@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 #include "ccMacros.h"
 #include "cocoa/CCObject.h"
-
+#include "base_nodes/CCNode.h"
 #include "CCGL.h"
 
 NS_CC_BEGIN
@@ -57,8 +57,58 @@ enum {
 	kCCUniformCosTime,
 	kCCUniformRandom01,
 	kCCUniformSampler,
+    kCCUniformAlphaTestValue,
+    
+    // custom uniforms starts
+    kCCUniform_custom_start = kCCUniformAlphaTestValue,
+    
+    // custom uniforms
+    kCCUniform_blurSize,
+    kCCUniform_blurSubtract,
+    kCCUniform_flashColor,
+    kCCUniform_flashTime,
+    kCCUniform_lightingMul,
+    kCCUniform_lightingAdd,
+    kCCUniform_colorMatrix,
+    kCCUniform_shineWidth,
+    kCCUniform_shineXY1,
+    kCCUniform_shineXY2,
+    kCCUniform_shineColor1,
+    kCCUniform_shineColor2,
+    kCCUniform_shineColor3,
+    kCCUniform_shinePositions,
+    kCCUniform_shineTime,
     
 	kCCUniform_MAX,
+};
+
+static const char* kCCUniformNames[] = {
+    "CC_PMatrix",
+    "CC_MVMatrix",
+    "CC_MVPMatrix",
+    "CC_Time",
+    "CC_SinTime",
+    "CC_CosTime",
+    "CC_Random01",
+    "CC_Texture0",
+    "CC_alpha_value",
+    
+    // custom uniforms
+    "CC_blurSize",
+    "CC_blurSubtract",
+    "CC_flashColor",
+    "CC_flashTime",
+    "CC_lightingMul",
+    "CC_lightingAdd",
+    "CC_colorMatrix",
+    "CC_shineWidth",
+    "CC_shineXY1",
+    "CC_shineXY2",
+    "CC_shineColor1",
+    "CC_shineColor2",
+    "CC_shineColor3",
+    "CC_shinePositions",
+    "CC_shineTime",
 };
 
 #define kCCShader_PositionTextureColor              "ShaderPositionTextureColor"
@@ -78,34 +128,6 @@ enum {
 #define kCCShader_lighting "kCCShader_lighting"
 #define kCCShader_matrix "kCCShader_matrix"
 #define kCCShader_shine "kCCShader_shine"
-
-// uniform names
-#define kCCUniformPMatrix_s				"CC_PMatrix"
-#define kCCUniformMVMatrix_s			"CC_MVMatrix"
-#define kCCUniformMVPMatrix_s			"CC_MVPMatrix"
-#define kCCUniformTime_s				"CC_Time"
-#define kCCUniformSinTime_s				"CC_SinTime"
-#define kCCUniformCosTime_s				"CC_CosTime"
-#define kCCUniformRandom01_s			"CC_Random01"
-#define kCCUniformSampler_s				"CC_Texture0"
-#define kCCUniformAlphaTestValue		"CC_alpha_value"
-
-// extension shader uniforms
-#define kCCUniform_blurSize "CC_blurSize"
-#define kCCUniform_blurSubtract "CC_blurSubtract"
-#define kCCUniform_flashColor "CC_flashColor"
-#define kCCUniform_flashTime "CC_flashTime"
-#define kCCUniform_lightingMul "CC_lightingMul"
-#define kCCUniform_lightingAdd "CC_lightingAdd"
-#define kCCUniform_colorMatrix "CC_colorMatrix"
-#define kCCUniform_shineWidth "CC_shineWidth"
-#define kCCUniform_shineXY1 "CC_shineXY1"
-#define kCCUniform_shineXY2 "CC_shineXY2"
-#define kCCUniform_shineColor1 "CC_shineColor1"
-#define kCCUniform_shineColor2 "CC_shineColor2"
-#define kCCUniform_shineColor3 "CC_shineColor3"
-#define kCCUniform_shinePositions "CC_shinePositions"
-#define kCCUniform_shineTime "CC_shineTime"
 
 // Attribute names
 #define    kCCAttributeNameColor           "a_color"
@@ -268,6 +290,11 @@ public:
      *  @lua NA
      */
     void setUniformsForBuiltins();
+    
+    /** will update the custom uniforms saved in node if there is any
+     *  @lua NA
+     */
+    void setCustomUniforms(CCNode* n);
 
     /** returns the vertexShader error log 
      *  @js  getVertexShaderLog

@@ -192,7 +192,7 @@ void CCDrawNode::render()
 
 void CCDrawNode::draw()
 {
-    CC_NODE_DRAW_SETUP();
+    CC_NODE_DRAW_SETUP(this);
     ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
     
     render();

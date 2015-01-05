@@ -330,7 +330,7 @@ void CCMotionStreak::draw()
     if(m_uNuPoints <= 1)
         return;
 
-    CC_NODE_DRAW_SETUP();
+    CC_NODE_DRAW_SETUP(this);
 
     ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
     ccGLBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );

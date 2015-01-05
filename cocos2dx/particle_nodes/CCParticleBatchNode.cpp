@@ -409,7 +409,7 @@ void CCParticleBatchNode::draw(void)
         return;
     }
 
-    CC_NODE_DRAW_SETUP();
+    CC_NODE_DRAW_SETUP(this);
 
     ccGLBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 

@@ -26,9 +26,6 @@
 
 NS_CC_BEGIN
 
-static GLint sUniform_pos_CC_flashColor = -1;
-static GLint sUniform_pos_CC_flashTime = -1;
-
 const char* ccShader_flash_frag = "\n\
 	#ifdef GL_ES \n\
 	precision lowp float; \n\

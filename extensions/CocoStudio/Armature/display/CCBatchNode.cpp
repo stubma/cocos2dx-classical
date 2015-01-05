@@ -163,7 +163,7 @@ void CCBatchNode::visit()
 
 void CCBatchNode::draw()
 {
-    CC_NODE_DRAW_SETUP();
+    CC_NODE_DRAW_SETUP(this);
     CCObject *object = nullptr;
     CCARRAY_FOREACH(m_pChildren, object)
     {

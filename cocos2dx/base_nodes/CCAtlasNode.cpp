@@ -140,7 +140,7 @@ void CCAtlasNode::updateAtlasValues()
 // CCAtlasNode - draw
 void CCAtlasNode::draw(void)
 {
-    CC_NODE_DRAW_SETUP();
+    CC_NODE_DRAW_SETUP(this);
 
     ccGLBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 

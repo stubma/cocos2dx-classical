@@ -26,8 +26,6 @@
 
 NS_CC_BEGIN
 
-static GLint sUniform_pos_CC_colorMatrix = -1;
-
 const char* ccShader_matrix_frag = "\n\
     #ifdef GL_ES \n\
         precision lowp float; \n\

@@ -472,7 +472,7 @@ void CCArmature::draw()
     
     if (m_pParentBone == nullptr && m_pBatchNode == nullptr)
     {
-        CC_NODE_DRAW_SETUP();
+        CC_NODE_DRAW_SETUP(this);
         ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
     }
 
@@ -550,7 +550,7 @@ void CCArmature::draw()
                 }
                 node->visit();
 
-                CC_NODE_DRAW_SETUP();
+                CC_NODE_DRAW_SETUP(this);
                 ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
             }
             break;
@@ -565,7 +565,7 @@ void CCArmature::draw()
             }
             node->visit();
 
-            CC_NODE_DRAW_SETUP();
+            CC_NODE_DRAW_SETUP(this);
             ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
         }
     }

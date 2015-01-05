@@ -297,7 +297,7 @@ void CCClippingNode::visit()
         // since glAlphaTest do not exists in OES, use a shader that writes
         // pixel only if greater than an alpha threshold
         CCGLProgram *program = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
-        GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kCCUniformAlphaTestValue);
+        GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kCCUniformNames[kCCUniformAlphaTestValue]);
         // set our alphaThreshold
         program->use();
         program->setUniformLocationWith1f(alphaValueLocation, m_fAlphaThreshold);

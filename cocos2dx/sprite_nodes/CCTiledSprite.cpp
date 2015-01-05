@@ -131,7 +131,7 @@ void CCTiledSprite::draw() {
 	CC_PROFILER_START_CATEGORY(kCCProfilerCategorySprite, "CCTiledSprite - draw");
 	
 	// setup
-    CC_NODE_DRAW_SETUP();
+    CC_NODE_DRAW_SETUP(this);
 	
 	// blend func
     ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);

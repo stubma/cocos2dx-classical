@@ -130,7 +130,7 @@ void CCAFCSprite::initSpriteFromAnimationData() {
 void CCAFCSprite::draw() {
     CC_PROFILER_START_CATEGORY(kCCProfilerCategorySprite, "CCAFCSprite - draw");
     
-    CC_NODE_DRAW_SETUP();
+    CC_NODE_DRAW_SETUP(this);
     
     ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
     

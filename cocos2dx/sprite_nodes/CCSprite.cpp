@@ -558,7 +558,7 @@ void CCSprite::draw(void)
     if(m_preDrawFunction)
         m_preDrawFunction->execute();
     
-    CC_NODE_DRAW_SETUP();
+    CC_NODE_DRAW_SETUP(this);
 
     ccGLBlendFunc( m_sBlendFunc.src, m_sBlendFunc.dst );
 

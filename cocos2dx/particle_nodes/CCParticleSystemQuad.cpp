@@ -355,7 +355,7 @@ void CCParticleSystemQuad::draw()
 	
     CCAssert(!m_pBatchNode,"draw should not be called when added to a particleBatchNode");
 
-    CC_NODE_DRAW_SETUP();
+    CC_NODE_DRAW_SETUP(this);
 
     ccGLBindTexture2D( m_pTexture->getName() );
     ccGLBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );

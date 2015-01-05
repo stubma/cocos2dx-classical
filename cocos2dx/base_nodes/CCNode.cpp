@@ -90,6 +90,7 @@ CCNode::CCNode(void)
 , m_nScriptHandler(0)
 , m_nUpdateScriptHandler(0)
 , m_pComponentContainer(nullptr)
+, m_uniformValues(nullptr)
 {
     // set default scheduler and actionManager
     CCDirector *director = CCDirector::sharedDirector();
@@ -121,6 +122,7 @@ CCNode::~CCNode(void)
     CC_SAFE_RELEASE(m_pGrid);
     CC_SAFE_RELEASE(m_pShaderProgram);
     CC_SAFE_RELEASE(m_pUserObject);
+    CC_SAFE_RELEASE(m_uniformValues);
 
     // m_pComsContainer
     m_pComponentContainer->removeAll();
@@ -516,11 +518,15 @@ void CCNode::setUserObject(CCObject *pUserObject)
     m_pUserObject = pUserObject;
 }
 
-void CCNode::setShaderProgram(CCGLProgram *pShaderProgram)
+void CCNode::setShaderProgram(CCGLProgram *pShaderProgram, CCDictionary* uniformValues)
 {
     CC_SAFE_RETAIN(pShaderProgram);
     CC_SAFE_RELEASE(m_pShaderProgram);
     m_pShaderProgram = pShaderProgram;
+    
+    CC_SAFE_RETAIN(uniformValues);
+    CC_SAFE_RELEASE(m_uniformValues);
+    m_uniformValues = uniformValues;
 }
 
 CCRect CCNode::boundingBox()

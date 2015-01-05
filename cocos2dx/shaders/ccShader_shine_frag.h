@@ -24,15 +24,6 @@
 #ifndef __ccShader_shine_frag_h__
 #define __ccShader_shine_frag_h__
 
-static GLint sUniform_pos_CC_shineWidth = -1;
-static GLint sUniform_pos_CC_shineTime = -1;
-static GLint sUniform_pos_CC_shineXY1 = -1;
-static GLint sUniform_pos_CC_shineXY2 = -1;
-static GLint sUniform_pos_CC_shineColor1 = -1;
-static GLint sUniform_pos_CC_shineColor2 = -1;
-static GLint sUniform_pos_CC_shineColor3 = -1;
-static GLint sUniform_pos_CC_shinePositions = -1;
-
 const char* ccShader_shine_frag = "\n\
     #ifdef GL_ES\n\
         precision lowp float;\n\
