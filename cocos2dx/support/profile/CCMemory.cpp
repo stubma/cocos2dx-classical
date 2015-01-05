@@ -254,6 +254,8 @@ typedef struct ccRefRecord {
     ccRefOp op;
     const char* file;
     int line;
+    int retainCount;
+    int autoReleaseCount;
     struct ccRefRecord* next;
 } ccRefRecord;
 typedef struct ccObjRecord{
@@ -270,8 +272,6 @@ static const char* ccRefOpStrings[] = {
 
 // record buffer
 static ccObjRecord* sObjRecord[MEMORY_RECORD_INDEX_SIZE] = { 0 };
-
-// static
 
 // find obj record
 static ccObjRecord* findObjRecord(CCObject* obj) {
@@ -296,6 +296,18 @@ static void appendRefRecord(ccObjRecord* r, ccRefRecord* newrr) {
         rr->next = newrr;
     } else {
         r->firstOp = newrr;
+    }
+}
+
+static void dumpOneObjRecord(ccObjRecord* r) {
+    while(r) {
+        CCLOG("[REFRECORD of %p]", r->obj);
+        ccRefRecord* rr = r->firstOp;
+        while(rr) {
+            CCLOG("    %s:%d,%d [%s:%d]", ccRefOpStrings[rr->op], rr->retainCount, rr->autoReleaseCount, rr->file, rr->line);
+            rr = rr->next;
+        }
+        r = r->next;
     }
 }
 
@@ -330,15 +342,7 @@ void CCMemory::dumpRecord() {
     // reference count records
     for (int i = 0; i < MEMORY_RECORD_INDEX_SIZE; i++) {
         ccObjRecord* r = sObjRecord[i];
-        while(r) {
-            CCLOG("[REFRECORD of %p]", r->obj);
-            ccRefRecord* rr = r->firstOp;
-            while(rr) {
-                CCLOG("    %s: [%s:%d]", ccRefOpStrings[rr->op], rr->file, rr->line);
-                rr = rr->next;
-            }
-            r = r->next;
-        }
+        dumpOneObjRecord(r);
     }
 #endif
 }
@@ -383,7 +387,6 @@ void CCMemory::trackCCObject(CCObject* obj, string name) {
     
     // set track flag
     obj->m_tracked = true;
-    
 #endif
 }
 
@@ -409,6 +412,9 @@ void CCMemory::untrackCCObject(CCObject* obj) {
     if(!pTemp) {
         return;
     }
+    
+    // dump
+    dumpOneObjRecord(pTemp);
     
     // remove record
     if(pTemp == sObjRecord[hash]) {
@@ -447,6 +453,8 @@ void CCMemory::trackRetain(CCObject* obj, const char* file, int line) {
     newrr->op = kCC_RETAIN;
     newrr->file = file;
     newrr->line = line;
+    newrr->retainCount = obj->retainCount();
+    newrr->autoReleaseCount = obj->autoReleaseCount();
     newrr->next = nullptr;
     appendRefRecord(r, newrr);
 #endif
@@ -470,6 +478,8 @@ void CCMemory::trackRelease(CCObject* obj, const char* file, int line) {
     newrr->op = kCC_RELEASE;
     newrr->file = file;
     newrr->line = line;
+    newrr->retainCount = obj->retainCount();
+    newrr->autoReleaseCount = obj->autoReleaseCount();
     newrr->next = nullptr;
     appendRefRecord(r, newrr);
 #endif
@@ -493,6 +503,8 @@ void CCMemory::trackAutorelease(CCObject* obj, const char* file, int line) {
     newrr->op = kCC_AUTORELEASE;
     newrr->file = file;
     newrr->line = line;
+    newrr->retainCount = obj->retainCount();
+    newrr->autoReleaseCount = obj->autoReleaseCount();
     newrr->next = nullptr;
     appendRefRecord(r, newrr);
 #endif

@@ -85,6 +85,7 @@ public:
     CCObject* copy(void);
     bool isSingleReference(void) const;
     unsigned int retainCount(void) const;
+    unsigned int autoReleaseCount(void) const;
     virtual bool isEqual(const CCObject* pObject);
 
     virtual void acceptVisitor(CCDataVisitor &visitor);

@@ -412,16 +412,8 @@ CCCallFunc * CCCallFunc::create(ccScriptFunction nHandler)
 }
 
 bool CCCallFunc::initWithTarget(CCObject* pSelectorTarget) {
-    if (pSelectorTarget) 
-    {
-        CC_SAFE_RETAIN(pSelectorTarget);
-    }
-
-    if (m_pSelectorTarget) 
-    {
-        CC_SAFE_RELEASE(m_pSelectorTarget);
-    }
-
+    CC_SAFE_RETAIN(pSelectorTarget);
+    CC_SAFE_RELEASE(m_pSelectorTarget);
     m_pSelectorTarget = pSelectorTarget;
     return true;
 }

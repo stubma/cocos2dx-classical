@@ -87,14 +87,14 @@ CCObject* CCObject::copy()
 
 void CCObject::release(const char* file, int line)
 {
+    CCAssert(m_uReference > 0, "reference count should greater than 0");
+    --m_uReference;
+
     // for memory debugging
 #ifdef CC_CFLAG_MEMORY_TRACKING
     CCMemory::trackRelease(this, file, line);
 #endif
     
-    CCAssert(m_uReference > 0, "reference count should greater than 0");
-    --m_uReference;
-
     if (m_uReference == 0)
     {
         delete this;
@@ -103,30 +103,35 @@ void CCObject::release(const char* file, int line)
 
 void CCObject::retain(const char* file, int line)
 {
+    CCAssert(m_uReference > 0, "reference count should greater than 0");
+
+    ++m_uReference;
+    
     // for memory debugging
 #ifdef CC_CFLAG_MEMORY_TRACKING
     CCMemory::trackRetain(this, file, line);
 #endif
-    
-    CCAssert(m_uReference > 0, "reference count should greater than 0");
-
-    ++m_uReference;
 }
 
 CCObject* CCObject::autorelease(const char* file, int line)
 {
+    CCPoolManager::sharedPoolManager()->addObject(this);
+    
     // for memory debugging
 #ifdef CC_CFLAG_MEMORY_TRACKING
     CCMemory::trackAutorelease(this, file, line);
 #endif
     
-    CCPoolManager::sharedPoolManager()->addObject(this);
     return this;
 }
 
 bool CCObject::isSingleReference(void) const
 {
     return m_uReference == 1;
+}
+
+unsigned int CCObject::autoReleaseCount(void) const {
+    return m_uAutoReleaseCount;
 }
 
 unsigned int CCObject::retainCount(void) const
