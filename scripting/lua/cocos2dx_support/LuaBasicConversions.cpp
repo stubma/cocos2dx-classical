@@ -767,6 +767,42 @@ bool luaval_to_tex2f(lua_State* L, int lo, cocos2d::ccTex2F* outValue, const cha
     return ok;
 }
 
+bool luaval_to_mat4(lua_State* L, int lo, kmMat4* outValue , const char* funcName) {
+    if (nullptr == L || nullptr == outValue)
+        return false;
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err)) {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L, "#ferror:", &tolua_err,funcName);
+        ok = false;
+#endif
+    }
+    
+    if (ok) {
+        do {
+            size_t len = lua_objlen(L, lo);
+            if (len != 16) {
+                ok = false;
+                break;
+            }
+            for (size_t i = 0; i < len; i++) {
+                lua_pushnumber(L, i + 1);
+                lua_gettable(L,lo);
+                if (tolua_isnumber(L, -1, 0, &tolua_err)) {
+                    outValue->mat[i] = tolua_tonumber(L, -1, 0);
+                } else {
+                    outValue->mat[i] = 0;
+                }
+                lua_pop(L, 1);
+            }
+        } while (0);
+    }
+    
+    return ok;
+}
+
 bool luaval_to_point(lua_State* L,int lo,cocos2d::CCPoint* outValue, const char* funcName)
 {
     if (nullptr == L || nullptr == outValue)
@@ -2613,5 +2649,17 @@ void ccvector_rect_to_luaval(lua_State* L, const std::vector<cocos2d::CCRect>& i
         rect_to_luaval(L, value);
         lua_rawset(L, -3);
         ++index;
+    }
+}
+
+void mat4_to_luaval(lua_State* L, const kmMat4& mat) {
+    if (nullptr == L)
+        return;
+    
+    lua_newtable(L);                                    /* L: table */
+    for (int i = 0; i < 16; i++) {
+        lua_pushnumber(L, i + 1);
+        lua_pushnumber(L, (lua_Number)mat.mat[i]);
+        lua_rawset(L, -3);
     }
 }
