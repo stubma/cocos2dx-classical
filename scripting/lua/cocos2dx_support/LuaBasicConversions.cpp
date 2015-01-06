@@ -1559,6 +1559,8 @@ bool luaval_to_dictionary(lua_State* L,int lo, CCDictionary** outValue, const ch
                         dict->setObject(obj, stringKey);
                     }
                 } else if(lua_istable(L, -1)) {
+                    // if i can't get element by index, we think it is a dictionary
+                    // otherwise parse the table as an array
                     lua_pushnumber(L, 1);
                     lua_gettable(L, -2);
                     if (lua_isnil(L, -1)) {
