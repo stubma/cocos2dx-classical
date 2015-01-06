@@ -78,6 +78,7 @@ extern bool luaval_to_vertex3f(lua_State* L, int lo, cocos2d::ccVertex3F* outVal
 extern bool luaval_to_bezierconfig(lua_State* L, int lo, cocos2d::ccBezierConfig* outValue, const char* funcName = "");
 extern bool luaval_to_quad3(lua_State* L, int lo, cocos2d::ccQuad3* outValue, const char* funcName = "");
 extern bool luaval_to_cpoint(lua_State* L, int lo, cocos2d::ccPoint* outValue, const char* funcName = "");
+extern bool luaval_to_csize(lua_State* L,int lo, cocos2d::ccSize* outValue, const char* funcName = "");
 extern bool luaval_to_crect(lua_State* L, int lo, cocos2d::ccRect* outValue, const char* funcName = "");
 extern bool luaval_to_luafunc(lua_State* L, int lo, cocos2d::ccScriptFunction* outValue, const char* funcName = "");
 extern bool luaval_to_aabb(lua_State* L, int lo, cocos2d::ccAABB* outValue, const char* funcName = "");
@@ -133,6 +134,7 @@ extern void vertex3f_to_luaval(lua_State* L, const cocos2d::ccVertex3F& v);
 extern void bezierconfig_to_luaval(lua_State* L, const cocos2d::ccBezierConfig& bc);
 extern void quad3_to_luaval(lua_State* L, const cocos2d::ccQuad3& q);
 extern void cpoint_to_luaval(lua_State* L, const cocos2d::ccPoint& p);
+extern void csize_to_luaval(lua_State* L, const cocos2d::ccSize& s);
 extern void crect_to_luaval(lua_State* L, const cocos2d::ccRect& r);
 extern void aabb_to_luaval(lua_State* L, const cocos2d::ccAABB& r);
 extern void packetheader_to_luaval(lua_State* L, const cocos2d::ccPacketHeader& r);

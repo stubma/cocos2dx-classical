@@ -549,6 +549,35 @@ bool luaval_to_bezierconfig(lua_State* L, int lo, cocos2d::ccBezierConfig* outVa
     return ok;
 }
 
+bool luaval_to_csize(lua_State* L,int lo, cocos2d::ccSize* outValue, const char* funcName) {
+    // null checking
+    if (nullptr == L || nullptr == outValue)
+        return false;
+    bool ok = true;
+    
+    // top should be a table
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err)) {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L, "#ferror:", &tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok) {
+        lua_pushstring(L, "width");
+        lua_gettable(L, lo);
+        outValue->width = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "height");
+        lua_gettable(L, lo);
+        outValue->height = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+    }
+    return ok;
+}
+
 bool luaval_to_cpoint(lua_State* L, int lo, cocos2d::ccPoint* outValue, const char* funcName) {
     // null checking
     if (nullptr == L || nullptr == outValue)
@@ -559,7 +588,7 @@ bool luaval_to_cpoint(lua_State* L, int lo, cocos2d::ccPoint* outValue, const ch
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err)) {
 #if COCOS2D_DEBUG >=1
-        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+        luaval_to_native_err(L, "#ferror:", &tolua_err,funcName);
 #endif
         ok = false;
     }
@@ -2048,6 +2077,18 @@ void bezierconfig_to_luaval(lua_State* L, const cocos2d::ccBezierConfig& bc) {
     lua_rawset(L, -3);
     lua_pushstring(L, "controlPoint_2");
     point_to_luaval(L, bc.controlPoint_2);
+    lua_rawset(L, -3);
+}
+
+void csize_to_luaval(lua_State* L, const cocos2d::ccSize& s) {
+    if (nullptr == L)
+        return;
+    lua_newtable(L);
+    lua_pushstring(L, "width");
+    lua_pushnumber(L, (lua_Number)s.width);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "height");
+    lua_pushnumber(L, (lua_Number)s.height);
     lua_rawset(L, -3);
 }
 
