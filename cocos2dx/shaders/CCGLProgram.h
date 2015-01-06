@@ -28,12 +28,15 @@ THE SOFTWARE.
 #ifndef __CCGLPROGRAM_H__
 #define __CCGLPROGRAM_H__
 
+#include "ccTypes.h"
 #include "ccMacros.h"
 #include "cocoa/CCObject.h"
-#include "base_nodes/CCNode.h"
 #include "CCGL.h"
+#include "kazmath/mat4.h"
 
 NS_CC_BEGIN
+
+class CCNode;
 
 /**
  * @addtogroup shaders
@@ -138,6 +141,47 @@ struct _hashUniformEntry;
 
 typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
 typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
+
+// custom uniforms value union
+typedef union {
+    struct {
+        float r, g, b, t;
+    } flash;
+    
+    struct {
+        ccSize nodeSize;
+        ccSize blurSize;
+        ccColor4F subtract;
+    } blur;
+    
+    struct {
+        ccColor4B mul;
+        ccColor3B add;
+    } lighting;
+    
+    struct {
+        kmMat4 mat4;
+    } matrix;
+    
+    struct {
+        float width;
+        ccPoint lb, rt;
+        ccColor4B color1, color2, color3;
+        ccVertex3F gradientPositions;
+        float time;
+    } shine;
+} ccCustomUniformValue;
+
+// common used uniform value
+static ccCustomUniformValue kCCMatrixUniformValue_gray = {
+    .matrix = {
+        0.299f, 0.299f, 0.299f, 0,
+        0.587f, 0.587f, 0.587f, 0,
+        0.114f, 0.114f, 0.114f, 0,
+        0, 0, 0, 1
+    }
+};
+static ccCustomUniformValue kCCCustomUniformValue_empty = { 0 };
 
 /** CCGLProgram
  Class that implements a glProgram

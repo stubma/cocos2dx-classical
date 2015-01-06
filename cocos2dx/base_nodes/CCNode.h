@@ -855,9 +855,23 @@ public:
      * @endcode
      * 
      * @param The shader program which fetchs from CCShaderCache.
+     */
+    virtual void setShaderProgram(CCGLProgram *pShaderProgram);
+    
+    /**
+     * Sets the shader program for this node
+     *
+     * Since v2.0, each rendering node must set its shader program.
+     * It should be set in initialize phase.
+     * @code
+     * node->setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+     * @endcode
+     *
+     * @param The shader program which fetchs from CCShaderCache.
      * @param uniformValues the uniform values used for this program
      */
-    virtual void setShaderProgram(CCGLProgram *pShaderProgram, CCDictionary* uniformValues = nullptr);
+    virtual void setShaderProgram(CCGLProgram *pShaderProgram, ccCustomUniformValue v);
+    
     /// @} end of Shader Program
     
     
@@ -1382,6 +1396,9 @@ public:
      */
     virtual void removeAllComponents();
     /// @} end of component functions
+    
+    /// get custom uniform value
+    ccCustomUniformValue& getCustomUniformValue();
 
 private:
     /// lazy allocs
@@ -1464,7 +1481,7 @@ protected:
     ccScriptType m_eScriptType;         ///< type of script binding, lua or javascript
     
     CCComponentContainer *m_pComponentContainer;        ///< Dictionary of components
-    CCDictionary* m_uniformValues; /// uniform values for node shader program
+    ccCustomUniformValue m_uniformValue; /// uniform values for node shader program
 };
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
