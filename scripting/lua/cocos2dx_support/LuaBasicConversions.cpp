@@ -832,6 +832,47 @@ bool luaval_to_mat4(lua_State* L, int lo, kmMat4* outValue , const char* funcNam
     return ok;
 }
 
+bool luaval_to_customuniformvalue(lua_State* L, int lo, cocos2d::ccCustomUniformValue* outValue , const char* funcName ) {
+    // null checking
+    if (nullptr == L || nullptr == outValue)
+        return false;
+    bool ok = true;
+    
+    // must be table
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err)) {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L, "#ferror:", &tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    // must have __union field
+    string __union;
+    lua_pushstring(L, "__union");
+    lua_gettable(L, lo);
+    if(lua_isnil(L, -1) || !lua_isstring(L, -1)) {
+        ok = false;
+    } else {
+        luaval_to_std_string(L, -1, &__union);
+    }
+    lua_pop(L, 1);
+    
+    // conversion based on __union
+    if(ok) {
+        if(__union == "flash") {
+            
+        } else if(__union == "blur") {
+        } else if(__union == "matrix") {
+            
+        } else if(__union == "lighting") {
+        } else if(__union == "shine") {
+            
+        }
+    }
+    return ok;
+}
+
 bool luaval_to_point(lua_State* L,int lo,cocos2d::CCPoint* outValue, const char* funcName)
 {
     if (nullptr == L || nullptr == outValue)
@@ -2703,4 +2744,8 @@ void mat4_to_luaval(lua_State* L, const kmMat4& mat) {
         lua_pushnumber(L, (lua_Number)mat.mat[i]);
         lua_rawset(L, -3);
     }
+}
+
+void customuniformvalue_to_luaval(lua_State* L, const ccCustomUniformValue& v) {
+    
 }

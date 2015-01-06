@@ -142,7 +142,11 @@ struct _hashUniformEntry;
 typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
 typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
 
-// custom uniforms value union
+/**
+ * custom uniforms value union
+ * to convert between native and lua, lua table must set "__union" field, it is a string
+ * the __union value of this type can be: "flash", "blur", "lighting", "matrix", "laser", "shine"
+ */
 typedef union {
     struct {
         float r, g, b, t;
