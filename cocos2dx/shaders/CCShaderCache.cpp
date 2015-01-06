@@ -137,15 +137,13 @@ void CCShaderCache::loadDefaultShaders()
     // Position Texture Color shader
     CCGLProgram *p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionTextureColor);
-
-    m_pPrograms->setObject(p, kCCShader_PositionTextureColor);
+    addProgram(p, kCCShader_PositionTextureColor);
     CC_SAFE_RELEASE(p);
 
     // Position Texture Color alpha test
     p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionTextureColorAlphaTest);
-
-    m_pPrograms->setObject(p, kCCShader_PositionTextureColorAlphaTest);
+    addProgram(p, kCCShader_PositionTextureColorAlphaTest);
     CC_SAFE_RELEASE(p);
 
     //
@@ -153,8 +151,7 @@ void CCShaderCache::loadDefaultShaders()
     //
     p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionColor);
-
-    m_pPrograms->setObject(p, kCCShader_PositionColor);
+    addProgram(p, kCCShader_PositionColor);
     CC_SAFE_RELEASE(p);
 
     //
@@ -162,8 +159,7 @@ void CCShaderCache::loadDefaultShaders()
     //
     p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionTexture);
-
-    m_pPrograms->setObject(p, kCCShader_PositionTexture);
+    addProgram(p, kCCShader_PositionTexture);
     CC_SAFE_RELEASE(p);
 
     //
@@ -171,8 +167,7 @@ void CCShaderCache::loadDefaultShaders()
     //
     p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionTexture_uColor);
-
-    m_pPrograms->setObject(p ,kCCShader_PositionTexture_uColor);
+    addProgram(p, kCCShader_PositionTexture_uColor);
     CC_SAFE_RELEASE(p);
 
     //
@@ -180,8 +175,7 @@ void CCShaderCache::loadDefaultShaders()
     //
     p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionTextureA8Color);
-    
-    m_pPrograms->setObject(p, kCCShader_PositionTextureA8Color);
+    addProgram(p, kCCShader_PositionTextureA8Color);
     CC_SAFE_RELEASE(p);
 
     //
@@ -189,8 +183,7 @@ void CCShaderCache::loadDefaultShaders()
     //
     p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_Position_uColor);
-    
-    m_pPrograms->setObject(p, kCCShader_Position_uColor);
+    addProgram(p, kCCShader_Position_uColor);
     CC_SAFE_RELEASE(p);
     
     //
@@ -198,8 +191,7 @@ void CCShaderCache::loadDefaultShaders()
 	//
     p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_PositionLengthTexureColor);
-    
-    m_pPrograms->setObject(p, kCCShader_PositionLengthTexureColor);
+    addProgram(p, kCCShader_PositionLengthTexureColor);
     CC_SAFE_RELEASE(p);
 
     //
@@ -207,12 +199,9 @@ void CCShaderCache::loadDefaultShaders()
 	//
     p = new CCGLProgram();
     loadDefaultShader(p, kCCShaderType_ControlSwitch);
-    
-    m_pPrograms->setObject(p, kCCShader_ControlSwitch);
+    addProgram(p, kCCShader_ControlSwitch);
     CC_SAFE_RELEASE(p);
 }
-
-
 
 void CCShaderCache::reloadDefaultShaders()
 {
@@ -270,9 +259,6 @@ void CCShaderCache::reloadDefaultShaders()
     p->reset();
     loadDefaultShader(p, kCCShaderType_PositionLengthTexureColor);
 }
-
-
-
 
 void CCShaderCache::loadDefaultShader(CCGLProgram *p, int type)
 {
@@ -364,6 +350,7 @@ CCGLProgram* CCShaderCache::programForKey(const char* key)
 
 void CCShaderCache::addProgram(CCGLProgram* program, const char* key)
 {
+    program->setKey(key);
     m_pPrograms->setObject(program, key);
 }
 

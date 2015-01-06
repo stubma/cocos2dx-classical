@@ -380,6 +380,9 @@ private:
     struct _hashUniformEntry* m_pHashForUniforms;
     bool              m_bUsesTime;
     bool              m_hasShaderCompiler;
+    
+    // program key
+    CC_SYNTHESIZE(std::string, m_key, Key);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     std::string       m_shaderId;
