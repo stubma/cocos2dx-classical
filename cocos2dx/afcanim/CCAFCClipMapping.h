@@ -231,7 +231,7 @@ public:
 	 * @param flipX flip clip in x axis or not
 	 * @param rotation is clip rotated, positive value means clockwise
 	 */
-	void mapClip(int fromClipIndex, CCTexture2D* tex, ccPoint pos = ccpZero, ccRect texRect = ccrZero, bool flipX = false, float rotation = 0);
+	void mapClip(int fromClipIndex, CCTexture2D* tex, ccPoint pos = ccPointZero, ccRect texRect = ccRectZero, bool flipX = false, float rotation = 0);
 
 	/**
 	 * Get tag

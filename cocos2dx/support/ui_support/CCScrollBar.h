@@ -80,10 +80,10 @@ public:
 	virtual bool initWithTrackAndFixedThumb(CCScale9Sprite* track, CCSprite* thumb);
 	
 	/// attach scrollbar to CocoStudio ScrollView
-	void attachToScrollView(ScrollView* scrollView, ccInsets insets = cciZero, bool horizontal = false);
+	void attachToScrollView(ScrollView* scrollView, ccInsets insets = ccInsetsZero, bool horizontal = false);
 	
 	/// attach scrollbar to CCScrollView
-	void attachToCCScrollView(CCScrollView* scrollView, ccInsets insets = cciZero, bool horizontal = false);
+	void attachToCCScrollView(CCScrollView* scrollView, ccInsets insets = ccInsetsZero, bool horizontal = false);
     
     /// set auto fade and initial fade state
     void setAutoFade(bool autoFade, bool initFadeOut = false);

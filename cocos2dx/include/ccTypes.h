@@ -314,7 +314,7 @@ static inline ccPosition ccpos(const int x, const int y) {
 
 // point struct
 typedef struct ccPoint { float x, y; } ccPoint;
-static const ccPoint ccpZero = { 0, 0 };
+static const ccPoint ccPointZero = { 0, 0 };
 static inline ccPoint ccPointMake(const float x, const float y) {
     ccPoint p = { x, y };
     return p;
@@ -334,7 +334,7 @@ static inline float ccptLength(const ccPoint& p) {
 
 // rect struct
 typedef struct ccRect { float x, y, width, height; } ccRect;
-static const ccRect ccrZero = { 0, 0, 0, 0 };
+static const ccRect ccRectZero = { 0, 0, 0, 0 };
 static inline ccRect ccRectMake(const float x, const float y, const float w, const float h) {
     ccRect r = { x, y, w, h };
     return r;
@@ -345,7 +345,7 @@ static inline CCRect ccr2CCR(const ccRect& r) {
 
 // size struct
 typedef struct ccSize { float width, height; } ccSize;
-static const ccSize ccsZero = { 0, 0 };
+static const ccSize ccSizeZero = { 0, 0 };
 static inline ccSize ccSizeMake(const float w, const float h) {
     ccSize s = { w, h };
     return s;
@@ -358,7 +358,7 @@ typedef struct ccInsets {
     float right;
     float bottom;
 } ccInsets;
-static const ccInsets cciZero = { 0, 0, 0, 0 };
+static const ccInsets ccInsetsZero = { 0, 0, 0, 0 };
 static inline ccInsets ccInsetsMake(float t, float l, float r, float b) {
     ccInsets i = {
         t, l, r, b

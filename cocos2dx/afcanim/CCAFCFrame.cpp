@@ -31,7 +31,7 @@ CCAFCFrame::CCAFCFrame() :
         m_flipX(false),
         m_flipY(false),
 		m_useTickDelay(false),
-		m_inc(ccpZero) {
+		m_inc(ccPointZero) {
 }
 
 CCAFCFrame::~CCAFCFrame() {
