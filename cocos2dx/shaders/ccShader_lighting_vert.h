@@ -24,10 +24,6 @@
 #ifndef __ccShader_lighting_vert_h__
 #define __ccShader_lighting_vert_h__
 
-NS_CC_BEGIN
-
 const char* ccShader_lighting_vert = ccPositionTextureColor_vert;
-
-NS_CC_END
 
 #endif // __ccShader_lighting_vert_h__

@@ -29,27 +29,10 @@ THE SOFTWARE.
 
 #include "CCGL.h"
 #include "cocoa/CCDictionary.h"
+#include <map>
+#include "shaders/CCGLProgram.h"
 
 NS_CC_BEGIN
-
-extern CC_DLL const GLchar * ccPosition_uColor_frag;
-extern CC_DLL const GLchar * ccPosition_uColor_vert;
-extern CC_DLL const GLchar * ccPositionColor_frag;
-extern CC_DLL const GLchar * ccPositionColor_vert;
-extern CC_DLL const GLchar * ccPositionTexture_frag;
-extern CC_DLL const GLchar * ccPositionTexture_vert;
-extern CC_DLL const GLchar * ccPositionTextureA8Color_frag;
-extern CC_DLL const GLchar * ccPositionTextureA8Color_vert;
-extern CC_DLL const GLchar * ccPositionTextureColor_frag;
-extern CC_DLL const GLchar * ccPositionTextureColor_vert;
-extern CC_DLL const GLchar * ccPositionTextureColorAlphaTest_frag;
-extern CC_DLL const GLchar * ccPositionTexture_uColor_frag;
-extern CC_DLL const GLchar * ccPositionTexture_uColor_vert;
-extern CC_DLL const GLchar * ccPositionColorLengthTexture_frag;
-extern CC_DLL const GLchar * ccPositionColorLengthTexture_vert;
-extern CC_DLL const GLchar * ccExSwitchMask_frag;
-
-class CCGLProgram;
 
 /**
  * @addtogroup shaders
@@ -86,21 +69,19 @@ public:
     /** reload the default shaders */
     void reloadDefaultShaders();
 
-
-
     /** returns a GL program for a given key 
      *  @js getProgram
      */
-    CCGLProgram * programForKey(const char* key);
+    CCGLProgram * programForKey(ccShaderType key);
 
     /** adds a CCGLProgram to the cache for a given name */
-    void addProgram(CCGLProgram* program, const char* key);
+    void addProgram(CCGLProgram* program, ccShaderType key);
 
 private:
     bool init();
-    void loadDefaultShader(CCGLProgram *program, int type);
+    void loadDefaultShader(CCGLProgram *program, ccShaderType type);
 
-    CCDictionary* m_pPrograms;
+    std::map<int, CCGLProgram*> m_pPrograms;
 
 };
 

@@ -22,8 +22,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "CCBlur.h"
-#include "shaders/CCShaders.h"
 #include "ccTypes.h"
+#include "shaders/CCShaderCache.h"
+#include "cocoa/CCZone.h"
 
 NS_CC_BEGIN
 
@@ -72,7 +73,7 @@ void CCBlur::startWithTarget(CCNode *pTarget) {
             cc4fTRANSPARENT
         }
     };
-    pTarget->setShaderProgram(CCShaders::programForKey(kCCShader_blur), v);
+    pTarget->setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_blur), v);
 }
 
 void CCBlur::stop() {

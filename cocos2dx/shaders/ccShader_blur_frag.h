@@ -24,8 +24,6 @@
 #ifndef __ccShader_blur_frag_h__
 #define __ccShader_blur_frag_h__
 
-NS_CC_BEGIN
-
 const char* ccShader_blur_frag = "\n\
 	#ifdef GL_ES \n\
 		precision lowp float;\n\
@@ -51,7 +49,5 @@ const char* ccShader_blur_frag = "\n\
 		\n\
 		gl_FragColor = (sum - CC_blurSubtract) * v_fragmentColor;\n\
 	}";
-
-NS_CC_END
 
 #endif // __ccShader_blur_frag_h__

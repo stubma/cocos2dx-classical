@@ -24,8 +24,6 @@
 #ifndef __ccShader_matrix_frag_h__
 #define __ccShader_matrix_frag_h__
 
-NS_CC_BEGIN
-
 const char* ccShader_matrix_frag = "\n\
     #ifdef GL_ES \n\
         precision lowp float; \n\
@@ -40,7 +38,5 @@ const char* ccShader_matrix_frag = "\n\
         gl_FragColor = v_fragmentColor * texture2D(CC_Texture0, v_texCoord); \n\
         gl_FragColor = CC_colorMatrix * gl_FragColor; \n\
     }";
-
-NS_CC_END
 
 #endif // __ccShader_matrix_frag_h__

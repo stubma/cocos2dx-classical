@@ -183,7 +183,6 @@ THE SOFTWARE.
 #include "shaders/CCGLProgram.h"
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CCShaderCache.h"
-#include "shaders/CCShaders.h"
 
 // sprite_nodes
 #include "sprite_nodes/CCAnimation.h"

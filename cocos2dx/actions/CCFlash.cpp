@@ -22,7 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "CCFlash.h"
-#include "shaders/CCShaders.h"
+#include "shaders/CCShaderCache.h"
+#include "cocoa/CCZone.h"
 
 NS_CC_BEGIN
 
@@ -79,7 +80,7 @@ void CCFlash::startWithTarget(CCNode *pTarget) {
             m_r, m_g, m_b, 0
         }
     };
-    pTarget->setShaderProgram(CCShaders::programForKey(kCCShader_flash), v);
+    pTarget->setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_flash), v);
 }
 
 void CCFlash::stop() {

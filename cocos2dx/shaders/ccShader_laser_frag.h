@@ -24,8 +24,6 @@
 #ifndef __ccShader_laser_frag_h__
 #define __ccShader_laser_frag_h__
 
-NS_CC_BEGIN
-
 /// by default, cocos2d-x set CC_Time as vec4 and y is seconds
 const char* ccShader_laser_frag = "\n\
 	#ifdef GL_ES\n\
@@ -69,7 +67,5 @@ const char* ccShader_laser_frag = "\n\
 		gl_FragColor.rgb = Color;\n\
 		gl_FragColor.a = fA;\n\
 	}";
-
-NS_CC_END
 
 #endif // __ccShader_laser_frag_h__

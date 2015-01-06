@@ -24,8 +24,6 @@
 #ifndef __ccShader_flash_frag_h__
 #define __ccShader_flash_frag_h__
 
-NS_CC_BEGIN
-
 const char* ccShader_flash_frag = "\n\
 	#ifdef GL_ES \n\
 	precision lowp float; \n\
@@ -44,7 +42,5 @@ const char* ccShader_flash_frag = "\n\
 			gl_FragColor.xyz += deltaColor; \n\
 		} \n\
 	}";
-
-NS_CC_END
 
 #endif // __ccShader_flash_frag_h__

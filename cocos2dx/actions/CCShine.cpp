@@ -22,7 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "CCShine.h"
-#include "shaders/CCShaders.h"
+#include "shaders/CCShaderCache.h"
+#include "cocoa/CCZone.h"
 
 NS_CC_BEGIN
 
@@ -86,7 +87,7 @@ void CCShine::startWithTarget(CCNode *pTarget) {
             0
         }
     };
-    pTarget->setShaderProgram(CCShaders::programForKey(kCCShader_shine), v);
+    pTarget->setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_shine), v);
 }
 
 void CCShine::stop() {

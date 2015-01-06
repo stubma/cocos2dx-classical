@@ -24,8 +24,6 @@
 #ifndef __ccShader_lighting_frag_h__
 #define __ccShader_lighting_frag_h__
 
-NS_CC_BEGIN
-
 const char* ccShader_lighting_frag = "\n\
     #ifdef GL_ES \n\
         precision lowp float; \n\
@@ -43,7 +41,5 @@ const char* ccShader_lighting_frag = "\n\
         gl_FragColor *= CC_lightingMul; \n\
         gl_FragColor.xyz += c; \n\
     }";
-
-NS_CC_END
 
 #endif // __ccShader_lighting_frag_h__

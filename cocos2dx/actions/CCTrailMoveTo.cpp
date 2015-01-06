@@ -22,7 +22,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "CCTrailMoveTo.h"
-#include "shaders/CCShaders.h"
 #include "sprite_nodes/CCSprite.h"
 #include "CCArmature.h"
 #include "CCUtils.h"
@@ -199,7 +198,7 @@ void CCTrailMoveTo::startWithTarget(CCNode* pTarget) {
                 trail->getAnimation()->playWithIndex(m_animationIndex);
             else
                 trail->getAnimation()->play(m_animationName.c_str());
-            trail->setShaderProgram(CCShaders::programForKey(kCCShader_lighting), v);
+            trail->setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_lighting), v);
             trail->setAnchorPoint(m_pTarget->getAnchorPoint());
             trail->setPosition(m_pTarget->getPosition());
             trail->setScaleX(m_pTarget->getScaleX());
@@ -249,7 +248,7 @@ void CCTrailMoveTo::update(float time) {
                     trail = CCSprite::createWithSpriteFrameName(m_spriteName.c_str());
                 else
                     trail = CCSprite::create(m_spriteName.c_str());
-                trail->setShaderProgram(CCShaders::programForKey(kCCShader_lighting), v);
+                trail->setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_lighting), v);
                 trail->setAnchorPoint(m_pTarget->getAnchorPoint());
                 trail->setPosition(m_pTarget->getAnchorPointInPoints());
                 

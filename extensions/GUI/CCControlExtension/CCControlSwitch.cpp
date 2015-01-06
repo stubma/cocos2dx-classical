@@ -31,6 +31,9 @@
 NS_CC_EXT_BEGIN
 // CCControlSwitchSprite
 
+extern const GLchar* ccExSwitchMask_frag;
+extern const GLchar* ccPositionTextureColor_vert;
+
 class CCControlSwitchSprite : public CCSprite, public CCActionTweenDelegate
 {
 public:

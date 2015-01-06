@@ -43,6 +43,28 @@ class CCNode;
  * @{
  */
 
+typedef enum {
+    kCCShader_PositionTextureColor,
+    kCCShader_PositionTextureColorAlphaTest,
+    kCCShader_PositionColor,
+    kCCShader_PositionTexture,
+    kCCShader_PositionTexture_uColor,
+    kCCShader_PositionTextureA8Color,
+    kCCShader_Position_uColor,
+    kCCShader_PositionLengthTexureColor,
+    kCCShader_ControlSwitch,
+    
+    // custom shader
+    kCCShader_blur,
+    kCCShader_flash,
+    kCCShader_laser,
+    kCCShader_lighting,
+    kCCShader_matrix,
+    kCCShader_shine,
+    
+    kCCShader_MAX,
+} ccShaderType;
+
 enum {
     kCCVertexAttrib_Position,
     kCCVertexAttrib_Color,
@@ -113,24 +135,6 @@ static const char* kCCUniformNames[] = {
     "CC_shinePositions",
     "CC_shineTime",
 };
-
-#define kCCShader_PositionTextureColor              "ShaderPositionTextureColor"
-#define kCCShader_PositionTextureColorAlphaTest     "ShaderPositionTextureColorAlphaTest"
-#define kCCShader_PositionColor                     "ShaderPositionColor"
-#define kCCShader_PositionTexture                   "ShaderPositionTexture"
-#define kCCShader_PositionTexture_uColor            "ShaderPositionTexture_uColor"
-#define kCCShader_PositionTextureA8Color            "ShaderPositionTextureA8Color"
-#define kCCShader_Position_uColor                   "ShaderPosition_uColor"
-#define kCCShader_PositionLengthTexureColor         "ShaderPositionLengthTextureColor"
-#define kCCShader_ControlSwitch                     "Shader_ControlSwitch"
-
-// extension shader keys
-#define kCCShader_flash "kCCShader_flash"
-#define kCCShader_blur "kCCShader_blur"
-#define kCCShader_laser "kCCShader_laser"
-#define kCCShader_lighting "kCCShader_lighting"
-#define kCCShader_matrix "kCCShader_matrix"
-#define kCCShader_shine "kCCShader_shine"
 
 // Attribute names
 #define    kCCAttributeNameColor           "a_color"
@@ -392,7 +396,7 @@ private:
     bool              m_hasShaderCompiler;
     
     // program key
-    CC_SYNTHESIZE(std::string, m_key, Key);
+    CC_SYNTHESIZE(ccShaderType, m_key, Key);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     std::string       m_shaderId;

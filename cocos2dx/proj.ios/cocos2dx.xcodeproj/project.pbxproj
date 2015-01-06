@@ -758,8 +758,6 @@
 		92A7AFD11A3C456F001C830B /* CCShaderCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92A7AFAF1A3C456F001C830B /* CCShaderCache.cpp */; };
 		92A7AFD21A3C456F001C830B /* CCShaderCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A7AFB01A3C456F001C830B /* CCShaderCache.h */; };
 		92A7AFD31A3C456F001C830B /* ccShaderEx_SwitchMask_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A7AFB11A3C456F001C830B /* ccShaderEx_SwitchMask_frag.h */; };
-		92A7AFD41A3C456F001C830B /* CCShaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92A7AFB21A3C456F001C830B /* CCShaders.cpp */; };
-		92A7AFD51A3C456F001C830B /* CCShaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A7AFB31A3C456F001C830B /* CCShaders.h */; };
 		92A7AFD81A3C46DB001C830B /* ccShader_matrix_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A7AFD61A3C46DB001C830B /* ccShader_matrix_frag.h */; };
 		92A7AFD91A3C46DB001C830B /* ccShader_matrix_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 92A7AFD71A3C46DB001C830B /* ccShader_matrix_vert.h */; };
 		92A7AFDE1A3C6DE0001C830B /* CCClipIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92A7AFDA1A3C6DE0001C830B /* CCClipIn.cpp */; };
@@ -1663,8 +1661,6 @@
 		92A7AFAF1A3C456F001C830B /* CCShaderCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCShaderCache.cpp; sourceTree = "<group>"; };
 		92A7AFB01A3C456F001C830B /* CCShaderCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCShaderCache.h; sourceTree = "<group>"; };
 		92A7AFB11A3C456F001C830B /* ccShaderEx_SwitchMask_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShaderEx_SwitchMask_frag.h; sourceTree = "<group>"; };
-		92A7AFB21A3C456F001C830B /* CCShaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCShaders.cpp; sourceTree = "<group>"; };
-		92A7AFB31A3C456F001C830B /* CCShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCShaders.h; sourceTree = "<group>"; };
 		92A7AFD61A3C46DB001C830B /* ccShader_matrix_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_matrix_frag.h; sourceTree = "<group>"; };
 		92A7AFD71A3C46DB001C830B /* ccShader_matrix_vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_matrix_vert.h; sourceTree = "<group>"; };
 		92A7AFDA1A3C6DE0001C830B /* CCClipIn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCClipIn.cpp; sourceTree = "<group>"; };
@@ -3414,8 +3410,6 @@
 				92A7AFAF1A3C456F001C830B /* CCShaderCache.cpp */,
 				92A7AFB01A3C456F001C830B /* CCShaderCache.h */,
 				92A7AFB11A3C456F001C830B /* ccShaderEx_SwitchMask_frag.h */,
-				92A7AFB21A3C456F001C830B /* CCShaders.cpp */,
-				92A7AFB31A3C456F001C830B /* CCShaders.h */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -3845,7 +3839,6 @@
 				92A7AFC01A3C456F001C830B /* ccShader_Position_uColor_frag.h in Headers */,
 				928F64C11A33EE6900178235 /* CCUDPSocket.h in Headers */,
 				928F64D01A33EF7600178235 /* CCJSONObject.h in Headers */,
-				92A7AFD51A3C456F001C830B /* CCShaders.h in Headers */,
 				928F64E51A341C8F00178235 /* CCLayerClip.h in Headers */,
 				927FE5671A45708A0065F052 /* ScrollView.h in Headers */,
 				1551A73E158F2ADE00E66CFE /* EAGLView.h in Headers */,
@@ -4491,7 +4484,6 @@
 				92A7AF5C1A3C4038001C830B /* CCArcticFileData.cpp in Sources */,
 				928F64481A33E5CF00178235 /* CCImagePicker.cpp in Sources */,
 				92A7AFE81A3C709B001C830B /* CCCount.cpp in Sources */,
-				92A7AFD41A3C456F001C830B /* CCShaders.cpp in Sources */,
 				1A4646DC16DC901A00DE131F /* ccFPSImages.c in Sources */,
 				927FE5181A45708A0065F052 /* CCProcessBase.cpp in Sources */,
 				1A2802B016DF1C5B00189CBF /* ccUTF8.cpp in Sources */,

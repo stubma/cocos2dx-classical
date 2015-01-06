@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "support/data_support/uthash.h"
 #include "cocoa/CCString.h"
-#include "shaders/CCShaders.h"
 // extern
 #include "kazmath/GL/matrix.h"
 #include "kazmath/kazmath.h"
@@ -42,6 +41,9 @@ THE SOFTWARE.
 #endif
 
 NS_CC_BEGIN
+
+#define GET_UNIFORM(name) \
+    m_uUniforms[kCCUniform_##name] = getUniformLocationForName(kCCUniformNames[kCCUniform_##name])
 
 typedef struct _hashUniformEntry
 {
@@ -267,6 +269,36 @@ void CCGLProgram::updateUniforms()
 
     m_uUniforms[kCCUniformSampler] = glGetUniformLocation(m_uProgram, kCCUniformNames[kCCUniformSampler]);
 
+    switch (m_key) {
+        case kCCShader_blur:
+            GET_UNIFORM(blurSize);
+            GET_UNIFORM(blurSubtract);
+            break;
+        case kCCShader_flash:
+            GET_UNIFORM(flashColor);
+            GET_UNIFORM(flashTime);
+            break;
+        case kCCShader_lighting:
+            GET_UNIFORM(lightingMul);
+            GET_UNIFORM(lightingAdd);
+            break;
+        case kCCShader_matrix:
+            GET_UNIFORM(colorMatrix);
+            break;
+        case kCCShader_shine:
+            GET_UNIFORM(shineWidth);
+            GET_UNIFORM(shineXY1);
+            GET_UNIFORM(shineXY2);
+            GET_UNIFORM(shineColor1);
+            GET_UNIFORM(shineColor2);
+            GET_UNIFORM(shineColor3);
+            GET_UNIFORM(shinePositions);
+            GET_UNIFORM(shineTime);
+            break;
+        default:
+            break;
+    }
+    
     this->use();
     
     // Since sample most probably won't change, set it to 0 now.
@@ -566,7 +598,59 @@ void CCGLProgram::setUniformLocationWithMatrix4fv(GLint location, GLfloat* matri
 }
 
 void CCGLProgram::setCustomUniforms(CCNode* n) {
-    CCShaders::setUniformValue(this, n->getCustomUniformValue());
+    ccCustomUniformValue& v = n->getCustomUniformValue();
+    switch (m_key) {
+        case kCCShader_blur:
+            setUniformLocationWith2f(m_uUniforms[kCCUniform_blurSize],
+                                     v.blur.blurSize.width / v.blur.nodeSize.width,
+                                     v.blur.blurSize.height / v.blur.nodeSize.height);
+            setUniformLocationWith4f(m_uUniforms[kCCUniform_blurSubtract],
+                                     v.blur.subtract.r, v.blur.subtract.g, v.blur.subtract.b, v.blur.subtract.a);
+            break;
+        case kCCShader_flash:
+            setUniformLocationWith3f(m_uUniforms[kCCUniform_flashColor], v.flash.r, v.flash.g, v.flash.b);
+            setUniformLocationWith1f(m_uUniforms[kCCUniform_flashTime], v.flash.t);
+            break;
+        case kCCShader_lighting:
+            setUniformLocationWith4f(m_uUniforms[kCCUniform_lightingMul],
+                                     v.lighting.mul.r / 255.0f,
+                                     v.lighting.mul.g / 255.0f,
+                                     v.lighting.mul.b / 255.0f,
+                                     v.lighting.mul.a / 255.0f);
+            setUniformLocationWith3f(m_uUniforms[kCCUniform_lightingAdd],
+                                     v.lighting.add.r / 255.0f,
+                                     v.lighting.add.g / 255.0f,
+                                     v.lighting.add.b / 255.0f);
+            break;
+        case kCCShader_matrix:
+            setUniformLocationWithMatrix4fv(m_uUniforms[kCCUniform_colorMatrix], (GLfloat*)v.matrix.mat4.mat, 1);
+            break;
+        case kCCShader_shine:
+            setUniformLocationWith1f(m_uUniforms[kCCUniform_shineWidth], v.shine.width);
+            setUniformLocationWith1f(m_uUniforms[kCCUniform_shineTime], v.shine.time);
+            setUniformLocationWith2f(m_uUniforms[kCCUniform_shineXY1], v.shine.lb.x, v.shine.lb.y);
+            setUniformLocationWith2f(m_uUniforms[kCCUniform_shineXY2], v.shine.rt.x, v.shine.rt.y);
+            setUniformLocationWith4f(m_uUniforms[kCCUniform_shineColor1],
+                                     v.shine.color1.r / 255.0f,
+                                     v.shine.color1.g / 255.0f,
+                                     v.shine.color1.b / 255.0f,
+                                     v.shine.color1.a / 255.0f);
+            setUniformLocationWith4f(m_uUniforms[kCCUniform_shineColor2],
+                                     v.shine.color2.r / 255.0f,
+                                     v.shine.color2.g / 255.0f,
+                                     v.shine.color2.b / 255.0f,
+                                     v.shine.color2.a / 255.0f);
+            setUniformLocationWith4f(m_uUniforms[kCCUniform_shineColor3],
+                                     v.shine.color3.r / 255.0f,
+                                     v.shine.color3.g / 255.0f,
+                                     v.shine.color3.b / 255.0f,
+                                     v.shine.color3.a / 255.0f);
+            setUniformLocationWith3f(m_uUniforms[kCCUniform_shinePositions],
+                                     v.shine.gradientPositions.x, v.shine.gradientPositions.y, v.shine.gradientPositions.z);
+            break;
+        default:
+            break;
+    }
 }
 
 void CCGLProgram::setUniformsForBuiltins()
