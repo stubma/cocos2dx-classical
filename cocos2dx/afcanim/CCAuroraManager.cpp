@@ -98,11 +98,11 @@ void CCAuroraManager::parseModule(CCAuroraModule* auroraModule, CCAuroraFrameMod
 
 			// clip pos
 			// BSprite y axis is reversed with opengl y axis, and origin is top left corner
-			afcClipData.clipPos = ccpt(resolve(auroraFrameModule->x + auroraModule->w / 2 + offsetX),
+			afcClipData.clipPos = ccPointMake(resolve(auroraFrameModule->x + auroraModule->w / 2 + offsetX),
 					resolve(-auroraFrameModule->y - auroraModule->h / 2 - offsetY));
 
 			// save image rect
-			afcClipData.i.rect = ccr(resolve(auroraModule->x), resolve(auroraModule->y),
+			afcClipData.i.rect = ccRectMake(resolve(auroraModule->x), resolve(auroraModule->y),
 					resolve(auroraModule->w), resolve(auroraModule->h));
 
 			// set flip flag
@@ -119,7 +119,7 @@ void CCAuroraManager::parseModule(CCAuroraModule* auroraModule, CCAuroraFrameMod
 
 			// clip pos
 			// BSprite y axis is reversed with opengl y axis, and origin is top left corner
-			afcClipData.clipPos = ccpt(resolve(auroraFrameModule->x + auroraModule->w / 2 + offsetX),
+			afcClipData.clipPos = ccPointMake(resolve(auroraFrameModule->x + auroraModule->w / 2 + offsetX),
 					resolve(-auroraFrameModule->y - auroraModule->h / 2 - offsetY));
 
 			// set rect size
@@ -133,7 +133,7 @@ void CCAuroraManager::parseModule(CCAuroraModule* auroraModule, CCAuroraFrameMod
 
 			// clip pos
 			// BSprite y axis is reversed with opengl y axis, and origin is top left corner
-			afcClipData.clipPos = ccpt(resolve(auroraFrameModule->x + auroraModule->w / 2 + offsetX),
+			afcClipData.clipPos = ccPointMake(resolve(auroraFrameModule->x + auroraModule->w / 2 + offsetX),
 					resolve(-auroraModule->h / 2 - auroraFrameModule->y - offsetY));
 
 			// set rect size
@@ -210,7 +210,7 @@ void CCAuroraManager::parseFrameModules(CCAuroraFileData* afd, CCAuroraFrame* au
 						clipData.i.sheet = rule->ear.sheet;
 						
 						// clip pos
-						clipData.clipPos = ccpt(resolve(auroraFrameModule->x) + rule->ear.pos.x,
+						clipData.clipPos = ccPointMake(resolve(auroraFrameModule->x) + rule->ear.pos.x,
 								resolve(-auroraFrameModule->y) + rule->ear.pos.y);
 						
 						// clip image rect
@@ -258,7 +258,7 @@ CCAFCAnimation* CCAuroraManager::getAnimationData(CCAuroraFileData* afd, int ani
 		// save offset, we need convert it to offset relative to previous frame
 		// aurora y axis is reversed to opengl y axis, so negate it
 		if(i > 0) {
-			afcFrame->setIncrementation(ccpt(resolve(auroraAnimFrame->offsetX - prevOffsetX), resolve(-auroraAnimFrame->offsetY - prevOffsetY)));
+			afcFrame->setIncrementation(ccPointMake(resolve(auroraAnimFrame->offsetX - prevOffsetX), resolve(-auroraAnimFrame->offsetY - prevOffsetY)));
 		}
 		prevOffsetX = auroraAnimFrame->offsetX;
 		prevOffsetY = -auroraAnimFrame->offsetY;
@@ -284,7 +284,7 @@ CCAFCAnimation* CCAuroraManager::getAnimationData(CCAuroraFileData* afd, int ani
 			afcClip->setType(AFC_CLIP_COLLISION_RECT);
 
 			// set clip pos
-			afcClipData.clipPos = ccpt(resolve(collisionRect->x + collisionRect->width / 2),
+			afcClipData.clipPos = ccPointMake(resolve(collisionRect->x + collisionRect->width / 2),
 					resolve(-collisionRect->y - collisionRect->height / 2));
 
 			// set rect size

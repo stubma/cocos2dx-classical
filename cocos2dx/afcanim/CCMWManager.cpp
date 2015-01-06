@@ -109,7 +109,7 @@ bool CCMWManager::parseClip(CCMWFileData* animationFileData, int clipAdditionalD
 		}
 
 		// image rect in atlas
-		afcClipData.i.rect = ccr(resolve(animationFileData->m_imageClipPool[clipAdditionalDataIndex * 4]),
+		afcClipData.i.rect = ccRectMake(resolve(animationFileData->m_imageClipPool[clipAdditionalDataIndex * 4]),
 				resolve(animationFileData->m_imageClipPool[clipAdditionalDataIndex * 4 + 1]),
 				resolve(animationFileData->m_imageClipPool[clipAdditionalDataIndex * 4 + 2]),
 				resolve(animationFileData->m_imageClipPool[clipAdditionalDataIndex * 4 + 3]));
@@ -117,38 +117,38 @@ bool CCMWManager::parseClip(CCMWFileData* animationFileData, int clipAdditionalD
 		// in motion welder coordinate system, upper y axis is negative
 		// we need to reverse it
 		// don't resolve y again because clippos and image rect are all resolved before
-		afcClipData.clipPos = ccpt(clipPosX + afcClipData.i.rect.width / 2,
+		afcClipData.clipPos = ccPointMake(clipPosX + afcClipData.i.rect.width / 2,
 				-clipPosY - afcClipData.i.rect.height / 2);
 	} else if(type == ClipType_CollisionRect) {
 		afcClip->setType(AFC_CLIP_COLLISION_RECT);
-		afcClipData.cr.size = ccsz(resolve(animationFileData->m_positionerRectangleClipPool[clipAdditionalDataIndex * 2]),
+		afcClipData.cr.size = ccSizeMake(resolve(animationFileData->m_positionerRectangleClipPool[clipAdditionalDataIndex * 2]),
 				resolve(animationFileData->m_positionerRectangleClipPool[clipAdditionalDataIndex * 2 + 1]));
 
 		// in motion welder coordinate system, upper y axis is negative
 		// we need to reverse it
 		// don't resolve y again because clippos and image rect are all resolved before
-		afcClipData.clipPos = ccpt(clipPosX + afcClipData.cr.size.width / 2,
+		afcClipData.clipPos = ccPointMake(clipPosX + afcClipData.cr.size.width / 2,
 				-clipPosY - afcClipData.cr.size.height / 2);
 	} else if(type == ClipType_Line) {
 		afcClip->setType(AFC_CLIP_LINE);
-		afcClipData.l.endPoint = ccpt(resolve(animationFileData->m_lineClipPool[clipAdditionalDataIndex * 2]),
+		afcClipData.l.endPoint = ccPointMake(resolve(animationFileData->m_lineClipPool[clipAdditionalDataIndex * 2]),
 				resolve(animationFileData->m_lineClipPool[clipAdditionalDataIndex * 2 + 1]));
 		afcClipData.l.color = animationFileData->m_lineClipPool[clipAdditionalDataIndex * 2 + 2];
-		afcClipData.clipPos = ccpt(clipPosX, -clipPosY);
+		afcClipData.clipPos = ccPointMake(clipPosX, -clipPosY);
 	} else if(type == ClipType_Rect || type == ClipType_Rect_Filled) {
 		afcClip->setType(AFC_CLIP_RECT);
-		afcClipData.r.size = ccsz(resolve(animationFileData->m_rectangleClipPool[clipAdditionalDataIndex * 2]),
+		afcClipData.r.size = ccSizeMake(resolve(animationFileData->m_rectangleClipPool[clipAdditionalDataIndex * 2]),
 				resolve(animationFileData->m_rectangleClipPool[clipAdditionalDataIndex * 2 + 1]));
 		afcClipData.r.color = animationFileData->m_rectangleClipPool[clipAdditionalDataIndex * 2 + 2];
 
 		// in motion welder coordinate system, upper y axis is negative
 		// we need to reverse it
 		// don't resolve y again because clippos and image rect are all resolved before
-		afcClipData.clipPos = ccpt(clipPosX + afcClipData.r.size.width / 2,
+		afcClipData.clipPos = ccPointMake(clipPosX + afcClipData.r.size.width / 2,
 				-clipPosY - afcClipData.r.size.height / 2);
 	} else if(type == ClipType_RoundRect || type == ClipType_RoundRect_Filled) {
 		afcClip->setType(AFC_CLIP_ROUNDRECT);
-		afcClipData.rr.size = ccsz(resolve(animationFileData->m_roundedRectangleClipPool[clipAdditionalDataIndex * 2]),
+		afcClipData.rr.size = ccSizeMake(resolve(animationFileData->m_roundedRectangleClipPool[clipAdditionalDataIndex * 2]),
 				resolve(animationFileData->m_roundedRectangleClipPool[clipAdditionalDataIndex * 2 + 1]));
 		afcClipData.rr.arcWidth = resolve(animationFileData->m_roundedRectangleClipPool[clipAdditionalDataIndex * 2 + 2]);
 		afcClipData.rr.arcHeight = resolve(animationFileData->m_roundedRectangleClipPool[clipAdditionalDataIndex * 2 + 3]);
@@ -157,11 +157,11 @@ bool CCMWManager::parseClip(CCMWFileData* animationFileData, int clipAdditionalD
 		// in motion welder coordinate system, upper y axis is negative
 		// we need to reverse it
 		// don't resolve y again because clippos and image rect are all resolved before
-		afcClipData.clipPos = ccpt(clipPosX + afcClipData.rr.size.width / 2,
+		afcClipData.clipPos = ccPointMake(clipPosX + afcClipData.rr.size.width / 2,
 				-clipPosY - afcClipData.rr.size.height / 2);
 	} else if(type == ClipType_Ecllipse || type == ClipType_Ecllipse_Filled) {
 		afcClip->setType(AFC_CLIP_ELLIPSE);
-		afcClipData.e.size = ccsz(resolve(animationFileData->m_ellipseClipPool[clipAdditionalDataIndex * 2]),
+		afcClipData.e.size = ccSizeMake(resolve(animationFileData->m_ellipseClipPool[clipAdditionalDataIndex * 2]),
 				resolve(animationFileData->m_ellipseClipPool[clipAdditionalDataIndex * 2 + 1]));
 		afcClipData.e.startAngle = animationFileData->m_ellipseClipPool[clipAdditionalDataIndex * 2 + 2];
 		afcClipData.e.endAngle = animationFileData->m_ellipseClipPool[clipAdditionalDataIndex * 2 + 3];
@@ -170,7 +170,7 @@ bool CCMWManager::parseClip(CCMWFileData* animationFileData, int clipAdditionalD
 		// in motion welder coordinate system, upper y axis is negative
 		// we need to reverse it
 		// don't resolve y again because clippos and image rect are all resolved before
-		afcClipData.clipPos = ccpt(clipPosX + afcClipData.e.size.width / 2,
+		afcClipData.clipPos = ccPointMake(clipPosX + afcClipData.e.size.width / 2,
 				-clipPosY - afcClipData.e.size.height / 2);
 	} else {
 		return false;
@@ -197,7 +197,7 @@ CCAFCAnimation* CCMWManager::getAnimationData(CCMWFileData* animationFileData, i
 		int frameGlobalIndex = startFrame + i;
 		afcFrame->setUseTickDelay(true);
 		afcFrame->setDelay(animationFileData->m_frameTable[frameGlobalIndex * O_FRAMEDATA_NUM + 1]);
-		afcFrame->setIncrementation(ccpt(resolve(animationFileData->m_frameTable[frameGlobalIndex * O_FRAMEDATA_NUM + 2]),
+		afcFrame->setIncrementation(ccPointMake(resolve(animationFileData->m_frameTable[frameGlobalIndex * O_FRAMEDATA_NUM + 2]),
 				resolve(animationFileData->m_frameTable[frameGlobalIndex * O_FRAMEDATA_NUM + 3])));
 
 		// get frame index in pool

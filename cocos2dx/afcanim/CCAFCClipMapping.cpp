@@ -196,7 +196,7 @@ void CCAFCClipMapping::mapClip(int fromClipIndex, CCTexture2D* tex, ccPoint pos,
 		CC_SAFE_RETAIN(m_rules[insertion].ear.sheet);
 		if(texRect.width == 0 || texRect.height == 0) {
 			CCSize size = tex->getContentSizeInPixels();
-			m_rules[insertion].ear.texRect = ccr(0, 0, size.width, size.height);
+			m_rules[insertion].ear.texRect = ccRectMake(0, 0, size.width, size.height);
 		} else {
 			m_rules[insertion].ear.texRect = texRect;
 		}

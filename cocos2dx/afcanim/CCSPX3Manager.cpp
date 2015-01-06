@@ -126,7 +126,7 @@ CCAFCAnimation* CCSPX3Manager::getAnimationData(CCSPX3FileData* spx, int animInd
 				if(spxTileSet->m_mode == SPX_TILE_INDEX) {
 					int row = patch->tile.tileSetIndex / spxTileSet->m_tileColumns;
 					int col = patch->tile.tileSetIndex % spxTileSet->m_tileRows;
-					afcClipData.i.rect = ccr(resolve(spxTileSet->m_tileWidth * col),
+					afcClipData.i.rect = ccRectMake(resolve(spxTileSet->m_tileWidth * col),
 							resolve(spxTileSet->m_tileHeight * row),
 							resolve(spxTileSet->m_tileWidth),
 							resolve(spxTileSet->m_tileHeight));
@@ -139,20 +139,20 @@ CCAFCAnimation* CCSPX3Manager::getAnimationData(CCSPX3FileData* spx, int animInd
 						case SPX_TRANS_MIRROR_ROT180:
 						case SPX_TRANS_MIRROR:
 						case SPX_TRANS_ROT180:
-							afcClipData.clipPos =  ccpt(resolve(patch->tile.x + spxTileSet->m_tileWidth / 2),
+							afcClipData.clipPos =  ccPointMake(resolve(patch->tile.x + spxTileSet->m_tileWidth / 2),
 									resolve(-patch->tile.y - spxTileSet->m_tileHeight / 2));
 							break;
 						case SPX_TRANS_MIRROR_ROT270:
 						case SPX_TRANS_ROT90:
 						case SPX_TRANS_ROT270:
 						case SPX_TRANS_MIRROR_ROT90:
-							afcClipData.clipPos =  ccpt(resolve(patch->tile.x + spxTileSet->m_tileHeight / 2),
+							afcClipData.clipPos =  ccPointMake(resolve(patch->tile.x + spxTileSet->m_tileHeight / 2),
 									resolve(-patch->tile.y - spxTileSet->m_tileWidth / 2));
 							break;
 					}
 				} else {
 					CCSPX3Tile* tile = spxTileSet->m_tiles + patch->tile.tileIndex;
-					afcClipData.i.rect = ccr(resolve(tile->left()), resolve(tile->top()), resolve(tile->width()), resolve(tile->height()));
+					afcClipData.i.rect = ccRectMake(resolve(tile->left()), resolve(tile->top()), resolve(tile->width()), resolve(tile->height()));
 
 					// set clip center position
 					// SpriteX y axis is reversed with opengl y axis, and tile pos is top left corner
@@ -162,13 +162,13 @@ CCAFCAnimation* CCSPX3Manager::getAnimationData(CCSPX3FileData* spx, int animInd
 						case SPX_TRANS_MIRROR_ROT180:
 						case SPX_TRANS_MIRROR:
 						case SPX_TRANS_ROT180:
-							afcClipData.clipPos = ccpt(resolve(patch->tile.x + tile->width() / 2), resolve(-patch->tile.y - tile->height() / 2));
+							afcClipData.clipPos = ccPointMake(resolve(patch->tile.x + tile->width() / 2), resolve(-patch->tile.y - tile->height() / 2));
 							break;
 						case SPX_TRANS_MIRROR_ROT270:
 						case SPX_TRANS_ROT90:
 						case SPX_TRANS_ROT270:
 						case SPX_TRANS_MIRROR_ROT90:
-							afcClipData.clipPos = ccpt(resolve(patch->tile.x + tile->height() / 2), resolve(-patch->tile.y - tile->width() / 2));
+							afcClipData.clipPos = ccPointMake(resolve(patch->tile.x + tile->height() / 2), resolve(-patch->tile.y - tile->width() / 2));
 							break;
 					}
 				}
@@ -207,11 +207,11 @@ CCAFCAnimation* CCSPX3Manager::getAnimationData(CCSPX3FileData* spx, int animInd
 				switch(patch->shape.shape) {
 					case SPX_POINT:
 						afcClip->setType(AFC_CLIP_POINT);
-						afcClipData.clipPos = ccpt(resolve(patch->shape.params[0]), resolve(-patch->shape.params[1]));
+						afcClipData.clipPos = ccPointMake(resolve(patch->shape.params[0]), resolve(-patch->shape.params[1]));
 						break;
 					case SPX_LINE:
 						afcClip->setType(AFC_CLIP_LINE);
-						afcClipData.clipPos = ccpt(resolve(patch->shape.params[0]), resolve(-patch->shape.params[1]));
+						afcClipData.clipPos = ccPointMake(resolve(patch->shape.params[0]), resolve(-patch->shape.params[1]));
 						afcClipData.l.endPoint.x = resolve(patch->shape.params[2]);
 						afcClipData.l.endPoint.y = resolve(-patch->shape.params[3]);
 						break;
@@ -234,7 +234,7 @@ CCAFCAnimation* CCSPX3Manager::getAnimationData(CCSPX3FileData* spx, int animInd
 						afcClipData.r.size.height = resolve(abs(y1 - y2));
 
 						// clip center pos
-						afcClipData.clipPos = ccpt((x1 + x2) / 2, (y1 + y2) / 2);
+						afcClipData.clipPos = ccPointMake((x1 + x2) / 2, (y1 + y2) / 2);
 
 						break;
 					}
@@ -244,7 +244,7 @@ CCAFCAnimation* CCSPX3Manager::getAnimationData(CCSPX3FileData* spx, int animInd
 						afcClip->setType(AFC_CLIP_TRIANGLE);
 
 						// points
-						afcClipData.clipPos = ccpt(resolve(patch->shape.params[0]), resolve(-patch->shape.params[1]));
+						afcClipData.clipPos = ccPointMake(resolve(patch->shape.params[0]), resolve(-patch->shape.params[1]));
 						afcClipData.t.pt2.x = resolve(patch->shape.params[2]);
 						afcClipData.t.pt2.y = resolve(-patch->shape.params[3]);
 						afcClipData.t.pt3.x = resolve(patch->shape.params[4]);
@@ -271,7 +271,7 @@ CCAFCAnimation* CCSPX3Manager::getAnimationData(CCSPX3FileData* spx, int animInd
 						afcClipData.e.size.height = resolve(abs(y1 - y2));
 
 						// clip center pos
-						afcClipData.clipPos = ccpt((x1 + x2) / 2, (y1 + y2) / 2);
+						afcClipData.clipPos = ccPointMake((x1 + x2) / 2, (y1 + y2) / 2);
 
 						// angle
 						afcClipData.e.startAngle = 0;
@@ -297,7 +297,7 @@ CCAFCAnimation* CCSPX3Manager::getAnimationData(CCSPX3FileData* spx, int animInd
 						afcClipData.rr.size.height = resolve(abs(y1 - y2));
 
 						// clip center pos
-						afcClipData.clipPos = ccpt((x1 + x2) / 2, (y1 + y2) / 2);
+						afcClipData.clipPos = ccPointMake((x1 + x2) / 2, (y1 + y2) / 2);
 
 						// arc size
 						afcClipData.rr.arcWidth = resolve(patch->shape.params[4]);
@@ -327,7 +327,7 @@ CCAFCAnimation* CCSPX3Manager::getAnimationData(CCSPX3FileData* spx, int animInd
 			afcClip->setType(AFC_CLIP_COLLISION_RECT);
 
 			// clip pos
-			afcClipData.clipPos = ccpt(resolve(collision->left() + collision->width() / 2),
+			afcClipData.clipPos = ccPointMake(resolve(collision->left() + collision->width() / 2),
 					resolve(-collision->bottom() - collision->height() / 2));
 
 			// size

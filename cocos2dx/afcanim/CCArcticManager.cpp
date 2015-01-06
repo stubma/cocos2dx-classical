@@ -95,11 +95,11 @@ void CCArcticManager::parseModule(CCArcticModule* arcticModule, CCArcticFrameMod
 
 	// clip pos
 	// ASprite y axis is reversed with opengl y axis, and origin is top left corner
-	afcClipData.clipPos = ccpt(resolve(arcticFrameModule->x + arcticModule->w / 2 + offsetX),
+	afcClipData.clipPos = ccPointMake(resolve(arcticFrameModule->x + arcticModule->w / 2 + offsetX),
 			resolve(-arcticFrameModule->y - arcticModule->h / 2 - offsetY));
 
 	// save image rect
-	afcClipData.i.rect = ccr(resolve(arcticModule->x), resolve(arcticModule->y), resolve(arcticModule->w), resolve(arcticModule->h));
+	afcClipData.i.rect = ccRectMake(resolve(arcticModule->x), resolve(arcticModule->y), resolve(arcticModule->w), resolve(arcticModule->h));
 
 	// set flip flag
 	afcClipData.i.flipX = (arcticFrameModule->flags & AS_FLIP_X) != 0;
@@ -175,7 +175,7 @@ void CCArcticManager::parseFrameModules(CCArcticFileData* afd, CCArcticFrame* ar
 						clipData.i.sheet = rule->ear.sheet;
 
 						// clip pos
-						clipData.clipPos = ccpt(resolve(arcticFrameModule->x) + rule->ear.pos.x,
+						clipData.clipPos = ccPointMake(resolve(arcticFrameModule->x) + rule->ear.pos.x,
 								resolve(-arcticFrameModule->y) + rule->ear.pos.y);
 
 						// clip image rect
@@ -207,11 +207,11 @@ void CCArcticManager::parseFrameModules(CCArcticFileData* afd, CCArcticFrame* ar
 			
 			// clip pos
 			// ASprite y axis is reversed with opengl y axis, and origin is top left corner
-			afcClipData.clipPos = ccpt(resolve(cr->x + cr->width / 2 + offsetX),
+			afcClipData.clipPos = ccPointMake(resolve(cr->x + cr->width / 2 + offsetX),
 					resolve(-cr->y - cr->height / 2 - offsetY));
 			
 			// set rect
-			afcClipData.cr.size = ccsz(resolve(cr->width), resolve(cr->height));
+			afcClipData.cr.size = ccSizeMake(resolve(cr->width), resolve(cr->height));
 			
 			// add clip
 			afcFrame->addClip(afcClip);
@@ -245,7 +245,7 @@ CCAFCAnimation* CCArcticManager::getAnimationData(CCArcticFileData* afd, int ani
 		// save offset, we need convert it to offset relative to previous frame
 		// arctic y axis is reversed to opengl y axis, so negate it
 		if(i > 0) {
-			afcFrame->setIncrementation(ccpt(resolve(arcticAnimFrame->offsetX - prevOffsetX), resolve(-arcticAnimFrame->offsetY - prevOffsetY)));
+			afcFrame->setIncrementation(ccPointMake(resolve(arcticAnimFrame->offsetX - prevOffsetX), resolve(-arcticAnimFrame->offsetY - prevOffsetY)));
 		}
 		prevOffsetX = arcticAnimFrame->offsetX;
 		prevOffsetY = -arcticAnimFrame->offsetY;
