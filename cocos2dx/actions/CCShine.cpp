@@ -58,14 +58,8 @@ bool CCShine::initWithColors(float duration, ccColor4B color1, ccColor4B color2,
 }
 
 void CCShine::update(float time) {
-    CCShaders::setShine(m_size.width,
-                        ccp(0, m_size.height),
-                        ccp(m_size.height, 0),
-                        m_color1,
-                        m_color2,
-                        m_color3,
-                        m_gradientPositions,
-                        time);
+    ccCustomUniformValue& v = m_pTarget->getCustomUniformValue();
+    v.shine.time = time;
 }
 
 void CCShine::startWithTarget(CCNode *pTarget) {
@@ -80,15 +74,19 @@ void CCShine::startWithTarget(CCNode *pTarget) {
     m_size = pTarget->getContentSize();
     
     // set new program
-    pTarget->setShaderProgram(CCShaders::programForKey(kCCShader_shine));
-    CCShaders::setShine(m_size.width,
-                        ccp(0, m_size.height),
-                        ccp(m_size.height, 0),
-                        m_color1,
-                        m_color2,
-                        m_color3,
-                        m_gradientPositions,
-                        0);
+    ccCustomUniformValue v = {
+        .shine = {
+            m_size.width,
+            ccPointMake(0, m_size.height),
+            ccPointMake(m_size.height, 0),
+            m_color1,
+            m_color2,
+            m_color3,
+            m_gradientPositions,
+            0
+        }
+    };
+    pTarget->setShaderProgram(CCShaders::programForKey(kCCShader_shine), v);
 }
 
 void CCShine::stop() {

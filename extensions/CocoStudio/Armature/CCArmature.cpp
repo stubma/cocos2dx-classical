@@ -86,8 +86,7 @@ m_bArmatureTransformDirty(true),
 m_pBoneDic(nullptr),
 m_pTopBoneList(nullptr),
 m_pAnimation(nullptr),
-m_pTextureAtlasDic(nullptr),
-m_preDrawFunction(nullptr) {
+m_pTextureAtlasDic(nullptr) {
 }
 
 
@@ -105,7 +104,6 @@ CCArmature::~CCArmature(void)
     }
     CC_SAFE_DELETE(m_pAnimation);
     CC_SAFE_RELEASE_NULL(m_pTextureAtlasDic);
-    CC_SAFE_RELEASE(m_preDrawFunction);
 }
 
 
@@ -467,9 +465,6 @@ void CCArmature::update(float dt)
 
 void CCArmature::draw()
 {
-    if(m_preDrawFunction)
-        m_preDrawFunction->execute();
-    
     if (m_pParentBone == nullptr && m_pBatchNode == nullptr)
     {
         CC_NODE_DRAW_SETUP(this);

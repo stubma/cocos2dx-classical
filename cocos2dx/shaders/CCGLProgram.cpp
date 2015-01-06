@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "support/data_support/uthash.h"
 #include "cocoa/CCString.h"
+#include "shaders/CCShaders.h"
 // extern
 #include "kazmath/GL/matrix.h"
 #include "kazmath/kazmath.h"
@@ -565,7 +566,7 @@ void CCGLProgram::setUniformLocationWithMatrix4fv(GLint location, GLfloat* matri
 }
 
 void CCGLProgram::setCustomUniforms(CCNode* n) {
-    
+    CCShaders::setUniformValue(this, n->getCustomUniformValue());
 }
 
 void CCGLProgram::setUniformsForBuiltins()

@@ -61,7 +61,8 @@ void CCFlash::update(float time) {
     }
     
     // shader, set
-	CCShaders::setFlash(m_r, m_g, m_b, t);
+    ccCustomUniformValue& v = m_pTarget->getCustomUniformValue();
+    v.flash.t = t;
 }
 
 void CCFlash::startWithTarget(CCNode *pTarget) {
@@ -73,7 +74,12 @@ void CCFlash::startWithTarget(CCNode *pTarget) {
     }
     
     // set new program
-    pTarget->setShaderProgram(CCShaders::programForKey(kCCShader_flash));
+    ccCustomUniformValue v = {
+        .flash = {
+            m_r, m_g, m_b, 0
+        }
+    };
+    pTarget->setShaderProgram(CCShaders::programForKey(kCCShader_flash), v);
 }
 
 void CCFlash::stop() {

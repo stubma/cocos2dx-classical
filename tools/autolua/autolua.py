@@ -159,6 +159,7 @@ class NativeType(object):
     def __init__(self):
         self.is_class = False
         self.is_struct = False
+        self.is_union = False
         self.is_function = False
         self.is_enum = False
         self.not_supported = False
@@ -242,6 +243,11 @@ class NativeType(object):
                         nt.qualified_ns  = get_qualified_namespace(decl)
                 elif decl_type.kind == CursorKind.STRUCT_DECL:
                     nt.is_struct = True
+                    nt.name = decl.displayname
+                    nt.qualified_name = get_qualified_name(decl)
+                    nt.qualified_ns  = get_qualified_namespace(decl)
+                elif decl_type.kind == CursorKind.UNION_DECL:
+                    nt.is_union = True
                     nt.name = decl.displayname
                     nt.qualified_name = get_qualified_name(decl)
                     nt.qualified_ns  = get_qualified_namespace(decl)
@@ -502,6 +508,13 @@ class NativeTypedef(object):
                 st.qualified_name = self.qualified_name
                 st.is_typedef = True
                 self.generator.structs[self.qualified_name] = st
+        elif node.kind == CursorKind.UNION_DECL:
+            if not self.generator.unions.has_key(self.qualified_name):
+                nu = NativeUnion(node)
+                nu.qualified_name = self.qualified_name
+                nu.union_name = self.node.displayname
+                nu.is_typedef = True
+                self.generator.unions[self.qualified_name] = nu
         elif node.kind == CursorKind.ENUM_DECL:
             if not self.generator.enums.has_key(self.qualified_name):
                 ne = NativeEnum(node)
@@ -530,6 +543,13 @@ class NativeEnum(object):
     def process_node(self, node):
         if node.kind == CursorKind.ENUM_CONSTANT_DECL:
             self.constants.append(node.spelling)
+
+class NativeUnion(object):
+    def __init__(self, node):
+        self.node = node
+        self.union_name = node.displayname
+        self.qualified_name = get_qualified_name(node)
+        self.is_typedef = False
 
 class NativeOverloadedFunction(object):
     def __init__(self, func_array):
@@ -930,10 +950,9 @@ class Generator(object):
         self.target_module_fullname = os.path.splitext(os.path.basename(self.conf))[0]
         self.classes = {}
         self.generated_classes = {}
-        self.generated_enums = {}
-        self.generated_structs = {}
         self.enums = {}
         self.structs = {}
+        self.unions = {}
         self.sorted_classes = []
 
     @property
@@ -1019,6 +1038,12 @@ class Generator(object):
                 qn = get_qualified_name(node)
                 ne = NativeEnum(node)
                 self.enums[qn] = ne
+            return False
+        elif node.kind == CursorKind.UNION_DECL:
+            if node == node.type.get_declaration() and len(node.get_children_array()) > 0 and len(node.displayname) > 0:
+                qn = get_qualified_name(node)
+                nu = NativeUnion(node)
+                self.unions[qn] = nu
             return False
         elif node.kind == CursorKind.TYPEDEF_DECL:
             if node == node.type.get_declaration():

@@ -44,35 +44,9 @@ public:
     
 	/// program for key
 	static CCGLProgram* programForKey(const string& key);
-	
-	/// flash
-	static void setFlash(float r, float g, float b, float t);
-	
-	/// blur
-	static void setBlur(CCSize nodeSize, CCSize blurSize, ccColor4F blurSubtract = cc4fTRANSPARENT);
     
-    /// lighting, view ccShader_lighting_frag.h for detail algorithm
-    static void setLighting(ccColor4B mul, ccColor3B add);
-    
-    /// color matrix
-    static void setColorMatrix(const kmMat4& mat4);
-    static void setGray();
-    
-    /**
-     * Set uniform for shine shader.
-     *
-     * @param width node width
-     * @param lb shining pattern left bottom position
-     * @param rt shining pattern right top position
-     * @param color1 gradient color 1
-     * @param color2 gradient color 2
-     * @param color3 gradient color 3
-     * @param gradientPositions the gradient point, it is relative and can be between [0, 1]. First value
-     *      indicating the start of color 1, second value is indicating the start of color 2, and so on. Color between
-     *      two values will be interpolated.
-     * @param time time, from 0 to 1
-     */
-    static void setShine(float width, CCPoint lb, CCPoint rt, ccColor4B color1, ccColor4B color2, ccColor4B color3, ccVertex3F gradientPositions, float time);
+    /// set uniform value for custom shader
+    static void setUniformValue(CCGLProgram* p, ccCustomUniformValue& v);
 };
 
 NS_CC_END

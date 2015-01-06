@@ -23,6 +23,7 @@
  ****************************************************************************/
 #include "CCBlur.h"
 #include "shaders/CCShaders.h"
+#include "ccTypes.h"
 
 NS_CC_BEGIN
 
@@ -41,15 +42,18 @@ CCBlur* CCBlur::create(float duration, CCSize startBlurSize, CCSize endBlurSize)
 
 bool CCBlur::initWithBlurSize(float d, CCSize startBlurSize, CCSize endBlurSize) {
     setDuration(d);
-    m_startBlurSize = startBlurSize;
-	m_endBlurSize = endBlurSize;
-	m_deltaBlurSize = m_endBlurSize - m_startBlurSize;
+    m_startBlurSize = CCS2ccs(startBlurSize);
+	m_endBlurSize = CCS2ccs(endBlurSize);
+	m_deltaBlurSize = ccSizeMake(m_endBlurSize.width - m_startBlurSize.width,
+                                 m_endBlurSize.height - m_startBlurSize.height);
     
     return true;
 }
 
 void CCBlur::update(float time) {
-	CCShaders::setBlur(getTarget()->getContentSize(), m_startBlurSize + m_deltaBlurSize * time);
+    ccCustomUniformValue& v = m_pTarget->getCustomUniformValue();
+    v.blur.blurSize.width = m_startBlurSize.width + m_deltaBlurSize.width * time;
+    v.blur.blurSize.height = m_startBlurSize.height + m_deltaBlurSize.height * time;
 }
 
 void CCBlur::startWithTarget(CCNode *pTarget) {
@@ -61,8 +65,14 @@ void CCBlur::startWithTarget(CCNode *pTarget) {
     }
     
     // set new program
-    pTarget->setShaderProgram(CCShaders::programForKey(kCCShader_blur));
-	CCShaders::setBlur(pTarget->getContentSize(), m_startBlurSize);
+    ccCustomUniformValue v = {
+        .blur = {
+            CCS2ccs(pTarget->getContentSize()),
+            m_startBlurSize,
+            cc4fTRANSPARENT
+        }
+    };
+    pTarget->setShaderProgram(CCShaders::programForKey(kCCShader_blur), v);
 }
 
 void CCBlur::stop() {
@@ -83,14 +93,14 @@ CCObject* CCBlur::copyWithZone(CCZone *pZone) {
     }
 	
     CCActionInterval::copyWithZone(pZone);
-    pCopy->initWithBlurSize(m_fDuration, m_startBlurSize, m_endBlurSize);
+    pCopy->initWithBlurSize(m_fDuration, ccs2CCS(m_startBlurSize), ccs2CCS(m_endBlurSize));
     
     CC_SAFE_DELETE(pNewZone);
     return pCopy;
 }
 
 CCActionInterval* CCBlur::reverse() {
-    return CCBlur::create(getDuration(), m_endBlurSize, m_startBlurSize);
+    return CCBlur::create(getDuration(), ccs2CCS(m_endBlurSize), ccs2CCS(m_startBlurSize));
 }
 
 NS_CC_END

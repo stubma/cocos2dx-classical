@@ -210,9 +210,6 @@ protected:
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
     CC_PROPERTY(cpBody *, m_pBody, Body);
 #endif
-    
-    /// predraw function
-    CC_SYNTHESIZE_RETAIN(CCCallFuncO*, m_preDrawFunction, PreDrawFunction);
 };
 
 NS_CC_EXT_END

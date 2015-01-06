@@ -181,6 +181,12 @@ static ccCustomUniformValue kCCMatrixUniformValue_gray = {
         0, 0, 0, 1
     }
 };
+static ccCustomUniformValue kCCLightingUniformValue_pressed = {
+    .lighting =  {
+        ccc4(255 * 0.5f, 255 * 0.5f, 255 * 0.5f, 255 * 0.7f),
+        ccBLACK
+    }
+};
 static ccCustomUniformValue kCCCustomUniformValue_empty = { 0 };
 
 /** CCGLProgram

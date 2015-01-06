@@ -115,56 +115,51 @@ CCGLProgram* CCShaders::programForKey(const string& key) {
 	return CCShaderCache::sharedShaderCache()->programForKey(key.c_str());
 }
 
-void CCShaders::setFlash(float r, float g, float b, float t) {
-    CCGLProgram* p = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_flash);
-    p->use();
-    p->setUniformLocationWith3f(sUniformLocations[kCCUniform_flashColor], r, g, b);
-    p->setUniformLocationWith1f(sUniformLocations[kCCUniform_flashTime], t);
-}
-
-void CCShaders::setBlur(CCSize nodeSize, CCSize blurSize, ccColor4F blurSubtract) {
-    CCGLProgram* p = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_blur);
-    p->use();
-	p->setUniformLocationWith2f(sUniformLocations[kCCUniform_blurSize], blurSize.width / nodeSize.width, blurSize.height / nodeSize.height);
-	p->setUniformLocationWith4f(sUniformLocations[kCCUniform_blurSubtract], blurSubtract.r, blurSubtract.g, blurSubtract.b, blurSubtract.a);
-}
-
-void CCShaders::setLighting(ccColor4B mul, ccColor3B add) {
-    CCGLProgram* p = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_lighting);
-    p->use();
-	p->setUniformLocationWith4f(sUniformLocations[kCCUniform_lightingMul], mul.r / 255.0f, mul.g / 255.0f, mul.b / 255.0f, mul.a / 255.0f);
-	p->setUniformLocationWith3f(sUniformLocations[kCCUniform_lightingAdd], add.r / 255.0f, add.g / 255.0f, add.b / 255.0f);
-}
-
-void CCShaders::setColorMatrix(const kmMat4& mat4) {
-    CCGLProgram* p = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_matrix);
-    p->use();
-    p->setUniformLocationWithMatrix4fv(sUniformLocations[kCCUniform_colorMatrix], (GLfloat*)mat4.mat, 1);
-}
-
-void CCShaders::setGray() {
-    kmMat4 m;
-    float v[] = {
-        0.299f, 0.299f, 0.299f, 0,
-        0.587f, 0.587f, 0.587f, 0,
-        0.114f, 0.114f, 0.114f, 0,
-        0, 0, 0, 1
-    };
-    kmMat4Fill(&m, v);
-    setColorMatrix(m);
-}
-
-void CCShaders::setShine(float width, CCPoint lb, CCPoint rt, ccColor4B color1, ccColor4B color2, ccColor4B color3, ccVertex3F gradientPositions, float time) {
-    CCGLProgram* p = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_shine);
-    p->use();
-    p->setUniformLocationWith1f(sUniformLocations[kCCUniform_shineWidth], width);
-    p->setUniformLocationWith1f(sUniformLocations[kCCUniform_shineTime], time);
-    p->setUniformLocationWith2f(sUniformLocations[kCCUniform_shineXY1], lb.x, lb.y);
-    p->setUniformLocationWith2f(sUniformLocations[kCCUniform_shineXY2], rt.x, rt.y);
-    p->setUniformLocationWith4f(sUniformLocations[kCCUniform_shineColor1], color1.r / 255.0f, color1.g / 255.0f, color1.b / 255.0f, color1.a / 255.0f);
-    p->setUniformLocationWith4f(sUniformLocations[kCCUniform_shineColor2], color2.r / 255.0f, color2.g / 255.0f, color2.b / 255.0f, color2.a / 255.0f);
-    p->setUniformLocationWith4f(sUniformLocations[kCCUniform_shineColor3], color3.r / 255.0f, color3.g / 255.0f, color3.b / 255.0f, color3.a / 255.0f);
-    p->setUniformLocationWith3f(sUniformLocations[kCCUniform_shinePositions], gradientPositions.x, gradientPositions.y, gradientPositions.z);
+void CCShaders::setUniformValue(CCGLProgram* p, ccCustomUniformValue& v) {
+    if(p->getKey() == kCCShader_blur) {
+        p->setUniformLocationWith2f(sUniformLocations[kCCUniform_blurSize],
+                                    v.blur.blurSize.width / v.blur.nodeSize.width,
+                                    v.blur.blurSize.height / v.blur.nodeSize.height);
+        p->setUniformLocationWith4f(sUniformLocations[kCCUniform_blurSubtract],
+                                    v.blur.subtract.r, v.blur.subtract.g, v.blur.subtract.b, v.blur.subtract.a);
+    } else if(p->getKey() == kCCShader_flash) {
+        p->setUniformLocationWith3f(sUniformLocations[kCCUniform_flashColor], v.flash.r, v.flash.g, v.flash.b);
+        p->setUniformLocationWith1f(sUniformLocations[kCCUniform_flashTime], v.flash.t);
+    } else if(p->getKey() == kCCShader_lighting) {
+        p->setUniformLocationWith4f(sUniformLocations[kCCUniform_lightingMul],
+                                    v.lighting.mul.r / 255.0f,
+                                    v.lighting.mul.g / 255.0f,
+                                    v.lighting.mul.b / 255.0f,
+                                    v.lighting.mul.a / 255.0f);
+        p->setUniformLocationWith3f(sUniformLocations[kCCUniform_lightingAdd],
+                                    v.lighting.add.r / 255.0f,
+                                    v.lighting.add.g / 255.0f,
+                                    v.lighting.add.b / 255.0f);
+    } else if(p->getKey() == kCCShader_matrix) {
+        p->setUniformLocationWithMatrix4fv(sUniformLocations[kCCUniform_colorMatrix], (GLfloat*)v.matrix.mat4.mat, 1);
+    } else if(p->getKey() == kCCShader_shine) {
+        p->setUniformLocationWith1f(sUniformLocations[kCCUniform_shineWidth], v.shine.width);
+        p->setUniformLocationWith1f(sUniformLocations[kCCUniform_shineTime], v.shine.time);
+        p->setUniformLocationWith2f(sUniformLocations[kCCUniform_shineXY1], v.shine.lb.x, v.shine.lb.y);
+        p->setUniformLocationWith2f(sUniformLocations[kCCUniform_shineXY2], v.shine.rt.x, v.shine.rt.y);
+        p->setUniformLocationWith4f(sUniformLocations[kCCUniform_shineColor1],
+                                    v.shine.color1.r / 255.0f,
+                                    v.shine.color1.g / 255.0f,
+                                    v.shine.color1.b / 255.0f,
+                                    v.shine.color1.a / 255.0f);
+        p->setUniformLocationWith4f(sUniformLocations[kCCUniform_shineColor2],
+                                    v.shine.color2.r / 255.0f,
+                                    v.shine.color2.g / 255.0f,
+                                    v.shine.color2.b / 255.0f,
+                                    v.shine.color2.a / 255.0f);
+        p->setUniformLocationWith4f(sUniformLocations[kCCUniform_shineColor3],
+                                    v.shine.color3.r / 255.0f,
+                                    v.shine.color3.g / 255.0f,
+                                    v.shine.color3.b / 255.0f,
+                                    v.shine.color3.a / 255.0f);
+        p->setUniformLocationWith3f(sUniformLocations[kCCUniform_shinePositions],
+                                    v.shine.gradientPositions.x, v.shine.gradientPositions.y, v.shine.gradientPositions.z);
+    }
 }
 
 NS_CC_END

@@ -37,13 +37,13 @@ private:
     CCGLProgram* m_oldProgram;
     
     /// start blur size
-	CCSize m_startBlurSize;
+	ccSize m_startBlurSize;
 	
 	/// end blur size
-	CCSize m_endBlurSize;
+	ccSize m_endBlurSize;
 	
 	/// delta size
-	CCSize m_deltaBlurSize;
+	ccSize m_deltaBlurSize;
     
 protected:
     CCBlur();

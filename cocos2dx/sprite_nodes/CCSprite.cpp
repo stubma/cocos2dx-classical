@@ -298,15 +298,13 @@ CCSprite* CCSprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
 CCSprite::CCSprite(void) :
 m_bShouldBeHidden(false),
 m_pobTexture(nullptr),
-m_shouldUpdateBlendFunc(true),
-m_preDrawFunction(nullptr)
+m_shouldUpdateBlendFunc(true)
 {
 }
 
 CCSprite::~CCSprite(void)
 {
     CC_SAFE_RELEASE(m_pobTexture);
-    CC_SAFE_RELEASE(m_preDrawFunction);
 }
 
 void CCSprite::setTextureRect(const CCRect& rect)
@@ -553,10 +551,6 @@ void CCSprite::draw(void)
     CC_PROFILER_START_CATEGORY(kCCProfilerCategorySprite, "CCSprite - draw");
 
     CCAssert(!m_pobBatchNode, "If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
-
-    // pre draw
-    if(m_preDrawFunction)
-        m_preDrawFunction->execute();
     
     CC_NODE_DRAW_SETUP(this);
 

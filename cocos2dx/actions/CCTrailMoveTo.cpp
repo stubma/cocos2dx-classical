@@ -185,6 +185,12 @@ void CCTrailMoveTo::startWithTarget(CCNode* pTarget) {
     
     // create armature tail if armature mode
     if(m_mode == ARMATURE) {
+        ccCustomUniformValue v = {
+            .lighting = {
+                m_trailColorScale,
+                m_trailColor
+            }
+        };
         CCNode* parent = m_pTarget->getParent();
         int z = m_pTarget->getZOrder();
         while(m_trails.count() < m_trailSegments) {
@@ -193,8 +199,7 @@ void CCTrailMoveTo::startWithTarget(CCNode* pTarget) {
                 trail->getAnimation()->playWithIndex(m_animationIndex);
             else
                 trail->getAnimation()->play(m_animationName.c_str());
-            trail->setPreDrawFunction(CCCallFuncO::create(this, callfuncO_selector(CCTrailMoveTo::onPreDraw), trail));
-            trail->setShaderProgram(CCShaders::programForKey(kCCShader_lighting));
+            trail->setShaderProgram(CCShaders::programForKey(kCCShader_lighting), v);
             trail->setAnchorPoint(m_pTarget->getAnchorPoint());
             trail->setPosition(m_pTarget->getPosition());
             trail->setScaleX(m_pTarget->getScaleX());
@@ -229,6 +234,12 @@ void CCTrailMoveTo::update(float time) {
             }
         }
     } else {
+        ccCustomUniformValue v = {
+            .lighting = {
+                m_trailColorScale,
+                m_trailColor
+            }
+        };
         if(m_trails.count() < m_trailSegments) {
             float d = ccpLength(ccpSub(currentPos, previousPos));
             m_distance += d;
@@ -238,8 +249,7 @@ void CCTrailMoveTo::update(float time) {
                     trail = CCSprite::createWithSpriteFrameName(m_spriteName.c_str());
                 else
                     trail = CCSprite::create(m_spriteName.c_str());
-                trail->setPreDrawFunction(CCCallFuncO::create(this, callfuncO_selector(CCTrailMoveTo::onPreDraw), trail));
-                trail->setShaderProgram(CCShaders::programForKey(kCCShader_lighting));
+                trail->setShaderProgram(CCShaders::programForKey(kCCShader_lighting), v);
                 trail->setAnchorPoint(m_pTarget->getAnchorPoint());
                 trail->setPosition(m_pTarget->getAnchorPointInPoints());
                 
@@ -345,15 +355,7 @@ void CCTrailMoveTo::cleanTrails() {
 }
 
 void CCTrailMoveTo::removeTrail(CCNode* trail) {
-    if(m_mode == ARMATURE) {
-        ((CCArmature*)trail)->setPreDrawFunction(nullptr);
-    }
     trail->removeFromParent();
-}
-
-void CCTrailMoveTo::onPreDraw(CCObject* sender) {
-    // set color
-    CCShaders::setLighting(m_trailColorScale, m_trailColor);
 }
 
 NS_CC_END

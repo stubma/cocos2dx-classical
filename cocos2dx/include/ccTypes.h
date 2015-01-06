@@ -350,6 +350,12 @@ static inline ccSize ccSizeMake(const float w, const float h) {
     ccSize s = { w, h };
     return s;
 }
+static inline CCSize ccs2CCS(const ccSize& s) {
+    return CCSizeMake(s.width, s.height);
+}
+static inline ccSize CCS2ccs(const CCSize& s) {
+    return ccSizeMake(s.width, s.height);
+}
 
 // insets
 typedef struct ccInsets {

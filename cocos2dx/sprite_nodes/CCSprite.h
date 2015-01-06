@@ -553,9 +553,6 @@ protected:
     
     /// true means don't update blend function
     CC_SYNTHESIZE_BOOL(m_shouldUpdateBlendFunc, ShouldUpdateBlendFunc);
-    
-    /// predraw function
-    CC_SYNTHESIZE_RETAIN(CCCallFuncO*, m_preDrawFunction, PreDrawFunction);
 };
 
 
