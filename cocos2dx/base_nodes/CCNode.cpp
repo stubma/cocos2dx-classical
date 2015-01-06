@@ -528,6 +528,7 @@ void CCNode::setShaderProgram(CCGLProgram *pShaderProgram, ccCustomUniformValue 
 }
 
 ccCustomUniformValue& CCNode::getCustomUniformValue() {
+    m_uniformValue.type = m_pShaderProgram ? m_pShaderProgram->getKey() : kCCShader_none;
     return m_uniformValue;
 }
 

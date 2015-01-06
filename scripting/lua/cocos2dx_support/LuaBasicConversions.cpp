@@ -848,26 +848,116 @@ bool luaval_to_customuniformvalue(lua_State* L, int lo, cocos2d::ccCustomUniform
     }
     
     // must have __union field
-    string __union;
-    lua_pushstring(L, "__union");
+    ccShaderType type;
+    lua_pushstring(L, "type");
     lua_gettable(L, lo);
-    if(lua_isnil(L, -1) || !lua_isstring(L, -1)) {
+    if(lua_isnil(L, -1) || !lua_isnumber(L, -1)) {
         ok = false;
     } else {
-        luaval_to_std_string(L, -1, &__union);
+        type = (ccShaderType)lua_tointeger(L, -1);
     }
     lua_pop(L, 1);
     
     // conversion based on __union
     if(ok) {
-        if(__union == "flash") {
-            
-        } else if(__union == "blur") {
-        } else if(__union == "matrix") {
-            
-        } else if(__union == "lighting") {
-        } else if(__union == "shine") {
-            
+        switch (type) {
+            case cocos2d::kCCShader_blur:
+                lua_pushstring(L, "nodeSize");
+                lua_gettable(L, lo);
+                luaval_to_csize(L, -1, &outValue->blur.nodeSize);
+                lua_pop(L, 1);
+                
+                lua_pushstring(L, "blurSize");
+                lua_gettable(L, lo);
+                luaval_to_csize(L, -1, &outValue->blur.blurSize);
+                lua_pop(L, 1);
+                
+                lua_pushstring(L, "subtract");
+                lua_gettable(L, lo);
+                luaval_to_color4f(L, -1, &outValue->blur.subtract);
+                lua_pop(L, 1);
+                break;
+            case cocos2d::kCCShader_flash:
+                lua_pushstring(L, "r");
+                lua_gettable(L, lo);
+                outValue->flash.r = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+                lua_pop(L, 1);
+                
+                lua_pushstring(L, "g");
+                lua_gettable(L, lo);
+                outValue->flash.g = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+                lua_pop(L, 1);
+                
+                lua_pushstring(L, "b");
+                lua_gettable(L, lo);
+                outValue->flash.b = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+                lua_pop(L, 1);
+                
+                lua_pushstring(L, "t");
+                lua_gettable(L, lo);
+                outValue->flash.t = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+                lua_pop(L, 1);
+                break;
+            case cocos2d::kCCShader_lighting:
+                lua_pushstring(L, "mul");
+                lua_gettable(L, lo);
+                luaval_to_color4b(L, -1, &outValue->lighting.mul);
+                lua_pop(L, 1);
+                
+                lua_pushstring(L, "add");
+                lua_gettable(L, lo);
+                luaval_to_color3b(L, -1, &outValue->lighting.add);
+                lua_pop(L, 1);
+                break;
+            case cocos2d::kCCShader_matrix:
+                lua_pushstring(L, "mat4");
+                lua_gettable(L, lo);
+                luaval_to_mat4(L, -1, &outValue->matrix.mat4);
+                lua_pop(L, 1);
+                break;
+            case cocos2d::kCCShader_shine:
+                lua_pushstring(L, "width");
+                lua_gettable(L, lo);
+                outValue->shine.width = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+                lua_pop(L, 1);
+                
+                lua_pushstring(L, "time");
+                lua_gettable(L, lo);
+                outValue->shine.time = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+                lua_pop(L, 1);
+                
+                lua_pushstring(L, "lb");
+                lua_gettable(L, lo);
+                luaval_to_cpoint(L, -1, &outValue->shine.lb);
+                lua_pop(L, 1);
+                
+                lua_pushstring(L, "rt");
+                lua_gettable(L, lo);
+                luaval_to_cpoint(L, -1, &outValue->shine.rt);
+                lua_pop(L, 1);
+                
+                lua_pushstring(L, "color1");
+                lua_gettable(L, lo);
+                luaval_to_color4b(L, -1, &outValue->shine.color1);
+                lua_pop(L, 1);
+                
+                lua_pushstring(L, "color2");
+                lua_gettable(L, lo);
+                luaval_to_color4b(L, -1, &outValue->shine.color2);
+                lua_pop(L, 1);
+                
+                lua_pushstring(L, "color3");
+                lua_gettable(L, lo);
+                luaval_to_color4b(L, -1, &outValue->shine.color3);
+                lua_pop(L, 1);
+                
+                lua_pushstring(L, "gradientPositions");
+                lua_gettable(L, lo);
+                luaval_to_vertex3f(L, -1, &outValue->shine.gradientPositions);
+                lua_pop(L, 1);
+                break;
+            default:
+                break;
         }
     }
     return ok;
@@ -2747,5 +2837,96 @@ void mat4_to_luaval(lua_State* L, const kmMat4& mat) {
 }
 
 void customuniformvalue_to_luaval(lua_State* L, const ccCustomUniformValue& v) {
+    if (nullptr == L)
+        return;
     
+    lua_newtable(L);
+    
+    // type
+    lua_pushstring(L, "type");
+    lua_pushnumber(L, (lua_Number)v.type);
+    lua_rawset(L, -3);
+    
+    // based on type
+    switch (v.type) {
+        case kCCShader_blur:
+            lua_pushstring(L, "nodeSize");
+            csize_to_luaval(L, v.blur.nodeSize);
+            lua_rawset(L, -3);
+            
+            lua_pushstring(L, "blurSize");
+            csize_to_luaval(L, v.blur.blurSize);
+            lua_rawset(L, -3);
+            
+            lua_pushstring(L, "subtract");
+            color4f_to_luaval(L, v.blur.subtract);
+            lua_rawset(L, -3);
+            break;
+        case kCCShader_flash:
+            lua_pushstring(L, "r");
+            lua_pushnumber(L, (lua_Number)v.flash.r);
+            lua_rawset(L, -3);
+            
+            lua_pushstring(L, "g");
+            lua_pushnumber(L, (lua_Number)v.flash.g);
+            lua_rawset(L, -3);
+            
+            lua_pushstring(L, "b");
+            lua_pushnumber(L, (lua_Number)v.flash.b);
+            lua_rawset(L, -3);
+            
+            lua_pushstring(L, "t");
+            lua_pushnumber(L, (lua_Number)v.flash.t);
+            lua_rawset(L, -3);
+            break;
+        case kCCShader_lighting:
+            lua_pushstring(L, "mul");
+            color4b_to_luaval(L, v.lighting.mul);
+            lua_rawset(L, -3);
+            
+            lua_pushstring(L, "add");
+            color3b_to_luaval(L, v.lighting.add);
+            lua_rawset(L, -3);
+            break;
+        case kCCShader_matrix:
+            lua_pushstring(L, "mat4");
+            mat4_to_luaval(L, v.matrix.mat4);
+            lua_rawset(L, -3);
+            break;
+        case kCCShader_shine:
+            lua_pushstring(L, "width");
+            lua_pushnumber(L, (lua_Number)v.shine.width);
+            lua_rawset(L, -3);
+            
+            lua_pushstring(L, "time");
+            lua_pushnumber(L, (lua_Number)v.shine.time);
+            lua_rawset(L, -3);
+            
+            lua_pushstring(L, "color1");
+            color4b_to_luaval(L, v.shine.color1);
+            lua_rawset(L, -3);
+            
+            lua_pushstring(L, "color2");
+            color4b_to_luaval(L, v.shine.color2);
+            lua_rawset(L, -3);
+            
+            lua_pushstring(L, "color3");
+            color4b_to_luaval(L, v.shine.color3);
+            lua_rawset(L, -3);
+            
+            lua_pushstring(L, "lb");
+            cpoint_to_luaval(L, v.shine.lb);
+            lua_rawset(L, -3);
+            
+            lua_pushstring(L, "rt");
+            cpoint_to_luaval(L, v.shine.rt);
+            lua_rawset(L, -3);
+            
+            lua_pushstring(L, "gradientPositions");
+            vertex3f_to_luaval(L, v.shine.gradientPositions);
+            lua_rawset(L, -3);
+            break;
+        default:
+            break;
+    }
 }

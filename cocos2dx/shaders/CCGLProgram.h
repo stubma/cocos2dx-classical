@@ -44,6 +44,9 @@ class CCNode;
  */
 
 typedef enum {
+    kCCShader_none,
+    
+    // builtin
     kCCShader_PositionTextureColor,
     kCCShader_PositionTextureColorAlphaTest,
     kCCShader_PositionColor,
@@ -148,36 +151,41 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 
 /**
  * custom uniforms value union
- * to convert between native and lua, lua table must set "__union" field, it is a string
- * the __union value of this type can be: "flash", "blur", "lighting", "matrix", "laser", "shine"
+ * when convert from lua to native type, lua table must have type set
+ * when convert from native to lua type, the type is set before lua get it so that lua conversion code
+ * can check it
  */
-typedef union {
-    struct {
-        float r, g, b, t;
-    } flash;
+typedef struct {
+    union {
+        struct {
+            float r, g, b, t;
+        } flash;
+        
+        struct {
+            ccSize nodeSize;
+            ccSize blurSize;
+            ccColor4F subtract;
+        } blur;
+        
+        struct {
+            ccColor4B mul;
+            ccColor3B add;
+        } lighting;
+        
+        struct {
+            kmMat4 mat4;
+        } matrix;
+        
+        struct {
+            float width;
+            ccPoint lb, rt;
+            ccColor4B color1, color2, color3;
+            ccVertex3F gradientPositions;
+            float time;
+        } shine;
+    };
     
-    struct {
-        ccSize nodeSize;
-        ccSize blurSize;
-        ccColor4F subtract;
-    } blur;
-    
-    struct {
-        ccColor4B mul;
-        ccColor3B add;
-    } lighting;
-    
-    struct {
-        kmMat4 mat4;
-    } matrix;
-    
-    struct {
-        float width;
-        ccPoint lb, rt;
-        ccColor4B color1, color2, color3;
-        ccVertex3F gradientPositions;
-        float time;
-    } shine;
+    ccShaderType type;
 } ccCustomUniformValue;
 
 // common used uniform value
