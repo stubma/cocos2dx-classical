@@ -28,11 +28,15 @@
 #include "CCControlSwitch.h"
 #include "cocos2d.h"
 
-NS_CC_EXT_BEGIN
-// CCControlSwitchSprite
+NS_CC_BEGIN
 
 extern const GLchar* ccExSwitchMask_frag;
 extern const GLchar* ccPositionTextureColor_vert;
+
+NS_CC_END
+
+NS_CC_EXT_BEGIN
+// CCControlSwitchSprite
 
 class CCControlSwitchSprite : public CCSprite, public CCActionTweenDelegate
 {
