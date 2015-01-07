@@ -16,7 +16,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := cocos_extension_static
 LOCAL_MODULE_FILENAME := libextension
 LOCAL_SRC_FILES := $(call all-cpp-files-under,.)
-LOCAL_CFLAGS += -fexceptions
+LOCAL_CFLAGS += -fexceptions -Qunused-arguments
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
 	$(LOCAL_PATH)/GUI/CCControlExtension \
 	$(LOCAL_PATH)/GUI/CCScrollView \

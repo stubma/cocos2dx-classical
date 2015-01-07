@@ -634,7 +634,7 @@ void SpriteRenderTextureBug::SimpleSprite::draw()
 	rt->beginWithClear(0.0f, 0.0f, 0.0f, 1.0f);
 	rt->end();
     
-	CC_NODE_DRAW_SETUP();
+	CC_NODE_DRAW_SETUP(this);
     
 	ccBlendFunc blend = getBlendFunc();
 	ccGLBlendFunc(blend.src, blend.dst);

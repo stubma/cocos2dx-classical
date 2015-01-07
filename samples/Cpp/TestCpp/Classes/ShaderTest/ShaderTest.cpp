@@ -2,6 +2,14 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 
+NS_CC_BEGIN
+
+extern const GLchar* ccPositionTextureColor_vert;
+extern const GLchar* ccPositionTexture_vert;
+extern const GLchar* ccPositionTexture_vert;
+
+NS_CC_END
+
 static int sceneIdx = -1; 
 
 #define MAX_LAYER    9
@@ -258,7 +266,7 @@ void ShaderNode::setPosition(const CCPoint &newPosition)
 
 void ShaderNode::draw()
 {
-    CC_NODE_DRAW_SETUP();
+    CC_NODE_DRAW_SETUP(this);
 
     float w = SIZE_X, h = SIZE_Y;
     GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};

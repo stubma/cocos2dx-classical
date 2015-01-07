@@ -1006,7 +1006,7 @@ SpriteZVertex::SpriteZVertex()
     // Configure shader to mimic glAlphaTest
     //
     CCGLProgram *alphaTestShader = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
-    GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->getProgram(), kCCUniformAlphaTestValue);
+    GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->getProgram(), kCCUniformNames[kCCUniformAlphaTestValue]);
 
     // set alpha test value
     // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
@@ -1091,7 +1091,7 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     // Configure shader to mimic glAlphaTest
     //
     CCGLProgram *alphaTestShader = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
-    GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->getProgram(), kCCUniformAlphaTestValue);
+    GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->getProgram(), kCCUniformNames[kCCUniformAlphaTestValue]);
 
     // set alpha test value
     // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
