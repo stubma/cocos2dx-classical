@@ -22,7 +22,8 @@ I only care iOS/Android platform, so other platform code will be deleted. Are yo
 ===
 1. 基于cocos2dx 2.x最新代码 **(已完成)**
 2. 将我个人的cocos2dx-better代码融入 **(已完成)**
-3. 把quick-cocos2dx那一套lua支持拷贝过来改吧改吧 **(基本完成)**
+3. 把quick-cocos2dx那一套lua支持拷贝过来改吧改吧 **(已完成)**
+	* quick 3.x的binding generator工具已经被我移植了过来, 名字叫autolua, 引擎的绑定已经全部生成, HelloLua工程已经调试通过, 尚需更多实践检验
 4. 专注于填坑改bug, 而非大刀阔斧的修改架构 **(随时进行中)**
 
 Purpose
@@ -30,7 +31,8 @@ Purpose
 
 1. base on cocos2dx v2 **(Done)**
 2. merge my cocos2dx-better **(Done)**
-3. provide fully lua support, in quick-cocos2dx 3.x way **(Almost Done)**
+3. provide fully lua support, in quick-cocos2dx 3.x way **(Done)**
+	* quick 3.x binding generator is migrated as autolua, and all lua binding for cocos2dx-classical is generated. HelloLua sample is tested and result is fine. Sure it needs more testing but basically it works.
 4. fix v2 bugs **(Always in progress)**	
 
 何时结束
