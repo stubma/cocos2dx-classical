@@ -64,6 +64,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 			* 注: 不再支持从CocoStudio中直接添加page item, 必须使用PageViewDataSource接口
 	* 修正UILabelBMFont::setFntFile方法中的内存泄露
 	* ListView的pushBackDefaultItem返回新item
+	* 修正CCArmature有时候帧事件触发两次的问题
 	* 由于CocoStudio Mac 1.0.0.0 beta没有骨骼动画功能, 需要使用骨骼动画时, 可以使用CocoStudio Windows版1.4.0.1, 1.4.0.1以上版本我没有测试过.
 * 重新实现TMX地图, 支持一个层有多张贴图的情况(来自cocos2dx-better的CBTMXTileMap)
 * 重新实现CCTableView(来自cocos2dx-better中的CCGridView代码):
@@ -79,6 +80,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 * CCScrollView增加getTouchPoint方法获得最后一次点击位置
 * CCRepeatForever覆盖stop方法, 停掉内部动作
 * copy()返回的对象不再需要release
+* setShaderProgram可以设置参数, 从而支持多个节点使用同一个shader但参数不同
 
 cocos2dx-better新加的其它功能我就不列举了, 目前cocos2dx-better的代码已经合并完成, 有一部分代码我感觉写的用处不大就没有合并了, 不过只是一小部分, 95%的cocos2dx-better代码已经合并.
 
@@ -103,6 +105,7 @@ Things Improved
 			* Note: don't support add page item in CocoStudio
 	* fix memory leak in UILabelBMFont::setFntFile
 	* return created item in Listview::pushBackDefaultItem
+	* fix bug: CCArmature frame event may be triggered more than once
 	* Note: if you want to use skeleton animation, please still use CocoStudio Windows version, 1.4.0.1 is recommended.
 * reimplement TMX, support multi-tileset for one layer(merge from cocos2dx-better CBTMXTileMap)
 * reimplement CCTableView(merge from cocos2dx-better CCGridView):
@@ -117,6 +120,7 @@ Things Improved
 * CCSpriteBatchNode insertQuadFromSprite, updateQuadFromSprite, addSpriteWithoutQuad are changed to public
 * CCScrollView adds getTouchPoint to get last touch position
 * CCRepeatForever override stop method
+* setShaderProgram can specify uniform values so that one shader can be shared by many nodes
 
 How to use CCImagePicker
 ==========================
