@@ -397,7 +397,9 @@ float CCTween::updateFrameData(float currentPercent)
         currentPercent = fmodf(currentPercent, 1);
     }
 
-    float playedTime = (float)(m_iRawDuration - 1) * currentPercent;
+    // XXX: old code will subtract one, but it brings frame event bug
+    // so I removed it, if anything wrong, bring old code back
+    float playedTime = (float)m_iRawDuration * currentPercent;
 
 
     //! If play to current frame's front or back, then find current frame again
