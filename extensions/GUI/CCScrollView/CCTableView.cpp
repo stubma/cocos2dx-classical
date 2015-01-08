@@ -66,7 +66,6 @@ CCTableView::CCTableView()
 , m_pCellsFreed(nullptr)
 , m_pDataSource(nullptr)
 , m_pTableViewDelegate(nullptr)
-, m_eOldDirection(kCCScrollViewDirectionNone)
 , m_viewRows(-1)
 {
     
@@ -80,9 +79,8 @@ CCTableView::~CCTableView()
     unregisterAllScriptHandler();
 }
 
-void CCTableView::reloadData()
+void CCTableView::reloadData(bool keepOffset)
 {
-    m_eOldDirection = kCCScrollViewDirectionNone;
     CCObject* pObj = nullptr;
     CCARRAY_FOREACH(m_pCellsUsed, pObj)
     {
@@ -105,7 +103,7 @@ void CCTableView::reloadData()
     m_pCellsUsed = new CCArrayForObjectSorting();
     
     _updateCellPositions();
-    _updateContentSize();
+    _updateContentSize(keepOffset);
     if (m_pDataSource->numberOfCellsInTableView(this) > 0)
     {
         scrollViewDidScroll(this);
@@ -321,25 +319,26 @@ void CCTableView::_updateCellPositions() {
     }
 }
 
-void CCTableView::_updateContentSize() {
+void CCTableView::_updateContentSize(bool keepOffset) {
     CCSize contentSize;
     contentSize.width = MAX(m_hCellsPositions[m_hCellsPositions.size() - 1], m_tViewSize.width);
     contentSize.height = MAX(m_vCellsPositions[m_vCellsPositions.size() - 1], m_tViewSize.height);
     setContentSize(contentSize);
     
-	if (m_eOldDirection != m_eDirection)
-	{
-		if (m_eDirection == kCCScrollViewDirectionHorizontal)
-		{
+	if (!keepOffset) {
+		if (m_eDirection == kCCScrollViewDirectionHorizontal) {
 			setContentOffset(ccp(0,0));
-		}
-		else
-		{
+		} else {
 			setContentOffset(ccp(0,minContainerOffset().y));
 		}
-		m_eOldDirection = m_eDirection;
-	}
-    
+    } else {
+        CCPoint offset = getContentOffset();
+        CCPoint min = minContainerOffset();
+        CCPoint max = maxContainerOffset();
+        offset.x = clampf(offset.x, min.x, max.x);
+        offset.y = clampf(offset.y, min.y, max.y);
+        setContentOffset(offset);
+    }
 }
 
 CCPoint CCTableView::_offsetFromIndex(unsigned int index) {

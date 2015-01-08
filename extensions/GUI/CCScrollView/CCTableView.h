@@ -184,8 +184,10 @@ public:
     void removeCellAtIndex(unsigned int idx);
     /**
      * reloads data from data source.  the view will be refreshed.
+     * @param keepOffset true means try to keep old content offset, false means
+     *      the content offset will be reset to min
      */
-    void reloadData();
+    void reloadData(bool keepOffset = false);
     /**
      * Dequeues a free cell if available. nil if not.
      *
@@ -242,8 +244,6 @@ protected:
      */
     CCTableViewDelegate* m_pTableViewDelegate;
     
-	CCScrollViewDirection m_eOldDirection;
-    
     virtual int _indexFromOffset(CCPoint offset);
     virtual CCPoint _offsetFromIndex(unsigned int index);
     
@@ -253,7 +253,7 @@ protected:
     void _updateCellPositions();
     
 public:
-    virtual void _updateContentSize();
+    virtual void _updateContentSize(bool keepOffset = false);
     
     enum TableViewScriptEventType
     {
