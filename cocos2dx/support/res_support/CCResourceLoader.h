@@ -398,11 +398,20 @@ public:
 	void addImageTask(const string& name, CC_DECRYPT_FUNC decFunc, float idle = 0);
 	
 	/// add a zwoptex image loading task
-	void addZwoptexTask(const string& name, float idle = 0);
+	void addAtlasTaskByPlist(const string& name, float idle = 0);
 	
 	/// add a multipack zwoptex image loading task
-	void addZwoptexTask(const string& pattern, int start, int end, float idle = 0);
-	
+	void addAtlasTaskByPlistPattern(const string& pattern, int start, int end, float idle = 0);
+    
+    /**
+     * add a zwoptex task, but the texture is encrypted. So a decrypt function must be provided.
+     *
+     * @param plistName name of plist file, it should not be encrypted
+     * @param texName name of image file, it should be encrypted
+     * @param idle idle time after loaded
+     */
+    void addAtlasTaskByPlistAndImage(const string& plistName, const string& texName, float idle = 0);
+    
 	/**
 	 * add a zwoptex task, but the texture is encrypted. So a decrypt function must be provided.
 	 *
@@ -411,8 +420,19 @@ public:
 	 * @param decFunc decrypt func
 	 * @param idle idle time after loaded
 	 */
-	void addZwoptexTask(const string& plistName, const string& texName, CC_DECRYPT_FUNC decFunc, float idle = 0);
+	void addAtlasTaskByPlistAndImage(const string& plistName, const string& texName, CC_DECRYPT_FUNC decFunc, float idle = 0);
 	
+    /**
+     * add a multipack zwoptex task, but the texture is encrypted. So a decrypt function must be provided.
+     *
+     * @param plistPattern pattern of plist file, it should not be encrypted
+     * @param texPattern name pattern of image file, it should be encrypted
+     * @param start start index in pattern
+     * @param end end index in pattern
+     * @param idle idle time after loaded
+     */
+    void addAtlasTaskByPlistAndImagePattern(const string& plistPattern, const string& texPattern, int start, int end, float idle = 0);
+    
 	/**
 	 * add a multipack zwoptex task, but the texture is encrypted. So a decrypt function must be provided.
 	 *
@@ -423,7 +443,7 @@ public:
 	 * @param decFunc decrypt func
 	 * @param idle idle time after loaded
 	 */
-	void addZwoptexTask(const string& plistPattern, const string& texPattern, int start, int end, CC_DECRYPT_FUNC decFunc, float idle = 0);
+	void addAtlasTaskByPlistAndImagePattern(const string& plistPattern, const string& texPattern, int start, int end, CC_DECRYPT_FUNC decFunc, float idle = 0);
 	
 	/// add a cocosdenshion effect task
 	void addCDEffectTask(const string& name, float idle = 0);
@@ -433,27 +453,13 @@ public:
 	
 	/// add a zwoptex animation loading task
 	/// the endIndex is inclusive
-	void addZwoptexAnimTask(const string& name,
-							float unitDelay,
-							const string& pattern,
-							int startIndex,
-							int endIndex,
-							bool restoreOriginalFrame = false,
-							float idle = 0);
-	
-	/// add a zwoptex animation loading task
-	/// the endIndex is inclusive
-	/// this method can specify two sets of start/end index so the
-	/// animation can have two stage
-	void addZwoptexAnimTask(const string& name,
-							float unitDelay,
-							const string& pattern,
-							int startIndex,
-							int endIndex,
-							int startIndex2,
-							int endIndex2,
-							bool restoreOriginalFrame = false,
-							float idle = 0);
+    void addAtlasAnimByFramePattern(const string& name,
+                                    float unitDelay,
+                                    const string& pattern,
+                                    int startIndex,
+                                    int endIndex,
+                                    bool restoreOriginalFrame = false,
+                                    float idle = 0);
     
     /**
      * add a zwoptex animation loading task, you can specify delay for every frame
@@ -467,13 +473,13 @@ public:
      * @param restoreOriginalFrame restore original frame or not
      * @param idle idle time after task is completed
      */
-    void addZwoptexAnimTask(const string& name,
-                            const string& pattern,
-                            int startIndex,
-                            int endIndex,
-                            const string& delayString,
-                            bool restoreOriginalFrame = false,
-                            float idle = 0);
+    void addAtlasAnimByFramePatternAndVariableDelay(const string& name,
+                                                    const string& pattern,
+                                                    int startIndex,
+                                                    int endIndex,
+                                                    const string& delayString,
+                                                    bool restoreOriginalFrame = false,
+                                                    float idle = 0);
 
     /**
      * add a zwoptex animation loading task, you can specify delay for every frame
@@ -486,12 +492,12 @@ public:
      * @param restoreOriginalFrame restore original frame or not
      * @param idle idle time after task is completed
      */
-    void addZwoptexAnimTask(const string& name,
-                            const string& pattern,
-                            const string& indicesString,
-                            float delay,
-                            bool restoreOriginalFrame = false,
-                            float idle = 0);
+    void addAtlasAnimByFramePatternAndVariableIndex(const string& name,
+                                                    const string& pattern,
+                                                    const string& indicesString,
+                                                    float delay,
+                                                    bool restoreOriginalFrame = false,
+                                                    float idle = 0);
     
     /**
      * add a zwoptex animation loading task, you can specify delay for every frame
@@ -504,12 +510,12 @@ public:
      * @param restoreOriginalFrame restore original frame or not
      * @param idle idle time after task is completed
      */
-    void addZwoptexAnimTask(const string& name,
-                            const string& pattern,
-                            const string& indicesString,
-                            const string& delayString,
-                            bool restoreOriginalFrame = false,
-                            float idle = 0);
+    void addAtlasAnimByFramePatternAndVariableIndexDelay(const string& name,
+                                                         const string& pattern,
+                                                         const string& indicesString,
+                                                         const string& delayString,
+                                                         bool restoreOriginalFrame = false,
+                                                         float idle = 0);
     
     /**
      * add an armature config file load task, you should add related image task for this
