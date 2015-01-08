@@ -1094,57 +1094,43 @@ class Generator(object):
                 # visit from top node
                 self.visit_node(tu.cursor)
 
-    def check_class_abstract(self, c, parents, puref={}):
+    def check_class_abstract(self, c, parents):
+        puref = {}
         for p in parents:
-            self.check_class_abstract(p, p.parents, puref)
-        if len(c.parents) > 0:
-            # visit my functions, if pure virtual add to dict, if not, remove from dict if has
-            for name, m in c.methods.items():
-                if isinstance(m, NativeOverloadedFunction):
-                    for f in m.implementations:
-                        if f.pure_virtual:
-                            puref[f] = f
-                        elif puref.has_key(f):
-                            del puref[f]
-                else:
-                    if m.pure_virtual:
-                        puref[m] = m
-                    elif puref.has_key(m):
-                        del puref[m]
-            for name, m in c.override_methods.items():
-                if isinstance(m, NativeOverloadedFunction):
-                    for f in m.implementations:
-                        if f.pure_virtual:
-                            puref[f] = f
-                        elif puref.has_key(m):
-                            del puref[f]
-                else:
-                    if m.pure_virtual:
-                        puref[m] = m
-                    elif puref.has_key(m):
-                        del puref[m]
+            puref = dict(self.check_class_abstract(p, p.parents), **puref)
 
-            # finally if dict is not empty then this is an abstract class
-            if len(puref) > 0:
-                c.is_abstract = True
-        else:
-            # append self pure virtual to pure virtual list
-            for name, m in c.methods.items():
-                if isinstance(m, NativeOverloadedFunction):
-                    for f in m.implementations:
-                        if f.pure_virtual:
-                            puref[f] = f
-                else:
-                    if m.pure_virtual:
-                        puref[m] = m
-            for name, m in c.override_methods.items():
-                if isinstance(m, NativeOverloadedFunction):
-                    for f in m.implementations:
-                        if f.pure_virtual:
-                            puref[f] = f
-                else:
-                    if m.pure_virtual:
-                        puref[m] = m
+        # visit my functions, if pure virtual add to dict, if not, remove from dict if has
+        for name, m in c.methods.items():
+            if isinstance(m, NativeOverloadedFunction):
+                for f in m.implementations:
+                    if f.pure_virtual:
+                        puref[f] = f
+                    elif puref.has_key(f):
+                        del puref[f]
+            else:
+                if m.pure_virtual:
+                    puref[m] = m
+                elif puref.has_key(m):
+                    del puref[m]
+        for name, m in c.override_methods.items():
+            if isinstance(m, NativeOverloadedFunction):
+                for f in m.implementations:
+                    if f.pure_virtual:
+                        puref[f] = f
+                    elif puref.has_key(m):
+                        del puref[f]
+            else:
+                if m.pure_virtual:
+                    puref[m] = m
+                elif puref.has_key(m):
+                    del puref[m]
+
+        # finally if dict is not empty then this is an abstract class
+        if len(puref) > 0:
+            c.is_abstract = True
+
+        # return my puref
+        return puref
 
     def generate_code(self):
         # ensure dst dir existence
