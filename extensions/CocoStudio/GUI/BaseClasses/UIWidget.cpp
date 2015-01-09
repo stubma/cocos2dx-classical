@@ -64,7 +64,7 @@ _flippedX(false),
 _flippedY(false),
 _scriptObjectDict(nullptr)
 {
-    
+    m_scriptTouchHandler.handler = 0;
 }
 
 Widget::~Widget()
@@ -78,6 +78,12 @@ Widget::~Widget()
     _nodes->removeAllObjects();
     CC_SAFE_RELEASE(_nodes);
     CC_SAFE_RELEASE_NULL(_scriptObjectDict);
+    
+    if (m_scriptTouchHandler.handler != 0) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_scriptTouchHandler.handler);
+        LUALOG("[LUA] Remove widget touch event handler: %d", m_scriptTouchHandler.handler);
+        m_scriptTouchHandler.handler = 0;
+    }
 }
 
 Widget* Widget::create()
@@ -760,33 +766,37 @@ void Widget::onTouchCancelled(CCTouch *touch, CCEvent *unused_event)
 
 void Widget::pushDownEvent()
 {
-    if (_touchEventListener && _touchEventSelector)
-    {
+    if (_touchEventListener && _touchEventSelector) {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_BEGAN);
+    } else if(m_scriptTouchHandler.handler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeWidgetTouchEvent(this, TOUCH_EVENT_BEGAN);
     }
 }
 
 void Widget::moveEvent()
 {
-    if (_touchEventListener && _touchEventSelector)
-    {
-        (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_MOVED);
+    if (_touchEventListener && _touchEventSelector) {
+        (_touchEventListener->*_touchEventSelector)(this, TOUCH_EVENT_MOVED);
+    } else {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeWidgetTouchEvent(this, TOUCH_EVENT_MOVED);
     }
 }
 
 void Widget::releaseUpEvent()
 {
-    if (_touchEventListener && _touchEventSelector)
-    {
-        (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_ENDED);
+    if (_touchEventListener && _touchEventSelector) {
+        (_touchEventListener->*_touchEventSelector)(this, TOUCH_EVENT_ENDED);
+    } else {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeWidgetTouchEvent(this, TOUCH_EVENT_ENDED);
     }
 }
 
 void Widget::cancelUpEvent()
 {
-    if (_touchEventListener && _touchEventSelector)
-    {
-        (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_CANCELED);
+    if (_touchEventListener && _touchEventSelector) {
+        (_touchEventListener->*_touchEventSelector)(this, TOUCH_EVENT_CANCELED);
+    } else {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeWidgetTouchEvent(this, TOUCH_EVENT_CANCELED);
     }
 }
 
@@ -794,6 +804,10 @@ void Widget::addTouchEventListener(CCObject *target, SEL_TouchEvent selector)
 {
     _touchEventListener = target;
     _touchEventSelector = selector;
+}
+    
+void Widget::addScriptTouchEventListener(ccScriptFunction func) {
+    m_scriptTouchHandler = func;
 }
 
 bool Widget::hitTest(const CCPoint &pt)
@@ -1135,6 +1149,10 @@ void Widget::setScriptObjectDict(cocos2d::CCDictionary* scriptObjectDict)
 cocos2d::CCDictionary* Widget::getScriptObjectDict() const
 {
     return _scriptObjectDict;
+}
+ 
+int Widget::getScriptTouchHandler() {
+    return m_scriptTouchHandler.handler;
 }
     
 }

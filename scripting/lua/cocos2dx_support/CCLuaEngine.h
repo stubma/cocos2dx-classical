@@ -45,6 +45,10 @@ namespace extension {
     class CCTableView;
 }
 
+namespace ui {
+    class Widget;
+}
+
 /** Lua support for cocos2d-x
  *  @js NA
  *  @lua NA
@@ -120,6 +124,10 @@ public:
     virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches);
     virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch);
     virtual int executeLayerKeypadEvent(CCLayer* pLayer, int eventType);
+    
+    /// for cocostudio widget touch event
+    virtual int executeWidgetTouchEvent(ui::Widget* widget, int eventType);
+    
     /** execute a accelerometer event */
     virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue);
     virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = nullptr, const char* pEventSourceClassName = nullptr);

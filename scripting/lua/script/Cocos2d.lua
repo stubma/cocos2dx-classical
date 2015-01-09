@@ -1,3 +1,4 @@
+require("Cocos2dConstants")
 
 cc = cc or {}
 

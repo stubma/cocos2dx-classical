@@ -177,6 +177,19 @@ int CCLuaEngine::executeSchedule(int nHandler, float dt, CCNode* pNode/* = nullp
     return ret;
 }
 
+int CCLuaEngine::executeWidgetTouchEvent(ui::Widget* widget, int eventType) {
+    // check handler
+    int handler = widget->getScriptTouchHandler();
+    if(!handler)
+        return 0;
+    
+    // execute lua function
+    m_stack->pushInt(eventType);
+    int ret = m_stack->executeFunctionByHandler(handler, 1);
+    m_stack->clean();
+    return ret;
+}
+
 int CCLuaEngine::executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch)
 {
     CCTouchScriptHandlerEntry* pScriptHandlerEntry = pLayer->getScriptTouchHandlerEntry();

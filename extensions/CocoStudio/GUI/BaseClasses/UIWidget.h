@@ -340,6 +340,16 @@ public:
      */
     void addTouchEventListener(CCObject* target,SEL_TouchEvent selector);
     
+    /**
+     * add a script function as touch event listener
+     * the script function should have one argument which is touch event type
+     * the event type constants are defined in Cocos2dConstants.lua, available values:
+     * cc.TOUCH_EVENT_BEGAN = 0x0
+     * cc.TOUCH_EVENT_MOVED = 0x1
+     * cc.TOUCH_EVENT_ENDED = 0x2
+     * cc.TOUCH_EVENT_CANCELED = 0x3
+     */
+    void addScriptTouchEventListener(ccScriptFunction func);
     
     //cocos2d property
     
@@ -659,6 +669,9 @@ public:
      */
     virtual void setScriptObjectDict(cocos2d::CCDictionary* scriptObjectDict);
     
+    /// get script touch handler
+    int getScriptTouchHandler();
+    
     void pushDownEvent();
     void moveEvent();
     void releaseUpEvent();
@@ -697,6 +710,7 @@ protected:
     virtual void copySpecialProperties(Widget* model);
     virtual void copyClonedWidgetChildren(Widget* model);
     Widget* getWidgetParent();
+    
 protected:
     bool _enabled;            ///< Highest control of widget
     bool _bright;             ///< is this widget bright
@@ -710,7 +724,7 @@ protected:
     
     CCObject*       _touchEventListener;
     SEL_TouchEvent    _touchEventSelector;
-    
+    ccScriptFunction m_scriptTouchHandler;
 
     
     std::string _name;

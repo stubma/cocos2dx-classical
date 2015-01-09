@@ -44,6 +44,10 @@ class CCNotificationCenter;
 class CCCallFunc;
 class CCAcceleration;
 
+namespace ui {
+    class Widget;
+}
+
 // for script function
 typedef struct {
     unsigned int handler;
@@ -238,6 +242,9 @@ public:
 
     /** functions for keypad event */
     virtual int executeLayerKeypadEvent(CCLayer* pLayer, int eventType) = 0;
+    
+    /** function for widget touch event */
+    virtual int executeWidgetTouchEvent(ui::Widget* widget, int eventType) = 0;
 
     /** execute a accelerometer event */
     virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue) = 0;
