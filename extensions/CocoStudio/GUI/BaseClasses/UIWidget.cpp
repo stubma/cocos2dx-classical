@@ -777,7 +777,7 @@ void Widget::moveEvent()
 {
     if (_touchEventListener && _touchEventSelector) {
         (_touchEventListener->*_touchEventSelector)(this, TOUCH_EVENT_MOVED);
-    } else {
+    } else if(m_scriptTouchHandler.handler) {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeWidgetTouchEvent(this, TOUCH_EVENT_MOVED);
     }
 }
@@ -786,7 +786,7 @@ void Widget::releaseUpEvent()
 {
     if (_touchEventListener && _touchEventSelector) {
         (_touchEventListener->*_touchEventSelector)(this, TOUCH_EVENT_ENDED);
-    } else {
+    } else if(m_scriptTouchHandler.handler) {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeWidgetTouchEvent(this, TOUCH_EVENT_ENDED);
     }
 }
@@ -795,7 +795,7 @@ void Widget::cancelUpEvent()
 {
     if (_touchEventListener && _touchEventSelector) {
         (_touchEventListener->*_touchEventSelector)(this, TOUCH_EVENT_CANCELED);
-    } else {
+    } else if(m_scriptTouchHandler.handler) {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeWidgetTouchEvent(this, TOUCH_EVENT_CANCELED);
     }
 }
