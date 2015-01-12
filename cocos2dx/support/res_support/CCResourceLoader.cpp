@@ -632,7 +632,7 @@ void CCResourceLoader::doLoad(float delta) {
             m_listener->onResourceLoadingDone();
     } else {
         CCResourceLoadTask* lp = m_loadTaskList.at(m_nextLoad++);
-        m_remainingIdle = 0.1f;
+        m_remainingIdle = 0;
         
         lp->load();
         if(m_listener)
