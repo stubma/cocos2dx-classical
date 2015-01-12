@@ -2930,3 +2930,12 @@ void customuniformvalue_to_luaval(lua_State* L, const ccCustomUniformValue& v) {
             break;
     }
 }
+
+const char* getLuaTypeNameByTypeId(const string& typeName) {
+    auto iter = g_luaType.find(typeName);
+    if(g_luaType.end() != iter) {
+        return iter->second.c_str();
+    } else {
+        return "CCObject";
+    }
+}

@@ -114,6 +114,7 @@ public:
     virtual void pushCCLuaValueArray(const CCLuaValueArray& array);    
     virtual bool pushFunctionByHandler(int nHandler);
     virtual int executeFunction(int numArgs);
+    virtual void pop(int count);
     
     virtual int executeFunctionByHandler(int nHandler, int numArgs);
     

@@ -393,6 +393,10 @@ int CCLuaStack::executeFunction(int numArgs)
     return ret;
 }
 
+void CCLuaStack::pop(int count) {
+    lua_pop(m_state, count);
+}
+
 int CCLuaStack::executeFunctionByHandler(int nHandler, int numArgs)
 {
     int ret = 0;

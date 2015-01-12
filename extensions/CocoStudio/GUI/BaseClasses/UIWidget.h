@@ -342,7 +342,7 @@ public:
     
     /**
      * add a script function as touch event listener
-     * the script function should have one argument which is touch event type
+     * the script function should have two argument which is widget and touch event type
      * the event type constants are defined in Cocos2dConstants.lua, available values:
      * cc.TOUCH_EVENT_BEGAN = 0x0
      * cc.TOUCH_EVENT_MOVED = 0x1

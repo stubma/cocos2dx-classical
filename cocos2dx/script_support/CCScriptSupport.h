@@ -252,7 +252,11 @@ public:
     /** function for common event */
     virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = nullptr, const char* pEventSourceClassName = nullptr) = 0;
     
-    /** function for c++ call back lua funtion */
+    /** 
+     * function for c++ call back lua funtion 
+     * if you want to add a CCObject subclass, it is better to insert a CCString before it.
+     * The CCString contains CCObject lua type name and the name can be queried by getLuaTypeNameByTypeId method
+     */
     virtual int executeEventWithArgs(int nHandler, CCArray* pArgs) { return 0; }
 
     /** called by CCAssert to allow scripting engine to handle failed assertions

@@ -4597,6 +4597,7 @@
 					"\"$(SDKROOT)/usr/include/libxml2\"",
 					"$(PROJECT_DIR)/../../CocosDenshion/include",
 					"$(PROJECT_DIR)/../../extensions",
+					"$(PROJECT_DIR)/../../scripting/lua/cocos2dx_support",
 					"$(PROJECT_DIR)/../platform/third_party/ios",
 				);
 				LIBRARY_SEARCH_PATHS = (
@@ -4623,6 +4624,7 @@
 					"\"$(SDKROOT)/usr/include/libxml2\"",
 					"$(PROJECT_DIR)/../../CocosDenshion/include",
 					"$(PROJECT_DIR)/../../extensions",
+					"$(PROJECT_DIR)/../../scripting/lua/cocos2dx_support",
 					"$(PROJECT_DIR)/../platform/third_party/ios",
 				);
 				LIBRARY_SEARCH_PATHS = (

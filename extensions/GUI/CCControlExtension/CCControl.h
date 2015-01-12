@@ -272,7 +272,7 @@ public:
     /**
      *  @js NA
      */
-    void addHandleOfControlEvent(int nFunID,CCControlEvent controlEvent);
+    void addHandleOfControlEvent(ccScriptFunction func, CCControlEvent controlEvent);
     /**
      *  @js NA
      */

@@ -414,7 +414,7 @@ int CCLuaEngine::executeEventWithArgs(int nHandler, CCArray* pArgs)
     CCFloat*    pFloatVal = nullptr;
     CCBool*     pBoolVal = nullptr;
    
-
+    CCObject* prevVal = nullptr;
     int nArgNums = 0;
     for (unsigned int i = 0; i < pArgs->count(); i++)
     {
@@ -446,9 +446,19 @@ int CCLuaEngine::executeEventWithArgs(int nHandler, CCArray* pArgs)
         }
         else if(nullptr != pObject)
         {
-            m_stack->pushCCObject(pObject, "CCObject");
+            if(prevVal && dynamic_cast<CCString*>(prevVal)) {
+                m_stack->pop(1);
+                nArgNums--;
+                CCString* luaType = dynamic_cast<CCString*>(prevVal);
+                m_stack->pushCCObject(pObject, luaType->getCString());
+            } else {
+                m_stack->pushCCObject(pObject, "CCObject");
+            }
             nArgNums++;
         }
+        
+        // save
+        prevVal = pObject;
     }
     
     return  m_stack->executeFunctionByHandler(nHandler, nArgNums);

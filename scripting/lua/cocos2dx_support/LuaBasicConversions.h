@@ -147,6 +147,9 @@ extern void v2fc4bt2fquad_to_luaval(lua_State* L, const cocos2d::ccV2F_C4B_T2F_Q
 extern void mat4_to_luaval(lua_State* L, const kmMat4& mat);
 extern void customuniformvalue_to_luaval(lua_State* L, const ccCustomUniformValue& v);
 
+/// query a ccobject sublcass lua type name
+extern const char* getLuaTypeNameByTypeId(const string& typeName);
+
 /**
  Because all override functions wouldn't be bound,so we must use `typeid` to get the real class name
  */
@@ -156,7 +159,7 @@ const char* getLuaTypeName(T* ret,const char* type)
     if (nullptr != ret)
     {
         std::string hashName = typeid(*ret).name();
-        auto iter =  g_luaType.find(hashName);
+        auto iter = g_luaType.find(hashName);
         if(g_luaType.end() != iter)
         {
             return iter->second.c_str();
