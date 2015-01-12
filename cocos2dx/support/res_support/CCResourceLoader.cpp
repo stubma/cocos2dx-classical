@@ -25,6 +25,7 @@
 #include "SimpleAudioEngine.h"
 #include "CCArmatureDataManager.h"
 #include "support/utils/CCUtils.h"
+#include "CCDirector.h"
 
 using namespace CocosDenshion;
 USING_NS_CC_EXT;
@@ -100,6 +101,13 @@ void EncryptedZwoptexLoadTask::load() {
 
 void ImageLoadTask::load() {
     CCTextureCache::sharedTextureCache()->addImage(name.c_str());
+}
+
+void CustomTask::load() {
+    CCScene* scene = CCDirector::sharedDirector()->getRunningScene();
+    if(scene) {
+        scene->runAction(func);
+    }
 }
 
 void EncryptedImageLoadTask::load() {
@@ -386,74 +394,68 @@ void CCResourceLoader::addAndroidStringTask(const string& lan, const string& pat
     addLoadTask(t);
 }
 
-void CCResourceLoader::addImageTask(const string& name, float idle) {
+void CCResourceLoader::addImageTask(const string& name) {
 	ImageLoadTask* t = new ImageLoadTask();
-    t->idle = idle;
     t->name = name;
     addLoadTask(t);
 }
 
-void CCResourceLoader::addImageTask(const string& name, CC_DECRYPT_FUNC decFunc, float idle) {
+void CCResourceLoader::addImageTask(const string& name, CC_DECRYPT_FUNC decFunc) {
 	EncryptedImageLoadTask* t = new EncryptedImageLoadTask();
-	t->idle = idle;
 	t->name = name;
 	t->func = decFunc;
 	addLoadTask(t);
 }
 
-void CCResourceLoader::addBMFontTask(const string& fntFile, float idle) {
+void CCResourceLoader::addBMFontTask(const string& fntFile) {
     BMFontLoadTask* t = new BMFontLoadTask();
-    t->idle = idle;
     t->name = fntFile;
     addLoadTask(t);
 }
 
-void CCResourceLoader::addBMFontTask(const string& fntFile, CC_DECRYPT_FUNC decFunc, float idle) {
+void CCResourceLoader::addBMFontTask(const string& fntFile, CC_DECRYPT_FUNC decFunc) {
     EncryptedBMFontLoadTask* t = new EncryptedBMFontLoadTask();
-    t->idle = idle;
     t->name = fntFile;
     t->func = decFunc;
     addLoadTask(t);
 }
 
-void CCResourceLoader::addAtlasTaskByPlist(const string& name, float idle) {
+void CCResourceLoader::addAtlasTaskByPlist(const string& name) {
     ZwoptexLoadTask* t = new ZwoptexLoadTask();
-    t->idle = idle;
     t->name = name;
     addLoadTask(t);
 }
 
-void CCResourceLoader::addAtlasTaskByPlistPattern(const string& pattern, int start, int end, float idle) {
+void CCResourceLoader::addAtlasTaskByPlistPattern(const string& pattern, int start, int end) {
 	char buf[512];
 	for(int i = start; i <= end; i++) {
 		sprintf(buf, pattern.c_str(), i);
-		addAtlasTaskByPlist(buf, idle);
+		addAtlasTaskByPlist(buf);
 	}
 }
 
-void CCResourceLoader::addAtlasTaskByPlistAndImage(const string& plistName, const string& texName, float idle) {
-    addAtlasTaskByPlistAndImage(plistName, texName, nullptr, idle);
+void CCResourceLoader::addAtlasTaskByPlistAndImage(const string& plistName, const string& texName) {
+    addAtlasTaskByPlistAndImage(plistName, texName, nullptr);
 }
 
-void CCResourceLoader::addAtlasTaskByPlistAndImage(const string& plistName, const string& texName, CC_DECRYPT_FUNC decFunc, float idle) {
+void CCResourceLoader::addAtlasTaskByPlistAndImage(const string& plistName, const string& texName, CC_DECRYPT_FUNC decFunc) {
 	EncryptedZwoptexLoadTask* t = new EncryptedZwoptexLoadTask();
-	t->idle = idle;
 	t->name = plistName;
 	t->texName = texName;
 	t->func = decFunc;
 	addLoadTask(t);
 }
 
-void CCResourceLoader::addAtlasTaskByPlistAndImagePattern(const string& plistPattern, const string& texPattern, int start, int end, float idle) {
-    addAtlasTaskByPlistAndImagePattern(plistPattern, texPattern, start, end, nullptr, idle);
+void CCResourceLoader::addAtlasTaskByPlistAndImagePattern(const string& plistPattern, const string& texPattern, int start, int end) {
+    addAtlasTaskByPlistAndImagePattern(plistPattern, texPattern, start, end, nullptr);
 }
 
-void CCResourceLoader::addAtlasTaskByPlistAndImagePattern(const string& plistPattern, const string& texPattern, int start, int end, CC_DECRYPT_FUNC decFunc, float idle) {
+void CCResourceLoader::addAtlasTaskByPlistAndImagePattern(const string& plistPattern, const string& texPattern, int start, int end, CC_DECRYPT_FUNC decFunc) {
 	char buf1[512], buf2[512];
 	for(int i = start; i <= end; i++) {
 		sprintf(buf1, plistPattern.c_str(), i);
 		sprintf(buf2, texPattern.c_str(), i);
-		addAtlasTaskByPlistAndImage(buf1, buf2, decFunc, idle);
+		addAtlasTaskByPlistAndImage(buf1, buf2, decFunc);
 	}
 }
 
@@ -462,13 +464,11 @@ void CCResourceLoader::addAtlasAnimByFramePattern(const string& name,
                                                   const string& pattern,
                                                   int startIndex,
                                                   int endIndex,
-                                                  bool restoreOriginalFrame,
-                                                  float idle) {
+                                                  bool restoreOriginalFrame) {
 	ZwoptexAnimLoadTask* t = new ZwoptexAnimLoadTask();
 	t->name = name;
 	t->unitDelay = unitDelay;
 	t->restoreOriginalFrame = restoreOriginalFrame;
-	t->idle = idle;
 	char buf[256];
 	for(int i = startIndex; i <= endIndex; i++) {
 		sprintf(buf, pattern.c_str(), i);
@@ -482,12 +482,10 @@ void CCResourceLoader::addAtlasAnimByFramePatternAndVariableDelay(const string& 
                                                                   int startIndex,
                                                                   int endIndex,
                                                                   const string& delayString,
-                                                                  bool restoreOriginalFrame,
-                                                                  float idle) {
+                                                                  bool restoreOriginalFrame) {
     ZwoptexAnimLoadTask2* t = new ZwoptexAnimLoadTask2();
     t->name = name;
     t->restoreOriginalFrame = restoreOriginalFrame;
-    t->idle = idle;
     
     char buf[256];
     for(int i = startIndex; i <= endIndex; i++) {
@@ -509,13 +507,11 @@ void CCResourceLoader::addAtlasAnimByFramePatternAndVariableIndex(const string& 
                                                                   const string& pattern,
                                                                   const string& indicesString,
                                                                   float delay,
-                                                                  bool restoreOriginalFrame,
-                                                                  float idle) {
+                                                                  bool restoreOriginalFrame) {
     // task
     ZwoptexAnimLoadTask2* t = new ZwoptexAnimLoadTask2();
     t->name = name;
     t->restoreOriginalFrame = restoreOriginalFrame;
-    t->idle = idle;
     
     // frame names
     char buf[256];
@@ -538,13 +534,11 @@ void CCResourceLoader::addAtlasAnimByFramePatternAndVariableIndexDelay(const str
                                                                        const string& pattern,
                                                                        const string& indicesString,
                                                                        const string& delayString,
-                                                                       bool restoreOriginalFrame,
-                                                                       float idle) {
+                                                                       bool restoreOriginalFrame) {
     // task
     ZwoptexAnimLoadTask2* t = new ZwoptexAnimLoadTask2();
     t->name = name;
     t->restoreOriginalFrame = restoreOriginalFrame;
-    t->idle = idle;
     
     // frame names
     char buf[256];
@@ -565,16 +559,14 @@ void CCResourceLoader::addAtlasAnimByFramePatternAndVariableIndexDelay(const str
     addLoadTask(t);
 }
 
-void CCResourceLoader::addCDEffectTask(const string& name, float idle) {
+void CCResourceLoader::addCDEffectTask(const string& name) {
 	CDEffectTask* t = new CDEffectTask();
-	t->idle = idle;
 	t->name = name;
 	addLoadTask(t);
 }
 
-void CCResourceLoader::addCDMusicTask(const string& name, float idle) {
+void CCResourceLoader::addCDMusicTask(const string& name) {
 	CDMusicTask* t = new CDMusicTask();
-	t->idle = idle;
 	t->name = name;
 	addLoadTask(t);
 }
@@ -586,18 +578,17 @@ void CCResourceLoader::addCustomTask(CCCallFunc* func) {
     addLoadTask(t);
 }
 
-void CCResourceLoader::addArmatureTask(string config, float idle) {
+void CCResourceLoader::addArmatureTask(string config) {
     ArmatureTask* t = new ArmatureTask();
-    t->idle = idle;
     t->configFilePath = config;
     addLoadTask(t);
 }
 
-void CCResourceLoader::addArmatureTask(string plist, string tex, string config, float idle) {
-    addArmatureTask(plist, tex, config, nullptr, idle);
+void CCResourceLoader::addArmatureTask(string plist, string tex, string config) {
+    addArmatureTask(plist, tex, config, nullptr);
 }
 
-void CCResourceLoader::addArmatureTask(string plist, string tex, string config, CC_DECRYPT_FUNC func, float idle) {
+void CCResourceLoader::addArmatureTask(string plist, string tex, string config, CC_DECRYPT_FUNC func) {
     if(!plist.empty() && !tex.empty()) {
         addAtlasTaskByPlistAndImage(plist, tex, func);
     }
@@ -606,16 +597,16 @@ void CCResourceLoader::addArmatureTask(string plist, string tex, string config, 
         addArmatureTask(config);
 }
 
-void CCResourceLoader::addArmatureTask(string plistPattern, string texPattern, int start, int end, string config, float idle) {
-    addArmatureTask(plistPattern, texPattern, start, end, config, nullptr, idle);
+void CCResourceLoader::addArmatureTask(string plistPattern, string texPattern, int start, int end, string config) {
+    addArmatureTask(plistPattern, texPattern, start, end, config, nullptr);
 }
 
-void CCResourceLoader::addArmatureTask(string plistPattern, string texPattern, int start, int end, string config, CC_DECRYPT_FUNC func, float idle) {
+void CCResourceLoader::addArmatureTask(string plistPattern, string texPattern, int start, int end, string config, CC_DECRYPT_FUNC func) {
     char buf1[512], buf2[512];
 	for(int i = start; i <= end; i++) {
 		sprintf(buf1, plistPattern.c_str(), i);
 		sprintf(buf2, texPattern.c_str(), i);
-		addAtlasTaskByPlistAndImage(buf1, buf2, func, idle);
+		addAtlasTaskByPlistAndImage(buf1, buf2, func);
 	}
     
     if(!config.empty())
@@ -641,7 +632,7 @@ void CCResourceLoader::doLoad(float delta) {
             m_listener->onResourceLoadingDone();
     } else {
         CCResourceLoadTask* lp = m_loadTaskList.at(m_nextLoad++);
-        m_remainingIdle = lp->idle;
+        m_remainingIdle = 0.1f;
         
         lp->load();
         if(m_listener)

@@ -39,10 +39,7 @@ class CCCallFunc;
 
 /// load parameter
 struct CCResourceLoadTask {
-    /// idle time after loaded
-    float idle;
-    
-    CCResourceLoadTask() : idle(0.1f) {
+    CCResourceLoadTask() {
     }
     
     virtual ~CCResourceLoadTask() {}
@@ -235,16 +232,13 @@ struct CustomTask : public CCResourceLoadTask {
         CC_SAFE_RELEASE(func);
     }
     
-    virtual void load() {
-        func->execute();
-    }
+    virtual void load();
 };
 
 /**
  * A self-retain class for resource loading. It schedule resource loading in OpenGL thread in
  * every tick. One resource is handled by one Task, the loading logic is encapsulated in task so
- * you don't care about that. For CPU intensive task, you can set idle time to avoid blocking OpenGL
- * thread too long. If you display an animation feedback, don't use CCAction mechanism because a long
+ * you don't care about that. if you display an animation feedback, don't use CCAction mechanism because a long
  * task will cause animation to skip frames. The better choice is invoking setDisplayFrame one by one.
  *
  * \par
@@ -371,10 +365,10 @@ public:
     void addCustomTask(CCCallFunc* func);
     
     /// add bitmap font loading task
-    void addBMFontTask(const string& fntFile, float idle = 0);
+    void addBMFontTask(const string& fntFile);
     
     /// add bitmap font loading task, and the bitmap font atlas is encrypted
-    void addBMFontTask(const string& fntFile, CC_DECRYPT_FUNC decFunc, float idle = 0);
+    void addBMFontTask(const string& fntFile, CC_DECRYPT_FUNC decFunc);
     
     /**
      * add an Android string loading task
@@ -386,31 +380,29 @@ public:
     void addAndroidStringTask(const string& lan, const string& path, bool merge = false);
 	
 	/// add a image loading task
-	void addImageTask(const string& name, float idle = 0);
+	void addImageTask(const string& name);
 	
 	/**
 	 * add a image task, but the texture is encrypted. So a decrypt function must be provided.
 	 *
 	 * @param name name of image file, it should be encrypted
 	 * @param decFunc decrypt func
-	 * @param idle idle time after loaded
 	 */
-	void addImageTask(const string& name, CC_DECRYPT_FUNC decFunc, float idle = 0);
+	void addImageTask(const string& name, CC_DECRYPT_FUNC decFunc);
 	
 	/// add a zwoptex image loading task
-	void addAtlasTaskByPlist(const string& name, float idle = 0);
+	void addAtlasTaskByPlist(const string& name);
 	
 	/// add a multipack zwoptex image loading task
-	void addAtlasTaskByPlistPattern(const string& pattern, int start, int end, float idle = 0);
+	void addAtlasTaskByPlistPattern(const string& pattern, int start, int end);
     
     /**
      * add a zwoptex task, but the texture is encrypted. So a decrypt function must be provided.
      *
      * @param plistName name of plist file, it should not be encrypted
      * @param texName name of image file, it should be encrypted
-     * @param idle idle time after loaded
      */
-    void addAtlasTaskByPlistAndImage(const string& plistName, const string& texName, float idle = 0);
+    void addAtlasTaskByPlistAndImage(const string& plistName, const string& texName);
     
 	/**
 	 * add a zwoptex task, but the texture is encrypted. So a decrypt function must be provided.
@@ -418,9 +410,8 @@ public:
 	 * @param plistName name of plist file, it should not be encrypted
 	 * @param texName name of image file, it should be encrypted
 	 * @param decFunc decrypt func
-	 * @param idle idle time after loaded
 	 */
-	void addAtlasTaskByPlistAndImage(const string& plistName, const string& texName, CC_DECRYPT_FUNC decFunc, float idle = 0);
+	void addAtlasTaskByPlistAndImage(const string& plistName, const string& texName, CC_DECRYPT_FUNC decFunc);
 	
     /**
      * add a multipack zwoptex task, but the texture is encrypted. So a decrypt function must be provided.
@@ -429,9 +420,8 @@ public:
      * @param texPattern name pattern of image file, it should be encrypted
      * @param start start index in pattern
      * @param end end index in pattern
-     * @param idle idle time after loaded
      */
-    void addAtlasTaskByPlistAndImagePattern(const string& plistPattern, const string& texPattern, int start, int end, float idle = 0);
+    void addAtlasTaskByPlistAndImagePattern(const string& plistPattern, const string& texPattern, int start, int end);
     
 	/**
 	 * add a multipack zwoptex task, but the texture is encrypted. So a decrypt function must be provided.
@@ -441,15 +431,14 @@ public:
 	 * @param start start index in pattern
 	 * @param end end index in pattern
 	 * @param decFunc decrypt func
-	 * @param idle idle time after loaded
 	 */
-	void addAtlasTaskByPlistAndImagePattern(const string& plistPattern, const string& texPattern, int start, int end, CC_DECRYPT_FUNC decFunc, float idle = 0);
+	void addAtlasTaskByPlistAndImagePattern(const string& plistPattern, const string& texPattern, int start, int end, CC_DECRYPT_FUNC decFunc);
 	
 	/// add a cocosdenshion effect task
-	void addCDEffectTask(const string& name, float idle = 0);
+	void addCDEffectTask(const string& name);
 	
 	/// add a cocosdenshion music task
-	void addCDMusicTask(const string& name, float idle = 0);
+	void addCDMusicTask(const string& name);
 	
 	/// add a zwoptex animation loading task
 	/// the endIndex is inclusive
@@ -458,8 +447,7 @@ public:
                                     const string& pattern,
                                     int startIndex,
                                     int endIndex,
-                                    bool restoreOriginalFrame = false,
-                                    float idle = 0);
+                                    bool restoreOriginalFrame = false);
     
     /**
      * add a zwoptex animation loading task, you can specify delay for every frame
@@ -471,15 +459,13 @@ public:
      * @param endIndex sprite frame pattern end index
      * @param delayString delay time string in format "[float,float,...]"
      * @param restoreOriginalFrame restore original frame or not
-     * @param idle idle time after task is completed
      */
     void addAtlasAnimByFramePatternAndVariableDelay(const string& name,
                                                     const string& pattern,
                                                     int startIndex,
                                                     int endIndex,
                                                     const string& delayString,
-                                                    bool restoreOriginalFrame = false,
-                                                    float idle = 0);
+                                                    bool restoreOriginalFrame = false);
 
     /**
      * add a zwoptex animation loading task, you can specify delay for every frame
@@ -490,14 +476,12 @@ public:
      * @param indicesString a string in format "[num,num,...]"
      * @param delay delay time
      * @param restoreOriginalFrame restore original frame or not
-     * @param idle idle time after task is completed
      */
     void addAtlasAnimByFramePatternAndVariableIndex(const string& name,
                                                     const string& pattern,
                                                     const string& indicesString,
                                                     float delay,
-                                                    bool restoreOriginalFrame = false,
-                                                    float idle = 0);
+                                                    bool restoreOriginalFrame = false);
     
     /**
      * add a zwoptex animation loading task, you can specify delay for every frame
@@ -508,22 +492,19 @@ public:
      * @param indicesString a string in format "[num,num,...]"
      * @param delayString delay time string in format "[float,float,...]
      * @param restoreOriginalFrame restore original frame or not
-     * @param idle idle time after task is completed
      */
     void addAtlasAnimByFramePatternAndVariableIndexDelay(const string& name,
                                                          const string& pattern,
                                                          const string& indicesString,
                                                          const string& delayString,
-                                                         bool restoreOriginalFrame = false,
-                                                         float idle = 0);
+                                                         bool restoreOriginalFrame = false);
     
     /**
      * add an armature config file load task, you should add related image task for this
      *
      * @param config path of config file
-     * @param idle idle time after task is completed
      */
-    void addArmatureTask(string config, float idle = 0);
+    void addArmatureTask(string config);
     
     /**
      * add an armature config file task, also load related image files  
@@ -531,9 +512,8 @@ public:
      * @param plist path of atlas plist file
      * @param tex path of atlas image file
      * @param config path of armature config file
-     * @param idle idle time after task is completed
      */
-    void addArmatureTask(string plist, string tex, string config, float idle = 0);
+    void addArmatureTask(string plist, string tex, string config);
     
     /**
      * add an armature config file task, also load related image files. Decryption is 
@@ -543,9 +523,8 @@ public:
      * @param tex path of atlas image file
      * @param config path of armature config file
      * @param func decrypte func, default is nullptr
-     * @param idle idle time after task is completed
      */
-    void addArmatureTask(string plist, string tex, string config, CC_DECRYPT_FUNC func = nullptr, float idle = 0);
+    void addArmatureTask(string plist, string tex, string config, CC_DECRYPT_FUNC func);
  
     /**
      * add an armature config file task, also load related image files
@@ -555,9 +534,8 @@ public:
      * @param start start parameter in pattern
      * @param end end parameter in pattern
      * @param config path of armature config file
-     * @param idle idle time after task is completed
      */
-    void addArmatureTask(string plistPattern, string texPattern, int start, int end, string config, float idle = 0);
+    void addArmatureTask(string plistPattern, string texPattern, int start, int end, string config);
     
     /**
      * add an armature config file task, also load related image files. Decryption is
@@ -569,9 +547,8 @@ public:
      * @param end end parameter in pattern
      * @param config path of armature config file
      * @param func decrypte func, default is nullptr
-     * @param idle idle time after task is completed
      */
-    void addArmatureTask(string plistPattern, string texPattern, int start, int end, string config, CC_DECRYPT_FUNC func = nullptr, float idle = 0);
+    void addArmatureTask(string plistPattern, string texPattern, int start, int end, string config, CC_DECRYPT_FUNC func);
 	
 	/// delay time before start to load
 	CC_SYNTHESIZE(float, m_delay, Delay);
