@@ -184,8 +184,9 @@ int CCLuaEngine::executeWidgetTouchEvent(ui::Widget* widget, int eventType) {
         return 0;
     
     // execute lua function
+    m_stack->pushCCObject(widget, "Widget");
     m_stack->pushInt(eventType);
-    int ret = m_stack->executeFunctionByHandler(handler, 1);
+    int ret = m_stack->executeFunctionByHandler(handler, 2);
     m_stack->clean();
     return ret;
 }
