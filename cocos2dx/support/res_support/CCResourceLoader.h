@@ -526,6 +526,16 @@ public:
     void addArmatureTask(string config, float idle = 0);
     
     /**
+     * add an armature config file task, also load related image files  
+     *
+     * @param plist path of atlas plist file
+     * @param tex path of atlas image file
+     * @param config path of armature config file
+     * @param idle idle time after task is completed
+     */
+    void addArmatureTask(string plist, string tex, string config, float idle = 0);
+    
+    /**
      * add an armature config file task, also load related image files. Decryption is 
      * optional and you should not encrypt plist and config file
      * 
@@ -536,6 +546,18 @@ public:
      * @param idle idle time after task is completed
      */
     void addArmatureTask(string plist, string tex, string config, CC_DECRYPT_FUNC func = nullptr, float idle = 0);
+ 
+    /**
+     * add an armature config file task, also load related image files
+     *
+     * @param plistPattern path pattern of atlas plist file
+     * @param texPattern path pattern of atlas image file
+     * @param start start parameter in pattern
+     * @param end end parameter in pattern
+     * @param config path of armature config file
+     * @param idle idle time after task is completed
+     */
+    void addArmatureTask(string plistPattern, string texPattern, int start, int end, string config, float idle = 0);
     
     /**
      * add an armature config file task, also load related image files. Decryption is

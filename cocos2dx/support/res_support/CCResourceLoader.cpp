@@ -593,6 +593,10 @@ void CCResourceLoader::addArmatureTask(string config, float idle) {
     addLoadTask(t);
 }
 
+void CCResourceLoader::addArmatureTask(string plist, string tex, string config, float idle) {
+    addArmatureTask(plist, tex, config, nullptr, idle);
+}
+
 void CCResourceLoader::addArmatureTask(string plist, string tex, string config, CC_DECRYPT_FUNC func, float idle) {
     if(!plist.empty() && !tex.empty()) {
         addAtlasTaskByPlistAndImage(plist, tex, func);
@@ -600,6 +604,10 @@ void CCResourceLoader::addArmatureTask(string plist, string tex, string config, 
     
     if(!config.empty())
         addArmatureTask(config);
+}
+
+void CCResourceLoader::addArmatureTask(string plistPattern, string texPattern, int start, int end, string config, float idle) {
+    addArmatureTask(plistPattern, texPattern, start, end, config, nullptr, idle);
 }
 
 void CCResourceLoader::addArmatureTask(string plistPattern, string texPattern, int start, int end, string config, CC_DECRYPT_FUNC func, float idle) {
