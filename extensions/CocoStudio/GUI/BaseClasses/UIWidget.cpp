@@ -807,6 +807,10 @@ void Widget::addTouchEventListener(CCObject *target, SEL_TouchEvent selector)
 }
     
 void Widget::addScriptTouchEventListener(ccScriptFunction func) {
+    if(m_scriptTouchHandler.handler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_scriptTouchHandler.handler);
+        m_scriptTouchHandler.handler = 0;
+    }
     m_scriptTouchHandler = func;
 }
 

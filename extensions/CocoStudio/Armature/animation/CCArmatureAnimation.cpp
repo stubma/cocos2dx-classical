@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "../utils/CCArmatureDefine.h"
 #include "../utils/CCUtilMath.h"
 #include "../datas/CCDatas.h"
+#include "LuaBasicConversions.h"
 
 
 NS_CC_EXT_BEGIN
@@ -46,30 +47,39 @@ CCArmatureAnimation *CCArmatureAnimation::create(CCArmature *armature)
 
 
 CCArmatureAnimation::CCArmatureAnimation()
-    : m_pAnimationData(nullptr)
-    , m_fSpeedScale(1)
-    , m_pMovementData(nullptr)
-    , m_pArmature(nullptr)
-    , m_strMovementID("")
-    , m_iToIndex(0)
-    , m_pTweenList(nullptr)
-    , m_bIgnoreFrameEvent(false)
-    , m_bOnMovementList(false)
-    , m_bMovementListLoop(false)
-    , m_iMovementListDurationTo(-1)
-    , m_pUserObject(nullptr)
+: m_pAnimationData(nullptr)
+, m_fSpeedScale(1)
+, m_pMovementData(nullptr)
+, m_pArmature(nullptr)
+, m_strMovementID("")
+, m_iToIndex(0)
+, m_pTweenList(nullptr)
+, m_bIgnoreFrameEvent(false)
+, m_bOnMovementList(false)
+, m_bMovementListLoop(false)
+, m_iMovementListDurationTo(-1)
+, m_pUserObject(nullptr)
 
-    , m_sMovementEventCallFunc(nullptr)
-    , m_sFrameEventCallFunc(nullptr)
-    , m_sMovementEventTarget(nullptr)
-    , m_sFrameEventTarget(nullptr)
-    , m_pScriptObjectDict(nullptr)
+, m_sMovementEventCallFunc(nullptr)
+, m_sFrameEventCallFunc(nullptr)
+, m_sMovementEventTarget(nullptr)
+, m_sFrameEventTarget(nullptr)
+, m_pScriptObjectDict(nullptr)
+, m_movementEventHandler(0)
+, m_frameEventHandler(0)
 {
 
 }
 
 CCArmatureAnimation::~CCArmatureAnimation(void)
 {
+    if(m_movementEventHandler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_movementEventHandler);
+    }
+    if(m_frameEventHandler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_frameEventHandler);
+    }
+    
     CC_SAFE_RELEASE_NULL(m_pTweenList);
     CC_SAFE_RELEASE_NULL(m_pAnimationData);
 
@@ -410,6 +420,15 @@ void CCArmatureAnimation::update(float dt)
 
         m_bIgnoreFrameEvent = true;
         (m_sFrameEventTarget->*m_sFrameEventCallFunc)(event->bone, event->frameEventName, event->originFrameIndex, event->currentFrameIndex);
+        if(m_frameEventHandler) {
+            CCArray* pArrayArgs = CCArray::createWithCapacity(5);
+            pArrayArgs->addObject(CCString::create(getLuaTypeNameByTypeId(typeid(*event->bone).name())));
+            pArrayArgs->addObject(event->bone);
+            pArrayArgs->addObject(CCString::create(event->frameEventName));
+            pArrayArgs->addObject(CCInteger::create(event->originFrameIndex));
+            pArrayArgs->addObject(CCInteger::create(event->currentFrameIndex));
+            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_frameEventHandler, pArrayArgs);
+        }
         m_bIgnoreFrameEvent = false;
 
         CC_SAFE_DELETE(event);
@@ -421,6 +440,15 @@ void CCArmatureAnimation::update(float dt)
         m_sMovementEventQueue.pop();
 
         (m_sMovementEventTarget->*m_sMovementEventCallFunc)(event->armature, event->movementType, event->movementID);
+        
+        if(m_movementEventHandler) {
+            CCArray* pArrayArgs = CCArray::createWithCapacity(4);
+            pArrayArgs->addObject(CCString::create(getLuaTypeNameByTypeId(typeid(*event->armature).name())));
+            pArrayArgs->addObject(event->armature);
+            pArrayArgs->addObject(CCInteger::create(event->movementType));
+            pArrayArgs->addObject(CCString::create(event->movementID));
+            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_movementEventHandler, pArrayArgs);
+        }
 
         CC_SAFE_DELETE(event);
     }
@@ -513,10 +541,26 @@ void CCArmatureAnimation::setMovementEventCallFunc(CCObject *target, SEL_Movemen
     m_sMovementEventCallFunc = callFunc;
 }
 
+void CCArmatureAnimation::setScriptMovementEventHandler(ccScriptFunction func) {
+    if(m_movementEventHandler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_movementEventHandler);
+        m_movementEventHandler = 0;
+    }
+    m_movementEventHandler = func.handler;
+}
+
 void CCArmatureAnimation::setFrameEventCallFunc(CCObject *target, SEL_FrameEventCallFunc callFunc)
 {
     m_sFrameEventTarget = target;
     m_sFrameEventCallFunc = callFunc;
+}
+
+void CCArmatureAnimation::setScriptFrameEventHandler(ccScriptFunction func) {
+    if(m_frameEventHandler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_frameEventHandler);
+        m_frameEventHandler = 0;
+    }
+    m_frameEventHandler = func.handler;
 }
 
 void CCArmatureAnimation::setUserObject(CCObject *pUserObject)

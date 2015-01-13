@@ -212,6 +212,11 @@ public:
      * To disconnect this event, just setMovementEventCallFunc(nullptr, nullptr);
      */
     void setMovementEventCallFunc(CCObject *target, SEL_MovementEventCallFunc callFunc);
+    
+    /**
+     * set armature's movement event callback in lua side
+     */
+    void setScriptMovementEventHandler(ccScriptFunction func);
 
     /**
      * Set armature's frame event callback function
@@ -219,6 +224,10 @@ public:
      */
     void setFrameEventCallFunc(CCObject *target, SEL_FrameEventCallFunc callFunc);
 
+    /**
+     * set armature's frame event callback in lua side
+     */
+    void setScriptFrameEventHandler(ccScriptFunction func);
 
     /** 
      * Returns a user assigned CCObject
@@ -324,6 +333,11 @@ protected:
 
     CCObject *m_pUserObject;
     cocos2d::CCDictionary* m_pScriptObjectDict;
+    
+    // script event handler
+    int m_movementEventHandler;
+    int m_frameEventHandler;
+    
 protected:
     /**
      * MovementEvent CallFunc.
