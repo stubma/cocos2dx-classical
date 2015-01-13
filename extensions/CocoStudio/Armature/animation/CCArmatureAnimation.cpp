@@ -254,6 +254,35 @@ void CCArmatureAnimation::play(const char *animationName, int durationTo, int du
     m_pArmature->update(0);
 }
 
+bool CCArmatureAnimation::hasFrameEvent(std::string movementId, std::string eventName, bool partial) {
+    // get movement data
+    CCMovementData* movementData = m_pAnimationData->getMovement(movementId.c_str());
+    if(!movementData)
+        return false;
+    
+    // search every bone's frame list
+    CCDictElement* ele;
+    CCDictionary* dict = &movementData->movBoneDataDic;
+    CCDICT_FOREACH(dict, ele) {
+        CCMovementBoneData* boneData = (CCMovementBoneData*)ele->getObject();
+        if(boneData && boneData->frameList.count() > 0) {
+            CCObject* obj;
+            CCARRAY_FOREACH(&boneData->frameList, obj) {
+                CCFrameData* frame = (CCFrameData*)obj;
+                if(!frame->strEvent.empty()) {
+                    if(partial && frame->strEvent.find(eventName) != std::string::npos) {
+                        return true;
+                    } else if(!partial && frame->strEvent == eventName) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    
+    return false;
+}
+
 void CCArmatureAnimation::playByIndex(int animationIndex, int durationTo, int durationTween,  int loop, int tweenEasing)
 {
     playWithIndex(animationIndex, durationTo, durationTween, loop, tweenEasing);

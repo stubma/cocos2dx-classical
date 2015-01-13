@@ -253,6 +253,16 @@ public:
      * @param A user assigned CCObject
      */
     void setScriptObjectDict(cocos2d::CCDictionary* pScriptObjectDict);
+    
+    /**
+     * check if an movement has a frame event
+     * 
+     * @param movementId movement id
+     * @param eventName event name
+     * @param partial true if event name is just a sub string, not whole string
+     */
+    bool hasFrameEvent(std::string movementId, std::string eventName, bool partial);
+    
 protected:
 
     /**
