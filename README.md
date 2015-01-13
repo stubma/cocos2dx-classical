@@ -69,6 +69,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 	* 修正CCArmature有时候帧事件触发两次的问题
 	* 由于CocoStudio Mac 1.0.0.0 beta没有骨骼动画功能, 需要使用骨骼动画时, 可以使用CocoStudio Windows版1.4.0.1, 1.4.0.1以上版本我没有测试过.
 	* Widget添加addScriptTouchEventListener以支持在lua处理Widget的触摸事件
+	* CCArmatureAnimation添加hasFrameEvent用于检测是否存在某个帧事件 
 * 重新实现TMX地图, 支持一个层有多张贴图的情况(来自cocos2dx-better的CBTMXTileMap)
 * 重新实现CCTableView(来自cocos2dx-better中的CCGridView代码):
 	* CCTableView支持多列
@@ -111,6 +112,7 @@ Things Improved
 	* fix bug: CCArmature frame event may be triggered more than once
 	* Note: if you want to use skeleton animation, please still use CocoStudio Windows version, 1.4.0.1 is recommended.
 	* Widget adds addScriptTouchEventListener to support process widget touch event in lua side
+	* CCArmatureAnimation adds hasFrameEvent to detect existence of a frame event
 * reimplement TMX, support multi-tileset for one layer(merge from cocos2dx-better CBTMXTileMap)* 
 * reimplement CCTableView(merge from cocos2dx-better CCGridView):
 	* support multi-column
