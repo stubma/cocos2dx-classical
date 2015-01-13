@@ -29,7 +29,6 @@
 #include "CocoStudio/ActionTimeline/CCNodeReader.h"
 #include "CocoStudio/ActionTimeline/CCTimeLine.h"
 #include "CocoStudio/ActionTimeline/CCTimelineMacro.h"
-#include "CocoStudio/Trigger/TriggerBase.h"
 #include "CocoStudio/Components/CCComBase.h"
 #include "CocoStudio/Components/CCComAttribute.h"
 #include "CocoStudio/Components/CCComAudio.h"

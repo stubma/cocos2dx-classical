@@ -52,129 +52,6 @@ const char* SceneReader::sceneReaderVersion()
 	return "1.2.0.0";
 }
 
-cocos2d::CCNode* SceneReader::createNodeWithSceneFile(const char* pszFileName, AttachComponentType eAttachComponent /*= ATTACH_EMPTY_NODE*/)
-{
-	std::string reDir = pszFileName;
-	std::string file_extension = "";
-	size_t pos = reDir.find_last_of('.');
-	if (pos != std::string::npos)
-	{
-		file_extension = reDir.substr(pos, reDir.length());
-		std::transform(file_extension.begin(),file_extension.end(), file_extension.begin(), (int(*)(int))toupper);
-	}
-	if (file_extension == ".JSON")
-	{
-		rapidjson::Document jsonDict;
-		do {
-			CC_BREAK_IF(!readJson(pszFileName, jsonDict));
-			_eAttachComponent = eAttachComponent;
-			_pNode = createObject(jsonDict, nullptr, eAttachComponent);
-			TriggerMng::getInstance()->parse(jsonDict);
-		} while (0);
-		return _pNode;
-	}
-	else if (file_extension == ".CSB")
-	{
-		unsigned long size = 0;
-		unsigned char *pBytes = nullptr;
-		do {
-			CC_BREAK_IF(pszFileName == nullptr);
-			std::string binaryFilePath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFileName);
-			pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(binaryFilePath.c_str(), "rb", &size);
-			CC_BREAK_IF(pBytes == nullptr || strcmp((char*)pBytes, "") == 0);
-			CocoLoader tCocoLoader;
-			if (tCocoLoader.ReadCocoBinBuff((char*)pBytes))
-			{
-				stExpCocoNode *tpRootCocoNode = tCocoLoader.GetRootCocoNode();
-				rapidjson::Type tType = tpRootCocoNode->GetType(&tCocoLoader);
-				if (rapidjson::kObjectType  == tType)
-				{
-					stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray(&tCocoLoader);
-					CC_BREAK_IF(tpRootCocoNode->GetChildNum() == 0);
-					_pNode = CCNode::create();
-					int  nCount = 0;
-					std::vector<CCComponent*> _vecComs;
-					CCComRender *pRender = nullptr;
-					std::string key = tpChildArray[15].GetName(&tCocoLoader);
-					if (key == "components")
-					{
-						nCount = tpChildArray[15].GetChildNum();
-					}
-					stExpCocoNode *pComponents = tpChildArray[15].GetChildArray(&tCocoLoader);
-					
-					for (int i = 0; i < nCount; i++)
-					{
-						stExpCocoNode *subDict = pComponents[i].GetChildArray(&tCocoLoader);
-						if (subDict == nullptr)
-						{
-							continue;
-						}
-						std::string key = subDict[1].GetName(&tCocoLoader);
-						const char *comName = subDict[1].GetValue(&tCocoLoader);//DICTOOL->getStringValue_json(subDict, "classname");
-						CCComponent *pCom = nullptr;
-						if (key == "classname" && comName != nullptr)
-						{
-							pCom = ObjectFactory::getInstance()->createComponent(comName);
-						}
-						CCLOG("classname = %s", comName);
-                        SerData *data = new SerData();
-						if (pCom != nullptr)
-						{
-							data->prData = nullptr;
-							data->pCocoNode = subDict;
-							data->pCocoLoader = &tCocoLoader;
-							if (pCom->serialize(data))
-							{
-								CCComRender *pTRender = dynamic_cast<CCComRender*>(pCom);
-								if (pTRender != nullptr)
-								{
-									pRender = pTRender;
-								}
-								else
-								{
-									_vecComs.push_back(pCom);
-								}
-							}
-							else
-							{
-								CC_SAFE_RELEASE_NULL(pCom);
-							}
-						}
-						if (_pListener && _pfnSelector)
-						{
-							(_pListener->*_pfnSelector)(pCom, data);
-						}
-                        CC_SAFE_DELETE(data);
-					}
-                    
-
-					setPropertyFromJsonDict(&tCocoLoader, tpRootCocoNode, _pNode);
-					for (std::vector<CCComponent*>::iterator iter = _vecComs.begin(); iter != _vecComs.end(); ++iter)
-					{
-						_pNode->addComponent(*iter);
-					}
-
-					stExpCocoNode *pGameObjects = tpChildArray[11].GetChildArray(&tCocoLoader);
-					int length = tpChildArray[11].GetChildNum();
-					for (int i = 0; i < length; ++i)
-					{
-						createObject(&tCocoLoader, &pGameObjects[i], _pNode, eAttachComponent);
-					}
-					TriggerMng::getInstance()->parse(&tCocoLoader, tpChildArray);
-				}
-				
-			}
-		}while (0);
-		return _pNode;
-	}
-	else
-	{
-		CCLog("read json file extension [%s] error!\n", pszFileName);
-	}
-	return nullptr;
-}
-
-
 bool SceneReader::readJson(const char *pszFileName, rapidjson::Document &doc)
 {
 	bool bRet = false;
@@ -540,7 +417,6 @@ SceneReader* SceneReader::sharedSceneReader()
 void SceneReader::purge()
 {		
     cocos2d::extension::DictionaryHelper::shareHelper()->purgeDictionaryHelper();
-    TriggerMng::getInstance()->destroyInstance();
     _pfnSelector = nullptr;
     _pListener = nullptr;
     CocosDenshion::SimpleAudioEngine::sharedEngine()->end();
