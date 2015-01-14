@@ -67,6 +67,9 @@ CCTableView::CCTableView()
 , m_pDataSource(nullptr)
 , m_pTableViewDelegate(nullptr)
 , m_viewRows(-1)
+, m_rowSpacing(0)
+, m_colSpacing(0)
+, m_insets(ccInsetsZero)
 {
     
 }
@@ -263,10 +266,16 @@ void CCTableView::_updateCellPositions() {
     CCScrollViewDirection d = getDirection();
     switch(d) {
         case kCCScrollViewDirectionHorizontal:
+        {
             // view rows
-            pos = 0;
+            pos = m_insets.top;
+            bool first = true;
             for (int i = 0; i < cellsCount; i++) {
                 cellSize = m_pDataSource->tableCellSizeForIndex(this, i);
+                if(!first) {
+                    pos += m_rowSpacing;
+                }
+                first = false;
                 pos += cellSize.height;
                 if(pos >= m_tViewSize.height) {
                     m_viewRows = i + 1;
@@ -275,42 +284,63 @@ void CCTableView::_updateCellPositions() {
             }
             
             // v pos
-            pos = 0;
+            pos = m_insets.top;
+            first = true;
             for (int i = 0; i < m_viewRows; i++) {
                 cellSize = m_pDataSource->tableCellSizeForIndex(this, i);
+                if(!first) {
+                    pos += m_rowSpacing;
+                }
                 m_vCellsPositions.push_back(pos);
+                first = false;
                 pos += cellSize.height;
             }
             m_vCellsPositions.push_back(pos);
             
             // h pos
-            pos = 0;
+            pos = m_insets.left;
+            first = true;
             for (int i = 0; i < cellsCount; i += m_viewRows) {
                 cellSize = m_pDataSource->tableCellSizeForIndex(this, i);
+                if(!first) {
+                    pos += m_colSpacing;
+                }
                 m_hCellsPositions.push_back(pos);
+                first = false;
                 pos += cellSize.width;
             }
             m_hCellsPositions.push_back(pos);
             break;
+        }
         default:
         {
             // cols and rows
             int cols = m_colCount;
             
             // v pos
-            pos = 0;
+            pos = m_insets.top;
+            bool first = true;
             for (int i = 0; i < cellsCount; i += cols) {
                 cellSize = m_pDataSource->tableCellSizeForIndex(this, i);
+                if(!first) {
+                    pos += m_rowSpacing;
+                }
                 m_vCellsPositions.push_back(pos);
+                first = false;
                 pos += cellSize.height;
             }
             m_vCellsPositions.push_back(pos);
             
             // h pos
-            pos = 0;
+            pos = m_insets.left;
+            first = true;
             for (int i = 0; i < cols; i++) {
                 cellSize = m_pDataSource->tableCellSizeForIndex(this, i);
+                if(!first) {
+                    pos += m_colSpacing;
+                }
                 m_hCellsPositions.push_back(pos);
+                first = false;
                 pos += cellSize.width;
             }
             m_hCellsPositions.push_back(pos);
@@ -321,8 +351,8 @@ void CCTableView::_updateCellPositions() {
 
 void CCTableView::_updateContentSize(bool keepOffset) {
     CCSize contentSize;
-    contentSize.width = MAX(m_hCellsPositions[m_hCellsPositions.size() - 1], m_tViewSize.width);
-    contentSize.height = MAX(m_vCellsPositions[m_vCellsPositions.size() - 1], m_tViewSize.height);
+    contentSize.width = MAX(m_hCellsPositions[m_hCellsPositions.size() - 1] + m_insets.right, m_tViewSize.width);
+    contentSize.height = MAX(m_vCellsPositions[m_vCellsPositions.size() - 1] + m_insets.bottom, m_tViewSize.height);
     setContentSize(contentSize);
     
 	if (!keepOffset) {
@@ -349,19 +379,19 @@ CCPoint CCTableView::_offsetFromIndex(unsigned int index) {
             int row = index % m_viewRows;
             int col = index / m_viewRows;
             return ccp(m_hCellsPositions[col],
-                       contentSize.height - m_vCellsPositions[row + 1] + 1);
+                       contentSize.height - m_vCellsPositions[row + 1] + ((row < m_viewRows - 1) ? m_rowSpacing : 0) + 1);
         }
         default:
         {
             int row = index / m_colCount;
             int col = index % m_colCount;
             return ccp(m_hCellsPositions[col],
-                       contentSize.height - m_vCellsPositions[row + 1] + 1);
+                       contentSize.height - m_vCellsPositions[row + 1] + ((row < m_vCellsPositions.size() - 2) ? m_rowSpacing : 0) + 1);
         }
     }
 }
 
-int CCTableView::_indexFromOffset(CCPoint offset) {
+int CCTableView::_indexFromOffset(CCPoint offset, bool excludeMargin) {
     // max index
     const int maxIdx = m_pDataSource->numberOfCellsInTableView(this) - 1;
     
@@ -391,8 +421,26 @@ int CCTableView::_indexFromOffset(CCPoint offset) {
         }
     }
     
-    // get index, without range limit
+    // index
     int index = -1;
+    
+    // margin, space checking
+    if(excludeMargin) {
+        if(row == 0 && offset.y < m_insets.top) {
+            return index;
+        }
+        if(row < m_vCellsPositions.size() - 2 && offset.y > m_vCellsPositions[row + 1] - m_rowSpacing) {
+            return index;
+        }
+        if(col == 0 && offset.x < m_insets.left) {
+            return index;
+        }
+        if(col < m_hCellsPositions.size() - 2 && offset.x > m_hCellsPositions[col + 1] - m_colSpacing) {
+            return index;
+        }
+    }
+    
+    // get index, without range limit
     switch (getDirection()) {
         case kCCScrollViewDirectionHorizontal:
             index = row + m_viewRows * col;
@@ -573,7 +621,7 @@ bool CCTableView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
         
         point = getContainer()->convertTouchToNodeSpace(pTouch);
         
-        index = _indexFromOffset(point);
+        index = _indexFromOffset(point, true);
 		if (index == CC_INVALID_INDEX)
 		{
 			m_pTouchedCell = nullptr;

@@ -244,7 +244,7 @@ protected:
      */
     CCTableViewDelegate* m_pTableViewDelegate;
     
-    virtual int _indexFromOffset(CCPoint offset);
+    virtual int _indexFromOffset(CCPoint offset, bool excludeMargin = false);
     virtual CCPoint _offsetFromIndex(unsigned int index);
     
     void _moveCellOutOfSight(CCTableViewCell *cell);
@@ -271,6 +271,15 @@ public:
     
     /// column count, by default it is 1
     CC_SYNTHESIZE_SETTER(unsigned int, m_colCount, ColCount);
+    
+    /// border spacing
+    CC_SYNTHESIZE(ccInsets, m_insets, Insets);
+    
+    /// spacing between rows
+    CC_SYNTHESIZE(float, m_rowSpacing, RowSpacing);
+    
+    /// spacing between columns
+    CC_SYNTHESIZE(float, m_colSpacing, ColSpacing);
 };
 
 NS_CC_EXT_END
