@@ -246,7 +246,7 @@ void Widget::removeChildByTag(int tag, bool cleanup)
     
     if (child == nullptr)
     {
-        CCLOG("cocos2d: removeChildByTag(tag = %d): child not found!", tag);
+//        CCLOG("cocos2d: removeChildByTag(tag = %d): child not found!", tag);
     }
     else
     {
