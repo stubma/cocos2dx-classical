@@ -30,35 +30,37 @@ NS_CC_BEGIN
 CCShake::~CCShake() {
 }
 
-CCShake* CCShake::create(float duration, float maxRadius, float minRadius) {
+CCShake* CCShake::create(float duration, float maxRadius, float minRadius, float shakeInterval) {
 	CCShake* a = new CCShake();
-	a->initWithRing(duration, maxRadius, minRadius);
+	a->initWithRing(duration, maxRadius, minRadius, shakeInterval);
 	CC_SAFE_AUTORELEASE_RETURN(a, CCShake*);
 }
 
-CCShake* CCShake::create(float duration, float startMaxR, float endMaxR, float startMinR, float endMinR) {
+CCShake* CCShake::create(float duration, float startMaxR, float endMaxR, float startMinR, float endMinR, float shakeInterval) {
     CCShake* a = new CCShake();
-	a->initWithDynamicRing(duration, startMaxR, endMaxR, startMinR, endMinR);
+	a->initWithDynamicRing(duration, startMaxR, endMaxR, startMinR, endMinR, shakeInterval);
 	CC_SAFE_AUTORELEASE_RETURN(a, CCShake*);
 }
 
-bool CCShake::initWithRing(float d, float maxR, float minR) {
+bool CCShake::initWithRing(float d, float maxR, float minR, float shakeInterval) {
     m_mode = RING;
 	m_fDuration = d;
     m_maxRadius = maxR;
     m_minRadius = minR;
     m_endMaxRadius = maxR;
     m_endMinRadius = minR;
+    m_shakeInterval = shakeInterval;
 	return true;
 }
 
-bool CCShake::initWithDynamicRing(float d, float startMaxR, float endMaxR, float startMinR, float endMinR) {
+bool CCShake::initWithDynamicRing(float d, float startMaxR, float endMaxR, float startMinR, float endMinR, float shakeInterval) {
     m_mode = DYNAMIC_RING;
 	m_fDuration = d;
     m_maxRadius = startMaxR;
     m_minRadius = startMinR;
     m_endMaxRadius = endMaxR;
     m_endMinRadius = endMinR;
+    m_shakeInterval = shakeInterval;
 	return true;
 }
 
@@ -77,10 +79,10 @@ CCObject* CCShake::copyWithZone(CCZone *pZone) {
     CCActionInterval::copyWithZone(pZone);
     switch (m_mode) {
         case DYNAMIC_RING:
-            pCopy->initWithDynamicRing(m_fDuration, m_maxRadius, m_endMaxRadius, m_minRadius, m_endMinRadius);
+            pCopy->initWithDynamicRing(m_fDuration, m_maxRadius, m_endMaxRadius, m_minRadius, m_endMinRadius, m_shakeInterval);
             break;
         default:
-            pCopy->initWithRing(m_fDuration, m_maxRadius, m_minRadius);
+            pCopy->initWithRing(m_fDuration, m_maxRadius, m_minRadius, m_shakeInterval);
             break;
     }
     
@@ -91,9 +93,9 @@ CCObject* CCShake::copyWithZone(CCZone *pZone) {
 CCActionInterval* CCShake::reverse() {
     switch (m_mode) {
         case DYNAMIC_RING:
-            return create(m_fDuration, m_maxRadius, m_endMaxRadius, m_minRadius, m_endMinRadius);
+            return create(m_fDuration, m_maxRadius, m_endMaxRadius, m_minRadius, m_endMinRadius, m_shakeInterval);
         default:
-            return create(m_fDuration, m_maxRadius, m_minRadius);
+            return create(m_fDuration, m_maxRadius, m_minRadius, m_shakeInterval);
     }
 }
 
@@ -101,17 +103,24 @@ void CCShake::update(float t) {
 	if(t >= 1) {
 		getTarget()->setPosition(m_originalX, m_originalY);
 	} else {
+        m_time += t;
         switch (m_mode) {
             case RING:
             case DYNAMIC_RING:
             {
-                float radian = CCRANDOM_0_1() * M_PI * 2;
-                float maxR = m_maxRadius + (m_endMinRadius - m_maxRadius) * t;
-                float minR = m_minRadius + (m_endMinRadius - m_minRadius) * t;
-                float r = CCRANDOM_0_1() * (maxR - minR) + minR;
-                float x = m_originalX + cosf(radian) * r;
-                float y = m_originalY + sinf(radian) * r;
-                getTarget()->setPosition(ccp(x, y));
+                if(m_shakeInterval == 0 || m_time > m_shakeInterval) {
+                    float radian = CCRANDOM_0_1() * M_PI * 2;
+                    float maxR = m_maxRadius + (m_endMinRadius - m_maxRadius) * t;
+                    float minR = m_minRadius + (m_endMinRadius - m_minRadius) * t;
+                    float r = CCRANDOM_0_1() * (maxR - minR) + minR;
+                    float x = m_originalX + cosf(radian) * r;
+                    float y = m_originalY + sinf(radian) * r;
+                    getTarget()->setPosition(ccp(x, y));
+                    
+                    if(m_shakeInterval > 0) {
+                        m_time = fmodf(m_time, m_shakeInterval);
+                    }
+                }
                 break;
             }
             default:
@@ -125,6 +134,7 @@ void CCShake::startWithTarget(CCNode* pTarget) {
 
 	m_originalX = pTarget->getPositionX();
 	m_originalY = pTarget->getPositionY();
+    m_time = 0;
 }
 
 NS_CC_END

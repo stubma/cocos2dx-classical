@@ -58,6 +58,12 @@ protected:
     
     /// mode
     Mode m_mode;
+    
+    /// shake interval
+    float m_shakeInterval;
+    
+    /// time
+    float m_time;
 
 public:
 	/**
@@ -66,8 +72,9 @@ public:
 	 * @param duration duration time of action in seconds
 	 * @param maxRadius max radius of shaking area
      * @param minRadius min radius of shaking area, by default it is zero
+     * @param shakeInterval min interval between shaking, zero means by frame
 	 */
-	static CCShake* create(float duration, float maxRadius, float minRadius = 0);
+	static CCShake* create(float duration, float maxRadius, float minRadius = 0, float shakeInterval = 0);
     
 	/**
 	 * create a shake which in dynamic ring mode
@@ -77,14 +84,15 @@ public:
      * @param startMinRadius min radius of shaking area, by default it is zero
      * @param endMaxRadius max radius at the end of action
      * @param endMinRadius min radius at the end of action
+     * @param shakeInterval min interval between shaking, zero means by frame
 	 */
-    static CCShake* create(float duration, float startMaxRadius, float endMaxRadius, float startMinRadius, float endMinRadius);
+    static CCShake* create(float duration, float startMaxRadius, float endMaxRadius, float startMinRadius, float endMinRadius, float shakeInterval = 0);
 
 	virtual ~CCShake();
 
 	/** initializes the action */
-    bool initWithRing(float d, float maxR, float minR);
-    bool initWithDynamicRing(float d, float startMaxR, float endMaxR, float startMinR, float endMinR);
+    bool initWithRing(float d, float maxR, float minR, float shakeInterval);
+    bool initWithDynamicRing(float d, float startMaxR, float endMaxR, float startMinR, float endMinR, float shakeInterval);
 	
 	/// @see CCObject::copyWithZone
 	virtual CCObject* copyWithZone(CCZone* pZone);
