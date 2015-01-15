@@ -233,7 +233,7 @@ public:
      * @param handler A number that indicates a lua function.
      * @js NA
      */
-    void registerScriptEditBoxHandler(int handler);
+    void registerScriptEditBoxHandler(ccScriptFunction handler);
     
     /**
      * Unregisters a script function that will be called for EditBox events.

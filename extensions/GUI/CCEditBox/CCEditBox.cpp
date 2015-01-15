@@ -389,10 +389,10 @@ void CCEditBox::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
 	
 }
 
-void CCEditBox::registerScriptEditBoxHandler(int handler)
+void CCEditBox::registerScriptEditBoxHandler(ccScriptFunction handler)
 {
     unregisterScriptEditBoxHandler();
-    m_nScriptEditBoxHandler = handler;
+    m_nScriptEditBoxHandler = handler.handler;
 }
 
 void CCEditBox::unregisterScriptEditBoxHandler(void)
