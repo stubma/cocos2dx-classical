@@ -273,13 +273,13 @@ public:
     CC_SYNTHESIZE_SETTER(unsigned int, m_colCount, ColCount);
     
     /// border spacing
-    CC_SYNTHESIZE(ccInsets, m_insets, Insets);
+    CC_SYNTHESIZE_SETTER(ccInsets, m_insets, Insets);
     
     /// spacing between rows
-    CC_SYNTHESIZE(float, m_rowSpacing, RowSpacing);
+    CC_SYNTHESIZE_SETTER(float, m_rowSpacing, RowSpacing);
     
     /// spacing between columns
-    CC_SYNTHESIZE(float, m_colSpacing, ColSpacing);
+    CC_SYNTHESIZE_SETTER(float, m_colSpacing, ColSpacing);
 };
 
 NS_CC_EXT_END

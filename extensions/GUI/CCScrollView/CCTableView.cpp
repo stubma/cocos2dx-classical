@@ -691,6 +691,24 @@ void CCTableView::setColCount(unsigned int cols) {
     _updateContentSize();
 }
 
+void CCTableView::setInsets(ccInsets var) {
+    m_insets = var;
+    _updateCellPositions();
+    _updateContentSize();
+}
+
+void CCTableView::setRowSpacing(float var) {
+    m_rowSpacing = var;
+    _updateCellPositions();
+    _updateContentSize();
+}
+
+void CCTableView::setColSpacing(float var) {
+    m_colSpacing = var;
+    _updateCellPositions();
+    _updateContentSize();
+}
+
 int CCTableView::getRealRows() {
     return (int)m_vCellsPositions.size() - 1;
 }
