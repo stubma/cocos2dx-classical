@@ -75,6 +75,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 	* CCTableView支持多列
 	* 支持cell重用, cell可以设置名称
 	* 支持不等宽度的行或列
+	* 支持设置行间距, 列间距, 边界间距
 * CCProtocols.h增加CCMeasurableProtocol, 让LoadingBar, CCProgressTimer实现CCMeasurableProtocol. 从而让CCProgressTo, CCProgressFromTo支持UILoadingBar
 * CCLabelBMFont添加了setLineKerning, 用于调整行间距
 * CCScrollView添加方法可以设置min/max scale
@@ -118,6 +119,7 @@ Things Improved
 	* support multi-column
 	* support cell reuse, cell can set name
 	* column or row can be different size
+	* support to set row spacing, col spacing and border spacing
 * add CCMeasurableProtocol class to abstract LoadingBar and CCProgressTimer, so that CProgressTo, CCProgressFromTo can be used on LoadingBar
 * CCLabelBMFont adds setLineKerning to adjust line spacing
 * CCScrollView add methods to set min/max scale
