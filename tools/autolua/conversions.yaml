@@ -70,6 +70,7 @@ conversions:
     "CCArray*": "ok &= luaval_to_array(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "CCArray&": "ok &= luaval_to_arrayref(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "CCDictionary*": "ok &= luaval_to_dictionary(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
+    "CCDictionary&": "ok &= luaval_to_dictionaryref(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "CCAffineTransform": "ok &= luaval_to_affinetransform(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "ccFontDefinition":  "ok &= luaval_to_fontdefinition(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "@vector<std::basic_string.*>": "ok &= luaval_to_std_vector_string(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"

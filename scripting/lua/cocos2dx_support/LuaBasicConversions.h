@@ -69,6 +69,7 @@ extern bool luaval_to_fontdefinition(lua_State* L, int lo, ccFontDefinition* out
 extern bool luaval_to_array(lua_State* L,int lo, CCArray** outValue, const char* funcName = "");
 extern bool luaval_to_arrayref(lua_State* L,int lo, CCArray* outValue, const char* funcName = "");
 extern bool luaval_to_dictionary(lua_State* L,int lo, CCDictionary** outValue, const char* funcName = "");
+extern bool luaval_to_dictionaryref(lua_State* L,int lo, CCDictionary* outValue, const char* funcName = "");
 extern bool luaval_to_array_of_point(lua_State* L,int lo,cocos2d::CCPoint **points, int *numPoints, const char* funcName = "");
 extern bool luavals_variadic_to_array(lua_State* L,int argc, CCArray** ret);
 extern bool luaval_to_point(lua_State* L,int lo,cocos2d::CCPoint* outValue, const char* funcName = "");

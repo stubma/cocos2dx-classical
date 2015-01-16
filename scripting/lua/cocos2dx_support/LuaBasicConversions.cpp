@@ -1747,39 +1747,34 @@ bool luaval_to_array(lua_State* L, int lo, CCArray** outValue, const char* funcN
     return ret;
 }
 
-bool luaval_to_dictionary(lua_State* L,int lo, CCDictionary** outValue, const char* funcName)
-{
+bool luaval_to_dictionaryref(lua_State* L, int lo, CCDictionary* outValue, const char* funcName) {
     if (nullptr == L || nullptr == outValue)
-        return  false;
-    
+        return false;
     bool ok = true;
-
+    
     tolua_Error tolua_err;
-    if (!tolua_istable(L, lo, 0, &tolua_err) )
-    {
+    if (!tolua_istable(L, lo, 0, &tolua_err)) {
 #if COCOS2D_DEBUG >=1
-        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+        luaval_to_native_err(L, "#ferror:", &tolua_err,funcName);
 #endif
         ok = false;
     }
     
-    if (ok)
-    {
+    if (ok) {
         std::string stringKey = "";
         std::string stringValue = "";
         bool boolVal = false;
-        CCDictionary* dict = nullptr;
+        CCDictionary* dict = outValue;
+        if (nullptr == dict) {
+            return false;
+        }
+        
         lua_pushnil(L);                                             /* L: lotable ..... nil */
-        while (0 != lua_next(L, lo )) {
+        while (0 != lua_next(L, lo)) {
             // if key is not string, ignore
             if (!lua_isstring(L, -2)) {
                 lua_pop(L, 1);
                 continue;
-            }
-            
-            // lazy create dictionary
-            if (nullptr == dict) {
-                dict = CCDictionary::create();
             }
             
             if(luaval_to_std_string(L, -2, &stringKey)) {
@@ -1811,13 +1806,12 @@ bool luaval_to_dictionary(lua_State* L,int lo, CCDictionary** outValue, const ch
                     if(luaval_to_std_string(L, -1, &stringValue)) {
                         dict->setObject(CCString::create(stringValue), stringKey);
                     }
-                }
-                else if(lua_type(L, -1) == LUA_TBOOLEAN) {
+                } else if(lua_type(L, -1) == LUA_TBOOLEAN) {
                     if (luaval_to_boolean(L, -1, &boolVal)) {
                         dict->setObject(CCBool::create(boolVal),stringKey);
                     }
                 } else if(lua_type(L, -1) == LUA_TNUMBER) {
-                     dict->setObject(CCDouble::create(tolua_tonumber(L, -1, 0)),stringKey);
+                    dict->setObject(CCDouble::create(tolua_tonumber(L, -1, 0)),stringKey);
                 } else {
                     CCAssert(false, "not supported type");
                 }
@@ -1825,11 +1819,16 @@ bool luaval_to_dictionary(lua_State* L,int lo, CCDictionary** outValue, const ch
             
             lua_pop(L, 1);                                          /* L: lotable ..... key */
         }
-                                                                    /* L: lotable ..... */
-        *outValue = dict;
     }
     
     return ok;
+}
+
+bool luaval_to_dictionary(lua_State* L,int lo, CCDictionary** outValue, const char* funcName) {
+    CCDictionary* dict = CCDictionary::create();
+    bool ret = luaval_to_dictionaryref(L, lo, dict, funcName);
+    *outValue = dict;
+    return ret;
 }
 
 bool luaval_to_array_of_point(lua_State* L,int lo,cocos2d::CCPoint **points, int *numPoints, const char* funcName)
