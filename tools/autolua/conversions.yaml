@@ -11,6 +11,7 @@ conversions:
     "@std::vector<int.*>.>": "std::vector<int>"
 
   ns_map:
+    "Json::": ""
     "cocos2d::experimental::ui::": ""
     "cocos2d::experimental::": ""
     "cocos2d::extension::": ""

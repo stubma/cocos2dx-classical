@@ -910,12 +910,17 @@ class Generator(object):
         config = ConfigParser.SafeConfigParser()
         config.read(conf)
         ndk_root = os.getenv("NDK_ROOT")
+        c2xc_root = os.getenv("COCOS2DX_CLASSICAL_ROOT") if os.getenv("COCOS2DX_CLASSICAL_ROOT") else ""
+        home = os.getenv("HOME") if os.getenv("HOME") else ""
         self.tpl_opt = yaml.load(file("conversions.yaml", "r"))
         self.conf = conf
         self.clang = Index.create()
         self.current_ns = ""
+        project_dir = config.get("DEFAULT", "project_dir").replace("${HOME}", home) if config.has_option("DEFAULT", "project_dir") else ""
         clang_args = re.split(r"\s", config.get("DEFAULT", "clang_args")) if config.has_option("DEFAULT", "clang_args") else []
-        self.clang_args = [x.replace("${NDK_ROOT}", ndk_root) for x in clang_args]
+        clang_args = [x.replace("${NDK_ROOT}", ndk_root) for x in clang_args]
+        clang_args = [x.replace("${COCOS2DX_CLASSICAL_ROOT}", c2xc_root) for x in clang_args]
+        self.clang_args = [x.replace("${PROJECT_DIR}", project_dir) for x in clang_args]
         self.include_namespaces = re.split(r"\s", config.get("DEFAULT", "include_namespaces")) if config.has_option("DEFAULT", "include_namespaces") else []
         self.src_dirs = re.split(r"\s", config.get("DEFAULT", "src_dirs")) if config.has_option("DEFAULT", "src_dirs") else ["."]
         self.exclude_dirs = re.split(r"\s", config.get("DEFAULT", "exclude_dirs")) if config.has_option("DEFAULT", "exclude_dirs") else ["."]
