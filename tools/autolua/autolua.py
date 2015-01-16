@@ -914,27 +914,8 @@ class Generator(object):
         self.conf = conf
         self.clang = Index.create()
         self.current_ns = ""
-        self.clang_args = [
-            "-x", "c++-header",
-            "-nostdinc",
-            "-std=c++11",
-            "-I" + ndk_root + "/platforms/android-14/arch-arm/usr/include",
-            "-I" + ndk_root + "/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/include",
-            "-I" + ndk_root + "/sources/cxx-stl/gnu-libstdc++/4.9/include",
-            "-I" + ndk_root + "/toolchains/llvm-3.4/prebuilt/darwin-x86_64/lib/clang/3.4/include",
-            "-I../../cocos2dx/include",
-            "-I../../cocos2dx",
-            "-I../../cocos2dx/platform/android",
-            "-I../../cocos2dx/platform/android/jni",
-            "-I../../cocos2dx/kazmath/include",
-            "-I../../extensions",
-            "-I../../extensions/CocoStudio",
-            "-I../../extensions/CocoStudio/GUI",
-            "-I../../extensions/CocoStudio/GUI/Layouts",
-            "-I../../extensions/GUI/CCScrollView",
-            "-DANDROID",
-            "-D_SIZE_T_DEFINED_"
-        ]
+        clang_args = re.split(r"\s", config.get("DEFAULT", "clang_args")) if config.has_option("DEFAULT", "clang_args") else []
+        self.clang_args = [x.replace("${NDK_ROOT}", ndk_root) for x in clang_args]
         self.include_namespaces = re.split(r"\s", config.get("DEFAULT", "include_namespaces")) if config.has_option("DEFAULT", "include_namespaces") else []
         self.src_dirs = re.split(r"\s", config.get("DEFAULT", "src_dirs")) if config.has_option("DEFAULT", "src_dirs") else ["."]
         self.exclude_dirs = re.split(r"\s", config.get("DEFAULT", "exclude_dirs")) if config.has_option("DEFAULT", "exclude_dirs") else ["."]

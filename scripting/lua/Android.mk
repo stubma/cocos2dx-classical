@@ -22,7 +22,8 @@ LOCAL_SRC_FILES := $(call all-cpp-files-under,cocos2dx_support) \
 	$(call all-c-files-under,tolua)
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/cocos2dx_support \
 	$(LOCAL_PATH)/tolua \
-	$(LOCAL_PATH)/lua/src/src
+	$(LOCAL_PATH)/lua/src/src \
+	$(LOCAL_PATH)/cocos2dx_support
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_C_INCLUDES)
 LOCAL_WHOLE_STATIC_LIBRARIES := lua_static \
 	cocos2dx_static \
