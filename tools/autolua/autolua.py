@@ -468,6 +468,8 @@ class NativeType(object):
         to_native_dict = generator.tpl_opt['conversions']['to_native']
         if self.is_class:
             if not dict_has_key_re(to_native_dict, keys):
+                if self.is_ref:
+                    keys.append(self.name + "&")
                 keys.append("object")
         elif self.is_enum:
             keys.append("int")
@@ -766,14 +768,14 @@ class NativeClass(object):
 
     def should_function_be_generated(self, f):
         if not f.ret_type.has_from_native_mapping(self.generator):
-            if not self.generator.is_class_included(f.ret_type.name.replace("*", "")) or\
-                    self.generator.is_class_excluded(f.ret_type.name.replace("*", "")):
+            if not self.generator.is_type_included(f.ret_type.name.replace("*", "")) or\
+                    self.generator.is_type_excluded(f.ret_type.name.replace("*", "")):
                 return False
 
         for arg in f.arguments:
             if not arg.has_to_native_mapping(self.generator):
-                if not self.generator.is_class_included(arg.name.replace("*", "")) or\
-                        self.generator.is_class_excluded(arg.name.replace("*", "")):
+                if not self.generator.is_type_included(arg.name.replace("*", "")) or\
+                        self.generator.is_type_excluded(arg.name.replace("*", "")):
                     return False
 
         return True
@@ -929,6 +931,10 @@ class Generator(object):
         self.exclude_classes_regex = [re.compile(x) for x in exclude_classes]
         include_classes = re.split(r"\s", config.get("DEFAULT", "include_classes")) if config.has_option("DEFAULT", "include_classes") else []
         self.include_classes_regex = [re.compile(x) for x in include_classes]
+        exclude_types = re.split(r"\s", config.get("DEFAULT", "exclude_types")) if config.has_option("DEFAULT", "exclude_types") else []
+        self.exclude_types_regex = [re.compile(x) for x in exclude_types]
+        include_types = re.split(r"\s", config.get("DEFAULT", "include_types")) if config.has_option("DEFAULT", "include_types") else []
+        self.include_types_regex = [re.compile(x) for x in include_types]
         self.target_module = config.get("DEFAULT", "target_module") if config.has_option("DEFAULT", "target_module") else None
         self.hfile_path = ""
         self.cppfile_path = ""
@@ -991,6 +997,18 @@ class Generator(object):
 
     def is_class_included(self, name):
         for r in self.include_classes_regex:
+            if r.match(name):
+                return True
+        return False
+
+    def is_type_excluded(self, name):
+        for r in self.exclude_types_regex:
+            if r.match(name):
+                return True
+        return False
+
+    def is_type_included(self, name):
+        for r in self.include_types_regex:
             if r.match(name):
                 return True
         return False

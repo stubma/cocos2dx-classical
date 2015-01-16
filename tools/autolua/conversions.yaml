@@ -12,6 +12,7 @@ conversions:
 
   ns_map:
     "Json::": ""
+    "rapidjson::": ""
     "cocos2d::experimental::ui::": ""
     "cocos2d::experimental::": ""
     "cocos2d::extension::": ""
@@ -51,6 +52,7 @@ conversions:
     "ccPoint": "ok &= luaval_to_cpoint(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "ccSize": "ok &= luaval_to_csize(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "ccRect": "ok &= luaval_to_crect(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
+    "ccInsets": "ok &= luaval_to_insets(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "ccBlendFunc": "ok &= luaval_to_blendfunc(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "ccVertex2F": "ok &= luaval_to_vertex2f(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "ccVertex3F": "ok &= luaval_to_vertex3f(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
@@ -66,6 +68,7 @@ conversions:
     "ccV3F_C4B_T2F_Quad": "ok &= luaval_to_v3fc4bt2fquad(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "ccCustomUniformValue": "ok &= luaval_to_customuniformvalue(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "CCArray*": "ok &= luaval_to_array(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
+    "CCArray&": "ok &= luaval_to_arrayref(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "CCDictionary*": "ok &= luaval_to_dictionary(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "CCAffineTransform": "ok &= luaval_to_affinetransform(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "ccFontDefinition":  "ok &= luaval_to_fontdefinition(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
@@ -105,6 +108,7 @@ conversions:
     "ccPoint": "cpoint_to_luaval(tolua_S, ${in_value})"
     "ccSize": "csize_to_luaval(tolua_S, ${in_value})"
     "ccRect": "crect_to_luaval(tolua_S, ${in_value})"
+    "ccInsets": "insets_to_luaval(tolua_S, ${in_value})"
     "ccVertex2F": "vertex2f_to_luaval(tolua_S, ${in_value})"
     "ccVertex3F": "vertex3f_to_luaval(tolua_S, ${in_value})"
     "ccBezierConfig": "bezierconfig_to_luaval(tolua_S, ${in_value})"

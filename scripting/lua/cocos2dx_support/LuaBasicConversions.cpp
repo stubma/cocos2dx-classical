@@ -1112,6 +1112,45 @@ bool luaval_to_size(lua_State* L,int lo, CCSize* outValue, const char* funcName)
     return ok;
 }
 
+bool luaval_to_insets(lua_State* L, int lo, cocos2d::ccInsets* outValue, const char* funcName) {
+    if (nullptr == L || nullptr == outValue)
+        return false;
+    
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err) ) {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok) {
+        lua_pushstring(L, "left");
+        lua_gettable(L, lo);
+        outValue->left = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "right");
+        lua_gettable(L, lo);
+        outValue->right = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "top");
+        lua_gettable(L, lo);
+        outValue->top = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "bottom");
+        lua_gettable(L, lo);
+        outValue->bottom = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+    }
+    
+    return ok;
+}
+
 bool luaval_to_crect(lua_State* L, int lo, cocos2d::ccRect* outValue, const char* funcName) {
     if (nullptr == L || nullptr == outValue)
         return false;
@@ -1629,37 +1668,30 @@ bool luaval_to_fontdefinition(lua_State* L, int lo, ccFontDefinition* outValue ,
     return ok;
 }
 
-bool luaval_to_array(lua_State* L,int lo, CCArray** outValue, const char* funcName)
-{
+bool luaval_to_arrayref(lua_State* L,int lo, CCArray* outValue, const char* funcName) {
     if (nullptr == L || nullptr == outValue)
         return false;
-    
     bool ok = true;
-
+    
     tolua_Error tolua_err;
-    if (!tolua_istable(L, lo, 0, &tolua_err) )
-    {
+    if (!tolua_istable(L, lo, 0, &tolua_err)) {
 #if COCOS2D_DEBUG >=1
-        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+        luaval_to_native_err(L, "#ferror:", &tolua_err,funcName);
 #endif
         ok = false;
     }
     
-    if (ok)
-    {
+    if(ok) {
         size_t len = lua_objlen(L, lo);
-        if (len > 0)
-        {
-            CCArray* arr =  CCArray::createWithCapacity(len);
+        if (len > 0) {
+            CCArray* arr = outValue;
             if (nullptr == arr)
                 return false;
             
-            for (size_t i = 0; i < len; i++)
-            {
-                lua_pushnumber(L,i + 1);
-                lua_gettable(L,lo);
-                if (lua_isnil(L,-1))
-                {
+            for (size_t i = 0; i < len; i++) {
+                lua_pushnumber(L, i + 1);
+                lua_gettable(L, lo);
+                if (lua_isnil(L, -1)) {
                     lua_pop(L, 1);
                     continue;
                 }
@@ -1670,22 +1702,20 @@ bool luaval_to_array(lua_State* L,int lo, CCArray** outValue, const char* funcNa
                         arr->addObject(obj);
                     }
                 } else if(lua_istable(L, -1)) {
-                    lua_pushnumber(L,1);
-                    lua_gettable(L,-2);
+                    lua_pushnumber(L, 1);
+                    lua_gettable(L, -2);
                     if (lua_isnil(L, -1) ) {
-                        lua_pop(L,1);
+                        lua_pop(L, 1);
                         CCDictionary* dictVal = nullptr;
-                        if (luaval_to_dictionary(L,-1,&dictVal))
-                        {
+                        if (luaval_to_dictionary(L, -1, &dictVal)) {
                             arr->addObject(dictVal);
                         }
                     } else {
-                       lua_pop(L,1);
-                       CCArray* arrVal = nullptr;
-                       if(luaval_to_array(L, -1, &arrVal))
-                       {
-                           arr->addObject(arrVal);
-                       }
+                        lua_pop(L, 1);
+                        CCArray* arrVal = nullptr;
+                        if(luaval_to_array(L, -1, &arrVal)) {
+                            arr->addObject(arrVal);
+                        }
                     }
                 } else if(lua_type(L, -1) == LUA_TSTRING) {
                     std::string stringValue = "";
@@ -1704,12 +1734,17 @@ bool luaval_to_array(lua_State* L,int lo, CCArray** outValue, const char* funcNa
                 }
                 lua_pop(L, 1);
             }
-            
-            *outValue = arr;
         }
     }
     
     return ok;
+}
+
+bool luaval_to_array(lua_State* L, int lo, CCArray** outValue, const char* funcName) {
+    CCArray* arr =  CCArray::create();
+    bool ret = luaval_to_arrayref(L, lo, arr, funcName);
+    *outValue = arr;
+    return ret;
 }
 
 bool luaval_to_dictionary(lua_State* L,int lo, CCDictionary** outValue, const char* funcName)
@@ -2337,6 +2372,24 @@ void size_to_luaval(lua_State* L,const CCSize& sz)
     lua_pushstring(L, "height");                        /* L: table key */
     lua_pushnumber(L, (lua_Number) sz.height);          /* L: table key value*/
     lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+}
+
+void insets_to_luaval(lua_State* L, const cocos2d::ccInsets& i) {
+    if (nullptr == L)
+        return;
+    lua_newtable(L);                                    /* L: table */
+    lua_pushstring(L, "left");                             /* L: table key */
+    lua_pushnumber(L, (lua_Number)i.left);               /* L: table key value*/
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    lua_pushstring(L, "right");                             /* L: table key */
+    lua_pushnumber(L, (lua_Number)i.right);               /* L: table key value*/
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    lua_pushstring(L, "top");                         /* L: table key */
+    lua_pushnumber(L, (lua_Number)i.top);           /* L: table key value*/
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    lua_pushstring(L, "bottom");                        /* L: table key */
+    lua_pushnumber(L, (lua_Number)i.bottom);          /* L: table key value*/
+    lua_rawset(L, -3);
 }
 
 void crect_to_luaval(lua_State* L, const cocos2d::ccRect& r) {
