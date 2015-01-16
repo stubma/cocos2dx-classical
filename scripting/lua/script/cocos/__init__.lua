@@ -30,4 +30,5 @@ function loadLua(name)
     end
 end
 
+-- load all cocos core lua
 loadLua("cocos")

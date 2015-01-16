@@ -391,8 +391,8 @@ void CCResourceLoader::runInBlockMode() {
         if(m_handler) {
             CCArray* pArrayArgs = CCArray::createWithCapacity(3);
             pArrayArgs->addObject(CCString::create("progress"));
-            pArrayArgs->addObject(CCInteger::create(m_nextLoad * 100 / m_loadTaskList.size()));
-            pArrayArgs->addObject(CCInteger::create(0));
+            pArrayArgs->addObject(CCFloat::create(m_nextLoad * 100 / m_loadTaskList.size()));
+            pArrayArgs->addObject(CCFloat::create(0));
             CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_handler, pArrayArgs);
         }
     }
@@ -668,8 +668,8 @@ void CCResourceLoader::doLoad(float delta) {
         if(m_handler) {
             CCArray* pArrayArgs = CCArray::createWithCapacity(3);
             pArrayArgs->addObject(CCString::create("progress"));
-            pArrayArgs->addObject(CCInteger::create(m_nextLoad * 100 / m_loadTaskList.size()));
-            pArrayArgs->addObject(CCInteger::create(delta));
+            pArrayArgs->addObject(CCFloat::create(m_nextLoad * 100 / m_loadTaskList.size()));
+            pArrayArgs->addObject(CCFloat::create(delta));
             CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_handler, pArrayArgs);
         }
     }

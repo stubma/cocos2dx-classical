@@ -100,14 +100,12 @@ end
 
 local modename = "AudioEngine"
 local proxy = {}
-local mt    = {
+local mt = {
     __index = M,
-    __newindex =  function (t ,k ,v)
+    __newindex = function (t ,k ,v)
         print("attemp to update a read-only table")
     end
 } 
-setmetatable(proxy,mt)
+setmetatable(proxy, mt)
 _G[modename] = proxy
 package.loaded[modename] = proxy
-
-

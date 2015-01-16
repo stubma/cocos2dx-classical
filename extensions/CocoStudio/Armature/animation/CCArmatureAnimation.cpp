@@ -424,7 +424,6 @@ void CCArmatureAnimation::update(float dt)
         }
         if(m_frameEventHandler) {
             CCArray* pArrayArgs = CCArray::createWithCapacity(5);
-            pArrayArgs->addObject(CCString::create(getLuaTypeNameByTypeId(typeid(*event->bone).name())));
             pArrayArgs->addObject(event->bone);
             pArrayArgs->addObject(CCString::create(event->frameEventName));
             pArrayArgs->addObject(CCInteger::create(event->originFrameIndex));
@@ -447,7 +446,6 @@ void CCArmatureAnimation::update(float dt)
         
         if(m_movementEventHandler) {
             CCArray* pArrayArgs = CCArray::createWithCapacity(4);
-            pArrayArgs->addObject(CCString::create(getLuaTypeNameByTypeId(typeid(*event->armature).name())));
             pArrayArgs->addObject(event->armature);
             pArrayArgs->addObject(CCInteger::create(event->movementType));
             pArrayArgs->addObject(CCString::create(event->movementID));

@@ -254,8 +254,6 @@ public:
     
     /** 
      * function for c++ call back lua funtion 
-     * if you want to add a CCObject subclass, it is better to insert a CCString before it.
-     * The CCString contains CCObject lua type name and the name can be queried by getLuaTypeNameByTypeId method
      */
     virtual int executeEventWithArgs(int nHandler, CCArray* pArgs) { return 0; }
 

@@ -137,7 +137,6 @@ void CCControl::sendActionsForControlEvents(CCControlEvent controlEvents)
                 int nHandler = getHandleOfControlEvent(controlEvents);
                 if (-1 != nHandler) {
                     CCArray* pArrayArgs = CCArray::createWithCapacity(3);
-                    pArrayArgs->addObject(CCString::create(getLuaTypeNameByTypeId(typeid(*this).name())));
                     pArrayArgs->addObject(this);
                     pArrayArgs->addObject(CCInteger::create(1 << i));
                     CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(nHandler, pArrayArgs);
