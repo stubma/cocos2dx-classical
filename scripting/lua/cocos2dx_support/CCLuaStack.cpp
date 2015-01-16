@@ -30,6 +30,7 @@ extern "C" {
 #include "lualib.h"
 #include "lauxlib.h"
 #include "tolua_fix.h"
+#include "lfs.h"
 }
 
 #include "lua_cocos2dx_auto.h"
@@ -110,6 +111,7 @@ bool CCLuaStack::init(void)
     luaL_openlibs(m_state);
     register_all_cocos2dx(m_state);
     toluafix_open(m_state);
+    luaopen_lfs(m_state);
 
     // Register our version of the global "print" function
     const luaL_reg global_functions [] = {

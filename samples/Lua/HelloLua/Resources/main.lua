@@ -1,30 +1,9 @@
-require("extern")
-require("json")
-require("Cocos2d")
-require("AudioEngine")
-require("CocoStudio")
-require("OpenglConstants")
-require("Opengl")
-require("bitExtend")
-require("DrawPrimitives")
-
--- cclog
-cclog = function(...)
-    print(string.format(...))
-end
+require "script/cocos/__init__"
 
 -- try inheritance
 local SpriteEx = class("SpriteEx", function(f)
                             return CCSprite:create(f)
                        end)
-
--- for CCLuaEngine traceback
-function __G__TRACKBACK__(msg)
-    cclog("----------------------------------------")
-    cclog("LUA ERROR: " .. tostring(msg) .. "\n")
-    cclog(debug.traceback())
-    cclog("----------------------------------------")
-end
 
 local function main()
     -- avoid memory leak
@@ -110,7 +89,7 @@ local function main()
         local touchBeginPoint = nil
 
         local function onTouchBegan(x, y)
-            cclog("onTouchBegan: %0.2f, %0.2f", x, y)
+            cc.log("onTouchBegan: %0.2f, %0.2f", x, y)
             touchBeginPoint = {x = x, y = y}
             spriteDog.isPaused = true
             -- CCTOUCHBEGAN event must return true
@@ -118,7 +97,7 @@ local function main()
         end
 
         local function onTouchMoved(x, y)
-            cclog("onTouchMoved: %0.2f, %0.2f", x, y)
+            cc.log("onTouchMoved: %0.2f, %0.2f", x, y)
             if touchBeginPoint then
                 pos = layerFarm:getPosition()
                 layerFarm:setPosition(pos.x + x - touchBeginPoint.x,
@@ -128,7 +107,7 @@ local function main()
         end
 
         local function onTouchEnded(x, y)
-            cclog("onTouchEnded: %0.2f, %0.2f", x, y)
+            cc.log("onTouchEnded: %0.2f, %0.2f", x, y)
             touchBeginPoint = nil
             spriteDog.isPaused = false
         end

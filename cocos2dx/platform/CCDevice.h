@@ -18,6 +18,12 @@ public:
      *  @return The DPI of device.
      */
     static int getDPI();
+    
+    /// get platform constants
+    /// lua can query constants defined Cocos2dCosntants.lua
+    static int getPlatform() {
+        return CC_TARGET_PLATFORM;
+    }
 };
 
 

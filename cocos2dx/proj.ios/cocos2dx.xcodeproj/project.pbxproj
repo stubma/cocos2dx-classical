@@ -335,6 +335,8 @@
 		9211124D1A2B4D89003FE653 /* CCTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 921111361A2B4D89003FE653 /* CCTableViewCell.h */; };
 		921B61701A53A93A006BAA2B /* CCActionWatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 921B616E1A53A93A006BAA2B /* CCActionWatcher.cpp */; };
 		921B61711A53A93A006BAA2B /* CCActionWatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 921B616F1A53A93A006BAA2B /* CCActionWatcher.h */; };
+		922DAB301A68E43A00333050 /* lfs.c in Sources */ = {isa = PBXBuildFile; fileRef = 922DAB2E1A68E43A00333050 /* lfs.c */; };
+		922DAB311A68E43A00333050 /* lfs.h in Headers */ = {isa = PBXBuildFile; fileRef = 922DAB2F1A68E43A00333050 /* lfs.h */; };
 		9242C2551A3078FB00E1E944 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9242C2541A3078FB00E1E944 /* CoreText.framework */; };
 		924308401A2F5FBE00BE2476 /* CCAssetInputStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 924308381A2F5FBE00BE2476 /* CCAssetInputStream.cpp */; };
 		924308411A2F5FBE00BE2476 /* CCAssetInputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 924308391A2F5FBE00BE2476 /* CCAssetInputStream.h */; };
@@ -1229,6 +1231,8 @@
 		921111361A2B4D89003FE653 /* CCTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTableViewCell.h; sourceTree = "<group>"; };
 		921B616E1A53A93A006BAA2B /* CCActionWatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionWatcher.cpp; sourceTree = "<group>"; };
 		921B616F1A53A93A006BAA2B /* CCActionWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionWatcher.h; sourceTree = "<group>"; };
+		922DAB2E1A68E43A00333050 /* lfs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lfs.c; sourceTree = "<group>"; };
+		922DAB2F1A68E43A00333050 /* lfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lfs.h; sourceTree = "<group>"; };
 		9242C2541A3078FB00E1E944 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		924308381A2F5FBE00BE2476 /* CCAssetInputStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAssetInputStream.cpp; sourceTree = "<group>"; };
 		924308391A2F5FBE00BE2476 /* CCAssetInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAssetInputStream.h; sourceTree = "<group>"; };
@@ -3528,6 +3532,8 @@
 				92CF92E81A523D6000441150 /* platform */,
 				92CF92EC1A523D6000441150 /* tolua_fix.cpp */,
 				92CF92ED1A523D6000441150 /* tolua_fix.h */,
+				922DAB2E1A68E43A00333050 /* lfs.c */,
+				922DAB2F1A68E43A00333050 /* lfs.h */,
 			);
 			path = cocos2dx_support;
 			sourceTree = "<group>";
@@ -3634,6 +3640,7 @@
 				1551A667158F2ADE00E66CFE /* CCGrabber.h in Headers */,
 				1551A669158F2ADE00E66CFE /* CCGrid.h in Headers */,
 				1551A6B1158F2ADE00E66CFE /* ccConfig.h in Headers */,
+				922DAB311A68E43A00333050 /* lfs.h in Headers */,
 				929D53961A27595700560A2E /* yajl_encode.h in Headers */,
 				92A7AF611A3C4038001C830B /* CCArcticManager.h in Headers */,
 				927FE56E1A45708A0065F052 /* CheckBox.h in Headers */,
@@ -4297,6 +4304,7 @@
 				927FE5331A45708A0065F052 /* CCDataReaderHelper.cpp in Sources */,
 				929D536A1A27582F00560A2E /* VectorImpl.cpp in Sources */,
 				927FE5931A45708A0065F052 /* ListViewReader.cpp in Sources */,
+				922DAB301A68E43A00333050 /* lfs.c in Sources */,
 				92A7AF7A1A3C4038001C830B /* CCSPX3Frame.cpp in Sources */,
 				927FE52D1A45708A0065F052 /* CCColliderDetector.cpp in Sources */,
 				92A7AF521A3C4038001C830B /* CCAFCClipMapping.cpp in Sources */,
