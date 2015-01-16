@@ -281,6 +281,9 @@ private:
     
     /// flag indicating it is running
     bool m_loading;
+    
+    /// listener in lua side
+    int m_handler;
 
 private:
 	/// perform loading
@@ -289,6 +292,18 @@ private:
 public:
     CCResourceLoader(CCResourceLoaderListener* listener);
 	virtual ~CCResourceLoader();
+    
+    /**
+     * create a resource loader with a lua side listener
+     *
+     * @param func function handler in lua side, the lua function should have prototype
+     *      function f(event, ...) ... end.
+     *      the event is a name of what happened and it can be:
+     *      "progress", "done"
+     *      when it is "progress", function has two more arguments "progress", "delta"
+     *      when it is "done", no more arguments
+     */
+    CCResourceLoader(ccScriptFunction func);
     
     /// abort all active resource loading
     static void abortAll();

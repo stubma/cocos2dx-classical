@@ -27,6 +27,7 @@
 #include "cocoa/CCArray.h"
 #include "CCScheduler.h"
 #include "cocos-ext.h"
+#include "LuaBasicConversions.h"
 
 NS_CC_BEGIN
 
@@ -101,6 +102,8 @@ int CCLuaEngine::executeNodeEvent(CCNode* pNode, int nAction)
     int nHandler = pNode->getScriptHandler();
     if (!nHandler) return 0;
     
+    m_stack->pushCCObject(pNode, getLuaTypeNameByTypeId(typeid(*pNode).name()));
+    
     switch (nAction)
     {
         case kCCNodeOnEnter:
@@ -126,7 +129,7 @@ int CCLuaEngine::executeNodeEvent(CCNode* pNode, int nAction)
         default:
             return 0;
     }
-    int ret = m_stack->executeFunctionByHandler(nHandler, 1);
+    int ret = m_stack->executeFunctionByHandler(nHandler, 2);
     m_stack->clean();
     return ret;
 }

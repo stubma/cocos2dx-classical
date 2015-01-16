@@ -922,7 +922,7 @@ public:
      *
      * @param handler   A number that indicates a lua function. 
      */
-    virtual void registerScriptHandler(int handler);
+    virtual void registerScriptHandler(ccScriptFunction handler);
     /**
      * Unregisters a script function that will be called in onEnter() & onExit() series functions.
      *
