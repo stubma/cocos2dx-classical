@@ -250,7 +250,7 @@ public:
     virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue) = 0;
 
     /** function for common event */
-    virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = nullptr, const char* pEventSourceClassName = nullptr) = 0;
+    virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = nullptr) = 0;
     
     /** 
      * function for c++ call back lua funtion 

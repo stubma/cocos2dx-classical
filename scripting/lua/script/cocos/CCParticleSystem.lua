@@ -1,6 +1,6 @@
-function cc.createParticle(name, x, y, anchor, parent, tag)
+function cc.createParticle(name, x, y, anchor, parent, tag, z)
     local spark = CCParticleSystemQuad:create(R(name))
-    spark:setPosition(x,y)
-    parent:addChild(spark, tag)
+    spark:setPosition(x, y)
+    parent:addChild(spark, tag, z)
     return spark
 end

@@ -140,7 +140,7 @@ int CCLuaEngine::executeMenuItemEvent(CCMenuItem* pMenuItem)
     if (!nHandler) return 0;
     
     m_stack->pushInt(pMenuItem->getTag());
-    m_stack->pushCCObject(pMenuItem, "CCMenuItem");
+    m_stack->pushCCObject(pMenuItem, getLuaTypeNameByTypeId(typeid(*pMenuItem).name()));
     int ret = m_stack->executeFunctionByHandler(nHandler, 2);
     m_stack->clean();
     return ret;
@@ -164,7 +164,7 @@ int CCLuaEngine::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarg
     
     if (pTarget)
     {
-        m_stack->pushCCObject(pTarget, "CCNode");
+        m_stack->pushCCObject(pTarget, getLuaTypeNameByTypeId(typeid(*pTarget).name()));
     }
     int ret = m_stack->executeFunctionByHandler(nHandler, pTarget ? 1 : 0);
     m_stack->clean();
@@ -187,7 +187,7 @@ int CCLuaEngine::executeWidgetTouchEvent(ui::Widget* widget, int eventType) {
         return 0;
     
     // execute lua function
-    m_stack->pushCCObject(widget, "Widget");
+    m_stack->pushCCObject(widget, getLuaTypeNameByTypeId(typeid(*widget).name()));
     m_stack->pushInt(eventType);
     int ret = m_stack->executeFunctionByHandler(handler, 2);
     m_stack->clean();
@@ -323,12 +323,12 @@ int CCLuaEngine::executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAcc
     return ret;
 }
 
-int CCLuaEngine::executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource /* = nullptr*/, const char* pEventSourceClassName /* = nullptr*/)
+int CCLuaEngine::executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource /* = nullptr*/)
 {
     m_stack->pushString(pEventName);
     if (pEventSource)
     {
-        m_stack->pushCCObject(pEventSource, pEventSourceClassName ? pEventSourceClassName : "CCObject");
+        m_stack->pushCCObject(pEventSource, getLuaTypeNameByTypeId(typeid(*pEventSource).name()));
     }
     int ret = m_stack->executeFunctionByHandler(nHandler, pEventSource ? 2 : 1);
     m_stack->clean();
@@ -364,7 +364,7 @@ int CCLuaEngine::executeTableViewEvent(int nEventType,cocos2d::extension::CCTabl
         case cocos2d::extension::CCTableView::kTableViewScroll:
         case cocos2d::extension::CCTableView::kTableViewZoom:
             {
-                m_stack->pushCCObject(pTableView, "CCTableView");
+                m_stack->pushCCObject(pTableView, getLuaTypeNameByTypeId(typeid(*pTableView).name()));
                 nRet = m_stack->executeFunctionByHandler(nHanlder, 1);
             }
             break;
@@ -373,28 +373,28 @@ int CCLuaEngine::executeTableViewEvent(int nEventType,cocos2d::extension::CCTabl
         case cocos2d::extension::CCTableView::kTableCellUnhighLight:
         case cocos2d::extension::CCTableView::kTableCellWillRecycle:
             {
-                m_stack->pushCCObject(pTableView, "CCTableView");
-                m_stack->pushCCObject(static_cast<cocos2d::extension::CCTableViewCell*>(pValue), "CCTableViewCell");
+                m_stack->pushCCObject(pTableView, getLuaTypeNameByTypeId(typeid(*pTableView).name()));
+                m_stack->pushCCObject(static_cast<cocos2d::extension::CCTableViewCell*>(pValue), getLuaTypeNameByTypeId(typeid(*pValue).name()));
                 nRet = m_stack->executeFunctionByHandler(nHanlder, 2);
             }
             break;
         case cocos2d::extension::CCTableView::kTableCellSizeForIndex:
             {
-                m_stack->pushCCObject(pTableView, "CCTableView");
+                m_stack->pushCCObject(pTableView, getLuaTypeNameByTypeId(typeid(*pTableView).name()));
                 m_stack->pushInt(*((int*)pValue));
                 nRet = m_stack->executeFunctionReturnArray(nHanlder, 2, 2, pResultArray);
             }
             break;
         case cocos2d::extension::CCTableView::kTableCellSizeAtIndex:
             {
-                m_stack->pushCCObject(pTableView, "CCTableView");
+                m_stack->pushCCObject(pTableView, getLuaTypeNameByTypeId(typeid(*pTableView).name()));
                 m_stack->pushInt(*((int*)pValue));
                 nRet = m_stack->executeFunctionReturnArray(nHanlder, 2, 1, pResultArray);
             }
             break;
         case cocos2d::extension::CCTableView::kNumberOfCellsInTableView:
             {
-                m_stack->pushCCObject(pTableView, "CCTableView");
+                m_stack->pushCCObject(pTableView, getLuaTypeNameByTypeId(typeid(*pTableView).name()));
                 nRet = m_stack->executeFunctionReturnArray(nHanlder, 1, 1, pResultArray);
             }
             break;

@@ -351,6 +351,9 @@ public:
      */
     void addScriptTouchEventListener(ccScriptFunction func);
     
+    /// remove touch event listener in script side
+    void removeScriptTouchEventListener();
+    
     //cocos2d property
     
     /**

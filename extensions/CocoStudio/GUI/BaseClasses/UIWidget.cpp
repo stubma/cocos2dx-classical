@@ -78,12 +78,7 @@ Widget::~Widget()
     _nodes->removeAllObjects();
     CC_SAFE_RELEASE(_nodes);
     CC_SAFE_RELEASE_NULL(_scriptObjectDict);
-    
-    if (m_scriptTouchHandler.handler != 0) {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_scriptTouchHandler.handler);
-        LUALOG("[LUA] Remove widget touch event handler: %d", m_scriptTouchHandler.handler);
-        m_scriptTouchHandler.handler = 0;
-    }
+    removeScriptTouchEventListener();
 }
 
 Widget* Widget::create()
@@ -807,11 +802,15 @@ void Widget::addTouchEventListener(CCObject *target, SEL_TouchEvent selector)
 }
     
 void Widget::addScriptTouchEventListener(ccScriptFunction func) {
+    removeScriptTouchEventListener();
+    m_scriptTouchHandler = func;
+}
+    
+void Widget::removeScriptTouchEventListener() {
     if(m_scriptTouchHandler.handler) {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_scriptTouchHandler.handler);
         m_scriptTouchHandler.handler = 0;
     }
-    m_scriptTouchHandler = func;
 }
 
 bool Widget::hitTest(const CCPoint &pt)

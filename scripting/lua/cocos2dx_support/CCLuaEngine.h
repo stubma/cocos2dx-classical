@@ -130,7 +130,7 @@ public:
     
     /** execute a accelerometer event */
     virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue);
-    virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = nullptr, const char* pEventSourceClassName = nullptr);
+    virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = nullptr);
     
     int executeTableViewEvent(int nEventType,cocos2d::extension::CCTableView* pTableView,void* pValue = nullptr, CCArray* pResultArray = nullptr);
     

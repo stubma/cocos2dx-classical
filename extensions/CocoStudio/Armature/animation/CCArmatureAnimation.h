@@ -214,9 +214,12 @@ public:
     void setMovementEventCallFunc(CCObject *target, SEL_MovementEventCallFunc callFunc);
     
     /**
-     * set armature's movement event callback in lua side
+     * set armature's movement event callback in script side
      */
     void setScriptMovementEventHandler(ccScriptFunction func);
+    
+    /// remove movement handler in script side
+    void removeScriptMovementEventHandler();
 
     /**
      * Set armature's frame event callback function
@@ -225,9 +228,12 @@ public:
     void setFrameEventCallFunc(CCObject *target, SEL_FrameEventCallFunc callFunc);
 
     /**
-     * set armature's frame event callback in lua side
+     * set armature's frame event callback in script side
      */
     void setScriptFrameEventHandler(ccScriptFunction func);
+    
+    /// remove frame event handler in script side
+    void removeScriptFrameEventHandler();
 
     /** 
      * Returns a user assigned CCObject

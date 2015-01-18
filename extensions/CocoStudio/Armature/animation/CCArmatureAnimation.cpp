@@ -73,12 +73,8 @@ CCArmatureAnimation::CCArmatureAnimation()
 
 CCArmatureAnimation::~CCArmatureAnimation(void)
 {
-    if(m_movementEventHandler) {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_movementEventHandler);
-    }
-    if(m_frameEventHandler) {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_frameEventHandler);
-    }
+    removeScriptMovementEventHandler();
+    removeScriptFrameEventHandler();
     
     CC_SAFE_RELEASE_NULL(m_pTweenList);
     CC_SAFE_RELEASE_NULL(m_pAnimationData);
@@ -544,11 +540,15 @@ void CCArmatureAnimation::setMovementEventCallFunc(CCObject *target, SEL_Movemen
 }
 
 void CCArmatureAnimation::setScriptMovementEventHandler(ccScriptFunction func) {
+    removeScriptMovementEventHandler();
+    m_movementEventHandler = func.handler;
+}
+
+void CCArmatureAnimation::removeScriptMovementEventHandler() {
     if(m_movementEventHandler) {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_movementEventHandler);
         m_movementEventHandler = 0;
     }
-    m_movementEventHandler = func.handler;
 }
 
 void CCArmatureAnimation::setFrameEventCallFunc(CCObject *target, SEL_FrameEventCallFunc callFunc)
@@ -558,11 +558,15 @@ void CCArmatureAnimation::setFrameEventCallFunc(CCObject *target, SEL_FrameEvent
 }
 
 void CCArmatureAnimation::setScriptFrameEventHandler(ccScriptFunction func) {
+    removeScriptFrameEventHandler();
+    m_frameEventHandler = func.handler;
+}
+
+void CCArmatureAnimation::removeScriptFrameEventHandler() {
     if(m_frameEventHandler) {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_frameEventHandler);
         m_frameEventHandler = 0;
     }
-    m_frameEventHandler = func.handler;
 }
 
 void CCArmatureAnimation::setUserObject(CCObject *pUserObject)
