@@ -222,8 +222,6 @@ public:
     virtual int executeGlobalFunction(const char* functionName) = 0;
     
     virtual int executeMenuItemEvent(CCMenuItem* pMenuItem) = 0;
-    /** Execute a notification event function */
-    virtual int executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName) = 0;
     
     /** execute a callfun event */
     virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = nullptr) = 0;

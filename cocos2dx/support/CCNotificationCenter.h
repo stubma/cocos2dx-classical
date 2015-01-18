@@ -73,9 +73,9 @@ public:
 
     /** @brief Registers one hander for script binding.
      *  @note Only supports Lua Binding now.
-     *  @param handler The lua handler.
+     *  @param func The lua handler.
      */
-    void registerScriptObserver(CCObject *target, ccScriptFunction handler,const char* name);
+    void registerScriptObserver(ccScriptFunction func, const char* name);
 
     /** Unregisters script observer */
     void unregisterScriptObserver(CCObject *target,const char* name);
@@ -91,17 +91,11 @@ public:
      */
     void postNotification(const char *name, CCObject *object);
     
-    /** @brief Gets script handler.
-     *  @note Only supports Lua Binding now.
-     *  @return The script handle.
-     */
-    inline int getScriptHandler() { return m_scriptHandler; };
-    
     /** @brief Gets observer script handler.
      *  @param name The name of this notification.
      *  @return The observer script handle.
      */
-    int getObserverHandlerByName(const char* name);
+    ccScriptFunction getObserverHandlerByName(const char* name);
 private:
     // internal functions
 
@@ -111,7 +105,6 @@ private:
     // variables
     //
     CCArray *m_observers;
-    int     m_scriptHandler;
 };
 
 /**
@@ -131,18 +124,29 @@ public:
                            SEL_CallFuncO selector,
                            const char *name,
                            CCObject *obj);
+    
+    /** @brief CCNotificationObserver constructor for script
+     *  @param func script function descriptor
+     *  @param name The name of this notification.
+     *  @param obj The extra parameter which will be passed to the callback function.
+     */
+    CCNotificationObserver(ccScriptFunction func, const char* name, CCObject* obj);
 
     /** CCNotificationObserver destructor function */
     ~CCNotificationObserver();      
     
     /** Invokes the callback function of this observer */
     void performSelector(CCObject *obj);
+    
+    inline ccScriptFunction& getHandler() { return m_func; }
+    
 private:
     CC_PROPERTY_READONLY(CCObject *, m_target, Target);
     CC_PROPERTY_READONLY(SEL_CallFuncO, m_selector, Selector);
     CC_PROPERTY_READONLY(char *, m_name, Name);
     CC_PROPERTY_READONLY(CCObject *, m_object, Object);
-    CC_PROPERTY(int, m_nHandler,Handler);
+    
+    ccScriptFunction m_func;
 };
 
 NS_CC_END

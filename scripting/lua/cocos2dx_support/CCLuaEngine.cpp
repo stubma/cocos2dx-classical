@@ -109,17 +109,6 @@ int CCLuaEngine::executeMenuItemEvent(CCMenuItem* pMenuItem)
     return ret;
 }
 
-int CCLuaEngine::executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName)
-{
-    int nHandler = pNotificationCenter->getObserverHandlerByName(pszName);
-    if (!nHandler) return 0;
-    
-    m_stack->pushString(pszName);
-    int ret = m_stack->executeFunctionByHandler(nHandler, 1);
-    m_stack->clean();
-    return ret;
-}
-
 int CCLuaEngine::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget/* = nullptr*/)
 {
     ccScriptFunction& func = pAction->getScriptHandler();
