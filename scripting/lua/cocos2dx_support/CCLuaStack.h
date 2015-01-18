@@ -113,6 +113,8 @@ public:
     virtual void pushCCLuaValueDict(const CCLuaValueDict& dict);
     virtual void pushCCLuaValueArray(const CCLuaValueArray& array);    
     virtual bool pushFunctionByHandler(int nHandler);
+    virtual void pushCCArray(CCArray* array);
+    virtual void pushCCDictionary(CCDictionary* dict);
     virtual int executeFunction(int numArgs);
     virtual void pop(int count);
     

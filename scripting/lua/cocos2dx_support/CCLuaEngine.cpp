@@ -303,6 +303,8 @@ int CCLuaEngine::executeEventWithArgs(ccScriptFunction& func, CCArray* pArgs) {
     CCDouble*   pDoubleVal = nullptr;
     CCFloat*    pFloatVal = nullptr;
     CCBool*     pBoolVal = nullptr;
+    CCArray* pArrayVal = nullptr;
+    CCDictionary* pDictVal = nullptr;
     if(pArgs) {
         for (unsigned int i = 0; i < pArgs->count(); i++) {
             pObject = pArgs->objectAtIndex(i);
@@ -320,6 +322,12 @@ int CCLuaEngine::executeEventWithArgs(ccScriptFunction& func, CCArray* pArgs) {
                 nArgNums++;
             } else if (nullptr != (pBoolVal = dynamic_cast<CCBool*>(pObject))) {
                 m_stack->pushBoolean(pBoolVal->getValue());
+                nArgNums++;
+            } else if(nullptr != (pArrayVal = dynamic_cast<CCArray*>(pObject))) {
+                m_stack->pushCCArray(pArrayVal);
+                nArgNums++;
+            } else if(nullptr != (pDictVal = dynamic_cast<CCDictionary*>(pObject))) {
+                m_stack->pushCCDictionary(pDictVal);
                 nArgNums++;
             } else if(nullptr != pObject) {
                 m_stack->pushCCObject(pObject, getLuaTypeNameByTypeId(typeid(*pObject).name()));

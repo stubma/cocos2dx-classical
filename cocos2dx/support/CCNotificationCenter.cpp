@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "CCNotificationCenter.h"
 #include "cocoa/CCArray.h"
+#include "cocoa/CCString.h"
 #include "script_support/CCScriptSupport.h"
 #include <string>
 
@@ -179,7 +180,12 @@ void CCNotificationCenter::postNotification(const char *name, CCObject *object)
             if (0 != observer->getHandler().handler)
             {
                 CCScriptEngineProtocol* engine = CCScriptEngineManager::sharedManager()->getScriptEngine();
-                engine->executeEvent(observer->getHandler(), name);
+                CCArray args;
+                args.addObject(CCString::create(name));
+                if(object) {
+                    args.addObject(object);
+                }
+                engine->executeEventWithArgs(observer->getHandler(), &args);
             }
             else
             {

@@ -35,9 +35,7 @@ extern "C" {
 
 #include "lua_cocos2dx_auto.h"
 #include "Cocos2dxLuaLoader.h"
-//#include "lua_cocos2dx_manual.h"
-//#include "lua_cocos2dx_extensions_manual.h"
-//#include "lua_cocos2dx_cocostudio_manual.h"
+#include "LuaBasicConversions.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "platform/ios/CCLuaObjcBridge.h"
@@ -264,6 +262,14 @@ void CCLuaStack::pushNil(void)
 void CCLuaStack::pushCCObject(CCObject* objectValue, const char* typeName)
 {
     toluafix_pushusertype_ccobject(m_state, objectValue->m_uID, &objectValue->m_nLuaID, objectValue, typeName);
+}
+
+void CCLuaStack::pushCCArray(CCArray* array) {
+    array_to_luaval(m_state, array);
+}
+
+void CCLuaStack::pushCCDictionary(CCDictionary* dict) {
+    dictionary_to_luaval(m_state, dict);
 }
 
 void CCLuaStack::pushCCLuaValue(const CCLuaValue& value)
