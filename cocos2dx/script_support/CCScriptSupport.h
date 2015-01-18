@@ -67,11 +67,11 @@ enum ccScriptType {
 class CCScriptHandlerEntry : public CCObject
 {
 public:
-    static CCScriptHandlerEntry* create(int nHandler);
+    static CCScriptHandlerEntry* create(ccScriptFunction func);
     ~CCScriptHandlerEntry(void);
     
-    int getHandler(void) {
-        return m_nHandler;
+    ccScriptFunction& getHandler(void) {
+        return m_func;
     }
     
     int getEntryId(void) {
@@ -79,15 +79,15 @@ public:
     }
     
 protected:
-    CCScriptHandlerEntry(int nHandler)
-    : m_nHandler(nHandler)
+    CCScriptHandlerEntry(ccScriptFunction func)
+    : m_func(func)
     {
         static int newEntryId = 0;
         newEntryId++;
         m_nEntryId = newEntryId;
     }
     
-    int m_nHandler;
+    ccScriptFunction m_func;
     int m_nEntryId;
 };
 
@@ -102,7 +102,7 @@ class CCSchedulerScriptHandlerEntry : public CCScriptHandlerEntry
 {
 public:
     // nHandler return by tolua_ref_function(), called from LuaCocos2d.cpp
-    static CCSchedulerScriptHandlerEntry* create(int nHandler, float fInterval, bool bPaused);
+    static CCSchedulerScriptHandlerEntry* create(ccScriptFunction nHandler, float fInterval, bool bPaused);
     ~CCSchedulerScriptHandlerEntry(void);
     
     cocos2d::CCTimer* getTimer(void) {
@@ -122,7 +122,7 @@ public:
     }
     
 private:
-    CCSchedulerScriptHandlerEntry(int nHandler)
+    CCSchedulerScriptHandlerEntry(ccScriptFunction nHandler)
     : CCScriptHandlerEntry(nHandler)
     , m_pTimer(nullptr)
     , m_bPaused(false)
@@ -144,7 +144,7 @@ private:
 class CCTouchScriptHandlerEntry : public CCScriptHandlerEntry
 {
 public:
-    static CCTouchScriptHandlerEntry* create(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches);
+    static CCTouchScriptHandlerEntry* create(ccScriptFunction nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches);
     ~CCTouchScriptHandlerEntry(void);
     
     bool isMultiTouches(void) {
@@ -160,7 +160,7 @@ public:
     }
     
 private:
-    CCTouchScriptHandlerEntry(int nHandler)
+    CCTouchScriptHandlerEntry(ccScriptFunction nHandler)
     : CCScriptHandlerEntry(nHandler)
     , m_bIsMultiTouches(false)
     , m_nPriority(0)
@@ -228,17 +228,14 @@ public:
     /** execute a callfun event */
     virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = nullptr) = 0;
     /** execute a schedule function */
-    virtual int executeSchedule(int nHandler, float dt, CCNode* pNode = nullptr) = 0;
+    virtual int executeSchedule(ccScriptFunction& func, float dt) = 0;
     
     /** functions for executing touch event */
     virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches) = 0;
     virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch) = 0;
 
-    /** functions for keypad event */
-    virtual int executeLayerKeypadEvent(CCLayer* pLayer, int eventType) = 0;
-
     /** execute a accelerometer event */
-    virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue) = 0;
+    virtual int executeAccelerometerEvent(ccScriptFunction& func, CCAcceleration* pAccelerationValue) = 0;
     
     /** 
      * function for common event

@@ -119,13 +119,12 @@ public:
     virtual int executeMenuItemEvent(CCMenuItem* pMenuItem);
     virtual int executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName);
     virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = nullptr);
-    virtual int executeSchedule(int nHandler, float dt, CCNode* pNode = nullptr);
+    virtual int executeSchedule(ccScriptFunction& func, float dt);
     virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches);
     virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch);
-    virtual int executeLayerKeypadEvent(CCLayer* pLayer, int eventType);
     
     /** execute a accelerometer event */
-    virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue);
+    virtual int executeAccelerometerEvent(ccScriptFunction& func, CCAcceleration* pAccelerationValue);
     
     /// common event
     virtual int executeEvent(ccScriptFunction& func, const char* pEventName);

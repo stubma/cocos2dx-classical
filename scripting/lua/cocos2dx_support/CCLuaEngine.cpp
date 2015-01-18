@@ -136,11 +136,16 @@ int CCLuaEngine::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarg
     return ret;
 }
 
-int CCLuaEngine::executeSchedule(int nHandler, float dt, CCNode* pNode/* = nullptr*/)
+int CCLuaEngine::executeSchedule(ccScriptFunction& func, float dt)
 {
-    if (!nHandler) return 0;
+    if (!func.handler) return 0;
+    
+    if(func.target) {
+        m_stack->pushCCObject(func.target, getLuaTypeNameByTypeId(typeid(*func.target).name()));
+    }
     m_stack->pushFloat(dt);
-    int ret = m_stack->executeFunctionByHandler(nHandler, 1);
+    
+    int ret = m_stack->executeFunctionByHandler(func.handler, func.target ? 2 : 1);
     m_stack->clean();
     return ret;
 }
@@ -149,8 +154,12 @@ int CCLuaEngine::executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch 
 {
     CCTouchScriptHandlerEntry* pScriptHandlerEntry = pLayer->getScriptTouchHandlerEntry();
     if (!pScriptHandlerEntry) return 0;
-    int nHandler = pScriptHandlerEntry->getHandler();
-    if (!nHandler) return 0;
+    ccScriptFunction& func = pScriptHandlerEntry->getHandler();
+    if (!func.handler) return 0;
+    
+    if(func.target) {
+        m_stack->pushCCObject(func.target, getLuaTypeNameByTypeId(typeid(*func.target).name()));
+    }
     
     switch (eventType)
     {
@@ -177,7 +186,7 @@ int CCLuaEngine::executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch 
     const CCPoint pt = CCDirector::sharedDirector()->convertToGL(pTouch->getLocationInView());
     m_stack->pushFloat(pt.x);
     m_stack->pushFloat(pt.y);
-    int ret = m_stack->executeFunctionByHandler(nHandler, 3);
+    int ret = m_stack->executeFunctionByHandler(func.handler, func.target ? 4 : 3);
     m_stack->clean();
     return ret;
 }
@@ -186,8 +195,12 @@ int CCLuaEngine::executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet 
 {
     CCTouchScriptHandlerEntry* pScriptHandlerEntry = pLayer->getScriptTouchHandlerEntry();
     if (!pScriptHandlerEntry) return 0;
-    int nHandler = pScriptHandlerEntry->getHandler();
-    if (!nHandler) return 0;
+    ccScriptFunction& func = pScriptHandlerEntry->getHandler();
+    if (!func.handler) return 0;
+    
+    if(func.target) {
+        m_stack->pushCCObject(func.target, getLuaTypeNameByTypeId(typeid(*func.target).name()));
+    }
     
     switch (eventType)
     {
@@ -226,50 +239,24 @@ int CCLuaEngine::executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet 
         lua_pushinteger(L, pTouch->getID());
         lua_rawseti(L, -2, i++);
     }
-    int ret = m_stack->executeFunctionByHandler(nHandler, 2);
+    int ret = m_stack->executeFunctionByHandler(func.handler, func.target ? 3 : 2);
     m_stack->clean();
     return ret;
 }
 
-int CCLuaEngine::executeLayerKeypadEvent(CCLayer* pLayer, int eventType)
+int CCLuaEngine::executeAccelerometerEvent(ccScriptFunction& func, CCAcceleration* pAccelerationValue)
 {
-    CCScriptHandlerEntry* pScriptHandlerEntry = pLayer->getScriptKeypadHandlerEntry();
-    if (!pScriptHandlerEntry)
-        return 0;
-    int nHandler = pScriptHandlerEntry->getHandler();
-    if (!nHandler) return 0;
+    if (!func.handler) return 0;
     
-    switch (eventType)
-    {
-        case kTypeBackClicked:
-            m_stack->pushString("backClicked");
-            break;
-            
-        case kTypeMenuClicked:
-            m_stack->pushString("menuClicked");
-            break;
-            
-        default:
-            return 0;
+    if(func.target) {
+        m_stack->pushCCObject(func.target, getLuaTypeNameByTypeId(typeid(*func.target).name()));
     }
-    int ret = m_stack->executeFunctionByHandler(nHandler, 1);
-    m_stack->clean();
-    return ret;
-}
-
-int CCLuaEngine::executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue)
-{
-    CCScriptHandlerEntry* pScriptHandlerEntry = pLayer->getScriptAccelerateHandlerEntry();
-    if (!pScriptHandlerEntry)
-        return 0;
-    int nHandler = pScriptHandlerEntry->getHandler();
-    if (!nHandler) return 0;
     
     m_stack->pushFloat(pAccelerationValue->x);
     m_stack->pushFloat(pAccelerationValue->y);
     m_stack->pushFloat(pAccelerationValue->z);
     m_stack->pushFloat(pAccelerationValue->timestamp);
-    int ret = m_stack->executeFunctionByHandler(nHandler, 4);
+    int ret = m_stack->executeFunctionByHandler(func.handler, func.target ? 5 : 4);
     m_stack->clean();
     return ret;
 }

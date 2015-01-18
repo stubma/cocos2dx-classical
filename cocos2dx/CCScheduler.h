@@ -79,7 +79,7 @@ public:
     bool initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds, unsigned int nRepeat, float fDelay);
     
     /** Initializes a timer with a script callback function and an interval in seconds. */
-    bool initWithScriptHandler(int nHandler, float fSeconds);
+    bool initWithScriptHandler(ccScriptFunction nHandler, float fSeconds);
     
     /** triggers the timer */
     void update(float dt);
@@ -100,7 +100,7 @@ public:
     /**
      *  @lua NA
      */
-    inline int getScriptHandler() { return m_nScriptHandler; };
+    inline ccScriptFunction& getScriptHandler() { return m_nScriptHandler; };
 
 protected:
     CCObject *m_pTarget;
@@ -113,7 +113,7 @@ protected:
     float m_fInterval;
     SEL_SCHEDULE m_pfnSelector;
     
-    int m_nScriptHandler;
+    ccScriptFunction m_nScriptHandler;
 };
 
 //

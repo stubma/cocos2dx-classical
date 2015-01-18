@@ -926,7 +926,7 @@ public:
      * Schedules for lua script. 
      * @js NA
      */
-    void scheduleUpdateWithPriorityLua(int nHandler, int priority);
+    void scheduleUpdateWithPriorityLua(ccScriptFunction nHandler, int priority);
     
     /// @}  end Script Bindings
 
@@ -1462,7 +1462,7 @@ protected:
     
     ccScriptFunction m_nScriptHandler;               ///< script handler for onEnter() & onExit(), used in Javascript binding and Lua binding.
     
-    int m_nUpdateScriptHandler;         ///< script handler for update() callback per frame, which is invoked from lua & javascript.
+    ccScriptFunction m_nUpdateScriptHandler;         ///< script handler for update() callback per frame, which is invoked from lua & javascript.
     ccScriptType m_eScriptType;         ///< type of script binding, lua or javascript
     
     CCComponentContainer *m_pComponentContainer;        ///< Dictionary of components

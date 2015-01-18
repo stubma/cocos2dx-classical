@@ -79,8 +79,8 @@ CCTimer::CCTimer()
 , m_fDelay(0.0f)
 , m_fInterval(0.0f)
 , m_pfnSelector(nullptr)
-, m_nScriptHandler(0)
 {
+    memset(&m_nScriptHandler, 0, sizeof(ccScriptFunction));
 }
 
 CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector)
@@ -103,17 +103,17 @@ CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, f
     return pTimer;
 }
 
-CCTimer* CCTimer::timerWithScriptHandler(ccScriptFunction nHandler, float fSeconds)
+CCTimer* CCTimer::timerWithScriptHandler(ccScriptFunction func, float fSeconds)
 {
     CCTimer *pTimer = new CCTimer();
 
-    pTimer->initWithScriptHandler(nHandler.handler, fSeconds);
+    pTimer->initWithScriptHandler(func, fSeconds);
     CC_SAFE_AUTORELEASE(pTimer);
 
     return pTimer;
 }
 
-bool CCTimer::initWithScriptHandler(int nHandler, float fSeconds)
+bool CCTimer::initWithScriptHandler(ccScriptFunction nHandler, float fSeconds)
 {
     m_nScriptHandler = nHandler;
     m_fElapsed = -1;
@@ -159,7 +159,7 @@ void CCTimer::update(float dt)
                     (m_pTarget->*m_pfnSelector)(m_fElapsed);
                 }
 
-                if (m_nScriptHandler)
+                if (m_nScriptHandler.handler)
                 {
                     CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed);
                 }
@@ -178,7 +178,7 @@ void CCTimer::update(float dt)
                         (m_pTarget->*m_pfnSelector)(m_fElapsed);
                     }
 
-                    if (m_nScriptHandler)
+                    if (m_nScriptHandler.handler)
                     {
                         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed);
                     }
@@ -197,7 +197,7 @@ void CCTimer::update(float dt)
                         (m_pTarget->*m_pfnSelector)(m_fElapsed);
                     }
 
-                    if (m_nScriptHandler)
+                    if (m_nScriptHandler.handler)
                     {
                         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nScriptHandler, m_fElapsed);
                     }
@@ -626,7 +626,7 @@ void CCScheduler::unscheduleAllForTarget(CCObject *pTarget)
 
 unsigned int CCScheduler::scheduleScriptFunc(ccScriptFunction nHandler, float fInterval, bool bPaused)
 {
-    CCSchedulerScriptHandlerEntry* pEntry = CCSchedulerScriptHandlerEntry::create(nHandler.handler, fInterval, bPaused);
+    CCSchedulerScriptHandlerEntry* pEntry = CCSchedulerScriptHandlerEntry::create(nHandler, fInterval, bPaused);
     if (!m_pScriptHandlerEntries)
     {
         m_pScriptHandlerEntries = CCArray::createWithCapacity(20);

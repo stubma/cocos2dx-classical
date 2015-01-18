@@ -130,7 +130,7 @@ void CCLayer::registerWithTouchDispatcher()
 void CCLayer::registerScriptTouchHandler(ccScriptFunction nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
 {
     unregisterScriptTouchHandler();
-    m_pScriptTouchHandlerEntry = CCTouchScriptHandlerEntry::create(nHandler.handler, bIsMultiTouches, nPriority, bSwallowsTouches);
+    m_pScriptTouchHandlerEntry = CCTouchScriptHandlerEntry::create(nHandler, bIsMultiTouches, nPriority, bSwallowsTouches);
     CC_SAFE_RETAIN(m_pScriptTouchHandlerEntry);
 }
 
@@ -270,13 +270,13 @@ void CCLayer::setAccelerometerInterval(double interval) {
 void CCLayer::didAccelerate(CCAcceleration* pAccelerationValue)
 {
    CC_UNUSED_PARAM(pAccelerationValue);
-   if ( m_eScriptType != kScriptTypeNone)
+   if (m_pScriptAccelerateHandlerEntry && m_pScriptAccelerateHandlerEntry->getHandler().handler)
    {
-       CCScriptEngineManager::sharedManager()->getScriptEngine()->executeAccelerometerEvent(this, pAccelerationValue);
+       CCScriptEngineManager::sharedManager()->getScriptEngine()->executeAccelerometerEvent(m_pScriptAccelerateHandlerEntry->getHandler(), pAccelerationValue);
    }
 }
 
-void CCLayer::registerScriptAccelerateHandler(int nHandler)
+void CCLayer::registerScriptAccelerateHandler(ccScriptFunction nHandler)
 {
     unregisterScriptAccelerateHandler();
     m_pScriptAccelerateHandlerEntry = CCScriptHandlerEntry::create(nHandler);
@@ -315,10 +315,10 @@ void CCLayer::setKeypadEnabled(bool enabled)
     }
 }
 
-void CCLayer::registerScriptKeypadHandler(int nHandler)
+void CCLayer::registerScriptKeypadHandler(ccScriptFunction func)
 {
     unregisterScriptKeypadHandler();
-    m_pScriptKeypadHandlerEntry = CCScriptHandlerEntry::create(nHandler);
+    m_pScriptKeypadHandlerEntry = CCScriptHandlerEntry::create(func);
     CC_SAFE_RETAIN(m_pScriptKeypadHandlerEntry);
 }
 
@@ -329,17 +329,17 @@ void CCLayer::unregisterScriptKeypadHandler(void)
 
 void CCLayer::keyBackClicked(void)
 {
-    if (m_pScriptKeypadHandlerEntry || m_eScriptType == kScriptTypeJavascript)
+    if (m_pScriptKeypadHandlerEntry && m_pScriptKeypadHandlerEntry->getHandler().handler)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerKeypadEvent(this, kTypeBackClicked);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_pScriptKeypadHandlerEntry->getHandler(), "back");
     }
 }
 
 void CCLayer::keyMenuClicked(void)
 {
-    if (m_pScriptKeypadHandlerEntry)
+    if (m_pScriptKeypadHandlerEntry && m_pScriptKeypadHandlerEntry->getHandler().handler)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerKeypadEvent(this, kTypeMenuClicked);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_pScriptKeypadHandlerEntry->getHandler(), "menu");
     }
 }
 

@@ -108,7 +108,7 @@ public:
      * @lua NA
      */
     virtual void didAccelerate(CCAcceleration* pAccelerationValue);
-    void registerScriptAccelerateHandler(int nHandler);
+    void registerScriptAccelerateHandler(ccScriptFunction nHandler);
     void unregisterScriptAccelerateHandler(void);
 
     /** If isTouchEnabled, this method is called onEnter. Override it to change the
@@ -162,7 +162,7 @@ public:
     virtual void setKeypadEnabled(bool value);
 
     /** Register keypad events handler */
-    void registerScriptKeypadHandler(int nHandler);
+    void registerScriptKeypadHandler(ccScriptFunction nHandler);
     /** Unregister keypad events handler */
     void unregisterScriptKeypadHandler(void);
 

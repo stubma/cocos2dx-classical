@@ -87,7 +87,6 @@ CCNode::CCNode(void)
 , m_bVisible(true)
 , m_bIgnoreAnchorPointForPosition(false)
 , m_bReorderChildDirty(false)
-, m_nUpdateScriptHandler(0)
 , m_pComponentContainer(nullptr)
 {
     // set default scheduler and actionManager
@@ -100,6 +99,7 @@ CCNode::CCNode(void)
     CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
     m_eScriptType = pEngine != nullptr ? pEngine->getScriptType() : kScriptTypeNone;
     m_pComponentContainer = new CCComponentContainer(this);
+    memset(&m_nUpdateScriptHandler, 0, sizeof(ccScriptFunction));
     memset(&m_nScriptHandler, 0, sizeof(ccScriptFunction));
 }
 
@@ -108,9 +108,9 @@ CCNode::~CCNode(void)
     CCLOGINFO( "cocos2d: deallocing" );
     
     unregisterScriptHandler();
-    if (m_nUpdateScriptHandler)
+    if (m_nUpdateScriptHandler.handler)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nUpdateScriptHandler);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nUpdateScriptHandler.handler);
     }
 
     CC_SAFE_RELEASE(m_pActionManager);
@@ -1063,7 +1063,7 @@ void CCNode::scheduleUpdateWithPriority(int priority)
     m_pScheduler->scheduleUpdateForTarget(this, priority, !m_bRunning);
 }
 
-void CCNode::scheduleUpdateWithPriorityLua(int nHandler, int priority)
+void CCNode::scheduleUpdateWithPriorityLua(ccScriptFunction nHandler, int priority)
 {
     unscheduleUpdate();
     m_nUpdateScriptHandler = nHandler;
@@ -1073,10 +1073,10 @@ void CCNode::scheduleUpdateWithPriorityLua(int nHandler, int priority)
 void CCNode::unscheduleUpdate()
 {
     m_pScheduler->unscheduleUpdateForTarget(this);
-    if (m_nUpdateScriptHandler)
+    if (m_nUpdateScriptHandler.handler)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nUpdateScriptHandler);
-        m_nUpdateScriptHandler = 0;
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nUpdateScriptHandler.handler);
+        m_nUpdateScriptHandler.handler = 0;
     }
 }
 
@@ -1132,9 +1132,9 @@ void CCNode::pauseSchedulerAndActions()
 // override me
 void CCNode::update(float fDelta)
 {
-    if (m_nUpdateScriptHandler)
+    if (m_nUpdateScriptHandler.handler)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nUpdateScriptHandler, fDelta, this);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeSchedule(m_nUpdateScriptHandler, fDelta);
     }
     
     if (m_pComponentContainer && !m_pComponentContainer->isEmpty())
