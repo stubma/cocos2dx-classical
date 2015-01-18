@@ -120,9 +120,7 @@ enum EditBoxInputFlag
      * Capitalize all characters automatically.
      */
     kEditBoxInputFlagInitialCapsAllCharacters
-
 };
-
 
 class CCEditBox;
 class CCEditBoxImpl;
@@ -240,11 +238,13 @@ public:
      * @js NA
      */
     void unregisterScriptEditBoxHandler(void);
+    
     /**
      * get a script Handler
      * @js NA
      */
-    int  getScriptEditBoxHandler(void){ return m_nScriptEditBoxHandler ;}
+    ccScriptFunction& getScriptEditBoxHandler() { return m_nScriptEditBoxHandler; }
+    
     /**
      * Set the text entered in the edit box.
      * @param pText The given text.
@@ -422,7 +422,7 @@ protected:
     
     int   m_nMaxLength;
     float m_fAdjustHeight;
-    int   m_nScriptEditBoxHandler;
+    ccScriptFunction m_nScriptEditBoxHandler;
 };
 
 NS_CC_EXT_END

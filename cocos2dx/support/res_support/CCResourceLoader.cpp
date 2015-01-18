@@ -181,11 +181,12 @@ void ArmatureTask::load() {
 
 CCResourceLoader::CCResourceLoader(CCResourceLoaderListener* listener) :
 m_listener(listener),
-m_handler(0),
 m_delay(0),
 m_remainingIdle(0),
 m_nextLoad(0),
 m_loading(false) {
+    memset(&m_func, 0, sizeof(ccScriptFunction));
+    
     // just add it to an array, but not hold it
     sActiveLoaders.addObject(this);
     release();
@@ -193,7 +194,7 @@ m_loading(false) {
 
 CCResourceLoader::CCResourceLoader(ccScriptFunction func) :
 m_listener(nullptr),
-m_handler(func.handler),
+m_func(func),
 m_delay(0),
 m_remainingIdle(0),
 m_nextLoad(0),
@@ -208,8 +209,8 @@ CCResourceLoader::~CCResourceLoader() {
         delete *iter;
     }
     sActiveLoaders.removeObject(this, false);
-    if(m_handler) {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_handler);
+    if(m_func.handler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_func.handler);
     }
 }
 
@@ -388,12 +389,12 @@ void CCResourceLoader::runInBlockMode() {
         lp->load();
         if(m_listener)
             m_listener->onResourceLoadingProgress(m_nextLoad * 100 / m_loadTaskList.size(), 0);
-        if(m_handler) {
+        if(m_func.handler) {
             CCArray* pArrayArgs = CCArray::createWithCapacity(3);
             pArrayArgs->addObject(CCString::create("progress"));
             pArrayArgs->addObject(CCFloat::create(m_nextLoad * 100 / m_loadTaskList.size()));
             pArrayArgs->addObject(CCFloat::create(0));
-            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_handler, pArrayArgs);
+            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_func, pArrayArgs);
         }
     }
     m_loading = false;
@@ -653,10 +654,10 @@ void CCResourceLoader::doLoad(float delta) {
         
         if(m_listener)
             m_listener->onResourceLoadingDone();
-        if(m_handler) {
+        if(m_func.handler) {
             CCArray* pArrayArgs = CCArray::createWithCapacity(3);
             pArrayArgs->addObject(CCString::create("done"));
-            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_handler, pArrayArgs);
+            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_func, pArrayArgs);
         }
     } else {
         CCResourceLoadTask* lp = m_loadTaskList.at(m_nextLoad++);
@@ -665,12 +666,12 @@ void CCResourceLoader::doLoad(float delta) {
         lp->load();
         if(m_listener)
             m_listener->onResourceLoadingProgress(m_nextLoad * 100 / m_loadTaskList.size(), delta);
-        if(m_handler) {
+        if(m_func.handler) {
             CCArray* pArrayArgs = CCArray::createWithCapacity(3);
             pArrayArgs->addObject(CCString::create("progress"));
             pArrayArgs->addObject(CCFloat::create(m_nextLoad * 100 / m_loadTaskList.size()));
             pArrayArgs->addObject(CCFloat::create(delta));
-            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_handler, pArrayArgs);
+            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_func, pArrayArgs);
         }
     }
 }

@@ -16,11 +16,18 @@ cc.PLATFORM_TIZEN             = 11
 cc.PLATFORM_WINRT             = 12
 cc.PLATFORM_WP8               = 13
 
+-- node event type
+cc.NodeOnEnter = "enter"
+cc.NodeOnExit = "exit"
+cc.NodeOnEnterTransitionDidFinish = "enterTransitionFinish"
+cc.NodeOnExitTransitionDidStart = "exitTransitionStart"
+cc.NodeOnCleanup = "cleanup"
+
 -- touch event type
-cc.TOUCH_EVENT_BEGAN = 0x0
-cc.TOUCH_EVENT_MOVED = 0x1
-cc.TOUCH_EVENT_ENDED = 0x2
-cc.TOUCH_EVENT_CANCELED = 0x3
+cc.TOUCH_EVENT_BEGAN = "began"
+cc.TOUCH_EVENT_MOVED = "moved"
+cc.TOUCH_EVENT_ENDED = "ended"
+cc.TOUCH_EVENT_CANCELED = "canceled"
 
 -- control event type
 cc.ControlEventTouchDown = 0x1
@@ -32,6 +39,16 @@ cc.ControlEventTouchUpInside = 0x20
 cc.ControlEventTouchUpOutside = 0x40
 cc.ControlEventTouchCancel = 0x80
 cc.ControlEventValueChanged = 0x100
+
+-- editbox event type
+cc.EditBoxTextChanged = "changed"
+cc.EditBoxEditingDidBegin = "began"
+cc.EditBoxEditingDidEnd = "ended"
+cc.EditBoxReturn = "return"
+
+-- resource loader event
+cc.ResourceLoaderProgress = "progress"
+cc.ResourceLoaderDone = "done"
 
 -- point constants
 cc.CENTER = cc.p(0.5, 0.5)

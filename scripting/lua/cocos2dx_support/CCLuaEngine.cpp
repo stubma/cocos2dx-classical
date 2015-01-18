@@ -97,43 +97,6 @@ int CCLuaEngine::executeGlobalFunction(const char* functionName)
     return ret;
 }
 
-int CCLuaEngine::executeNodeEvent(CCNode* pNode, int nAction)
-{
-    int nHandler = pNode->getScriptHandler();
-    if (!nHandler) return 0;
-    
-    m_stack->pushCCObject(pNode, getLuaTypeNameByTypeId(typeid(*pNode).name()));
-    
-    switch (nAction)
-    {
-        case kCCNodeOnEnter:
-            m_stack->pushString("enter");
-            break;
-            
-        case kCCNodeOnExit:
-            m_stack->pushString("exit");
-            break;
-            
-        case kCCNodeOnEnterTransitionDidFinish:
-            m_stack->pushString("enterTransitionFinish");
-            break;
-            
-        case kCCNodeOnExitTransitionDidStart:
-            m_stack->pushString("exitTransitionStart");
-            break;
-            
-        case kCCNodeOnCleanup:
-            m_stack->pushString("cleanup");
-            break;
-            
-        default:
-            return 0;
-    }
-    int ret = m_stack->executeFunctionByHandler(nHandler, 2);
-    m_stack->clean();
-    return ret;
-}
-
 int CCLuaEngine::executeMenuItemEvent(CCMenuItem* pMenuItem)
 {
     int nHandler = pMenuItem->getScriptTapHandler();
@@ -159,14 +122,16 @@ int CCLuaEngine::executeNotificationEvent(CCNotificationCenter* pNotificationCen
 
 int CCLuaEngine::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget/* = nullptr*/)
 {
-    int nHandler = pAction->getScriptHandler();
-    if (!nHandler) return 0;
+    ccScriptFunction& func = pAction->getScriptHandler();
+    if (!func.handler) return 0;
     
-    if (pTarget)
-    {
+    if(func.target) {
+        m_stack->pushCCObject(func.target, getLuaTypeNameByTypeId(typeid(*func.target).name()));
+    }
+    if (pTarget) {
         m_stack->pushCCObject(pTarget, getLuaTypeNameByTypeId(typeid(*pTarget).name()));
     }
-    int ret = m_stack->executeFunctionByHandler(nHandler, pTarget ? 1 : 0);
+    int ret = m_stack->executeFunctionByHandler(func.handler, (pTarget ? 1 : 0) + (func.target ? 1 : 0));
     m_stack->clean();
     return ret;
 }
@@ -176,20 +141,6 @@ int CCLuaEngine::executeSchedule(int nHandler, float dt, CCNode* pNode/* = nullp
     if (!nHandler) return 0;
     m_stack->pushFloat(dt);
     int ret = m_stack->executeFunctionByHandler(nHandler, 1);
-    m_stack->clean();
-    return ret;
-}
-
-int CCLuaEngine::executeWidgetTouchEvent(ui::Widget* widget, int eventType) {
-    // check handler
-    int handler = widget->getScriptTouchHandler();
-    if(!handler)
-        return 0;
-    
-    // execute lua function
-    m_stack->pushCCObject(widget, getLuaTypeNameByTypeId(typeid(*widget).name()));
-    m_stack->pushInt(eventType);
-    int ret = m_stack->executeFunctionByHandler(handler, 2);
     m_stack->clean();
     return ret;
 }
@@ -323,14 +274,12 @@ int CCLuaEngine::executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAcc
     return ret;
 }
 
-int CCLuaEngine::executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource /* = nullptr*/)
-{
-    m_stack->pushString(pEventName);
-    if (pEventSource)
-    {
-        m_stack->pushCCObject(pEventSource, getLuaTypeNameByTypeId(typeid(*pEventSource).name()));
+int CCLuaEngine::executeEvent(ccScriptFunction& func, const char* pEventName) {
+    if(func.target) {
+        m_stack->pushCCObject(func.target, getLuaTypeNameByTypeId(typeid(*func.target).name()));
     }
-    int ret = m_stack->executeFunctionByHandler(nHandler, pEventSource ? 2 : 1);
+    m_stack->pushString(pEventName);
+    int ret = m_stack->executeFunctionByHandler(func.handler, func.target ? 2 : 1);
     m_stack->clean();
     return ret;
 }
@@ -404,56 +353,48 @@ int CCLuaEngine::executeTableViewEvent(int nEventType,cocos2d::extension::CCTabl
     return nRet;
 }
 
-int CCLuaEngine::executeEventWithArgs(int nHandler, CCArray* pArgs)
-{
-    if (nullptr == pArgs)
-        return 0;
+int CCLuaEngine::executeEventWithArgs(ccScriptFunction& func, CCArray* pArgs) {
+    int nArgNums = 0;
     
+    // target
+    if(func.target) {
+        m_stack->pushCCObject(func.target, getLuaTypeNameByTypeId(typeid(*func.target).name()));
+        nArgNums++;
+    }
+    
+    // push args
     CCObject*   pObject = nullptr;
-    
     CCInteger*  pIntVal = nullptr;
     CCString*   pStrVal = nullptr;
     CCDouble*   pDoubleVal = nullptr;
     CCFloat*    pFloatVal = nullptr;
     CCBool*     pBoolVal = nullptr;
-   
-    int nArgNums = 0;
-    for (unsigned int i = 0; i < pArgs->count(); i++)
-    {
-        pObject = pArgs->objectAtIndex(i);
-        if (nullptr != (pIntVal = dynamic_cast<CCInteger*>(pObject)))
-        {
-            m_stack->pushInt(pIntVal->getValue());
-            nArgNums++;
-        }
-        else if (nullptr != (pStrVal = dynamic_cast<CCString*>(pObject)))
-        {
-            m_stack->pushString(pStrVal->getCString());
-            nArgNums++;
-        }
-        else if (nullptr != (pDoubleVal = dynamic_cast<CCDouble*>(pObject)))
-        {
-            m_stack->pushFloat(pDoubleVal->getValue());
-            nArgNums++;
-        }
-        else if (nullptr != (pFloatVal = dynamic_cast<CCFloat*>(pObject)))
-        {
-            m_stack->pushFloat(pFloatVal->getValue());
-            nArgNums++;
-        }
-        else if (nullptr != (pBoolVal = dynamic_cast<CCBool*>(pObject)))
-        {
-            m_stack->pushBoolean(pBoolVal->getValue());
-            nArgNums++;
-        }
-        else if(nullptr != pObject)
-        {
-            m_stack->pushCCObject(pObject, getLuaTypeNameByTypeId(typeid(*pObject).name()));
-            nArgNums++;
+    if(pArgs) {
+        for (unsigned int i = 0; i < pArgs->count(); i++) {
+            pObject = pArgs->objectAtIndex(i);
+            if (nullptr != (pIntVal = dynamic_cast<CCInteger*>(pObject))) {
+                m_stack->pushInt(pIntVal->getValue());
+                nArgNums++;
+            } else if (nullptr != (pStrVal = dynamic_cast<CCString*>(pObject))) {
+                m_stack->pushString(pStrVal->getCString());
+                nArgNums++;
+            } else if (nullptr != (pDoubleVal = dynamic_cast<CCDouble*>(pObject))) {
+                m_stack->pushFloat(pDoubleVal->getValue());
+                nArgNums++;
+            } else if (nullptr != (pFloatVal = dynamic_cast<CCFloat*>(pObject))) {
+                m_stack->pushFloat(pFloatVal->getValue());
+                nArgNums++;
+            } else if (nullptr != (pBoolVal = dynamic_cast<CCBool*>(pObject))) {
+                m_stack->pushBoolean(pBoolVal->getValue());
+                nArgNums++;
+            } else if(nullptr != pObject) {
+                m_stack->pushCCObject(pObject, getLuaTypeNameByTypeId(typeid(*pObject).name()));
+                nArgNums++;
+            }
         }
     }
     
-    return  m_stack->executeFunctionByHandler(nHandler, nArgNums);
+    return  m_stack->executeFunctionByHandler(func.handler, nArgNums);
 }
 
 bool CCLuaEngine::parseConfig(CCScriptEngineProtocol::ConfigType type, const std::string& str)

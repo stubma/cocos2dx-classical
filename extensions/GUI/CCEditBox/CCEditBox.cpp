@@ -28,7 +28,7 @@
 
 NS_CC_EXT_BEGIN
 
-CCEditBox::CCEditBox(void)
+CCEditBox::CCEditBox()
 : m_pEditBoxImpl(nullptr)
 , m_pDelegate(nullptr)
 , m_eEditBoxInputMode(kEditBoxInputModeSingleLine)
@@ -39,17 +39,14 @@ CCEditBox::CCEditBox(void)
 , m_colText(ccWHITE)
 , m_colPlaceHolder(ccGRAY)
 , m_nMaxLength(0)
-, m_fAdjustHeight(0.0f)
-, m_nScriptEditBoxHandler(0)
-{
+, m_fAdjustHeight(0.0f) {
+    memset(&m_nScriptEditBoxHandler, 0, sizeof(ccScriptFunction));
 }
 
-CCEditBox::~CCEditBox(void)
-{
+CCEditBox::~CCEditBox() {
     CC_SAFE_DELETE(m_pEditBoxImpl);
     unregisterScriptEditBoxHandler();
 }
-
 
 void CCEditBox::touchDownAction(CCObject *sender, CCControlEvent controlEvent)
 {
@@ -392,15 +389,13 @@ void CCEditBox::keyboardDidHide(CCIMEKeyboardNotificationInfo& info)
 void CCEditBox::registerScriptEditBoxHandler(ccScriptFunction handler)
 {
     unregisterScriptEditBoxHandler();
-    m_nScriptEditBoxHandler = handler.handler;
+    m_nScriptEditBoxHandler = handler;
 }
 
-void CCEditBox::unregisterScriptEditBoxHandler(void)
-{
-    if (0 != m_nScriptEditBoxHandler)
-    {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nScriptEditBoxHandler);
-        m_nScriptEditBoxHandler = 0;
+void CCEditBox::unregisterScriptEditBoxHandler() {
+    if (m_nScriptEditBoxHandler.handler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nScriptEditBoxHandler.handler);
+        m_nScriptEditBoxHandler.handler = 0;
     }
 }
 

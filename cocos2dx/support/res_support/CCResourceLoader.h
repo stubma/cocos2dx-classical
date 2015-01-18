@@ -283,7 +283,7 @@ private:
     bool m_loading;
     
     /// listener in lua side
-    int m_handler;
+    ccScriptFunction m_func;
 
 private:
 	/// perform loading

@@ -116,7 +116,6 @@ public:
      */
     virtual int executeGlobalFunction(const char* functionName);
 
-    virtual int executeNodeEvent(CCNode* pNode, int nAction);
     virtual int executeMenuItemEvent(CCMenuItem* pMenuItem);
     virtual int executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName);
     virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = nullptr);
@@ -125,16 +124,15 @@ public:
     virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch);
     virtual int executeLayerKeypadEvent(CCLayer* pLayer, int eventType);
     
-    /// for cocostudio widget touch event
-    virtual int executeWidgetTouchEvent(ui::Widget* widget, int eventType);
-    
     /** execute a accelerometer event */
     virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue);
-    virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = nullptr);
+    
+    /// common event
+    virtual int executeEvent(ccScriptFunction& func, const char* pEventName);
     
     int executeTableViewEvent(int nEventType,cocos2d::extension::CCTableView* pTableView,void* pValue = nullptr, CCArray* pResultArray = nullptr);
     
-    virtual int executeEventWithArgs(int nHandler, CCArray* pArgs);
+    virtual int executeEventWithArgs(ccScriptFunction& func, CCArray* pArgs);
 
     virtual bool handleAssert(const char *msg);
     virtual bool parseConfig(CCScriptEngineProtocol::ConfigType type, const std::string& str);

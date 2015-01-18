@@ -40,10 +40,11 @@ extern std::map<std::string, std::string>  g_typeCast;
 void luaval_to_native_err(lua_State* L,const char* msg,tolua_Error* err, const char* funcName = "");
 #endif
 
-#define LUA_PRECONDITION( condition, ...) if( ! (condition) ) {														\
-CCLOG("lua: ERROR: File %s: Line: %d, Function: %s", __FILE__, __LINE__, __FUNCTION__ );                                                         \
-CCLOG(__VA_ARGS__);                                                  \
-}                                                                           \
+#define LUA_PRECONDITION(condition, ...) \
+    if(!(condition)) { \
+        CCLOG("lua: ERROR: File %s: Line: %d, Function: %s", __FILE__, __LINE__, __FUNCTION__ ); \
+        CCLOG(__VA_ARGS__); \
+    }
 
 extern bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def);
 // to native

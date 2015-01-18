@@ -9,6 +9,6 @@ function ccs.createArm(arm, anim, x, y, parent, tag, z)
     local a = CCArmature:create(arm)
     a:getAnimation():play(anim)
     a:setPosition(x, y)
-    parent:addChild(a, arm, z)
+    parent:addChild(a, tag, z)
     return a
 end

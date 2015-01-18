@@ -93,8 +93,8 @@ bool CCControl::init()
 CCControl::~CCControl()
 {
     CC_SAFE_RELEASE(m_pDispatchTable);
-    for(map<int, int>::iterator iter = m_mapHandleOfControlEvent.begin(); iter != m_mapHandleOfControlEvent.end(); iter++) {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(iter->second);
+    for(map<int, ccScriptFunction>::iterator iter = m_mapHandleOfControlEvent.begin(); iter != m_mapHandleOfControlEvent.end(); iter++) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(iter->second.handler);
     }
 }
 
@@ -134,19 +134,19 @@ void CCControl::sendActionsForControlEvents(CCControlEvent controlEvents)
             //Call ScriptFunc
             if (kScriptTypeNone != m_eScriptType)
             {
-                int nHandler = getHandleOfControlEvent(controlEvents);
-                if (-1 != nHandler) {
+                ccScriptFunction func = getHandleOfControlEvent(controlEvents);
+                if (func.handler) {
                     CCArray* pArrayArgs = CCArray::createWithCapacity(3);
                     pArrayArgs->addObject(this);
                     pArrayArgs->addObject(CCInteger::create(1 << i));
-                    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(nHandler, pArrayArgs);
+                    CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(func, pArrayArgs);
                 }
             }
         }
     }
 }
-void CCControl::addTargetWithActionForControlEvents(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvents)
-{
+
+void CCControl::addTargetWithActionForControlEvents(CCObject* target, SEL_CCControlHandler action, CCControlEvent controlEvents) {
     // For each control events
     for (int i = 0; i < kControlEventTotalNumber; i++)
     {
@@ -157,8 +157,6 @@ void CCControl::addTargetWithActionForControlEvents(CCObject* target, SEL_CCCont
         }
     }
 }
-
-
 
 /**
  * Adds a target and action for a particular event to an internal dispatch 
@@ -345,27 +343,28 @@ bool CCControl::hasVisibleParents()
 
 void CCControl::addHandleOfControlEvent(ccScriptFunction func, CCControlEvent controlEvent)
 {
-    m_mapHandleOfControlEvent[controlEvent] = func.handler;
+    m_mapHandleOfControlEvent[controlEvent] = func;
 }
 
 void CCControl::removeHandleOfControlEvent(CCControlEvent controlEvent)
 {
-    std::map<int,int>::iterator iter = m_mapHandleOfControlEvent.find(controlEvent);
+    std::map<int, ccScriptFunction>::iterator iter = m_mapHandleOfControlEvent.find(controlEvent);
     
     if (m_mapHandleOfControlEvent.end() != iter)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(iter->second);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(iter->second.handler);
         m_mapHandleOfControlEvent.erase(iter);
     }
 }
 
-int  CCControl::getHandleOfControlEvent(CCControlEvent controlEvent)
+ccScriptFunction CCControl::getHandleOfControlEvent(CCControlEvent controlEvent)
 {
-    std::map<int,int>::iterator iter = m_mapHandleOfControlEvent.find(controlEvent);
+    std::map<int, ccScriptFunction>::iterator iter = m_mapHandleOfControlEvent.find(controlEvent);
     
     if (m_mapHandleOfControlEvent.end() != iter)
         return iter->second;
     
-    return -1;
+    ccScriptFunction ret = { nullptr, 0 };
+    return ret;
 }
 NS_CC_EXT_END

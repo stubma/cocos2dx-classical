@@ -62,14 +62,6 @@ enum {
     kCCNodeTagInvalid = -1,
 };
 
-enum {
-    kCCNodeOnEnter,
-    kCCNodeOnExit,
-    kCCNodeOnEnterTransitionDidFinish,
-    kCCNodeOnExitTransitionDidStart,
-    kCCNodeOnCleanup
-};
-
 /** @brief CCNode is the main element. Anything that gets drawn or contains things that get drawn is a CCNode.
  The most popular CCNodes are: CCScene, CCLayer, CCSprite, CCMenu.
 
@@ -929,14 +921,6 @@ public:
      * @see registerScriptHandler(int)
      */
     virtual void unregisterScriptHandler(void);
-    /**
-     * Gets script handler for onEnter/onExit event.
-     * This is an internal method. g
-     * @see registerScriptHandler(int)
-     *
-     * @return A number that indicates a lua function.
-     */
-    inline int getScriptHandler() { return m_nScriptHandler; };
     
     /** 
      * Schedules for lua script. 
@@ -1476,7 +1460,8 @@ protected:
     
     bool m_bReorderChildDirty;          ///< children order dirty flag
     
-    int m_nScriptHandler;               ///< script handler for onEnter() & onExit(), used in Javascript binding and Lua binding.
+    ccScriptFunction m_nScriptHandler;               ///< script handler for onEnter() & onExit(), used in Javascript binding and Lua binding.
+    
     int m_nUpdateScriptHandler;         ///< script handler for update() callback per frame, which is invoked from lua & javascript.
     ccScriptType m_eScriptType;         ///< type of script binding, lua or javascript
     

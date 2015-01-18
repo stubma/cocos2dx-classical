@@ -179,6 +179,10 @@ TOLUA_API int toluafix_remove_ccobject_by_refid(lua_State* L, int refid)
 
 TOLUA_API int toluafix_ref_function(lua_State* L, int lo, int def)
 {
+    // convert lo to position if it is negative
+    if(lo < 0)
+        lo = lua_gettop(L) + lo + 1;
+    
     // function at lo
     if (!lua_isfunction(L, lo)) return 0;
     

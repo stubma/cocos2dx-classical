@@ -402,7 +402,7 @@ CCCallFunc * CCCallFunc::create(ccScriptFunction nHandler)
 	CCCallFunc *pRet = new CCCallFunc();
 
 	if (pRet) {
-		pRet->m_nScriptHandler = nHandler.handler;
+		pRet->m_nScriptHandler = nHandler;
 		CC_SAFE_AUTORELEASE(pRet);
 	}
 	else{
@@ -420,16 +420,15 @@ bool CCCallFunc::initWithTarget(CCObject* pSelectorTarget) {
 
 CCCallFunc::CCCallFunc()
 : m_pSelectorTarget(nullptr)
-, m_nScriptHandler(0)
 , m_pCallFunc(nullptr)
 {
+    memset(&m_nScriptHandler, 0, sizeof(ccScriptFunction));
 }
 
 CCCallFunc::~CCCallFunc(void)
 {
-    if (m_nScriptHandler)
-    {
-        cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nScriptHandler);
+    if (m_nScriptHandler.handler) {
+        cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nScriptHandler.handler);
     }
     CC_SAFE_RELEASE(m_pSelectorTarget);
 }
@@ -450,8 +449,9 @@ CCObject * CCCallFunc::copyWithZone(CCZone *pZone) {
     CCActionInstant::copyWithZone(pZone);
     pRet->initWithTarget(m_pSelectorTarget);
     pRet->m_pCallFunc = m_pCallFunc;
-    if (m_nScriptHandler > 0 ) {
-        pRet->m_nScriptHandler = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine()->reallocateScriptHandler(m_nScriptHandler);
+    if (m_nScriptHandler.handler) {
+        pRet->m_nScriptHandler.target = m_nScriptHandler.target;
+        pRet->m_nScriptHandler.handler = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine()->reallocateScriptHandler(m_nScriptHandler.handler);
     }
     CC_SAFE_DELETE(pNewZone);
     return pRet;
@@ -466,7 +466,7 @@ void CCCallFunc::execute() {
     if (m_pCallFunc) {
         (m_pSelectorTarget->*m_pCallFunc)();
     }
-	if (m_nScriptHandler) {
+	if (m_nScriptHandler.handler) {
 		CCScriptEngineManager::sharedManager()->getScriptEngine()->executeCallFuncActionEvent(this);
 	}
 }
@@ -478,7 +478,7 @@ void CCCallFuncN::execute() {
     if (m_pCallFuncN) {
         (m_pSelectorTarget->*m_pCallFuncN)(m_pTarget);
     }
-	if (m_nScriptHandler) {
+	if (m_nScriptHandler.handler) {
 		CCScriptEngineManager::sharedManager()->getScriptEngine()->executeCallFuncActionEvent(this, m_pTarget);
 	}
 }
@@ -502,7 +502,7 @@ CCCallFuncN * CCCallFuncN::create(ccScriptFunction nHandler)
 	CCCallFuncN *pRet = new CCCallFuncN();
 
 	if (pRet) {
-		pRet->m_nScriptHandler = nHandler.handler;
+		pRet->m_nScriptHandler = nHandler;
 		CC_SAFE_AUTORELEASE(pRet);
 	}
 	else{

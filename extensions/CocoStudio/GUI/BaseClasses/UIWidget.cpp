@@ -64,7 +64,7 @@ _flippedX(false),
 _flippedY(false),
 _scriptObjectDict(nullptr)
 {
-    m_scriptTouchHandler.handler = 0;
+    memset(&m_scriptTouchHandler, 0, sizeof(ccScriptFunction));
 }
 
 Widget::~Widget()
@@ -764,7 +764,7 @@ void Widget::pushDownEvent()
     if (_touchEventListener && _touchEventSelector) {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_BEGAN);
     } else if(m_scriptTouchHandler.handler) {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeWidgetTouchEvent(this, TOUCH_EVENT_BEGAN);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_scriptTouchHandler, "began");
     }
 }
 
@@ -773,7 +773,7 @@ void Widget::moveEvent()
     if (_touchEventListener && _touchEventSelector) {
         (_touchEventListener->*_touchEventSelector)(this, TOUCH_EVENT_MOVED);
     } else if(m_scriptTouchHandler.handler) {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeWidgetTouchEvent(this, TOUCH_EVENT_MOVED);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_scriptTouchHandler, "moved");
     }
 }
 
@@ -782,7 +782,7 @@ void Widget::releaseUpEvent()
     if (_touchEventListener && _touchEventSelector) {
         (_touchEventListener->*_touchEventSelector)(this, TOUCH_EVENT_ENDED);
     } else if(m_scriptTouchHandler.handler) {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeWidgetTouchEvent(this, TOUCH_EVENT_ENDED);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_scriptTouchHandler, "ended");
     }
 }
 
@@ -791,7 +791,7 @@ void Widget::cancelUpEvent()
     if (_touchEventListener && _touchEventSelector) {
         (_touchEventListener->*_touchEventSelector)(this, TOUCH_EVENT_CANCELED);
     } else if(m_scriptTouchHandler.handler) {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeWidgetTouchEvent(this, TOUCH_EVENT_CANCELED);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_scriptTouchHandler, "canceled");
     }
 }
 

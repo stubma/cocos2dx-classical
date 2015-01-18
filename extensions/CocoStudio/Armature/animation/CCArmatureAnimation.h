@@ -341,8 +341,8 @@ protected:
     cocos2d::CCDictionary* m_pScriptObjectDict;
     
     // script event handler
-    int m_movementEventHandler;
-    int m_frameEventHandler;
+    ccScriptFunction m_movementEventHandler;
+    ccScriptFunction m_frameEventHandler;
     
 protected:
     /**

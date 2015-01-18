@@ -37,6 +37,7 @@ typedef struct lua_State lua_State;
 
 NS_CC_BEGIN
 
+class CCObject;
 class CCTimer;
 class CCLayer;
 class CCMenuItem;
@@ -50,6 +51,7 @@ namespace ui {
 
 // for script function
 typedef struct {
+    CCObject* target;
     unsigned int handler;
 } ccScriptFunction;
 
@@ -219,14 +221,6 @@ public:
      */
     virtual int executeGlobalFunction(const char* functionName) = 0;
     
-    /**
-     @brief Execute a node event function
-     @param pNode which node produce this event
-     @param nAction kCCNodeOnEnter,kCCNodeOnExit,kCCMenuItemActivated,kCCNodeOnEnterTransitionDidFinish,kCCNodeOnExitTransitionDidStart
-     @return The integer value returned from the script function.
-     */
-    virtual int executeNodeEvent(CCNode* pNode, int nAction) = 0;
-    
     virtual int executeMenuItemEvent(CCMenuItem* pMenuItem) = 0;
     /** Execute a notification event function */
     virtual int executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName) = 0;
@@ -242,20 +236,21 @@ public:
 
     /** functions for keypad event */
     virtual int executeLayerKeypadEvent(CCLayer* pLayer, int eventType) = 0;
-    
-    /** function for widget touch event */
-    virtual int executeWidgetTouchEvent(ui::Widget* widget, int eventType) = 0;
 
     /** execute a accelerometer event */
     virtual int executeAccelerometerEvent(CCLayer* pLayer, CCAcceleration* pAccelerationValue) = 0;
-
-    /** function for common event */
-    virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = nullptr) = 0;
+    
+    /** 
+     * function for common event
+     * @param func script funcation, if target is not null, it will be passed as first argument
+     * @param pEventName event name
+     */
+    virtual int executeEvent(ccScriptFunction& func, const char* pEventName) = 0;
     
     /** 
      * function for c++ call back lua funtion 
      */
-    virtual int executeEventWithArgs(int nHandler, CCArray* pArgs) { return 0; }
+    virtual int executeEventWithArgs(ccScriptFunction& func, CCArray* pArgs) = 0;
 
     /** called by CCAssert to allow scripting engine to handle failed assertions
      * @return true if the assert was handled by the script engine, false otherwise.

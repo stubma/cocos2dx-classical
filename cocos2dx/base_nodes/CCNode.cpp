@@ -87,7 +87,6 @@ CCNode::CCNode(void)
 , m_bVisible(true)
 , m_bIgnoreAnchorPointForPosition(false)
 , m_bReorderChildDirty(false)
-, m_nScriptHandler(0)
 , m_nUpdateScriptHandler(0)
 , m_pComponentContainer(nullptr)
 {
@@ -101,6 +100,7 @@ CCNode::CCNode(void)
     CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
     m_eScriptType = pEngine != nullptr ? pEngine->getScriptType() : kScriptTypeNone;
     m_pComponentContainer = new CCComponentContainer(this);
+    memset(&m_nScriptHandler, 0, sizeof(ccScriptFunction));
 }
 
 CCNode::~CCNode(void)
@@ -558,9 +558,8 @@ void CCNode::cleanup()
     this->stopAllActions();
     this->unscheduleAllSelectors();
     
-    if ( m_eScriptType != kScriptTypeNone)
-    {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnCleanup);
+    if (m_nScriptHandler.handler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_nScriptHandler, "cleanup");
     }
     
     // timers
@@ -922,9 +921,8 @@ void CCNode::onEnter()
     //fix setTouchEnabled not take effect when called the function in onEnter in JSBinding.
     m_bRunning = true;
 
-    if (m_eScriptType != kScriptTypeNone)
-    {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnEnter);
+    if (m_nScriptHandler.handler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_nScriptHandler, "enter");
     }
 
     //Judge the running state for prevent called onEnter method more than once,it's possible that this function called by addChild  
@@ -947,9 +945,8 @@ void CCNode::onEnter()
 
 void CCNode::onEnterTransitionDidFinish()
 {
-    if (m_eScriptType != kScriptTypeNone)
-    {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnEnterTransitionDidFinish);
+    if (m_nScriptHandler.handler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_nScriptHandler, "enterTransitionFinish");
     }
     
     arrayMakeObjectsPerformSelector(m_pChildren, onEnterTransitionDidFinish, CCNode*);
@@ -959,9 +956,8 @@ void CCNode::onExitTransitionDidStart()
 {
     arrayMakeObjectsPerformSelector(m_pChildren, onExitTransitionDidStart, CCNode*);
 
-    if (m_eScriptType != kScriptTypeNone)
-    {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnExitTransitionDidStart);
+    if (m_nScriptHandler.handler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_nScriptHandler, "exitTransitionStart");
     }
 }
 
@@ -973,26 +969,21 @@ void CCNode::onExit()
 
     arrayMakeObjectsPerformSelector(m_pChildren, onExit, CCNode*);
     
-    if ( m_eScriptType != kScriptTypeNone)
-    {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnExit);
+    if (m_nScriptHandler.handler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_nScriptHandler, "exit");
     }
 }
 
 void CCNode::registerScriptHandler(ccScriptFunction nHandler)
 {
     unregisterScriptHandler();
-    m_nScriptHandler = nHandler.handler;
-    LUALOG("[LUA] Add CCNode event handler: %d", m_nScriptHandler);
+    m_nScriptHandler = nHandler;
 }
 
-void CCNode::unregisterScriptHandler(void)
-{
-    if (m_nScriptHandler)
-    {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nScriptHandler);
-        LUALOG("[LUA] Remove CCNode event handler: %d", m_nScriptHandler);
-        m_nScriptHandler = 0;
+void CCNode::unregisterScriptHandler() {
+    if (m_nScriptHandler.handler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nScriptHandler.handler);
+        m_nScriptHandler.handler = 0;
     }
 }
 

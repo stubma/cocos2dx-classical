@@ -278,9 +278,9 @@ public:
      */
     void removeHandleOfControlEvent(CCControlEvent controlEvent);
 private:
-    int  getHandleOfControlEvent(CCControlEvent controlEvent);
+    ccScriptFunction getHandleOfControlEvent(CCControlEvent controlEvent);
 private:
-    std::map<int,int> m_mapHandleOfControlEvent;
+    std::map<int, ccScriptFunction> m_mapHandleOfControlEvent;
 };
 
 // end of GUI group

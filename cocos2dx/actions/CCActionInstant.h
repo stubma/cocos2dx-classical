@@ -353,15 +353,14 @@ public:
             m_pSelectorTarget = pSel; 
         }
     }
-    /**
-     * @lua NA
-     */
-    inline int getScriptHandler() { return m_nScriptHandler; };
+    
+    inline ccScriptFunction& getScriptHandler() { return m_nScriptHandler; }
+
 protected:
     /** Target that will be called */
     CCObject*   m_pSelectorTarget;
 
-	int m_nScriptHandler;
+	ccScriptFunction m_nScriptHandler;
 
     union
     {

@@ -8,11 +8,15 @@ function cc.setAnchor(node, x, y)
 end
 
 function cc.delayActionN(node, time, callback)
-    node:runAction(CCSequence:createWithTwoActions(CCDelayTime:create(time),
-                                                   CCCallFuncN:create(callback)))
+    local sequence = CCSequence:createWithTwoActions(CCDelayTime:create(time),
+                                                     CCCallFuncN:create(callback));
+    node:runAction(sequence)
+    return sequence
 end
 
 function cc.delayAction(node, time, callback)
-    node:runAction(CCSequence:createWithTwoActions(CCDelayTime:create(time),
-                                                   CCCallFunc:create(callback)))
+    local sequence = CCSequence:createWithTwoActions(CCDelayTime:create(time),
+                                                     CCCallFunc:create(callback))
+    node:runAction(sequence)
+    return sequence
 end

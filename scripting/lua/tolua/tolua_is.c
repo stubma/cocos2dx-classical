@@ -163,12 +163,15 @@ int push_table_instance(lua_State* L, int lo) {
 /* the equivalent of lua_is* for usertype */
 int lua_isusertype (lua_State* L, int lo, const char* type)
 {
+    // convert lo to position if it is negative
+    if(lo < 0)
+        lo = lua_gettop(L) + lo + 1;
+    
     if (!lua_isuserdata(L,lo)) {
         if (!push_table_instance(L, lo)) {
             return 0;
-        };
-    };
-    {
+        }
+    } else {
         /* check if it is of the same type */
         int r;
         const char *tn;
