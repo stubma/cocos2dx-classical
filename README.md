@@ -23,7 +23,6 @@ I only care iOS/Android platform, so other platform code will be deleted. Are yo
 1. 基于cocos2dx 2.x最新代码 **(已完成)**
 2. 将我个人的cocos2dx-better代码融入 **(已完成)**
 3. 把quick-cocos2dx那一套lua支持拷贝过来改吧改吧 **(已完成)**
-	* quick 3.x的binding generator工具已经被我移植了过来, 名字叫autolua, 引擎的绑定已经全部生成, HelloLua工程已经调试通过, 尚需更多实践检验
 4. 专注于填坑改bug, 而非大刀阔斧的修改架构 **(随时进行中)**
 
 Purpose
@@ -32,7 +31,6 @@ Purpose
 1. base on cocos2dx v2 **(Done)**
 2. merge my cocos2dx-better **(Done)**
 3. provide fully lua support, in quick-cocos2dx 3.x way **(Done)**
-	* quick 3.x binding generator is migrated as autolua, and all lua binding for cocos2dx-classical is generated. HelloLua sample is tested and result is fine. Sure it needs more testing but basically it works.
 4. fix v2 bugs **(Always in progress)**	
 
 何时结束
@@ -86,6 +84,15 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 * CCRepeatForever覆盖stop方法, 停掉内部动作
 * copy()返回的对象不再需要release
 * setShaderProgram可以设置参数, 从而支持多个节点使用同一个shader但参数不同
+* Lua相关修改
+	* quick 3.x的binding generator工具移植完成, 名叫autolua, 引擎的lua绑定已经全部生成
+	* HelloLua工程修改调试通过
+	* 使用ccScriptFunction代表一个脚本方法, 替代了原来使用int的方式. 引擎中注册脚本方法相关的代码都改成使用ccScriptFunction, 相应的牵涉到CCLuaEngine, CCLuaStack等都有不少修改, 脚本回调方法可以获得self参数, 解决了脚本回调方法中获取self不方便的问题
+	* 逐渐完善一些公用库, 都放在scripting/lua/script下, 提供一些基本的封装
+	* 加入了lfs方便载入脚本, 修正了Cocos2dxLuaLoader和lfs冲突的问题
+	* luajit和lua都已经预编译成静态库, 由于luajit并不支持64位, 所以目前并未启用, 还是采用包含lua代码编译的方式. 需要使用luajit的可以直接使用
+	* 修正了一些tolua_fix的bug
+	* script端的CCNotification监听方法现在可以收到额外参数
 
 cocos2dx-better新加的其它功能我就不列举了, 目前cocos2dx-better的代码已经合并完成, 有一部分代码我感觉写的用处不大就没有合并了, 不过只是一小部分, 95%的cocos2dx-better代码已经合并.
 
@@ -129,6 +136,17 @@ Things Improved
 * CCScrollView adds getTouchPoint to get last touch position
 * CCRepeatForever override stop method
 * setShaderProgram can specify uniform values so that one shader can be shared by many nodes
+* Lua related
+	* quick 3.x binding generator is migrated, renamed as autolua
+	* engine lua binding is generated
+	* HelloLua project is debugged and fine
+	* use ccScriptFunction struct to replace int handler, modified all related code
+	* make it easy to pass self parameter to script callback
+	* adding more shared library, in scripting/lua/script
+	* add lfs to easily load lua files under a folder, fix conflict between Cocos2dxLuaLoader and lfs
+	* fix some bugs of tolua_fix
+	* luajit is precompiled but not enabled because it doesn't support 64 bit, but you can directly use it if you want
+	* CCNotification script observer can get extra parameters now
 
 How to use CCImagePicker
 ==========================
