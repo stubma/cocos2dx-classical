@@ -29,6 +29,10 @@ cc.TOUCH_EVENT_MOVED = "moved"
 cc.TOUCH_EVENT_ENDED = "ended"
 cc.TOUCH_EVENT_CANCELED = "canceled"
 
+-- touch mode
+cc.TouchesAllAtOnce = 0
+cc.TouchesOneByOne = 1
+
 -- keypad event type
 cc.KeyEventMenu = "menu"
 cc.KeyEventBack = "back"

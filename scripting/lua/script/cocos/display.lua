@@ -22,3 +22,7 @@ end
 function display.resume()
     sharedDirector:resume()
 end
+
+function display.smoothAnimation()
+    sharedDirector:setNextDeltaTimeZero(true)
+end
