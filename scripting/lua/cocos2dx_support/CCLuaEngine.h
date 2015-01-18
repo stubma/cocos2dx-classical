@@ -120,8 +120,8 @@ public:
     virtual int executeNotificationEvent(CCNotificationCenter* pNotificationCenter, const char* pszName);
     virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = nullptr);
     virtual int executeSchedule(ccScriptFunction& func, float dt);
-    virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches);
-    virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch);
+    virtual int executeLayerTouchesEvent(CCLayer* pLayer, const char* pEventName, CCSet *pTouches);
+    virtual int executeLayerTouchEvent(CCLayer* pLayer, const char* pEventName, CCTouch *pTouch);
     
     /** execute a accelerometer event */
     virtual int executeAccelerometerEvent(ccScriptFunction& func, CCAcceleration* pAccelerationValue);

@@ -150,7 +150,7 @@ int CCLuaEngine::executeSchedule(ccScriptFunction& func, float dt)
     return ret;
 }
 
-int CCLuaEngine::executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch)
+int CCLuaEngine::executeLayerTouchEvent(CCLayer* pLayer, const char* pEventName, CCTouch *pTouch)
 {
     CCTouchScriptHandlerEntry* pScriptHandlerEntry = pLayer->getScriptTouchHandlerEntry();
     if (!pScriptHandlerEntry) return 0;
@@ -160,28 +160,7 @@ int CCLuaEngine::executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch 
     if(func.target) {
         m_stack->pushCCObject(func.target, getLuaTypeNameByTypeId(typeid(*func.target).name()));
     }
-    
-    switch (eventType)
-    {
-        case CCTOUCHBEGAN:
-            m_stack->pushString("began");
-            break;
-            
-        case CCTOUCHMOVED:
-            m_stack->pushString("moved");
-            break;
-            
-        case CCTOUCHENDED:
-            m_stack->pushString("ended");
-            break;
-            
-        case CCTOUCHCANCELLED:
-            m_stack->pushString("cancelled");
-            break;
-            
-        default:
-            return 0;
-    }
+    m_stack->pushString(pEventName);
     
     const CCPoint pt = CCDirector::sharedDirector()->convertToGL(pTouch->getLocationInView());
     m_stack->pushFloat(pt.x);
@@ -191,7 +170,7 @@ int CCLuaEngine::executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch 
     return ret;
 }
 
-int CCLuaEngine::executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches)
+int CCLuaEngine::executeLayerTouchesEvent(CCLayer* pLayer, const char* pEventName, CCSet *pTouches)
 {
     CCTouchScriptHandlerEntry* pScriptHandlerEntry = pLayer->getScriptTouchHandlerEntry();
     if (!pScriptHandlerEntry) return 0;
@@ -201,29 +180,8 @@ int CCLuaEngine::executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet 
     if(func.target) {
         m_stack->pushCCObject(func.target, getLuaTypeNameByTypeId(typeid(*func.target).name()));
     }
+    m_stack->pushString(pEventName);
     
-    switch (eventType)
-    {
-        case CCTOUCHBEGAN:
-            m_stack->pushString("began");
-            break;
-            
-        case CCTOUCHMOVED:
-            m_stack->pushString("moved");
-            break;
-            
-        case CCTOUCHENDED:
-            m_stack->pushString("ended");
-            break;
-            
-        case CCTOUCHCANCELLED:
-            m_stack->pushString("cancelled");
-            break;
-            
-        default:
-            return 0;
-    }
-
     CCDirector* pDirector = CCDirector::sharedDirector();
     lua_State *L = m_stack->getLuaState();
     lua_newtable(L);

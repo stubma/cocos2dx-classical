@@ -187,8 +187,8 @@ private:
     int m_nTouchPriority;
     ccTouchesMode m_eTouchMode;
     
-    int  excuteScriptTouchHandler(int nEventType, CCTouch *pTouch);
-    int  excuteScriptTouchHandler(int nEventType, CCSet *pTouches);
+    int  excuteScriptTouchHandler(const char* pEventName, CCTouch *pTouch);
+    int  excuteScriptTouchHandler(const char* pEventName, CCSet *pTouches);
 };
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)

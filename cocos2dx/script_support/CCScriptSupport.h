@@ -231,8 +231,8 @@ public:
     virtual int executeSchedule(ccScriptFunction& func, float dt) = 0;
     
     /** functions for executing touch event */
-    virtual int executeLayerTouchesEvent(CCLayer* pLayer, int eventType, CCSet *pTouches) = 0;
-    virtual int executeLayerTouchEvent(CCLayer* pLayer, int eventType, CCTouch *pTouch) = 0;
+    virtual int executeLayerTouchesEvent(CCLayer* pLayer, const char* pEventName, CCSet *pTouches) = 0;
+    virtual int executeLayerTouchEvent(CCLayer* pLayer, const char* pEventName, CCTouch *pTouch) = 0;
 
     /** execute a accelerometer event */
     virtual int executeAccelerometerEvent(ccScriptFunction& func, CCAcceleration* pAccelerationValue) = 0;

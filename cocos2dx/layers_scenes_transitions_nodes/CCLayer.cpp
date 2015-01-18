@@ -139,14 +139,14 @@ void CCLayer::unregisterScriptTouchHandler(void)
     CC_SAFE_RELEASE_NULL(m_pScriptTouchHandlerEntry);
 }
 
-int CCLayer::excuteScriptTouchHandler(int nEventType, CCTouch *pTouch)
+int CCLayer::excuteScriptTouchHandler(const char* pEventName, CCTouch *pTouch)
 {
-    return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerTouchEvent(this, nEventType, pTouch);
+    return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerTouchEvent(this, pEventName, pTouch);
 }
 
-int CCLayer::excuteScriptTouchHandler(int nEventType, CCSet *pTouches)
+int CCLayer::excuteScriptTouchHandler(const char* pEventName, CCSet *pTouches)
 {
-    return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerTouchesEvent(this, nEventType, pTouches);
+    return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeLayerTouchesEvent(this, pEventName, pTouches);
 }
 
 /// isTouchEnabled getter
@@ -410,7 +410,7 @@ bool CCLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     if (kScriptTypeNone != m_eScriptType)
     {
-        return excuteScriptTouchHandler(CCTOUCHBEGAN, pTouch) == 0 ? false : true;
+        return excuteScriptTouchHandler("began", pTouch) == 0 ? false : true;
     }
 
     CC_UNUSED_PARAM(pTouch);
@@ -423,7 +423,7 @@ void CCLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 {
     if (kScriptTypeNone != m_eScriptType)
     {
-        excuteScriptTouchHandler(CCTOUCHMOVED, pTouch);
+        excuteScriptTouchHandler("moved", pTouch);
         return;
     }
 
@@ -435,7 +435,7 @@ void CCLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
     if (kScriptTypeNone != m_eScriptType)
     {
-        excuteScriptTouchHandler(CCTOUCHENDED, pTouch);
+        excuteScriptTouchHandler("ended", pTouch);
         return;
     }
 
@@ -447,7 +447,7 @@ void CCLayer::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 {
     if (kScriptTypeNone != m_eScriptType)
     {
-        excuteScriptTouchHandler(CCTOUCHCANCELLED, pTouch);
+        excuteScriptTouchHandler("canceled", pTouch);
         return;
     }
 
@@ -459,7 +459,7 @@ void CCLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
     if (kScriptTypeNone != m_eScriptType)
     {
-        excuteScriptTouchHandler(CCTOUCHBEGAN, pTouches);
+        excuteScriptTouchHandler("began", pTouches);
         return;
     }
 
@@ -471,7 +471,7 @@ void CCLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
     if (kScriptTypeNone != m_eScriptType)
     {
-        excuteScriptTouchHandler(CCTOUCHMOVED, pTouches);
+        excuteScriptTouchHandler("moved", pTouches);
         return;
     }
 
@@ -483,7 +483,7 @@ void CCLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 {
     if (kScriptTypeNone != m_eScriptType)
     {
-        excuteScriptTouchHandler(CCTOUCHENDED, pTouches);
+        excuteScriptTouchHandler("ended", pTouches);
         return;
     }
 
@@ -495,7 +495,7 @@ void CCLayer::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
 {
     if (kScriptTypeNone != m_eScriptType)
     {
-        excuteScriptTouchHandler(CCTOUCHCANCELLED, pTouches);
+        excuteScriptTouchHandler("canceled", pTouches);
         return;
     }
 
