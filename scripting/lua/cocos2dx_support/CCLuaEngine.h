@@ -132,6 +132,8 @@ public:
     
     virtual int executeEventWithArgs(ccScriptFunction& func, CCArray* pArgs);
 
+    virtual void executeObjectDestructor(CCObject* obj);
+    
     virtual bool handleAssert(const char *msg);
     virtual bool parseConfig(CCScriptEngineProtocol::ConfigType type, const std::string& str);
     

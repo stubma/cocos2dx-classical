@@ -40,7 +40,8 @@ function class(classname, super)
             cls.__create = super
         end
 
-        cls.ctor    = function() end
+        cls.ctor = function() end
+        cls.dtor = function() end
         cls.__cname = classname
         cls.__ctype = CC_INHERITED_FROM_NATIVE_CLASS
 
@@ -59,7 +60,7 @@ function class(classname, super)
             cls = clone(super)
             cls.super = super
         else
-            cls = {ctor = function() end}
+            cls = { ctor = function() end, dtor = function() end }
         end
 
         cls.__cname = classname

@@ -340,6 +340,34 @@ bool CCLuaStack::pushFunctionByHandler(int nHandler)
     return true;
 }
 
+void CCLuaStack::executeObjectDestructor(CCObject* obj) {
+    pushCCObject(obj, getLuaTypeNameByTypeId(typeid(*obj).name())); // obj
+    lua_pushstring(m_state, "dtor"); // obj "dtor"
+    lua_gettable(m_state, -2); // obj dtor
+    if(lua_isnil(m_state, -1) || !lua_isfunction(m_state, -1)) {
+        lua_pop(m_state, 2);
+    } else {
+        lua_getglobal(m_state, "__G__TRACKBACK__"); // obj dtor trackback
+        if (!lua_isfunction(m_state, -1)) {
+            lua_pop(m_state, 1);
+        } else {
+            lua_insert(m_state, -2); // obj trackback dtor
+        }
+        
+        // push obj
+        lua_pushvalue(m_state, -3); // obj trackback dtor obj
+        
+        // call dtor
+        int error = 0;
+        ++m_callFromLua;
+        error = lua_pcall(m_state, 1, 0, -3);
+        --m_callFromLua;
+        if(error) {
+            lua_pop(m_state, 2);
+        }
+    }
+}
+
 int CCLuaStack::executeFunction(int numArgs)
 {
     int functionIndex = -(numArgs + 1);

@@ -109,6 +109,13 @@ int CCLuaEngine::executeMenuItemEvent(CCMenuItem* pMenuItem)
     return ret;
 }
 
+void CCLuaEngine::executeObjectDestructor(CCObject* obj) {
+    if(obj) {
+        m_stack->executeObjectDestructor(obj);
+        m_stack->clean();
+    }
+}
+
 int CCLuaEngine::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget/* = nullptr*/)
 {
     ccScriptFunction& func = pAction->getScriptHandler();

@@ -68,6 +68,10 @@ CCObject::~CCObject(void)
     // if the object is referenced by Lua engine, remove it
     if (m_nLuaID)
     {
+        // destructor event of ccobject
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeObjectDestructor(this);
+        
+        // remove object from lua registry
         CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptObjectByCCObject(this);
     }
     else
