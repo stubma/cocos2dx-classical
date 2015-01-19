@@ -640,6 +640,18 @@ unsigned int CCScheduler::scheduleScriptFunc(ccScriptFunction nHandler, float fI
     return pEntry->getEntryId();
 }
 
+void CCScheduler::unscheduleAllScriptEntryForTarget(CCObject* target) {
+    if(m_pScriptHandlerEntries) {
+        for (int i = m_pScriptHandlerEntries->count() - 1; i >= 0; i--) {
+            CCSchedulerScriptHandlerEntry* pEntry = static_cast<CCSchedulerScriptHandlerEntry*>(m_pScriptHandlerEntries->objectAtIndex(i));
+            ccScriptFunction& func = pEntry->getHandler();
+            if(func.target == target) {
+                pEntry->markedForDeletion();
+            }
+        }
+    }
+}
+
 void CCScheduler::unscheduleScriptEntry(unsigned int uScheduleScriptEntryID)
 {
     for (int i = m_pScriptHandlerEntries->count() - 1; i >= 0; i--)

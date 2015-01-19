@@ -555,8 +555,9 @@ CCNode * CCNode::create(void)
 void CCNode::cleanup()
 {
     // actions
-    this->stopAllActions();
-    this->unscheduleAllSelectors();
+    stopAllActions();
+    unscheduleAllSelectors();
+    unscheduleAllScriptFuncs();
     
     if (m_nScriptHandler.handler) {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_nScriptHandler, "cleanup");
@@ -1041,7 +1042,8 @@ unsigned int CCNode::numberOfRunningActions()
 void CCNode::setScheduler(CCScheduler* scheduler)
 {
     if( scheduler != m_pScheduler ) {
-        this->unscheduleAllSelectors();
+        unscheduleAllSelectors();
+        unscheduleAllScriptFuncs();
         CC_SAFE_RETAIN(scheduler);
         CC_SAFE_RELEASE(m_pScheduler);
         m_pScheduler = scheduler;
@@ -1090,6 +1092,11 @@ void CCNode::schedule(SEL_SCHEDULE selector, float interval)
     this->schedule(selector, interval, kCCRepeatForever, 0.0f);
 }
 
+void CCNode::schedule(ccScriptFunction func, float interval, unsigned int repeat, float delay) {
+    CCAssert(func.target, "function target must be non-nil");
+    m_pScheduler->scheduleScriptFunc(func, interval, repeat, delay, !m_bRunning);
+}
+
 void CCNode::schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, float delay)
 {
     CCAssert( selector, "Argument must be non-nil");
@@ -1110,6 +1117,10 @@ void CCNode::unschedule(SEL_SCHEDULE selector)
         return;
 
     m_pScheduler->unscheduleSelector(selector, this);
+}
+
+void CCNode::unscheduleAllScriptFuncs() {
+    m_pScheduler->unscheduleAllScriptEntryForTarget(this);
 }
 
 void CCNode::unscheduleAllSelectors()

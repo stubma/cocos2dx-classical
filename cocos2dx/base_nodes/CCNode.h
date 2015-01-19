@@ -1154,6 +1154,11 @@ public:
     void schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, float delay);
     
     /**
+     * schedule a script function, function target must be self
+     */
+    void schedule(ccScriptFunction func, float interval, unsigned int repeat, float delay);
+    
+    /**
      * Schedules a custom selector with an interval time in seconds.
      * @see schedule(SEL_SCHEDULE, float, unsigned int, float)
      *
@@ -1196,6 +1201,11 @@ public:
      * Actions are not affected by this method.
      */
     void unscheduleAllSelectors(void);
+    
+    /**
+     * Unschedule all scheduled script functions
+     */
+    void unscheduleAllScriptFuncs();
 
     /** 
      * Resumes all scheduled selectors and actions.

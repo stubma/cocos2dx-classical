@@ -239,7 +239,12 @@ public:
      *  @js NA
      */
     void unscheduleScriptEntry(unsigned int uScheduleScriptEntryID);
-
+    
+    /** Unschedule all script entry of an target
+     * @js NA
+     */
+    void unscheduleAllScriptEntryForTarget(CCObject* target);
+    
     /** Pauses the target.
      All scheduled selectors/update for a given target won't be 'ticked' until the target is resumed.
      If the target is not present, nothing happens.
