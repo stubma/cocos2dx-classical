@@ -76,3 +76,7 @@ cc.NORTH_EAST = cc.RIGHT_TOP
 cc.NORTH_WEST = cc.LEFT_TOP
 cc.SOUTH_EAST = cc.RIGHT_BOTTOM
 cc.SOUTH_WEST = cc.LEFT_BOTTOM
+
+-- progress bar type
+cc.ProgressTimerTypeRadial = 0
+cc.ProgressTimerTypeBar = 1

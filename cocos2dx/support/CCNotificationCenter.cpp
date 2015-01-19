@@ -157,7 +157,7 @@ void CCNotificationCenter::unregisterScriptObserver(CCObject *target,const char*
         if (!observer)
             continue;
             
-        if ( !strcmp(observer->getName(),name) && observer->getTarget() == target)
+        if ( !strcmp(observer->getName(),name) && observer->getHandler().target == target)
         {
             m_observers->removeObject(observer);
         }
