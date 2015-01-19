@@ -271,6 +271,7 @@ class NativeType(object):
                 nt.name = decl.displayname
                 nt.qualified_name = get_qualified_name(decl)
                 nt.qualified_ns = get_qualified_namespace(decl)
+                nt.is_class = True
             else:
                 nt.name = decl.spelling
                 nt.qualified_name = get_qualified_name(decl)
