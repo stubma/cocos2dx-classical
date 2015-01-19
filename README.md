@@ -93,6 +93,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 	* luajit和lua都已经预编译成静态库, 由于luajit并不支持64位, 所以目前并未启用, 还是采用包含lua代码编译的方式. 需要使用luajit的可以直接使用
 	* 修正了一些tolua_fix的bug
 	* script端的CCNotification监听方法现在可以收到额外参数
+	* 修改了extern.lua, 添加了dtor方法, 会在C++对象析构时调用
 
 cocos2dx-better新加的其它功能我就不列举了, 目前cocos2dx-better的代码已经合并完成, 有一部分代码我感觉写的用处不大就没有合并了, 不过只是一小部分, 95%的cocos2dx-better代码已经合并.
 
@@ -147,6 +148,7 @@ Things Improved
 	* fix some bugs of tolua_fix
 	* luajit is precompiled but not enabled because it doesn't support 64 bit, but you can directly use it if you want
 	* CCNotification script observer can get extra parameters now
+	* lua class add a dtor method to receive CCObject destruction event
 
 How to use CCImagePicker
 ==========================
