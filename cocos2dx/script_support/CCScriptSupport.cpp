@@ -63,18 +63,18 @@ CCScriptHandlerEntry::~CCScriptHandlerEntry()
 // #pragma mark CCSchedulerScriptHandlerEntry
 #endif
 
-CCSchedulerScriptHandlerEntry* CCSchedulerScriptHandlerEntry::create(ccScriptFunction nHandler, float fInterval, bool bPaused)
+CCSchedulerScriptHandlerEntry* CCSchedulerScriptHandlerEntry::create(ccScriptFunction nHandler, float fInterval, unsigned int repeat, float delay, bool bPaused)
 {
     CCSchedulerScriptHandlerEntry* pEntry = new CCSchedulerScriptHandlerEntry(nHandler);
-    pEntry->init(fInterval, bPaused);
+    pEntry->init(fInterval, repeat, delay, bPaused);
     CC_SAFE_AUTORELEASE(pEntry);
     return pEntry;
 }
 
-bool CCSchedulerScriptHandlerEntry::init(float fInterval, bool bPaused)
+bool CCSchedulerScriptHandlerEntry::init(float fInterval, unsigned int repeat, float delay, bool bPaused)
 {
     m_pTimer = new CCTimer();
-    m_pTimer->initWithScriptHandler(m_func, fInterval);
+    m_pTimer->initWithScriptHandler(m_func, fInterval, repeat, delay);
     CC_SAFE_AUTORELEASE(m_pTimer);
     CC_SAFE_RETAIN(m_pTimer);
     m_bPaused = bPaused;

@@ -136,7 +136,7 @@ void CCControl::sendActionsForControlEvents(CCControlEvent controlEvents)
             {
                 ccScriptFunction func = getHandleOfControlEvent(controlEvents);
                 if (func.handler) {
-                    CCArray* pArrayArgs = CCArray::createWithCapacity(3);
+                    CCArray* pArrayArgs = CCArray::createWithCapacity(2);
                     pArrayArgs->addObject(this);
                     pArrayArgs->addObject(CCInteger::create(1 << i));
                     CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(func, pArrayArgs);

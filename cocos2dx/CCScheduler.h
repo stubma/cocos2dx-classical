@@ -79,7 +79,7 @@ public:
     bool initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds, unsigned int nRepeat, float fDelay);
     
     /** Initializes a timer with a script callback function and an interval in seconds. */
-    bool initWithScriptHandler(ccScriptFunction nHandler, float fSeconds);
+    bool initWithScriptHandler(ccScriptFunction nHandler, float fSeconds, unsigned int nRepeat, float fDelay);
     
     /** triggers the timer */
     void update(float dt);
@@ -96,7 +96,7 @@ public:
     static CCTimer* timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds);
     
     /** Allocates a timer with a script callback function and an interval in seconds. */
-    static CCTimer* timerWithScriptHandler(ccScriptFunction nHandler, float fSeconds);
+    static CCTimer* timerWithScriptHandler(ccScriptFunction nHandler, float fSeconds, unsigned int repeat, float delay);
     /**
      *  @lua NA
      */
@@ -233,7 +233,7 @@ public:
      return schedule script entry ID, used for unscheduleScriptFunc().
      @js NA
      */
-    unsigned int scheduleScriptFunc(ccScriptFunction nHandler, float fInterval, bool bPaused);
+    unsigned int scheduleScriptFunc(ccScriptFunction nHandler, float fInterval, unsigned int repeat, float delay, bool bPaused);
     
     /** Unschedule a script entry. 
      *  @js NA

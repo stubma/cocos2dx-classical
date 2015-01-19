@@ -48,6 +48,12 @@ cc.ControlEventTouchUpOutside = 0x40
 cc.ControlEventTouchCancel = 0x80
 cc.ControlEventValueChanged = 0x100
 
+-- control state
+cc.ControlStateNormal = 0x1
+cc.ControlStateHighlighted  = 0x2
+cc.ControlStateDisabled = 0x4
+cc.ControlStateSelected = 0x8
+
 -- editbox event type
 cc.EditBoxTextChanged = "changed"
 cc.EditBoxEditingDidBegin = "began"
@@ -80,3 +86,14 @@ cc.SOUTH_WEST = cc.LEFT_BOTTOM
 -- progress bar type
 cc.ProgressTimerTypeRadial = 0
 cc.ProgressTimerTypeBar = 1
+
+-- repeat type
+cc.RepeatForever = -1
+
+-- label alignment
+cc.VerticalTextAlignmentTop = 0
+cc.VerticalTextAlignmentCenter = 1
+cc.VerticalTextAlignmentBottom = 2
+cc.TextAlignmentLeft = 0
+cc.TextAlignmentCenter = 1
+cc.TextAlignmentRight = 2

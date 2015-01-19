@@ -119,20 +119,26 @@ public:
     /**
      * creates a CCLabelTTF with a font name and font size in points
      */
-    static CCLabelTTF* create(const char *s, const char *fontName, float fontSize, CC_DECRYPT_FUNC decryptFunc = nullptr);
+    static CCLabelTTF* create(const char *s, const char *fontName, float fontSize);
+    static CCLabelTTF* create(const char *s, const char *fontName, float fontSize, CC_DECRYPT_FUNC decryptFunc);
     
     /**
      * creates a CCLabelTTF from a fontname, horizontal alignment, dimension in points,  and font size in points.
      */
     static CCLabelTTF* create(const char *s, const char *fontName, float fontSize,
-                                  const CCSize& dimensions, CCTextAlignment hAlignment, CC_DECRYPT_FUNC decryptFunc = nullptr);
+                              const CCSize& dimensions, CCTextAlignment hAlignment);
+    static CCLabelTTF* create(const char *s, const char *fontName, float fontSize,
+                              const CCSize& dimensions, CCTextAlignment hAlignment, CC_DECRYPT_FUNC decryptFunc);
     
     /**
      * creates a CCLabelTTF from a fontname, alignment, dimension in points and font size in points
      */
     static CCLabelTTF* create(const char *s, const char *fontName, float fontSize,
+                              const CCSize& dimensions, CCTextAlignment hAlignment,
+                              CCVerticalTextAlignment vAlignment);
+    static CCLabelTTF* create(const char *s, const char *fontName, float fontSize,
                                   const CCSize& dimensions, CCTextAlignment hAlignment,
-                                  CCVerticalTextAlignment vAlignment, CC_DECRYPT_FUNC decryptFunc = nullptr);
+                                  CCVerticalTextAlignment vAlignment, CC_DECRYPT_FUNC decryptFunc);
     
     /** Create a lable with string and a font definition*/
     static CCLabelTTF* createWithFontDefinition(const char* s, ccFontDefinition &textDefinition);

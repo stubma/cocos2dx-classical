@@ -103,21 +103,25 @@ CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, f
     return pTimer;
 }
 
-CCTimer* CCTimer::timerWithScriptHandler(ccScriptFunction func, float fSeconds)
+CCTimer* CCTimer::timerWithScriptHandler(ccScriptFunction func, float fSeconds, unsigned int repeat, float delay)
 {
     CCTimer *pTimer = new CCTimer();
 
-    pTimer->initWithScriptHandler(func, fSeconds);
+    pTimer->initWithScriptHandler(func, fSeconds, repeat, delay);
     CC_SAFE_AUTORELEASE(pTimer);
 
     return pTimer;
 }
 
-bool CCTimer::initWithScriptHandler(ccScriptFunction nHandler, float fSeconds)
+bool CCTimer::initWithScriptHandler(ccScriptFunction nHandler, float fSeconds, unsigned int nRepeat, float fDelay)
 {
     m_nScriptHandler = nHandler;
     m_fElapsed = -1;
     m_fInterval = fSeconds;
+    m_fDelay = fDelay;
+    m_bUseDelay = (fDelay > 0.0f) ? true : false;
+    m_uRepeat = nRepeat;
+    m_bRunForever = (nRepeat == kCCRepeatForever) ? true : false;
 
     return true;
 }
@@ -624,9 +628,9 @@ void CCScheduler::unscheduleAllForTarget(CCObject *pTarget)
     unscheduleUpdateForTarget(pTarget);
 }
 
-unsigned int CCScheduler::scheduleScriptFunc(ccScriptFunction nHandler, float fInterval, bool bPaused)
+unsigned int CCScheduler::scheduleScriptFunc(ccScriptFunction nHandler, float fInterval, unsigned int repeat, float delay, bool bPaused)
 {
-    CCSchedulerScriptHandlerEntry* pEntry = CCSchedulerScriptHandlerEntry::create(nHandler, fInterval, bPaused);
+    CCSchedulerScriptHandlerEntry* pEntry = CCSchedulerScriptHandlerEntry::create(nHandler, fInterval, repeat, delay, bPaused);
     if (!m_pScriptHandlerEntries)
     {
         m_pScriptHandlerEntries = CCArray::createWithCapacity(20);

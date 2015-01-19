@@ -118,6 +118,12 @@ CCLabelTTF * CCLabelTTF::createWithFontDefinition(const char *string, ccFontDefi
     return nullptr;
 }
 
+CCLabelTTF * CCLabelTTF::create(const char *string, const char *fontName, float fontSize)
+{
+    return CCLabelTTF::create(string, fontName, fontSize,
+                              CCSizeZero, kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop, nullptr);
+}
+
 CCLabelTTF * CCLabelTTF::create(const char *string, const char *fontName, float fontSize, CC_DECRYPT_FUNC decryptFunc)
 {
     return CCLabelTTF::create(string, fontName, fontSize,
@@ -125,9 +131,22 @@ CCLabelTTF * CCLabelTTF::create(const char *string, const char *fontName, float 
 }
 
 CCLabelTTF * CCLabelTTF::create(const char *string, const char *fontName, float fontSize,
+                                const CCSize& dimensions, CCTextAlignment hAlignment)
+{
+    return CCLabelTTF::create(string, fontName, fontSize, dimensions, hAlignment, kCCVerticalTextAlignmentTop, nullptr);
+}
+
+CCLabelTTF * CCLabelTTF::create(const char *string, const char *fontName, float fontSize,
                                         const CCSize& dimensions, CCTextAlignment hAlignment, CC_DECRYPT_FUNC decryptFunc)
 {
     return CCLabelTTF::create(string, fontName, fontSize, dimensions, hAlignment, kCCVerticalTextAlignmentTop, decryptFunc);
+}
+
+CCLabelTTF* CCLabelTTF::create(const char *string, const char *fontName, float fontSize,
+                               const CCSize &dimensions, CCTextAlignment hAlignment,
+                               CCVerticalTextAlignment vAlignment)
+{
+    return CCLabelTTF::create(string, fontName, fontSize, dimensions, hAlignment, vAlignment, nullptr);
 }
 
 CCLabelTTF* CCLabelTTF::create(const char *string, const char *fontName, float fontSize,
