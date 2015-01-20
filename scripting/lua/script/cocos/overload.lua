@@ -4,11 +4,14 @@ local function create()
     local arg_table = {}
     local function dispatcher (...)
         local tbl = arg_table
-        local n = select ("#",...)
+        local n = select ("#", ...)
         local last_match
         for i = 1, n do
-            local t = type(select(i,...))
+            local t = type(select(i, ...))
             local n = tbl[t]
+            if (t == "userdata" or t == "table") and not n then
+                n = tbl["class"]
+            end
             last_match = tbl["..."] or last_match
             if not n then
                 return last_match (...)
@@ -62,7 +65,21 @@ local function register(env, desc, name)
     func_table[name](desc,func)
 end
 
--- define overload function in cc module
+--[[ 
+    define overload function in cc module
+    example usage:
+    define.test {
+        "string",
+        function(n)
+            cc.log(n)
+        end
+    }
+    
+    function should be placed in the end, and put every argument type string
+    before it. argument type string can be "number", "string", "table", "userdata", "...",
+    and one more type "class" which means "userdata" or "table", mainly used for builtin and
+    inherited CCObject subclass
+--]]
 define = setmetatable({}, {
                         __index = function (t,k)
                             local function reg(desc)

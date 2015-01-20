@@ -6,7 +6,7 @@ define.createSprite {
     "number",
     "number",
     "number",
-    "userdata",
+    "class",
     "number",
     "number",
     function(name, x, y, aX, aY, parent, z, tag)
