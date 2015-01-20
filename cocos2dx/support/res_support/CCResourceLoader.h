@@ -352,6 +352,14 @@ public:
 	 */
 	static void loadZwoptex(const string& plistName, const string& texName, CC_DECRYPT_FUNC decFunc);
     
+    /**
+     * a static method used to load an encrypted zwoptex resource, the plist should not be encrypted
+     *
+     * @param plistName name of plist file, it should not be encrypted
+     * @param texName name of image file, it should be encrypted
+     */
+    static void loadZwoptex(const string& plistName, const string& texName);
+    
     /// unload image
     static void unloadImages(const string& tex);
     

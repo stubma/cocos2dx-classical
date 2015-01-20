@@ -345,6 +345,10 @@ void CCResourceLoader::loadImage(const string& name, CC_DECRYPT_FUNC decFunc) {
 	free(data);
 }
 
+void CCResourceLoader::loadZwoptex(const string& plistName, const string& texName) {
+    loadZwoptex(plistName, texName, nullptr);
+}
+
 void CCResourceLoader::loadZwoptex(const string& plistName, const string& texName, CC_DECRYPT_FUNC decFunc) {
 	// load encryptd data
 	unsigned long len;
