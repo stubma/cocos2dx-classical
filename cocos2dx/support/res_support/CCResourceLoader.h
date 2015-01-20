@@ -96,19 +96,6 @@ struct BMFontLoadTask : public CCResourceLoadTask {
     virtual void load();
 };
 
-/// bitmap font load task, image is encrypted
-struct EncryptedBMFontLoadTask : public CCResourceLoadTask {
-    /// fnt file name
-    string name;
-    
-    /// decrypt func
-    CC_DECRYPT_FUNC func;
-    
-    virtual ~EncryptedBMFontLoadTask() {}
-    
-    virtual void load();
-};
-
 /// image load parameter
 struct ImageLoadTask : public CCResourceLoadTask {
     /// image name
@@ -119,41 +106,15 @@ struct ImageLoadTask : public CCResourceLoadTask {
     virtual void load();
 };
 
-/// encrypted image load parameter
-struct EncryptedImageLoadTask : public CCResourceLoadTask {
-    /// image name
-    string name;
-    
-    /// decrypt function
-    CC_DECRYPT_FUNC func;
-    
-    virtual ~EncryptedImageLoadTask() {}
-    
-    virtual void load();
-};
-
 /// zwoptex load parameter
 struct ZwoptexLoadTask : public CCResourceLoadTask {
     /// plist name
     string name;
     
-    virtual ~ZwoptexLoadTask() {}
-    
-    virtual void load();
-};
-
-/// encrypted zwoptex load task
-struct EncryptedZwoptexLoadTask : public CCResourceLoadTask {
-    /// plist name, plist is not encrypted
-    string name;
-    
-    /// texture name, which is encrypted
+    /// texture name
     string texName;
     
-    // decrypt func
-    CC_DECRYPT_FUNC func;
-    
-    virtual ~EncryptedZwoptexLoadTask() {}
+    virtual ~ZwoptexLoadTask() {}
     
     virtual void load();
 };
@@ -309,56 +270,48 @@ public:
     static void abortAll();
 	
     /**
-     * load a file and return raw data
+     * load a file and return raw data, if global decrypt is set, it will be
+     * used to decrypt file
      *
      * @param name file path
-     * @param decFunc decrypt function or nullptr if file is not encrypted
      * @return raw data of file, caller should release it
      */
-    static unsigned char* loadRaw(const string& name, unsigned long* size, CC_DECRYPT_FUNC decFunc = nullptr);
+    static unsigned char* loadRaw(const string& name, unsigned long* size);
     
     /**
-     * load a file and return a c string
+     * load a file and return a c string, if global decrypt is set, it will be
+     * used to decrypt file
      *
      * @param name file path
-     * @param decFunc decrypt function or nullptr if file is not encrypted
      * @return c string of file content, caller should release it
      */
-    static char* loadCString(const string& name, CC_DECRYPT_FUNC decFunc = nullptr);
+    static char* loadCString(const string& name);
     
     /**
-     * load a file and return a c++ string
+     * load a file and return a c++ string, if global decrypt is set, it will be
+     * used to decrypt file
      *
      * @param name file path
-     * @param decFunc decrypt function or nullptr if file is not encrypted
      * @return c string of file content, caller should release it
      */
-    static string loadString(const string& name, CC_DECRYPT_FUNC decFunc = nullptr);
+    static string loadString(const string& name);
     
 	/**
-	 * a static method used to load an encrypted image
+	 * a static method used to load an image, if global decrypt is set, it will be
+     * used to decrypt image data
 	 *
-	 * @param name name of image file, it should be encrypted
-	 * @param decFunc decrypt func
+	 * @param name name of image file
 	 */
-	static void loadImage(const string& name, CC_DECRYPT_FUNC decFunc);
+	static void loadImage(const string& name);
     
 	/**
-	 * a static method used to load an encrypted zwoptex resource, the plist should not be encrypted
-	 *
+     * a static method used to load an atlas resource, if global decrypt is set, it will be
+     * used to decrypt file
+     *
 	 * @param plistName name of plist file, it should not be encrypted
 	 * @param texName name of image file, it should be encrypted
-	 * @param decFunc decrypt func
 	 */
-	static void loadZwoptex(const string& plistName, const string& texName, CC_DECRYPT_FUNC decFunc);
-    
-    /**
-     * a static method used to load an encrypted zwoptex resource, the plist should not be encrypted
-     *
-     * @param plistName name of plist file, it should not be encrypted
-     * @param texName name of image file, it should be encrypted
-     */
-    static void loadZwoptex(const string& plistName, const string& texName);
+	static void loadZwoptex(const string& plistName, const string& texName);
     
     /// unload image
     static void unloadImages(const string& tex);
@@ -390,9 +343,6 @@ public:
     /// add bitmap font loading task
     void addBMFontTask(const string& fntFile);
     
-    /// add bitmap font loading task, and the bitmap font atlas is encrypted
-    void addBMFontTask(const string& fntFile, CC_DECRYPT_FUNC decFunc);
-    
     /**
      * add an Android string loading task
      *
@@ -402,16 +352,12 @@ public:
      */
     void addAndroidStringTask(const string& lan, const string& path, bool merge = false);
 	
-	/// add a image loading task
-	void addImageTask(const string& name);
-	
 	/**
-	 * add a image task, but the texture is encrypted. So a decrypt function must be provided.
+	 * add a image task, if global gResDecrypt is set, it will be used to decrypt data
 	 *
-	 * @param name name of image file, it should be encrypted
-	 * @param decFunc decrypt func
+	 * @param name name of image file
 	 */
-	void addImageTask(const string& name, CC_DECRYPT_FUNC decFunc);
+	void addImageTask(const string& name);
 	
 	/// add a zwoptex image loading task
 	void addAtlasTaskByPlist(const string& name);
@@ -426,15 +372,6 @@ public:
      * @param texName name of image file, it should be encrypted
      */
     void addAtlasTaskByPlistAndImage(const string& plistName, const string& texName);
-    
-	/**
-	 * add a zwoptex task, but the texture is encrypted. So a decrypt function must be provided.
-	 *
-	 * @param plistName name of plist file, it should not be encrypted
-	 * @param texName name of image file, it should be encrypted
-	 * @param decFunc decrypt func
-	 */
-	void addAtlasTaskByPlistAndImage(const string& plistName, const string& texName, CC_DECRYPT_FUNC decFunc);
 	
     /**
      * add a multipack zwoptex task, but the texture is encrypted. So a decrypt function must be provided.
@@ -445,17 +382,6 @@ public:
      * @param end end index in pattern
      */
     void addAtlasTaskByPlistAndImagePattern(const string& plistPattern, const string& texPattern, int start, int end);
-    
-	/**
-	 * add a multipack zwoptex task, but the texture is encrypted. So a decrypt function must be provided.
-	 *
-	 * @param plistPattern pattern of plist file, it should not be encrypted
-	 * @param texPattern name pattern of image file, it should be encrypted
-	 * @param start start index in pattern
-	 * @param end end index in pattern
-	 * @param decFunc decrypt func
-	 */
-	void addAtlasTaskByPlistAndImagePattern(const string& plistPattern, const string& texPattern, int start, int end, CC_DECRYPT_FUNC decFunc);
 	
 	/// add a cocosdenshion effect task
 	void addCDEffectTask(const string& name);
@@ -537,17 +463,6 @@ public:
      * @param config path of armature config file
      */
     void addArmatureTask(string plist, string tex, string config);
-    
-    /**
-     * add an armature config file task, also load related image files. Decryption is 
-     * optional and you should not encrypt plist and config file
-     * 
-     * @param plist path of atlas plist file
-     * @param tex path of atlas image file
-     * @param config path of armature config file
-     * @param func decrypte func, default is nullptr
-     */
-    void addArmatureTask(string plist, string tex, string config, CC_DECRYPT_FUNC func);
  
     /**
      * add an armature config file task, also load related image files
@@ -559,19 +474,6 @@ public:
      * @param config path of armature config file
      */
     void addArmatureTask(string plistPattern, string texPattern, int start, int end, string config);
-    
-    /**
-     * add an armature config file task, also load related image files. Decryption is
-     * optional and you should not encrypt plist and config file
-     *
-     * @param plistPattern path pattern of atlas plist file
-     * @param texPattern path pattern of atlas image file
-     * @param start start parameter in pattern
-     * @param end end parameter in pattern
-     * @param config path of armature config file
-     * @param func decrypte func, default is nullptr
-     */
-    void addArmatureTask(string plistPattern, string texPattern, int start, int end, string config, CC_DECRYPT_FUNC func);
 	
 	/// delay time before start to load
 	CC_SYNTHESIZE(float, m_delay, Delay);

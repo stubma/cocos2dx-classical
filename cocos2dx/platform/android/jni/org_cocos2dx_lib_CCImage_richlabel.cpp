@@ -121,14 +121,14 @@ JNIEXPORT void JNICALL Java_org_cocos2dx_lib_CCImage_1richlabel_nativeGetSpriteF
 		string plistPath = CCUtils::getExternalOrFullPath(plist);
 
 		// need to be decrypted or not
-		if(bitmapDC.m_decryptFunc) {
+		if(gResDecrypt) {
 			// load encryptd data
 			unsigned long len;
 			char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(atlasPath.c_str(), "rb", &len);
 
 			// create texture
 			int decLen;
-			const char* dec = (*bitmapDC.m_decryptFunc)(data, (int)len, &decLen);
+			const char* dec = (*gResDecrypt)(data, (int)len, &decLen);
 			CCImage* image = new CCImage();
 			image->initWithImageData((void*)dec, decLen);
 			image->autorelease();
@@ -183,13 +183,13 @@ JNIEXPORT void JNICALL Java_org_cocos2dx_lib_CCImage_1richlabel_nativeGetSpriteF
 
 JNIEXPORT jbyteArray JNICALL Java_org_cocos2dx_lib_CCImage_1richlabel_nativeDecryptData(JNIEnv* env, jclass clazz, jbyteArray jInput) {
 	CLBitmapDC& bitmapDC = CLBitmapDC::sharedCLBitmapDC();
-	if(bitmapDC.m_decryptFunc) {
+	if(gResDecrypt) {
 		// get c array
 		const char* input = (const char*)env->GetByteArrayElements(jInput, NULL);
 
 		// decrypt
 		int decLen;
-		const char* dec = (*bitmapDC.m_decryptFunc)(input, (int)env->GetArrayLength(jInput), &decLen);
+		const char* dec = (*gResDecrypt)(input, (int)env->GetArrayLength(jInput), &decLen);
 
 		// create new array
 		jbyteArray ret = env->NewByteArray(decLen);

@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "cocoa/CCArray.h"
 #include "CCScheduler.h"
 #include "ccMacros.h"
+#include "ccTypes.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "support/CCPointExtension.h"
 #include "support/CCNotificationCenter.h"
@@ -65,8 +66,6 @@ THE SOFTWARE.
 #include "CCEGLView.h"
 #include "CCConfiguration.h"
 
-
-
 /**
  Position of the FPS
  
@@ -82,6 +81,11 @@ unsigned int g_uNumberOfDraws = 0;
 
 NS_CC_BEGIN
 // XXX it should be a Director ivar. Move it there once support for multiple directors is added
+
+// global decrypt/encrypt functions, set by CCDirector
+CC_DECRYPT_FUNC gResDecrypt = nullptr;
+CC_DECRYPT_FUNC gUserDefaultDecrypt = nullptr;
+CC_ENCRYPT_FUNC gUserDefaultEncrypt = nullptr;
 
 // singleton stuff
 static CCDisplayLinkDirector *s_SharedDirector = nullptr;
@@ -192,6 +196,18 @@ CCDirector::~CCDirector(void)
     delete []m_pszFPS;
 
     s_SharedDirector = nullptr;
+}
+
+void CCDirector::setResDecrypt(CC_DECRYPT_FUNC dec) {
+    gResDecrypt = dec;
+}
+
+void CCDirector::setUserDefaultDecrypt(CC_DECRYPT_FUNC dec) {
+    gUserDefaultDecrypt = dec;
+}
+
+void CCDirector::setUserDefaultEncrypt(CC_ENCRYPT_FUNC enc) {
+    gUserDefaultEncrypt = enc;
 }
 
 void CCDirector::setDefaultValues(void)

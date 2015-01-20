@@ -68,39 +68,35 @@ void ZwoptexAnimLoadTask::load() {
 }
 
 void ZwoptexLoadTask::load() {
-    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name.c_str());
-}
-
-void EncryptedZwoptexLoadTask::load() {
-    // load encryptd data
-    unsigned long len;
-    char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(texName.c_str(), "rb", &len);
-    
-    // create texture
-    int decLen;
-    const char* dec = nullptr;
-    if(func) {
-        dec = (*func)(data, len, &decLen);
+    if(texName.empty()) {
+        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name.c_str());
     } else {
-        dec = data;
-        decLen = (int)len;
-    }
-    CCImage* image = new CCImage();
-    image->initWithImageData((void*)dec, decLen);
-    CC_SAFE_AUTORELEASE(image);
-    CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addUIImage(image, texName.c_str());
-    
-    // free
-    if(dec != data)
+        // load encryptd data
+        unsigned long len;
+        char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(texName.c_str(), "rb", &len);
+        
+        // create texture
+        int decLen;
+        const char* dec = nullptr;
+        if(gResDecrypt) {
+            dec = (*gResDecrypt)(data, len, &decLen);
+        } else {
+            dec = data;
+            decLen = (int)len;
+        }
+        CCImage* image = new CCImage();
+        image->initWithImageData((void*)dec, decLen);
+        CC_SAFE_AUTORELEASE(image);
+        CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addUIImage(image, texName.c_str());
+        
+        // free
+        if(dec != data)
         free((void*)dec);
-    free(data);
-    
-    // add zwoptex
-    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name.c_str(), tex);
-}
-
-void ImageLoadTask::load() {
-    CCTextureCache::sharedTextureCache()->addImage(name.c_str());
+        free(data);
+        
+        // add zwoptex
+        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name.c_str(), tex);
+    }
 }
 
 void CustomTask::load() {
@@ -110,61 +106,65 @@ void CustomTask::load() {
     }
 }
 
-void EncryptedImageLoadTask::load() {
-    // load encryptd data
-    unsigned long len;
-    char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(name.c_str(), "rb", &len);
-    
-    // create texture
-    int decLen;
-    const char* dec = nullptr;
-    if(func) {
-        dec = (*func)(data, len, &decLen);
-    } else {
-        dec = data;
-        decLen = (int)len;
-    }
-    CCImage* image = new CCImage();
-    image->initWithImageData((void*)dec, decLen);
-    CC_SAFE_AUTORELEASE(image);
-    CCTextureCache::sharedTextureCache()->addUIImage(image, name.c_str());
-    
-    // free
-    if(dec != data)
+void ImageLoadTask::load() {
+    if(gResDecrypt) {
+        // load encryptd data
+        unsigned long len;
+        char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(name.c_str(), "rb", &len);
+        
+        // create texture
+        int decLen;
+        const char* dec = nullptr;
+        if(gResDecrypt) {
+            dec = (*gResDecrypt)(data, len, &decLen);
+        } else {
+            dec = data;
+            decLen = (int)len;
+        }
+        CCImage* image = new CCImage();
+        image->initWithImageData((void*)dec, decLen);
+        CC_SAFE_AUTORELEASE(image);
+        CCTextureCache::sharedTextureCache()->addUIImage(image, name.c_str());
+        
+        // free
+        if(dec != data)
         free((void*)dec);
-    free(data);
+        free(data);
+    } else {
+        CCTextureCache::sharedTextureCache()->addImage(name.c_str());
+    }
 }
 
 void BMFontLoadTask::load() {
-    CCBMFontConfiguration* conf = FNTConfigLoadFile(name.c_str());
-    CCTextureCache::sharedTextureCache()->addImage(conf->getAtlasName());
-}
-
-void EncryptedBMFontLoadTask::load() {
-    CCBMFontConfiguration* conf = FNTConfigLoadFile(name.c_str());
-    
-    // load encryptd data
-    unsigned long len;
-    char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(conf->getAtlasName(), "rb", &len);
-    
-    // create texture
-    int decLen;
-    const char* dec = nullptr;
-    if(func) {
-        dec = (*func)(data, len, &decLen);
-    } else {
-        dec = data;
-        decLen = (int)len;
-    }
-    CCImage* image = new CCImage();
-    image->initWithImageData((void*)dec, decLen);
-    CC_SAFE_AUTORELEASE(image);
-    CCTextureCache::sharedTextureCache()->addUIImage(image, conf->getAtlasName());
-    
-    // free
-    if(dec != data)
+    if(gResDecrypt) {
+        CCBMFontConfiguration* conf = FNTConfigLoadFile(name.c_str());
+        
+        // load encryptd data
+        unsigned long len;
+        char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(conf->getAtlasName(), "rb", &len);
+        
+        // create texture
+        int decLen;
+        const char* dec = nullptr;
+        if(gResDecrypt) {
+            dec = (*gResDecrypt)(data, len, &decLen);
+        } else {
+            dec = data;
+            decLen = (int)len;
+        }
+        CCImage* image = new CCImage();
+        image->initWithImageData((void*)dec, decLen);
+        CC_SAFE_AUTORELEASE(image);
+        CCTextureCache::sharedTextureCache()->addUIImage(image, conf->getAtlasName());
+        
+        // free
+        if(dec != data)
         free((void*)dec);
-    free(data);
+        free(data);
+    } else {
+        CCBMFontConfiguration* conf = FNTConfigLoadFile(name.c_str());
+        CCTextureCache::sharedTextureCache()->addImage(conf->getAtlasName());
+    }
 }
 
 void CDMusicTask::load() {
@@ -257,7 +257,7 @@ void CCResourceLoader::unloadArmatures(string plistPattern, string texPattern, i
     }
 }
 
-unsigned char* CCResourceLoader::loadRaw(const string& name, unsigned long* size, CC_DECRYPT_FUNC decFunc) {
+unsigned char* CCResourceLoader::loadRaw(const string& name, unsigned long* size) {
     // load encryptd data
 	unsigned long len;
 	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(name.c_str(), "rb", &len);
@@ -265,8 +265,8 @@ unsigned char* CCResourceLoader::loadRaw(const string& name, unsigned long* size
     // create texture
 	int decLen;
     const char* dec = nullptr;
-	if(decFunc) {
-        dec = (*decFunc)(data, len, &decLen);
+	if(gResDecrypt) {
+        dec = (*gResDecrypt)(data, len, &decLen);
     } else {
         dec = data;
         decLen = (int)len;
@@ -284,14 +284,14 @@ unsigned char* CCResourceLoader::loadRaw(const string& name, unsigned long* size
     return (unsigned char*)dec;
 }
 
-string CCResourceLoader::loadString(const string& name, CC_DECRYPT_FUNC decFunc) {
-    char* buf = loadCString(name, decFunc);
+string CCResourceLoader::loadString(const string& name) {
+    char* buf = loadCString(name);
     string ret = buf;
     free(buf);
     return ret;
 }
 
-char* CCResourceLoader::loadCString(const string& name, CC_DECRYPT_FUNC decFunc) {
+char* CCResourceLoader::loadCString(const string& name) {
     // load encryptd data
 	unsigned long len;
 	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(name.c_str(), "rb", &len);
@@ -299,8 +299,8 @@ char* CCResourceLoader::loadCString(const string& name, CC_DECRYPT_FUNC decFunc)
 	// create texture
 	int decLen;
     const char* dec = nullptr;
-	if(decFunc) {
-        dec = (*decFunc)(data, len, &decLen);
+	if(gResDecrypt) {
+        dec = (*gResDecrypt)(data, len, &decLen);
     } else {
         dec = data;
         decLen = (int)len;
@@ -320,7 +320,7 @@ char* CCResourceLoader::loadCString(const string& name, CC_DECRYPT_FUNC decFunc)
     return ret;
 }
 
-void CCResourceLoader::loadImage(const string& name, CC_DECRYPT_FUNC decFunc) {
+void CCResourceLoader::loadImage(const string& name) {
 	// load encryptd data
 	unsigned long len;
 	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(name.c_str(), "rb", &len);
@@ -328,8 +328,8 @@ void CCResourceLoader::loadImage(const string& name, CC_DECRYPT_FUNC decFunc) {
 	// create texture
 	int decLen;
     const char* dec = nullptr;
-	if(decFunc) {
-        dec = (*decFunc)(data, len, &decLen);
+	if(gResDecrypt) {
+        dec = (*gResDecrypt)(data, len, &decLen);
     } else {
         dec = data;
         decLen = (int)len;
@@ -346,10 +346,6 @@ void CCResourceLoader::loadImage(const string& name, CC_DECRYPT_FUNC decFunc) {
 }
 
 void CCResourceLoader::loadZwoptex(const string& plistName, const string& texName) {
-    loadZwoptex(plistName, texName, nullptr);
-}
-
-void CCResourceLoader::loadZwoptex(const string& plistName, const string& texName, CC_DECRYPT_FUNC decFunc) {
 	// load encryptd data
 	unsigned long len;
 	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(texName.c_str(), "rb", &len);
@@ -357,8 +353,8 @@ void CCResourceLoader::loadZwoptex(const string& plistName, const string& texNam
 	// create texture
 	int decLen;
 	const char* dec = nullptr;
-	if(decFunc) {
-        dec = (*decFunc)(data, len, &decLen);
+	if(gResDecrypt) {
+        dec = (*gResDecrypt)(data, len, &decLen);
     } else {
         dec = data;
         decLen = (int)len;
@@ -428,29 +424,16 @@ void CCResourceLoader::addImageTask(const string& name) {
     addLoadTask(t);
 }
 
-void CCResourceLoader::addImageTask(const string& name, CC_DECRYPT_FUNC decFunc) {
-	EncryptedImageLoadTask* t = new EncryptedImageLoadTask();
-	t->name = name;
-	t->func = decFunc;
-	addLoadTask(t);
-}
-
 void CCResourceLoader::addBMFontTask(const string& fntFile) {
     BMFontLoadTask* t = new BMFontLoadTask();
     t->name = fntFile;
     addLoadTask(t);
 }
 
-void CCResourceLoader::addBMFontTask(const string& fntFile, CC_DECRYPT_FUNC decFunc) {
-    EncryptedBMFontLoadTask* t = new EncryptedBMFontLoadTask();
-    t->name = fntFile;
-    t->func = decFunc;
-    addLoadTask(t);
-}
-
 void CCResourceLoader::addAtlasTaskByPlist(const string& name) {
     ZwoptexLoadTask* t = new ZwoptexLoadTask();
     t->name = name;
+    t->texName = "";
     addLoadTask(t);
 }
 
@@ -463,27 +446,18 @@ void CCResourceLoader::addAtlasTaskByPlistPattern(const string& pattern, int sta
 }
 
 void CCResourceLoader::addAtlasTaskByPlistAndImage(const string& plistName, const string& texName) {
-    addAtlasTaskByPlistAndImage(plistName, texName, nullptr);
-}
-
-void CCResourceLoader::addAtlasTaskByPlistAndImage(const string& plistName, const string& texName, CC_DECRYPT_FUNC decFunc) {
-	EncryptedZwoptexLoadTask* t = new EncryptedZwoptexLoadTask();
+	ZwoptexLoadTask* t = new ZwoptexLoadTask();
 	t->name = plistName;
 	t->texName = texName;
-	t->func = decFunc;
 	addLoadTask(t);
 }
 
 void CCResourceLoader::addAtlasTaskByPlistAndImagePattern(const string& plistPattern, const string& texPattern, int start, int end) {
-    addAtlasTaskByPlistAndImagePattern(plistPattern, texPattern, start, end, nullptr);
-}
-
-void CCResourceLoader::addAtlasTaskByPlistAndImagePattern(const string& plistPattern, const string& texPattern, int start, int end, CC_DECRYPT_FUNC decFunc) {
 	char buf1[512], buf2[512];
 	for(int i = start; i <= end; i++) {
 		sprintf(buf1, plistPattern.c_str(), i);
 		sprintf(buf2, texPattern.c_str(), i);
-		addAtlasTaskByPlistAndImage(buf1, buf2, decFunc);
+		addAtlasTaskByPlistAndImage(buf1, buf2);
 	}
 }
 
@@ -613,12 +587,8 @@ void CCResourceLoader::addArmatureTask(string config) {
 }
 
 void CCResourceLoader::addArmatureTask(string plist, string tex, string config) {
-    addArmatureTask(plist, tex, config, nullptr);
-}
-
-void CCResourceLoader::addArmatureTask(string plist, string tex, string config, CC_DECRYPT_FUNC func) {
     if(!plist.empty() && !tex.empty()) {
-        addAtlasTaskByPlistAndImage(plist, tex, func);
+        addAtlasTaskByPlistAndImage(plist, tex);
     }
     
     if(!config.empty())
@@ -626,15 +596,11 @@ void CCResourceLoader::addArmatureTask(string plist, string tex, string config, 
 }
 
 void CCResourceLoader::addArmatureTask(string plistPattern, string texPattern, int start, int end, string config) {
-    addArmatureTask(plistPattern, texPattern, start, end, config, nullptr);
-}
-
-void CCResourceLoader::addArmatureTask(string plistPattern, string texPattern, int start, int end, string config, CC_DECRYPT_FUNC func) {
     char buf1[512], buf2[512];
 	for(int i = start; i <= end; i++) {
 		sprintf(buf1, plistPattern.c_str(), i);
 		sprintf(buf2, texPattern.c_str(), i);
-		addAtlasTaskByPlistAndImage(buf1, buf2, func);
+		addAtlasTaskByPlistAndImage(buf1, buf2);
 	}
     
     if(!config.empty())

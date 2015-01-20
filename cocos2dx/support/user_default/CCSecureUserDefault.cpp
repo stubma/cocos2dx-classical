@@ -23,6 +23,7 @@
  ****************************************************************************/
 #include "CCSecureUserDefault.h"
 #include "CCBase64.h"
+#include "CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -42,12 +43,6 @@ CCSecureUserDefault* CCSecureUserDefault::getInstance() {
 	return s_instance;
 }
 
-void CCSecureUserDefault::init(CC_ENCRYPT_FUNC eFunc, CC_DECRYPT_FUNC dFunc) {
-	CCSecureUserDefault* d = CCSecureUserDefault::getInstance();
-	d->m_encryptFunc = eFunc;
-	d->m_decryptFunc = dFunc;
-}
-
 void CCSecureUserDefault::purge() {
 	delete s_instance;
 }
@@ -56,7 +51,7 @@ const char* CCSecureUserDefault::getSecureValue(const char* pKey, int* outLen) {
 	string v = CCUserDefault::sharedUserDefault()->getStringForKey(pKey);
 	int len;
 	const char* dec = CCBase64::decodeAsCString(v, &len);
-	const char* plain = dec ? (*m_decryptFunc)(dec, len, outLen) : nullptr;
+	const char* plain = dec ? (*gUserDefaultDecrypt)(dec, len, outLen) : nullptr;
 	
 	// free dec
 	if(dec && plain != dec)
@@ -70,7 +65,7 @@ bool CCSecureUserDefault::getBoolForKey(const char* pKey) {
 }
 
 bool CCSecureUserDefault::getBoolForKey(const char* pKey, bool defaultValue) {
-	if(m_decryptFunc) {
+	if(gUserDefaultDecrypt) {
 		// for bool, we save "true" string
         int len;
 		const char* plain = getSecureValue(pKey, &len);
@@ -95,7 +90,7 @@ int CCSecureUserDefault::getIntegerForKey(const char* pKey) {
 }
 
 int CCSecureUserDefault::getIntegerForKey(const char* pKey, int defaultValue) {
-	if(m_decryptFunc) {
+	if(gUserDefaultDecrypt) {
 		// for integer, we save number string
         int len;
 		const char* plain = getSecureValue(pKey, &len);
@@ -120,7 +115,7 @@ float CCSecureUserDefault::getFloatForKey(const char* pKey) {
 }
 
 float CCSecureUserDefault::getFloatForKey(const char* pKey, float defaultValue) {
-	if(m_decryptFunc) {
+	if(gUserDefaultDecrypt) {
 		// for integer, we save number string
         int len;
 		const char* plain = getSecureValue(pKey, &len);
@@ -145,7 +140,7 @@ double CCSecureUserDefault::getDoubleForKey(const char* pKey) {
 }
 
 double CCSecureUserDefault::getDoubleForKey(const char* pKey, double defaultValue) {
-	if(m_decryptFunc) {
+	if(gUserDefaultDecrypt) {
 		// for integer, we save number string
         int len;
 		const char* plain = getSecureValue(pKey, &len);
@@ -170,7 +165,7 @@ string CCSecureUserDefault::getStringForKey(const char* pKey) {
 }
 
 string CCSecureUserDefault::getStringForKey(const char* pKey, const string& defaultValue) {
-	if(m_decryptFunc) {
+	if(gUserDefaultDecrypt) {
 		// for integer, we save number string
         int len;
 		const char* plain = getSecureValue(pKey, &len);
@@ -187,9 +182,9 @@ string CCSecureUserDefault::getStringForKey(const char* pKey, const string& defa
 }
 
 void CCSecureUserDefault::setBoolForKey(const char* pKey, bool value) {
-	if(m_encryptFunc) {
+	if(gUserDefaultEncrypt) {
 		int encLen;
-		const char* enc = (*m_encryptFunc)(value ? "true" : "false", value ? 4 : 5, &encLen);
+		const char* enc = (*gUserDefaultEncrypt)(value ? "true" : "false", value ? 4 : 5, &encLen);
 		string b64 = CCBase64::encode(enc, encLen);
 		CCUserDefault::sharedUserDefault()->setStringForKey(pKey, b64);
         
@@ -202,11 +197,11 @@ void CCSecureUserDefault::setBoolForKey(const char* pKey, bool value) {
 }
 
 void CCSecureUserDefault::setIntegerForKey(const char* pKey, int value) {
-	if(m_encryptFunc) {
+	if(gUserDefaultEncrypt) {
 		char buf[32];
 		sprintf(buf, "%d", value);
 		int encLen;
-		const char* enc = (*m_encryptFunc)(buf, (int)strlen(buf), &encLen);
+		const char* enc = (*gUserDefaultEncrypt)(buf, (int)strlen(buf), &encLen);
 		string b64 = CCBase64::encode(enc, encLen);
 		CCUserDefault::sharedUserDefault()->setStringForKey(pKey, b64);
         
@@ -219,11 +214,11 @@ void CCSecureUserDefault::setIntegerForKey(const char* pKey, int value) {
 }
 
 void CCSecureUserDefault::setFloatForKey(const char* pKey, float value) {
-	if(m_encryptFunc) {
+	if(gUserDefaultEncrypt) {
 		char buf[64];
 		sprintf(buf, "%f", value);
 		int encLen;
-		const char* enc = (*m_encryptFunc)(buf, (int)strlen(buf), &encLen);
+		const char* enc = (*gUserDefaultEncrypt)(buf, (int)strlen(buf), &encLen);
 		string b64 = CCBase64::encode(enc, encLen);
 		CCUserDefault::sharedUserDefault()->setStringForKey(pKey, b64);
         
@@ -236,11 +231,11 @@ void CCSecureUserDefault::setFloatForKey(const char* pKey, float value) {
 }
 
 void CCSecureUserDefault::setDoubleForKey(const char* pKey, double value) {
-	if(m_encryptFunc) {
+	if(gUserDefaultEncrypt) {
 		char buf[128];
 		sprintf(buf, "%lf", value);
 		int encLen;
-		const char* enc = (*m_encryptFunc)(buf, (int)strlen(buf), &encLen);
+		const char* enc = (*gUserDefaultEncrypt)(buf, (int)strlen(buf), &encLen);
 		string b64 = CCBase64::encode(enc, encLen);
 		CCUserDefault::sharedUserDefault()->setStringForKey(pKey, b64);
         
@@ -253,9 +248,9 @@ void CCSecureUserDefault::setDoubleForKey(const char* pKey, double value) {
 }
 
 void CCSecureUserDefault::setStringForKey(const char* pKey, const string& value) {
-	if(m_encryptFunc) {
+	if(gUserDefaultEncrypt) {
 		int encLen;
-		const char* enc = (*m_encryptFunc)(value.c_str(), (int)value.length(), &encLen);
+		const char* enc = (*gUserDefaultEncrypt)(value.c_str(), (int)value.length(), &encLen);
 		string b64 = CCBase64::encode(enc, encLen);
 		CCUserDefault::sharedUserDefault()->setStringForKey(pKey, b64);
         

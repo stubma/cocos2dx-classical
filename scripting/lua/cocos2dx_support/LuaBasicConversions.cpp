@@ -1661,13 +1661,6 @@ bool luaval_to_fontdefinition(lua_State* L, int lo, ccFontDefinition* outValue ,
         }
         lua_pop(L, 1);
         
-        lua_pushstring(L, "decryptFunc");
-        lua_gettable(L, lo);
-        if (!lua_isnil(L, -1)) {
-            outValue->decryptFunc = (CC_DECRYPT_FUNC)tolua_touserdata(L, -1, nullptr);
-        }
-        lua_pop(L, 1);
-        
         lua_pushstring(L, "elapsed");
         lua_gettable(L, lo);
         if(!lua_isnil(L, -1)) {
@@ -2605,10 +2598,6 @@ void fontdefinition_to_luaval(lua_State* L,const ccFontDefinition& inValue)
     
     lua_pushstring(L, "toCharIndex");
     lua_pushinteger(L, (lua_Integer)inValue.m_toCharIndex);
-    lua_rawset(L, -3);
-    
-    lua_pushstring(L, "decryptFunc");
-    lua_pushlightuserdata(L, (void*)inValue.decryptFunc);
     lua_rawset(L, -3);
     
     lua_pushstring(L, "elapsed");

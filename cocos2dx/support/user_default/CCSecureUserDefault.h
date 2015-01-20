@@ -35,11 +35,7 @@ NS_CC_BEGIN
  * You can set a decrypt and encrypt method for it. If not set, it is just same as
  * CCUserDefault
  */
-class CC_DLL CCSecureUserDefault {	
-private:
-	CC_DECRYPT_FUNC m_decryptFunc;
-	CC_ENCRYPT_FUNC m_encryptFunc;
-	
+class CC_DLL CCSecureUserDefault {
 protected:
 	CCSecureUserDefault();
 	
@@ -51,9 +47,6 @@ public:
 	
 	/// get singleton
 	static CCSecureUserDefault* getInstance();
-	
-	/// init
-	static void init(CC_ENCRYPT_FUNC eFunc, CC_DECRYPT_FUNC dFunc);
 	
 	/// default all defaults
     static void purge();

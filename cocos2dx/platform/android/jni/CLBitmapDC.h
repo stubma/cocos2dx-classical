@@ -56,9 +56,6 @@ public:
 	// this data will pass to CCImage, so it should NOT be released in this class
 	unsigned char* m_pData;
 
-	// decrypt function
-	CC_DECRYPT_FUNC m_decryptFunc;
-
 	// length of unstyled string
 	int m_realLength;
 
@@ -76,7 +73,7 @@ public:
 	bool getBitmapFromJavaShadowStroke(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, float fontSize,
 			float textTintR = 1.0, float textTintG = 1.0, float textTintB = 1.0, bool shadow = false, float shadowDeltaX = 0.0, float shadowDeltaY = 0.0, int shadowColor = 0,
 			float shadowBlur = 0.0, bool stroke = false, float strokeColorR = 0.0, float strokeColorG = 0.0, float strokeColorB =
-					0.0, float strokeSize = 0.0, float lineSpacing = 0, float globalImageScaleFactor = 1, int toCharIndex = -1, float elapsedTime = 0, CC_DECRYPT_FUNC decryptFunc = NULL, bool sizeOnly = false);
+					0.0, float strokeSize = 0.0, float lineSpacing = 0, float globalImageScaleFactor = 1, int toCharIndex = -1, float elapsedTime = 0, bool sizeOnly = false);
 
 	bool getBitmapFromJava(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, float fontSize);
 

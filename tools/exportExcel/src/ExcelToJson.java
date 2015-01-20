@@ -281,7 +281,7 @@ public class ExcelToJson {
 			.append("void " + className + "::ensureLoaded() {\n")
 			.append("\tif(!sLoaded) {\n")
 			.append("\t\tstring fullPath = CCUtils::getExternalOrFullPath(\"" + className + ".json\");\n")
-			.append("\t\tchar* raw = CCResourceLoader::loadCString(fullPath, decryptRes);\n")
+			.append("\t\tchar* raw = CCResourceLoader::loadCString(fullPath);\n")
 			.append("\t\tJson::Reader reader;\n")
 			.append("\t\treader.parse(raw, sJSON);\n")
 			.append("\t\tfree(raw);\n")

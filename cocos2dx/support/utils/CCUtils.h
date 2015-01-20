@@ -500,8 +500,7 @@ public:
                                 float shadowOffsetY = 0,
                                 float strokeSize = 0,
                                 float lineSpacing = 0,
-                                float globalImageScaleFactor = 1,
-                                CC_DECRYPT_FUNC decryptFunc = nullptr);
+                                float globalImageScaleFactor = 1);
 	
 	/**
 	 * capture screen and save it to a image file. The file type will auto determined by extension, and 

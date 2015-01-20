@@ -163,8 +163,7 @@ public:
                                 float shadowOffsetY = 0,
                                 float strokeSize = 0,
                                 float lineSpacing = 0,
-                                float globalImageScaleFactor = 1,
-                                CC_DECRYPT_FUNC decryptFunc = nullptr);
+                                float globalImageScaleFactor = 1);
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     /**
@@ -193,8 +192,7 @@ public:
                                     float lineSpacing           = 0,
                                     float globalImageScaleFactor = 1,
                                     int toCharIndex = -1,
-                                    float elapsedTime = 0,
-                                    CC_DECRYPT_FUNC decryptFunc = nullptr);
+                                    float elapsedTime = 0);
 #endif
     
 

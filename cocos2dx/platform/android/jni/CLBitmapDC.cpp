@@ -31,7 +31,6 @@ CLBitmapDC CLBitmapDC::s_BmpDC;
 
 CLBitmapDC::CLBitmapDC() :
 m_pData(NULL),
-m_decryptFunc(NULL),
 m_nWidth(0),
 m_nHeight(0),
 m_realLength(0),
@@ -53,10 +52,7 @@ bool CLBitmapDC::getBitmapFromJava(const char *text, int nWidth, int nHeight, CC
 bool CLBitmapDC::getBitmapFromJavaShadowStroke(const char *text, int nWidth, int nHeight, CCImage::ETextAlign eAlignMask, const char * pFontName, float fontSize,
 		float textTintR, float textTintG, float textTintB, bool shadow, float shadowDeltaX, float shadowDeltaY, int shadowColor,
 		float shadowBlur, bool stroke, float strokeColorR, float strokeColorG, float strokeColorB, float strokeSize, float lineSpacing, float globalImageScaleFactor, int toCharIndex,
-		float elapsedTime, CC_DECRYPT_FUNC decryptFunc, bool sizeOnly) {
-	// save func
-	m_decryptFunc = decryptFunc;
-	
+		float elapsedTime, bool sizeOnly) {	
 	// check method
 	JniMethodInfo methodInfo;
 	if(!JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/CCImage_richlabel", "createRichLabelBitmap",
@@ -86,7 +82,7 @@ bool CLBitmapDC::getBitmapFromJavaShadowStroke(const char *text, int nWidth, int
 
 	methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, jstrText, jstrFont, (int) fontSize, textTintR, textTintG, textTintB,
 			eAlignMask, nWidth, nHeight, shadow, shadowDeltaX, -shadowDeltaY, shadowColor, shadowBlur, stroke, strokeColorR, strokeColorG, strokeColorB, strokeSize,
-			lineSpacing, CC_CONTENT_SCALE_FACTOR(), globalImageScaleFactor, toCharIndex, elapsedTime, decryptFunc != NULL, sizeOnly);
+			lineSpacing, CC_CONTENT_SCALE_FACTOR(), globalImageScaleFactor, toCharIndex, elapsedTime, gResDecrypt != NULL, sizeOnly);
 
 	methodInfo.env->DeleteLocalRef(jstrText);
 	methodInfo.env->DeleteLocalRef(jstrFont);

@@ -40,6 +40,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+// global decrypt/encrypt functions, set by CCDirector
+extern CC_DECRYPT_FUNC gResDecrypt;
+extern CC_DECRYPT_FUNC gUserDefaultDecrypt;
+extern CC_ENCRYPT_FUNC gUserDefaultEncrypt;
+
 /**
  * @addtogroup base_nodes
  * @{
@@ -324,6 +329,11 @@ public:
     */
     void setContentScaleFactor(float scaleFactor);
     float getContentScaleFactor(void);
+    
+    // set global encrypt/decrypt functions
+    void setResDecrypt(CC_DECRYPT_FUNC dec);
+    void setUserDefaultDecrypt(CC_DECRYPT_FUNC dec);
+    void setUserDefaultEncrypt(CC_ENCRYPT_FUNC enc);
 
 public:
     /** CCScheduler associated with this director

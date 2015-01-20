@@ -220,10 +220,9 @@ public:
 	 * execute a sql file in a transaction
 	 *
 	 * @param path sql file absolute path, will be mapped to platform format
-     * @param func you can provide a decrypt function if the sql file is encrypted
 	 * @return true means execution is ok
 	 */
-	bool executeSQL(string path, CC_DECRYPT_FUNC func = nullptr);
+	bool executeSQL(string path);
 
 	/**
 	 * execute a sql file in a transaction

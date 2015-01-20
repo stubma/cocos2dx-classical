@@ -581,7 +581,6 @@ public:
     m_alignment(kCCTextAlignmentCenter),
     m_vertAlignment(kCCVerticalTextAlignmentTop),
     m_fontFillColor(ccWHITE),
-    decryptFunc(nullptr),
     m_globalImageScaleFactor(1),
     m_lineSpacing(0),
     m_shadowColor(0),
@@ -626,9 +625,6 @@ public:
     
     // shown letter to index
     int m_toCharIndex;
-    
-    // decrypt func for embedded image
-    CC_DECRYPT_FUNC decryptFunc;
     
     // elapsed time
     float m_elapsed;

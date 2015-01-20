@@ -84,7 +84,7 @@ bool CCImage::initWithString(
 
 bool CCImage::initWithStringShadowStroke(const char * pText, int nWidth, int nHeight, ETextAlign eAlignMask, const char * pFontName, int nSize,
 		float textTintR, float textTintG, float textTintB, bool shadow, float shadowOffsetX, float shadowOffsetY, int shadowColor, float shadowBlur,
-		bool stroke, float strokeR, float strokeG, float strokeB, float strokeSize, float lineSpacing, float globalImageScaleFactor, int toCharIndex, float elapsedTime, CC_DECRYPT_FUNC decryptFunc) {
+		bool stroke, float strokeR, float strokeG, float strokeB, float strokeSize, float lineSpacing, float globalImageScaleFactor, int toCharIndex, float elapsedTime) {
 	bool bRet = false;
 	do {
 		CC_BREAK_IF(!pText);
@@ -114,7 +114,6 @@ bool CCImage::initWithStringShadowStroke(const char * pText, int nWidth, int nHe
                                                       globalImageScaleFactor,
                                                       toCharIndex,
                                                       elapsedTime,
-                                                      decryptFunc,
                                                       false));
 
 		// assign the dc.m_pData to m_pData in order to save time
@@ -153,8 +152,7 @@ CCSize CCImage::measureString(const char* pText,
 								float shadowOffsetY,
 								float strokeSize,
 								float lineSpacing,
-								float globalImageScaleFactor,
-								CC_DECRYPT_FUNC decryptFunc) {
+								float globalImageScaleFactor) {
     CCSize size = CCSizeZero;
 	do {
 		CC_BREAK_IF(!pText);
@@ -184,7 +182,6 @@ CCSize CCImage::measureString(const char* pText,
                                                       globalImageScaleFactor,
                                                       -1,
                                                       0,
-                                                      decryptFunc,
                                                       true));
 		size.width = dc.m_nWidth;
 		size.height = dc.m_nHeight;

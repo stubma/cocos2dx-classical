@@ -68,7 +68,6 @@ m_stateListener(nullptr),
 m_toCharIndex(-1),
 m_defaultTarget(nullptr),
 m_loopFunc(nullptr),
-m_decryptFunc(nullptr),
 m_textChanging(true) {
     m_stateListener = new CCLabelTTFLinkStateSynchronizer(this);
 }
@@ -93,10 +92,10 @@ CCLabelTTF::~CCLabelTTF() {
     CC_SAFE_RELEASE(m_stateListener);
 }
 
-CCLabelTTF * CCLabelTTF::create(CC_DECRYPT_FUNC decryptFunc)
+CCLabelTTF * CCLabelTTF::create()
 {
     CCLabelTTF * pRet = new CCLabelTTF();
-    if (pRet && pRet->init(decryptFunc))
+    if (pRet && pRet->init())
     {
         CC_SAFE_AUTORELEASE(pRet);
     }
@@ -121,40 +120,21 @@ CCLabelTTF * CCLabelTTF::createWithFontDefinition(const char *string, ccFontDefi
 CCLabelTTF * CCLabelTTF::create(const char *string, const char *fontName, float fontSize)
 {
     return CCLabelTTF::create(string, fontName, fontSize,
-                              CCSizeZero, kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop, nullptr);
-}
-
-CCLabelTTF * CCLabelTTF::create(const char *string, const char *fontName, float fontSize, CC_DECRYPT_FUNC decryptFunc)
-{
-    return CCLabelTTF::create(string, fontName, fontSize,
-                                  CCSizeZero, kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop, decryptFunc);
+                                  CCSizeZero, kCCTextAlignmentCenter, kCCVerticalTextAlignmentTop);
 }
 
 CCLabelTTF * CCLabelTTF::create(const char *string, const char *fontName, float fontSize,
-                                const CCSize& dimensions, CCTextAlignment hAlignment)
+                                        const CCSize& dimensions, CCTextAlignment hAlignment)
 {
-    return CCLabelTTF::create(string, fontName, fontSize, dimensions, hAlignment, kCCVerticalTextAlignmentTop, nullptr);
-}
-
-CCLabelTTF * CCLabelTTF::create(const char *string, const char *fontName, float fontSize,
-                                        const CCSize& dimensions, CCTextAlignment hAlignment, CC_DECRYPT_FUNC decryptFunc)
-{
-    return CCLabelTTF::create(string, fontName, fontSize, dimensions, hAlignment, kCCVerticalTextAlignmentTop, decryptFunc);
-}
-
-CCLabelTTF* CCLabelTTF::create(const char *string, const char *fontName, float fontSize,
-                               const CCSize &dimensions, CCTextAlignment hAlignment,
-                               CCVerticalTextAlignment vAlignment)
-{
-    return CCLabelTTF::create(string, fontName, fontSize, dimensions, hAlignment, vAlignment, nullptr);
+    return CCLabelTTF::create(string, fontName, fontSize, dimensions, hAlignment, kCCVerticalTextAlignmentTop);
 }
 
 CCLabelTTF* CCLabelTTF::create(const char *string, const char *fontName, float fontSize,
                                        const CCSize &dimensions, CCTextAlignment hAlignment,
-                                       CCVerticalTextAlignment vAlignment, CC_DECRYPT_FUNC decryptFunc)
+                                       CCVerticalTextAlignment vAlignment)
 {
     CCLabelTTF *pRet = new CCLabelTTF();
-    if(pRet && pRet->initWithString(string, strcmp(fontName, "") == 0 ? "Helvetica" : fontName , fontSize, dimensions, hAlignment, vAlignment, decryptFunc))
+    if(pRet && pRet->initWithString(string, strcmp(fontName, "") == 0 ? "Helvetica" : fontName , fontSize, dimensions, hAlignment, vAlignment))
     {
         CC_SAFE_AUTORELEASE(pRet);
         return pRet;
@@ -163,26 +143,26 @@ CCLabelTTF* CCLabelTTF::create(const char *string, const char *fontName, float f
     return nullptr;
 }
 
-bool CCLabelTTF::init(CC_DECRYPT_FUNC decryptFunc)
+bool CCLabelTTF::init()
 {
-    return this->initWithString("", "Helvetica", 12, decryptFunc);
+    return this->initWithString("", "Helvetica", 12);
 }
 
 bool CCLabelTTF::initWithString(const char *label, const char *fontName, float fontSize,
-                                    const CCSize& dimensions, CCTextAlignment alignment, CC_DECRYPT_FUNC decryptFunc)
+                                    const CCSize& dimensions, CCTextAlignment alignment)
 {
-    return this->initWithString(label, fontName, fontSize, dimensions, alignment, kCCVerticalTextAlignmentTop, decryptFunc);
+    return this->initWithString(label, fontName, fontSize, dimensions, alignment, kCCVerticalTextAlignmentTop);
 }
 
-bool CCLabelTTF::initWithString(const char *label, const char *fontName, float fontSize, CC_DECRYPT_FUNC decryptFunc)
+bool CCLabelTTF::initWithString(const char *label, const char *fontName, float fontSize)
 {
     return this->initWithString(label, fontName, fontSize,
-                                CCSizeZero, kCCTextAlignmentLeft, kCCVerticalTextAlignmentTop, decryptFunc);
+                                CCSizeZero, kCCTextAlignmentLeft, kCCVerticalTextAlignmentTop);
 }
 
 bool CCLabelTTF::initWithString(const char *string, const char *fontName, float fontSize,
                                     const CCSize &dimensions, CCTextAlignment hAlignment,
-                                    CCVerticalTextAlignment vAlignment, CC_DECRYPT_FUNC decryptFunc)
+                                    CCVerticalTextAlignment vAlignment)
 {
     if (CCGradientSprite::init())
     {
@@ -194,7 +174,6 @@ bool CCLabelTTF::initWithString(const char *string, const char *fontName, float 
         m_vAlignment  = vAlignment;
         m_pFontName   = new std::string(fontName);
         m_fFontSize   = fontSize;
-        m_decryptFunc = decryptFunc;
         
         this->setString(string);
         
@@ -684,7 +663,6 @@ ccFontDefinition CCLabelTTF::_prepareTextDefinition(bool adjustForResolution)
 {
     ccFontDefinition texDef;
     
-    texDef.decryptFunc = m_decryptFunc;
     texDef.m_globalImageScaleFactor = m_globalImageScaleFactor;
     texDef.m_elapsed = m_elapsed;
     

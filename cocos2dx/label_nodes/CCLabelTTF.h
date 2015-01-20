@@ -93,10 +93,6 @@ private:
     /// length of unstyled string
     int m_realLength;
     
-    /// decrypt func, used to decrypt resource
-    /// it will be used when there is embedded image and the image is encrypted
-    CC_DECRYPT_FUNC m_decryptFunc;
-    
     /// link target cache
     CCDictionary m_linkTargets;
     
@@ -114,21 +110,18 @@ public:
     /**
      * Creates an label.
      */
-    static CCLabelTTF* create(CC_DECRYPT_FUNC decryptFunc = nullptr);
+    static CCLabelTTF* create();
     
     /**
      * creates a CCLabelTTF with a font name and font size in points
      */
     static CCLabelTTF* create(const char *s, const char *fontName, float fontSize);
-    static CCLabelTTF* create(const char *s, const char *fontName, float fontSize, CC_DECRYPT_FUNC decryptFunc);
     
     /**
      * creates a CCLabelTTF from a fontname, horizontal alignment, dimension in points,  and font size in points.
      */
     static CCLabelTTF* create(const char *s, const char *fontName, float fontSize,
                               const CCSize& dimensions, CCTextAlignment hAlignment);
-    static CCLabelTTF* create(const char *s, const char *fontName, float fontSize,
-                              const CCSize& dimensions, CCTextAlignment hAlignment, CC_DECRYPT_FUNC decryptFunc);
     
     /**
      * creates a CCLabelTTF from a fontname, alignment, dimension in points and font size in points
@@ -136,9 +129,6 @@ public:
     static CCLabelTTF* create(const char *s, const char *fontName, float fontSize,
                               const CCSize& dimensions, CCTextAlignment hAlignment,
                               CCVerticalTextAlignment vAlignment);
-    static CCLabelTTF* create(const char *s, const char *fontName, float fontSize,
-                                  const CCSize& dimensions, CCTextAlignment hAlignment,
-                                  CCVerticalTextAlignment vAlignment, CC_DECRYPT_FUNC decryptFunc);
     
     /** Create a lable with string and a font definition*/
     static CCLabelTTF* createWithFontDefinition(const char* s, ccFontDefinition &textDefinition);
@@ -146,16 +136,16 @@ public:
     const char* description();
     
     /** initializes the CCLabelTTF with a font name and font size */
-    virtual bool initWithString(const char * s, const char *fontName, float fontSize, CC_DECRYPT_FUNC decryptFunc = nullptr);
+    virtual bool initWithString(const char * s, const char *fontName, float fontSize);
     
     /** initializes the CCLabelTTF with a font name, alignment, dimension and font size */
     virtual bool initWithString(const char * s, const char *fontName, float fontSize,
-                        const CCSize& dimensions, CCTextAlignment hAlignment, CC_DECRYPT_FUNC decryptFunc = nullptr);
+                        const CCSize& dimensions, CCTextAlignment hAlignment);
     
     /** initializes the CCLabelTTF with a font name, alignment, dimension and font size */
     virtual bool initWithString(const char * s, const char *fontName, float fontSize,
                         const CCSize& dimensions, CCTextAlignment hAlignment,
-                        CCVerticalTextAlignment vAlignment, CC_DECRYPT_FUNC decryptFunc = nullptr);
+                        CCVerticalTextAlignment vAlignment);
     
     /** initializes the CCLabelTTF with a font name, alignment, dimension and font size */
     virtual bool initWithStringAndTextDefinition(const char * s, ccFontDefinition &textDefinition);
@@ -181,7 +171,7 @@ public:
     void disableStroke(bool mustUpdateTexture = true);
     
     /** initializes the CCLabelTTF */
-    virtual bool init(CC_DECRYPT_FUNC decryptFunc = nullptr);
+    virtual bool init();
     
     /** changes the string to render
      * @warning Changing the string is as expensive as creating a new CCLabelTTF. To obtain better performance use CCLabelAtlas
@@ -202,8 +192,6 @@ public:
     
     float getFontSize();
     void setFontSize(float fontSize);
-    
-    void setDecryptFunc(CC_DECRYPT_FUNC func) { m_decryptFunc = func; }
     
     const char* getFontName();
     void setFontName(const char *fontName);

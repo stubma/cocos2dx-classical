@@ -1061,8 +1061,7 @@ CCSize CCUtils::measureString(const char* pText,
                               float shadowOffsetY,
                               float strokeSize,
                               float lineSpacing,
-                              float globalImageScaleFactor,
-                              CC_DECRYPT_FUNC decryptFunc) {
+                              float globalImageScaleFactor) {
     return CCImage::measureString(pText,
                                   pFontName,
                                   nSize,
@@ -1071,8 +1070,7 @@ CCSize CCUtils::measureString(const char* pText,
                                   shadowOffsetY,
                                   strokeSize,
                                   lineSpacing,
-                                  globalImageScaleFactor,
-                                  decryptFunc);
+                                  globalImageScaleFactor);
 }
 
 string CCUtils::makeScreenshot(CCNode* root, const string& path, bool needStencil) {

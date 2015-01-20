@@ -455,7 +455,6 @@ bool CCTexture2D::initWithString(const char *text, const char *fontName, float f
     tempDef.m_vertAlignment = vAlignment;
     tempDef.m_fontFillColor = ccWHITE;
     tempDef.m_shadowColor = 0;
-    tempDef.decryptFunc = nullptr;
 
     return initWithString(text, &tempDef);
 #else
@@ -593,8 +592,7 @@ bool CCTexture2D::initWithString(const char *text, ccFontDefinition *textDefinit
                                                   textDefinition->m_lineSpacing,
                                                   textDefinition->m_globalImageScaleFactor,
                                                   textDefinition->m_toCharIndex,
-                                                  textDefinition->m_elapsed,
-                                                  textDefinition->decryptFunc);
+                                                  textDefinition->m_elapsed);
         
         
         CC_BREAK_IF(!bRet);
