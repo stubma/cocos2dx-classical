@@ -131,7 +131,7 @@ public:
     }
     
     // set gradient
-    virtual void setColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
+    virtual void setGradientColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
     
     CC_PROPERTY_PASS_BY_REF(ccColor3B, m_startColor, StartColor)
     CC_PROPERTY_PASS_BY_REF(ccColor3B, m_endColor, EndColor)

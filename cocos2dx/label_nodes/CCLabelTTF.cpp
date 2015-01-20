@@ -324,8 +324,8 @@ void CCLabelTTF::setFontName(const char *fontName)
     }
 }
 
-void CCLabelTTF::setColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v) {
-    CCGradientSprite::setColor(start, end, v);
+void CCLabelTTF::setGradientColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v) {
+    CCGradientSprite::setGradientColor(start, end, v);
 }
 
 // Helper
@@ -573,19 +573,12 @@ void CCLabelTTF::disableStroke(bool updateTexture)
 #endif
 }
 
-void CCLabelTTF::setColor(const ccColor3B& color3) {
-    setColor(color3, true);
-}
-
-void CCLabelTTF::setColor(const ccColor3B &tintColor, bool updateTexture)
+void CCLabelTTF::setColor(const ccColor3B &tintColor)
 {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-    if (m_textFillColor.r != tintColor.r || m_textFillColor.g != tintColor.g || m_textFillColor.b != tintColor.b)
-    {
+    if (m_textFillColor.r != tintColor.r || m_textFillColor.g != tintColor.g || m_textFillColor.b != tintColor.b) {
         m_textFillColor = tintColor;
-        
-        if (updateTexture)
-            this->updateTexture();
+        updateTexture();
     }
 #else
     CCAssert(false, "Operation is not supported for your platform");

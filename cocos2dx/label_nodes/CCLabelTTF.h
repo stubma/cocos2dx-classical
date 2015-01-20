@@ -198,9 +198,7 @@ public:
     
     virtual void setColor(const ccColor3B& color3);
     
-    void setColor(const ccColor3B &tintColor, bool mustUpdateTexture);
-    
-    virtual void setColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
+    virtual void setGradientColor(const ccColor4B& start, const ccColor4B& end, const CCPoint& v);
     
     /**
      * If a rich lable contains link tag, a menu will be created and every link tag is
