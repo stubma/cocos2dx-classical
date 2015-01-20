@@ -17,6 +17,7 @@ end
 function loadLua(name)
     local path
     if CCDevice:getPlatform() == cc.PLATFORM_ANDROID then
+        -- XXX: in Android, looks like we need copy script to files dir first, this is not done
         path = CCUtils:getInternalStoragePath() .. "/script"
     else
         path = CCFileUtils:sharedFileUtils():fullPathForFilename("script");

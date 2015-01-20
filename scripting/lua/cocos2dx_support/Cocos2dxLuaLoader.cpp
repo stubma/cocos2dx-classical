@@ -30,19 +30,18 @@ using namespace cocos2d;
 
 extern "C"
 {
-    int cocos2dx_lua_loader(lua_State *L)
-    {
+    int cocos2dx_lua_loader(lua_State *L) {
+        // remove lua extension
         std::string filepath(luaL_checkstring(L, 1));
         size_t pos = filepath.rfind(".lua");
-        if (pos != std::string::npos)
-        {
+        if (pos != std::string::npos) {
             filepath = filepath.substr(0, pos);
         }
         
+        // convert package to path, for example: cc.XX will be cc/XX
         std::string filename = CCUtils::lastPathComponent(filepath);
         pos = filename.find_first_of(".");
-        while (pos != std::string::npos)
-        {
+        while (pos != std::string::npos) {
             filename.replace(pos, 1, "/");
             pos = filename.find_first_of(".");
         }
@@ -50,21 +49,23 @@ extern "C"
         filepath = CCUtils::deleteLastPathComponent(filepath);
         filepath = CCUtils::appendPathComponent(filepath, filename);
         
+        // now try find lua in external path first, then use internal path
+        pos = filepath.rfind("script/");
+        if(pos != std::string::npos) {
+            filepath = CCUtils::getExternalOrFullPath(filepath.substr(pos));
+        }
+        
+        // load lua file
         unsigned long codeBufferSize = 0;
         unsigned char* codeBuffer = CCFileUtils::sharedFileUtils()->getFileData(filepath.c_str(), "rb", &codeBufferSize);
-        
-        if (codeBuffer)
-        {
-            if (luaL_loadbuffer(L, (char*)codeBuffer, codeBufferSize, filepath.c_str()) != 0)
-            {
+        if (codeBuffer) {
+            if (luaL_loadbuffer(L, (char*)codeBuffer, codeBufferSize, filepath.c_str()) != 0) {
                 luaL_error(L, "error loading module %s from file %s :\n\t%s",
                     lua_tostring(L, 1), filepath.c_str(), lua_tostring(L, -1));
             }
-            delete []codeBuffer;
-        }
-        else
-        {
-            CCLog("can not get file data of %s", filepath.c_str());
+            delete[] codeBuffer;
+        } else {
+            CCLOG("can not get file data of %s", filepath.c_str());
         }
         
         return 1;
