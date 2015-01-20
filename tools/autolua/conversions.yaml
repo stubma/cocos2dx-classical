@@ -124,6 +124,8 @@ conversions:
     "ccCustomUniformValue": "customuniformvalue_to_luaval(tolua_S, ${in_value})"
     "CCArray*": "array_to_luaval(tolua_S,${in_value})"
     "CCDictionary*": "dictionary_to_luaval(tolua_S, ${in_value})"
+    "CCArray&": "arrayref_to_luaval(tolua_S,${in_value})"
+    "CCDictionary&": "dictionaryref_to_luaval(tolua_S, ${in_value})"
     "CCAffineTransform": "affinetransform_to_luaval(tolua_S, ${in_value})"
     "ccFontDefinition": "fontdefinition_to_luaval(tolua_S, ${in_value})"
     "@vector<std::basic_string.*>": "ccvector_std_string_to_luaval(tolua_S, ${in_value})"

@@ -2605,6 +2605,14 @@ void fontdefinition_to_luaval(lua_State* L,const ccFontDefinition& inValue)
     lua_rawset(L, -3);
 }
 
+void arrayref_to_luaval(lua_State* L, const cocos2d::CCArray& inValue) {
+    array_to_luaval(L, (cocos2d::CCArray*)&inValue);
+}
+
+void dictionaryref_to_luaval(lua_State* L, const cocos2d::CCDictionary& dict) {
+    dictionary_to_luaval(L, (cocos2d::CCDictionary*)&dict);
+}
+
 void array_to_luaval(lua_State* L,CCArray* inValue)
 {
     lua_newtable(L);

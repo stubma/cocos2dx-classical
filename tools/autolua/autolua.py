@@ -443,6 +443,8 @@ class NativeType(object):
         from_native_dict = generator.tpl_opt['conversions']['from_native']
         if self.is_class:
             if not dict_has_key_re(from_native_dict, keys):
+                if self.is_ref:
+                    keys.append(self.name + "&")
                 keys.append("object")
         elif self.is_enum:
             keys.append("int")
