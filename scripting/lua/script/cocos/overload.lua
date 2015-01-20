@@ -80,7 +80,7 @@ end
     and one more type "class" which means "userdata" or "table", mainly used for builtin and
     inherited CCObject subclass
 --]]
-define = setmetatable({}, {
+overload = setmetatable({}, {
                         __index = function (t,k)
                             local function reg(desc)
                                 register(cc, desc, k)

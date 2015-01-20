@@ -437,6 +437,24 @@ function cc.mat4.transformVector(self, vector, dst)
     return mat4_transformVector(self, vector, dst)
 end
 
+function cc.safeRelease(obj)
+    if obj ~= nil then
+        obj:release()
+    end
+end
+
+function cc.safeRetain(obj)
+    if obj ~= nil then
+        obj:retain()
+    end
+end
+
+function cc.safeAutoRelease(obj)
+    if obj ~= nil then
+        obj:autorelease()
+    end
+end
+
 -- lua helper
 function printTable(value)
     table.foreach(value,

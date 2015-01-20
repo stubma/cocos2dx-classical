@@ -1,9 +1,51 @@
-function cc.createLabel(parent, name, x, y, aX, aY, z, tag, size, color)
-    local nameLabel = CCLabelTTF:create(name, "SIMHEI", 120)
-    nameLabel:setDimensions(cc.p(1, 0))
-    cc.setAnchor(nameLabel, aX, aY)
-    nameLabel:setColor(cc.i2c3b(color))
-    nameLabel:setPosition(x, y)
-    parent:addChild(nameLabel, z, tag)
-    return nameLabel
-end
+require("script/cocos/overload")
+
+overload.createLabel {
+    "class",
+    "table",
+    "string",
+    "string",
+    "number",
+    function(parent, pos, text, font, size)
+        local label = CCLabelTTF:create(text, font, size)
+        label:setPosition(pos)
+        parent:addChild(label)
+        return label
+    end
+}
+
+overload.createLabel {
+    "class",
+    "table",
+    "string",
+    "string",
+    "number",
+    "table",
+    "number",
+    function(parent, pos, text, font, size, dimension, alignment)
+        local label = CCLabelTTF:create(text, font, size, dimension, alignment)
+        label:setPosition(pos)
+        parent:addChild(label)
+        return label
+    end
+}
+
+overload.createLabel {
+    "class",
+    "table",
+    "string",
+    "string",
+    "number",
+    "table",
+    "number",
+    "table",
+    "number",
+    "number",
+    function(parent, pos, text, font, size, dimension, alignment, color, z, tag)
+        local label = CCLabelTTF:create(text, font, size, dimension, alignment)
+        label:setPosition(pos)
+        label:setColor(color)
+        parent:addChild(label, z, tag)
+        return label
+    end
+}

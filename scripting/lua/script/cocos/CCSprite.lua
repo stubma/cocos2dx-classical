@@ -1,6 +1,6 @@
 require("script/cocos/overload")
 
-define.createSprite {
+overload.createSprite {
     "class",
     "string",
     "table",
@@ -12,7 +12,7 @@ define.createSprite {
     end
 }
 
-define.createSprite {
+overload.createSprite {
     "class",
     "string",
     "number",
@@ -25,7 +25,7 @@ define.createSprite {
     end
 }
 
-define.createSprite {
+overload.createSprite {
     "class",
     "string",
     "number",

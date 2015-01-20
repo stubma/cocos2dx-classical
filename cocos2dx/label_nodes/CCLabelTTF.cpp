@@ -646,7 +646,7 @@ void CCLabelTTF::_updateWithTextDefinition(ccFontDefinition & textDefinition, bo
     }
     
     // fill color
-    setColor(textDefinition.m_fontFillColor, false);
+    setColor(textDefinition.m_fontFillColor);
     
     if (mustUpdateTexture)
         updateTexture();
