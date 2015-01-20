@@ -64,7 +64,7 @@ public:
      * @param lan language ISO 639-1 two-letter code
      * @param path string XML file path. The path is platform-independent and
      *      it will be mapped to platform format. For example, "/sdcard/strings.xml" will
-     *      be mapped to "~/Documents/sdcard/strings.xml" in iOS like system.
+     *      be mapped to "~/Library/Caches/sdcard/strings.xml" in iOS like system.
      * @param merge true means new strings will be merged with current strings if strings 
      *      of this language already exists. false means new strings will replace current strings
      *      if strings of this language already exists.

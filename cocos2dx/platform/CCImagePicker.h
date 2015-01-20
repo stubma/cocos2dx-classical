@@ -44,7 +44,7 @@ class CC_DLL CCImagePicker {
 	 * image size and image will be scaled if not matched. If device doesn't have a desired camera,
 	 * callback onImagePickingCancelled will be invoked	 
 	 *
-	 * @param path the relative path of image file, it will be mapped to platform writable path. In iOS, it is ~/Documents,
+	 * @param path the relative path of image file, it will be mapped to platform writable path. In iOS, it is ~/Library/Caches,
 	 *		in Android, it is cache dir
 	 * @param callback callback
 	 * @param w expected image width
@@ -75,7 +75,7 @@ public:
 	 * image size and image will be scaled if not matched. If device doesn't have a camera,
 	 * callback onImagePickingCancelled will be invoked
 	 *
-	 * @param path the relative path of image file, it will be mapped to platform writable path. In iOS, it is ~/Documents,
+	 * @param path the relative path of image file, it will be mapped to platform writable path. In iOS, it is ~/Library/Caches,
 	 *		in Android, it is cache dir
 	 * @param callback callback
 	 * @param w expected image width, the final image width may not same as this
@@ -90,7 +90,7 @@ public:
 	 * image size and image will be scaled if not matched. If device doesn't have a front camera,
 	 * callback onImagePickingCancelled will be invoked.
 	 *
-	 * @param path the relative path of image file, it will be mapped to platform writable path. In iOS, it is ~/Documents,
+	 * @param path the relative path of image file, it will be mapped to platform writable path. In iOS, it is ~/Library/Caches,
 	 *		in Android, it is cache dir
 	 * @param callback callback
 	 * @param w expected image width
@@ -104,7 +104,7 @@ public:
 	 * pick a image from album and save it to a file. You can specify an expected
 	 * image size and image will be scaled if not matched.
 	 *
-	 * @param path the relative path of image file, it will be mapped to platform writable path. In iOS, it is ~/Documents,
+	 * @param path the relative path of image file, it will be mapped to platform writable path. In iOS, it is ~/Library/Caches,
 	 *		in Android, it is cache dir
 	 * @param callback callback
 	 * @param w expected image width

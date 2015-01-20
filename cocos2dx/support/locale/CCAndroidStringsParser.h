@@ -52,7 +52,7 @@ public:
      *
      * @param path string XML file path. The path is platform-independent and
      *      it will be mapped to platform format. For example, "/sdcard/strings.xml" will
-     *      be mapped to "~/Documents/sdcard/strings.xml" in iOS like system.
+     *      be mapped to "~/Library/Caches/sdcard/strings.xml" in iOS like system.
      * @param dict the dictionary to hold parsed strings
      */
     void parse(const string& path, const CCDictionary& dict);

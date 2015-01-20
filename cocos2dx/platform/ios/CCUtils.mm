@@ -215,7 +215,7 @@ bool CCUtils::hasExternalStorage() {
 }
 
 string CCUtils::getInternalStoragePath() {
-    NSString* docDir = @"~/Documents";
+    NSString* docDir = @"~/Library/Caches";
     docDir = [docDir stringByExpandingTildeInPath];
     return [docDir cStringUsingEncoding:NSUTF8StringEncoding];
 }
@@ -253,7 +253,7 @@ bool CCUtils::createFolder(const string& path) {
 string CCUtils::externalize(const string& path) {
     if(!CCFileUtils::sharedFileUtils()->isAbsolutePath(path)) {
         NSString* nsPath = [NSString stringWithUTF8String:path.c_str()];
-        NSString* nsFullPath = [NSString stringWithFormat:@"~/Documents/%@", nsPath];
+        NSString* nsFullPath = [NSString stringWithFormat:@"~/Library/Caches/%@", nsPath];
         nsFullPath = [nsFullPath stringByExpandingTildeInPath];
         return [nsFullPath cStringUsingEncoding:NSUTF8StringEncoding];
     } else {
