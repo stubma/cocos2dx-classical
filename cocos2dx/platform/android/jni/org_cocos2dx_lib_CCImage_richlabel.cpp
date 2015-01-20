@@ -28,6 +28,7 @@
 #include "sprite_nodes/CCSpriteFrameCache.h"
 #include "textures/CCTextureCache.h"
 #include "platform/CCFileUtils.h"
+#include "CCDirector.h"
 
 #ifdef __cplusplus
 extern "C" {
