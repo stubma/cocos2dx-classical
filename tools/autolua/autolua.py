@@ -886,6 +886,10 @@ class NativeClass(object):
             if nf.not_supported:
                 return
 
+            # if function should be excluded, return
+            if not self.should_function_be_generated(nf):
+                return
+
             # set flag
             self.has_constructor = True
             if not self.methods.has_key('constructor'):
