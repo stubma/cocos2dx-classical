@@ -925,9 +925,10 @@ class Generator(object):
         clang_args = [x.replace("${COCOS2DX_CLASSICAL_ROOT}", c2xc_root) for x in clang_args]
         self.clang_args = [x.replace("${PROJECT_DIR}", project_dir) for x in clang_args]
         self.include_namespaces = re.split(r"\s", config.get("DEFAULT", "include_namespaces")) if config.has_option("DEFAULT", "include_namespaces") else []
-        self.src_dirs = re.split(r"\s", config.get("DEFAULT", "src_dirs")) if config.has_option("DEFAULT", "src_dirs") else ["."]
+        src_dirs = re.split(r"\s", config.get("DEFAULT", "src_dirs")) if config.has_option("DEFAULT", "src_dirs") else ["."]
+        self.src_dirs = [x.replace("${PROJECT_DIR}", project_dir) for x in src_dirs]
         self.exclude_dirs = re.split(r"\s", config.get("DEFAULT", "exclude_dirs")) if config.has_option("DEFAULT", "exclude_dirs") else ["."]
-        self.dst_dir = config.get("DEFAULT", "dst_dir") if config.has_option("DEFAULT", "dst_dir") else "."
+        self.dst_dir = config.get("DEFAULT", "dst_dir").replace("${PROJECT_DIR}", project_dir) if config.has_option("DEFAULT", "dst_dir") else "."
         exclude_classes = re.split(r"\s", config.get("DEFAULT", "exclude_classes")) if config.has_option("DEFAULT", "exclude_classes") else []
         self.exclude_classes_regex = [re.compile(x) for x in exclude_classes]
         include_classes = re.split(r"\s", config.get("DEFAULT", "include_classes")) if config.has_option("DEFAULT", "include_classes") else []
