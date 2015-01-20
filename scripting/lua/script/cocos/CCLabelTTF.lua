@@ -1,4 +1,4 @@
-function cc.createLabel(name, x, y, aX, aY, parent, z, tag, size, color)
+function cc.createLabel(parent, name, x, y, aX, aY, z, tag, size, color)
     local nameLabel = CCLabelTTF:create(name, "SIMHEI", 120)
     nameLabel:setDimensions(cc.p(1, 0))
     cc.setAnchor(nameLabel, aX, aY)
