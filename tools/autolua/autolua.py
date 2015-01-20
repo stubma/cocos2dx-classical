@@ -572,6 +572,11 @@ class NativeOverloadedFunction(object):
 
     def generate_code(self, hfile, cppfile, clazz):
         static = self.implementations[0].static
+        override = self.implementations[0].is_override
+
+        # if override method, no need generate
+        if override:
+            return
 
         # generate binding code
         tpl = None
@@ -597,6 +602,7 @@ class NativeFunction(object):
         self.static = node.kind == CursorKind.CXX_METHOD and node.is_static_method()
         self.implementations = []
         self.not_supported = False
+        self.is_override = False
         self.overload = False
         self.ret_type = NativeType.from_type(node.result_type)
         self.min_args = 0
@@ -625,6 +631,8 @@ class NativeFunction(object):
             self.min_args = len(self.arguments)
             index = -1
             for arg_node in self.node.get_children():
+                if arg_node.kind == CursorKind.CXX_OVERRIDE_ATTR:
+                    self.is_override = True
                 if arg_node.kind == CursorKind.PARM_DECL:
                     index += 1
                     if self.has_default_arg(arg_node):
@@ -658,6 +666,10 @@ class NativeFunction(object):
         return False
 
     def generate_code(self, hfile, cppfile, clazz):
+        # if override method, no need generate
+        if self.is_override:
+            return
+
         # generate binding code
         tpl = None
         if self.static:
@@ -720,6 +732,7 @@ class NativeClass(object):
         self.current_access_specifier = AccessSpecifierKind.PRIVATE
         if node.kind == CursorKind.STRUCT_DECL:
             self.current_access_specifier = AccessSpecifierKind.PUBLIC
+        self.override_methods = {}
         self.has_constructor = False
         self.qualified_ns = get_qualified_namespace(node)
         self.is_abstract = False
@@ -728,11 +741,27 @@ class NativeClass(object):
         # visit
         self.visit_node(self.node)
 
+    def is_method_in_parents(self, f):
+        if len(self.parents) > 0:
+            if self.parents[0].methods.has_key(f.func_name):
+                pf = self.parents[0].methods[f.func_name]
+                if isinstance(pf, NativeOverloadedFunction):
+                    for pfm in pf.implementations:
+                        if pfm == f:
+                            return True
+                else:
+                    if pf == f:
+                        return True
+            return self.parents[0].is_method_in_parents(f)
+        return False
+
     def generate_code(self, hfile, cppfile):
         # function binding code
         for name, m in self.static_methods.items():
             m.generate_code(hfile, cppfile, self)
         for name, m in self.methods.items():
+            m.generate_code(hfile, cppfile, self)
+        for name, m in self.override_methods.items():
             m.generate_code(hfile, cppfile, self)
 
         # register code
@@ -810,8 +839,23 @@ class NativeClass(object):
                 if not self.should_function_be_generated(nf):
                     return
 
-                # if static, to static map, or to normal map
-                if nf.static:
+                # check if function is override
+                if self.is_method_in_parents(nf):
+                    nf.is_override = True
+
+                # if override, put to override_methods
+                if nf.is_override:
+                    if not self.override_methods.has_key(nf.func_name):
+                        self.override_methods[nf.func_name] = nf
+                    else:
+                        nf.overload = True
+                        previous_nf = self.override_methods[nf.func_name]
+                        if isinstance(previous_nf, NativeOverloadedFunction):
+                            previous_nf.append(nf)
+                        else:
+                            self.override_methods[nf.func_name] = NativeOverloadedFunction([nf, previous_nf])
+                            previous_nf.overload = True
+                elif nf.static:
                     if not self.static_methods.has_key(nf.func_name):
                         self.static_methods[nf.func_name] = nf
                     else:
@@ -1074,6 +1118,18 @@ class Generator(object):
                     if f.pure_virtual:
                         puref[f] = f
                     elif puref.has_key(f):
+                        del puref[f]
+            else:
+                if m.pure_virtual:
+                    puref[m] = m
+                elif puref.has_key(m):
+                    del puref[m]
+        for name, m in c.override_methods.items():
+            if isinstance(m, NativeOverloadedFunction):
+                for f in m.implementations:
+                    if f.pure_virtual:
+                        puref[f] = f
+                    elif puref.has_key(m):
                         del puref[f]
             else:
                 if m.pure_virtual:
