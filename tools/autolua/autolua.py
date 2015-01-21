@@ -968,7 +968,9 @@ class Generator(object):
             if namespace_class_name.find("std::") == 0:
                 return namespace_class_name
             else:
-                raise Exception("The namespace (%s) conversion wasn't set in 'ns_map' section of the conversions.yaml" % namespace_class_name)
+                print "The namespace (%s) conversion wasn't set in 'ns_map' section of the conversions.yaml, it will be automatically removed" % namespace_class_name
+                index = namespace_class_name.rfind("::")
+                return namespace_class_name[index + 2:]
         else:
             return namespace_class_name.replace("*","").replace("const ", "")
 
