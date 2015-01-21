@@ -764,7 +764,10 @@ void Widget::pushDownEvent()
     if (_touchEventListener && _touchEventSelector) {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_BEGAN);
     } else if(m_scriptTouchHandler.handler) {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_scriptTouchHandler, "began");
+        CCArray args;
+        args.addObject(this);
+        args.addObject(CCString::create("began"));
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptTouchHandler, &args);
     }
 }
 
@@ -773,7 +776,10 @@ void Widget::moveEvent()
     if (_touchEventListener && _touchEventSelector) {
         (_touchEventListener->*_touchEventSelector)(this, TOUCH_EVENT_MOVED);
     } else if(m_scriptTouchHandler.handler) {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_scriptTouchHandler, "moved");
+        CCArray args;
+        args.addObject(this);
+        args.addObject(CCString::create("moved"));
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptTouchHandler, &args);
     }
 }
 
@@ -782,7 +788,10 @@ void Widget::releaseUpEvent()
     if (_touchEventListener && _touchEventSelector) {
         (_touchEventListener->*_touchEventSelector)(this, TOUCH_EVENT_ENDED);
     } else if(m_scriptTouchHandler.handler) {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_scriptTouchHandler, "ended");
+        CCArray args;
+        args.addObject(this);
+        args.addObject(CCString::create("ended"));
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptTouchHandler, &args);
     }
 }
 
@@ -791,7 +800,10 @@ void Widget::cancelUpEvent()
     if (_touchEventListener && _touchEventSelector) {
         (_touchEventListener->*_touchEventSelector)(this, TOUCH_EVENT_CANCELED);
     } else if(m_scriptTouchHandler.handler) {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_scriptTouchHandler, "canceled");
+        CCArray args;
+        args.addObject(this);
+        args.addObject(CCString::create("canceled"));
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptTouchHandler, &args);
     }
 }
 

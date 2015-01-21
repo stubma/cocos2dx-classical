@@ -209,6 +209,12 @@ static int tolua_bnd_releaseownership (lua_State* L)
     return 1;
 }
 
+static int tolua_bnd_isa(lua_State* L) {
+    tolua_Error err;
+    const char* type = tolua_tostring(L, 2, NULL);
+    return tolua_isusertype(L, 1, type, 0, &err);
+}
+
 /* Type casting
 */
 static int tolua_bnd_cast (lua_State* L)
@@ -368,6 +374,7 @@ TOLUA_API void tolua_open (lua_State* L)
         tolua_function(L,"takeownership",tolua_bnd_takeownership);
         tolua_function(L,"releaseownership",tolua_bnd_releaseownership);
         tolua_function(L,"cast",tolua_bnd_cast);
+        tolua_function(L, "isa", tolua_bnd_isa);
         tolua_function(L,"isnull",tolua_bnd_isnulluserdata);
         tolua_function(L,"inherit", tolua_bnd_inherit);
 #ifdef LUA_VERSION_NUM /* lua 5.1 */
