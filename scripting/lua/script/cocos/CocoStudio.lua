@@ -18,6 +18,15 @@ end
 overload.getWidgetByName {
     "class",
     "string",
+    function(root, name, type)
+        local obj = UIHelper:seekWidgetByName(root, name)
+        return obj
+    end
+}
+
+overload.getWidgetByName {
+    "class",
+    "string",
     "string",
     function(root, name, type)
         local obj = UIHelper:seekWidgetByName(root, name)

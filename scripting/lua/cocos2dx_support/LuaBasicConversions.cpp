@@ -1979,6 +1979,43 @@ bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>*
     return ok;
 }
 
+bool luaval_to_std_vector_bool(lua_State* L, int lo, std::vector<bool>* ret, const char* funcName) {
+    if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
+        return false;
+    
+    tolua_Error tolua_err;
+    bool ok = true;
+    if (!tolua_istable(L, lo, 0, &tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        size_t len = lua_objlen(L, lo);
+        for (size_t i = 0; i < len; i++)
+        {
+            lua_pushnumber(L, i + 1);
+            lua_gettable(L,lo);
+            if(lua_isboolean(L, -1))
+            {
+                ret->push_back((bool)tolua_toboolean(L, -1, false));
+            }
+            else
+            {
+                CCAssert(false, "int type is needed");
+            }
+            
+            lua_pop(L, 1);
+        }
+    }
+    
+    return ok;
+}
+
 bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret, const char* funcName)
 {
     if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
@@ -2815,6 +2852,22 @@ void ccvector_std_string_to_luaval(lua_State* L, const std::vector<std::string>&
     {
         lua_pushnumber(L, (lua_Number)index);
         lua_pushstring(L, value.c_str());
+        lua_rawset(L, -3);
+        ++index;
+    }
+}
+
+void ccvector_bool_to_luaval(lua_State* L, const std::vector<bool>& inValue) {
+    if (nullptr == L)
+        return;
+    
+    lua_newtable(L);
+    
+    int index = 1;
+    for (const bool value : inValue)
+    {
+        lua_pushnumber(L, (lua_Number)index);
+        lua_pushboolean(L, value);
         lua_rawset(L, -3);
         ++index;
     }

@@ -97,6 +97,7 @@ extern bool luaval_to_customuniformvalue(lua_State* L, int lo, cocos2d::ccCustom
 
 bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret, const char* funcName = "");
 bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret, const char* funcName = "");
+bool luaval_to_std_vector_bool(lua_State* L, int lo, std::vector<bool>* ret, const char* funcName = "");
 
 template <class T>
 bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret)
@@ -201,6 +202,7 @@ void object_to_luaval(lua_State* L,const char* type, T* ret)
 
 void ccvector_std_string_to_luaval(lua_State* L, const std::vector<std::string>& inValue);
 void ccvector_int_to_luaval(lua_State* L, const std::vector<int>& inValue);
+void ccvector_bool_to_luaval(lua_State* L, const std::vector<bool>& inValue);
 void ccvector_float_to_luaval(lua_State* L, const std::vector<float>& inValue);
 void ccvector_ushort_to_luaval(lua_State* L, const std::vector<unsigned short>& inValue);
 void ccvector_rect_to_luaval(lua_State* L, const std::vector<cocos2d::CCRect>& inValue);
