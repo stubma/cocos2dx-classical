@@ -1,6 +1,18 @@
 require("script/cocos/overload")
 
 overload.createLabel {
+    "string",
+    "string",
+    "number",
+    "number",
+    function(text, font, size, color)
+        local label = CCLabelTTF:create(text, font, size)
+        label:setColor(cc.i2c3b(color))
+        return label
+    end
+}
+
+overload.createLabel {
     "class",
     "table",
     "string",
