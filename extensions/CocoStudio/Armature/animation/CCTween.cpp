@@ -392,8 +392,7 @@ void CCTween::tweenColorTo(float percent, CCFrameData *node)
 
 float CCTween::updateFrameData(float currentPercent)
 {
-    if (currentPercent > 1 && m_pMovementBoneData->delay != 0)
-    {
+    if (currentPercent > 1 && m_pMovementBoneData->delay != 0) {
         currentPercent = fmodf(currentPercent, 1);
     }
 
@@ -401,10 +400,8 @@ float CCTween::updateFrameData(float currentPercent)
     // so I removed it, if anything wrong, bring old code back
     float playedTime = (float)m_iRawDuration * currentPercent;
 
-
     //! If play to current frame's front or back, then find current frame again
-    if (playedTime < m_iTotalDuration || playedTime >= m_iTotalDuration + m_iBetweenDuration)
-    {
+    if (playedTime < m_iTotalDuration || playedTime >= m_iTotalDuration + m_iBetweenDuration) {
         /*
          *  Get frame length, if m_iToIndex >= _length, then set m_iToIndex to 0, start anew.
          *  m_iToIndex is next index will play
@@ -415,65 +412,56 @@ float CCTween::updateFrameData(float currentPercent)
         CCFrameData *from = nullptr;
         CCFrameData *to = nullptr;
 
-        if (playedTime < frames[0]->frameID)
-        {
+        if (playedTime < frames[0]->frameID) {
             from = to = frames[0];
             setBetween(from, to);
             return m_fCurrentPercent;
         }
         
-        if(playedTime >= frames[length - 1]->frameID)
-        {
-            if (m_bPassLastFrame)
-            {
+        if(playedTime >= frames[length - 1]->frameID) {
+            if (m_bPassLastFrame) {
                 from = to = frames[length - 1];
                 setBetween(from, to);
                 return m_fCurrentPercent;
             }
             m_bPassLastFrame = true;
-        }
-        else
-        {
+        } else {
             m_bPassLastFrame = false;
         }
 
-
-        do
-        {
+        do {
             m_iFromIndex = m_iToIndex;
             from = frames[m_iFromIndex];
             m_iTotalDuration  = from->frameID;
 
             m_iToIndex = m_iFromIndex + 1;
-            if (m_iToIndex >= length)
-            {
+            if (m_iToIndex >= length) {
                 m_iToIndex= 0;
             }
 
             to = frames[m_iToIndex];
 
             //! Guaranteed to trigger frame event
-            if(from->strEvent.length() != 0 && !m_pAnimation->isIgnoreFrameEvent())
-            {
+            if(from->strEvent.length() != 0 && !m_pAnimation->isIgnoreFrameEvent()) {
                 m_pAnimation->frameEvent(m_pBone, from->strEvent.c_str(), from->frameID, playedTime);
             }
 
-            if (playedTime == from->frameID || (m_bPassLastFrame && m_iFromIndex == length-1))
-            {
+            if (playedTime == from->frameID || (m_bPassLastFrame && m_iFromIndex == length-1)) {
                 break;
             }
-        }
-        while (playedTime < from->frameID || playedTime >= to->frameID);
+        } while (playedTime < from->frameID || playedTime >= to->frameID);
 
+        // calculate time between key frames, need check underflow because to may be smaller than from
         m_iBetweenDuration = to->frameID - from->frameID;
+        if(m_iBetweenDuration < 0) {
+            m_iBetweenDuration = 0;
+        }
 
         m_eFrameTweenEasing = from->tweenEasing;
 
         setBetween(from, to, false);
-
     }
     currentPercent = m_iBetweenDuration == 0 ? 0 : (playedTime - m_iTotalDuration) / (float)m_iBetweenDuration;
-
 
     /*
      *  If frame tween easing equal to TWEEN_EASING_MAX, then it will not do tween.
