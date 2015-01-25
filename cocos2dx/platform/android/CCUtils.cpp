@@ -32,6 +32,7 @@
 #include "ccMacros.h"
 #include "CCUtilsAndroid.h"
 #include <unistd.h>
+#include "platform/android/CCFileUtilsAndroid.h"
 
 NS_CC_BEGIN
 
@@ -47,8 +48,13 @@ bool CCUtils::isPathExistent(const string& path) {
 	// if path is empty, directly return
 	if(path.empty())
 		return false;
-
-	return access(path.c_str(), 0) == 0;
+    
+    // if relative path, convert to assets path and check
+    if(CCFileUtils::sharedFileUtils()->isAbsolutePath(path)) {
+        return access(path.c_str(), 0) == 0;
+    } else {
+        return CCFileUtils::sharedFileUtils()->isFileExist(path);
+    }
 }
 
 string CCUtils::externalize(const string& path) {

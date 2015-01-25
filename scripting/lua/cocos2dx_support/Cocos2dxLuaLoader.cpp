@@ -45,14 +45,22 @@ extern "C"
             filename.replace(pos, 1, "/");
             pos = filename.find_first_of(".");
         }
-        filename.append(".lua");
-        filepath = CCUtils::deleteLastPathComponent(filepath);
-        filepath = CCUtils::appendPathComponent(filepath, filename);
+        string basepath = CCUtils::deleteLastPathComponent(filepath);
+        string filepathWithoutExt = CCUtils::appendPathComponent(basepath, filename);
         
-        // now try find lua in external path first, then use internal path
-        pos = filepath.rfind("script/");
+        // find script relative path
+        pos = filepathWithoutExt.rfind("script/");
         if(pos != std::string::npos) {
-            filepath = CCUtils::getExternalOrFullPath(filepath.substr(pos));
+            filepathWithoutExt = filepathWithoutExt.substr(pos);
+        }
+        
+        // try find compiled lua first
+        // then try find lua source
+        filepath = filepathWithoutExt + ".lc";
+        filepath = CCUtils::getExternalOrFullPath(filepath);
+        if(!CCUtils::isPathExistent(filepath)) {
+            filepath = filepathWithoutExt + ".lua";
+            filepath = CCUtils::getExternalOrFullPath(filepath);
         }
         
         // load lua file
