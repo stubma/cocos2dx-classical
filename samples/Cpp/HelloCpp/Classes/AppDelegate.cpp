@@ -23,10 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "AppDelegate.h"
-
 #include <vector>
 #include <string>
-
 #include "HelloWorldScene.h"
 #include "AppMacros.h"
 
@@ -56,7 +54,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
     pEGLView->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, kResolutionNoBorder);
 #endif
 
-    
     vector<string> searchPath;
 
     // In this demo, we select resource according to the frame's height.
@@ -86,15 +83,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
         pDirector->setContentScaleFactor(MIN(smallResource.size.height/designResolutionSize.height, smallResource.size.width/designResolutionSize.width));
     }
 
-
     // set searching path
     CCFileUtils::sharedFileUtils()->setSearchPaths(searchPath);
 	
     // turn on display FPS
+#ifdef COCOS2D_DEBUG
     pDirector->setDisplayStats(true);
-
-    // set FPS. the default value is 1.0/60 if you don't call this
-    pDirector->setAnimationInterval(1.0 / 60);
+#endif
 
     // create a scene. it's an autorelease object
     CCScene *pScene = HelloWorld::scene();
@@ -110,7 +105,7 @@ void AppDelegate::applicationDidEnterBackground() {
     CCDirector::sharedDirector()->stopAnimation();
 
     // if you use SimpleAudioEngine, it must be pause
-    // SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }
 
 // this function will be called when the app is active again
@@ -118,5 +113,5 @@ void AppDelegate::applicationWillEnterForeground() {
     CCDirector::sharedDirector()->startAnimation();
 
     // if you use SimpleAudioEngine, it must resume here
-    // SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }
