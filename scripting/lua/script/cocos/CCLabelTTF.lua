@@ -50,13 +50,13 @@ overload.createLabel {
     "number",
     "table",
     "number",
-    "table",
+    "number",
     "number",
     "number",
     function(parent, pos, text, font, size, dimension, alignment, color, z, tag)
         local label = CCLabelTTF:create(text, font, size, dimension, alignment)
         label:setPosition(pos)
-        label:setColor(color)
+        label:setColor(cc.i2c3b(color))
         parent:addChild(label, z, tag)
         return label
     end
