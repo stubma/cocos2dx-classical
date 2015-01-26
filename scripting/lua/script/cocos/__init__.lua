@@ -23,7 +23,8 @@ function loadLua(name)
         path = CCFileUtils:sharedFileUtils():fullPathForFilename("script");
     end
     for entry in lfs.dir(path .. "/" .. name) do
-        if entry ~= "." and entry ~= ".." and entry ~= "__init__.lua" and string.find(entry,".lua") ~= nil then
+        if entry ~= "." and entry ~= ".." and
+            ((entry ~= "__init__.lua" and string.find(entry,".lua") ~= nil) or (entry ~= "__init__.lc" and string.find(entry,".lc") ~= nil)) then
             local s, n = string.gsub(entry, ".lua+", function(s) return "" end)
             local fullpath = path .. "/" .. name .. "/" .. s
             require(fullpath)
