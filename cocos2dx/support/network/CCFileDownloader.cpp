@@ -165,6 +165,10 @@ size_t CCFileDownloader::getCurrentDownloadingFileSize() {
     return m_entry ? m_entry->m_size : 0;
 }
 
+int CCFileDownloader::getFailedEntryCount() {
+    return m_failedEntries.count();
+}
+
 void CCFileDownloader::onHttpDone(CCHttpResponse* response) {
     // if entry is not set, this notification is not for me
     if(!m_entry)

@@ -120,6 +120,9 @@ public:
     /// get total size of current downloading file, maybe zero if size is still unknown
     size_t getCurrentDownloadingFileSize();
     
+    /// get failed entry count
+    int getFailedEntryCount();
+    
     /// file folder prefix
     CC_SYNTHESIZE_PASS_BY_REF(string, m_folder, Folder);
     
