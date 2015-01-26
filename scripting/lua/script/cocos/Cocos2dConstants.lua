@@ -60,6 +60,13 @@ cc.EditBoxEditingDidBegin = "began"
 cc.EditBoxEditingDidEnd = "ended"
 cc.EditBoxReturn = "return"
 
+-- edit box input type
+cc.kEditBoxInputFlagPassword = 0
+cc.kEditBoxInputFlagSensitive = 1
+cc.kEditBoxInputFlagInitialCapsWord = 2
+cc.kEditBoxInputFlagInitialCapsSentence = 3
+cc.kEditBoxInputFlagInitialCapsAllCharacters = 4
+
 -- resource loader event
 cc.ResourceLoaderProgress = "progress"
 cc.ResourceLoaderDone = "done"
@@ -97,3 +104,9 @@ cc.VerticalTextAlignmentBottom = 2
 cc.TextAlignmentLeft = 0
 cc.TextAlignmentCenter = 1
 cc.TextAlignmentRight = 2
+
+-- scrolview scrolling type
+cc.kCCScrollViewDirectionNone = -1
+cc.kCCScrollViewDirectionHorizontal = 0
+cc.kCCScrollViewDirectionVertical=1
+cc.kCCScrollViewDirectionBoth=2
