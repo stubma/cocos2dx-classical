@@ -90,6 +90,11 @@ cc.NORTH_WEST = cc.LEFT_TOP
 cc.SOUTH_EAST = cc.RIGHT_BOTTOM
 cc.SOUTH_WEST = cc.LEFT_BOTTOM
 
+-- geometry constant
+cc.RectZero = cc.rect(0, 0, 0, 0)
+cc.SizeZero = cc.size(0, 0)
+cc.PointZero = cc.p(0, 0)
+
 -- progress bar type
 cc.ProgressTimerTypeRadial = 0
 cc.ProgressTimerTypeBar = 1

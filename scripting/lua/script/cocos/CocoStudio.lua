@@ -3,22 +3,49 @@ require("script/cocos/overload")
 ccs = ccs or {}
 
 -- movement type
-ccs.START = 0
-ccs.COMPLETE = 1
-ccs.LOOP_COMPLETE = 2
+cc.START = 0
+cc.COMPLETE = 1
+cc.LOOP_COMPLETE = 2
 
-function ccs.createArm(arm, anim, x, y, parent, z, tag)
-    local a = CCArmature:create(arm)
-    a:getAnimation():play(anim)
-    a:setPosition(x, y)
-    parent:addChild(a, z, tag)
-    return a
-end
+-- layout color type
+cc.LAYOUT_COLOR_NONE = 0
+cc.LAYOUT_COLOR_SOLID = 1
+cc.LAYOUT_COLOR_GRADIENT = 2
+
+overload.createArm {
+    "class",
+    "string",
+    "string",
+    "table",
+    function(parent, arm, anim, pos)
+        local a = CCArmature:create(arm)
+        a:getAnimation():play(anim)
+        a:setPosition(pos)
+        parent:addChild(a)
+        return a
+    end
+}
+
+overload.createArm {
+    "class",
+    "string",
+    "string",
+    "table",
+    "number",
+    "number",
+    function(parent, arm, anim, pos, z, tag)
+        local a = CCArmature:create(arm)
+        a:getAnimation():play(anim)
+        a:setPosition(pos)
+        parent:addChild(a, z, tag)
+        return a
+    end
+}
 
 overload.getWidgetByName {
     "class",
     "string",
-    function(root, name, type)
+    function(root, name)
         local obj = UIHelper:seekWidgetByName(root, name)
         return obj
     end
