@@ -60,6 +60,13 @@ cc.EditBoxEditingDidBegin = "began"
 cc.EditBoxEditingDidEnd = "ended"
 cc.EditBoxReturn = "return"
 
+-- editbox return key type
+cc.kKeyboardReturnTypeDefault = 0
+cc.kKeyboardReturnTypeDone = 1
+cc.kKeyboardReturnTypeSend = 2
+cc.kKeyboardReturnTypeSearch = 3
+cc.kKeyboardReturnTypeGo = 4
+
 -- edit box input type
 cc.kEditBoxInputFlagPassword = 0
 cc.kEditBoxInputFlagSensitive = 1
