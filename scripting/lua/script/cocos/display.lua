@@ -1,3 +1,5 @@
+require("script/cocos/Cocos2d")
+
 display = {}
 
 local sharedDirector         = CCDirector:sharedDirector()

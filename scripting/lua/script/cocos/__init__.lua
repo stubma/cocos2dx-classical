@@ -15,21 +15,45 @@ end
 
 -- load lua file under a folder, include subfolders
 function loadLua(name)
-    local path
+    -- internal and external path
+    local internalPath
+    local externalPath
     if CCDevice:getPlatform() == cc.PLATFORM_ANDROID then
         -- XXX: in Android, looks like we need copy script to files dir first, this is not done
-        path = CCUtils:getInternalStoragePath() .. "/script"
+        internalPath = CCUtils:getInternalStoragePath() .. "/script"
     else
-        path = CCFileUtils:sharedFileUtils():fullPathForFilename("script");
+        internalPath = CCFileUtils:sharedFileUtils():fullPathForFilename("script");
     end
-    for entry in lfs.dir(path .. "/" .. name) do
+    internalPath = internalPath .. "/" .. name
+    externalPath = CCUtils:externalize("script")  .. "/" .. name
+    
+    -- search file in internal and external, exclude duplicated entry
+    local entries = {}
+    for entry in lfs.dir(internalPath) do
         local isLua = entry ~= "__init__.lua" and string.find(entry, ".lua") ~= nil
         local isLc = entry ~= "__init__.lc" and string.find(entry, ".lc") ~= nil
         if entry ~= "." and entry ~= ".." and (isLua or isLc) then
-            local s, n = string.gsub(entry, "(\.lua+|\.lc+)", function(s) return "" end)
-            local fullpath = path .. "/" .. name .. "/" .. s
-            require(fullpath)
+            local s, n = string.gsub(entry, "%.lua+", "")
+            s, n = string.gsub(s, "%.lc+", "")
+            entries[tostring(s)] = internalPath
         end
+    end
+    if CCUtils:isPathExistent(externalPath) then
+        for entry in lfs.dir(externalPath) do
+            local isLua = entry ~= "__init__.lua" and string.find(entry, ".lua") ~= nil
+            local isLc = entry ~= "__init__.lc" and string.find(entry, ".lc") ~= nil
+            if entry ~= "." and entry ~= ".." and (isLua or isLc) then
+                local s, n = string.gsub(entry, "%.lua+", "")
+                s, n = string.gsub(s, "%.lc+", "")
+                entries[tostring(s)] = externalPath
+            end
+        end
+    end
+    
+    -- load
+    for file,path in pairs(entries) do
+        local fullpath = path .. "/" .. file
+        require(fullpath)
     end
 end
 

@@ -31,9 +31,13 @@ using namespace cocos2d;
 extern "C"
 {
     int cocos2dx_lua_loader(lua_State *L) {
-        // remove lua extension
+        // remove lua/lc extension
         std::string filepath(luaL_checkstring(L, 1));
         size_t pos = filepath.rfind(".lua");
+        if (pos != std::string::npos) {
+            filepath = filepath.substr(0, pos);
+        }
+        pos = filepath.rfind(".lc");
         if (pos != std::string::npos) {
             filepath = filepath.substr(0, pos);
         }

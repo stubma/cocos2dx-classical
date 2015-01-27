@@ -1,3 +1,5 @@
+require("script/cocos/Cocos2d")
+
 cc = cc or {}
 
 -- platform constants
