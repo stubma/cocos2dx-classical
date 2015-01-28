@@ -142,3 +142,22 @@ cc.ScrollViewDirectionNone = -1
 cc.ScrollViewDirectionHorizontal = 0
 cc.ScrollViewDirectionVertical = 1
 cc.ScrollViewDirectionBoth = 2
+
+-- shader constants
+cc.Shader_none = 0
+cc.Shader_PositionTextureColor = 1
+cc.Shader_PositionTextureColorAlphaTest = 2
+cc.Shader_PositionColor = 3
+cc.Shader_PositionTexture = 4
+cc.Shader_PositionTexture_uColor = 5
+cc.Shader_PositionTextureA8Color = 6
+cc.Shader_Position_uColor = 7
+cc.Shader_PositionLengthTexureColor = 8
+cc.Shader_ControlSwitch = 9
+cc.Shader_blur = 10
+cc.Shader_flash = 11
+cc.Shader_laser = 12
+cc.Shader_lighting = 13
+cc.Shader_matrix = 14
+cc.Shader_shine = 15
+cc.Shader_MAX = 16
