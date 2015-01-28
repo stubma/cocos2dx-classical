@@ -2,6 +2,24 @@ require("script/cocos/Cocos2d")
 
 cc = cc or {}
 
+-- color constants
+cc.cc4RED = { 255, 0, 0, 255 }
+cc.cc4GREEN = { 0, 255, 0, 255 }
+cc.cc4BLUE = { 0, 0, 255, 255 }
+cc.cc4BLACK = { 0, 0, 0, 255 }
+cc.cc4WHITE = { 255, 255, 255, 255 }
+cc.cc4TRANSPARENT = { 0, 0, 0, 0 }
+cc.cc4DIM = { 0, 0, 0, 127 }
+cc.cc4YELLOW = { 255, 255, 0, 255 }
+cc.cc4fRED = { 1, 0, 0, 1 }
+cc.cc4fGREEN = { 0, 1, 0, 1 }
+cc.cc4fBLUE = { 0, 0, 1, 1 }
+cc.cc4fBLACK = { 0, 0, 0, 1 }
+cc.cc4fWHITE = { 1, 1, 1, 1 }
+cc.cc4fTRANSPARENT = { 0, 0, 0, 0 }
+cc.cc4fDIM = { 0, 0, 0, 0.5 }
+cc.cc4fYELLOW = { 1, 1, 0, 1 }
+
 -- platform constants
 cc.PLATFORM_UNKNOWN            = 0
 cc.PLATFORM_IOS                = 1
@@ -63,18 +81,18 @@ cc.EditBoxEditingDidEnd = "ended"
 cc.EditBoxReturn = "return"
 
 -- editbox return key type
-cc.kKeyboardReturnTypeDefault = 0
-cc.kKeyboardReturnTypeDone = 1
-cc.kKeyboardReturnTypeSend = 2
-cc.kKeyboardReturnTypeSearch = 3
-cc.kKeyboardReturnTypeGo = 4
+cc.KeyboardReturnTypeDefault = 0
+cc.KeyboardReturnTypeDone = 1
+cc.KeyboardReturnTypeSend = 2
+cc.KeyboardReturnTypeSearch = 3
+cc.KeyboardReturnTypeGo = 4
 
 -- edit box input type
-cc.kEditBoxInputFlagPassword = 0
-cc.kEditBoxInputFlagSensitive = 1
-cc.kEditBoxInputFlagInitialCapsWord = 2
-cc.kEditBoxInputFlagInitialCapsSentence = 3
-cc.kEditBoxInputFlagInitialCapsAllCharacters = 4
+cc.EditBoxInputFlagPassword = 0
+cc.EditBoxInputFlagSensitive = 1
+cc.EditBoxInputFlagInitialCapsWord = 2
+cc.EditBoxInputFlagInitialCapsSentence = 3
+cc.EditBoxInputFlagInitialCapsAllCharacters = 4
 
 -- resource loader event
 cc.ResourceLoaderProgress = "progress"
@@ -120,7 +138,7 @@ cc.TextAlignmentCenter = 1
 cc.TextAlignmentRight = 2
 
 -- scrolview scrolling type
-cc.kCCScrollViewDirectionNone = -1
-cc.kCCScrollViewDirectionHorizontal = 0
-cc.kCCScrollViewDirectionVertical=1
-cc.kCCScrollViewDirectionBoth=2
+cc.ScrollViewDirectionNone = -1
+cc.ScrollViewDirectionHorizontal = 0
+cc.ScrollViewDirectionVertical = 1
+cc.ScrollViewDirectionBoth = 2
