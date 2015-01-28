@@ -115,6 +115,12 @@ static inline ccColor4F ccc4FFromccc3B(ccColor3B c)
     return c4;
 }
 
+static inline ccColor4B ccc4BFromccc3B(ccColor3B c)
+{
+    ccColor4B c4 = { c.r, c.g, c.b, 255 };
+    return c4;
+}
+
 //! helper that creates a ccColor4f type
 static inline ccColor4F 
 ccc4f(const GLfloat r, const GLfloat g, const GLfloat b, const GLfloat a) {
