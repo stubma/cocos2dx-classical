@@ -3,22 +3,22 @@ require("script/cocos/Cocos2d")
 cc = cc or {}
 
 -- color constants
-cc.cc4RED = { 255, 0, 0, 255 }
-cc.cc4GREEN = { 0, 255, 0, 255 }
-cc.cc4BLUE = { 0, 0, 255, 255 }
-cc.cc4BLACK = { 0, 0, 0, 255 }
-cc.cc4WHITE = { 255, 255, 255, 255 }
-cc.cc4TRANSPARENT = { 0, 0, 0, 0 }
-cc.cc4DIM = { 0, 0, 0, 127 }
-cc.cc4YELLOW = { 255, 255, 0, 255 }
-cc.cc4fRED = { 1, 0, 0, 1 }
-cc.cc4fGREEN = { 0, 1, 0, 1 }
-cc.cc4fBLUE = { 0, 0, 1, 1 }
-cc.cc4fBLACK = { 0, 0, 0, 1 }
-cc.cc4fWHITE = { 1, 1, 1, 1 }
-cc.cc4fTRANSPARENT = { 0, 0, 0, 0 }
-cc.cc4fDIM = { 0, 0, 0, 0.5 }
-cc.cc4fYELLOW = { 1, 1, 0, 1 }
+cc.cc4RED = cc.c4b(255, 0, 0, 255)
+cc.cc4GREEN = cc.c4b(0, 255, 0, 255)
+cc.cc4BLUE = cc.c4b(0, 0, 255, 255)
+cc.cc4BLACK = cc.c4b(0, 0, 0, 255)
+cc.cc4WHITE = cc.c4b(255, 255, 255, 255)
+cc.cc4TRANSPARENT = cc.c4b(0, 0, 0, 0)
+cc.cc4DIM = cc.c4b(0, 0, 0, 127)
+cc.cc4YELLOW = cc.c4b(255, 255, 0, 255)
+cc.cc4fRED = cc.c4f(1, 0, 0, 1)
+cc.cc4fGREEN = cc.c4f(0, 1, 0, 1)
+cc.cc4fBLUE = cc.c4f(0, 0, 1, 1)
+cc.cc4fBLACK = cc.c4f(0, 0, 0, 1)
+cc.cc4fWHITE = cc.c4f(1, 1, 1, 1)
+cc.cc4fTRANSPARENT = cc.c4f(0, 0, 0, 0)
+cc.cc4fDIM = cc.c4f(0, 0, 0, 0.5)
+cc.cc4fYELLOW = cc.c4f(1, 1, 0, 1)
 
 -- platform constants
 cc.PLATFORM_UNKNOWN            = 0
