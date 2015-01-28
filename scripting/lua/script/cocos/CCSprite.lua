@@ -7,7 +7,11 @@ overload.createSprite {
     function(parent, name, pos)
         local sprite = CCSprite:create(name)
         sprite:setPosition(pos)
-        parent:addChild(sprite)
+        if tolua.isa(parent, "Widget") then
+            parent:addNode(sprite)
+        else
+            parent:addChild(sprite)
+        end
         return sprite
     end
 }
@@ -15,30 +19,19 @@ overload.createSprite {
 overload.createSprite {
     "class",
     "string",
+    "table",
+    "table",
     "number",
     "number",
-    function(parent, name, x, y)
+    function(parent, name, pos, anchor, z, tag)
         local sprite = CCSprite:create(name)
-        sprite:setPosition(x, y)
-        parent:addChild(sprite)
-        return sprite
-    end
-}
-
-overload.createSprite {
-    "class",
-    "string",
-    "number",
-    "number",
-    "number",
-    "number",
-    "number",
-    "number",
-    function(parent, name, x, y, aX, aY, z, tag)
-        local sprite = CCSprite:create(name)
-        sprite:setPosition(x, y)
-        cc.setAnchor(sprite, aX, aY)
-        parent:addChild(sprite, z, tag)
+        sprite:setPosition(pos)
+        cc.setAnchor(sprite, anchor.x, anchor.y)
+        if tolua.isa(parent, "Widget") then
+            parent:addNode(sprite, z, tag)
+        else
+            parent:addChild(sprite, z, tag)
+        end
         return sprite
     end
 }
@@ -58,7 +51,11 @@ overload.createFrameSprite {
     function(parent, name, pos)
         local sprite = CCSprite:createWithSpriteFrameName(name)
         sprite:setPosition(pos)
-        parent:addChild(sprite)
+        if tolua.isa(parent, "Widget") then
+            parent:addNode(sprite)
+        else
+            parent:addChild(sprite)
+        end
         return sprite
     end
 }
@@ -74,15 +71,11 @@ overload.createFrameSprite {
         local sprite = CCSprite:createWithSpriteFrameName(name)
         sprite:setPosition(pos)
         cc.setAnchor(sprite, anchor.x, anchor.y)
-        parent:addChild(sprite, z, tag)
+        if tolua.isa(parent, "Widget") then
+            parent:addNode(sprite, z, tag)
+        else
+            parent:addChild(sprite, z, tag)
+        end
         return sprite
     end
 }
-
-function cc.createWidgetSprite(parent, name, x, y, aX, aY, z, tag)
-    local sprite = CCSprite:create(name)
-    sprite:setPosition(x, y)
-    cc.setAnchor(sprite, aX, aY)
-    parent:addNode(sprite, z, tag)
-    return sprite
-end
