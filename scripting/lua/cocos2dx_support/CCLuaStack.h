@@ -32,6 +32,7 @@ extern "C" {
 #include "ccTypes.h"
 #include "cocoa/CCObject.h"
 #include "CCLuaValue.h"
+#include "script_support/CCScriptSupport.h"
 
 NS_CC_BEGIN
 /** Lua support for cocos2d-x
@@ -115,10 +116,10 @@ public:
     virtual bool pushFunctionByHandler(int nHandler);
     virtual void pushCCArray(CCArray* array);
     virtual void pushCCDictionary(CCDictionary* dict);
-    virtual int executeFunction(int numArgs);
+    virtual int executeFunction(int numArgs, CCObject* collector = nullptr, SEL_ScriptReturnedValueCollector sel = nullptr);
     virtual void pop(int count);
     
-    virtual int executeFunctionByHandler(int nHandler, int numArgs);
+    virtual int executeFunctionByHandler(int nHandler, int numArgs, CCObject* collector = nullptr, SEL_ScriptReturnedValueCollector sel = nullptr);
     
     virtual int executeFunctionReturnArray(int nHandler,int nNumArgs,int nNummResults,CCArray* pResultArray);
     

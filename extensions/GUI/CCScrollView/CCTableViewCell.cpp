@@ -27,6 +27,11 @@
 
 NS_CC_EXT_BEGIN
 
+CCTableViewCell* CCTableViewCell::create() {
+    CCTableViewCell* cell = new CCTableViewCell();
+    CC_SAFE_AUTORELEASE_RETURN(cell, CCTableViewCell*);
+}
+
 void CCTableViewCell::reset()
 {
     m_uIdx = CC_INVALID_INDEX;

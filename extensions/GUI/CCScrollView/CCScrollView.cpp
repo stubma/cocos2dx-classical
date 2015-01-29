@@ -56,14 +56,14 @@ CCScrollView::CCScrollView()
 , m_fMinScale(0.0f)
 , m_fMaxScale(0.0f)
 {
+    memset(&m_scriptHandler, 0, sizeof(ccScriptFunction));
     setSwallowTouch(false);
 }
 
 CCScrollView::~CCScrollView()
 {
     CC_SAFE_RELEASE(m_pTouches);
-    this->unregisterScriptHandler(kScrollViewScroll);
-    this->unregisterScriptHandler(kScrollViewZoom);
+    unregisterScriptScrollViewEventHandler();
 }
 
 CCScrollView* CCScrollView::create(CCSize size, CCNode* container/* = nullptr*/)
@@ -122,7 +122,6 @@ bool CCScrollView::initWithViewSize(CCSize size, CCNode *container/* = nullptr*/
         
         this->addChild(m_pContainer);
         m_fMinScale = m_fMaxScale = 1.0f;
-        m_mapScriptHandler.clear();
         return true;
     }
     return false;
@@ -209,10 +208,7 @@ void CCScrollView::setContentOffset(CCPoint offset, bool animated/* = false*/)
 
         m_pContainer->setPosition(offset);
 
-        if (m_pDelegate != nullptr)
-        {
-            m_pDelegate->scrollViewDidScroll(this);   
-        }
+        onScrollViewDidScroll();
     }
 }
 
@@ -253,10 +249,7 @@ void CCScrollView::setZoomScale(float s)
         newCenter = m_pContainer->convertToWorldSpace(oldCenter);
         
         const CCPoint offset = ccpSub(center, newCenter);
-        if (m_pDelegate != nullptr)
-        {
-            m_pDelegate->scrollViewDidZoom(this);
-        }
+        onScrollViewDidZoom();
         this->setContentOffset(ccpAdd(m_pContainer->getPosition(),offset));
     }
 }
@@ -414,14 +407,38 @@ void CCScrollView::deaccelerateScrolling(float dt)
     }
 }
 
+void CCScrollView::onScrollViewDidScroll() {
+    if (m_pDelegate != nullptr) {
+        m_pDelegate->scrollViewDidScroll(this);
+    }
+    
+    if(m_scriptHandler.handler) {
+        CCArray* pArrayArgs = CCArray::createWithCapacity(2);
+        pArrayArgs->addObject(this);
+        pArrayArgs->addObject(CCString::create("scroll"));
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs);
+    }
+}
+
+void CCScrollView::onScrollViewDidZoom() {
+    if (m_pDelegate != nullptr) {
+        m_pDelegate->scrollViewDidZoom(this);
+    }
+    
+    if(m_scriptHandler.handler) {
+        CCArray* pArrayArgs = CCArray::createWithCapacity(2);
+        pArrayArgs->addObject(this);
+        pArrayArgs->addObject(CCString::create("zoom"));
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs);
+    }
+}
+
 void CCScrollView::stoppedAnimatedScroll(CCNode * node)
 {
     this->unschedule(schedule_selector(CCScrollView::performedAnimatedScroll));
+    
     // After the animation stopped, "scrollViewDidScroll" should be invoked, this could fix the bug of lack of tableview cells.
-    if (m_pDelegate != nullptr)
-    {
-        m_pDelegate->scrollViewDidScroll(this);
-    }
+    onScrollViewDidScroll();
 }
 
 void CCScrollView::performedAnimatedScroll(float dt)
@@ -432,10 +449,7 @@ void CCScrollView::performedAnimatedScroll(float dt)
         return;
     }
 
-    if (m_pDelegate != nullptr)
-    {
-        m_pDelegate->scrollViewDidScroll(this);
-    }
+    onScrollViewDidScroll();
 }
 
 
@@ -783,27 +797,16 @@ CCRect CCScrollView::getViewRect()
     return CCRectMake(screenPos.x, screenPos.y, m_tViewSize.width*scaleX, m_tViewSize.height*scaleY);
 }
 
-void CCScrollView::registerScriptHandler(int nFunID,int nScriptEventType)
-{
-    this->unregisterScriptHandler(nScriptEventType);
-    m_mapScriptHandler[nScriptEventType] = nFunID;
+void CCScrollView::registerScriptScrollViewEventHandler(ccScriptFunction func) {
+    unregisterScriptScrollViewEventHandler();
+    m_scriptHandler = func;
 }
-void CCScrollView::unregisterScriptHandler(int nScriptEventType)
-{
-    std::map<int,int>::iterator iter = m_mapScriptHandler.find(nScriptEventType);
-    
-    if (m_mapScriptHandler.end() != iter)
-    {
-        m_mapScriptHandler.erase(iter);
+
+void CCScrollView::unregisterScriptScrollViewEventHandler() {
+    if(m_scriptHandler.handler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_scriptHandler.handler);
+        m_scriptHandler.handler = 0;
     }
 }
-int  CCScrollView::getScriptHandler(int nScriptEventType)
-{
-    std::map<int,int>::iterator iter = m_mapScriptHandler.find(nScriptEventType);
-    
-    if (m_mapScriptHandler.end() != iter)
-        return iter->second;
-    
-    return 0;
-}
+
 NS_CC_EXT_END

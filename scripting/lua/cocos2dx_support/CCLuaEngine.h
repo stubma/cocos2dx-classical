@@ -126,11 +126,9 @@ public:
     virtual int executeAccelerometerEvent(ccScriptFunction& func, CCAcceleration* pAccelerationValue);
     
     /// common event
-    virtual int executeEvent(ccScriptFunction& func, const char* pEventName);
+    virtual int executeEvent(ccScriptFunction& func, const char* pEventName, CCObject* collector = nullptr, SEL_ScriptReturnedValueCollector sel = nullptr);
     
-    int executeTableViewEvent(int nEventType,cocos2d::extension::CCTableView* pTableView,void* pValue = nullptr, CCArray* pResultArray = nullptr);
-    
-    virtual int executeEventWithArgs(ccScriptFunction& func, CCArray* pArgs);
+    virtual int executeEventWithArgs(ccScriptFunction& func, CCArray* pArgs, CCObject* collector = nullptr, SEL_ScriptReturnedValueCollector sel = nullptr);
 
     virtual void executeObjectDestructor(CCObject* obj);
     

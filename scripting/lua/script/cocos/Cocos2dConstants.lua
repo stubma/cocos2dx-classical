@@ -94,6 +94,19 @@ cc.EditBoxInputFlagInitialCapsWord = 2
 cc.EditBoxInputFlagInitialCapsSentence = 3
 cc.EditBoxInputFlagInitialCapsAllCharacters = 4
 
+-- scroll view event
+cc.ScrollViewEventScroll = "scroll"
+cc.ScrollViewEventZoom = "zoom"
+
+-- table view event
+cc.TableViewEventCellAtIndex = "cell"
+cc.TableViewEventCellTouched = "touched"
+cc.TableViewEventCellHighlight = "highlight"
+cc.TableViewEventCellUnhighlight = "unhighlight"
+cc.TableViewEventCellWillRecycle = "recycle"
+cc.TableViewEventCellSizeForIndex = "size"
+cc.TableViewEventNumberOfCells = "num"
+
 -- resource loader event
 cc.ResourceLoaderProgress = "progress"
 cc.ResourceLoaderDone = "done"

@@ -40,7 +40,10 @@ NS_CC_EXT_BEGIN
 class CC_DLL CCTableViewCell: public CCNode, public CCSortableObject
 {
 public:
+    virtual ~CCTableViewCell() {}
     CCTableViewCell() {}
+    static CCTableViewCell* create();
+    
     /**
      * The index used internally by SWTableView and its subclasses
      */

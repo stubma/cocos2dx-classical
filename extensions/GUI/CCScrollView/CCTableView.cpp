@@ -23,12 +23,18 @@
  ****************************************************************************/
 #include "CCTableView.h"
 #include "CCTableViewCell.h"
+#include "LuaBasicConversions.h"
+#include "CCLuaEngine.h"
 
 NS_CC_EXT_BEGIN
 
 CCTableView* CCTableView::create(CCTableViewDataSource* dataSource, CCSize size)
 {
     return CCTableView::create(dataSource, size, nullptr);
+}
+
+CCTableView* CCTableView::create(CCSize size) {
+    return CCTableView::create(nullptr, size);
 }
 
 CCTableView* CCTableView::create(CCTableViewDataSource* dataSource, CCSize size, CCNode *container)
@@ -71,7 +77,7 @@ CCTableView::CCTableView()
 , m_colSpacing(0)
 , m_insets(ccInsetsZero)
 {
-    
+    memset(&m_scriptHandler, 0, sizeof(ccScriptFunction));
 }
 
 CCTableView::~CCTableView()
@@ -79,7 +85,7 @@ CCTableView::~CCTableView()
     CC_SAFE_DELETE(m_pIndices);
     CC_SAFE_RELEASE(m_pCellsUsed);
     CC_SAFE_RELEASE(m_pCellsFreed);
-    unregisterAllScriptHandler();
+    unregisterScriptTableViewEventHandler();
 }
 
 void CCTableView::reloadData(bool keepOffset)
@@ -89,9 +95,7 @@ void CCTableView::reloadData(bool keepOffset)
     {
         CCTableViewCell* cell = (CCTableViewCell*)pObj;
         
-        if(m_pTableViewDelegate != nullptr) {
-            m_pTableViewDelegate->tableCellWillRecycle(this, cell);
-        }
+        onTableCellWillRecycle(cell);
         
         m_pCellsFreed->addObject(cell);
         cell->reset();
@@ -107,7 +111,7 @@ void CCTableView::reloadData(bool keepOffset)
     
     _updateCellPositions();
     _updateContentSize(keepOffset);
-    if (m_pDataSource->numberOfCellsInTableView(this) > 0)
+    if (onNumberOfCellsInTableView() > 0)
     {
         scrollViewDidScroll(this);
     }
@@ -131,7 +135,7 @@ void CCTableView::updateCellAtIndex(unsigned int idx)
     {
         return;
     }
-    unsigned int uCountOfItems = m_pDataSource->numberOfCellsInTableView(this);
+    unsigned int uCountOfItems = onNumberOfCellsInTableView();
     if (0 == uCountOfItems || idx > uCountOfItems-1)
     {
         return;
@@ -142,7 +146,7 @@ void CCTableView::updateCellAtIndex(unsigned int idx)
     {
         _moveCellOutOfSight(cell);
     }
-    cell = m_pDataSource->tableCellAtIndex(this, idx);
+    cell = onTableCellAtIndex(idx);
     _setIndexForCell(idx, cell);
     _addCellIfNecessary(cell);
 }
@@ -154,7 +158,7 @@ void CCTableView::insertCellAtIndex(unsigned  int idx)
         return;
     }
     
-    unsigned int uCountOfItems = m_pDataSource->numberOfCellsInTableView(this);
+    unsigned int uCountOfItems = onNumberOfCellsInTableView();
     if (0 == uCountOfItems || idx > uCountOfItems-1)
     {
         return;
@@ -175,7 +179,7 @@ void CCTableView::insertCellAtIndex(unsigned  int idx)
     }
     
     //insert a new cell
-    cell = m_pDataSource->tableCellAtIndex(this, idx);
+    cell = onTableCellAtIndex(idx);
     _setIndexForCell(idx, cell);
     _addCellIfNecessary(cell);
     _updateCellPositions();
@@ -189,7 +193,7 @@ void CCTableView::removeCellAtIndex(unsigned int idx)
         return;
     }
     
-    unsigned int uCountOfItems = m_pDataSource->numberOfCellsInTableView(this);
+    unsigned int uCountOfItems = onNumberOfCellsInTableView();
     if (0 == uCountOfItems || idx > uCountOfItems-1)
     {
         return;
@@ -257,7 +261,7 @@ void CCTableView::_addCellIfNecessary(CCTableViewCell * cell)
 }
 
 void CCTableView::_updateCellPositions() {
-    int cellsCount = m_pDataSource->numberOfCellsInTableView(this);
+    int cellsCount = onNumberOfCellsInTableView();
     m_vCellsPositions.clear();
     m_hCellsPositions.clear();
     
@@ -271,7 +275,7 @@ void CCTableView::_updateCellPositions() {
             pos = m_insets.top;
             bool first = true;
             for (int i = 0; i < cellsCount; i++) {
-                cellSize = m_pDataSource->tableCellSizeForIndex(this, i);
+                cellSize = onTableCellSizeForIndex(i);
                 if(!first) {
                     pos += m_rowSpacing;
                 }
@@ -287,7 +291,7 @@ void CCTableView::_updateCellPositions() {
             pos = m_insets.top;
             first = true;
             for (int i = 0; i < m_viewRows; i++) {
-                cellSize = m_pDataSource->tableCellSizeForIndex(this, i);
+                cellSize = onTableCellSizeForIndex(i);
                 if(!first) {
                     pos += m_rowSpacing;
                 }
@@ -301,7 +305,7 @@ void CCTableView::_updateCellPositions() {
             pos = m_insets.left;
             first = true;
             for (int i = 0; i < cellsCount; i += m_viewRows) {
-                cellSize = m_pDataSource->tableCellSizeForIndex(this, i);
+                cellSize = onTableCellSizeForIndex(i);
                 if(!first) {
                     pos += m_colSpacing;
                 }
@@ -321,7 +325,7 @@ void CCTableView::_updateCellPositions() {
             pos = m_insets.top;
             bool first = true;
             for (int i = 0; i < cellsCount; i += cols) {
-                cellSize = m_pDataSource->tableCellSizeForIndex(this, i);
+                cellSize = onTableCellSizeForIndex(i);
                 if(!first) {
                     pos += m_rowSpacing;
                 }
@@ -335,7 +339,7 @@ void CCTableView::_updateCellPositions() {
             pos = m_insets.left;
             first = true;
             for (int i = 0; i < cols; i++) {
-                cellSize = m_pDataSource->tableCellSizeForIndex(this, i);
+                cellSize = onTableCellSizeForIndex(i);
                 if(!first) {
                     pos += m_colSpacing;
                 }
@@ -393,7 +397,7 @@ CCPoint CCTableView::_offsetFromIndex(unsigned int index) {
 
 int CCTableView::_indexFromOffset(CCPoint offset, bool excludeMargin) {
     // max index
-    const int maxIdx = m_pDataSource->numberOfCellsInTableView(this) - 1;
+    const int maxIdx = onNumberOfCellsInTableView() - 1;
     
     // locate
     const CCSize& contentSize = getContentSize();
@@ -461,9 +465,7 @@ int CCTableView::_indexFromOffset(CCPoint offset, bool excludeMargin) {
 
 void CCTableView::_moveCellOutOfSight(CCTableViewCell *cell)
 {
-    if(m_pTableViewDelegate != nullptr) {
-        m_pTableViewDelegate->tableCellWillRecycle(this, cell);
-    }
+    onTableCellWillRecycle(cell);
     
     m_pCellsFreed->addObject(cell);
     m_pCellsUsed->removeSortedObject(cell);
@@ -484,7 +486,7 @@ void CCTableView::_setIndexForCell(unsigned int index, CCTableViewCell *cell)
 
 void CCTableView::scrollViewDidScroll(CCScrollView* view)
 {
-    unsigned int uCountOfItems = m_pDataSource->numberOfCellsInTableView(this);
+    unsigned int uCountOfItems = onNumberOfCellsInTableView();
     if (0 == uCountOfItems)
     {
         return;
@@ -595,10 +597,10 @@ void CCTableView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 		CCRect bb = boundingBox();
 		bb.origin = m_pParent->convertToWorldSpace(bb.origin);
         
-		if (bb.containsPoint(pTouch->getLocation()) && m_pTableViewDelegate != nullptr)
+		if (bb.containsPoint(pTouch->getLocation()))
         {
-            m_pTableViewDelegate->tableCellUnhighlight(this, m_pTouchedCell);
-            m_pTableViewDelegate->tableCellTouched(this, m_pTouchedCell);
+            onTableCellUnhighlight();
+            onTableCellTouched();
         }
         
         m_pTouchedCell = nullptr;
@@ -631,15 +633,12 @@ bool CCTableView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 			m_pTouchedCell  = cellAtIndex(index);
 		}
         
-        if (m_pTouchedCell && m_pTableViewDelegate != nullptr) {
-            m_pTableViewDelegate->tableCellHighlight(this, m_pTouchedCell);
+        if (m_pTouchedCell) {
+            onTableCellHighlight();
         }
     }
     else if(m_pTouchedCell) {
-        if(m_pTableViewDelegate != nullptr) {
-            m_pTableViewDelegate->tableCellUnhighlight(this, m_pTouchedCell);
-        }
-        
+        onTableCellUnhighlight();
         m_pTouchedCell = nullptr;
     }
     
@@ -651,10 +650,7 @@ void CCTableView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
     CCScrollView::ccTouchMoved(pTouch, pEvent);
     
     if (m_pTouchedCell && isTouchMoved()) {
-        if(m_pTableViewDelegate != nullptr) {
-            m_pTableViewDelegate->tableCellUnhighlight(this, m_pTouchedCell);
-        }
-        
+        onTableCellUnhighlight();
         m_pTouchedCell = nullptr;
     }
 }
@@ -664,25 +660,137 @@ void CCTableView::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
     CCScrollView::ccTouchCancelled(pTouch, pEvent);
     
     if (m_pTouchedCell) {
-        if(m_pTableViewDelegate != nullptr) {
-            m_pTableViewDelegate->tableCellUnhighlight(this, m_pTouchedCell);
-        }
-        
+        onTableCellUnhighlight();
         m_pTouchedCell = nullptr;
     }
 }
 
-void CCTableView::unregisterAllScriptHandler()
-{
-    unregisterScriptHandler(kTableViewScroll);
-    unregisterScriptHandler(kTableViewZoom);
-    unregisterScriptHandler(kTableCellTouched);
-    unregisterScriptHandler(kTableCellHighLight);
-    unregisterScriptHandler(kTableCellUnhighLight);
-    unregisterScriptHandler(kTableCellWillRecycle);
-    unregisterScriptHandler(kTableCellSizeForIndex);
-    unregisterScriptHandler(kTableCellSizeAtIndex);
-    unregisterScriptHandler(kNumberOfCellsInTableView);
+void CCTableView::onTableCellHighlight() {
+    if(m_pTableViewDelegate) {
+        m_pTableViewDelegate->tableCellHighlight(this, m_pTouchedCell);
+    }
+    
+    if(m_scriptHandler.handler) {
+        CCArray* pArrayArgs = CCArray::createWithCapacity(3);
+        pArrayArgs->addObject(this);
+        pArrayArgs->addObject(CCString::create("highlight"));
+        pArrayArgs->addObject(m_pTouchedCell);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs);
+    }
+}
+
+void CCTableView::onTableCellUnhighlight() {
+    if(m_pTableViewDelegate) {
+        m_pTableViewDelegate->tableCellUnhighlight(this, m_pTouchedCell);
+    }
+    
+    if(m_scriptHandler.handler) {
+        CCArray* pArrayArgs = CCArray::createWithCapacity(3);
+        pArrayArgs->addObject(this);
+        pArrayArgs->addObject(CCString::create("unhighlight"));
+        pArrayArgs->addObject(m_pTouchedCell);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs);
+    }
+}
+
+void CCTableView::onTableCellTouched() {
+    if(m_pTableViewDelegate) {
+        m_pTableViewDelegate->tableCellTouched(this, m_pTouchedCell);
+    }
+    
+    if(m_scriptHandler.handler) {
+        CCArray* pArrayArgs = CCArray::createWithCapacity(3);
+        pArrayArgs->addObject(this);
+        pArrayArgs->addObject(CCString::create("touched"));
+        pArrayArgs->addObject(m_pTouchedCell);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs);
+    }
+}
+
+void CCTableView::onTableCellWillRecycle(CCTableViewCell* cell) {
+    if(m_pTableViewDelegate) {
+        m_pTableViewDelegate->tableCellWillRecycle(this, cell);
+    }
+    
+    if(m_scriptHandler.handler) {
+        CCArray* pArrayArgs = CCArray::createWithCapacity(3);
+        pArrayArgs->addObject(this);
+        pArrayArgs->addObject(CCString::create("recycle"));
+        pArrayArgs->addObject(cell);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs);
+    }
+}
+
+unsigned int CCTableView::onNumberOfCellsInTableView() {
+    if(m_pDataSource) {
+        return m_pDataSource->numberOfCellsInTableView(this);
+    } else if(m_scriptHandler.handler) {
+        CCArray* pArrayArgs = CCArray::createWithCapacity(2);
+        pArrayArgs->addObject(this);
+        pArrayArgs->addObject(CCString::create("num"));
+        return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs);
+    } else {
+        return 0;
+    }
+}
+
+CCSize CCTableView::onTableCellSizeForIndex(unsigned int idx) {
+    if(m_pDataSource) {
+        return m_pDataSource->tableCellSizeForIndex(this, idx);
+    } else if(m_scriptHandler.handler) {
+        CCArray* pArrayArgs = CCArray::createWithCapacity(3);
+        pArrayArgs->addObject(this);
+        pArrayArgs->addObject(CCString::create("size"));
+        pArrayArgs->addObject(CCInteger::create(idx));
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs, this, valuecollector_selector(CCTableView::collectReturnedCCSize));
+        return m_scriptRetSize;
+    } else {
+        return CCSizeZero;
+    }
+}
+
+CCTableViewCell* CCTableView::onTableCellAtIndex(unsigned int idx) {
+    if(m_pDataSource) {
+        return m_pDataSource->tableCellAtIndex(this, idx);
+    } else if(m_scriptHandler.handler) {
+        CCArray* pArrayArgs = CCArray::createWithCapacity(3);
+        pArrayArgs->addObject(this);
+        pArrayArgs->addObject(CCString::create("cell"));
+        pArrayArgs->addObject(CCInteger::create(idx));
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs, this, valuecollector_selector(CCTableView::collectReturnedCell));
+        return m_scriptRetCell;
+    } else {
+        return nullptr;
+    }
+}
+
+void CCTableView::collectReturnedCCSize() {
+    CCLuaEngine* engine = (CCLuaEngine*)CCScriptEngineManager::sharedManager()->getScriptEngine();
+    lua_State* L = engine->getLuaStack()->getLuaState();
+    CCSize size;
+    if(!luaval_to_size(L, -1, &m_scriptRetSize)) {
+        m_scriptRetSize = CCSizeZero;
+    }
+}
+
+void CCTableView::collectReturnedCell() {
+    CCLuaEngine* engine = (CCLuaEngine*)CCScriptEngineManager::sharedManager()->getScriptEngine();
+    lua_State* L = engine->getLuaStack()->getLuaState();
+    if(!luaval_to_object<CCTableViewCell>(L, -1, "CCTableViewCell", &m_scriptRetCell)) {
+        m_scriptRetCell = nullptr;
+    }
+}
+
+void CCTableView::registerScriptTableViewEventHandler(ccScriptFunction func) {
+    unregisterScriptTableViewEventHandler();
+    m_scriptHandler = func;
+}
+
+void CCTableView::unregisterScriptTableViewEventHandler() {
+    if(m_scriptHandler.handler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_scriptHandler.handler);
+        m_scriptHandler.handler = 0;
+    }
 }
 
 void CCTableView::setColCount(unsigned int cols) {

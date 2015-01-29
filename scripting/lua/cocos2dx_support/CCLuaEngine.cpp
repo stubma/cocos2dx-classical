@@ -215,12 +215,12 @@ int CCLuaEngine::executeAccelerometerEvent(ccScriptFunction& func, CCAcceleratio
     return ret;
 }
 
-int CCLuaEngine::executeEvent(ccScriptFunction& func, const char* pEventName) {
+int CCLuaEngine::executeEvent(ccScriptFunction& func, const char* pEventName, CCObject* collector, SEL_ScriptReturnedValueCollector sel) {
     if(func.target) {
         m_stack->pushCCObject(func.target, getLuaTypeNameByTypeId(typeid(*func.target).name()));
     }
     m_stack->pushString(pEventName);
-    int ret = m_stack->executeFunctionByHandler(func.handler, func.target ? 2 : 1);
+    int ret = m_stack->executeFunctionByHandler(func.handler, func.target ? 2 : 1, collector, sel);
     m_stack->clean();
     return ret;
 }
@@ -239,62 +239,7 @@ int CCLuaEngine::reallocateScriptHandler(int nHandler)
     return nRet;
 }
 
-int CCLuaEngine::executeTableViewEvent(int nEventType,cocos2d::extension::CCTableView* pTableView,void* pValue, CCArray* pResultArray)
-{
-    if (nullptr == pTableView)
-        return 0;
-    
-    int nHanlder = pTableView->getScriptHandler(nEventType);
-    if (0 == nHanlder)
-        return 0;
-    
-    int nRet = 0;
-    switch (nEventType)
-    {
-        case cocos2d::extension::CCTableView::kTableViewScroll:
-        case cocos2d::extension::CCTableView::kTableViewZoom:
-            {
-                m_stack->pushCCObject(pTableView, getLuaTypeNameByTypeId(typeid(*pTableView).name()));
-                nRet = m_stack->executeFunctionByHandler(nHanlder, 1);
-            }
-            break;
-        case cocos2d::extension::CCTableView::kTableCellTouched:
-        case cocos2d::extension::CCTableView::kTableCellHighLight:
-        case cocos2d::extension::CCTableView::kTableCellUnhighLight:
-        case cocos2d::extension::CCTableView::kTableCellWillRecycle:
-            {
-                m_stack->pushCCObject(pTableView, getLuaTypeNameByTypeId(typeid(*pTableView).name()));
-                m_stack->pushCCObject(static_cast<cocos2d::extension::CCTableViewCell*>(pValue), getLuaTypeNameByTypeId(typeid(*pValue).name()));
-                nRet = m_stack->executeFunctionByHandler(nHanlder, 2);
-            }
-            break;
-        case cocos2d::extension::CCTableView::kTableCellSizeForIndex:
-            {
-                m_stack->pushCCObject(pTableView, getLuaTypeNameByTypeId(typeid(*pTableView).name()));
-                m_stack->pushInt(*((int*)pValue));
-                nRet = m_stack->executeFunctionReturnArray(nHanlder, 2, 2, pResultArray);
-            }
-            break;
-        case cocos2d::extension::CCTableView::kTableCellSizeAtIndex:
-            {
-                m_stack->pushCCObject(pTableView, getLuaTypeNameByTypeId(typeid(*pTableView).name()));
-                m_stack->pushInt(*((int*)pValue));
-                nRet = m_stack->executeFunctionReturnArray(nHanlder, 2, 1, pResultArray);
-            }
-            break;
-        case cocos2d::extension::CCTableView::kNumberOfCellsInTableView:
-            {
-                m_stack->pushCCObject(pTableView, getLuaTypeNameByTypeId(typeid(*pTableView).name()));
-                nRet = m_stack->executeFunctionReturnArray(nHanlder, 1, 1, pResultArray);
-            }
-            break;
-        default:
-            break;
-    }
-    return nRet;
-}
-
-int CCLuaEngine::executeEventWithArgs(ccScriptFunction& func, CCArray* pArgs) {
+int CCLuaEngine::executeEventWithArgs(ccScriptFunction& func, CCArray* pArgs, CCObject* collector, SEL_ScriptReturnedValueCollector sel) {
     int nArgNums = 0;
     
     // target
@@ -343,7 +288,7 @@ int CCLuaEngine::executeEventWithArgs(ccScriptFunction& func, CCArray* pArgs) {
         }
     }
     
-    return  m_stack->executeFunctionByHandler(func.handler, nArgNums);
+    return  m_stack->executeFunctionByHandler(func.handler, nArgNums, collector, sel);
 }
 
 bool CCLuaEngine::parseConfig(CCScriptEngineProtocol::ConfigType type, const std::string& str)

@@ -351,7 +351,7 @@ void CCLuaStack::executeObjectDestructor(CCObject* obj) {
     }
 }
 
-int CCLuaStack::executeFunction(int numArgs)
+int CCLuaStack::executeFunction(int numArgs, CCObject* collector, SEL_ScriptReturnedValueCollector sel)
 {
     int functionIndex = -(numArgs + 1);
     if (!lua_isfunction(m_state, functionIndex))
@@ -393,19 +393,18 @@ int CCLuaStack::executeFunction(int numArgs)
     
     // get return value
     int ret = 0;
-    if (lua_isnumber(m_state, -1))
-    {
+    if(collector) {
+        (collector->*sel)();
+    } else if (lua_isnumber(m_state, -1)) {
         ret = (int)lua_tointeger(m_state, -1);
-    }
-    else if (lua_isboolean(m_state, -1))
-    {
+    } else if (lua_isboolean(m_state, -1)) {
         ret = lua_toboolean(m_state, -1);
     }
+    
     // remove return value from stack
     lua_pop(m_state, 1);                                                /* L: ... [G] */
     
-    if (traceback)
-    {
+    if (traceback) {
         lua_pop(m_state, 1); // remove __G__TRACKBACK__ from stack      /* L: ... */
     }
     
@@ -416,7 +415,7 @@ void CCLuaStack::pop(int count) {
     lua_pop(m_state, count);
 }
 
-int CCLuaStack::executeFunctionByHandler(int nHandler, int numArgs)
+int CCLuaStack::executeFunctionByHandler(int nHandler, int numArgs, CCObject* collector, SEL_ScriptReturnedValueCollector sel)
 {
     int ret = 0;
     if (pushFunctionByHandler(nHandler))                                /* L: ... arg1 arg2 ... func */
@@ -425,7 +424,7 @@ int CCLuaStack::executeFunctionByHandler(int nHandler, int numArgs)
         {
             lua_insert(m_state, -(numArgs + 1));                        /* L: ... func arg1 arg2 ... */
         }
-        ret = executeFunction(numArgs);
+        ret = executeFunction(numArgs, collector, sel);
     }
     lua_settop(m_state, 0);
     return ret;

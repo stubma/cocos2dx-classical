@@ -111,9 +111,7 @@ public:
      * @return number of cells
      */
     virtual unsigned int numberOfCellsInTableView(CCTableView *table) = 0;
-    
 };
-
 
 /**
  * The code is copied from CCTableView for fix following:
@@ -148,6 +146,15 @@ public:
      * @return table view
      */
     static CCTableView* create(CCTableViewDataSource* dataSource, CCSize size, CCNode *container);
+    
+    /**
+     * An initialized table view object without specify data source, if you want to use script side
+     * data source, this is the method you should call
+     *
+     * @param size view size
+     * @return table view
+     */
+    static CCTableView* create(CCSize size);
     
     /**
      * data source
@@ -244,6 +251,9 @@ protected:
      */
     CCTableViewDelegate* m_pTableViewDelegate;
     
+    /// script side table data source and delegate
+    ccScriptFunction m_scriptHandler;
+    
     virtual int _indexFromOffset(CCPoint offset, bool excludeMargin = false);
     virtual CCPoint _offsetFromIndex(unsigned int index);
     
@@ -252,22 +262,70 @@ protected:
     void _addCellIfNecessary(CCTableViewCell * cell);
     void _updateCellPositions();
     
+    // event dispatch
+    void onTableCellTouched();
+    void onTableCellHighlight();
+    void onTableCellUnhighlight();
+    void onTableCellWillRecycle(CCTableViewCell* cell);
+    unsigned int onNumberOfCellsInTableView();
+    CCSize onTableCellSizeForIndex(unsigned int idx);
+    CCTableViewCell* onTableCellAtIndex(unsigned int idx);
+    
+    // script returned value collector
+    void collectReturnedCCSize();
+    void collectReturnedCell();
+    
+    // temp to save script returned value
+    CCSize m_scriptRetSize;
+    CCTableViewCell* m_scriptRetCell;
+    
 public:
     virtual void _updateContentSize(bool keepOffset = false);
     
-    enum TableViewScriptEventType
-    {
-        kTableViewScroll   = 0,
-        kTableViewZoom,
-        kTableCellTouched,
-        kTableCellHighLight,
-        kTableCellUnhighLight,
-        kTableCellWillRecycle,
-        kTableCellSizeForIndex,
-        kTableCellSizeAtIndex,
-        kNumberOfCellsInTableView,
-    };
-    void unregisterAllScriptHandler();
+    /**
+     register a script side table view data source and delegate. the event is a string passed to
+     script side and script function should check first argument(if first is not self) to see what
+     happened
+     
+     lua example code:
+     function XXX:onTableViewEvent(tableView, e, ...)
+        if e == cc.TableViewEventCellAtIndex then
+            -- argument is idx, should return cell
+            local idx = ...
+            local cell = tableView:dequeueCell()
+            if cell == nil then
+                cell = CCTableViewCell:create()
+            end
+            
+            -- do init before return
+            return cell
+        elseif e == cc.TableViewEventCellTouched then
+            -- argument is cell
+            local cell = ...
+        elseif e == cc.TableViewEventCellHighlight then
+             -- argument is cell
+             local cell = ...
+        elseif e == cc.TableViewEventCellUnhighlight then
+             -- argument is cell
+             local cell = ...
+        elseif e == cc.TableViewEventCellWillRecycle then
+             -- argument is cell
+             local cell = ...
+        elseif e == cc.TableViewEventCellSizeForIndex then
+            -- argument is idx
+            local idx = ...
+            
+            -- return a size
+            return xxx
+        elseif e == cc.TableViewEventNumberOfCells then
+            -- you should return cell count
+            return xxx
+        end
+     */
+    void registerScriptTableViewEventHandler(ccScriptFunction func);
+    
+    /// unregister script side table view event handler
+    void unregisterScriptTableViewEventHandler();
     
     /// column count, by default it is 1
     CC_SYNTHESIZE_SETTER(unsigned int, m_colCount, ColCount);

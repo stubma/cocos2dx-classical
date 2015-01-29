@@ -56,7 +56,6 @@ public:
     virtual void scrollViewDidZoom(CCScrollView* view) = 0;
 };
 
-
 /**
  * ScrollView support for cocos2d for iphone.
  * It provides scroll view functionalities to cocos2d projects natively.
@@ -256,6 +255,10 @@ private:
 protected:
     CCRect getViewRect();
     
+    // event dispatch
+    void onScrollViewDidScroll();
+    void onScrollViewDidZoom();
+    
     /**
      * current zoom scale
      */
@@ -338,21 +341,34 @@ protected:
      */
     CCRect m_tParentScissorRect;
     bool m_bScissorRestored;
+    
+    /// script event handler
+    ccScriptFunction m_scriptHandler;
+    
 public:
-    enum ScrollViewScriptEventType
-    {
-        kScrollViewScroll   = 0,
-        kScrollViewZoom,
-    };
-    void registerScriptHandler(int nFunID,int nScriptEventType);
-    void unregisterScriptHandler(int nScriptEventType);
-    int  getScriptHandler(int nScriptEventType);
+    /**
+     register a script side scroll view event handler
+     
+     lua example code:
+     <code>
+     local sv = a scroll view
+     sv:registerScriptScrollViewEventHandler({ target = self, handler = XXX.onScrollViewEvent })
+     function XXX:onScrollViewEvent(scrollView, e)
+        if e == cc.ScrollViewEventScroll then
+            -- this is scroll
+        elseif e == cc.ScrollViewEventZoom then
+            -- this is zoom
+        end
+     end
+     </code>
+     */
+    void registerScriptScrollViewEventHandler(ccScriptFunction func);
+    
+    /// unregister script scroll view event handler
+    void unregisterScriptScrollViewEventHandler();
     
     void setMinScale(float s) { m_fMinScale = s; }
     void setMaxScale(float s) { m_fMaxScale = s; }
-    
-private:
-    std::map<int,int> m_mapScriptHandler;
 };
 
 // end of GUI group

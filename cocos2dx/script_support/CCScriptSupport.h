@@ -55,6 +55,10 @@ typedef struct {
     unsigned int handler;
 } ccScriptFunction;
 
+// to collect returned value from script function
+typedef void (CCObject::*SEL_ScriptReturnedValueCollector)();
+#define valuecollector_selector(_SELECTOR) (SEL_ScriptReturnedValueCollector)(&_SELECTOR)
+
 enum ccScriptType {
     kScriptTypeNone = 0,
     kScriptTypeLua,
@@ -240,12 +244,12 @@ public:
      * @param func script funcation, if target is not null, it will be passed as first argument
      * @param pEventName event name
      */
-    virtual int executeEvent(ccScriptFunction& func, const char* pEventName) = 0;
+    virtual int executeEvent(ccScriptFunction& func, const char* pEventName, CCObject* collector = nullptr, SEL_ScriptReturnedValueCollector sel = nullptr) = 0;
     
     /** 
      * function for c++ call back lua funtion 
      */
-    virtual int executeEventWithArgs(ccScriptFunction& func, CCArray* pArgs) = 0;
+    virtual int executeEventWithArgs(ccScriptFunction& func, CCArray* pArgs, CCObject* collector = nullptr, SEL_ScriptReturnedValueCollector sel = nullptr) = 0;
     
     /// notify object destructor
     virtual void executeObjectDestructor(CCObject* obj) = 0;
