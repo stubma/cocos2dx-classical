@@ -592,21 +592,27 @@ CCArray& CCUtils::intComponentsOfString(const string& s, const char sep) {
     // remove head and tailing brace, bracket, parentheses
     size_t start = 0;
     size_t end = s.length() - 1;
-    char c = s[start];
-    while(c == '{' || c == '[' || c == '(') {
-        start++;
-        c = s[start];
-    }
-    c = s[end];
-    while(c == '}' || c == ']' || c == ')') {
-        end--;
-        c = s[end];
+    while(start < end) {
+        while(s[start] == ' ' && start < end) {
+            start++;
+        }
+        while(s[end] == ' ' && start < end) {
+            end--;
+        }
+        char cs = s[start];
+        char ce = s[end];
+        if(cs == ce && (cs == '{' || cs == '[' || cs == '(')) {
+            start++;
+            end--;
+        } else {
+            break;
+        }
     }
     
     // iterate string
     size_t compStart = start;
     for(size_t i = start; i <= end; i++) {
-        c = s[i];
+        char c = s[i];
         if(c == sep) {
             s_tmpArray.addObject(CCInteger::create(atoi(s.substr(compStart, i - compStart).c_str())));
             compStart = i + 1;
@@ -640,21 +646,27 @@ CCArray& CCUtils::floatComponentsOfString(const string& s, const char sep) {
     // remove head and tailing brace, bracket, parentheses
     size_t start = 0;
     size_t end = s.length() - 1;
-    char c = s[start];
-    while(c == '{' || c == '[' || c == '(') {
-        start++;
-        c = s[start];
-    }
-    c = s[end];
-    while(c == '}' || c == ']' || c == ')') {
-        end--;
-        c = s[end];
+    while(start < end) {
+        while(s[start] == ' ' && start < end) {
+            start++;
+        }
+        while(s[end] == ' ' && start < end) {
+            end--;
+        }
+        char cs = s[start];
+        char ce = s[end];
+        if(cs == ce && (cs == '{' || cs == '[' || cs == '(')) {
+            start++;
+            end--;
+        } else {
+            break;
+        }
     }
     
     // iterate string
     size_t compStart = start;
     for(size_t i = start; i <= end; i++) {
-        c = s[i];
+        char c = s[i];
         if(c == sep) {
             s_tmpArray.addObject(CCFloat::create(atof(s.substr(compStart, i - compStart).c_str())));
             compStart = i + 1;
@@ -688,21 +700,27 @@ CCArray& CCUtils::boolComponentsOfString(const string& s, const char sep) {
     // remove head and tailing brace, bracket, parentheses
     size_t start = 0;
     size_t end = s.length() - 1;
-    char c = s[start];
-    while(c == '{' || c == '[' || c == '(') {
-        start++;
-        c = s[start];
-    }
-    c = s[end];
-    while(c == '}' || c == ']' || c == ')') {
-        end--;
-        c = s[end];
+    while(start < end) {
+        while(s[start] == ' ' && start < end) {
+            start++;
+        }
+        while(s[end] == ' ' && start < end) {
+            end--;
+        }
+        char cs = s[start];
+        char ce = s[end];
+        if(cs == ce && (cs == '{' || cs == '[' || cs == '(')) {
+            start++;
+            end--;
+        } else {
+            break;
+        }
     }
     
     // iterate string
     size_t compStart = start;
     for(size_t i = start; i <= end; i++) {
-        c = s[i];
+        char c = s[i];
         if(c == sep) {
             string sub = s.substr(compStart, i - compStart);
             toLowercase(sub);
@@ -740,21 +758,27 @@ CCArray& CCUtils::componentsOfString(const string& s, const char sep) {
     // remove head and tailing brace, bracket, parentheses
     size_t start = 0;
     size_t end = s.length() - 1;
-    char c = s[start];
-    while(c == '{' || c == '[' || c == '(') {
-        start++;
-        c = s[start];
-    }
-    c = s[end];
-    while(c == '}' || c == ']' || c == ')') {
-        end--;
-        c = s[end];
+    while(start < end) {
+        while(s[start] == ' ' && start < end) {
+            start++;
+        }
+        while(s[end] == ' ' && start < end) {
+            end--;
+        }
+        char cs = s[start];
+        char ce = s[end];
+        if(cs == ce && (cs == '{' || cs == '[' || cs == '(')) {
+            start++;
+            end--;
+        } else {
+            break;
+        }
     }
     
     // iterate string
     size_t compStart = start;
     for(size_t i = start; i <= end; i++) {
-        c = s[i];
+        char c = s[i];
         if(c == sep) {
             s_tmpArray.addObject(CCString::create(s.substr(compStart, i - compStart)));
             compStart = i + 1;
