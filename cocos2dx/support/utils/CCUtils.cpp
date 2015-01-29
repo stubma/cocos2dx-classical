@@ -238,7 +238,7 @@ string CCUtils::lastPathComponent(const string& path) {
 string CCUtils::deleteLastPathComponent(const string& path) {
 	ssize_t end = lastSlashIndex(path);
 	if(end < 0)
-		return path;
+		return "";
 	else
 		return path.substr(0, end);
 }
