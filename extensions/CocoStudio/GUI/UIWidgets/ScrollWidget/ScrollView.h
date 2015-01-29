@@ -345,8 +345,6 @@ public:
     
     virtual void onEnter();
     
-    CCPoint getTouchEndPoint() { return _touchEndedPoint; }
-    
 protected:
     virtual bool init();
     virtual void initRenderer();
@@ -392,10 +390,7 @@ protected:
     
     SCROLLVIEW_DIR _direction;
 
-    CCPoint _touchBeganPoint;
-    CCPoint _touchMovedPoint;
-    CCPoint _touchEndedPoint;
-    CCPoint _touchMovingPoint;
+    CCPoint _touchMovingPos;
     CCPoint _autoScrollDir;
     
     float _topBoundary;
@@ -434,8 +429,6 @@ protected:
     float _bounceOriginalSpeed;
     bool _inertiaScrollEnabled;
 
-
-    
     CCObject* _scrollViewEventListener;
     SEL_ScrollViewEvent _scrollViewEventSelector;
 };

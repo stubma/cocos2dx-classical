@@ -75,10 +75,7 @@ IMPLEMENT_CLASS_GUI_INFO(ScrollView)
 ScrollView::ScrollView():
 _innerContainer(nullptr),
 _direction(SCROLLVIEW_DIR_VERTICAL),
-_touchBeganPoint(CCPointZero),
-_touchMovedPoint(CCPointZero),
-_touchEndedPoint(CCPointZero),
-_touchMovingPoint(CCPointZero),
+_touchMovingPos(CCPointZero),
 _autoScrollDir(CCPointZero),
 _topBoundary(0.0f),
 _bottomBoundary(0.0f),
@@ -1427,7 +1424,7 @@ void ScrollView::endRecordSlidAction()
         switch (_direction)
         {
             case SCROLLVIEW_DIR_VERTICAL:
-                totalDis = _touchEndedPoint.y - _touchBeganPoint.y;
+                totalDis = _touchEndPos.y - _touchStartPos.y;
                 if (totalDis < 0.0f)
                 {
                     dir = SCROLLDIR_DOWN;
@@ -1438,7 +1435,7 @@ void ScrollView::endRecordSlidAction()
                 }
                 break;
             case SCROLLVIEW_DIR_HORIZONTAL:
-                totalDis = _touchEndedPoint.x - _touchBeganPoint.x;
+                totalDis = _touchEndPos.x - _touchStartPos.x;
                 if (totalDis < 0.0f)
                 {
                     dir = SCROLLDIR_LEFT;
@@ -1450,7 +1447,7 @@ void ScrollView::endRecordSlidAction()
                 break;
             case SCROLLVIEW_DIR_BOTH:
             {
-                CCPoint subVector = _touchEndedPoint - _touchBeganPoint;
+                CCPoint subVector = _touchEndPos - _touchStartPos;
                 totalDis = subVector.getLength();
                 dir = subVector.normalize();
                 break;
@@ -1466,17 +1463,17 @@ void ScrollView::endRecordSlidAction()
 
 void ScrollView::handlePressLogic(const CCPoint &touchPoint)
 {        
-    _touchBeganPoint = convertToNodeSpace(touchPoint);
-    _touchMovingPoint = _touchBeganPoint;    
+    _touchStartPos = convertToNodeSpace(touchPoint);
+    _touchMovingPos = _touchStartPos;    
     startRecordSlidAction();
     _bePressed = true;
 }
 
 void ScrollView::handleMoveLogic(const CCPoint &touchPoint)
 {
-    _touchMovedPoint = convertToNodeSpace(touchPoint);
-    CCPoint delta = _touchMovedPoint - _touchMovingPoint;
-    _touchMovingPoint = _touchMovedPoint;
+    _touchMovePos = convertToNodeSpace(touchPoint);
+    CCPoint delta = _touchMovePos - _touchMovingPos;
+    _touchMovingPos = _touchMovePos;
     switch (_direction)
     {
         case SCROLLVIEW_DIR_VERTICAL: // vertical
@@ -1501,7 +1498,7 @@ void ScrollView::handleMoveLogic(const CCPoint &touchPoint)
 
 void ScrollView::handleReleaseLogic(const CCPoint &touchPoint)
 {
-    _touchEndedPoint = convertToNodeSpace(touchPoint);
+    _touchEndPos = convertToNodeSpace(touchPoint);
     endRecordSlidAction();
     _bePressed = false;
 }    
