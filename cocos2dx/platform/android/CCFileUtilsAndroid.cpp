@@ -78,7 +78,7 @@ const std::vector<std::string>& CCFileUtilsAndroid::listAssets(const std::string
 
     // get list and call it
     JniHelper::getMethodInfo(t, "android/content/res/AssetManager", "list", "(Ljava/lang/String;)[Ljava/lang/String;");
-    jobjectArray items = t.env->CallObjectMethod(am, t.methodID, jSubpath);
+    jobjectArray items = (jobjectArray)t.env->CallObjectMethod(am, t.methodID, jSubpath);
 
     // add to vector
     jsize size = t.env->GetArrayLength(items);
