@@ -330,6 +330,12 @@ public:
     virtual void setPopupNotify(bool bNotify);
     virtual bool isPopupNotify();
 
+    /// list files in assets folder, it is android only api
+    virtual const std::vector<std::string>& listAssets(const std::string& subpath) {
+        std::vector<std::string>* v = new std::vector<std::string>();
+        return *v;
+    }
+
 protected:
     /**
      *  The default constructor.

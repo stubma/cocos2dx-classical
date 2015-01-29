@@ -17,19 +17,22 @@ end
 function loadLua(name)
     -- internal and external path
     local internalPath
-    local externalPath
     if CCDevice:getPlatform() == cc.PLATFORM_ANDROID then
-        -- XXX: in Android, looks like we need copy script to files dir first, this is not done
-        internalPath = CCUtils:getInternalStoragePath() .. "/script"
+        internalPath = "script" .. "/" .. name
     else
-        internalPath = CCFileUtils:sharedFileUtils():fullPathForFilename("script");
+        internalPath = CCFileUtils:sharedFileUtils():fullPathForFilename("script") .. "/" .. name
     end
-    internalPath = internalPath .. "/" .. name
-    externalPath = CCUtils:externalize("script")  .. "/" .. name
+    local externalPath = CCUtils:externalize("script")  .. "/" .. name
     
     -- search file in internal and external, exclude duplicated entry
     local entries = {}
-    for entry in lfs.dir(internalPath) do
+    local internalEntries = {}
+    if CCDevice:getPlatform() == cc.PLATFORM_ANDROID then
+        internalEntries = CCFileUtils:sharedFileUtils():listAssets(internalPath)
+    else
+        internalEntries = lfs.dir(internalPath)
+    end
+    for entry in internalEntries do
         local isLua = entry ~= "__init__.lua" and string.find(entry, ".lua") ~= nil
         local isLc = entry ~= "__init__.lc" and string.find(entry, ".lc") ~= nil
         if entry ~= "." and entry ~= ".." and (isLua or isLc) then

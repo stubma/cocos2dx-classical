@@ -34,6 +34,7 @@ NS_CC_BEGIN
 
 // record the zip on the resource path
 static ZipFile *s_pZipFile = NULL;
+static std::vector<std::string> s_strvec;
 
 CCFileUtils* CCFileUtils::sharedFileUtils()
 {
@@ -60,6 +61,39 @@ bool CCFileUtilsAndroid::init()
 {
     m_strDefaultResRootPath = "assets/";
     return CCFileUtils::init();
+}
+
+const std::vector<std::string>& CCFileUtilsAndroid::listAssets(const std::string& subpath) {
+    // clear
+    s_strvec.clear();
+
+    // get asset manager
+    JniMethodInfo t;
+    JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxHelper", "getAssetManager", "()Landroid/content/res/AssetManager;");
+    jobject am = t.env->CallStaticObjectMethod(t.classID, t.methodID);
+
+    // convert arguments to java type
+    jstring jSubpath = t.env->NewStringUTF(subpath.c_str());
+
+    // get list and call it
+    JniHelper::getMethodInfo(t, "android/content/res/AssetManager", "list", "(Ljava/lang/String;)[Ljava/lang/String;");
+    jobjectArray items = t.env->CallObjectMethod(am, t.methodID, jSubpath);
+
+    // add to vector
+    jsize size = t.env->GetArrayLength(items);
+    for(jsize i = 0; i < size; i++) {
+        jstring item = (jstring)t.env->GetObjectArrayElement(items, i);
+        s_strvec.push_back(JniHelper::jstring2string(item));
+        t.env->DeleteLocalRef(item);
+    }
+
+    // delete ref
+    t.env->DeleteLocalRef(am);
+    t.env->DeleteLocalRef(jSubpath);
+    t.env->DeleteLocalRef(items);
+
+    // return
+    return s_strvec;
 }
 
 bool CCFileUtilsAndroid::isFileExist(const std::string& strFilePath)
