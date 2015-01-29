@@ -34,7 +34,7 @@ local function creatDog()
         spriteDog:setPositionX(pos.x)
     end
     
-    CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(tick, 0, false)
+    CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(tick, 0, cc.RepeatForever, 0, false)
     
     return spriteDog
 end
