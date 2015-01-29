@@ -601,7 +601,7 @@ CCArray& CCUtils::intComponentsOfString(const string& s, const char sep) {
         }
         char cs = s[start];
         char ce = s[end];
-        if(cs == ce && (cs == '{' || cs == '[' || cs == '(')) {
+        if((cs == '{' && ce == '}') || (cs == '[' && ce == ']') || (cs == '(' && ce == ')')) {
             start++;
             end--;
         } else {
@@ -655,7 +655,7 @@ CCArray& CCUtils::floatComponentsOfString(const string& s, const char sep) {
         }
         char cs = s[start];
         char ce = s[end];
-        if(cs == ce && (cs == '{' || cs == '[' || cs == '(')) {
+        if((cs == '{' && ce == '}') || (cs == '[' && ce == ']') || (cs == '(' && ce == ')')) {
             start++;
             end--;
         } else {
@@ -709,7 +709,7 @@ CCArray& CCUtils::boolComponentsOfString(const string& s, const char sep) {
         }
         char cs = s[start];
         char ce = s[end];
-        if(cs == ce && (cs == '{' || cs == '[' || cs == '(')) {
+        if((cs == '{' && ce == '}') || (cs == '[' && ce == ']') || (cs == '(' && ce == ')')) {
             start++;
             end--;
         } else {
@@ -767,7 +767,7 @@ CCArray& CCUtils::componentsOfString(const string& s, const char sep) {
         }
         char cs = s[start];
         char ce = s[end];
-        if(cs == ce && (cs == '{' || cs == '[' || cs == '(')) {
+        if((cs == '{' && ce == '}') || (cs == '[' && ce == ']') || (cs == '(' && ce == ')')) {
             start++;
             end--;
         } else {
