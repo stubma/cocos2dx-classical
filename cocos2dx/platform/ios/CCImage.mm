@@ -1387,10 +1387,7 @@ static bool _initWithString(const char * pText, CCImage::ETextAlign eAlign, cons
         }
         
         // adjust text rect
-        if (constrainSize.width > 0 && constrainSize.width > dim.width) {
-            dim.width = constrainSize.width;
-        }
-        if (constrainSize.height > 0 && constrainSize.height > dim.height) {
+        if (constrainSize.height > 0 && constrainSize.height < dim.height) {
             dim.height = constrainSize.height;
         }
         
