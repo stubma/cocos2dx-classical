@@ -463,7 +463,7 @@ function printTable(value)
                         print(i)
                         printTable(v)
                     else
-                        print(i .. " : " .. v)
+                        print(i .. " : " .. tostring(v))
                     end
                   end)
 end
