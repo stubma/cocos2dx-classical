@@ -190,6 +190,9 @@ void Layout::visit()
     }
     if (_clippingEnabled)
     {
+        // when drawing, always dirty clipping rect so that it can be updated
+        _clippingRectDirty = true;
+        
         switch (_clippingType)
         {
             case LAYOUT_CLIPPING_STENCIL:
