@@ -379,7 +379,9 @@ void PageView::handleReleaseLogic(const CCPoint &touchPoint) {
 }
 
 void PageView::checkChildInfo(int handleState,Widget* sender, const CCPoint &touchPoint) {
-    interceptTouchEvent(handleState, sender, touchPoint);
+    if(isEnabled() && isTouchEnabled()) {
+        interceptTouchEvent(handleState, sender, touchPoint);
+    }
 }
 
 void PageView::interceptTouchEvent(int handleState, Widget *sender, const CCPoint &touchPoint) {
