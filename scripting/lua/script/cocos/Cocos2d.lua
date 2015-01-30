@@ -372,9 +372,9 @@ function cc.PhysicsMaterial(_density, _restitution, _friction)
 end
 
 -- insets
-function cc.insets(l, t, r, b) {
+function cc.insets(l, t, r, b)
     return { left = l, top = t, right = r, bottom = b }
-}
+end
 
 function cc.vec3(_x, _y, _z)
     return { x = _x, y = _y, z = _z }
