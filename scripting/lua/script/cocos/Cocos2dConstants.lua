@@ -107,6 +107,12 @@ cc.TableViewEventCellWillRecycle = "recycle"
 cc.TableViewEventCellSizeForIndex = "size"
 cc.TableViewEventNumberOfCells = "num"
 
+-- page view event
+cc.PageViewEventTurning = "turning"
+cc.PageViewEventPageCount = "count"
+cc.PageViewEventPageAtIndex = "page"
+cc.PageViewEventPageDidRecycled = "recycled"
+
 -- resource loader event
 cc.ResourceLoaderProgress = "progress"
 cc.ResourceLoaderDone = "done"

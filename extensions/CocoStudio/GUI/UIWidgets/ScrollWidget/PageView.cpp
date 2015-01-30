@@ -24,10 +24,10 @@
 
 #include "PageView.h"
 #include "support/ui_support/CCVelocityTracker.h"
+#include "LuaBasicConversions.h"
+#include "CCLuaEngine.h"
 
-NS_CC_BEGIN
-
-namespace ui {
+NS_CC_UI_BEGIN
 
 IMPLEMENT_CLASS_GUI_INFO(PageView)
     
@@ -53,11 +53,13 @@ _childFocusCancelOffset(5.0f),
 _pageViewEventListener(nullptr),
 _pageViewEventSelector(nullptr)
 {
+    memset(&m_scriptHandler, 0, sizeof(ccScriptFunction));
 }
 
 PageView::~PageView()
 {
     // release others
+    unregisterScriptPageViewEventHandler();
     CC_SAFE_RELEASE(m_tracker);
     _pageViewEventListener = nullptr;
     _pageViewEventSelector = nullptr;
@@ -96,8 +98,7 @@ void PageView::recyclePage(Widget* page) {
     if(page) {
         enqueuePageItem(page, page->getName());
         page->removeFromParent();
-        if(m_dataSource)
-            m_dataSource->pageItemDidRecycled(this, page);
+        onPageViewEventPageDidRecycled(page);
         page = nullptr;
     }
 }
@@ -115,15 +116,15 @@ void PageView::reloadData() {
     m_dstPage = nullptr;
     
     // recreate current page
-    if(m_dataSource) {
-        m_curPage = m_dataSource->pageItemAtIndex(this, _curPageIdx);
+    if(m_dataSource || m_scriptHandler.handler) {
+        m_curPage = onPageViewEventPageAtIndex(_curPageIdx);
         addPage(m_curPage, 0);
         if(_curPageIdx > 0) {
-            m_leftChild = m_dataSource->pageItemAtIndex(this, _curPageIdx - 1);
+            m_leftChild = onPageViewEventPageAtIndex(_curPageIdx - 1);
             addPage(m_leftChild, -1);
         }
-        if(_curPageIdx < m_dataSource->pageViewItemCount(this) - 1) {
-            m_rightChild = m_dataSource->pageItemAtIndex(this, _curPageIdx + 1);
+        if(_curPageIdx < onPageViewEventPageCount() - 1) {
+            m_rightChild = onPageViewEventPageAtIndex(_curPageIdx + 1);
             addPage(m_rightChild, 1);
         }
     }
@@ -186,7 +187,7 @@ void PageView::updateChildrenSize()
 void PageView::scrollToPage(int idx, bool animation)
 {
     // index validating
-    int count = m_dataSource ? m_dataSource->pageViewItemCount(this) : 0;
+    int count = onPageViewEventPageCount();
     if (idx < 0 || idx >= count) {
         return;
     }
@@ -204,7 +205,7 @@ void PageView::scrollToPage(int idx, bool animation)
     
     // create page if needed
     if(abs(delta) > 1) {
-        Widget* page = m_dataSource->pageItemAtIndex(this, idx);
+        Widget* page = onPageViewEventPageAtIndex(idx);
         addPage(page, MIN(MAX(delta, -2), 2));
         m_dstPage = page;
     } else if(abs(delta) > 0) {
@@ -355,8 +356,8 @@ void PageView::handleReleaseLogic(const CCPoint &touchPoint) {
     }
     
     // scroll to other page or back to current page
-    CCPoint curPagePos = m_curPage->getPosition();
-    int pageCount = m_dataSource ? m_dataSource->pageViewItemCount(this) : 0;
+    CCPoint curPagePos = m_curPage ? m_curPage->getPosition() : CCPointZero;
+    int pageCount = onPageViewEventPageCount();
     float curPageLocation = curPagePos.x;
     float pageWidth = getSize().width;
     float boundary = pageWidth / 8.0f;
@@ -428,14 +429,14 @@ void PageView::pageTurningEvent() {
         recyclePage(m_rightChild);
         m_rightChild = m_curPage;
         m_curPage = m_leftChild;
-        m_leftChild = m_dstIndex > 0 ? m_dataSource->pageItemAtIndex(this, m_dstIndex - 1) : nullptr;
+        m_leftChild = m_dstIndex > 0 ? onPageViewEventPageAtIndex(m_dstIndex - 1) : nullptr;
         if(m_leftChild)
             addPage(m_leftChild, -1);
     } else if(m_dstPage == m_rightChild) {
         recyclePage(m_leftChild);
         m_leftChild = m_curPage;
         m_curPage = m_rightChild;
-        m_rightChild = (m_dstIndex < m_dataSource->pageViewItemCount(this) - 1) ? m_dataSource->pageItemAtIndex(this, m_dstIndex + 1) : nullptr;
+        m_rightChild = (m_dstIndex < onPageViewEventPageCount() - 1) ? onPageViewEventPageAtIndex(m_dstIndex + 1) : nullptr;
         if(m_rightChild)
             addPage(m_rightChild, 1);
     } else if(m_dstPage != m_curPage) {
@@ -445,7 +446,7 @@ void PageView::pageTurningEvent() {
             recyclePage(m_curPage);
             m_leftChild = m_rightChild;
             m_curPage = m_dstPage;
-            m_rightChild = (m_dstIndex < m_dataSource->pageViewItemCount(this) - 1) ? m_dataSource->pageItemAtIndex(this, m_dstIndex + 1) : nullptr;
+            m_rightChild = (m_dstIndex < onPageViewEventPageCount() - 1) ? onPageViewEventPageAtIndex(m_dstIndex + 1) : nullptr;
             if(m_rightChild)
                 addPage(m_rightChild, 1);
         } else if(delta == -2) {
@@ -453,7 +454,7 @@ void PageView::pageTurningEvent() {
             recyclePage(m_curPage);
             m_rightChild = m_leftChild;
             m_curPage = m_dstPage;
-            m_leftChild = m_dstIndex > 0 ? m_dataSource->pageItemAtIndex(this, m_dstIndex - 1) : nullptr;
+            m_leftChild = m_dstIndex > 0 ? onPageViewEventPageAtIndex(m_dstIndex - 1) : nullptr;
             if(m_leftChild)
                 addPage(m_leftChild, -1);
         } else {
@@ -461,10 +462,10 @@ void PageView::pageTurningEvent() {
             recyclePage(m_curPage);
             recyclePage(m_rightChild);
             m_curPage = m_dstPage;
-            m_leftChild = m_dstIndex > 0 ? m_dataSource->pageItemAtIndex(this, m_dstIndex - 1) : nullptr;
+            m_leftChild = m_dstIndex > 0 ? onPageViewEventPageAtIndex(m_dstIndex - 1) : nullptr;
             if(m_leftChild)
                 addPage(m_leftChild, -1);
-            m_rightChild = (m_dstIndex < m_dataSource->pageViewItemCount(this) - 1) ? m_dataSource->pageItemAtIndex(this, m_dstIndex + 1) : nullptr;
+            m_rightChild = (m_dstIndex < onPageViewEventPageCount() - 1) ? onPageViewEventPageAtIndex(m_dstIndex + 1) : nullptr;
             if(m_rightChild)
                 addPage(m_rightChild, 1);
         }
@@ -474,9 +475,7 @@ void PageView::pageTurningEvent() {
     m_dstPage = nullptr;
     
     // notify event
-    if (_pageViewEventListener && _pageViewEventSelector) {
-        (_pageViewEventListener->*_pageViewEventSelector)(this, PAGEVIEW_EVENT_TURNING);
-    }
+    onPageViewEventTurning();
 }
 
 void PageView::addEventListenerPageView(CCObject *target, SEL_PageViewEvent selector)
@@ -552,7 +551,80 @@ Widget* PageView::dequeuePageItem(const string& itemId) {
     
     return nullptr;
 }
-    
+ 
+void PageView::registerScriptPageViewEventHandler(ccScriptFunction func) {
+    unregisterScriptPageViewEventHandler();
+    m_scriptHandler = func;
 }
 
-NS_CC_END
+void PageView::unregisterScriptPageViewEventHandler() {
+    if(m_scriptHandler.handler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_scriptHandler.handler);
+        m_scriptHandler.handler = 0;
+    }
+}
+
+void PageView::onPageViewEventTurning() {
+    if (_pageViewEventListener && _pageViewEventSelector) {
+        (_pageViewEventListener->*_pageViewEventSelector)(this, PAGEVIEW_EVENT_TURNING);
+    }
+    
+    if(m_scriptHandler.handler) {
+        CCArray* pArrayArgs = CCArray::createWithCapacity(2);
+        pArrayArgs->addObject(this);
+        pArrayArgs->addObject(CCString::create("turning"));
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs);
+    }
+}
+
+int PageView::onPageViewEventPageCount() {
+    if(m_dataSource) {
+        return m_dataSource->pageViewItemCount(this);
+    } else if(m_scriptHandler.handler) {
+        CCArray* pArrayArgs = CCArray::createWithCapacity(2);
+        pArrayArgs->addObject(this);
+        pArrayArgs->addObject(CCString::create("count"));
+        return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs);
+    } else {
+        return 0;
+    }
+}
+
+Widget* PageView::onPageViewEventPageAtIndex(int idx) {
+    if(m_dataSource) {
+        return m_dataSource->pageItemAtIndex(this, idx);
+    } else if(m_scriptHandler.handler) {
+        CCArray* pArrayArgs = CCArray::createWithCapacity(3);
+        pArrayArgs->addObject(this);
+        pArrayArgs->addObject(CCString::create("page"));
+        pArrayArgs->addObject(CCInteger::create(idx));
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs, this, valuecollector_selector(PageView::collectReturnedPage));
+        return m_scriptRetPage;
+    } else {
+        return nullptr;
+    }
+}
+
+void PageView::onPageViewEventPageDidRecycled(Widget* page) {
+    if(m_dataSource) {
+        m_dataSource->pageItemDidRecycled(this, page);
+    }
+    
+    if(m_scriptHandler.handler) {
+        CCArray* pArrayArgs = CCArray::createWithCapacity(3);
+        pArrayArgs->addObject(this);
+        pArrayArgs->addObject(CCString::create("recycled"));
+        pArrayArgs->addObject(page);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs);
+    }
+}
+
+void PageView::collectReturnedPage() {
+    CCLuaEngine* engine = (CCLuaEngine*)CCScriptEngineManager::sharedManager()->getScriptEngine();
+    lua_State* L = engine->getLuaStack()->getLuaState();
+    if(!luaval_to_object<Widget>(L, -1, "Widget", &m_scriptRetPage)) {
+        m_scriptRetPage = nullptr;
+    }
+}
+
+NS_CC_UI_END

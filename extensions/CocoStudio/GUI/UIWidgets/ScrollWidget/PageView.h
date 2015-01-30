@@ -27,14 +27,15 @@
 
 #include "../../Layouts/Layout.h"
 #include "UIScrollInterface.h"
+#include "script_support/CCScriptSupport.h"
 
 using namespace std;
 
 NS_CC_BEGIN
-
 class CCVelocityTracker;
+NS_CC_END
 
-namespace ui {
+NS_CC_UI_BEGIN
 
 typedef enum
 {
@@ -109,6 +110,36 @@ public:
     
     // event
     void addEventListenerPageView(CCObject *target, SEL_PageViewEvent selector);
+    
+    /**
+     register a script side page view event handler
+     
+     lua example code
+     function XXX:onPageViewEvent(pageView, e, ...)
+        if e == cc.PageViewEventTurning then
+            -- no extra argument, no need return
+        elseif e == cc.PageViewEventPageCount then
+            -- no extra argument, and you should return count
+            return 3
+        elseif e == cc.PageViewEventPageAtIndex then
+            -- argument is index and you should return a widget
+            local idx = ...
+            local page = pageView:dequeuePageItem("item")
+            if page == nil then
+                page = GUIReader:sharedReader():widgetFromJsonFile(xxxx)
+                page:setName("item")
+            end
+            return page
+        elseif e == cc.PageViewEventPageDidRecycled then
+            -- argument is a page item widget, and no need return anything
+            local page = ...
+        end
+     end
+     */
+    void registerScriptPageViewEventHandler(ccScriptFunction func);
+    
+    /// unregister script side page view event handler
+    void unregisterScriptPageViewEventHandler();
 
     virtual bool onTouchBegan(CCTouch *touch, CCEvent *unusedEvent);
     virtual void onTouchMoved(CCTouch *touch, CCEvent *unusedEvent);
@@ -168,6 +199,15 @@ protected:
     virtual void copyClonedWidgetChildren(Widget* model);
     virtual void doLayout() {if (!_doLayoutDirty){return;} _doLayoutDirty = false;};
     
+    // event dispatch
+    void onPageViewEventTurning();
+    int onPageViewEventPageCount();
+    Widget* onPageViewEventPageAtIndex(int idx);
+    void onPageViewEventPageDidRecycled(Widget* page);
+    
+    // lua returned value collector
+    void collectReturnedPage();
+    
 protected:
     int _curPageIdx;
     PVTouchDir _touchMoveDir;
@@ -183,6 +223,8 @@ protected:
     float _childFocusCancelOffset;
     CCObject* _pageViewEventListener;
     SEL_PageViewEvent _pageViewEventSelector;
+    ccScriptFunction m_scriptHandler;
+    Widget* m_scriptRetPage;
 
     CC_SYNTHESIZE(PageViewDataSource*, m_dataSource, DataSource);
     CC_SYNTHESIZE(Widget*, m_leftChild, LeftChild);
@@ -190,7 +232,6 @@ protected:
     CC_SYNTHESIZE(Widget*, m_curPage, CurPage);
 };
 
-}
-NS_CC_END
+NS_CC_UI_END
 
 #endif /* defined(__PageView__) */
