@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "base_nodes/CCNode.h"
 #include "CCProtocols.h"
 #include "cocoa/CCArray.h"
+#include "script_support/CCScriptSupport.h"
 
 NS_CC_BEGIN
     
@@ -68,8 +69,9 @@ public:
     , m_bEnabled(false)            
     , m_pListener(nullptr)            
     , m_pfnSelector(nullptr)
-    , m_nScriptTapHandler(0)
-    {}
+    {
+        memset(&m_nScriptTapHandler, 0, sizeof(ccScriptFunction));
+    }
     /**
      * @js NA
      * @lua NA
@@ -99,7 +101,7 @@ public:
     /** Register menu handler script function */
     virtual void registerScriptTapHandler(ccScriptFunction nHandler);
     virtual void unregisterScriptTapHandler(void);
-    int getScriptTapHandler() { return m_nScriptTapHandler; };
+    ccScriptFunction& getScriptTapHandler() { return m_nScriptTapHandler; };
 
     virtual bool isEnabled();
     //@note: It's 'setIsEnable' in cocos2d-iphone. 
@@ -112,7 +114,7 @@ public:
 protected:
     CCObject*       m_pListener;
     SEL_MenuHandler    m_pfnSelector;
-    int             m_nScriptTapHandler;
+    ccScriptFunction   m_nScriptTapHandler;
 };
 
 /** @brief An abstract class for "label" CCMenuItemLabel items 

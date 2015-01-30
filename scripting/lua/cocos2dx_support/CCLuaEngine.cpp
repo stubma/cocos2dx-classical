@@ -97,18 +97,6 @@ int CCLuaEngine::executeGlobalFunction(const char* functionName)
     return ret;
 }
 
-int CCLuaEngine::executeMenuItemEvent(CCMenuItem* pMenuItem)
-{
-    int nHandler = pMenuItem->getScriptTapHandler();
-    if (!nHandler) return 0;
-    
-    m_stack->pushInt(pMenuItem->getTag());
-    m_stack->pushCCObject(pMenuItem, getLuaTypeNameByTypeId(typeid(*pMenuItem).name()));
-    int ret = m_stack->executeFunctionByHandler(nHandler, 2);
-    m_stack->clean();
-    return ret;
-}
-
 void CCLuaEngine::executeObjectDestructor(CCObject* obj) {
     if(obj) {
         m_stack->executeObjectDestructor(obj);

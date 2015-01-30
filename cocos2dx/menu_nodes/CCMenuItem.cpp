@@ -92,17 +92,17 @@ void CCMenuItem::unselected()
 void CCMenuItem::registerScriptTapHandler(ccScriptFunction nHandler)
 {
     unregisterScriptTapHandler();
-    m_nScriptTapHandler = nHandler.handler;
+    m_nScriptTapHandler = nHandler;
     LUALOG("[LUA] Add CCMenuItem script handler: %d", m_nScriptTapHandler);
 }
 
 void CCMenuItem::unregisterScriptTapHandler(void)
 {
-    if (m_nScriptTapHandler)
+    if (m_nScriptTapHandler.handler)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nScriptTapHandler);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nScriptTapHandler.handler);
         LUALOG("[LUA] Remove CCMenuItem script handler: %d", m_nScriptTapHandler);
-        m_nScriptTapHandler = 0;
+        m_nScriptTapHandler.handler = 0;
     }
 }
 
@@ -117,7 +117,9 @@ void CCMenuItem::activate()
         
         if (kScriptTypeNone != m_eScriptType)
         {
-            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeMenuItemEvent(this);
+            CCArray* args = CCArray::createWithCapacity(1);
+            args->addObject(this);
+            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_nScriptTapHandler, args);
         }
     }
 }

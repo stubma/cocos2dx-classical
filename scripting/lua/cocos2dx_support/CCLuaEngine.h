@@ -116,7 +116,6 @@ public:
      */
     virtual int executeGlobalFunction(const char* functionName);
 
-    virtual int executeMenuItemEvent(CCMenuItem* pMenuItem);
     virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = nullptr);
     virtual int executeSchedule(ccScriptFunction& func, float dt);
     virtual int executeLayerTouchesEvent(CCLayer* pLayer, const char* pEventName, CCSet *pTouches);
