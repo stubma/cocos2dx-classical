@@ -54,7 +54,7 @@ CCScrollBar* CCScrollBar::create(CCScale9Sprite* track, CCScale9Sprite* thumb) {
 	CC_SAFE_AUTORELEASE_RETURN(sb, CCScrollBar*);
 }
 
-CCScrollBar* CCScrollBar::create(CCScale9Sprite* track, CCSprite* thumb) {
+CCScrollBar* CCScrollBar::createWithSprite(CCScale9Sprite* track, CCSprite* thumb) {
 	CCScrollBar* sb = new CCScrollBar();
 	sb->initWithTrackAndFixedThumb(track, thumb);
 	CC_SAFE_AUTORELEASE_RETURN(sb, CCScrollBar*);

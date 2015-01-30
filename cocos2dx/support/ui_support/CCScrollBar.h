@@ -68,7 +68,7 @@ protected:
 public:
 	virtual ~CCScrollBar();
 	static CCScrollBar* create(CCScale9Sprite* track, CCScale9Sprite* thumb);
-	static CCScrollBar* create(CCScale9Sprite* track, CCSprite* thumb);
+	static CCScrollBar* createWithSprite(CCScale9Sprite* track, CCSprite* thumb);
 	
     // override super
     virtual void update(float delta);
