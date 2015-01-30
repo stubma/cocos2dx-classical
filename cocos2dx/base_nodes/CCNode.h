@@ -37,6 +37,7 @@
 #include "kazmath/kazmath.h"
 #include "script_support/CCScriptSupport.h"
 #include "CCProtocols.h"
+#include "actions/CCAction.h"
 
 NS_CC_BEGIN
 
@@ -1026,15 +1027,17 @@ public:
      */
     virtual CCActionManager* getActionManager();
     
-    /** 
+    /**
      * Executes an action, and returns the action that is executed.
      *
      * This node becomes the action's target. Refer to CCAction::getTarget()
      * @warning Actions don't retain their target.
      *
+     * @param action action
+     * @param tag the tag will be set to action
      * @return An Action pointer
      */
-    CCAction* runAction(CCAction* action);
+    CCAction* runAction(CCAction* action, int tag = kCCActionTagInvalid);
 
     /** 
      * Stops and removes all actions from the running action list .
