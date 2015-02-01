@@ -133,6 +133,11 @@ bool luaval_to_luafunc(lua_State* L, int lo, cocos2d::ccScriptFunction* outValue
         return false;
     bool ok = true;
     
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
+    
     tolua_Error tolua_err;
     if(!toluafix_isfunction(L, lo, "LUA_FUNCTION", 0, &tolua_err) && !tolua_istable(L, lo, 0, &tolua_err)) {
 #if COCOS2D_DEBUG >=1
@@ -311,6 +316,11 @@ bool luaval_to_position(lua_State* L, int lo, cocos2d::ccPosition* outValue, con
         return false;
     bool ok = true;
     
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
+    
     // top should be table
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err)) {
@@ -339,6 +349,11 @@ bool luaval_to_aabb(lua_State* L, int lo, cocos2d::ccAABB* outValue, const char*
     if (nullptr == L || nullptr == outValue)
         return false;
     bool ok = true;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
     
     // top should be table
     tolua_Error tolua_err;
@@ -370,6 +385,11 @@ bool luaval_to_quad3(lua_State* L, int lo, cocos2d::ccQuad3* outValue, const cha
     if (nullptr == L || nullptr == outValue)
         return false;
     bool ok = true;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
     
     // top should be table
     tolua_Error tolua_err;
@@ -414,6 +434,11 @@ bool luaval_to_vertex2f(lua_State* L, int lo, cocos2d::ccVertex2F* outValue, con
         return false;
     bool ok = true;
     
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
+    
     // top should be table
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err)) {
@@ -442,6 +467,11 @@ bool luaval_to_vertex3f(lua_State* L, int lo, cocos2d::ccVertex3F* outValue, con
     if (nullptr == L || nullptr == outValue)
         return false;
     bool ok = true;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
     
     // top should be table
     tolua_Error tolua_err;
@@ -476,6 +506,11 @@ bool luaval_to_packetheader(lua_State* L, int lo, cocos2d::ccPacketHeader* outVa
     if (nullptr == L || nullptr == outValue)
         return false;
     bool ok = true;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
     
     // top should be table
     tolua_Error tolua_err;
@@ -531,6 +566,11 @@ bool luaval_to_bezierconfig(lua_State* L, int lo, cocos2d::ccBezierConfig* outVa
         return false;
     bool ok = true;
     
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
+    
     // top should be table
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err)) {
@@ -568,6 +608,11 @@ bool luaval_to_csize(lua_State* L,int lo, cocos2d::ccSize* outValue, const char*
         return false;
     bool ok = true;
     
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
+    
     // top should be a table
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err)) {
@@ -597,6 +642,11 @@ bool luaval_to_cpoint(lua_State* L, int lo, cocos2d::ccPoint* outValue, const ch
         return false;
     bool ok = true;
     
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
+    
     // top should be a table
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err)) {
@@ -625,6 +675,11 @@ bool luaval_to_v2fc4bt2fquad(lua_State* L, int lo, cocos2d::ccV2F_C4B_T2F_Quad* 
     if (nullptr == L || nullptr == outValue)
         return false;
     bool ok = true;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
     
     // top should be a table
     tolua_Error tolua_err;
@@ -669,6 +724,11 @@ bool luaval_to_v3fc4bt2fquad(lua_State* L, int lo, cocos2d::ccV3F_C4B_T2F_Quad* 
         return false;
     bool ok = true;
     
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
+    
     // top should be a table
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err)) {
@@ -712,6 +772,11 @@ bool luaval_to_v2fc4bt2f(lua_State* L, int lo, cocos2d::ccV2F_C4B_T2F* outValue,
         return false;
     bool ok = true;
     
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
+    
     // top should be a table
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err)) {
@@ -749,6 +814,11 @@ bool luaval_to_v3fc4bt2f(lua_State* L, int lo, cocos2d::ccV3F_C4B_T2F* outValue,
         return false;
     bool ok = true;
     
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
+    
     // top should be a table
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err)) {
@@ -785,6 +855,11 @@ bool luaval_to_tex2f(lua_State* L, int lo, cocos2d::ccTex2F* outValue, const cha
     if (nullptr == L || nullptr == outValue)
         return false;
     bool ok = true;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
     
     // top should be a table
     tolua_Error tolua_err;
@@ -850,6 +925,11 @@ bool luaval_to_customuniformvalue(lua_State* L, int lo, cocos2d::ccCustomUniform
     if (nullptr == L || nullptr == outValue)
         return false;
     bool ok = true;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
     
     // must be table
     tolua_Error tolua_err;
@@ -980,8 +1060,12 @@ bool luaval_to_point(lua_State* L,int lo,cocos2d::CCPoint* outValue, const char*
 {
     if (nullptr == L || nullptr == outValue)
         return false;
-    
     bool ok = true;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
     
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
@@ -991,7 +1075,6 @@ bool luaval_to_point(lua_State* L,int lo,cocos2d::CCPoint* outValue, const char*
 #endif
         ok = false;
     }
-    
     
     if (ok)
     {
@@ -1012,8 +1095,12 @@ bool luaval_to_blendfunc(lua_State* L, int lo, cocos2d::ccBlendFunc* outValue, c
 {
     if (nullptr == L || nullptr == outValue)
         return false;
-    
     bool ok = true;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
     
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
@@ -1023,7 +1110,6 @@ bool luaval_to_blendfunc(lua_State* L, int lo, cocos2d::ccBlendFunc* outValue, c
 #endif
         ok = false;
     }
-    
     
     if (ok)
     {
@@ -1099,6 +1185,11 @@ bool luaval_to_size(lua_State* L,int lo, CCSize* outValue, const char* funcName)
         return false;
     
     bool ok = true;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
 
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
@@ -1128,8 +1219,12 @@ bool luaval_to_size(lua_State* L,int lo, CCSize* outValue, const char* funcName)
 bool luaval_to_insets(lua_State* L, int lo, cocos2d::ccInsets* outValue, const char* funcName) {
     if (nullptr == L || nullptr == outValue)
         return false;
-    
     bool ok = true;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
     
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) ) {
@@ -1167,8 +1262,12 @@ bool luaval_to_insets(lua_State* L, int lo, cocos2d::ccInsets* outValue, const c
 bool luaval_to_crect(lua_State* L, int lo, cocos2d::ccRect* outValue, const char* funcName) {
     if (nullptr == L || nullptr == outValue)
         return false;
-    
     bool ok = true;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
     
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
@@ -1209,8 +1308,12 @@ bool luaval_to_rect(lua_State* L,int lo, CCRect* outValue, const char* funcName)
 {
     if (nullptr == L || nullptr == outValue)
         return false;
-    
     bool ok = true;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
 
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
@@ -1251,8 +1354,12 @@ bool luaval_to_color4b(lua_State* L,int lo,ccColor4B* outValue, const char* func
 {
     if (nullptr == L || nullptr == outValue)
         return false;
-    
     bool ok = true;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
 
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
@@ -1295,6 +1402,11 @@ bool luaval_to_colorhsv(lua_State* L,int lo, ccColorHSV* outValue, const char* f
         return false;
     bool ok = true;
     
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
+    
     // top should be a table
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err))  {
@@ -1328,8 +1440,12 @@ bool luaval_to_color4f(lua_State* L,int lo,ccColor4F* outValue, const char* func
 {
     if (nullptr == L || nullptr == outValue)
         return false;
-    
     bool ok = true;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
 
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
@@ -1370,8 +1486,12 @@ bool luaval_to_color3b(lua_State* L,int lo,ccColor3B* outValue, const char* func
 {
     if (nullptr == L || nullptr == outValue)
         return false;
-    
     bool ok = true;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
 
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
@@ -1407,8 +1527,12 @@ bool luaval_to_affinetransform(lua_State* L,int lo, CCAffineTransform* outValue,
 {
     if (nullptr == L || nullptr == outValue)
         return false;
-    
     bool ok = true;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
 
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
@@ -1497,8 +1621,12 @@ bool luaval_to_fontdefinition(lua_State* L, int lo, ccFontDefinition* outValue ,
 {
     if (nullptr == L || nullptr == outValue)
         return false;
-    
     bool ok = true;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
 
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
