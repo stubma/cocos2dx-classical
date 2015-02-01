@@ -180,3 +180,27 @@ cc.Shader_lighting = 13
 cc.Shader_matrix = 14
 cc.Shader_shine = 15
 cc.Shader_MAX = 16
+
+-- predefined custom uniform values
+cc.MatrixUniformValue_gray = {
+    mat4 = {
+        0.299, 0.299, 0.299, 0,
+        0.587, 0.587, 0.587, 0,
+        0.114, 0.114, 0.114, 0,
+        0, 0, 0, 1
+    }
+}
+cc.LightingUniformValue_pressed = {
+    mul = {
+        r = 255 * 0.5,
+        g = 255 * 0.5,
+        b = 255 * 0.5,
+        a = 255 * 0.7
+    },
+    add = {
+        r = 0,
+        g = 0,
+        b = 0
+    }
+}
+cc.CustomUniformValue_empty = {}
