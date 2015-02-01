@@ -321,6 +321,7 @@ public:
             -- you should return cell count
             return xxx
         end
+     end
      */
     void registerScriptTableViewEventHandler(ccScriptFunction func);
     
