@@ -2735,7 +2735,7 @@ void array_to_luaval(lua_State* L,CCArray* inValue)
         }
         else
         {
-            CCAssert(false, "the type isn't suppored.");
+            CCAssert(false, "the type isn't supported.");
         }
     }
 }
@@ -2763,7 +2763,7 @@ void dictionary_to_luaval(lua_State* L, CCDictionary* dict)
         if (nullptr == element)
             continue;
         
-        std::string typeName = typeid(element->getObject()).name();
+        std::string typeName = typeid(*element->getObject()).name();
         
         auto iter = g_luaType.find(typeName);
         if (g_luaType.end() != iter)
@@ -2819,7 +2819,7 @@ void dictionary_to_luaval(lua_State* L, CCDictionary* dict)
         }
         else
         {
-            CCAssert(false, "the type isn't suppored.");
+            CCAssert(false, "the type isn't supported.");
         }
     }
 }
