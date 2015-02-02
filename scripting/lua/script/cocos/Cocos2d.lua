@@ -297,17 +297,17 @@ function cc.c4f( _r,_g,_b,_a )
 end
 
 --Vertex2F
-function cc.vertex2F(_x,_y)
+function cc.v2f(_x,_y)
     return { x = _x, y = _y }
 end
 
 --Vertex3F
-function cc.Vertex3F(_x,_y,_z)
+function cc.v3f(_x,_y,_z)
     return { x = _x, y = _y, z = _z }
 end
 
 --Tex2F
-function cc.tex2F(_u,_v)
+function cc.t2f(_u,_v)
     return { u = _u, v = _v }
 end
 
@@ -317,12 +317,12 @@ function cc.PointSprite(_pos,_color,_size)
 end
 
 --Quad2
-function cc.Quad2(_tl,_tr,_bl,_br)
+function cc.q2(_tl,_tr,_bl,_br)
     return { tl = _tl, tr = _tr, bl = _bl, br = _br }
 end
 
 --Quad3
-function cc.Quad3(_tl, _tr, _bl, _br)
+function cc.q3(_tl, _tr, _bl, _br)
     return { tl = _tl, tr = _tr, bl = _bl, br = _br }
 end
 
