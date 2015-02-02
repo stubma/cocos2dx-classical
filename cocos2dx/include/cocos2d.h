@@ -258,6 +258,8 @@ THE SOFTWARE.
 #include "support/network/CCUDPSocket.h"
 #include "support/network/CCUDPSocketHub.h"
 #include "support/network/CCPacket.h"
+#include "support/crypto/tea.h"
+#include "support/crypto/xxtea.h"
 
 // text_input_node
 #include "text_input_node/CCIMEDelegate.h"
