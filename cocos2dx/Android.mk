@@ -70,7 +70,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
     $(LOCAL_PATH)/support/tinyxml2 \
     $(LOCAL_PATH)/support/yajl/include \
     $(LOCAL_PATH)/support/jsoncpp \
-    $(LOCAL_PATH)/support/zip_support
+    $(LOCAL_PATH)/support/zip_support \
+    $(LOCAL_PATH)/support/ui_support
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_C_INCLUDES)
 LOCAL_LDLIBS := -lGLESv2 -llog -lz -latomic
 LOCAL_EXPORT_LDLIBS := $(LOCAL_LDLIBS)
