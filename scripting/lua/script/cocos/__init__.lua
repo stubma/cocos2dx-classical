@@ -48,7 +48,7 @@ function loadLua(name)
     else
         internalEntries = lfs.dir(internalPath)
     end
-    for entry in internalEntries do
+    for _,entry in ipairs(internalEntries) do
         local isLua = entry ~= "__init__.lua" and string.find(entry, ".lua") ~= nil
         local isLc = entry ~= "__init__.lc" and string.find(entry, ".lc") ~= nil
         if entry ~= "." and entry ~= ".." and (isLua or isLc) then
@@ -58,7 +58,7 @@ function loadLua(name)
         end
     end
     if CCUtils:isPathExistent(externalPath) then
-        for entry in lfs.dir(externalPath) do
+        for _,entry in ipairs(lfs.dir(externalPath)) do
             local isLua = entry ~= "__init__.lua" and string.find(entry, ".lua") ~= nil
             local isLc = entry ~= "__init__.lc" and string.find(entry, ".lc") ~= nil
             if entry ~= "." and entry ~= ".." and (isLua or isLc) then
