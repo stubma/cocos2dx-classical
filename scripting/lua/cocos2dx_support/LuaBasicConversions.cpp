@@ -889,6 +889,11 @@ bool luaval_to_mat4(lua_State* L, int lo, kmMat4* outValue , const char* funcNam
         return false;
     bool ok = true;
     
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
+    
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err)) {
 #if COCOS2D_DEBUG >=1
