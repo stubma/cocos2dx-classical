@@ -940,7 +940,7 @@ bool luaval_to_customuniformvalue(lua_State* L, int lo, cocos2d::ccCustomUniform
         ok = false;
     }
     
-    // must have __union field
+    // must have type field
     ccShaderType type;
     lua_pushstring(L, "type");
     lua_gettable(L, lo);
@@ -951,7 +951,7 @@ bool luaval_to_customuniformvalue(lua_State* L, int lo, cocos2d::ccCustomUniform
     }
     lua_pop(L, 1);
     
-    // conversion based on __union
+    // conversion based on type
     if(ok) {
         switch (type) {
             case cocos2d::kCCShader_blur:

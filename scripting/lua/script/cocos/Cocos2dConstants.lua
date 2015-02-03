@@ -173,6 +173,7 @@ cc.Shader_MAX = 16
 
 -- predefined custom uniform values
 cc.MatrixUniformValue_gray = {
+    ["type"] = cc.Shader_matrix,
     mat4 = {
         0.299, 0.299, 0.299, 0,
         0.587, 0.587, 0.587, 0,
@@ -181,6 +182,7 @@ cc.MatrixUniformValue_gray = {
     }
 }
 cc.LightingUniformValue_pressed = {
+    ["type"] = cc.Shader_lighting,
     mul = {
         r = 255 * 0.5,
         g = 255 * 0.5,
@@ -193,4 +195,6 @@ cc.LightingUniformValue_pressed = {
         b = 0
     }
 }
-cc.CustomUniformValue_empty = {}
+cc.CustomUniformValue_empty = {
+    ["type"] = cc.Shader_none
+}
