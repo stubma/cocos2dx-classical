@@ -185,6 +185,7 @@ typedef struct {
         } shine;
     };
     
+    // only lua need this
     ccShaderType type;
 } ccCustomUniformValue;
 

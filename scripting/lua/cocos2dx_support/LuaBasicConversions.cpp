@@ -956,8 +956,59 @@ bool luaval_to_customuniformvalue(lua_State* L, int lo, cocos2d::ccCustomUniform
     }
     lua_pop(L, 1);
     
+    // if no type, try to guess
+    if(!ok) {
+        do {
+            // kCCShader_blur?
+            lua_pushstring(L, "nodeSize");
+            lua_gettable(L, lo);
+            if(!lua_isnil(L, -1)) {
+                type = cocos2d::kCCShader_blur;
+                ok = true;
+                break;
+            }
+            
+            // kCCShader_flash?
+            lua_pushstring(L, "r");
+            lua_gettable(L, lo);
+            if(!lua_isnil(L, -1)) {
+                type = cocos2d::kCCShader_flash;
+                ok = true;
+                break;
+            }
+            
+            // kCCShader_lighting?
+            lua_pushstring(L, "mul");
+            lua_gettable(L, lo);
+            if(!lua_isnil(L, -1)) {
+                type = cocos2d::kCCShader_lighting;
+                ok = true;
+                break;
+            }
+            
+            // kCCShader_matrix?
+            lua_pushstring(L, "mat4");
+            lua_gettable(L, lo);
+            if(!lua_isnil(L, -1)) {
+                type = cocos2d::kCCShader_matrix;
+                ok = true;
+                break;
+            }
+            
+            // kCCShader_shine?
+            lua_pushstring(L, "width");
+            lua_gettable(L, lo);
+            if(!lua_isnil(L, -1)) {
+                type = cocos2d::kCCShader_shine;
+                ok = true;
+                break;
+            }
+        } while(false);
+    }
+    
     // conversion based on type
     if(ok) {
+        outValue->type = type;
         switch (type) {
             case cocos2d::kCCShader_blur:
                 lua_pushstring(L, "nodeSize");
@@ -2071,7 +2122,7 @@ bool luavals_variadic_to_array(lua_State* L,int argc, CCArray** ret)
     return ok;
 }
 
-bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret, const char* funcName)
+bool luaval_to_vector_string(lua_State* L, int lo, std::vector<std::string>* ret, const char* funcName)
 {
     if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
         return false;
@@ -2112,7 +2163,7 @@ bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>*
     return ok;
 }
 
-bool luaval_to_std_vector_bool(lua_State* L, int lo, std::vector<bool>* ret, const char* funcName) {
+bool luaval_to_vector_bool(lua_State* L, int lo, std::vector<bool>* ret, const char* funcName) {
     if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
         return false;
     
@@ -2149,7 +2200,7 @@ bool luaval_to_std_vector_bool(lua_State* L, int lo, std::vector<bool>* ret, con
     return ok;
 }
 
-bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret, const char* funcName)
+bool luaval_to_vector_int(lua_State* L, int lo, std::vector<int>* ret, const char* funcName)
 {
     if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
         return false;
@@ -2187,7 +2238,7 @@ bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret, const
     return ok;
 }
 
-bool luaval_to_std_vector_float(lua_State* L, int lo, std::vector<float>* ret, const char* funcName)
+bool luaval_to_vector_float(lua_State* L, int lo, std::vector<float>* ret, const char* funcName)
 {
     if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
         return false;
@@ -2226,7 +2277,7 @@ bool luaval_to_std_vector_float(lua_State* L, int lo, std::vector<float>* ret, c
     return ok;
 }
 
-bool luaval_to_std_vector_ushort(lua_State* L, int lo, std::vector<unsigned short>* ret, const char* funcName)
+bool luaval_to_vector_ushort(lua_State* L, int lo, std::vector<unsigned short>* ret, const char* funcName)
 {
     if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
         return false;
@@ -2265,7 +2316,7 @@ bool luaval_to_std_vector_ushort(lua_State* L, int lo, std::vector<unsigned shor
     return ok;
 }
 
-bool luaval_to_std_vector_rect(lua_State* L, int lo, std::vector<cocos2d::CCRect>* ret, const char* funcName) {
+bool luaval_to_vector_rect(lua_State* L, int lo, std::vector<cocos2d::CCRect>* ret, const char* funcName) {
     // null checking
     if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
         return false;
@@ -2972,7 +3023,7 @@ void blendfunc_to_luaval(lua_State* L, const cocos2d::ccBlendFunc& func)
     lua_rawset(L, -3);
 }
 
-void ccvector_std_string_to_luaval(lua_State* L, const std::vector<std::string>& inValue)
+void vector_string_to_luaval(lua_State* L, const std::vector<std::string>& inValue)
 {
     if (nullptr == L)
         return;
@@ -2990,7 +3041,7 @@ void ccvector_std_string_to_luaval(lua_State* L, const std::vector<std::string>&
     }
 }
 
-void ccvector_bool_to_luaval(lua_State* L, const std::vector<bool>& inValue) {
+void vector_bool_to_luaval(lua_State* L, const std::vector<bool>& inValue) {
     if (nullptr == L)
         return;
     
@@ -3006,7 +3057,7 @@ void ccvector_bool_to_luaval(lua_State* L, const std::vector<bool>& inValue) {
     }
 }
 
-void ccvector_int_to_luaval(lua_State* L, const std::vector<int>& inValue)
+void vector_int_to_luaval(lua_State* L, const std::vector<int>& inValue)
 {
     if (nullptr == L)
         return;
@@ -3023,7 +3074,7 @@ void ccvector_int_to_luaval(lua_State* L, const std::vector<int>& inValue)
     }
 }
 
-void ccvector_float_to_luaval(lua_State* L, const std::vector<float>& inValue)
+void vector_float_to_luaval(lua_State* L, const std::vector<float>& inValue)
 {
     if (nullptr == L)
         return;
@@ -3040,7 +3091,7 @@ void ccvector_float_to_luaval(lua_State* L, const std::vector<float>& inValue)
     }
 }
 
-void ccvector_ushort_to_luaval(lua_State* L, const std::vector<unsigned short>& inValue)
+void vector_ushort_to_luaval(lua_State* L, const std::vector<unsigned short>& inValue)
 {
     if (nullptr == L)
         return;
@@ -3057,7 +3108,7 @@ void ccvector_ushort_to_luaval(lua_State* L, const std::vector<unsigned short>& 
     }
 }
 
-void ccvector_rect_to_luaval(lua_State* L, const std::vector<cocos2d::CCRect>& inValue) {
+void vector_rect_to_luaval(lua_State* L, const std::vector<cocos2d::CCRect>& inValue) {
     if (nullptr == L)
         return;
     

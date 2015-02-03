@@ -95,9 +95,9 @@ extern bool luaval_to_v2fc4bt2fquad(lua_State* L, int lo, cocos2d::ccV2F_C4B_T2F
 extern bool luaval_to_mat4(lua_State* L, int lo, kmMat4* outValue , const char* funcName = "");
 extern bool luaval_to_customuniformvalue(lua_State* L, int lo, cocos2d::ccCustomUniformValue* outValue , const char* funcName = "");
 
-bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret, const char* funcName = "");
-bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret, const char* funcName = "");
-bool luaval_to_std_vector_bool(lua_State* L, int lo, std::vector<bool>* ret, const char* funcName = "");
+bool luaval_to_vector_string(lua_State* L, int lo, std::vector<std::string>* ret, const char* funcName = "");
+bool luaval_to_vector_int(lua_State* L, int lo, std::vector<int>* ret, const char* funcName = "");
+bool luaval_to_vector_bool(lua_State* L, int lo, std::vector<bool>* ret, const char* funcName = "");
 
 template <class T>
 bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret)
@@ -116,9 +116,9 @@ bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret)
     return true;
 }
 
-extern bool luaval_to_std_vector_float(lua_State* L, int lo, std::vector<float>* ret, const char* funcName = "");
-extern bool luaval_to_std_vector_ushort(lua_State* L, int lo, std::vector<unsigned short>* ret, const char* funcName = "");
-extern bool luaval_to_std_vector_rect(lua_State* L, int lo, std::vector<cocos2d::CCRect>* ret, const char* funcName = "");
+extern bool luaval_to_vector_float(lua_State* L, int lo, std::vector<float>* ret, const char* funcName = "");
+extern bool luaval_to_vector_ushort(lua_State* L, int lo, std::vector<unsigned short>* ret, const char* funcName = "");
+extern bool luaval_to_vector_rect(lua_State* L, int lo, std::vector<cocos2d::CCRect>* ret, const char* funcName = "");
 
 // from native
 extern void point_to_luaval(lua_State* L,const cocos2d::CCPoint& vec2);
@@ -200,11 +200,11 @@ void object_to_luaval(lua_State* L,const char* type, T* ret)
     }
 }
 
-void ccvector_std_string_to_luaval(lua_State* L, const std::vector<std::string>& inValue);
-void ccvector_int_to_luaval(lua_State* L, const std::vector<int>& inValue);
-void ccvector_bool_to_luaval(lua_State* L, const std::vector<bool>& inValue);
-void ccvector_float_to_luaval(lua_State* L, const std::vector<float>& inValue);
-void ccvector_ushort_to_luaval(lua_State* L, const std::vector<unsigned short>& inValue);
-void ccvector_rect_to_luaval(lua_State* L, const std::vector<cocos2d::CCRect>& inValue);
+void vector_string_to_luaval(lua_State* L, const std::vector<std::string>& inValue);
+void vector_int_to_luaval(lua_State* L, const std::vector<int>& inValue);
+void vector_bool_to_luaval(lua_State* L, const std::vector<bool>& inValue);
+void vector_float_to_luaval(lua_State* L, const std::vector<float>& inValue);
+void vector_ushort_to_luaval(lua_State* L, const std::vector<unsigned short>& inValue);
+void vector_rect_to_luaval(lua_State* L, const std::vector<cocos2d::CCRect>& inValue);
 
 #endif //__COCOS2DX_SCRIPTING_LUA_COCOS2DXSUPPORT_LUABAISCCONVERSIONS_H__
