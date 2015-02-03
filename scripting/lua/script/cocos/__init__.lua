@@ -1,5 +1,9 @@
 cc = cc or {}
 
+-- XXX: when __init__ is load, the constants are not resolved, so
+-- we defined a local here to workaround it
+local PLATFORM_ANDROID = 2
+
 -- cc.log
 cc.log = function(...)
     print(string.format(...))
@@ -17,7 +21,7 @@ end
 function loadLua(name)
     -- internal and external path
     local internalPath
-    if CCDevice:getPlatform() == cc.PLATFORM_ANDROID then
+    if CCDevice:getPlatform() == PLATFORM_ANDROID then
         internalPath = "script" .. "/" .. name
     else
         internalPath = CCFileUtils:sharedFileUtils():fullPathForFilename("script") .. "/" .. name
@@ -27,7 +31,7 @@ function loadLua(name)
     -- search file in internal and external, exclude duplicated entry
     local entries = {}
     local internalEntries = {}
-    if CCDevice:getPlatform() == cc.PLATFORM_ANDROID then
+    if CCDevice:getPlatform() == PLATFORM_ANDROID then
         internalEntries = CCFileUtils:sharedFileUtils():listAssets(internalPath)
     else
         internalEntries = lfs.dir(internalPath)
