@@ -45,20 +45,29 @@ function loadLua(name)
     local internalEntries = {}
     if CCDevice:getPlatform() == cc.PLATFORM_ANDROID then
         internalEntries = CCFileUtils:sharedFileUtils():listAssets(internalPath)
+        for _,entry in ipairs(internalEntries) do
+            local isLua = entry ~= "__init__.lua" and string.find(entry, ".lua") ~= nil
+            local isLc = entry ~= "__init__.lc" and string.find(entry, ".lc") ~= nil
+            if entry ~= "." and entry ~= ".." and (isLua or isLc) then
+                local s, n = string.gsub(entry, "%.lua+", "")
+                s, n = string.gsub(s, "%.lc+", "")
+                entries[tostring(s)] = internalPath
+            end
+        end
     else
         internalEntries = lfs.dir(internalPath)
-    end
-    for _,entry in ipairs(internalEntries) do
-        local isLua = entry ~= "__init__.lua" and string.find(entry, ".lua") ~= nil
-        local isLc = entry ~= "__init__.lc" and string.find(entry, ".lc") ~= nil
-        if entry ~= "." and entry ~= ".." and (isLua or isLc) then
-            local s, n = string.gsub(entry, "%.lua+", "")
-            s, n = string.gsub(s, "%.lc+", "")
-            entries[tostring(s)] = internalPath
+        for entry in internalEntries do
+            local isLua = entry ~= "__init__.lua" and string.find(entry, ".lua") ~= nil
+            local isLc = entry ~= "__init__.lc" and string.find(entry, ".lc") ~= nil
+            if entry ~= "." and entry ~= ".." and (isLua or isLc) then
+                local s, n = string.gsub(entry, "%.lua+", "")
+                s, n = string.gsub(s, "%.lc+", "")
+                entries[tostring(s)] = internalPath
+            end
         end
     end
     if CCUtils:isPathExistent(externalPath) then
-        for _,entry in ipairs(lfs.dir(externalPath)) do
+        for entry in lfs.dir(externalPath) do
             local isLua = entry ~= "__init__.lua" and string.find(entry, ".lua") ~= nil
             local isLc = entry ~= "__init__.lc" and string.find(entry, ".lc") ~= nil
             if entry ~= "." and entry ~= ".." and (isLua or isLc) then
