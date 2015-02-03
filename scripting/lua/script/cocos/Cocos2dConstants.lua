@@ -3,6 +3,12 @@ require("script/cocos/Cocos2d")
 cc = cc or {}
 
 -- color constants
+cc.ccRED = cc.c3b(255, 0, 0)
+cc.ccWHITE = cc.c3b(255, 255, 255)
+cc.ccGREEN = cc.c3b(0, 255, 0)
+cc.ccBLUE = cc.c3b(0, 0, 255)
+cc.ccBLACK = cc.c3b(0, 0, 0)
+cc.ccYELLOW = cc.c3b(255, 255, 0)
 cc.cc4RED = cc.c4b(255, 0, 0, 255)
 cc.cc4GREEN = cc.c4b(0, 255, 0, 255)
 cc.cc4BLUE = cc.c4b(0, 0, 255, 255)
