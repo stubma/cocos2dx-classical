@@ -20,22 +20,6 @@ cc.cc4fTRANSPARENT = cc.c4f(0, 0, 0, 0)
 cc.cc4fDIM = cc.c4f(0, 0, 0, 0.5)
 cc.cc4fYELLOW = cc.c4f(1, 1, 0, 1)
 
--- platform constants
-cc.PLATFORM_UNKNOWN            = 0
-cc.PLATFORM_IOS                = 1
-cc.PLATFORM_ANDROID            = 2
-cc.PLATFORM_WIN32              = 3
-cc.PLATFORM_MARMALADE          = 4
-cc.PLATFORM_LINUX              = 5
-cc.PLATFORM_BADA               = 6
-cc.PLATFORM_BLACKBERRY         = 7
-cc.PLATFORM_MAC                = 8
-cc.PLATFORM_NACL               = 9
-cc.PLATFORM_EMSCRIPTEN        = 10
-cc.PLATFORM_TIZEN             = 11
-cc.PLATFORM_WINRT             = 12
-cc.PLATFORM_WP8               = 13
-
 -- node event type
 cc.NodeOnEnter = "enter"
 cc.NodeOnExit = "exit"
