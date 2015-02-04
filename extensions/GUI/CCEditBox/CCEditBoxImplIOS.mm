@@ -28,6 +28,7 @@
 
 #define kLabelZOrder  9999
 
+#include "cocoa/CCString.h"
 #include "CCEditBox.h"
 #import "EAGLView.h"
 
@@ -129,12 +130,28 @@ static const int CC_EDIT_BOX_PADDING = 5;
 {
     if (sender == textField_) {
         if(sender.returnKeyType == UIReturnKeyNext) {
-            cocos2d::extension::CCEditBox* box = ((cocos2d::extension::CCEditBoxImpl*)self.editBox)->getCCEditBox();
+            cocos2d::extension::CCEditBox* box = getEditBoxImplIOS()->getCCEditBox();
             if(!box->moveToNext()) {
                 [sender resignFirstResponder];
             }
         } else {
             [sender resignFirstResponder];
+        }
+        
+        // c++ delegate
+        cocos2d::extension::CCEditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
+        if (pDelegate != NULL) {
+            pDelegate->editBoxReturn(getEditBoxImplIOS()->getCCEditBox());
+        }
+        
+        // script delegate
+        cocos2d::extension::CCEditBox* pEditBox= getEditBoxImplIOS()->getCCEditBox();
+        if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler().handler) {
+            cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
+            cocos2d::CCArray* args = cocos2d::CCArray::createWithCapacity(2);
+            args->addObject(pEditBox);
+            args->addObject(cocos2d::CCString::create("return"));
+            pEngine->executeEventWithArgs(pEditBox->getScriptEditBoxHandler(), args);
         }
     }
     return NO;
@@ -161,11 +178,14 @@ static const int CC_EDIT_BOX_PADDING = 5;
         pDelegate->editBoxEditingDidBegin(getEditBoxImplIOS()->getCCEditBox());
     }
     
-    cocos2d::extension::CCEditBox*  pEditBox= getEditBoxImplIOS()->getCCEditBox();
+    cocos2d::extension::CCEditBox* pEditBox = getEditBoxImplIOS()->getCCEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler().handler)
     {
         cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "began");
+        cocos2d::CCArray* args = cocos2d::CCArray::createWithCapacity(2);
+        args->addObject(pEditBox);
+        args->addObject(cocos2d::CCString::create("began"));
+        pEngine->executeEventWithArgs(pEditBox->getScriptEditBoxHandler(), args);
     }
     return YES;
 }
@@ -180,15 +200,16 @@ static const int CC_EDIT_BOX_PADDING = 5;
     if (pDelegate != NULL)
     {
         pDelegate->editBoxEditingDidEnd(getEditBoxImplIOS()->getCCEditBox());
-        pDelegate->editBoxReturn(getEditBoxImplIOS()->getCCEditBox());
     }
     
-    cocos2d::extension::CCEditBox*  pEditBox= getEditBoxImplIOS()->getCCEditBox();
+    cocos2d::extension::CCEditBox* pEditBox = getEditBoxImplIOS()->getCCEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler().handler)
     {
         cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "ended");
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "return");
+        cocos2d::CCArray* args = cocos2d::CCArray::createWithCapacity(2);
+        args->addObject(pEditBox);
+        args->addObject(cocos2d::CCString::create("ended"));
+        pEngine->executeEventWithArgs(pEditBox->getScriptEditBoxHandler(), args);
     }
 	
 	if(editBox_ != nil)
@@ -233,11 +254,14 @@ static const int CC_EDIT_BOX_PADDING = 5;
         pDelegate->editBoxTextChanged(getEditBoxImplIOS()->getCCEditBox(), getEditBoxImplIOS()->getText());
     }
     
-    cocos2d::extension::CCEditBox*  pEditBox= getEditBoxImplIOS()->getCCEditBox();
+    cocos2d::extension::CCEditBox* pEditBox = getEditBoxImplIOS()->getCCEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler().handler)
     {
         cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "changed");
+        cocos2d::CCArray* args = cocos2d::CCArray::createWithCapacity(2);
+        args->addObject(pEditBox);
+        args->addObject(cocos2d::CCString::create("changed"));
+        pEngine->executeEventWithArgs(pEditBox->getScriptEditBoxHandler(), args);
     }
 
 }

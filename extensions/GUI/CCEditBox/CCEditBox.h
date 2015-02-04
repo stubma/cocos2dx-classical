@@ -214,13 +214,13 @@ public:
      * @code
      * -- lua sample
      * local function editboxEventHandler(eventType)
-     *     if eventType == "began" then
+     *     if eventType == cc.EditBoxEditingDidBegin then
      *         -- triggered when an edit box gains focus after keyboard is shown
-     *     elseif eventType == "ended" then
+     *     elseif eventType == cc.EditBoxEditingDidEnd then
      *         -- triggered when an edit box loses focus after keyboard is hidden.
-     *     elseif eventType == "changed" then
+     *     elseif eventType == cc.EditBoxTextChanged then
      *         -- triggered when the edit box text was changed.
-     *     elseif eventType == "return" then
+     *     elseif eventType == cc.EditBoxReturn then
      *         -- triggered when the return button was pressed or the outside area of keyboard was touched.
      *     end
      * end

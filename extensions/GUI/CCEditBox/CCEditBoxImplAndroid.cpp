@@ -25,6 +25,10 @@
 
 #include "CCEditBoxImplAndroid.h"
 
+#include <platform/CCPlatformConfig.h>
+#include <platform/ios/CCPlatformDefine.h>
+#include <support/CCPointExtension.h>
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
 #include "CCEditBox.h"
@@ -260,38 +264,48 @@ static void editBoxCallbackFunc(const char* pText, void* ctx)
     if (nullptr != pEditBox && 0 != pEditBox->getScriptEditBoxHandler().handler)
     {
         cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "changed");
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "ended");
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "return");
+
+        cocos2d::CCArray* args = cocos2d::CCArray::createWithCapacity(2);
+        args->addObject(pEditBox);
+        args->addObject(cocos2d::CCString::create("changed"));
+        pEngine->executeEventWithArgs(pEditBox->getScriptEditBoxHandler(), args);
+
+        args->removeAllObjects();
+        args->addObject(pEditBox);
+        args->addObject(cocos2d::CCString::create("ended"));
+        pEngine->executeEventWithArgs(pEditBox->getScriptEditBoxHandler(), args);
+
+        args->removeAllObjects();
+        args->addObject(pEditBox);
+        args->addObject(cocos2d::CCString::create("return"));
+        pEngine->executeEventWithArgs(pEditBox->getScriptEditBoxHandler(), args);
     }
 }
 
-void CCEditBoxImplAndroid::openKeyboard()
-{
-    if (m_pDelegate != nullptr)
-    {
+void CCEditBoxImplAndroid::openKeyboard() {
+    if (m_pDelegate != nullptr) {
         m_pDelegate->editBoxEditingDidBegin(m_pEditBox);
     }
     CCEditBox* pEditBox = this->getCCEditBox();
-    if (nullptr != pEditBox && 0 != pEditBox->getScriptEditBoxHandler().handler)
-    {
+    if (nullptr != pEditBox && 0 != pEditBox->getScriptEditBoxHandler().handler) {
         cocos2d::CCScriptEngineProtocol* pEngine = cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine();
-        pEngine->executeEvent(pEditBox->getScriptEditBoxHandler(), "began");
+        cocos2d::CCArray* args = cocos2d::CCArray::createWithCapacity(2);
+        args->addObject(pEditBox);
+        args->addObject(cocos2d::CCString::create("began"));
+        pEngine->executeEventWithArgs(pEditBox->getScriptEditBoxHandler(), args);
     }
 	
-    showEditTextDialogJNI(  m_strPlaceHolder.c_str(),
+    showEditTextDialogJNI(m_strPlaceHolder.c_str(),
 						  m_strText.c_str(),
 						  m_eEditBoxInputMode,
 						  m_eEditBoxInputFlag,
 						  m_eKeyboardReturnType,
 						  m_nMaxLength,
 						  editBoxCallbackFunc,
-						  (void*)this  );
-	
+						  (void*)this);
 }
 
-void CCEditBoxImplAndroid::closeKeyboard()
-{
+void CCEditBoxImplAndroid::closeKeyboard() {
 	
 }
 
