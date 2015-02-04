@@ -76,6 +76,7 @@ cc.KeyboardReturnTypeDone = 1
 cc.KeyboardReturnTypeSend = 2
 cc.KeyboardReturnTypeSearch = 3
 cc.KeyboardReturnTypeGo = 4
+cc.KeyboardReturnTypeNext = 5
 
 -- edit box input type
 cc.EditBoxInputFlagPassword = 0

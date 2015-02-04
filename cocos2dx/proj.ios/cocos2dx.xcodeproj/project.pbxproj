@@ -322,8 +322,6 @@
 		921112401A2B4D89003FE653 /* CCEditBoxImplAndroid.h in Headers */ = {isa = PBXBuildFile; fileRef = 921111281A2B4D89003FE653 /* CCEditBoxImplAndroid.h */; };
 		921112411A2B4D89003FE653 /* CCEditBoxImplIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 921111291A2B4D89003FE653 /* CCEditBoxImplIOS.h */; };
 		921112421A2B4D89003FE653 /* CCEditBoxImplIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9211112A1A2B4D89003FE653 /* CCEditBoxImplIOS.mm */; };
-		921112431A2B4D89003FE653 /* CCEditBoxImplMac.h in Headers */ = {isa = PBXBuildFile; fileRef = 9211112B1A2B4D89003FE653 /* CCEditBoxImplMac.h */; };
-		921112441A2B4D89003FE653 /* CCEditBoxImplMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9211112C1A2B4D89003FE653 /* CCEditBoxImplMac.mm */; };
 		921112451A2B4D89003FE653 /* CCEditBoxImplNone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9211112D1A2B4D89003FE653 /* CCEditBoxImplNone.cpp */; };
 		921112461A2B4D89003FE653 /* CCScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9211112F1A2B4D89003FE653 /* CCScrollView.cpp */; };
 		921112471A2B4D89003FE653 /* CCScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 921111301A2B4D89003FE653 /* CCScrollView.h */; };
@@ -1224,8 +1222,6 @@
 		921111281A2B4D89003FE653 /* CCEditBoxImplAndroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImplAndroid.h; sourceTree = "<group>"; };
 		921111291A2B4D89003FE653 /* CCEditBoxImplIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImplIOS.h; sourceTree = "<group>"; };
 		9211112A1A2B4D89003FE653 /* CCEditBoxImplIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEditBoxImplIOS.mm; sourceTree = "<group>"; };
-		9211112B1A2B4D89003FE653 /* CCEditBoxImplMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEditBoxImplMac.h; sourceTree = "<group>"; };
-		9211112C1A2B4D89003FE653 /* CCEditBoxImplMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEditBoxImplMac.mm; sourceTree = "<group>"; };
 		9211112D1A2B4D89003FE653 /* CCEditBoxImplNone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEditBoxImplNone.cpp; sourceTree = "<group>"; };
 		9211112F1A2B4D89003FE653 /* CCScrollView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScrollView.cpp; sourceTree = "<group>"; };
 		921111301A2B4D89003FE653 /* CCScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScrollView.h; sourceTree = "<group>"; };
@@ -2629,8 +2625,6 @@
 				921111281A2B4D89003FE653 /* CCEditBoxImplAndroid.h */,
 				921111291A2B4D89003FE653 /* CCEditBoxImplIOS.h */,
 				9211112A1A2B4D89003FE653 /* CCEditBoxImplIOS.mm */,
-				9211112B1A2B4D89003FE653 /* CCEditBoxImplMac.h */,
-				9211112C1A2B4D89003FE653 /* CCEditBoxImplMac.mm */,
 				9211112D1A2B4D89003FE653 /* CCEditBoxImplNone.cpp */,
 			);
 			path = CCEditBox;
@@ -3957,7 +3951,6 @@
 				92CF92F31A523D6000441150 /* CCLuaStack.h in Headers */,
 				929F3A711A26193200DE78AC /* CCLocalization.h in Headers */,
 				1551A853158F2ADF00E66CFE /* ZipUtils.h in Headers */,
-				921112431A2B4D89003FE653 /* CCEditBoxImplMac.h in Headers */,
 				924308411A2F5FBE00BE2476 /* CCAssetInputStream.h in Headers */,
 				9211122D1A2B4D89003FE653 /* CCControlPotentiometer.h in Headers */,
 				92B9154F1A3D7A3400622FDA /* CCTMXLayer.h in Headers */,
@@ -4224,7 +4217,6 @@
 				1551A652158F2ADE00E66CFE /* CCArray.cpp in Sources */,
 				1551A654158F2ADE00E66CFE /* CCAutoreleasePool.cpp in Sources */,
 				927FE5831A45708A0065F052 /* SceneReader.cpp in Sources */,
-				921112441A2B4D89003FE653 /* CCEditBoxImplMac.mm in Sources */,
 				1551A656158F2ADE00E66CFE /* CCDictionary.cpp in Sources */,
 				92A7AFD11A3C456F001C830B /* CCShaderCache.cpp in Sources */,
 				1551A658158F2ADE00E66CFE /* CCGeometry.cpp in Sources */,

@@ -468,6 +468,9 @@ void CCEditBoxImplIOS::setReturnType(KeyboardReturnType returnType)
         case kKeyboardReturnTypeGo:
             m_systemControl.textField.returnKeyType = UIReturnKeyGo;
             break;
+        case kKeyboardReturnTypeNext:
+            m_systemControl.textField.returnKeyType = UIReturnKeyNext;
+            break;
         default:
             m_systemControl.textField.returnKeyType = UIReturnKeyDefault;
             break;

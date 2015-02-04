@@ -38,7 +38,8 @@ enum KeyboardReturnType {
     kKeyboardReturnTypeDone,
     kKeyboardReturnTypeSend,
     kKeyboardReturnTypeSearch,
-    kKeyboardReturnTypeGo
+    kKeyboardReturnTypeGo,
+    kKeyboardReturnTypeNext
 };
 
 
