@@ -87,6 +87,10 @@ public:
     
     virtual ~AssetsManager();
     
+    /* @brief Gets current version code.
+     */
+    static std::string getVersion(const string& defaultValue = "");
+    
     /* @brief Check out if there is a new version resource.
      *        You may use this method before updating, then let user determine whether
      *        he wants to update resources.
@@ -113,10 +117,6 @@ public:
     /* @brief Gets version file url.
      */
     void setVersionFileUrl(const char* versionFileUrl);
-    
-    /* @brief Gets current version code.
-     */
-    std::string getVersion();
     
     /* @brief Deletes recorded version code.
      */

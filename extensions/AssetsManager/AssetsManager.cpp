@@ -478,9 +478,9 @@ void AssetsManager::setVersionFileUrl(const char *versionFileUrl)
     _versionFileUrl = versionFileUrl;
 }
 
-string AssetsManager::getVersion()
+string AssetsManager::getVersion(const string& defaultValue)
 {
-    return CCUserDefault::sharedUserDefault()->getStringForKey(KEY_OF_VERSION);
+    return CCUserDefault::sharedUserDefault()->getStringForKey(KEY_OF_VERSION, defaultValue);
 }
 
 std::string AssetsManager::getMaxVersion()

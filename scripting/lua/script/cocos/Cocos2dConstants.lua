@@ -107,6 +107,10 @@ cc.PageViewEventPageDidRecycled = "recycled"
 cc.ResourceLoaderProgress = "progress"
 cc.ResourceLoaderDone = "done"
 
+-- assets manager event
+cc.AssetsManagerProgress = "progress"
+cc.AssetsManagerDone = "done"
+
 -- point constants
 cc.CENTER = cc.p(0.5, 0.5)
 cc.RIGHT_TOP = cc.p(1, 1)
