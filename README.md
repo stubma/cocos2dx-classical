@@ -92,6 +92,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 	* 加入了lfs方便载入脚本, 修正了Cocos2dxLuaLoader和lfs冲突的问题
 	* luajit和lua都已经预编译成静态库, 由于luajit并不支持64位, 所以目前并未启用, 还是采用包含lua代码编译的方式. 需要使用luajit的可以直接使用
 	* 修正了一些tolua_fix的bug
+	* 添加了tolua.isa方法
 	* script端的CCNotification监听方法现在可以收到额外参数
 	* 修改了extern.lua, 添加了dtor方法, 会在C++对象析构时调用
 
@@ -146,6 +147,7 @@ Things Improved
 	* adding more shared library, in scripting/lua/script
 	* add lfs to easily load lua files under a folder, fix conflict between Cocos2dxLuaLoader and lfs
 	* fix some bugs of tolua_fix
+	* add tolua.isa method
 	* luajit is precompiled but not enabled because it doesn't support 64 bit, but you can directly use it if you want
 	* CCNotification script observer can get extra parameters now
 	* lua class add a dtor method to receive CCObject destruction event
