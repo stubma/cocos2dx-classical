@@ -93,6 +93,7 @@ AssetsManager::~AssetsManager()
     unregisterScriptEventHandler();
     if (_schedule)
     {
+        CCDirector::sharedDirector()->getScheduler()->unscheduleAllForTarget(_schedule);
         _schedule->release();
     }
 }
