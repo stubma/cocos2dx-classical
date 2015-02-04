@@ -82,8 +82,6 @@ static const int CC_EDIT_BOX_PADDING = 5;
         [textField_ addTarget:self action:@selector(textChanged) forControlEvents:UIControlEventEditingChanged];
         self.editBox = editBox;
         
-		
-        
         return self;
     }while(0);
     
@@ -130,7 +128,14 @@ static const int CC_EDIT_BOX_PADDING = 5;
 - (BOOL)textFieldShouldReturn:(UITextField *)sender
 {
     if (sender == textField_) {
-        [sender resignFirstResponder];
+        if(sender.returnKeyType == UIReturnKeyNext) {
+            cocos2d::extension::CCEditBox* box = ((cocos2d::extension::CCEditBoxImpl*)self.editBox)->getCCEditBox();
+            if(!box->moveToNext()) {
+                [sender resignFirstResponder];
+            }
+        } else {
+            [sender resignFirstResponder];
+        }
     }
     return NO;
 }
@@ -600,6 +605,10 @@ void CCEditBoxImplIOS::openKeyboard()
 void CCEditBoxImplIOS::closeKeyboard()
 {
     [m_systemControl closeKeyboard];
+}
+
+void CCEditBoxImplIOS::removeFromSuperview() {
+    [m_systemControl.textField removeFromSuperview];
 }
 
 void CCEditBoxImplIOS::onEndEditing()

@@ -295,6 +295,10 @@ void CCEditBoxImplAndroid::closeKeyboard()
 	
 }
 
+void CCEditBoxImplAndroid::removeFromSuperview() {
+
+}
+
 NS_CC_EXT_END
 
 #endif /* #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) */

@@ -28,6 +28,29 @@
 
 NS_CC_EXT_BEGIN
 
+// to save all CCEditBox instances
+static std::vector<CCEditBox*>* sActiveEditBoxes = new std::vector<CCEditBox*>();
+
+// find next edit box, or null if none
+static CCEditBox* nextEditBox(CCEditBox* box) {
+    for(std::vector<CCEditBox*>::iterator iter = sActiveEditBoxes->begin(); iter != sActiveEditBoxes->end(); iter++) {
+        if(*iter == box) {
+            iter++;
+            if(iter != sActiveEditBoxes->end()) {
+                CCEditBox* next = *iter;
+                if(next->isRunning())
+                    return next;
+                else
+                    return nullptr;
+            } else {
+                return nullptr;
+            }
+        }
+    }
+    
+    return nullptr;
+}
+
 CCEditBox::CCEditBox()
 : m_pEditBoxImpl(nullptr)
 , m_pDelegate(nullptr)
@@ -41,11 +64,34 @@ CCEditBox::CCEditBox()
 , m_nMaxLength(0)
 , m_fAdjustHeight(0.0f) {
     memset(&m_nScriptEditBoxHandler, 0, sizeof(ccScriptFunction));
+    
+    // register self
+    sActiveEditBoxes->push_back(this);
 }
 
 CCEditBox::~CCEditBox() {
+    // unregister self
+    for(std::vector<CCEditBox*>::iterator iter = sActiveEditBoxes->begin(); iter != sActiveEditBoxes->end(); iter++) {
+        if(*iter == this) {
+            sActiveEditBoxes->erase(iter);
+            break;
+        }
+    }
+    
+    // release others
     CC_SAFE_DELETE(m_pEditBoxImpl);
     unregisterScriptEditBoxHandler();
+}
+
+bool CCEditBox::moveToNext() {
+    CCEditBox* next = nextEditBox(this);
+    if(next) {
+        next->m_pEditBoxImpl->openKeyboard();
+        m_pEditBoxImpl->removeFromSuperview();
+        return true;
+    } else {
+        return false;
+    }
 }
 
 void CCEditBox::touchDownAction(CCObject *sender, CCControlEvent controlEvent)

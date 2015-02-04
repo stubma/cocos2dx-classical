@@ -58,6 +58,7 @@ public:
     
     virtual void openKeyboard() = 0;
     virtual void closeKeyboard() = 0;
+    virtual void removeFromSuperview() = 0;
     
     virtual void setPosition(const CCPoint& pos) = 0;
     virtual void setVisible(bool visible) = 0;

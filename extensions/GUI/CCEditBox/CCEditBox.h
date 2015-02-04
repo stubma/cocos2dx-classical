@@ -379,6 +379,11 @@ public:
      */
     void touchDownAction(CCObject *sender, CCControlEvent controlEvent);
     
+    /** move focus to next edit box, or do nothing if no next
+     * @return false if no next edit box
+     */
+    bool moveToNext();
+    
 protected:
     /**
      *  @js NA
