@@ -274,11 +274,6 @@ static void editBoxCallbackFunc(const char* pText, void* ctx)
         args->addObject(pEditBox);
         args->addObject(cocos2d::CCString::create("ended"));
         pEngine->executeEventWithArgs(pEditBox->getScriptEditBoxHandler(), args);
-
-        args->removeAllObjects();
-        args->addObject(pEditBox);
-        args->addObject(cocos2d::CCString::create("return"));
-        pEngine->executeEventWithArgs(pEditBox->getScriptEditBoxHandler(), args);
     }
 }
 
