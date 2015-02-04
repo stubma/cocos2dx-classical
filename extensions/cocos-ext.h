@@ -45,4 +45,6 @@
 #include "CocoStudio/Action/CCActionEaseEx.h"
 #include "CocoStudio/Action/CCActionObject.h"
 
+#include "AssetsManager/AssetsManager.h"
+
 #endif /* __COCOS2D_EXT_H__ */

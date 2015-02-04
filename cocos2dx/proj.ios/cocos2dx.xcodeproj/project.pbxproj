@@ -890,6 +890,8 @@
 		92E3CE221A54E5CB008520DB /* LuaBasicConversions.h in Headers */ = {isa = PBXBuildFile; fileRef = 92E3CE201A54E5CB008520DB /* LuaBasicConversions.h */; };
 		92E3CE261A54E69A008520DB /* lua_cocos2dx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E3CE241A54E69A008520DB /* lua_cocos2dx_auto.cpp */; };
 		92E3CE271A54E69A008520DB /* lua_cocos2dx_auto.h in Headers */ = {isa = PBXBuildFile; fileRef = 92E3CE251A54E69A008520DB /* lua_cocos2dx_auto.h */; };
+		92FAF4DB1A81F1B400E2E718 /* AssetsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92FAF4D91A81F1B400E2E718 /* AssetsManager.cpp */; };
+		92FAF4DC1A81F1B400E2E718 /* AssetsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 92FAF4DA1A81F1B400E2E718 /* AssetsManager.h */; };
 		D43F7F8A15C7D8BA00D713FC /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */; };
 /* End PBXBuildFile section */
 
@@ -1793,6 +1795,8 @@
 		92E3CE201A54E5CB008520DB /* LuaBasicConversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaBasicConversions.h; sourceTree = "<group>"; };
 		92E3CE241A54E69A008520DB /* lua_cocos2dx_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_auto.cpp; sourceTree = "<group>"; };
 		92E3CE251A54E69A008520DB /* lua_cocos2dx_auto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_auto.h; sourceTree = "<group>"; };
+		92FAF4D91A81F1B400E2E718 /* AssetsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetsManager.cpp; sourceTree = "<group>"; };
+		92FAF4DA1A81F1B400E2E718 /* AssetsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsManager.h; sourceTree = "<group>"; };
 		D43F7F8915C7D8BA00D713FC /* CCTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTouch.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -2565,6 +2569,7 @@
 			children = (
 				921110331A2B4D89003FE653 /* cocos-ext.h */,
 				921111071A2B4D89003FE653 /* ExtensionMacros.h */,
+				92FAF4D81A81F1B400E2E718 /* AssetsManager */,
 				927FE42F1A4570890065F052 /* CocoStudio */,
 				921111081A2B4D89003FE653 /* GUI */,
 			);
@@ -3575,6 +3580,15 @@
 			path = ios;
 			sourceTree = "<group>";
 		};
+		92FAF4D81A81F1B400E2E718 /* AssetsManager */ = {
+			isa = PBXGroup;
+			children = (
+				92FAF4D91A81F1B400E2E718 /* AssetsManager.cpp */,
+				92FAF4DA1A81F1B400E2E718 /* AssetsManager.h */,
+			);
+			path = AssetsManager;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -3845,6 +3859,7 @@
 				1551A73C158F2ADE00E66CFE /* CCStdC.h in Headers */,
 				92A7AFC01A3C456F001C830B /* ccShader_Position_uColor_frag.h in Headers */,
 				928F64C11A33EE6900178235 /* CCUDPSocket.h in Headers */,
+				92FAF4DC1A81F1B400E2E718 /* AssetsManager.h in Headers */,
 				928F64D01A33EF7600178235 /* CCJSONObject.h in Headers */,
 				928F64E51A341C8F00178235 /* CCLayerClip.h in Headers */,
 				927FE5671A45708A0065F052 /* ScrollView.h in Headers */,
@@ -4200,6 +4215,7 @@
 				928F64C21A33EE6900178235 /* CCUDPSocketHub.cpp in Sources */,
 				92B9BA6B1A43240400443F4A /* tolua_map.c in Sources */,
 				927FE54A1A45708A0065F052 /* Layout.cpp in Sources */,
+				92FAF4DB1A81F1B400E2E718 /* AssetsManager.cpp in Sources */,
 				92B9B99C1A43240400443F4A /* lapi.c in Sources */,
 				92A7AF671A3C4038001C830B /* CCAuroraLoader.cpp in Sources */,
 				1551A64E158F2ADE00E66CFE /* CCScheduler.cpp in Sources */,
