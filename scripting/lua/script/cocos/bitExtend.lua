@@ -91,7 +91,24 @@ function bit._or(a,b)
     return bit._b2d(r)
 end
 
+function bit._lshift(a,n)
+    local op1= bit._d2b(a)
+    local r= bit._d2b(0)
+    
+    if n < 32 and n > 0 then
+        for i=1,n do
+            for i=1,31 do
+                op1[i]=op1[i+1]
+            end
+            op1[32]=0
+        end
+        r=op1
+    end
+    return  bit._b2d(r)
+end
+
 bit.band   = bit.band or bit._and
+bit.lshift = bit.lshift or bit._lshift
 bit.rshift = bit.rshift or bit._rshift
 bit.bnot   = bit.bnot or bit._not
 bit.bor   = bit.bor or bit._or
