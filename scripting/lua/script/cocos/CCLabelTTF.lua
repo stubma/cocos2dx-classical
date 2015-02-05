@@ -21,7 +21,11 @@ overload.createLabel {
     function(parent, pos, text, font, size)
         local label = CCLabelTTF:create(text, font, size)
         label:setPosition(pos)
-        parent:addChild(label)
+        if tolua.isa(parent, "Widget") then
+            parent:addNode(label)
+        else
+            parent:addChild(label)
+        end
         return label
     end
 }
@@ -37,7 +41,11 @@ overload.createLabel {
     function(parent, pos, text, font, size, dimension, alignment)
         local label = CCLabelTTF:create(text, font, size, dimension, alignment)
         label:setPosition(pos)
-        parent:addChild(label)
+        if tolua.isa(parent, "Widget") then
+            parent:addNode(label)
+        else
+            parent:addChild(label)
+        end
         return label
     end
 }
@@ -57,7 +65,11 @@ overload.createLabel {
         local label = CCLabelTTF:create(text, font, size, dimension, alignment)
         label:setPosition(pos)
         label:setColor(cc.i2c3b(color))
-        parent:addChild(label, z, tag)
+        if tolua.isa(parent, "Widget") then
+            parent:addNode(label, z, tag)
+        else
+            parent:addChild(label, z, tag)
+        end
         return label
     end
 }
