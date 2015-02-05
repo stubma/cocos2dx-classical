@@ -1005,7 +1005,9 @@ CCActionManager* CCNode::getActionManager()
 
 CCAction * CCNode::runAction(CCAction* action, int tag) {
     CCAssert( action != nullptr, "Argument must be non-nil");
-    action->setTag(tag);
+    if(tag != kCCActionTagInvalid) {
+        action->setTag(tag);
+    }
     m_pActionManager->addAction(action, this, !m_bRunning);
     return action;
 }
