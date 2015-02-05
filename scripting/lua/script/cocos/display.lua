@@ -7,6 +7,7 @@ local sharedTextureCache     = CCTextureCache:sharedTextureCache()
 local sharedSpriteFrameCache = CCSpriteFrameCache:sharedSpriteFrameCache()
 local sharedAnimationCache   = CCAnimationCache:sharedAnimationCache()
 
+display.winSize = sharedDirector:getWinSize()
 display.visibleSize = sharedDirector:getVisibleSize()
 display.origin = sharedDirector:getVisibleOrigin()
 display.factor = sharedDirector:getContentScaleFactor()
