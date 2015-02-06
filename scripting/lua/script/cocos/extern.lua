@@ -94,3 +94,15 @@ function ripairs(t)
     end
     return ripairs_it, t, max
 end
+
+function len(t)
+    if type(t) == "table" then
+        local c = 0
+        for _,v in pairs(t) do
+            c = c + 1
+        end
+        return c
+    else
+        return #t
+    end
+end

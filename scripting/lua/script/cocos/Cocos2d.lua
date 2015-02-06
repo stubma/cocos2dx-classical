@@ -461,14 +461,18 @@ function cc.safeAutoRelease(obj)
 end
 
 -- lua helper
-function printTable(value)
+function printTable(value, ...)
+    local indent = ...
+    if indent == nil then
+        indent = ""
+    end
     table.foreach(value,
                   function(i, v)
-                    if type(v) == "table" then
-                        print(i)
-                        printTable(v)
+                    if type(v) == "table" and v ~= value then
+                        print(indent .. i)
+                        printTable(v, indent .. "\t")
                     else
-                        print(i .. " : " .. tostring(v))
+                        print(indent .. i .. " = " .. tostring(v))
                     end
                   end)
 end
