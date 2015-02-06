@@ -12,6 +12,11 @@ cc.LAYOUT_COLOR_NONE = 0
 cc.LAYOUT_COLOR_SOLID = 1
 cc.LAYOUT_COLOR_GRADIENT = 2
 
+-- layout parameter
+cc.LAYOUT_PARAMETER_NONE = 0
+cc.LAYOUT_PARAMETER_LINEAR = 1
+cc.LAYOUT_PARAMETER_RELATIVE = 2
+
 overload.createArm {
     "class",
     "string",

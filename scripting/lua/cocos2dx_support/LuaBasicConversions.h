@@ -30,6 +30,7 @@ extern "C" {
 }
 #include "tolua_fix.h"
 #include "cocos2d.h"
+#include "cocos-ext.h"
 
 using namespace cocos2d;
 
@@ -84,6 +85,7 @@ extern bool luaval_to_cpoint(lua_State* L, int lo, cocos2d::ccPoint* outValue, c
 extern bool luaval_to_csize(lua_State* L,int lo, cocos2d::ccSize* outValue, const char* funcName = "");
 extern bool luaval_to_crect(lua_State* L, int lo, cocos2d::ccRect* outValue, const char* funcName = "");
 extern bool luaval_to_insets(lua_State* L, int lo, cocos2d::ccInsets* outValue, const char* funcName = "");
+extern bool luaval_to_margin(lua_State* L, int lo, cocos2d::ui::Margin* outValue, const char* funcName = "");
 extern bool luaval_to_luafunc(lua_State* L, int lo, cocos2d::ccScriptFunction* outValue, const char* funcName = "");
 extern bool luaval_to_aabb(lua_State* L, int lo, cocos2d::ccAABB* outValue, const char* funcName = "");
 extern bool luaval_to_packetheader(lua_State* L, int lo, cocos2d::ccPacketHeader* outValue, const char* funcName = "");
@@ -145,6 +147,7 @@ extern void cpoint_to_luaval(lua_State* L, const cocos2d::ccPoint& p);
 extern void csize_to_luaval(lua_State* L, const cocos2d::ccSize& s);
 extern void crect_to_luaval(lua_State* L, const cocos2d::ccRect& r);
 extern void insets_to_luaval(lua_State* L, const cocos2d::ccInsets& i);
+extern void margin_to_luaval(lua_State* L, const cocos2d::ui::Margin& m);
 extern void aabb_to_luaval(lua_State* L, const cocos2d::ccAABB& r);
 extern void packetheader_to_luaval(lua_State* L, const cocos2d::ccPacketHeader& r);
 extern void tex2f_to_luaval(lua_State* L, const cocos2d::ccTex2F& t);
