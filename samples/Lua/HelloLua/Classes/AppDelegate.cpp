@@ -43,7 +43,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCLuaEngine* pEngine = CCLuaEngine::defaultEngine();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
 
-    std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename("main.lua");
+    std::string path = CCUtils::getExternalOrFullPath("main.lua");
     pEngine->executeScriptFile(path.c_str());
 
     return true;

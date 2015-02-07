@@ -162,20 +162,11 @@ local function main()
     end
 
     -- play background music, preload effect
-	local targetPlatform = CCApplication:sharedApplication():getTargetPlatform()
-	local bgMusicPath = nil
-	if (kTargetBlackBerry == targetPlatform) then
-		bgMusicPath = CCFileUtils:sharedFileUtils():fullPathForFilename("background.ogg")
-	elseif (kTargetWinRT == targetPlatform) then
-		bgMusicPath = CCFileUtils:sharedFileUtils():fullPathForFilename("background.wav")
-	else
-		bgMusicPath = CCFileUtils:sharedFileUtils():fullPathForFilename("background.mp3")
-	end
-
-    AudioEngine.playMusic(bgMusicPath, true)
+	local bgMusicPath = CCFileUtils:sharedFileUtils():fullPathForFilename("background.mp3")
+	AudioEngine.playMusic(bgMusicPath, true)
     local effectPath = CCFileUtils:sharedFileUtils():fullPathForFilename("effect1.wav")
     AudioEngine.preloadEffect(effectPath)
-
+	
     -- run
     local sceneGame = CCScene:create()
     sceneGame:addChild(FarmLayer.new())
