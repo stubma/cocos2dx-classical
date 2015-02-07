@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include <string>
 #include <algorithm>
 #include "support/utils/CCUtils.h"
+#include "CCLuaEngine.h"
 
 using namespace cocos2d;
 
@@ -71,10 +72,8 @@ extern "C"
         unsigned long codeBufferSize = 0;
         unsigned char* codeBuffer = CCFileUtils::sharedFileUtils()->getFileData(filepath.c_str(), "rb", &codeBufferSize);
         if (codeBuffer) {
-            if (luaL_loadbuffer(L, (char*)codeBuffer, codeBufferSize, filepath.c_str()) != 0) {
-                luaL_error(L, "error loading module %s from file %s :\n\t%s",
-                    lua_tostring(L, 1), filepath.c_str(), lua_tostring(L, -1));
-            }
+            CCLuaStack* stack = CCLuaEngine::defaultEngine()->getLuaStack();
+            stack->luaLoadBuffer(L, (const char*)codeBuffer, (int)codeBufferSize, filepath.c_str());
             delete[] codeBuffer;
         } else {
             CCLOG("can not get file data of %s", filepath.c_str());

@@ -42,6 +42,7 @@ NS_CC_BEGIN
 class CCLuaStack : public CCObject
 {
 public:
+    virtual ~CCLuaStack();
     static CCLuaStack *create(void);
     static CCLuaStack *attach(lua_State *L);
     
@@ -127,10 +128,19 @@ public:
     
     virtual bool handleAssert(const char *msg);
     
+    void setXXTEAKeyAndSign(const char *key, int keyLen, const char *sign, int signLen);
+    void cleanupXXTEAKeyAndSign();
+    int luaLoadBuffer(lua_State* L, const char* chunk, int chunkSize, const char* chunkName);
+
 protected:
     CCLuaStack(void)
     : m_state(nullptr)
     , m_callFromLua(0)
+    , m_xxteaEnabled(false)
+    , m_xxteaKey(NULL)
+    , m_xxteaKeyLen(0)
+    , m_xxteaSign(NULL)
+    , m_xxteaSignLen(0)
     {
     }
     
@@ -139,6 +149,11 @@ protected:
     
     lua_State *m_state;
     int m_callFromLua;
+    bool  m_xxteaEnabled;
+    char* m_xxteaKey;
+    int   m_xxteaKeyLen;
+    char* m_xxteaSign;
+    int   m_xxteaSignLen;
 };
 
 NS_CC_END
