@@ -27,10 +27,9 @@
 #define __UILISTVIEW_H__
 
 #include "ScrollView.h"
+#include "script_support/CCScriptSupport.h"
 
-NS_CC_BEGIN
-
-namespace ui{
+NS_CC_UI_BEGIN
 
 typedef enum
 {
@@ -161,6 +160,9 @@ public:
     
     void addEventListenerListView(CCObject* target, SEL_ListViewEvent selector);
     
+    void registerScriptListViewEventHandler(ccScriptFunction func);
+    void unregisterScriptListViewEventHandler();
+    
     /**
      * Changes scroll direction of scrollview.
      *
@@ -207,9 +209,9 @@ protected:
     int _curSelectedIndex;
     bool _refreshViewDirty;
     CCArray* _items;
+    ccScriptFunction m_func;
 };
 
-}
-NS_CC_END
+NS_CC_UI_END
 
 #endif /* defined(__ListView__) */

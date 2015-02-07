@@ -104,6 +104,10 @@ cc.PageViewEventPageCount = "count"
 cc.PageViewEventPageAtIndex = "page"
 cc.PageViewEventPageDidRecycled = "recycled"
 
+-- list view event
+cc.LISTVIEW_ONSELECTEDITEM_START = "start"
+cc.LISTVIEW_ONSELECTEDITEM_END = "end"
+
 -- resource loader event
 cc.ResourceLoaderProgress = "progress"
 cc.ResourceLoaderDone = "done"

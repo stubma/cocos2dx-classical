@@ -26,9 +26,7 @@
 #include "../../System/UIHelper.h"
 #include "../../../../GUI/CCControlExtension/CCScale9Sprite.h"
 
-NS_CC_BEGIN
-
-namespace ui {
+NS_CC_UI_BEGIN
     
 IMPLEMENT_CLASS_GUI_INFO(ListView)
 
@@ -42,7 +40,7 @@ _curSelectedIndex(0),
 _refreshViewDirty(true),
 _items(nullptr)
 {
-    
+    memset(&m_func, 0, sizeof(ccScriptFunction));
 }
 
 ListView::~ListView()
@@ -431,6 +429,20 @@ void ListView::selectedItemEvent(int state)
                 break;
         }
     }
+    
+    if(m_func.handler) {
+        CCArray* args = CCArray::createWithCapacity(2);
+        args->addObject(this);
+        switch (state) {
+            case 0:
+                args->addObject(CCString::create("start"));
+                break;
+            default:
+                args->addObject(CCString::create("end"));
+                break;
+        }
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_func, args);
+    }
 }
     
 void ListView::interceptTouchEvent(int handleState, Widget *sender, const CCPoint &touchPoint)
@@ -496,5 +508,16 @@ void ListView::copySpecialProperties(Widget *widget)
     }
 }
 
+void ListView::registerScriptListViewEventHandler(ccScriptFunction func) {
+    unregisterScriptListViewEventHandler();
+    m_func = func;
 }
-NS_CC_END
+
+void ListView::unregisterScriptListViewEventHandler() {
+    if(m_func.handler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_func.handler);
+        m_func.handler = 0;
+    }
+}
+
+NS_CC_UI_END
