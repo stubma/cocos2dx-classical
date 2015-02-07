@@ -35,6 +35,7 @@ class CC_DLL CCFlash : public CCActionInterval {
 private:
     /// old program
     CCGLProgram* m_oldProgram;
+    ccCustomUniformValue m_oldUniforms;
     
     /// color
     ccColor3B m_color;

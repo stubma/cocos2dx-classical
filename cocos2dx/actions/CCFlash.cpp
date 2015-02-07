@@ -72,6 +72,7 @@ void CCFlash::startWithTarget(CCNode *pTarget) {
     // save old program
     if(!m_oldProgram) {
         m_oldProgram = pTarget->getShaderProgram();
+        m_oldUniforms = pTarget->getCustomUniformValue();
     }
     
     // set new program
@@ -85,7 +86,7 @@ void CCFlash::startWithTarget(CCNode *pTarget) {
 
 void CCFlash::stop() {
     if(getTarget()) {
-        getTarget()->setShaderProgram(m_oldProgram);
+        getTarget()->setShaderProgram(m_oldProgram, m_oldUniforms);
     }
     CCActionInterval::stop();
 }

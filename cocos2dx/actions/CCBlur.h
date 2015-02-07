@@ -35,6 +35,7 @@ class CC_DLL CCBlur : public CCActionInterval {
 private:
     /// old program
     CCGLProgram* m_oldProgram;
+    ccCustomUniformValue m_oldUniforms;
     
     /// start blur size
 	ccSize m_startBlurSize;

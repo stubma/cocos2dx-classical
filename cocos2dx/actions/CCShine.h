@@ -36,6 +36,7 @@ class CC_DLL CCShine : public CCActionInterval {
 private:
     /// old program
     CCGLProgram* m_oldProgram;
+    ccCustomUniformValue m_oldUniforms;
     
     /// target size
     CCSize m_size;
