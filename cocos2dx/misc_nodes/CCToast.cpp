@@ -26,6 +26,7 @@
 #include "actions/CCTreeFadeIn.h"
 #include "actions/CCTreeFadeOut.h"
 #include "actions/CCActionInstant.h"
+#include "support/utils/CCUtils.h"
 
 NS_CC_BEGIN
 
@@ -56,9 +57,7 @@ CCToast* CCToast::create(CCNode* owner, CCNode* content, int tag, float duration
     
     // run action for content node
     if(inAction == nullptr) {
-        CCNodeRGBA* n = dynamic_cast<CCNodeRGBA*>(content);
-        if(n)
-            n->setOpacity(0);
+        CCUtils::setOpacityRecursively(content, 0);
         inAction = CCTreeFadeIn::create(0.5f);
     }
     if(outAction == nullptr) {

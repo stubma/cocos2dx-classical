@@ -1,14 +1,5 @@
 cc = cc or {}
 
--- anchor is a table, x = ?, y = ?
-function cc.setAnchor(node, anchor)
-    node:setAnchorPoint(anchor)
-end
-
-function cc.setAnchor(node, x, y)
-    node:setAnchorPoint({ x = x, y = y })
-end
-
 function cc.delayActionN(node, time, callback)
     local sequence = CCSequence:createWithTwoActions(CCDelayTime:create(time),
                                                      CCCallFuncN:create(callback));

@@ -26,7 +26,7 @@ overload.createSprite {
     function(parent, name, pos, anchor, z, tag)
         local sprite = CCSprite:create(name)
         sprite:setPosition(pos)
-        cc.setAnchor(sprite, anchor.x, anchor.y)
+        sprite:setAnchorPoint(cc.p(anchor.x, anchor.y))
         if tolua.isa(parent, "Widget") then
             parent:addNode(sprite, z, tag)
         else
@@ -70,7 +70,7 @@ overload.createFrameSprite {
     function(parent, name, pos, anchor, z, tag)
         local sprite = CCSprite:createWithSpriteFrameName(name)
         sprite:setPosition(pos)
-        cc.setAnchor(sprite, anchor.x, anchor.y)
+        sprite:setAnchorPoint(cc.p(anchor.x, anchor.y))
         if tolua.isa(parent, "Widget") then
             parent:addNode(sprite, z, tag)
         else
