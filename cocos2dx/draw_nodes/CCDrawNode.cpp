@@ -292,6 +292,17 @@ void CCDrawNode::drawSegment(const CCPoint &from, const CCPoint &to, float radiu
     m_bDirty = true;
 }
 
+void CCDrawNode::drawPolygon(std::vector<CCPoint>& verts, const ccColor4F &fillColor, float borderWidth, const ccColor4F &borderColor) {
+    int i = 0;
+    CCPoint* tmp = (CCPoint*)malloc(sizeof(CCPoint) * verts.size());
+    for(CCPoint& p : verts) {
+        tmp[i].x = p.x;
+        tmp[i++].y = p.y;
+    }
+    drawPolygon(tmp, (unsigned int)verts.size(), fillColor, borderWidth, borderColor);
+    free(tmp);
+}
+
 void CCDrawNode::drawPolygon(CCPoint *verts, unsigned int count, const ccColor4F &fillColor, float borderWidth, const ccColor4F &borderColor)
 {
     struct ExtrudeVerts {ccVertex2F offset, n;};

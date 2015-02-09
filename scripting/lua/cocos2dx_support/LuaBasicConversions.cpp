@@ -1906,6 +1906,11 @@ bool luaval_to_arrayref(lua_State* L,int lo, CCArray* outValue, const char* func
         return false;
     bool ok = true;
     
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
+    
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err)) {
 #if COCOS2D_DEBUG >=1
@@ -2068,8 +2073,12 @@ bool luaval_to_array_of_point(lua_State* L,int lo,cocos2d::CCPoint **points, int
 {
     if (nullptr == L)
         return false;
-    
     bool ok = true;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
     
     tolua_Error tolua_err;
     
@@ -2124,7 +2133,6 @@ bool luavals_variadic_to_array(lua_State* L,int argc, CCArray** ret)
 {
     if (nullptr == L || argc == 0 )
         return false;
-    
     bool ok = true;
     
     CCArray* array = CCArray::create();
@@ -2170,6 +2178,11 @@ bool luaval_to_vector_string(lua_State* L, int lo, std::vector<std::string>* ret
     if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
         return false;
     
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
+    
     tolua_Error tolua_err;
     bool ok = true;
     if (!tolua_istable(L, lo, 0, &tolua_err))
@@ -2210,6 +2223,11 @@ bool luaval_to_vector_bool(lua_State* L, int lo, std::vector<bool>* ret, const c
     if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
         return false;
     
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
+    
     tolua_Error tolua_err;
     bool ok = true;
     if (!tolua_istable(L, lo, 0, &tolua_err))
@@ -2247,6 +2265,11 @@ bool luaval_to_vector_int(lua_State* L, int lo, std::vector<int>* ret, const cha
 {
     if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
         return false;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
     
     tolua_Error tolua_err;
     bool ok = true;
@@ -2286,6 +2309,11 @@ bool luaval_to_vector_float(lua_State* L, int lo, std::vector<float>* ret, const
     if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
         return false;
     
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
+    
     tolua_Error tolua_err;
     bool ok = true;
     
@@ -2324,9 +2352,13 @@ bool luaval_to_vector_ushort(lua_State* L, int lo, std::vector<unsigned short>* 
 {
     if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
         return false;
-    
     tolua_Error tolua_err;
     bool ok = true;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
     
     if (!tolua_istable(L, lo, 0, &tolua_err))
     {
@@ -2364,6 +2396,11 @@ bool luaval_to_vector_rect(lua_State* L, int lo, std::vector<cocos2d::CCRect>* r
     if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
         return false;
     
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
+    
     // top should be a table
     tolua_Error tolua_err;
     bool ok = true;
@@ -2383,6 +2420,46 @@ bool luaval_to_vector_rect(lua_State* L, int lo, std::vector<cocos2d::CCRect>* r
             if(lua_istable(L, -1)) {
                 luaval_to_rect(L, -1, &r);
                 ret->push_back(r);
+            } else {
+                CCAssert(false, "table is needed");
+            }
+            
+            lua_pop(L, 1);
+        }
+    }
+    
+    return ok;
+}
+
+bool luaval_to_vector_point(lua_State* L, int lo, std::vector<cocos2d::CCPoint>* ret, const char* funcName) {
+    // null checking
+    if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
+        return false;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
+    
+    // top should be a table
+    tolua_Error tolua_err;
+    bool ok = true;
+    if (!tolua_istable(L, lo, 0, &tolua_err)) {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok) {
+        CCPoint p;
+        size_t len = lua_objlen(L, lo);
+        for (size_t i = 0; i < len; i++) {
+            lua_pushnumber(L, i + 1);
+            lua_gettable(L, lo);
+            if(lua_istable(L, -1)) {
+                luaval_to_point(L, -1, &p);
+                ret->push_back(p);
             } else {
                 CCAssert(false, "table is needed");
             }
@@ -3164,6 +3241,21 @@ void vector_ushort_to_luaval(lua_State* L, const std::vector<unsigned short>& in
     {
         lua_pushnumber(L, (lua_Number)index);
         lua_pushnumber(L, (lua_Number)value);
+        lua_rawset(L, -3);
+        ++index;
+    }
+}
+
+void vector_point_to_luaval(lua_State* L, const std::vector<cocos2d::CCPoint>& inValue) {
+    if (nullptr == L)
+        return;
+    
+    lua_newtable(L);
+    
+    int index = 1;
+    for (const CCPoint& value : inValue) {
+        lua_pushnumber(L, (lua_Number)index);
+        point_to_luaval(L, value);
         lua_rawset(L, -3);
         ++index;
     }

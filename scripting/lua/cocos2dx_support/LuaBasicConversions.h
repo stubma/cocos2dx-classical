@@ -121,6 +121,7 @@ bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret)
 extern bool luaval_to_vector_float(lua_State* L, int lo, std::vector<float>* ret, const char* funcName = "");
 extern bool luaval_to_vector_ushort(lua_State* L, int lo, std::vector<unsigned short>* ret, const char* funcName = "");
 extern bool luaval_to_vector_rect(lua_State* L, int lo, std::vector<cocos2d::CCRect>* ret, const char* funcName = "");
+extern bool luaval_to_vector_point(lua_State* L, int lo, std::vector<cocos2d::CCPoint>* ret, const char* funcName = "");
 
 // from native
 extern void point_to_luaval(lua_State* L,const cocos2d::CCPoint& vec2);
@@ -209,5 +210,6 @@ void vector_bool_to_luaval(lua_State* L, const std::vector<bool>& inValue);
 void vector_float_to_luaval(lua_State* L, const std::vector<float>& inValue);
 void vector_ushort_to_luaval(lua_State* L, const std::vector<unsigned short>& inValue);
 void vector_rect_to_luaval(lua_State* L, const std::vector<cocos2d::CCRect>& inValue);
+void vector_point_to_luaval(lua_State* L, const std::vector<cocos2d::CCPoint>& inValue);
 
 #endif //__COCOS2DX_SCRIPTING_LUA_COCOS2DXSUPPORT_LUABAISCCONVERSIONS_H__

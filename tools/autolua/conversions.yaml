@@ -78,6 +78,7 @@ conversions:
     "@vector<float.*>": "ok &= luaval_to_vector_float(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "@vector<unsigned short.*>": "ok &= luaval_to_vector_ushort(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     "@vector<cocos2d::CCRect.*>": "ok &= luaval_to_vector_rect(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
+    "@vector<cocos2d::CCPoint.*>": "ok &= luaval_to_vector_point(tolua_S, ${arg_idx}, &${out_value}, \"${lua_type}:${func_name}\")"
     object: "ok &= luaval_to_object<${arg.decl_in_tpl($generator).replace(\"*\", \"\")}>(tolua_S, ${arg_idx}, \"${arg_lua_type}\", &${out_value})"
 
   from_native:
@@ -133,6 +134,7 @@ conversions:
     "@vector<int.*>": "vector_int_to_luaval(tolua_S, ${in_value})"
     "@vector<bool.*>": "vector_bool_to_luaval(tolua_S, ${in_value})"
     "@vector<cocos2d::CCRect.*>": "vector_rect_to_luaval(tolua_S, ${in_value})"
+    "@vector<cocos2d::CCPoint.*>": "vector_point_to_luaval(tolua_S, ${in_value})"
     "ccBlendFunc": "blendfunc_to_luaval(tolua_S, ${in_value})"
     "@vector<float.*>": "vector_float_to_luaval(tolua_S, ${in_value})"
     "@vector<unsigned short.*>": "vector_ushort_to_luaval(tolua_S, ${in_value})"
