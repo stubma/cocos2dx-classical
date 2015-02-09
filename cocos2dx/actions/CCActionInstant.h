@@ -321,7 +321,12 @@ public:
     * @lua NA
     */
     virtual bool initWithTarget(CCObject* pSelectorTarget);
-    /** executes the callback 
+    
+    /** initializes the action with the script callback
+     */
+    virtual bool initWithScriptTarget(ccScriptFunction& func);
+    
+    /** executes the callback
      * @lua NA
      */
     virtual void execute();
@@ -476,17 +481,29 @@ public:
 		return id;
     }
 
-    /** creates the action with the callback 
-
+    /** creates the action with the callback
     typedef void (CCObject::*SEL_CallFuncO)(CCObject*);
     */
     static CCCallFuncO * create(CCObject* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);
+    
+    /** creates the action with the script callback
+     lua example code:
+     function XXX:method1(obj)
+     end
+     local func = CCCallFuncO:create({ target = xxx, handler = XXX.method1 }, obj)
+     */
+    static CCCallFuncO * create(ccScriptFunction func, CCObject* pObject);
 
     /** initializes the action with the callback 
 
     typedef void (CCObject::*SEL_CallFuncO)(CCObject*);
     */
     virtual bool initWithTarget(CCObject* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject);
+    
+    /** initializes the action with the script callback
+     */
+    virtual bool initWithScriptTarget(ccScriptFunction& func, CCObject* pObject);
+    
     // super methods
     /**
      *  @js NA

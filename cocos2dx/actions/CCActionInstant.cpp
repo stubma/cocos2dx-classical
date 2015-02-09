@@ -401,20 +401,24 @@ CCCallFunc * CCCallFunc::create(ccScriptFunction nHandler)
 {
 	CCCallFunc *pRet = new CCCallFunc();
 
-	if (pRet) {
-		pRet->m_nScriptHandler = nHandler;
-		CC_SAFE_AUTORELEASE(pRet);
-	}
-	else{
-		CC_SAFE_DELETE(pRet);
-	}
-	return pRet;
+    if (pRet && pRet->initWithScriptTarget(nHandler)) {
+        CC_SAFE_AUTORELEASE(pRet);
+        return pRet;
+    }
+    
+    CC_SAFE_DELETE(pRet);
+    return nullptr;
 }
 
 bool CCCallFunc::initWithTarget(CCObject* pSelectorTarget) {
     CC_SAFE_RETAIN(pSelectorTarget);
     CC_SAFE_RELEASE(m_pSelectorTarget);
     m_pSelectorTarget = pSelectorTarget;
+    return true;
+}
+
+bool CCCallFunc::initWithScriptTarget(ccScriptFunction& func) {
+    m_nScriptHandler = func;
     return true;
 }
 
@@ -608,6 +612,9 @@ void CCCallFuncO::execute() {
     if (m_pCallFuncO) {
         (m_pSelectorTarget->*m_pCallFuncO)(m_pObject);
     }
+    if (m_nScriptHandler.handler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeCallFuncActionEvent(this, m_pObject);
+    }
 }
 
 CCCallFuncO * CCCallFuncO::create(CCObject* pSelectorTarget, SEL_CallFuncO selector, CCObject* pObject)
@@ -621,6 +628,28 @@ CCCallFuncO * CCCallFuncO::create(CCObject* pSelectorTarget, SEL_CallFuncO selec
 
     CC_SAFE_DELETE(pRet);
     return nullptr;
+}
+
+CCCallFuncO* CCCallFuncO::create(ccScriptFunction func, CCObject* pObject) {
+    CCCallFuncO *pRet = new CCCallFuncO();
+    if (pRet && pRet->initWithScriptTarget(func, pObject)) {
+        CC_SAFE_AUTORELEASE(pRet);
+        return pRet;
+    }
+    
+    CC_SAFE_DELETE(pRet);
+    return nullptr;
+    return pRet;
+}
+
+bool CCCallFuncO::initWithScriptTarget(ccScriptFunction& func, CCObject* pObject) {
+    if (CCCallFunc::initWithScriptTarget(func)) {
+        m_pObject = pObject;
+        CC_SAFE_RETAIN(m_pObject);
+        return true;
+    }
+    
+    return false;
 }
 
 bool CCCallFuncO::initWithTarget(CCObject* pSelectorTarget,
