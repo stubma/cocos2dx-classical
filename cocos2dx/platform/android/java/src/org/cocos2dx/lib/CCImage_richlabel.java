@@ -540,7 +540,7 @@ public class CCImage_richlabel {
 		// layout this text
 		StaticLayout layout = new StaticLayout(rich,
 				paint, 
-				pWidth <= 0 ? (int)StaticLayout.getDesiredWidth(rich, paint) : pWidth, 
+				pWidth <= 0 ? (int)Math.ceil(StaticLayout.getDesiredWidth(rich, paint)) : pWidth, 
 				align, 
 				1, 
 				lineSpacing, 
