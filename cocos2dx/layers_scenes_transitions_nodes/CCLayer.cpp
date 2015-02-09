@@ -101,36 +101,17 @@ void CCLayer::registerWithTouchDispatcher()
 {
     CCTouchDispatcher* pDispatcher = CCDirector::sharedDirector()->getTouchDispatcher();
 
-    // Using LuaBindings
-    if (m_pScriptTouchHandlerEntry)
-    {
-	    if (m_pScriptTouchHandlerEntry->isMultiTouches())
-	    {
-	       pDispatcher->addStandardDelegate(this, 0);
-	       LUALOG("[LUA] Add multi-touches event handler: %d", m_pScriptTouchHandlerEntry->getHandler());
-	    }
-	    else
-	    {
-	       pDispatcher->addTargetedDelegate(this,
-						m_pScriptTouchHandlerEntry->getPriority(),
-						m_pScriptTouchHandlerEntry->getSwallowsTouches());
-	       LUALOG("[LUA] Add touch event handler: %d", m_pScriptTouchHandlerEntry->getHandler());
-	    }
-    }
-    else
-    {
-        if( m_eTouchMode == kCCTouchesAllAtOnce ) {
-            pDispatcher->addStandardDelegate(this, 0);
-        } else {
-            pDispatcher->addTargetedDelegate(this, m_nTouchPriority, m_bSwallowTouch);
-        }
+    if( m_eTouchMode == kCCTouchesAllAtOnce ) {
+        pDispatcher->addStandardDelegate(this, 0);
+    } else {
+        pDispatcher->addTargetedDelegate(this, m_nTouchPriority, m_bSwallowTouch);
     }
 }
 
-void CCLayer::registerScriptTouchHandler(ccScriptFunction nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
+void CCLayer::registerScriptTouchHandler(ccScriptFunction nHandler)
 {
     unregisterScriptTouchHandler();
-    m_pScriptTouchHandlerEntry = CCTouchScriptHandlerEntry::create(nHandler, bIsMultiTouches, nPriority, bSwallowsTouches);
+    m_pScriptTouchHandlerEntry = CCTouchScriptHandlerEntry::create(nHandler);
     CC_SAFE_RETAIN(m_pScriptTouchHandlerEntry);
 }
 

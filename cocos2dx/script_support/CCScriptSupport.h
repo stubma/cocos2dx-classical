@@ -148,34 +148,15 @@ private:
 class CCTouchScriptHandlerEntry : public CCScriptHandlerEntry
 {
 public:
-    static CCTouchScriptHandlerEntry* create(ccScriptFunction nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches);
+    static CCTouchScriptHandlerEntry* create(ccScriptFunction nHandler);
     ~CCTouchScriptHandlerEntry(void);
-    
-    bool isMultiTouches(void) {
-        return m_bIsMultiTouches;
-    }
-    
-    int getPriority(void) {
-        return m_nPriority;
-    }
-    
-    bool getSwallowsTouches(void) {
-        return m_bSwallowsTouches;
-    }
     
 private:
     CCTouchScriptHandlerEntry(ccScriptFunction nHandler)
     : CCScriptHandlerEntry(nHandler)
-    , m_bIsMultiTouches(false)
-    , m_nPriority(0)
-    , m_bSwallowsTouches(false)
     {
     }
-    bool init(bool bIsMultiTouches, int nPriority, bool bSwallowsTouches);
-    
-    bool    m_bIsMultiTouches;
-    int     m_nPriority;
-    bool    m_bSwallowsTouches;
+    bool init();
 };
 
 

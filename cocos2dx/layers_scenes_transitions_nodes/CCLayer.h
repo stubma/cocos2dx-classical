@@ -124,7 +124,8 @@ public:
     virtual void registerWithTouchDispatcher(void);
     
     /** Register script touch events handler */
-    virtual void registerScriptTouchHandler(ccScriptFunction nHandler, bool bIsMultiTouches = false, int nPriority = INT_MIN, bool bSwallowsTouches = false);
+    virtual void registerScriptTouchHandler(ccScriptFunction nHandler);
+    
     /** Unregister script touch events handler */
     virtual void unregisterScriptTouchHandler(void);
 

@@ -93,13 +93,10 @@ CCSchedulerScriptHandlerEntry::~CCSchedulerScriptHandlerEntry(void)
 // #pragma mark CCTouchScriptHandlerEntry
 #endif
 
-CCTouchScriptHandlerEntry* CCTouchScriptHandlerEntry::create(ccScriptFunction nHandler,
-                                                             bool bIsMultiTouches,
-                                                             int nPriority,
-                                                             bool bSwallowsTouches)
+CCTouchScriptHandlerEntry* CCTouchScriptHandlerEntry::create(ccScriptFunction nHandler)
 {
     CCTouchScriptHandlerEntry* pEntry = new CCTouchScriptHandlerEntry(nHandler);
-    pEntry->init(bIsMultiTouches, nPriority, bSwallowsTouches);
+    pEntry->init();
     CC_SAFE_AUTORELEASE(pEntry);
     return pEntry;
 }
@@ -114,12 +111,8 @@ CCTouchScriptHandlerEntry::~CCTouchScriptHandlerEntry(void)
     }
 }
 
-bool CCTouchScriptHandlerEntry::init(bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
+bool CCTouchScriptHandlerEntry::init()
 {
-    m_bIsMultiTouches = bIsMultiTouches;
-    m_nPriority = nPriority;
-    m_bSwallowsTouches = bSwallowsTouches;
-    
     return true;
 }
 
