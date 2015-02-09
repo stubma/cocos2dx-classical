@@ -201,13 +201,11 @@ function cc.rect(_x,_y,_width,_height)
 end
 
 function cc.rectEqualToRect(rect1,rect2)
-    if ((rect1.x >= rect2.x) or (rect1.y >= rect2.y) or
-        ( rect1.x + rect1.width <= rect2.x + rect2.width) or
-        ( rect1.y + rect1.height <= rect2.y + rect2.height)) then
-        return false
+    if rect1.x == rect2.x and rect1.y == rect2.y and rect1.width == rect2.width and rect1.height == rect2.height then
+        return true
     end
 
-    return true
+    return false
 end
 
 function cc.rectGetMaxX(rect)
