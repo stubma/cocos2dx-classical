@@ -115,7 +115,7 @@ void CCMenuItem::activate()
             (m_pListener->*m_pfnSelector)(this);
         }
         
-        if (kScriptTypeNone != m_eScriptType)
+        if (m_nScriptTapHandler.handler)
         {
             CCArray* args = CCArray::createWithCapacity(1);
             args->addObject(this);
