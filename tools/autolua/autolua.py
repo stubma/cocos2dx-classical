@@ -1024,11 +1024,12 @@ class Generator(object):
         return False
 
     def process_node(self, node):
+        if node.kind == CursorKind.CLASS_TEMPLATE:
+            return False
         if node.kind == CursorKind.CLASS_DECL or node.kind == CursorKind.STRUCT_DECL:
             # check namespace for found class
             if node == node.type.get_declaration() and len(node.get_children_array()) > 0:
                 # check class is target or not
-                is_targeted_class = False
                 qn = get_qualified_name(node)
                 ns = get_qualified_namespace(node)
                 ns_matched = len(ns) <= 0 or ns in self.include_namespaces
