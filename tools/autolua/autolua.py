@@ -936,13 +936,13 @@ class Generator(object):
         self.exclude_dirs = re.split(r"\s", config.get("DEFAULT", "exclude_dirs")) if config.has_option("DEFAULT", "exclude_dirs") else ["."]
         self.dst_dir = config.get("DEFAULT", "dst_dir").replace("${PROJECT_DIR}", project_dir) if config.has_option("DEFAULT", "dst_dir") else "."
         exclude_classes = re.split(r"\s", config.get("DEFAULT", "exclude_classes")) if config.has_option("DEFAULT", "exclude_classes") else []
-        self.exclude_classes_regex = [re.compile(x) for x in exclude_classes]
+        self.exclude_classes_regex = [re.compile(x) for x in exclude_classes if len(x) > 0]
         include_classes = re.split(r"\s", config.get("DEFAULT", "include_classes")) if config.has_option("DEFAULT", "include_classes") else []
-        self.include_classes_regex = [re.compile(x) for x in include_classes]
+        self.include_classes_regex = [re.compile(x) for x in include_classes if len(x) > 0]
         exclude_types = re.split(r"\s", config.get("DEFAULT", "exclude_types")) if config.has_option("DEFAULT", "exclude_types") else []
-        self.exclude_types_regex = [re.compile(x) for x in exclude_types]
+        self.exclude_types_regex = [re.compile(x) for x in exclude_types if len(x) > 0]
         include_types = re.split(r"\s", config.get("DEFAULT", "include_types")) if config.has_option("DEFAULT", "include_types") else []
-        self.include_types_regex = [re.compile(x) for x in include_types]
+        self.include_types_regex = [re.compile(x) for x in include_types if len(x) > 0]
         self.target_module = config.get("DEFAULT", "target_module") if config.has_option("DEFAULT", "target_module") else None
         self.hfile_path = ""
         self.cppfile_path = ""
