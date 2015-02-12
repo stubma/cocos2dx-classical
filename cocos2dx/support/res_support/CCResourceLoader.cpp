@@ -345,6 +345,21 @@ void CCResourceLoader::loadImage(const string& name) {
 	free(data);
 }
 
+void CCResourceLoader::loadArmature(const string& plistName, const string& texName, const string& config) {
+    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(config.c_str());
+    loadZwoptex(plistName, texName);
+}
+
+void CCResourceLoader::loadArmature(const string& plistPattern, const string& texPattern, int start, int end, const string& config) {
+    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(config.c_str());
+    char buf1[512], buf2[512];
+    for(int i = start; i <= end; i++) {
+        sprintf(buf1, plistPattern.c_str(), i);
+        sprintf(buf2, texPattern.c_str(), i);
+        loadZwoptex(buf1, buf2);
+    }
+}
+
 void CCResourceLoader::loadZwoptex(const string& plistName, const string& texName) {
 	// load encryptd data
 	unsigned long len;

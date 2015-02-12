@@ -313,6 +313,13 @@ public:
 	 */
 	static void loadZwoptex(const string& plistName, const string& texName);
     
+    /**
+     * a static method used to load an aramature resource, if global decrypt is set, it will be
+     * used to decrypt file
+     */
+    static void loadArmature(const string& plistName, const string& texName, const string& config);
+    static void loadArmature(const string& plistPattern, const string& texPattern, int start, int end, const string& config);
+    
     /// unload image
     static void unloadImages(const string& tex);
     
