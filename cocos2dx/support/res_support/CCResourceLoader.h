@@ -321,16 +321,16 @@ public:
     static void loadArmature(const string& plistPattern, const string& texPattern, int start, int end, const string& config);
     
     /// unload image
-    static void unloadImages(const string& tex);
+    static void unloadImage(const string& tex);
     
     /// unload images
-    static void unloadImages(const string& texPattern, int start, int end);
+    static void unloadImage(const string& texPattern, int start, int end);
     
     /// unload sprite frames
-    static void unloadSpriteFrames(const string& plistPattern, const string& texPattern, int start, int end);
+    static void unloadAtlas(const string& plistPattern, const string& texPattern, int start, int end);
 	
     /// unload armature
-    static void unloadArmatures(string plistPattern, string texPattern, int start, int end, string config);
+    static void unloadArmature(const string& plistPattern, const string& texPattern, int start, int end, const string& config);
     
     /// start loading
     void run();

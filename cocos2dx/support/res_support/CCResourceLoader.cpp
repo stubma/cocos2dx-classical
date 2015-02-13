@@ -224,11 +224,11 @@ void CCResourceLoader::abortAll() {
     }
 }
 
-void CCResourceLoader::unloadImages(const string& tex) {
+void CCResourceLoader::unloadImage(const string& tex) {
     CCTextureCache::sharedTextureCache()->removeTextureForKey(tex.c_str());
 }
 
-void CCResourceLoader::unloadImages(const string& texPattern, int start, int end) {
+void CCResourceLoader::unloadImage(const string& texPattern, int start, int end) {
     char buf[512];
     for(int i = start; i <= end; i++) {
         sprintf(buf, texPattern.c_str(), i);
@@ -236,7 +236,7 @@ void CCResourceLoader::unloadImages(const string& texPattern, int start, int end
     }
 }
 
-void CCResourceLoader::unloadSpriteFrames(const string& plistPattern, const string& texPattern, int start, int end) {
+void CCResourceLoader::unloadAtlas(const string& plistPattern, const string& texPattern, int start, int end) {
     char buf[512];
     for(int i = start; i <= end; i++) {
         sprintf(buf, plistPattern.c_str(), i);
@@ -246,7 +246,7 @@ void CCResourceLoader::unloadSpriteFrames(const string& plistPattern, const stri
     }
 }
 
-void CCResourceLoader::unloadArmatures(string plistPattern, string texPattern, int start, int end, string config) {
+void CCResourceLoader::unloadArmature(const string& plistPattern, const string& texPattern, int start, int end, const string& config) {
     CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo(config.c_str());
     char buf[512];
     for(int i = start; i <= end; i++) {
