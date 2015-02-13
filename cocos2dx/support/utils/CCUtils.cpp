@@ -28,6 +28,7 @@
 #include "platform/CCImage.h"
 #include "CCPinyinUtils.h"
 #include "cocos-ext.h"
+#include "Unicode.h"
 
 USING_NS_CC_EXT;
 using namespace cocos2d::ui;
@@ -1047,6 +1048,18 @@ double CCUtils::pfloor(double x, int precision) {
 double CCUtils::pceil(double x, int precision) {
     double div = pow(10, -precision);
     return (int)ceil(x / div) * div;
+}
+
+int CCUtils::utf8_to_utf16(int utf8) {
+    char16_t u16;
+    size_t len = ((utf8 & 0xff000000) == 0) ? 3 : 4;
+    int be = htobe32(utf8);
+    uint8_t* p = (uint8_t*)&be;
+    if(len < 4) {
+        p++;
+    }
+    ::utf8_to_utf16(p, len, &u16);
+    return u16;
 }
 
 int CCUtils::getUTF8Bytes(unsigned char c) {

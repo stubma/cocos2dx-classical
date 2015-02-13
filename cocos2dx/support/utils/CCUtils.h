@@ -467,6 +467,9 @@ public:
 	 */
 	static int getUTF8Bytes(unsigned char c);
     
+    /// convert a utf8 char to unicode 16
+    static int utf8_to_utf16(int utf8);
+    
     /**
 	 * Get count of utf-8 character in a string
 	 *
