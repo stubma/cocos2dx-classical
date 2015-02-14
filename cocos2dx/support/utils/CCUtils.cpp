@@ -29,6 +29,7 @@
 #include "CCPinyinUtils.h"
 #include "cocos-ext.h"
 #include "Unicode.h"
+#include "support/data_support/hash_bob_jenkins_v2.h"
 
 USING_NS_CC_EXT;
 using namespace cocos2d::ui;
@@ -1073,6 +1074,10 @@ int CCUtils::getUTF8Bytes(unsigned char c) {
 	}
     
 	return count;
+}
+
+int32_t CCUtils::hash(const string& s) {
+    return hashlittle(s.c_str(), s.length(), 0);
 }
 
 int CCUtils::strlen8(const char* s) {

@@ -478,6 +478,9 @@ public:
 	 */
 	static int strlen8(const char* s);
     
+    /// get hash of a string, using bob jenkins algorithm v2
+    static int32_t hash(const string& s);
+    
     /**
      * Measure a rich string size without creating a OpenGL texture. Measured size
      * will be same as content size of rich label node. However, it may not exactly same

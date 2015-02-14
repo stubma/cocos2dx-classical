@@ -243,7 +243,6 @@ THE SOFTWARE.
 #include "support/ui_support/CCScroller.h"
 #include "support/ui_support/CCVelocityTracker.h"
 #include "support/data_support/CCPointList.h"
-#include "support/data_support/hash_bob_jenkins_v2.h"
 #include "support/json/CCJSONValue.h"
 #include "support/json/CCJSONObject.h"
 #include "support/json/CCJSONArray.h"
