@@ -1076,8 +1076,8 @@ int CCUtils::getUTF8Bytes(unsigned char c) {
 	return count;
 }
 
-int32_t CCUtils::hash(const string& s) {
-    return hashlittle(s.c_str(), s.length(), 0);
+int32_t CCUtils::hash(const string& s, int32_t initial) {
+    return hashlittle(s.c_str(), s.length(), initial);
 }
 
 int CCUtils::strlen8(const char* s) {

@@ -479,7 +479,7 @@ public:
 	static int strlen8(const char* s);
     
     /// get hash of a string, using bob jenkins algorithm v2
-    static int32_t hash(const string& s);
+    static int32_t hash(const string& s, int32_t initial = 0);
     
     /**
      * Measure a rich string size without creating a OpenGL texture. Measured size
