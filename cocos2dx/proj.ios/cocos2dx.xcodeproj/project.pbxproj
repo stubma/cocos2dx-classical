@@ -356,6 +356,8 @@
 		9246BE3E1A7F3F8D00505945 /* tea.h in Headers */ = {isa = PBXBuildFile; fileRef = 9246BE3C1A7F3F8D00505945 /* tea.h */; };
 		9258E85A1A28B3E7001DCEEF /* CCVelocityTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9258E8581A28B3E7001DCEEF /* CCVelocityTracker.cpp */; };
 		9258E85B1A28B3E7001DCEEF /* CCVelocityTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 9258E8591A28B3E7001DCEEF /* CCVelocityTracker.h */; };
+		9260DB281A8F865E007F50A2 /* hash_bob_jenkins_v2.c in Sources */ = {isa = PBXBuildFile; fileRef = 9260DB271A8F865E007F50A2 /* hash_bob_jenkins_v2.c */; };
+		9260DB2B1A8F876A007F50A2 /* hash_bob_jenkins_v2.h in Headers */ = {isa = PBXBuildFile; fileRef = 9260DB2A1A8F876A007F50A2 /* hash_bob_jenkins_v2.h */; };
 		9266DDAF1A5674BB00600A41 /* CCApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266DDAE1A5674BB00600A41 /* CCApplication.h */; };
 		9266DDB11A5675AE00600A41 /* CCAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266DDB01A5675AE00600A41 /* CCAccelerometer.h */; };
 		927FE4FF1A45708A0065F052 /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 927FE4311A4570890065F052 /* CCActionEaseEx.cpp */; };
@@ -1256,6 +1258,8 @@
 		9246BE3C1A7F3F8D00505945 /* tea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tea.h; sourceTree = "<group>"; };
 		9258E8581A28B3E7001DCEEF /* CCVelocityTracker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCVelocityTracker.cpp; sourceTree = "<group>"; };
 		9258E8591A28B3E7001DCEEF /* CCVelocityTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVelocityTracker.h; sourceTree = "<group>"; };
+		9260DB271A8F865E007F50A2 /* hash_bob_jenkins_v2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hash_bob_jenkins_v2.c; sourceTree = "<group>"; };
+		9260DB2A1A8F876A007F50A2 /* hash_bob_jenkins_v2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hash_bob_jenkins_v2.h; sourceTree = "<group>"; };
 		9266DDAE1A5674BB00600A41 /* CCApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
 		9266DDB01A5675AE00600A41 /* CCAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAccelerometer.h; sourceTree = "<group>"; };
 		927FE4311A4570890065F052 /* CCActionEaseEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEaseEx.cpp; sourceTree = "<group>"; };
@@ -2355,6 +2359,8 @@
 		1551A5F4158F2ADE00E66CFE /* data_support */ = {
 			isa = PBXGroup;
 			children = (
+				9260DB2A1A8F876A007F50A2 /* hash_bob_jenkins_v2.h */,
+				9260DB271A8F865E007F50A2 /* hash_bob_jenkins_v2.c */,
 				928F644B1A33E72400178235 /* CCData.cpp */,
 				928F644C1A33E72400178235 /* CCData.h */,
 				1551A5F5158F2ADE00E66CFE /* ccCArray.cpp */,
@@ -4055,6 +4061,7 @@
 				1A5B48EA16F084CC008568FC /* CCBool.h in Headers */,
 				1A5B48EB16F084CC008568FC /* CCDouble.h in Headers */,
 				1A5B48EC16F084CC008568FC /* CCFloat.h in Headers */,
+				9260DB2B1A8F876A007F50A2 /* hash_bob_jenkins_v2.h in Headers */,
 				1A5429001720F0650074EC5C /* CCDataVisitor.h in Headers */,
 				92B9B9BC1A43240400443F4A /* lparser.h in Headers */,
 				4698CFAA174CBB700066A57B /* CCTextureETC.h in Headers */,
@@ -4432,6 +4439,7 @@
 				92D683441A2F695900CD9F2A /* CCMenuItemColor.cpp in Sources */,
 				927FE5351A45708A0065F052 /* CCSpriteFrameCacheHelper.cpp in Sources */,
 				92B9B9D01A43240400443F4A /* lzio.c in Sources */,
+				9260DB281A8F865E007F50A2 /* hash_bob_jenkins_v2.c in Sources */,
 				92A7AF601A3C4038001C830B /* CCArcticManager.cpp in Sources */,
 				92B9BA6A1A43240400443F4A /* tolua_is.c in Sources */,
 				921110031A2B3FA8003FE653 /* CCScroller.cpp in Sources */,
