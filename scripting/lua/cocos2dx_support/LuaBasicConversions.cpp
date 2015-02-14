@@ -262,7 +262,7 @@ bool luaval_to_number(lua_State* L,int lo,double* outValue, const char* funcName
     return ok;
 }
 
-bool luaval_to_long_long(lua_State* L,int lo,long long* outValue, const char* funcName)
+bool luaval_to_int64(lua_State* L,int lo, int64_t* outValue, const char* funcName)
 {
     if (nullptr == L || nullptr == outValue)
         return false;
@@ -280,7 +280,31 @@ bool luaval_to_long_long(lua_State* L,int lo,long long* outValue, const char* fu
     
     if (ok)
     {
-        *outValue = (long long)tolua_tonumber(L, lo, 0);
+        *outValue = (int64_t)tolua_tonumber(L, lo, 0);
+    }
+    
+    return ok;
+}
+
+bool luaval_to_uint64(lua_State* L,int lo, uint64_t* outValue, const char* funcName)
+{
+    if (nullptr == L || nullptr == outValue)
+        return false;
+    
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if (!tolua_isnumber(L,lo,0,&tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        *outValue = (uint64_t)tolua_tonumber(L, lo, 0);
     }
     
     return ok;

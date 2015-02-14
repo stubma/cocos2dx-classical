@@ -56,7 +56,8 @@ extern bool luaval_to_uint32(lua_State* L, int lo, unsigned int* outValue, const
 extern bool luaval_to_uint16(lua_State* L,int lo,uint16_t* outValue, const char* funcName = "");
 extern bool luaval_to_boolean(lua_State* L,int lo,bool* outValue, const char* funcName = "");
 extern bool luaval_to_number(lua_State* L,int lo,double* outValue, const char* funcName = "");
-extern bool luaval_to_long_long(lua_State* L,int lo,long long* outValue, const char* funcName = "");
+extern bool luaval_to_int64(lua_State* L,int lo, int64_t* outValue, const char* funcName = "");
+extern bool luaval_to_uint64(lua_State* L,int lo, uint64_t* outValue, const char* funcName = "");
 extern bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue, const char* funcName = "");
 extern bool luaval_to_long(lua_State* L,int lo, long* outValue, const char* funcName = "");
 extern bool luaval_to_ssize(lua_State* L,int lo, ssize_t* outValue, const char* funcName = "");
