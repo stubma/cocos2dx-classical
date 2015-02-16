@@ -39,8 +39,10 @@ on 1 byte), but shoehorning those bytes into integers efficiently is messy.
 #include <time.h>       /* defines time_t for timings in the test */
 #include <stdint.h>     /* defines uint32_t etc */
 #include <sys/param.h>  /* attempt to define endianness */
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    #include <endian.h>    /* attempt to define endianness */
+#ifdef CC_TARGET_PLATFORM
+    #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+        #include <endian.h>    /* attempt to define endianness */
+    #endif
 #endif
 
 #ifdef __cplusplus
