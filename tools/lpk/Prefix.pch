@@ -1,0 +1,17 @@
+//
+//  Prefix.pch
+//  lpk
+//
+//  Created by maruojie on 15/2/15.
+//  Copyright (c) 2015年 luma. All rights reserved.
+//
+#ifdef __OBJC__
+
+#import <Cocoa/Cocoa.h>
+#import "CNSplitView.h"
+#include "lpk.h"
+#import "LpkEntry.h"
+#import "TreeManager.h"
+#include "hash_bob_jenkins_v2.h"
+
+#endif
