@@ -18,16 +18,21 @@
     LpkEntry* e = [[LpkEntry alloc] init];
     e.isDir = [[dict objectForKey:@"isDir"] boolValue];
     e.name = [dict objectForKey:@"name"];
-    e.size = [[dict objectForKey:@"size"] unsignedIntValue];
-    e.compressAlgorithm = (LPKCompressAlgorithm)[[dict objectForKey:@"compressAlgorithm"] intValue];
-    e.encryptAlgorithm = (LPKEncryptAlgorithm)[[dict objectForKey:@"encryptAlgorithm"] intValue];
-    e.realPath = [dict objectForKey:@"realPath"];
     {
         NSArray* children = [dict objectForKey:@"children"];
         for(NSDictionary* childDict in children) {
             LpkEntry* c = [LpkEntry decodeWithDictionary:childDict];
             [e.children addObject:c];
             c.parent = e;
+        }
+    }
+    if(!e.isDir) {
+        e.branches = [NSMutableArray array];
+        NSArray* branches = [dict objectForKey:@"branches"];
+        for(NSDictionary* bDict in branches) {
+            LpkBranchEntry* b = [LpkBranchEntry decodeWithDictionary:bDict];
+            [e.branches addObject:b];
+            b.trunk = e;
         }
     }
     return e;
@@ -38,7 +43,6 @@
         self.children = [NSMutableArray array];
         self.filteredChildren = [NSMutableArray array];
         self.name = @"/";
-        self.realPath = @"/";
         self.isDir = YES;
         return self;
     }
@@ -55,16 +59,16 @@
             if([self.name characterAtIndex:0] == '.')
                 return nil;
             
-            // if file, get size
-            if(!self.isDir) {
-                NSDictionary* attrs = [fm attributesOfItemAtPath:path error:nil];
-                self.size = [[attrs objectForKey:NSFileSize] unsignedIntValue];
-            }
-            
-            // save
-            self.realPath = path;
+            // init members
             self.children = [NSMutableArray array];
             self.filteredChildren = [NSMutableArray array];
+            
+            // if file, add default branch
+            if(!self.isDir) {
+                LpkBranchEntry* b = [[LpkBranchEntry alloc] initWithPath:path forTrunk:self];
+                self.branches = [NSMutableArray arrayWithObject:b];
+            }
+            
             return self;
         }
     }
@@ -75,7 +79,6 @@
     if(self = [super init]) {
         self.isDir = YES;
         self.name = name;
-        self.realPath = @"";
         self.children = [NSMutableArray array];
         self.filteredChildren = [NSMutableArray array];
         return self;
@@ -86,14 +89,6 @@
 - (void)encodeWithDictionary:(NSMutableDictionary*)dict relativeTo:(NSString*)projectDir; {
     [dict setObject:[NSNumber numberWithBool:self.isDir] forKey:@"isDir"];
     [dict setObject:self.name forKey:@"name"];
-    if([self.realPath isAbsolutePath]) {
-        [dict setObject:[self.realPath stringWithPathRelativeTo:projectDir] forKey:@"realPath"];
-    } else {
-        [dict setObject:self.realPath forKey:@"realPath"];
-    }
-    [dict setObject:[NSNumber numberWithUnsignedInt:self.size] forKey:@"size"];
-    [dict setObject:[NSNumber numberWithInt:self.compressAlgorithm] forKey:@"compressAlgorithm"];
-    [dict setObject:[NSNumber numberWithInt:self.encryptAlgorithm] forKey:@"encryptAlgorithm"];
     {
         NSArray* encodedChildren = [self.children arrayByApplyingBlock:^id(id e) {
             NSMutableDictionary* childDict = [NSMutableDictionary dictionary];
@@ -101,6 +96,14 @@
             return childDict;
         }];
         [dict setObject:encodedChildren forKey:@"children"];
+    }
+    if(!self.isDir) {
+        NSArray* encodedBranches = [self.branches arrayByApplyingBlock:^id(id b) {
+            NSMutableDictionary* bDict = [NSMutableDictionary dictionary];
+            [b encodeWithDictionary:bDict relativeTo:projectDir];
+            return bDict;
+        }];
+        [dict setObject:encodedBranches forKey:@"branches"];
     }
 }
 
@@ -170,6 +173,16 @@
     return nil;
 }
 
+- (void)collectFiles:(NSMutableArray*)ret {
+    for(LpkEntry* c in self.children) {
+        if(!c.isDir) {
+            [ret addObject:c];
+        } else {
+            [c collectFiles:ret];
+        }
+    }
+}
+
 - (NSString*)getKey {
     NSMutableArray* parts = [NSMutableArray array];
     LpkEntry* e = self;
@@ -196,6 +209,66 @@
             [self.filteredChildren addObject:child];
         }
     }
+}
+
+- (uint32_t)getTotalSize {
+    uint32_t size = 0;
+    for(LpkBranchEntry* b in self.branches) {
+        size += b.size;
+    }
+    return size;
+}
+
+- (LpkBranchEntry*)getFirstBranch {
+    if([self.branches count] > 0) {
+        return [self.branches objectAtIndex:0];
+    } else {
+        return nil;
+    }
+}
+
+- (NSString*)getCompressDesc {
+    if([self.branches count] > 1) {
+        return @"Multiple";
+    } else if([self.branches count] > 0) {
+        return LPKC_NAMES[self.firstBranch.compressAlgorithm];
+    } else {
+        return @"N/A";
+    }
+}
+
+- (NSString*)getEncryptDesc {
+    if([self.branches count] > 1) {
+        return @"Multiple";
+    } else if([self.branches count] > 0) {
+        return LPKE_NAMES[self.firstBranch.encryptAlgorithm];
+    } else {
+        return @"N/A";
+    }
+}
+
+- (BOOL)hasLocale:(uint16_t)locale andPlatform:(uint16_t)platform {
+    for(LpkBranchEntry* b in self.branches) {
+        if(b.locale == locale && b.platform == platform) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (int)getFileCountIncludeBranch {
+    // minus one because every entry has at least one branch
+    int count = 0;
+    if(!self.isDir)
+        count += [self.branches count];
+    for(LpkEntry* c in self.children) {
+        if(c.isDir) {
+            count += [c getFileCountIncludeBranch];
+        } else {
+            count += [c.branches count];
+        }
+    }
+    return count;
 }
 
 @end

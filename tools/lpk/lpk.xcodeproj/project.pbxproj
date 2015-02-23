@@ -15,6 +15,8 @@
 		9211D9DF1A91F1150015712A /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 9211D9DE1A91F1150015712A /* delete.png */; };
 		9211D9E11A91F1F50015712A /* new_folder.png in Resources */ = {isa = PBXBuildFile; fileRef = 9211D9E01A91F1F50015712A /* new_folder.png */; };
 		9211D9ED1A92475E0015712A /* InputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9211D9EC1A92475E0015712A /* InputViewController.m */; };
+		922E43531A9ACBB700A75392 /* ProgressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E43521A9ACBB700A75392 /* ProgressViewController.m */; };
+		922E43591A9AD93600A75392 /* NSMutableData+ReadWrite.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E43581A9AD93600A75392 /* NSMutableData+ReadWrite.m */; };
 		9247AF621A90CD67006BB0C4 /* open.png in Resources */ = {isa = PBXBuildFile; fileRef = 9247AF611A90CD67006BB0C4 /* open.png */; };
 		9247AF661A90D073006BB0C4 /* WindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9247AF651A90D073006BB0C4 /* WindowController.m */; };
 		9247AF761A90D127006BB0C4 /* CNSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9247AF691A90D127006BB0C4 /* CNSplitView.m */; };
@@ -26,6 +28,10 @@
 		9247AF7E1A90D626006BB0C4 /* save.png in Resources */ = {isa = PBXBuildFile; fileRef = 9247AF7C1A90D626006BB0C4 /* save.png */; };
 		9247AF7F1A90D626006BB0C4 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 9247AF7D1A90D626006BB0C4 /* setting.png */; };
 		9247AF831A90DEE6006BB0C4 /* lpk.c in Sources */ = {isa = PBXBuildFile; fileRef = 9247AF811A90DEE6006BB0C4 /* lpk.c */; };
+		926F19EC1A95C9D500BD0CE0 /* AddBranchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 926F19EB1A95C9D500BD0CE0 /* AddBranchViewController.m */; };
+		92B090B31A9465DA003A1298 /* LpkBranchEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B090B21A9465DA003A1298 /* LpkBranchEntry.m */; };
+		92B090B61A9472EB003A1298 /* EntryInfoCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B090B51A9472EB003A1298 /* EntryInfoCellView.m */; };
+		92CF2B4E1A961BC60094D6E4 /* Consts.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CF2B4D1A961BC60094D6E4 /* Consts.m */; };
 		92E850FC1A90C6E9005A1465 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92E850F91A90C6E9005A1465 /* Main.storyboard */; };
 		92E850FD1A90C6E9005A1465 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92E850FB1A90C6E9005A1465 /* Images.xcassets */; };
 		92E851041A90C712005A1465 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 92E851001A90C712005A1465 /* AppDelegate.m */; };
@@ -33,6 +39,7 @@
 		92E851081A90C742005A1465 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 92E851071A90C742005A1465 /* main.m */; };
 		92E9BD011A9339B200A9D898 /* NSString+Paths.m in Sources */ = {isa = PBXBuildFile; fileRef = 92E9BD001A9339B200A9D898 /* NSString+Paths.m */; };
 		92E9BD041A9379BB00A9D898 /* NSOutlineView+State.m in Sources */ = {isa = PBXBuildFile; fileRef = 92E9BD031A9379BB00A9D898 /* NSOutlineView+State.m */; };
+		92F1AF331A9B72B9002635DD /* NSData+Generator.m in Sources */ = {isa = PBXBuildFile; fileRef = 92F1AF321A9B72B9002635DD /* NSData+Generator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +56,10 @@
 		9211D9E01A91F1F50015712A /* new_folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = new_folder.png; sourceTree = "<group>"; };
 		9211D9EB1A92475E0015712A /* InputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputViewController.h; sourceTree = "<group>"; };
 		9211D9EC1A92475E0015712A /* InputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputViewController.m; sourceTree = "<group>"; };
+		922E43511A9ACBB700A75392 /* ProgressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressViewController.h; sourceTree = "<group>"; };
+		922E43521A9ACBB700A75392 /* ProgressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressViewController.m; sourceTree = "<group>"; };
+		922E43571A9AD93600A75392 /* NSMutableData+ReadWrite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableData+ReadWrite.h"; sourceTree = "<group>"; };
+		922E43581A9AD93600A75392 /* NSMutableData+ReadWrite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableData+ReadWrite.m"; sourceTree = "<group>"; };
 		9247AF611A90CD67006BB0C4 /* open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = open.png; sourceTree = "<group>"; };
 		9247AF641A90D073006BB0C4 /* WindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowController.h; sourceTree = "<group>"; };
 		9247AF651A90D073006BB0C4 /* WindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowController.m; sourceTree = "<group>"; };
@@ -71,6 +82,14 @@
 		9247AF801A90D81A006BB0C4 /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = SOURCE_ROOT; };
 		9247AF811A90DEE6006BB0C4 /* lpk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpk.c; sourceTree = "<group>"; };
 		9247AF821A90DEE6006BB0C4 /* lpk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lpk.h; sourceTree = "<group>"; };
+		926F19EA1A95C9D500BD0CE0 /* AddBranchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddBranchViewController.h; sourceTree = "<group>"; };
+		926F19EB1A95C9D500BD0CE0 /* AddBranchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddBranchViewController.m; sourceTree = "<group>"; };
+		92B090B11A9465DA003A1298 /* LpkBranchEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LpkBranchEntry.h; sourceTree = "<group>"; };
+		92B090B21A9465DA003A1298 /* LpkBranchEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LpkBranchEntry.m; sourceTree = "<group>"; };
+		92B090B41A9472EB003A1298 /* EntryInfoCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryInfoCellView.h; sourceTree = "<group>"; };
+		92B090B51A9472EB003A1298 /* EntryInfoCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryInfoCellView.m; sourceTree = "<group>"; };
+		92CF2B4C1A961BC60094D6E4 /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Consts.h; sourceTree = "<group>"; };
+		92CF2B4D1A961BC60094D6E4 /* Consts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Consts.m; sourceTree = "<group>"; };
 		92E850D21A90C68C005A1465 /* lpk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lpk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92E850FA1A90C6E9005A1465 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		92E850FB1A90C6E9005A1465 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -84,6 +103,8 @@
 		92E9BD001A9339B200A9D898 /* NSString+Paths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Paths.m"; sourceTree = "<group>"; };
 		92E9BD021A9379BB00A9D898 /* NSOutlineView+State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOutlineView+State.h"; sourceTree = "<group>"; };
 		92E9BD031A9379BB00A9D898 /* NSOutlineView+State.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOutlineView+State.m"; sourceTree = "<group>"; };
+		92F1AF311A9B72B9002635DD /* NSData+Generator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Generator.h"; sourceTree = "<group>"; };
+		92F1AF321A9B72B9002635DD /* NSData+Generator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Generator.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,16 +203,30 @@
 				9247AF651A90D073006BB0C4 /* WindowController.m */,
 				9211D9EB1A92475E0015712A /* InputViewController.h */,
 				9211D9EC1A92475E0015712A /* InputViewController.m */,
+				926F19EA1A95C9D500BD0CE0 /* AddBranchViewController.h */,
+				926F19EB1A95C9D500BD0CE0 /* AddBranchViewController.m */,
+				922E43511A9ACBB700A75392 /* ProgressViewController.h */,
+				922E43521A9ACBB700A75392 /* ProgressViewController.m */,
+				92B090B41A9472EB003A1298 /* EntryInfoCellView.h */,
+				92B090B51A9472EB003A1298 /* EntryInfoCellView.m */,
+				92CF2B4C1A961BC60094D6E4 /* Consts.h */,
+				92CF2B4D1A961BC60094D6E4 /* Consts.m */,
 				9211D9DB1A91CE900015712A /* NSArray+Transform.h */,
 				9211D9DC1A91CE900015712A /* NSArray+Transform.m */,
 				92E9BCFF1A9339B200A9D898 /* NSString+Paths.h */,
 				92E9BD001A9339B200A9D898 /* NSString+Paths.m */,
+				922E43571A9AD93600A75392 /* NSMutableData+ReadWrite.h */,
+				922E43581A9AD93600A75392 /* NSMutableData+ReadWrite.m */,
+				92F1AF311A9B72B9002635DD /* NSData+Generator.h */,
+				92F1AF321A9B72B9002635DD /* NSData+Generator.m */,
 				92E9BD021A9379BB00A9D898 /* NSOutlineView+State.h */,
 				92E9BD031A9379BB00A9D898 /* NSOutlineView+State.m */,
 				9211D9D01A91A2580015712A /* TreeManager.h */,
 				9211D9D11A91A2580015712A /* TreeManager.m */,
 				9211D9CD1A91A15D0015712A /* LpkEntry.h */,
 				9211D9CE1A91A15D0015712A /* LpkEntry.m */,
+				92B090B11A9465DA003A1298 /* LpkBranchEntry.h */,
+				92B090B21A9465DA003A1298 /* LpkBranchEntry.m */,
 				9211D9D81A91C5160015712A /* hash_bob_jenkins_v2.c */,
 				9211D9D91A91C5160015712A /* hash_bob_jenkins_v2.h */,
 				9247AF811A90DEE6006BB0C4 /* lpk.c */,
@@ -280,16 +315,23 @@
 				9211D9DA1A91C5160015712A /* hash_bob_jenkins_v2.c in Sources */,
 				9211D9D21A91A2580015712A /* TreeManager.m in Sources */,
 				9247AF761A90D127006BB0C4 /* CNSplitView.m in Sources */,
+				922E43531A9ACBB700A75392 /* ProgressViewController.m in Sources */,
 				9247AF661A90D073006BB0C4 /* WindowController.m in Sources */,
 				92E851081A90C742005A1465 /* main.m in Sources */,
+				92F1AF331A9B72B9002635DD /* NSData+Generator.m in Sources */,
 				9247AF7B1A90D127006BB0C4 /* NSView+CNSplitViewToolbar.m in Sources */,
 				9247AF791A90D127006BB0C4 /* CNSplitViewToolbarButton.m in Sources */,
+				92CF2B4E1A961BC60094D6E4 /* Consts.m in Sources */,
+				922E43591A9AD93600A75392 /* NSMutableData+ReadWrite.m in Sources */,
 				92E9BD011A9339B200A9D898 /* NSString+Paths.m in Sources */,
 				92E9BD041A9379BB00A9D898 /* NSOutlineView+State.m in Sources */,
 				9211D9DD1A91CE900015712A /* NSArray+Transform.m in Sources */,
+				926F19EC1A95C9D500BD0CE0 /* AddBranchViewController.m in Sources */,
 				9247AF7A1A90D127006BB0C4 /* CNSplitViewToolbarButtonCell.m in Sources */,
 				92E851061A90C712005A1465 /* ViewController.m in Sources */,
 				9247AF781A90D127006BB0C4 /* CNSplitViewToolbar.m in Sources */,
+				92B090B61A9472EB003A1298 /* EntryInfoCellView.m in Sources */,
+				92B090B31A9465DA003A1298 /* LpkBranchEntry.m in Sources */,
 				9211D9CF1A91A15D0015712A /* LpkEntry.m in Sources */,
 				9247AF771A90D127006BB0C4 /* CNSplitViewDraggingHandle.m in Sources */,
 				9211D9ED1A92475E0015712A /* InputViewController.m in Sources */,

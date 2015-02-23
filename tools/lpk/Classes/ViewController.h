@@ -15,6 +15,7 @@
 
 - (LpkEntry*)getFirstSelectedItem;
 - (void)reloadFileOutline;
+- (void)reloadInfoTable;
 - (IBAction)onDelete:(id)sender;
 
 @end

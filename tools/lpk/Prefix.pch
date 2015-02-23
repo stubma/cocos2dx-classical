@@ -8,9 +8,11 @@
 #ifdef __OBJC__
 
 #import <Cocoa/Cocoa.h>
+#import "Consts.h"
 #import "CNSplitView.h"
 #include "lpk.h"
 #import "LpkEntry.h"
+#import "LpkBranchEntry.h"
 #import "TreeManager.h"
 #include "hash_bob_jenkins_v2.h"
 

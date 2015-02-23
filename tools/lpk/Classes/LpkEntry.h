@@ -16,19 +16,21 @@ static NSString* LPKE_NAMES[] = {
     @"N/A"
 };
 
+@class LpkBranchEntry;
+
 @interface LpkEntry : NSObject
 
 @property (nonatomic, assign) BOOL isDir;
 @property (nonatomic, strong) NSString* name;
-@property (nonatomic, strong) NSString* realPath; // useless for dir
-@property (nonatomic, assign) LPKCompressAlgorithm compressAlgorithm;
-@property (nonatomic, assign) LPKEncryptAlgorithm encryptAlgorithm;
-@property (nonatomic, assign) uint32_t size;
 @property (nonatomic, strong) NSMutableArray* children;
 @property (nonatomic, strong) NSMutableArray* filteredChildren;
-@property (nonatomic, strong) NSMutableArray* group;
+@property (nonatomic, strong) NSMutableArray* branches;
 @property (nonatomic, strong) LpkEntry* parent;
 @property (nonatomic, readonly, getter=getKey) NSString* key;
+@property (nonatomic, readonly, getter=getTotalSize) uint32_t totalSize;
+@property (nonatomic, readonly, getter=getFirstBranch) LpkBranchEntry* firstBranch;
+@property (nonatomic, readonly, getter=getCompressDesc) NSString* compressDesc;
+@property (nonatomic, readonly, getter=getEncryptDesc) NSString* encryptDesc;
 
 + (LpkEntry*)decodeWithDictionary:(NSDictionary*)dict;
 
@@ -44,5 +46,8 @@ static NSString* LPKE_NAMES[] = {
 - (BOOL)hasChild:(NSString*)name;
 - (void)encodeWithDictionary:(NSMutableDictionary*)dict relativeTo:(NSString*)projectDir;
 - (void)rebuildFilterChildren:(NSString*)keyword;
+- (BOOL)hasLocale:(uint16_t)locale andPlatform:(uint16_t)platform;
+- (int)getFileCountIncludeBranch;
+- (void)collectFiles:(NSMutableArray*)ret;
 
 @end

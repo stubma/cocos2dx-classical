@@ -8,14 +8,17 @@
 
 #import "ViewController.h"
 #import "NSOutlineView+State.h"
+#import "AddBranchViewController.h"
 
 #define DRAG_TYPE_LPK_ENTRY @"_dt_lpk_entry"
 
-@interface ViewController () <NSSplitViewDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate>
+@interface ViewController () <NSSplitViewDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate, NSTableViewDataSource, NSTableViewDelegate>
 
 @property (weak) IBOutlet CNSplitView *hSplitView;
 @property (weak) IBOutlet CNSplitView *vSplitView;
 @property (weak) IBOutlet NSOutlineView *fileOutlineView;
+@property (weak) IBOutlet NSTableView *infoTableView;
+@property (weak) IBOutlet NSView *viewerContainer;
 @property (nonatomic, assign) BOOL hasFilter;
 @property (nonatomic, strong) NSArray* expandedItems;
 
@@ -26,15 +29,27 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    // Do any additional setup after loading the view.
+    // create tree manager
     self.tree = [[TreeManager alloc] init];
+    
+    // init file outline view
     self.filterKeyword = @"";
     [self.fileOutlineView reloadData];
     [self.fileOutlineView registerForDraggedTypes:@[NSFilenamesPboardType, NSStringPboardType]];
+    
+    // init info table view
+    [self.infoTableView registerForDraggedTypes:@[NSFilenamesPboardType]];
 }
 
 - (void)reloadFileOutline {
     [self.fileOutlineView reloadData];
+    
+    // ensure filter works
+    self.filterKeyword = self.filterKeyword;
+}
+
+- (void)reloadInfoTable {
+    [self.infoTableView reloadData];
 }
 
 - (void)setFilterKeyword:(NSString*)keyword {
@@ -118,11 +133,11 @@
     if([@"name" isEqualToString:tableColumn.identifier]) {
         return e.name;
     } else if([@"size" isEqualToString:tableColumn.identifier]) {
-        return [NSNumber numberWithUnsignedInt:e.size];
+        return [NSNumber numberWithUnsignedInt:e.totalSize];
     } else if([@"c" isEqualToString:tableColumn.identifier]) {
-        return LPKC_NAMES[e.compressAlgorithm];
+        return e.compressDesc;
     } else if([@"e" isEqualToString:tableColumn.identifier]) {
-        return LPKE_NAMES[e.encryptAlgorithm];
+        return e.encryptDesc;
     } else {
         return nil;
     }
@@ -258,6 +273,91 @@
     NSIndexSet* set = [self.fileOutlineView selectedRowIndexes];
     LpkEntry* e = (LpkEntry*)[self.fileOutlineView itemAtRow:set.firstIndex];
     return e;
+}
+
+- (void)outlineViewSelectionDidChange:(NSNotification *)notificatio {
+    [self.infoTableView reloadData];
+}
+
+#pragma mark -
+#pragma mark tableview data source
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+    LpkEntry* e = [self getFirstSelectedItem];
+    if(!e || e.isDir) {
+        return 0;
+    } else {
+        return [e.branches count];
+    }
+}
+
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    LpkEntry* e = [self getFirstSelectedItem];
+    return [e.branches objectAtIndex:row];
+}
+
+- (NSDragOperation)tableView:(NSTableView *)aTableView
+                validateDrop:(id<NSDraggingInfo>)info
+                 proposedRow:(NSInteger)row
+       proposedDropOperation:(NSTableViewDropOperation)operation {
+    // if no file selected in outline view, no drop allowed
+    LpkEntry* e = [self getFirstSelectedItem];
+    if(!e || e.isDir)
+        return NSDragOperationNone;
+    
+    // check operation
+    NSPasteboard* pboard = [info draggingPasteboard];
+    if([[pboard types] containsObject:NSFilenamesPboardType]) {
+        return NSDragOperationCopy;
+    } else {
+        return NSDragOperationNone;
+    }
+}
+
+- (BOOL)tableView:(NSTableView *)aTableView
+       acceptDrop:(id<NSDraggingInfo>)info
+              row:(NSInteger)row
+    dropOperation:(NSTableViewDropOperation)operation {
+    NSPasteboard* pboard = [info draggingPasteboard];
+    if([[pboard types] containsObject:NSFilenamesPboardType]) {
+        // get first file
+        NSArray *files = [pboard propertyListForType:NSFilenamesPboardType];
+        NSString* firstFile = [files objectAtIndex:0];
+        
+        // show sheet for this drop
+        LpkEntry* trunk = [self getFirstSelectedItem];
+        NSStoryboard* sb = [NSStoryboard storyboardWithName:@"Main" bundle:nil];
+        NSWindowController* add = [sb instantiateControllerWithIdentifier:@"add_branch"];
+        AddBranchViewController* vc = (AddBranchViewController*)add.contentViewController;
+        vc.entry = trunk;
+        vc.filePath = firstFile;
+        [self.view.window beginSheet:add.window completionHandler:^(NSModalResponse returnCode) {
+            if(returnCode == NSModalResponseOK) {
+                // create new branch
+                LpkBranchEntry* newb = [[LpkBranchEntry alloc] initWithPath:vc.filePath forTrunk:trunk];
+                
+                // set locale
+                NSInteger index = [vc.localeCombo indexOfSelectedItem];
+                uint32_t lcid = 0;
+                if(index > 0) {
+                    lcid = [NSLocale windowsLocaleCodeFromLocaleIdentifier:LOCALE_IDS[index]];
+                }
+                newb.locale = lcid;
+                
+                // set platform
+                newb.platform = (LPKPlatform)[vc.platformCombo indexOfSelectedItem];
+                
+                // add branch
+                [trunk.branches addObject:newb];
+                
+                // flag dirty and reload info table
+                self.tree.dirty = YES;
+                [self reloadInfoTable];
+            }
+        }];
+    }
+    
+    return YES;
 }
 
 @end

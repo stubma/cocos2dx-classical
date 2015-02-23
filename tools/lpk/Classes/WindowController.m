@@ -9,6 +9,7 @@
 #import "WindowController.h"
 #import "ViewController.h"
 #import "InputViewController.h"
+#import "ProgressViewController.h"
 
 @interface WindowController () <NSTextFieldDelegate>
 
@@ -18,11 +19,10 @@
 - (IBAction)onToolbarExport:(id)sender;
 - (IBAction)onToolbarNewFolder:(id)sender;
 - (IBAction)onToolbarDelete:(id)sender;
+- (void)startExport;
 
 @property (weak) IBOutlet NSSearchField *searchText;
 @property (nonatomic, readonly, getter=getTree) TreeManager* tree;
-
-- (void)onSearchTextChanged:(NSNotification*)n;
 
 @end
 
@@ -33,21 +33,9 @@
     
     // init title
     [self.window setTitleWithRepresentedFilename:self.tree.projectPath];
-    
-    // listen search text
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(onSearchTextChanged:)
-                                                 name:NSControlTextDidChangeNotification
-                                               object:nil];
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:NSControlTextDidChangeNotification
-                                                  object:nil];
-}
-
-- (void)onSearchTextChanged:(NSNotification*)n {
+- (void)controlTextDidChange:(NSNotification *)n {
     if(n.object == self.searchText) {
         NSString* text = self.searchText.stringValue;
         text = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
@@ -138,14 +126,33 @@
     [saveDlg setShowsHiddenFiles:NO];
     [saveDlg setExtensionHidden:NO];
     [saveDlg setAllowedFileTypes:@[@"lpk"]];
+    if([@"" isEqualToString:self.tree.exportPath]) {
+        NSString* projName = [[self.tree.projectPath lastPathComponent] stringByDeletingPathExtension];
+        NSString* lpkName = [NSString stringWithFormat:@"%@.lpk", projName];
+        self.tree.exportPath = [[self.tree.projectPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:lpkName];
+    }
     [saveDlg setNameFieldStringValue:[self.tree.exportPath lastPathComponent]];
     [saveDlg beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
         if (result == NSModalResponseOK) {
+            // save export path
             NSString* filePath = [[saveDlg URL] path];
             self.tree.exportPath = filePath;
-            [self.tree exportLPK];
+            
+            // export
+            [self performSelector:@selector(startExport) withObject:nil afterDelay:0.7f];
         }
     }];
+}
+
+- (void)startExport {
+    // start a progress
+    NSStoryboard* sb = [NSStoryboard storyboardWithName:@"Main" bundle:nil];
+    NSWindowController* progress = [sb instantiateControllerWithIdentifier:@"progress"];
+    ProgressViewController* vc = (ProgressViewController*)progress.contentViewController;
+    [self.window beginSheet:vc.view.window completionHandler:nil];
+    
+    // start export
+    [self.tree exportLPK:vc];
 }
 
 - (IBAction)onToolbarNewFolder:(id)sender {
