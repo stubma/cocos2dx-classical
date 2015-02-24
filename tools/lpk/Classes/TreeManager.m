@@ -307,8 +307,14 @@
         hash->locale = b.locale;
         hash->platform = b.platform;
         
+        // resolve path
+        NSString* path = b.realPath;
+        if(![path isAbsolutePath]) {
+            path = [[[self.projectPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:path] stringByStandardizingPath];
+        }
+        
         // write block
-        NSData* data = [NSData dataWithContentsOfFile:b.realPath];
+        NSData* data = [NSData dataWithContentsOfFile:path];
         uint32_t fileSize = (uint32_t)[data length];
         [fh writeData:data];
         uint32_t blockCount = fileSize / blockSize;
@@ -364,8 +370,14 @@
         chainHash->locale = b.locale;
         chainHash->platform = b.platform;
         
+        // resolve path
+        NSString* path = b.realPath;
+        if(![path isAbsolutePath]) {
+            path = [[[self.projectPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:path] stringByStandardizingPath];
+        }
+        
         // write block
-        NSData* data = [NSData dataWithContentsOfFile:b.realPath];
+        NSData* data = [NSData dataWithContentsOfFile:path];
         uint32_t fileSize = (uint32_t)[data length];
         [fh writeData:data];
         uint32_t blockCount = fileSize / blockSize;
@@ -439,8 +451,14 @@
             chainHash->locale = b.locale;
             chainHash->platform = b.platform;
             
+            // resolve path
+            NSString* path = b.realPath;
+            if(![path isAbsolutePath]) {
+                path = [[[self.projectPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:path] stringByStandardizingPath];
+            }
+            
             // write block
-            NSData* data = [NSData dataWithContentsOfFile:b.realPath];
+            NSData* data = [NSData dataWithContentsOfFile:path];
             uint32_t fileSize = (uint32_t)[data length];
             [fh writeData:data];
             uint32_t blockCount = fileSize / blockSize;
