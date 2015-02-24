@@ -36,6 +36,20 @@ extern "C" {
 #define LPK_FLAG_COMPRESSED		0x00000002	/* file is compressed. */
 #define LPK_FLAG_CRC			0x40000000	/* compressed block offset table has CRC checksum. */
     
+// error code
+#define LPK_SUCCESS 0
+#define LPK_ERROR_OPEN			-1		/* open error on file. */
+#define LPK_ERROR_CLOSE			-2		/* close error on file. */
+#define LPK_ERROR_SEEK			-3		/* lseek error on file. */
+#define LPK_ERROR_READ			-4		/* read error on file. */
+#define LPK_ERROR_WRITE			-5		/* write error on file. */
+#define LPK_ERROR_MALLOC		-6		/* memory allocation error. */
+#define LPK_ERROR_FORMAT		-7		/* format errror. */
+#define LPK_ERROR_SIZE			-9		/* buffer size is to small. */
+#define LPK_ERROR_EXIST			-10		/* file or block does not exist in archive. */
+#define LPK_ERROR_DECRYPT		-11		/* we don't know the decryption seed. */
+#define LPK_ERROR_UNPACK		-12		/* error on unpacking file. */
+    
 typedef enum {
     LPKC_NONE
 } LPKCompressAlgorithm;
@@ -98,11 +112,15 @@ typedef struct {
 } lpk_block;
     
 typedef struct {
+    FILE* fp;
     lpk_header h; // header
     lpk_hash* het; // hash entry table
     lpk_block* bet; // block entry table
     uint32_t files; // file count
 } lpk_file;
+    
+extern int lpk_open_file(const char* filepath, lpk_file* lpk);
+extern int lpk_close_file(lpk_file* lpk);
 
 #ifdef __cplusplus
 }

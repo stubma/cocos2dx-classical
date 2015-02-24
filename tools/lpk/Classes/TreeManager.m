@@ -532,6 +532,10 @@
     [fh synchronizeFile];
     [fh closeFile];
     
+    // release memory
+    free(lpk.het);
+    free(lpk.bet);
+    
     // close progress
     [pvc.view.window.sheetParent endSheet:pvc.view.window returnCode:NSModalResponseOK];
 }
