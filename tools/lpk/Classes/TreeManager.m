@@ -32,6 +32,7 @@
         self.projectPath = [@"~/Documents/Untitled.lpkproj" stringByExpandingTildeInPath];
         self.defaultCompressAlgorithm = LPKC_ZLIB;
         self.defaultEncryptAlgorithm = LPKE_NONE;
+        self.autoSkipCompression = YES;
         return self;
     }
     return nil;
@@ -210,6 +211,7 @@
         self.root = [LpkEntry decodeWithDictionary:dict];
         self.defaultCompressAlgorithm = (LPKCompressAlgorithm)[[dict objectForKey:@"d_cmp_alg"] intValue];
         self.defaultEncryptAlgorithm = (LPKEncryptAlgorithm)[[dict objectForKey:@"d_enc_alg"] intValue];
+        self.autoSkipCompression = [[dict objectForKey:@"auto_skip_cmp"] boolValue];
         
         // flag
         self.dirty = NO;
@@ -224,6 +226,7 @@
     [self.root encodeWithDictionary:root relativeTo:[self.projectPath stringByDeletingLastPathComponent]];
     [root setObject:[NSNumber numberWithInt:self.defaultCompressAlgorithm] forKey:@"d_cmp_alg"];
     [root setObject:[NSNumber numberWithInt:self.defaultEncryptAlgorithm] forKey:@"d_enc_alg"];
+    [root setObject:[NSNumber numberWithBool:self.autoSkipCompression] forKey:@"auto_skip_cmp"];
     if(![NSPropertyListSerialization writePropertyList:root
                                               toStream:os
                                                 format:NSPropertyListXMLFormat_v1_0
@@ -265,7 +268,7 @@
     LPKCompressAlgorithm cmpAlg = b.compressAlgorithm == LPKC_DEFAULT ? self.defaultCompressAlgorithm : b.compressAlgorithm;
     LPKEncryptAlgorithm encAlg = b.encryptAlgorithm == LPKE_DEFAULT ? self.defaultEncryptAlgorithm : b.encryptAlgorithm;
     
-    // write block
+    // get file data and compress it as needed
     uint32_t blockSize = 512 << lpk->h.block_size;
     NSData* data = [NSData dataWithContentsOfFile:path];
     NSData* cmpData = data;
@@ -276,9 +279,20 @@
         default:
             break;
     }
-    [fh writeData:cmpData];
     uint32_t fileSize = (uint32_t)[data length];
     uint32_t compressSize = (uint32_t)[cmpData length];
+    
+    // if auto skip compression is set, cancel compression if compressed size is even larger than original size
+    if(self.autoSkipCompression) {
+        if(compressSize >= fileSize) {
+            cmpData = data;
+            compressSize = fileSize;
+            cmpAlg = LPKC_NONE;
+        }
+    }
+    
+    // write file and get block count
+    [fh writeData:cmpData];
     uint32_t blockCount = (compressSize + blockSize - 1) / blockSize;
     
     // fill junk to make it align with block size

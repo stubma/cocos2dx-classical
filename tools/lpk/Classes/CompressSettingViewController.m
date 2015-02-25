@@ -12,6 +12,9 @@
 @interface CompressSettingViewController () <NSTableViewDataSource, NSTableViewDelegate>
 
 @property (weak) IBOutlet NSTableView *tableView;
+@property (weak) IBOutlet NSButton *autoSkipCheckbox;
+
+- (IBAction)onAutoSkipChanged:(id)sender;
 
 @end
 
@@ -19,6 +22,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+}
+
+- (void)viewDidAppear {
+    [super viewDidAppear];
+    
+    // init checkbox
+    SettingsWindowController* w = (SettingsWindowController*)self.view.window.windowController;
+    TreeManager* tree = w.tree;
+    [self.autoSkipCheckbox setState:tree.autoSkipCompression ? NSOnState : NSOffState];
 }
 
 #pragma mark -
@@ -52,6 +64,14 @@
             [tableView reloadData];
         }
     }
+}
+
+- (IBAction)onAutoSkipChanged:(id)sender {
+    SettingsWindowController* w = (SettingsWindowController*)self.view.window.windowController;
+    TreeManager* tree = w.tree;
+    NSButton* btn = (NSButton*)sender;
+    tree.autoSkipCompression = btn.state == NSOnState;
+    tree.dirty = YES;
 }
 
 @end

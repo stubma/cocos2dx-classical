@@ -368,11 +368,11 @@ DQ
             <objects>
                 <viewController title="Compress" id="EYJ-3L-xnO" customClass="CompressSettingViewController" sceneMemberID="viewController">
                     <view key="view" id="Fca-84-9gU">
-                        <rect key="frame" x="0.0" y="0.0" width="435" height="242"/>
+                        <rect key="frame" x="0.0" y="0.0" width="479" height="242"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView ambiguous="YES" misplaced="YES" borderType="line" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bHV-3Q-9NV">
-                                <rect key="frame" x="20" y="20" width="395" height="177"/>
+                                <rect key="frame" x="20" y="46" width="439" height="151"/>
                                 <clipView key="contentView" ambiguous="YES" misplaced="YES" id="l48-AK-HLl">
                                     <rect key="frame" x="1" y="0.0" width="238" height="134"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -430,56 +430,80 @@ DQ
                                 </tableHeaderView>
                             </scrollView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JfK-FY-Lbz">
-                                <rect key="frame" x="18" y="205" width="219" height="17"/>
+                                <rect key="frame" x="18" y="205" width="263" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Select default compress algorithm:" id="1bY-2S-Pcu">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="HBk-V1-hVs">
+                                <rect key="frame" x="18" y="18" width="443" height="18"/>
+                                <buttonCell key="cell" type="check" title="Auto skip compression if compressed size is larger than original size" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="tai-7P-dg8">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onAutoSkipChanged:" target="EYJ-3L-xnO" id="T7M-ln-Rw8"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="HBk-V1-hVs" firstAttribute="leading" secondItem="Fca-84-9gU" secondAttribute="leading" constant="20" id="9iW-B7-ZW4"/>
                             <constraint firstItem="bHV-3Q-9NV" firstAttribute="top" secondItem="JfK-FY-Lbz" secondAttribute="bottom" constant="8" id="P3a-72-S3p"/>
                             <constraint firstAttribute="trailing" secondItem="JfK-FY-Lbz" secondAttribute="trailing" constant="200" id="QP7-W2-ygx"/>
                             <constraint firstItem="JfK-FY-Lbz" firstAttribute="leading" secondItem="Fca-84-9gU" secondAttribute="leading" constant="20" id="jlG-SB-2yl"/>
                             <constraint firstItem="JfK-FY-Lbz" firstAttribute="top" secondItem="Fca-84-9gU" secondAttribute="top" constant="20" id="nLw-7h-JpP"/>
+                            <constraint firstAttribute="bottom" secondItem="HBk-V1-hVs" secondAttribute="bottom" constant="20" id="pQN-yf-x50"/>
+                            <constraint firstAttribute="trailing" secondItem="HBk-V1-hVs" secondAttribute="trailing" constant="20" id="u2f-0W-z7H"/>
                             <constraint firstItem="bHV-3Q-9NV" firstAttribute="leading" secondItem="Fca-84-9gU" secondAttribute="leading" constant="20" id="uef-Zj-suX"/>
                             <constraint firstAttribute="trailing" secondItem="bHV-3Q-9NV" secondAttribute="trailing" constant="20" id="zS8-L9-L2Z"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="autoSkipCheckbox" destination="HBk-V1-hVs" id="xzS-QJ-2P0"/>
                         <outlet property="tableView" destination="DTj-NM-Cg3" id="072-9y-AmL"/>
                     </connections>
                 </viewController>
                 <customObject id="Sht-D3-yHP" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1645.5" y="667"/>
+            <point key="canvasLocation" x="1667.5" y="667"/>
         </scene>
         <!--General-->
         <scene sceneID="wk7-kB-yk3">
             <objects>
                 <viewController id="9WP-Eg-MJT" userLabel="General" sceneMemberID="viewController">
                     <view key="view" id="uip-WW-ohJ">
-                        <rect key="frame" x="0.0" y="0.0" width="435" height="242"/>
+                        <rect key="frame" x="0.0" y="0.0" width="479" height="242"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IW4-g1-adN">
+                                <rect key="frame" x="18" y="205" width="73" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Block Size:" id="A4b-bP-jma">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
                     </view>
                 </viewController>
                 <customObject id="0dn-R3-vfd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1189.5" y="667"/>
+            <point key="canvasLocation" x="1163.5" y="667"/>
         </scene>
         <!--Encryption-->
         <scene sceneID="d66-hw-OT6">
             <objects>
                 <viewController title="Encryption" id="b3Y-WH-te2" sceneMemberID="viewController">
                     <view key="view" id="65Y-nN-FJR">
-                        <rect key="frame" x="0.0" y="0.0" width="435" height="242"/>
+                        <rect key="frame" x="0.0" y="0.0" width="479" height="242"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </view>
                 </viewController>
                 <customObject id="b4A-YQ-ZPH" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2101.5" y="667"/>
+            <point key="canvasLocation" x="2171.5" y="667"/>
         </scene>
         <!--Application-->
         <scene sceneID="JPo-4y-FX3">

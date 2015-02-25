@@ -18,6 +18,7 @@
 @property (nonatomic, assign) BOOL dirty;
 @property (nonatomic, assign) LPKCompressAlgorithm defaultCompressAlgorithm;
 @property (nonatomic, assign) LPKEncryptAlgorithm defaultEncryptAlgorithm;
+@property (nonatomic, assign) BOOL autoSkipCompression;
 
 - (NSArray*)stripContainedKeys:(NSArray*)keys;
 - (NSArray*)stripContainedEntries:(NSArray*)entries;
