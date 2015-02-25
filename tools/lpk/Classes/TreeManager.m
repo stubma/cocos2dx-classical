@@ -16,6 +16,8 @@
 
 - (uint32_t)nextPOT:(uint32_t)x;
 - (uint32_t)nextFreeHashIndex:(lpk_file*)f from:(uint32_t)from;
+- (void)endProgressSheet:(ProgressViewController*)pvc;
+- (void)outputExportedFileInfo;
 
 @end
 
@@ -229,6 +231,7 @@
 }
 
 - (void)exportLPK:(ProgressViewController*)pvc {
+    // ensure dest file is here
     NSFileManager* fm = [NSFileManager defaultManager];
     if(![fm fileExistsAtPath:self.exportPath]) {
         [fm createFileAtPath:self.exportPath contents:[NSData data] attributes:nil];
@@ -239,7 +242,12 @@
     NSFileHandle* fh = [NSFileHandle fileHandleForWritingAtPath:self.exportPath];
     NSMutableData* buf = [NSMutableData data];
     
+    // get a list of all entries
+    NSMutableArray* allFileEntries = [NSMutableArray array];
+    [self.root collectFiles:allFileEntries];
+    
     // progress hint
+    pvc.progressIndicator.maxValue = [allFileEntries count] * 2 + 100;
     pvc.hintLabel.stringValue = @"Prepare for exporting...";
     
     // init part of file struct
@@ -259,6 +267,7 @@
     }
     
     // progress hint
+    [pvc.progressIndicator incrementBy:50];
     pvc.hintLabel.stringValue = @"Writting header...";
     
     // write header
@@ -274,14 +283,10 @@
     [fh writeData:buf];
     [buf setLength:0];
     
-    // get a list of all entries
-    NSMutableArray* allFileEntries = [NSMutableArray array];
-    [self.root collectFiles:allFileEntries];
-    
     // start to write every file, but not include branch at first
     uint32_t totalSize = 0;
     uint32_t blockIndex = 0;
-    uint32_t blockSize = (uint32_t)(512 * pow(2, lpk.h.block_size));
+    uint32_t blockSize = 512 << lpk.h.block_size;
     NSMutableArray* postponeFileEntries = [NSMutableArray array];
     for(LpkEntry* e in allFileEntries) {
         // get hash table index for this entry
@@ -298,6 +303,7 @@
         }
         
         // progress hint
+        [pvc.progressIndicator incrementBy:1];
         pvc.hintLabel.stringValue = [NSString stringWithFormat:@"Writting %@...", e.name];
         
         // fill hash
@@ -317,10 +323,10 @@
         NSData* data = [NSData dataWithContentsOfFile:path];
         uint32_t fileSize = (uint32_t)[data length];
         [fh writeData:data];
-        uint32_t blockCount = fileSize / blockSize;
+        uint32_t blockCount = (fileSize + blockSize - 1) / blockSize;
         
         // fill junk to make it align with block size
-        uint32_t junk = blockSize - (fileSize % blockSize);
+        uint32_t junk = (blockSize - (fileSize % blockSize)) % blockSize;
         if(junk > 0) {
             [fh writeData:[NSData dataWithByte:0 repeated:junk]];
         }
@@ -346,6 +352,7 @@
     uint32_t freeHashIndex = 0;
     for(LpkEntry* e in postponeFileEntries) {
         // progress hint
+        [pvc.progressIndicator incrementBy:1];
         pvc.hintLabel.stringValue = [NSString stringWithFormat:@"Writting %@...", e.name];
         
         // get hash table index for this entry
@@ -354,6 +361,9 @@
         size_t len = [eKey lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
         uint32_t hashIndex = hashlittle(key, len, LPK_HASH_TAG_TABLE_INDEX) & (lpk.h.hash_table_count - 1);
         lpk_hash* hash = lpk.het + hashIndex;
+        while(hash->next_hash != LPK_HASH_FREE) {
+            hash = lpk.het + hash->next_hash;
+        }
         
         // find a free hash slot
         freeHashIndex = [self nextFreeHashIndex:&lpk from:freeHashIndex];
@@ -380,10 +390,10 @@
         NSData* data = [NSData dataWithContentsOfFile:path];
         uint32_t fileSize = (uint32_t)[data length];
         [fh writeData:data];
-        uint32_t blockCount = fileSize / blockSize;
+        uint32_t blockCount = (fileSize + blockSize - 1) / blockSize;
         
         // fill junk to make it align with block size
-        uint32_t junk = blockSize - (fileSize % blockSize);
+        uint32_t junk = (blockSize - (fileSize % blockSize)) % blockSize;
         if(junk > 0) {
             [fh writeData:[NSData dataWithByte:0 repeated:junk]];
         }
@@ -403,7 +413,7 @@
         chainHash->prev_hash = hashIndex;
         
         // add total size
-        totalSize += blockCount * fileSize;
+        totalSize += blockCount * blockSize;
         
         // move to next block
         blockIndex++;
@@ -415,6 +425,7 @@
     // process branch
     for(LpkEntry* e in allFileEntries) {
         // if only one branch, already processed, just skip
+        [pvc.progressIndicator incrementBy:1];
         int bc = (int)[e.branches count];
         if(bc == 1) {
             continue;
@@ -461,10 +472,10 @@
             NSData* data = [NSData dataWithContentsOfFile:path];
             uint32_t fileSize = (uint32_t)[data length];
             [fh writeData:data];
-            uint32_t blockCount = fileSize / blockSize;
+            uint32_t blockCount = (fileSize + blockSize - 1) / blockSize;
             
             // fill junk to make it align with block size
-            uint32_t junk = blockSize - (fileSize % blockSize);
+            uint32_t junk = (blockSize - (fileSize % blockSize)) % blockSize;
             if(junk > 0) {
                 [fh writeData:[NSData dataWithByte:0 repeated:junk]];
             }
@@ -484,7 +495,7 @@
             chainHash->prev_hash = hashIndex;
             
             // add total size
-            totalSize += blockCount * fileSize;
+            totalSize += blockCount * blockSize;
             
             // move to next block
             blockIndex++;
@@ -512,7 +523,7 @@
     [buf setLength:0];
     
     // write block table offset
-    lpk.h.block_table_offset = lpk.h.hash_table_offset + sizeof(lpk_block) * lpk.h.block_table_count;
+    lpk.h.block_table_offset = lpk.h.hash_table_offset + sizeof(lpk_hash) * lpk.h.hash_table_count;
     [buf writeUInt32:lpk.h.block_table_offset];
     [fh writeData:buf];
     [buf setLength:0];
@@ -536,7 +547,17 @@
     free(lpk.het);
     free(lpk.bet);
     
+    // progress
+    [pvc.progressIndicator incrementBy:50];
+    
+    // debug output
+    [self outputExportedFileInfo];
+    
     // close progress
+    [self performSelectorOnMainThread:@selector(endProgressSheet:) withObject:pvc waitUntilDone:NO];
+}
+
+- (void)endProgressSheet:(ProgressViewController*)pvc {
     [pvc.view.window.sheetParent endSheet:pvc.view.window returnCode:NSModalResponseOK];
 }
 
@@ -561,6 +582,66 @@
 
 - (void)rebuildFilterChildren:(NSString*)keyword {
     [self.root rebuildFilterChildren:keyword];
+}
+
+- (void)outputExportedFileInfo {
+    // open file
+    lpk_file lpk;
+    int result = lpk_open_file(&lpk, [self.exportPath cStringUsingEncoding:NSUTF8StringEncoding]);
+    if(result != 0) {
+        NSLog(@"lpk_open_file, error: %d", result);
+        return;
+    }
+    
+    // output header
+    NSLog(@"\nlpk file header:\n\tarchive size: %u\n\tblock size: %u\n\thash count: %u\n\tblock count: %u\n\thash offset: %u\n\tblock offset: %u",
+          lpk.h.archive_size,
+          512 << lpk.h.block_size,
+          lpk.h.hash_table_count,
+          lpk.h.block_table_count,
+          lpk.h.hash_table_offset,
+          lpk.h.block_table_offset);
+    
+    // output every file info
+    NSMutableArray* allFileEntries = [NSMutableArray array];
+    [self.root collectFiles:allFileEntries];
+    for(LpkEntry* e in allFileEntries) {
+        // get file path as the key
+        const char* filepath = [e.key cStringUsingEncoding:NSUTF8StringEncoding];
+        
+        // get hash table index
+        uint32_t hashIndex = lpk_get_file_hash_table_index(&lpk, filepath);
+        
+        // if invalid, print error
+        if(hashIndex == LPK_HASH_FREE) {
+            NSLog(@"\n%s\n\tERROR: can't find this file!!", filepath);
+            continue;
+        }
+        
+        // get block
+        lpk_hash* hash = lpk.het + hashIndex;
+        lpk_block* block = lpk.bet + hash->block_table_index;
+        
+        // print file info
+        NSString* locale = LOCALE_IDS[0];
+        if(hash->locale > 0) {
+            locale = [NSLocale localeIdentifierFromWindowsLocaleCode:hash->locale];
+        }
+        NSLog(@"\n%s\n\tfile size: %u\n\tpacked size: %u\n\toffset: %u\n\tlocale: %@\n\tplatform: %@\n\t",
+              filepath,
+              block->file_size,
+              block->packed_size,
+              block->offset,
+              locale,
+              PLATFORM_NAMES[hash->platform]);
+    }
+    
+    // close file
+    result = lpk_close_file(&lpk);
+    if(result != 0) {
+        NSLog(@"lpk_close_file, error: %d", result);
+        return;
+    }
 }
 
 @end

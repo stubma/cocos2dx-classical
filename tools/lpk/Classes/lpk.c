@@ -8,12 +8,14 @@
 
 #include "lpk.h"
 #include <stdlib.h>
+#include "hash_bob_jenkins_v2.h"
+#include <string.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
     
-int lpk_open_file(const char* filepath, lpk_file* lpk) {
+int lpk_open_file(lpk_file* lpk, const char* filepath) {
     // result code
     int result = 0;
     
@@ -26,7 +28,7 @@ int lpk_open_file(const char* filepath, lpk_file* lpk) {
         }
         
         // read header from file
-        if(fread(&lpk->h, 1, sizeof(lpk_header), lpk->fp) != sizeof(lpk_header)) {
+        if(fread(&lpk->h, sizeof(lpk_header), 1, lpk->fp) != 1) {
             result = LPK_ERROR_FORMAT;
             break;
         }
@@ -51,7 +53,7 @@ int lpk_open_file(const char* filepath, lpk_file* lpk) {
         }
         
         // read the hash table into the buffer
-        if(fread(lpk->het, 1, lpk->h.hash_table_count * sizeof(lpk_hash), lpk->fp) != lpk->h.hash_table_count * sizeof(lpk_hash)) {
+        if(fread(lpk->het, sizeof(lpk_hash), lpk->h.hash_table_count, lpk->fp) != lpk->h.hash_table_count) {
             result = LPK_ERROR_READ;
             break;
         }
@@ -63,7 +65,7 @@ int lpk_open_file(const char* filepath, lpk_file* lpk) {
         }
         
         // read block table into buffer
-        if(fread(lpk->bet, 1, lpk->h.block_table_count * sizeof(lpk_block), lpk->fp) != lpk->h.block_table_count * sizeof(lpk_block)) {
+        if(fread(lpk->bet, sizeof(lpk_block), lpk->h.block_table_count, lpk->fp) != lpk->h.block_table_count) {
             result = LPK_ERROR_READ;
             break;
         }
@@ -87,6 +89,28 @@ int lpk_close_file(lpk_file* lpk) {
     
     /* if no error was found, return zero. */
     return LPK_SUCCESS;
+}
+    
+uint32_t lpk_get_file_hash_table_index(lpk_file* lpk, const char* filepath) {
+    // get hash
+    size_t pathLen = strlen(filepath);
+    uint32_t hashI = hashlittle(filepath, pathLen, LPK_HASH_TAG_TABLE_INDEX) & (lpk->h.hash_table_count - 1);
+    uint32_t hashA = hashlittle(filepath, pathLen, LPK_HASH_TAG_NAME_A);
+    uint32_t hashB = hashlittle(filepath, pathLen, LPK_HASH_TAG_NAME_B);
+    
+    // find start entry
+    lpk_hash* hash = lpk->het + hashI;
+    while((hash->hash_a != hashA || hash->hash_b != hashB) && hash->next_hash != LPK_HASH_FREE) {
+        hashI = hash->next_hash;
+        hash = lpk->het + hashI;
+    }
+    
+    // return
+    if(hash->hash_a != hashA || hash->hash_b != hashB) {
+        return LPK_HASH_FREE;
+    } else {
+        return hashI;
+    }
 }
     
 #ifdef __cplusplus

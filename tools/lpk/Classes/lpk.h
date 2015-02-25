@@ -119,8 +119,9 @@ typedef struct {
     uint32_t files; // file count
 } lpk_file;
     
-extern int lpk_open_file(const char* filepath, lpk_file* lpk);
+extern int lpk_open_file(lpk_file* lpk, const char* filepath);
 extern int lpk_close_file(lpk_file* lpk);
+extern uint32_t lpk_get_file_hash_table_index(lpk_file* lpk, const char* filepath);
 
 #ifdef __cplusplus
 }

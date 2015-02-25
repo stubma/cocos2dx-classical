@@ -152,7 +152,7 @@
     [self.window beginSheet:vc.view.window completionHandler:nil];
     
     // start export
-    [self.tree exportLPK:vc];
+    [self.tree performSelectorInBackground:@selector(exportLPK:) withObject:vc];
 }
 
 - (IBAction)onToolbarNewFolder:(id)sender {
