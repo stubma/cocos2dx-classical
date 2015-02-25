@@ -360,17 +360,17 @@ DQ
             <objects>
                 <viewController title="Compress" id="EYJ-3L-xnO" customClass="CompressSettingViewController" sceneMemberID="viewController">
                     <view key="view" id="Fca-84-9gU">
-                        <rect key="frame" x="0.0" y="0.0" width="435" height="264"/>
+                        <rect key="frame" x="0.0" y="0.0" width="435" height="242"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView ambiguous="YES" misplaced="YES" borderType="line" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bHV-3Q-9NV">
-                                <rect key="frame" x="20" y="42" width="395" height="177"/>
+                                <rect key="frame" x="20" y="20" width="395" height="177"/>
                                 <clipView key="contentView" ambiguous="YES" misplaced="YES" id="l48-AK-HLl">
                                     <rect key="frame" x="1" y="0.0" width="238" height="134"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" headerView="1TB-Tf-Otb" id="DTj-NM-Cg3">
-                                            <rect key="frame" x="0.0" y="0.0" width="238" height="134"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="437" height="19"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -422,27 +422,17 @@ DQ
                                 </tableHeaderView>
                             </scrollView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JfK-FY-Lbz">
-                                <rect key="frame" x="18" y="227" width="219" height="17"/>
+                                <rect key="frame" x="18" y="205" width="219" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Select default compress algorithm:" id="1bY-2S-Pcu">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button translatesAutoresizingMaskIntoConstraints="NO" id="eR6-8O-gkn">
-                                <rect key="frame" x="18" y="18" width="198" height="18"/>
-                                <buttonCell key="cell" type="check" title="Apply to all files immediately" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="FV8-UN-Nfv">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                            </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="eR6-8O-gkn" firstAttribute="leading" secondItem="Fca-84-9gU" secondAttribute="leading" constant="20" id="5SQ-Gr-ZKI"/>
                             <constraint firstItem="bHV-3Q-9NV" firstAttribute="top" secondItem="JfK-FY-Lbz" secondAttribute="bottom" constant="8" id="P3a-72-S3p"/>
                             <constraint firstAttribute="trailing" secondItem="JfK-FY-Lbz" secondAttribute="trailing" constant="200" id="QP7-W2-ygx"/>
-                            <constraint firstAttribute="trailing" secondItem="eR6-8O-gkn" secondAttribute="trailing" constant="221" id="VTW-OR-gAu"/>
-                            <constraint firstAttribute="bottom" secondItem="eR6-8O-gkn" secondAttribute="bottom" constant="20" id="hES-OL-egO"/>
                             <constraint firstItem="JfK-FY-Lbz" firstAttribute="leading" secondItem="Fca-84-9gU" secondAttribute="leading" constant="20" id="jlG-SB-2yl"/>
                             <constraint firstItem="JfK-FY-Lbz" firstAttribute="top" secondItem="Fca-84-9gU" secondAttribute="top" constant="20" id="nLw-7h-JpP"/>
                             <constraint firstItem="bHV-3Q-9NV" firstAttribute="leading" secondItem="Fca-84-9gU" secondAttribute="leading" constant="20" id="uef-Zj-suX"/>
@@ -450,13 +440,12 @@ DQ
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="applyCheckbox" destination="eR6-8O-gkn" id="GlQ-Mn-r7f"/>
                         <outlet property="tableView" destination="DTj-NM-Cg3" id="072-9y-AmL"/>
                     </connections>
                 </viewController>
                 <customObject id="Sht-D3-yHP" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1582.5" y="661"/>
+            <point key="canvasLocation" x="1582.5" y="650"/>
         </scene>
         <!--Encryption-->
         <scene sceneID="d66-hw-OT6">

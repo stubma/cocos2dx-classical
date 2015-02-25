@@ -27,11 +27,13 @@ NSString* PLATFORM_NAMES[] = {
 };
 
 NSString* COMPRESS_ALGORITHM_NAMES[] = {
+    @"Default",
     @"Not Compressed",
     @"Zlib"
 };
 
 NSString* ENCRYPT_ALGORITHM_NAMES[] = {
+    @"Default",
     @"Not Encrypted",
     @"XOR",
     @"TEA",

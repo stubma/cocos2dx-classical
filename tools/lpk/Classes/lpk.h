@@ -35,9 +35,17 @@ extern "C" {
     
 /* define values used by flags. */
 #define LPK_FLAG_EXISTS			0x80000000	/* set if file exists, reset when the file was deleted. */
-#define LPK_FLAG_ENCRYPTED		0x00000001	/* indicates whether file is encrypted. */
-#define LPK_FLAG_COMPRESSED		0x00000002	/* file is compressed. */
+#define LPK_FLAG_COMPRESSED		0x00000080  /* file is compressed. */
+#define LPK_FLAG_ENCRYPTED		0x00008000	/* indicates whether file is encrypted. */
 #define LPK_FLAG_CRC			0x40000000	/* compressed block offset table has CRC checksum. */
+
+// to get compress algorithm
+#define LPK_MASK_COMPRESSED 0x0000007f
+#define LPK_SHIFT_COMPRESSED 0
+
+// to get encrypt algorithm
+#define LPK_MASK_ENCRYPTED 0x00007f00
+#define LPK_SHIFT_ENCRYPTED 8
     
 // error code
 #define LPK_SUCCESS 0
@@ -54,11 +62,13 @@ extern "C" {
 #define LPK_ERROR_UNPACK		-12		/* error on unpacking file. */
     
 typedef enum {
+    LPKC_DEFAULT,
     LPKC_NONE,
     LPKC_ZLIB
 } LPKCompressAlgorithm;
     
 typedef enum {
+    LPKE_DEFAULT,
     LPKE_NONE,
     LPKE_XOR,
     LPKE_TEA,

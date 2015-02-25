@@ -12,7 +12,6 @@
 @interface CompressSettingViewController () <NSTableViewDataSource, NSTableViewDelegate>
 
 @property (weak) IBOutlet NSTableView *tableView;
-@property (weak) IBOutlet NSButton *applyCheckbox;
 
 @end
 
@@ -26,16 +25,17 @@
 #pragma mark tableview data source
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return sizeof(COMPRESS_ALGORITHM_NAMES) / sizeof(NSString*);
+    // minus 1 to remove default
+    return sizeof(COMPRESS_ALGORITHM_NAMES) / sizeof(NSString*) - 1;
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     SettingsWindowController* w = (SettingsWindowController*)self.view.window.windowController;
     TreeManager* tree = w.tree;
     if([@"default_column" isEqualToString:tableColumn.identifier]) {
-        return [NSNumber numberWithBool:tree.defaultCompressAlgorithm == row];
+        return [NSNumber numberWithBool:tree.defaultCompressAlgorithm == row + 1];
     } else if([@"compress_algorithm_column" isEqualToString:tableColumn.identifier]) {
-        return COMPRESS_ALGORITHM_NAMES[row];
+        return COMPRESS_ALGORITHM_NAMES[row + 1];
     } else {
         return nil;
     }
@@ -47,7 +47,8 @@
         if(checked) {
             SettingsWindowController* w = (SettingsWindowController*)self.view.window.windowController;
             TreeManager* tree = w.tree;
-            tree.defaultCompressAlgorithm = (LPKCompressAlgorithm)row;
+            tree.defaultCompressAlgorithm = (LPKCompressAlgorithm)(row + 1);
+            tree.dirty = YES;
             [tableView reloadData];
         }
     }

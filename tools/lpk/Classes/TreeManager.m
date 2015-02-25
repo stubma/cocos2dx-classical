@@ -208,6 +208,8 @@
     NSDictionary* dict = [NSDictionary dictionaryWithContentsOfFile:self.projectPath];
     if(dict) {
         self.root = [LpkEntry decodeWithDictionary:dict];
+        self.defaultCompressAlgorithm = (LPKCompressAlgorithm)[[dict objectForKey:@"d_cmp_alg"] intValue];
+        self.defaultEncryptAlgorithm = (LPKEncryptAlgorithm)[[dict objectForKey:@"d_enc_alg"] intValue];
         
         // flag
         self.dirty = NO;
@@ -220,6 +222,8 @@
     [os open];
     NSMutableDictionary* root = [NSMutableDictionary dictionary];
     [self.root encodeWithDictionary:root relativeTo:[self.projectPath stringByDeletingLastPathComponent]];
+    [root setObject:[NSNumber numberWithInt:self.defaultCompressAlgorithm] forKey:@"d_cmp_alg"];
+    [root setObject:[NSNumber numberWithInt:self.defaultEncryptAlgorithm] forKey:@"d_enc_alg"];
     if(![NSPropertyListSerialization writePropertyList:root
                                               toStream:os
                                                 format:NSPropertyListXMLFormat_v1_0
@@ -255,11 +259,15 @@
         path = [[[self.projectPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:path] stringByStandardizingPath];
     }
     
+    // resolve compress and encrypt
+    LPKCompressAlgorithm cmpAlg = b.compressAlgorithm == LPKC_DEFAULT ? self.defaultCompressAlgorithm : b.compressAlgorithm;
+    LPKEncryptAlgorithm encAlg = b.encryptAlgorithm == LPKE_DEFAULT ? self.defaultEncryptAlgorithm : b.encryptAlgorithm;
+    
     // write block
     uint32_t blockSize = 512 << lpk->h.block_size;
     NSData* data = [NSData dataWithContentsOfFile:path];
     NSData* cmpData = data;
-    switch (b.compressAlgorithm) {
+    switch (cmpAlg) {
         case LPKC_ZLIB:
             cmpData = [data zlibDeflate];
             break;
@@ -281,8 +289,16 @@
     lpk_block* block = lpk->bet + blockIndex;
     block->file_size = fileSize;
     block->packed_size = compressSize;
-    block->flags = LPK_FLAG_EXISTS;
     block->offset = offset;
+    block->flags = LPK_FLAG_EXISTS;
+    if(cmpAlg > LPKC_NONE) {
+        block->flags |= LPK_FLAG_COMPRESSED;
+        block->flags |= (cmpAlg << LPK_SHIFT_COMPRESSED);
+    }
+    if(encAlg > LPKE_NONE) {
+        block->flags |= LPK_FLAG_ENCRYPTED;
+        block->flags |= (encAlg << LPK_SHIFT_ENCRYPTED);
+    }
     
     // save block index
     hash->block_table_index = blockIndex;
@@ -585,47 +601,47 @@
           lpk.h.block_table_offset);
     
     // extract a file
-//    uint32_t size;
-//    uint8_t* buf = lpk_extract_file(&lpk, "/Resources/res-iphone/manual/战场攻略_封印.jpg", &size);
-//    if(buf) {
-//        NSData* data = [NSData dataWithBytes:buf length:size];
-//        [data writeToFile:@"/Users/maruojie/Desktop/a.jpg" atomically:YES];
-//        free(buf);
-//    }
+    uint32_t size;
+    uint8_t* buf = lpk_extract_file(&lpk, "/Resources/res-iphone/manual/战场攻略_封印.jpg", &size);
+    if(buf) {
+        NSData* data = [NSData dataWithBytes:buf length:size];
+        [data writeToFile:@"/Users/maruojie/Desktop/a.jpg" atomically:YES];
+        free(buf);
+    }
     
     // output every file info
-    NSMutableArray* allFileEntries = [NSMutableArray array];
-    [self.root collectFiles:allFileEntries];
-    for(LpkEntry* e in allFileEntries) {
-        // get file path as the key
-        const char* filepath = [e.key cStringUsingEncoding:NSUTF8StringEncoding];
-        
-        // get hash table index
-        uint32_t hashIndex = lpk_get_file_hash_table_index(&lpk, filepath);
-        
-        // if invalid, print error
-        if(hashIndex == LPK_HASH_FREE) {
-            NSLog(@"\n%s\n\tERROR: can't find this file!!", filepath);
-            continue;
-        }
-        
-        // get block
-        lpk_hash* hash = lpk.het + hashIndex;
-        lpk_block* block = lpk.bet + hash->block_table_index;
-        
-        // print file info
-        NSString* locale = LOCALE_IDS[0];
-        if(hash->locale > 0) {
-            locale = [NSLocale localeIdentifierFromWindowsLocaleCode:hash->locale];
-        }
-        NSLog(@"\n%s\n\tfile size: %u\n\tpacked size: %u\n\toffset: %u\n\tlocale: %@\n\tplatform: %@\n\t",
-              filepath,
-              block->file_size,
-              block->packed_size,
-              block->offset,
-              locale,
-              PLATFORM_NAMES[hash->platform]);
-    }
+//    NSMutableArray* allFileEntries = [NSMutableArray array];
+//    [self.root collectFiles:allFileEntries];
+//    for(LpkEntry* e in allFileEntries) {
+//        // get file path as the key
+//        const char* filepath = [e.key cStringUsingEncoding:NSUTF8StringEncoding];
+//        
+//        // get hash table index
+//        uint32_t hashIndex = lpk_get_file_hash_table_index(&lpk, filepath);
+//        
+//        // if invalid, print error
+//        if(hashIndex == LPK_HASH_FREE) {
+//            NSLog(@"\n%s\n\tERROR: can't find this file!!", filepath);
+//            continue;
+//        }
+//        
+//        // get block
+//        lpk_hash* hash = lpk.het + hashIndex;
+//        lpk_block* block = lpk.bet + hash->block_table_index;
+//        
+//        // print file info
+//        NSString* locale = LOCALE_IDS[0];
+//        if(hash->locale > 0) {
+//            locale = [NSLocale localeIdentifierFromWindowsLocaleCode:hash->locale];
+//        }
+//        NSLog(@"\n%s\n\tfile size: %u\n\tpacked size: %u\n\toffset: %u\n\tlocale: %@\n\tplatform: %@\n\t",
+//              filepath,
+//              block->file_size,
+//              block->packed_size,
+//              block->offset,
+//              locale,
+//              PLATFORM_NAMES[hash->platform]);
+//    }
     
     // close file
     result = lpk_close_file(&lpk);

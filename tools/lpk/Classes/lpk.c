@@ -85,19 +85,11 @@ static int lpk_decompress_zlib(uint8_t* in, uint32_t inLength, uint8_t** out, ui
 // decompress function define
 typedef int (*LPK_DECOMPRESS)(uint8_t*, uint32_t, uint8_t**, uint32_t*);
     
-// decompress table define
-typedef struct {
-    // decompression bit
-    uint32_t mask;
-    
-    // decompression function
-    LPK_DECOMPRESS decompress;
-} LPKDecompressTable;
-    
 // decompress table
-static LPKDecompressTable s_dcmp_table[] = {
-    LPKC_NONE, NULL,
-    LPKC_ZLIB, lpk_decompress_zlib
+static LPK_DECOMPRESS s_dcmp_table[] = {
+    NULL, // LPKC_DEFAULT
+    NULL, // LPKC_NONE
+    lpk_decompress_zlib, // LPKC_ZLIB
 };
     
 int lpk_open_file(lpk_file* lpk, const char* filepath) {
@@ -254,10 +246,11 @@ uint8_t* lpk_extract_file(lpk_file* lpk, const char* filepath, uint32_t* size) {
     }
     
     // allocate memory
-    uint8_t* buf = (uint8_t*)malloc(sizeof(uint8_t) * block->packed_size);
+    uint32_t bufLen = block->packed_size;
+    uint8_t* buf = (uint8_t*)malloc(sizeof(uint8_t) * bufLen);
     
     // read, if failed, release buffer
-    if(fread(buf, block->packed_size, 1, lpk->fp) != 1) {
+    if(fread(buf, bufLen, 1, lpk->fp) != 1) {
         free(buf);
         buf = NULL;
     }
@@ -266,7 +259,25 @@ uint8_t* lpk_extract_file(lpk_file* lpk, const char* filepath, uint32_t* size) {
     
     // uncompress
     if(block->flags & LPK_FLAG_COMPRESSED) {
-        
+        LPKCompressAlgorithm cmpAlg = (block->flags & LPK_MASK_COMPRESSED) >> LPK_SHIFT_COMPRESSED;
+        uint8_t* out = NULL;
+        uint32_t outLen;
+        if(s_dcmp_table[cmpAlg]) {
+            if(s_dcmp_table[cmpAlg](buf, bufLen, &out, &outLen) == 0) {
+                free(buf);
+                buf = out;
+                bufLen = outLen;
+            } else {
+                free(buf);
+                buf = NULL;
+            }
+        }
+    }
+    
+    // ensure unpacked size is same as file size
+    if(bufLen != block->file_size) {
+        free(buf);
+        buf = NULL;
     }
     
     // save size
