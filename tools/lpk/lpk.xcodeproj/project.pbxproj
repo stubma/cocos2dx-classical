@@ -17,6 +17,7 @@
 		9211D9ED1A92475E0015712A /* InputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9211D9EC1A92475E0015712A /* InputViewController.m */; };
 		922E43531A9ACBB700A75392 /* ProgressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E43521A9ACBB700A75392 /* ProgressViewController.m */; };
 		922E43591A9AD93600A75392 /* NSMutableData+ReadWrite.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E43581A9AD93600A75392 /* NSMutableData+ReadWrite.m */; };
+		92403F301A9DFD510055D1C5 /* general.png in Resources */ = {isa = PBXBuildFile; fileRef = 92403F2F1A9DFD510055D1C5 /* general.png */; };
 		9247AF621A90CD67006BB0C4 /* open.png in Resources */ = {isa = PBXBuildFile; fileRef = 9247AF611A90CD67006BB0C4 /* open.png */; };
 		9247AF661A90D073006BB0C4 /* WindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9247AF651A90D073006BB0C4 /* WindowController.m */; };
 		9247AF761A90D127006BB0C4 /* CNSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9247AF691A90D127006BB0C4 /* CNSplitView.m */; };
@@ -67,6 +68,7 @@
 		922E43521A9ACBB700A75392 /* ProgressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressViewController.m; sourceTree = "<group>"; };
 		922E43571A9AD93600A75392 /* NSMutableData+ReadWrite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableData+ReadWrite.h"; sourceTree = "<group>"; };
 		922E43581A9AD93600A75392 /* NSMutableData+ReadWrite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableData+ReadWrite.m"; sourceTree = "<group>"; };
+		92403F2F1A9DFD510055D1C5 /* general.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = general.png; sourceTree = "<group>"; };
 		9247AF611A90CD67006BB0C4 /* open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = open.png; sourceTree = "<group>"; };
 		9247AF641A90D073006BB0C4 /* WindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowController.h; sourceTree = "<group>"; };
 		9247AF651A90D073006BB0C4 /* WindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowController.m; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 		9247AF601A90CD67006BB0C4 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				92403F2F1A9DFD510055D1C5 /* general.png */,
 				928B55611A9DB0E000781D3D /* compress.png */,
 				928B55621A9DB0E000781D3D /* encrypt.png */,
 				9211D9E01A91F1F50015712A /* new_folder.png */,
@@ -330,6 +333,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92403F301A9DFD510055D1C5 /* general.png in Resources */,
 				92E850FC1A90C6E9005A1465 /* Main.storyboard in Resources */,
 				92E850FD1A90C6E9005A1465 /* Images.xcassets in Resources */,
 				9247AF7E1A90D626006BB0C4 /* save.png in Resources */,

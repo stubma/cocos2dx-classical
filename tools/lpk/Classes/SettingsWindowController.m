@@ -12,6 +12,7 @@
 @interface SettingsWindowController ()
 
 @property (weak) IBOutlet NSToolbar *toolbar;
+- (IBAction)onGeneral:(id)sender;
 - (IBAction)onCompress:(id)sender;
 - (IBAction)onEncryption:(id)sender;
 
@@ -23,17 +24,22 @@
     [super windowDidLoad];
     
     // select first
-    [self.toolbar setSelectedItemIdentifier:@"compress_toolitem"];
+    [self.toolbar setSelectedItemIdentifier:@"general"];
+}
+
+- (IBAction)onGeneral:(id)sender {
+    SettingsViewController* vc = (SettingsViewController*)self.contentViewController;
+    [vc.tabView selectTabViewItemWithIdentifier:@"general"];
 }
 
 - (IBAction)onCompress:(id)sender {
     SettingsViewController* vc = (SettingsViewController*)self.contentViewController;
-    [vc.tabView selectTabViewItemAtIndex:0];
+    [vc.tabView selectTabViewItemWithIdentifier:@"compress"];
 }
 
 - (IBAction)onEncryption:(id)sender {
     SettingsViewController* vc = (SettingsViewController*)self.contentViewController;
-    [vc.tabView selectTabViewItemAtIndex:1];
+    [vc.tabView selectTabViewItemWithIdentifier:@"encryption"];
 }
 
 @end

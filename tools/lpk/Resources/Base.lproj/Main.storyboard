@@ -306,18 +306,24 @@ DQ
                         <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
                         <toolbar key="toolbar" implicitIdentifier="850DEF7E-7736-466F-B428-4A6F0DBA1930" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="zk9-Pg-LN4">
                             <allowedToolbarItems>
-                                <toolbarItem implicitItemIdentifier="0660CB7C-76FF-42E6-A45F-848452AB48A9" explicitItemIdentifier="compress_toolitem" label="Compress" paletteLabel="Compress" tag="-1" image="compress" selectable="YES" id="EUp-iZ-Wqu">
+                                <toolbarItem implicitItemIdentifier="238CBF92-81B1-43AC-BB4B-DF265199CFE5" explicitItemIdentifier="general" label="General" paletteLabel="General" tag="-1" image="general" selectable="YES" id="o3r-om-VSc">
+                                    <connections>
+                                        <action selector="onGeneral:" target="Cmq-wi-hC4" id="jfO-P4-olN"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="0660CB7C-76FF-42E6-A45F-848452AB48A9" explicitItemIdentifier="compress" label="Compress" paletteLabel="Compress" tag="-1" image="compress" selectable="YES" id="EUp-iZ-Wqu">
                                     <connections>
                                         <action selector="onCompress:" target="Cmq-wi-hC4" id="GxS-Sd-LDo"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="D30E197D-DA02-4D8C-B3D4-D35C28EB8FB3" explicitItemIdentifier="encryption_toolitem" label="Encryption" paletteLabel="Encryption" tag="-1" image="encrypt" selectable="YES" id="ASi-Id-iC2">
+                                <toolbarItem implicitItemIdentifier="D30E197D-DA02-4D8C-B3D4-D35C28EB8FB3" explicitItemIdentifier="encryption" label="Encryption" paletteLabel="Encryption" tag="-1" image="encrypt" selectable="YES" id="ASi-Id-iC2">
                                     <connections>
                                         <action selector="onEncryption:" target="Cmq-wi-hC4" id="I2v-ir-pGe"/>
                                     </connections>
                                 </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
+                                <toolbarItem reference="o3r-om-VSc"/>
                                 <toolbarItem reference="EUp-iZ-Wqu"/>
                                 <toolbarItem reference="ASi-Id-iC2"/>
                             </defaultToolbarItems>
@@ -337,8 +343,9 @@ DQ
             <objects>
                 <tabViewController selectedTabViewItemIndex="0" tabStyle="unspecified" id="CMg-nc-Z3p" customClass="SettingsViewController" sceneMemberID="viewController">
                     <tabViewItems>
-                        <tabViewItem identifier="" image="compress" id="CLk-Ne-4Yn"/>
-                        <tabViewItem identifier="" id="W1h-V9-yfg"/>
+                        <tabViewItem identifier="general" id="4bX-Qv-k0E"/>
+                        <tabViewItem identifier="compress" id="qAN-Zf-qYb"/>
+                        <tabViewItem identifier="encryption" id="Hh9-dG-yHl"/>
                     </tabViewItems>
                     <tabView key="tabView" type="noTabsNoBorder" id="RYl-zi-dBV">
                         <rect key="frame" x="0.0" y="0.0" width="446" height="300"/>
@@ -347,8 +354,9 @@ DQ
                         <tabViewItems/>
                     </tabView>
                     <connections>
-                        <segue destination="EYJ-3L-xnO" kind="relationship" relationship="tabItems" id="YKq-cL-U3r"/>
-                        <segue destination="b3Y-WH-te2" kind="relationship" relationship="tabItems" id="eIX-a8-323"/>
+                        <segue destination="9WP-Eg-MJT" kind="relationship" relationship="tabItems" id="6fM-2B-rXh"/>
+                        <segue destination="EYJ-3L-xnO" kind="relationship" relationship="tabItems" id="eTj-d9-hH7"/>
+                        <segue destination="b3Y-WH-te2" kind="relationship" relationship="tabItems" id="e7V-el-8JS"/>
                     </connections>
                 </tabViewController>
                 <customObject id="LvQ-vA-NHW" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -445,20 +453,33 @@ DQ
                 </viewController>
                 <customObject id="Sht-D3-yHP" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1582.5" y="650"/>
+            <point key="canvasLocation" x="1645.5" y="667"/>
+        </scene>
+        <!--General-->
+        <scene sceneID="wk7-kB-yk3">
+            <objects>
+                <viewController id="9WP-Eg-MJT" userLabel="General" sceneMemberID="viewController">
+                    <view key="view" id="uip-WW-ohJ">
+                        <rect key="frame" x="0.0" y="0.0" width="435" height="242"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </view>
+                </viewController>
+                <customObject id="0dn-R3-vfd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1189.5" y="667"/>
         </scene>
         <!--Encryption-->
         <scene sceneID="d66-hw-OT6">
             <objects>
                 <viewController title="Encryption" id="b3Y-WH-te2" sceneMemberID="viewController">
                     <view key="view" id="65Y-nN-FJR">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="435" height="242"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </view>
                 </viewController>
                 <customObject id="b4A-YQ-ZPH" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2071" y="679"/>
+            <point key="canvasLocation" x="2101.5" y="667"/>
         </scene>
         <!--Application-->
         <scene sceneID="JPo-4y-FX3">
@@ -1603,6 +1624,7 @@ DQ
         <image name="delete" width="30" height="30"/>
         <image name="encrypt" width="30" height="30"/>
         <image name="export" width="30" height="30"/>
+        <image name="general" width="30" height="30"/>
         <image name="new_folder" width="30" height="30"/>
         <image name="open" width="30" height="30"/>
         <image name="save" width="30" height="30"/>
