@@ -10,19 +10,19 @@
 #import "ViewController.h"
 #import "InputViewController.h"
 #import "ProgressViewController.h"
+#import "SettingsViewController.h"
+#import "SettingsWindowController.h"
 
 @interface WindowController () <NSTextFieldDelegate>
 
 - (IBAction)onToolbarOpen:(id)sender;
 - (IBAction)onToolbarSave:(id)sender;
-- (IBAction)onToolbarSettings:(id)sender;
 - (IBAction)onToolbarExport:(id)sender;
 - (IBAction)onToolbarNewFolder:(id)sender;
 - (IBAction)onToolbarDelete:(id)sender;
 - (void)startExport;
 
 @property (weak) IBOutlet NSSearchField *searchText;
-@property (nonatomic, readonly, getter=getTree) TreeManager* tree;
 
 @end
 
@@ -47,6 +47,14 @@
 - (TreeManager*)getTree {
     ViewController* vc = (ViewController*)self.window.contentViewController;
     return vc.tree;
+}
+
+- (void)prepareForSegue:(NSStoryboardSegue *)segue sender:(id)sender {
+    if([@"settings" isEqualToString:segue.identifier]) {
+        SettingsWindowController* dstWindow = (SettingsWindowController*)segue.destinationController;
+        dstWindow.tree = self.tree;
+    }
+    [super prepareForSegue:segue sender:sender];
 }
 
 - (IBAction)onToolbarOpen:(id)sender {
@@ -115,9 +123,6 @@
             [self.window setTitleWithRepresentedFilename:self.tree.projectPath];
         }
     }];
-}
-
-- (IBAction)onToolbarSettings:(id)sender {
 }
 
 - (IBAction)onToolbarExport:(id)sender {

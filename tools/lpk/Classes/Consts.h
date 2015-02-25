@@ -11,5 +11,7 @@
 extern NSString* LOCALE_IDS[8];
 extern NSMutableArray* gLocaleDisplayNames;
 extern NSString* PLATFORM_NAMES[3];
+extern NSString* COMPRESS_ALGORITHM_NAMES[2];
+extern NSString* ENCRYPT_ALGORITHM_NAMES[4];
 
 extern void initConsts();

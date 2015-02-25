@@ -14,6 +14,8 @@
 
 @property (weak) IBOutlet NSComboBox *localeCombo;
 @property (weak) IBOutlet NSComboBox *platformCombo;
+@property (weak) IBOutlet NSComboBox *compressCombo;
+@property (weak) IBOutlet NSComboBox *encryptCombo;
 @property (weak) IBOutlet NSTextField *pathLabel;
 
 - (IBAction)onAddNewBranch:(id)sender;
@@ -39,10 +41,10 @@
     [super setObjectValue:objectValue];
     
     // set data source for combo
-    [self.localeCombo setUsesDataSource:YES];
     [self.localeCombo setDataSource:self];
-    [self.platformCombo setUsesDataSource:YES];
     [self.platformCombo setDataSource:self];
+    [self.compressCombo setDataSource:self];
+    [self.encryptCombo setDataSource:self];
     
     // init UI
     LpkBranchEntry* b = (LpkBranchEntry*)objectValue;
@@ -54,6 +56,8 @@
     if([@"Root" isEqualToString:displayName])
         displayName = @"Default";
     [self.localeCombo selectItemAtIndex:[gLocaleDisplayNames indexOfObject:displayName]];
+    [self.compressCombo selectItemAtIndex:b.compressAlgorithm];
+    [self.encryptCombo selectItemAtIndex:b.encryptAlgorithm];
 }
 
 - (IBAction)onAddNewBranch:(id)sender {
@@ -148,16 +152,28 @@
 - (NSInteger)numberOfItemsInComboBox:(NSComboBox *)aComboBox {
     if(aComboBox == self.localeCombo) {
         return [gLocaleDisplayNames count];
-    } else {
+    } else if(aComboBox == self.platformCombo) {
         return sizeof(PLATFORM_NAMES) / sizeof(NSString*);
+    } else if(aComboBox == self.compressCombo) {
+        return sizeof(COMPRESS_ALGORITHM_NAMES) / sizeof(NSString*);
+    } else if(aComboBox == self.encryptCombo) {
+        return sizeof(ENCRYPT_ALGORITHM_NAMES) / sizeof(NSString*);
+    } else {
+        return 0;
     }
 }
 
 - (id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(NSInteger)index {
     if(aComboBox == self.localeCombo) {
         return [gLocaleDisplayNames objectAtIndex:index];
-    } else {
+    } else if(aComboBox == self.platformCombo) {
         return PLATFORM_NAMES[index];
+    } else if(aComboBox == self.compressCombo) {
+        return COMPRESS_ALGORITHM_NAMES[index];
+    } else if(aComboBox == self.encryptCombo) {
+        return ENCRYPT_ALGORITHM_NAMES[index];
+    } else {
+        return nil;
     }
 }
 

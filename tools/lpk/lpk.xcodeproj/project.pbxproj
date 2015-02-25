@@ -29,6 +29,13 @@
 		9247AF7F1A90D626006BB0C4 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 9247AF7D1A90D626006BB0C4 /* setting.png */; };
 		9247AF831A90DEE6006BB0C4 /* lpk.c in Sources */ = {isa = PBXBuildFile; fileRef = 9247AF811A90DEE6006BB0C4 /* lpk.c */; };
 		926F19EC1A95C9D500BD0CE0 /* AddBranchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 926F19EB1A95C9D500BD0CE0 /* AddBranchViewController.m */; };
+		928B55571A9D991400781D3D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 928B55561A9D991400781D3D /* libz.dylib */; };
+		928B555D1A9DA48100781D3D /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 928B555C1A9DA48100781D3D /* NSData+Compression.m */; };
+		928B55601A9DAEF500781D3D /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928B555F1A9DAEF500781D3D /* SettingsViewController.m */; };
+		928B55631A9DB0E000781D3D /* compress.png in Resources */ = {isa = PBXBuildFile; fileRef = 928B55611A9DB0E000781D3D /* compress.png */; };
+		928B55641A9DB0E000781D3D /* encrypt.png in Resources */ = {isa = PBXBuildFile; fileRef = 928B55621A9DB0E000781D3D /* encrypt.png */; };
+		928B556A1A9DB5C700781D3D /* SettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928B55691A9DB5C700781D3D /* SettingsWindowController.m */; };
+		928B556D1A9DBDCC00781D3D /* CompressSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928B556C1A9DBDCC00781D3D /* CompressSettingViewController.m */; };
 		92B090B31A9465DA003A1298 /* LpkBranchEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B090B21A9465DA003A1298 /* LpkBranchEntry.m */; };
 		92B090B61A9472EB003A1298 /* EntryInfoCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B090B51A9472EB003A1298 /* EntryInfoCellView.m */; };
 		92CF2B4E1A961BC60094D6E4 /* Consts.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CF2B4D1A961BC60094D6E4 /* Consts.m */; };
@@ -84,6 +91,17 @@
 		9247AF821A90DEE6006BB0C4 /* lpk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lpk.h; sourceTree = "<group>"; };
 		926F19EA1A95C9D500BD0CE0 /* AddBranchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddBranchViewController.h; sourceTree = "<group>"; };
 		926F19EB1A95C9D500BD0CE0 /* AddBranchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddBranchViewController.m; sourceTree = "<group>"; };
+		928B55561A9D991400781D3D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		928B555B1A9DA48100781D3D /* NSData+Compression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Compression.h"; sourceTree = "<group>"; };
+		928B555C1A9DA48100781D3D /* NSData+Compression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Compression.m"; sourceTree = "<group>"; };
+		928B555E1A9DAEF500781D3D /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		928B555F1A9DAEF500781D3D /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		928B55611A9DB0E000781D3D /* compress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = compress.png; sourceTree = "<group>"; };
+		928B55621A9DB0E000781D3D /* encrypt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = encrypt.png; sourceTree = "<group>"; };
+		928B55681A9DB5C700781D3D /* SettingsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsWindowController.h; sourceTree = "<group>"; };
+		928B55691A9DB5C700781D3D /* SettingsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsWindowController.m; sourceTree = "<group>"; };
+		928B556B1A9DBDCC00781D3D /* CompressSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompressSettingViewController.h; sourceTree = "<group>"; };
+		928B556C1A9DBDCC00781D3D /* CompressSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompressSettingViewController.m; sourceTree = "<group>"; };
 		92B090B11A9465DA003A1298 /* LpkBranchEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LpkBranchEntry.h; sourceTree = "<group>"; };
 		92B090B21A9465DA003A1298 /* LpkBranchEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LpkBranchEntry.m; sourceTree = "<group>"; };
 		92B090B41A9472EB003A1298 /* EntryInfoCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryInfoCellView.h; sourceTree = "<group>"; };
@@ -112,6 +130,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				928B55571A9D991400781D3D /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,6 +140,8 @@
 		9247AF601A90CD67006BB0C4 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				928B55611A9DB0E000781D3D /* compress.png */,
+				928B55621A9DB0E000781D3D /* encrypt.png */,
 				9211D9E01A91F1F50015712A /* new_folder.png */,
 				9211D9DE1A91F1150015712A /* delete.png */,
 				9211D9D31A91A9060015712A /* export.png */,
@@ -152,12 +173,21 @@
 			path = CNSplitView;
 			sourceTree = "<group>";
 		};
+		928B55581A9D991B00781D3D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				928B55561A9D991400781D3D /* libz.dylib */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		92E850C91A90C68C005A1465 = {
 			isa = PBXGroup;
 			children = (
 				92E850FE1A90C712005A1465 /* Classes */,
 				92E850F81A90C6E9005A1465 /* Resources */,
 				92E850D51A90C68C005A1465 /* Supporting Files */,
+				928B55581A9D991B00781D3D /* Frameworks */,
 				92E850D31A90C68C005A1465 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -201,12 +231,18 @@
 				92E851031A90C712005A1465 /* ViewController.m */,
 				9247AF641A90D073006BB0C4 /* WindowController.h */,
 				9247AF651A90D073006BB0C4 /* WindowController.m */,
+				928B55681A9DB5C700781D3D /* SettingsWindowController.h */,
+				928B55691A9DB5C700781D3D /* SettingsWindowController.m */,
 				9211D9EB1A92475E0015712A /* InputViewController.h */,
 				9211D9EC1A92475E0015712A /* InputViewController.m */,
 				926F19EA1A95C9D500BD0CE0 /* AddBranchViewController.h */,
 				926F19EB1A95C9D500BD0CE0 /* AddBranchViewController.m */,
 				922E43511A9ACBB700A75392 /* ProgressViewController.h */,
 				922E43521A9ACBB700A75392 /* ProgressViewController.m */,
+				928B555E1A9DAEF500781D3D /* SettingsViewController.h */,
+				928B555F1A9DAEF500781D3D /* SettingsViewController.m */,
+				928B556B1A9DBDCC00781D3D /* CompressSettingViewController.h */,
+				928B556C1A9DBDCC00781D3D /* CompressSettingViewController.m */,
 				92B090B41A9472EB003A1298 /* EntryInfoCellView.h */,
 				92B090B51A9472EB003A1298 /* EntryInfoCellView.m */,
 				92CF2B4C1A961BC60094D6E4 /* Consts.h */,
@@ -219,6 +255,8 @@
 				922E43581A9AD93600A75392 /* NSMutableData+ReadWrite.m */,
 				92F1AF311A9B72B9002635DD /* NSData+Generator.h */,
 				92F1AF321A9B72B9002635DD /* NSData+Generator.m */,
+				928B555B1A9DA48100781D3D /* NSData+Compression.h */,
+				928B555C1A9DA48100781D3D /* NSData+Compression.m */,
 				92E9BD021A9379BB00A9D898 /* NSOutlineView+State.h */,
 				92E9BD031A9379BB00A9D898 /* NSOutlineView+State.m */,
 				9211D9D01A91A2580015712A /* TreeManager.h */,
@@ -297,9 +335,11 @@
 				9247AF7E1A90D626006BB0C4 /* save.png in Resources */,
 				9247AF7F1A90D626006BB0C4 /* setting.png in Resources */,
 				9211D9DF1A91F1150015712A /* delete.png in Resources */,
+				928B55641A9DB0E000781D3D /* encrypt.png in Resources */,
 				9247AF621A90CD67006BB0C4 /* open.png in Resources */,
 				9211D9E11A91F1F50015712A /* new_folder.png in Resources */,
 				9211D9D41A91A9060015712A /* export.png in Resources */,
+				928B55631A9DB0E000781D3D /* compress.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,6 +353,7 @@
 				9247AF831A90DEE6006BB0C4 /* lpk.c in Sources */,
 				92E851041A90C712005A1465 /* AppDelegate.m in Sources */,
 				9211D9DA1A91C5160015712A /* hash_bob_jenkins_v2.c in Sources */,
+				928B55601A9DAEF500781D3D /* SettingsViewController.m in Sources */,
 				9211D9D21A91A2580015712A /* TreeManager.m in Sources */,
 				9247AF761A90D127006BB0C4 /* CNSplitView.m in Sources */,
 				922E43531A9ACBB700A75392 /* ProgressViewController.m in Sources */,
@@ -321,7 +362,9 @@
 				92F1AF331A9B72B9002635DD /* NSData+Generator.m in Sources */,
 				9247AF7B1A90D127006BB0C4 /* NSView+CNSplitViewToolbar.m in Sources */,
 				9247AF791A90D127006BB0C4 /* CNSplitViewToolbarButton.m in Sources */,
+				928B555D1A9DA48100781D3D /* NSData+Compression.m in Sources */,
 				92CF2B4E1A961BC60094D6E4 /* Consts.m in Sources */,
+				928B556A1A9DB5C700781D3D /* SettingsWindowController.m in Sources */,
 				922E43591A9AD93600A75392 /* NSMutableData+ReadWrite.m in Sources */,
 				92E9BD011A9339B200A9D898 /* NSString+Paths.m in Sources */,
 				92E9BD041A9379BB00A9D898 /* NSOutlineView+State.m in Sources */,
@@ -332,6 +375,7 @@
 				9247AF781A90D127006BB0C4 /* CNSplitViewToolbar.m in Sources */,
 				92B090B61A9472EB003A1298 /* EntryInfoCellView.m in Sources */,
 				92B090B31A9465DA003A1298 /* LpkBranchEntry.m in Sources */,
+				928B556D1A9DBDCC00781D3D /* CompressSettingViewController.m in Sources */,
 				9211D9CF1A91A15D0015712A /* LpkEntry.m in Sources */,
 				9247AF771A90D127006BB0C4 /* CNSplitViewDraggingHandle.m in Sources */,
 				9211D9ED1A92475E0015712A /* InputViewController.m in Sources */,

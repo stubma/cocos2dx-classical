@@ -256,7 +256,7 @@ DQ
                             <progressIndicator maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="E9V-wS-Zf1">
                                 <rect key="frame" x="20" y="51" width="440" height="20"/>
                             </progressIndicator>
-                            <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jlz-qZ-DeF">
+                            <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jlz-qZ-DeF">
                                 <rect key="frame" x="392" y="4" width="74" height="32"/>
                                 <buttonCell key="cell" type="push" title="Abort" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vgK-Hj-mvZ">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -293,7 +293,183 @@ DQ
                 </viewController>
                 <customObject id="SGg-aw-yzd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-756" y="784"/>
+            <point key="canvasLocation" x="-772" y="767"/>
+        </scene>
+        <!--Window Controller-->
+        <scene sceneID="yUf-6D-UCs">
+            <objects>
+                <windowController storyboardIdentifier="settings" showSeguePresentationStyle="single" id="Cmq-wi-hC4" customClass="SettingsWindowController" sceneMemberID="viewController">
+                    <window key="window" identifier="settings_window" title="Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="1pM-cx-l7K">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+                        <toolbar key="toolbar" implicitIdentifier="850DEF7E-7736-466F-B428-4A6F0DBA1930" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="zk9-Pg-LN4">
+                            <allowedToolbarItems>
+                                <toolbarItem implicitItemIdentifier="0660CB7C-76FF-42E6-A45F-848452AB48A9" explicitItemIdentifier="compress_toolitem" label="Compress" paletteLabel="Compress" tag="-1" image="compress" selectable="YES" id="EUp-iZ-Wqu">
+                                    <connections>
+                                        <action selector="onCompress:" target="Cmq-wi-hC4" id="GxS-Sd-LDo"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="D30E197D-DA02-4D8C-B3D4-D35C28EB8FB3" explicitItemIdentifier="encryption_toolitem" label="Encryption" paletteLabel="Encryption" tag="-1" image="encrypt" selectable="YES" id="ASi-Id-iC2">
+                                    <connections>
+                                        <action selector="onEncryption:" target="Cmq-wi-hC4" id="I2v-ir-pGe"/>
+                                    </connections>
+                                </toolbarItem>
+                            </allowedToolbarItems>
+                            <defaultToolbarItems>
+                                <toolbarItem reference="EUp-iZ-Wqu"/>
+                                <toolbarItem reference="ASi-Id-iC2"/>
+                            </defaultToolbarItems>
+                        </toolbar>
+                    </window>
+                    <connections>
+                        <outlet property="toolbar" destination="zk9-Pg-LN4" id="oOK-Ad-5fT"/>
+                        <segue destination="CMg-nc-Z3p" kind="relationship" relationship="window.shadowedContentViewController" id="Fnn-bA-JIO"/>
+                    </connections>
+                </windowController>
+                <customObject id="QaK-Er-oWg" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1010" y="248"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="Ezv-pb-kH3">
+            <objects>
+                <tabViewController selectedTabViewItemIndex="0" tabStyle="unspecified" id="CMg-nc-Z3p" customClass="SettingsViewController" sceneMemberID="viewController">
+                    <tabViewItems>
+                        <tabViewItem identifier="" image="compress" id="CLk-Ne-4Yn"/>
+                        <tabViewItem identifier="" id="W1h-V9-yfg"/>
+                    </tabViewItems>
+                    <tabView key="tabView" type="noTabsNoBorder" id="RYl-zi-dBV">
+                        <rect key="frame" x="0.0" y="0.0" width="446" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <font key="font" metaFont="message"/>
+                        <tabViewItems/>
+                    </tabView>
+                    <connections>
+                        <segue destination="EYJ-3L-xnO" kind="relationship" relationship="tabItems" id="YKq-cL-U3r"/>
+                        <segue destination="b3Y-WH-te2" kind="relationship" relationship="tabItems" id="eIX-a8-323"/>
+                    </connections>
+                </tabViewController>
+                <customObject id="LvQ-vA-NHW" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1588" y="213"/>
+        </scene>
+        <!--Compress-->
+        <scene sceneID="2oa-DT-6yb">
+            <objects>
+                <viewController title="Compress" id="EYJ-3L-xnO" customClass="CompressSettingViewController" sceneMemberID="viewController">
+                    <view key="view" id="Fca-84-9gU">
+                        <rect key="frame" x="0.0" y="0.0" width="435" height="264"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <scrollView ambiguous="YES" misplaced="YES" borderType="line" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bHV-3Q-9NV">
+                                <rect key="frame" x="20" y="42" width="395" height="177"/>
+                                <clipView key="contentView" ambiguous="YES" misplaced="YES" id="l48-AK-HLl">
+                                    <rect key="frame" x="1" y="0.0" width="238" height="134"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" headerView="1TB-Tf-Otb" id="DTj-NM-Cg3">
+                                            <rect key="frame" x="0.0" y="0.0" width="238" height="134"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <size key="intercellSpacing" width="3" height="2"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                            <tableColumns>
+                                                <tableColumn identifier="default_column" width="45.3984375" minWidth="40" maxWidth="1000" id="eai-j2-c5O">
+                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Default">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                                    </tableHeaderCell>
+                                                    <buttonCell key="dataCell" type="check" bezelStyle="regularSquare" imagePosition="only" inset="2" id="thz-9P-RgW">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                </tableColumn>
+                                                <tableColumn identifier="compress_algorithm_column" editable="NO" width="386" minWidth="40" maxWidth="1000" id="FUp-cY-j7v">
+                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Compress Algorithm">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                                    </tableHeaderCell>
+                                                    <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" alignment="left" title="Text Cell" id="sxW-si-jrq">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </tableColumn>
+                                            </tableColumns>
+                                            <connections>
+                                                <outlet property="dataSource" destination="EYJ-3L-xnO" id="lrE-QU-fCN"/>
+                                                <outlet property="delegate" destination="EYJ-3L-xnO" id="4Yj-jB-IxV"/>
+                                            </connections>
+                                        </tableView>
+                                    </subviews>
+                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="RM7-gL-i1Z">
+                                    <rect key="frame" x="1" y="119" width="223" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="Wq1-v2-GeF">
+                                    <rect key="frame" x="224" y="17" width="15" height="102"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <tableHeaderView key="headerView" id="1TB-Tf-Otb">
+                                    <rect key="frame" x="0.0" y="0.0" width="238" height="17"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableHeaderView>
+                            </scrollView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JfK-FY-Lbz">
+                                <rect key="frame" x="18" y="227" width="219" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Select default compress algorithm:" id="1bY-2S-Pcu">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="eR6-8O-gkn">
+                                <rect key="frame" x="18" y="18" width="198" height="18"/>
+                                <buttonCell key="cell" type="check" title="Apply to all files immediately" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="FV8-UN-Nfv">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="eR6-8O-gkn" firstAttribute="leading" secondItem="Fca-84-9gU" secondAttribute="leading" constant="20" id="5SQ-Gr-ZKI"/>
+                            <constraint firstItem="bHV-3Q-9NV" firstAttribute="top" secondItem="JfK-FY-Lbz" secondAttribute="bottom" constant="8" id="P3a-72-S3p"/>
+                            <constraint firstAttribute="trailing" secondItem="JfK-FY-Lbz" secondAttribute="trailing" constant="200" id="QP7-W2-ygx"/>
+                            <constraint firstAttribute="trailing" secondItem="eR6-8O-gkn" secondAttribute="trailing" constant="221" id="VTW-OR-gAu"/>
+                            <constraint firstAttribute="bottom" secondItem="eR6-8O-gkn" secondAttribute="bottom" constant="20" id="hES-OL-egO"/>
+                            <constraint firstItem="JfK-FY-Lbz" firstAttribute="leading" secondItem="Fca-84-9gU" secondAttribute="leading" constant="20" id="jlG-SB-2yl"/>
+                            <constraint firstItem="JfK-FY-Lbz" firstAttribute="top" secondItem="Fca-84-9gU" secondAttribute="top" constant="20" id="nLw-7h-JpP"/>
+                            <constraint firstItem="bHV-3Q-9NV" firstAttribute="leading" secondItem="Fca-84-9gU" secondAttribute="leading" constant="20" id="uef-Zj-suX"/>
+                            <constraint firstAttribute="trailing" secondItem="bHV-3Q-9NV" secondAttribute="trailing" constant="20" id="zS8-L9-L2Z"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="applyCheckbox" destination="eR6-8O-gkn" id="GlQ-Mn-r7f"/>
+                        <outlet property="tableView" destination="DTj-NM-Cg3" id="072-9y-AmL"/>
+                    </connections>
+                </viewController>
+                <customObject id="Sht-D3-yHP" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1582.5" y="661"/>
+        </scene>
+        <!--Encryption-->
+        <scene sceneID="d66-hw-OT6">
+            <objects>
+                <viewController title="Encryption" id="b3Y-WH-te2" sceneMemberID="viewController">
+                    <view key="view" id="65Y-nN-FJR">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </view>
+                </viewController>
+                <customObject id="b4A-YQ-ZPH" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2071" y="679"/>
         </scene>
         <!--Application-->
         <scene sceneID="JPo-4y-FX3">
@@ -941,7 +1117,7 @@ DQ
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" customClass="WindowController" sceneMemberID="viewController">
-                    <window key="window" title="Luma Pack Manager" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" identifier="main_window" title="Luma Pack Manager" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
                         <rect key="contentRect" x="196" y="240" width="1059" height="511"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
@@ -959,7 +1135,7 @@ DQ
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="5D92E2EE-B63E-4F22-876A-254019BC33BC" label="Settings" paletteLabel="Settings" tag="-1" image="setting" id="VnN-z3-V92">
                                     <connections>
-                                        <action selector="onToolbarSettings:" target="B8D-0N-5wS" id="SGx-py-vJA"/>
+                                        <segue destination="Cmq-wi-hC4" kind="modal" identifier="settings" id="PkJ-3J-YBW"/>
                                     </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="4hm-M4-0TY"/>
@@ -1178,25 +1354,14 @@ DQ
                                                                                             <rect key="frame" x="0.0" y="0.0" width="530" height="146"/>
                                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                                             <subviews>
-                                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G4v-tf-XE5">
-                                                                                                    <rect key="frame" x="12" y="119" width="43" height="14"/>
-                                                                                                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Locale:" id="b7x-oG-tbB">
+                                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G4v-tf-XE5">
+                                                                                                    <rect key="frame" x="12" y="119" width="64" height="14"/>
+                                                                                                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Locale:" id="b7x-oG-tbB">
                                                                                                         <font key="font" metaFont="smallSystem"/>
                                                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                                                     </textFieldCell>
                                                                                                 </textField>
-                                                                                                <comboBox verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nAK-mH-Y16">
-                                                                                                    <rect key="frame" x="61" y="115" width="196" height="22"/>
-                                                                                                    <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="20" id="zrb-qe-xxe">
-                                                                                                        <font key="font" metaFont="smallSystem"/>
-                                                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                                                    </comboBoxCell>
-                                                                                                    <connections>
-                                                                                                        <action selector="onLocaleChanged:" target="zc0-vl-7jd" id="6tr-wz-cbU"/>
-                                                                                                    </connections>
-                                                                                                </comboBox>
                                                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1ed-AQ-kjU">
                                                                                                     <rect key="frame" x="265" y="119" width="53" height="14"/>
                                                                                                     <constraints>
@@ -1242,7 +1407,7 @@ DQ
                                                                                                 </textField>
                                                                                                 <comboBox verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Yv-Xm-cx7">
                                                                                                     <rect key="frame" x="324" y="115" width="196" height="22"/>
-                                                                                                    <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="eRn-dw-aBv">
+                                                                                                    <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" usesDataSource="YES" numberOfVisibleItems="5" id="eRn-dw-aBv">
                                                                                                         <font key="font" metaFont="smallSystem"/>
                                                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1271,11 +1436,56 @@ DQ
                                                                                                         <action selector="onAddNewBranch:" target="zc0-vl-7jd" id="QHq-je-hXj"/>
                                                                                                     </connections>
                                                                                                 </button>
+                                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XOc-lF-xBx">
+                                                                                                    <rect key="frame" x="14" y="97" width="62" height="14"/>
+                                                                                                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Compress:" id="cnF-Ti-01Q">
+                                                                                                        <font key="font" metaFont="smallSystem"/>
+                                                                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                                                    </textFieldCell>
+                                                                                                </textField>
+                                                                                                <comboBox verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZpC-bO-uIU">
+                                                                                                    <rect key="frame" x="82" y="93" width="175" height="22"/>
+                                                                                                    <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" usesDataSource="YES" numberOfVisibleItems="5" id="dmW-iT-AOq">
+                                                                                                        <font key="font" metaFont="smallSystem"/>
+                                                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                                    </comboBoxCell>
+                                                                                                </comboBox>
+                                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8BY-iU-EOh">
+                                                                                                    <rect key="frame" x="267" y="98" width="51" height="14"/>
+                                                                                                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Encrypt:" id="C6I-FK-hTR">
+                                                                                                        <font key="font" metaFont="smallSystem"/>
+                                                                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                                                    </textFieldCell>
+                                                                                                </textField>
+                                                                                                <comboBox verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3WN-XL-fdD">
+                                                                                                    <rect key="frame" x="324" y="92" width="196" height="22"/>
+                                                                                                    <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" usesDataSource="YES" numberOfVisibleItems="5" id="fkV-U0-kle">
+                                                                                                        <font key="font" metaFont="smallSystem"/>
+                                                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                                    </comboBoxCell>
+                                                                                                </comboBox>
+                                                                                                <comboBox verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nAK-mH-Y16">
+                                                                                                    <rect key="frame" x="82" y="115" width="175" height="22"/>
+                                                                                                    <comboBoxCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" usesDataSource="YES" numberOfVisibleItems="20" id="zrb-qe-xxe">
+                                                                                                        <font key="font" metaFont="smallSystem"/>
+                                                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                                    </comboBoxCell>
+                                                                                                    <connections>
+                                                                                                        <action selector="onLocaleChanged:" target="zc0-vl-7jd" id="6tr-wz-cbU"/>
+                                                                                                    </connections>
+                                                                                                </comboBox>
                                                                                             </subviews>
                                                                                             <constraints>
                                                                                                 <constraint firstAttribute="trailing" secondItem="4Yv-Xm-cx7" secondAttribute="trailing" constant="13" id="2Mp-RE-jvf"/>
                                                                                                 <constraint firstItem="wcD-1A-4Tt" firstAttribute="leading" secondItem="zc0-vl-7jd" secondAttribute="leading" constant="14" id="FCY-Oj-1Tx"/>
+                                                                                                <constraint firstItem="ZpC-bO-uIU" firstAttribute="top" secondItem="nAK-mH-Y16" secondAttribute="bottom" constant="5" id="FY7-2j-RZd"/>
                                                                                                 <constraint firstItem="mFd-1U-KFN" firstAttribute="leading" secondItem="Lcd-rk-gyV" secondAttribute="trailing" constant="8" id="Fty-FH-t33"/>
+                                                                                                <constraint firstItem="3WN-XL-fdD" firstAttribute="top" secondItem="4Yv-Xm-cx7" secondAttribute="bottom" constant="6" id="LTO-QF-47V"/>
                                                                                                 <constraint firstItem="gVb-i8-CKk" firstAttribute="top" secondItem="nmx-Vd-Ah7" secondAttribute="top" id="MmP-SX-Fo3"/>
                                                                                                 <constraint firstAttribute="bottom" secondItem="mFd-1U-KFN" secondAttribute="bottom" constant="11" id="NSn-xO-G04"/>
                                                                                                 <constraint firstItem="nmx-Vd-Ah7" firstAttribute="leading" secondItem="gVb-i8-CKk" secondAttribute="trailing" constant="8" id="OpA-SQ-YdQ"/>
@@ -1283,20 +1493,28 @@ DQ
                                                                                                 <constraint firstItem="gVb-i8-CKk" firstAttribute="leading" secondItem="zc0-vl-7jd" secondAttribute="leading" constant="14" id="Up4-0Y-zFA"/>
                                                                                                 <constraint firstItem="4Yv-Xm-cx7" firstAttribute="top" secondItem="zc0-vl-7jd" secondAttribute="top" constant="10" id="ZG7-mV-wub"/>
                                                                                                 <constraint firstItem="G4v-tf-XE5" firstAttribute="top" secondItem="zc0-vl-7jd" secondAttribute="top" constant="13" id="ag7-kP-PQv"/>
+                                                                                                <constraint firstItem="ZpC-bO-uIU" firstAttribute="leading" secondItem="XOc-lF-xBx" secondAttribute="trailing" constant="8" id="b5H-bS-6LE"/>
                                                                                                 <constraint firstItem="nAK-mH-Y16" firstAttribute="leading" secondItem="G4v-tf-XE5" secondAttribute="trailing" constant="8" id="bV9-Na-Ycw"/>
                                                                                                 <constraint firstAttribute="bottom" secondItem="Lcd-rk-gyV" secondAttribute="bottom" constant="11" id="dYz-Wq-YKb"/>
                                                                                                 <constraint firstAttribute="bottom" secondItem="wcD-1A-4Tt" secondAttribute="bottom" constant="11" id="fJo-Vz-YCl"/>
                                                                                                 <constraint firstItem="X5T-1w-DOM" firstAttribute="leading" secondItem="zc0-vl-7jd" secondAttribute="leading" constant="14" id="ftb-QZ-EVw"/>
+                                                                                                <constraint firstItem="8BY-iU-EOh" firstAttribute="leading" secondItem="ZpC-bO-uIU" secondAttribute="trailing" constant="15" id="iBs-gv-yjg"/>
                                                                                                 <constraint firstAttribute="trailing" secondItem="nmx-Vd-Ah7" secondAttribute="trailing" constant="13" id="iF5-TE-SH4"/>
+                                                                                                <constraint firstItem="XOc-lF-xBx" firstAttribute="top" secondItem="G4v-tf-XE5" secondAttribute="bottom" constant="8" id="irT-Vk-PCN"/>
                                                                                                 <constraint firstItem="1ed-AQ-kjU" firstAttribute="leading" secondItem="nAK-mH-Y16" secondAttribute="trailing" constant="13" id="mRK-rg-T6j"/>
                                                                                                 <constraint firstAttribute="trailing" secondItem="X5T-1w-DOM" secondAttribute="trailing" constant="13" id="mc0-OH-3Tw"/>
                                                                                                 <constraint firstItem="nAK-mH-Y16" firstAttribute="top" secondItem="zc0-vl-7jd" secondAttribute="top" constant="10" id="pMi-A0-KkA"/>
                                                                                                 <constraint firstItem="gVb-i8-CKk" firstAttribute="top" secondItem="X5T-1w-DOM" secondAttribute="bottom" constant="7" id="rLk-DF-xhI"/>
+                                                                                                <constraint firstItem="XOc-lF-xBx" firstAttribute="leading" secondItem="zc0-vl-7jd" secondAttribute="leading" constant="16" id="uHd-wg-0zA"/>
                                                                                                 <constraint firstAttribute="trailing" secondItem="mFd-1U-KFN" secondAttribute="trailing" constant="13" id="vAT-NG-7ia"/>
                                                                                                 <constraint firstItem="mFd-1U-KFN" firstAttribute="top" secondItem="nmx-Vd-Ah7" secondAttribute="bottom" constant="8" id="vb0-DG-FWp"/>
+                                                                                                <constraint firstAttribute="trailing" secondItem="3WN-XL-fdD" secondAttribute="trailing" constant="13" id="xak-Pc-sGQ"/>
+                                                                                                <constraint firstItem="3WN-XL-fdD" firstAttribute="leading" secondItem="8BY-iU-EOh" secondAttribute="trailing" constant="8" id="y7G-QU-IUy"/>
                                                                                                 <constraint firstItem="G4v-tf-XE5" firstAttribute="leading" secondItem="zc0-vl-7jd" secondAttribute="leading" constant="14" id="z4I-Vg-DmL"/>
                                                                                             </constraints>
                                                                                             <connections>
+                                                                                                <outlet property="compressCombo" destination="ZpC-bO-uIU" id="Wjx-wo-JCj"/>
+                                                                                                <outlet property="encryptCombo" destination="3WN-XL-fdD" id="KUB-Z7-cc3"/>
                                                                                                 <outlet property="localeCombo" destination="nAK-mH-Y16" id="OEc-aW-KdQ"/>
                                                                                                 <outlet property="pathLabel" destination="nmx-Vd-Ah7" id="5T4-mY-guJ"/>
                                                                                                 <outlet property="platformCombo" destination="4Yv-Xm-cx7" id="9Pz-vq-F9T"/>
@@ -1392,7 +1610,9 @@ DQ
         </scene>
     </scenes>
     <resources>
+        <image name="compress" width="30" height="30"/>
         <image name="delete" width="30" height="30"/>
+        <image name="encrypt" width="30" height="30"/>
         <image name="export" width="30" height="30"/>
         <image name="new_folder" width="30" height="30"/>
         <image name="open" width="30" height="30"/>

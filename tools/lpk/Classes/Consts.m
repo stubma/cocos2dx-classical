@@ -26,6 +26,18 @@ NSString* PLATFORM_NAMES[] = {
     @"Android"
 };
 
+NSString* COMPRESS_ALGORITHM_NAMES[] = {
+    @"Not Compressed",
+    @"Zlib"
+};
+
+NSString* ENCRYPT_ALGORITHM_NAMES[] = {
+    @"Not Encrypted",
+    @"XOR",
+    @"TEA",
+    @"XXTEA"
+};
+
 void initConsts() {
     if(!gLocaleDisplayNames) {
         NSLocale* locale = [NSLocale localeWithLocaleIdentifier:@"en_US"];

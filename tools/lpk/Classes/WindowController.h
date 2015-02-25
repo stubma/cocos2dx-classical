@@ -10,4 +10,6 @@
 
 @interface WindowController : NSWindowController
 
+@property (nonatomic, readonly, getter=getTree) TreeManager* tree;
+
 @end

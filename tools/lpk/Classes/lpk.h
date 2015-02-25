@@ -25,6 +25,9 @@ extern "C" {
 // Hash table entry is not used
 #define LPK_HASH_FREE 0xFFFFFFFF
     
+// invalid block index
+#define LPK_BLOCK_INVALID 0xFFFFFFFF
+
 // hash initial
 #define LPK_HASH_TAG_TABLE_INDEX 0
 #define LPK_HASH_TAG_NAME_A 0x100
@@ -51,11 +54,15 @@ extern "C" {
 #define LPK_ERROR_UNPACK		-12		/* error on unpacking file. */
     
 typedef enum {
-    LPKC_NONE
+    LPKC_NONE,
+    LPKC_ZLIB
 } LPKCompressAlgorithm;
     
 typedef enum {
-    LPKE_NONE
+    LPKE_NONE,
+    LPKE_XOR,
+    LPKE_TEA,
+    LPKE_XXTEA
 } LPKEncryptAlgorithm;
     
 typedef enum {
@@ -122,7 +129,10 @@ typedef struct {
 extern int lpk_open_file(lpk_file* lpk, const char* filepath);
 extern int lpk_close_file(lpk_file* lpk);
 extern uint32_t lpk_get_file_hash_table_index(lpk_file* lpk, const char* filepath);
-
+extern uint32_t lpk_get_file_block_table_index(lpk_file* lpk, const char* filepath);
+extern uint32_t lpk_get_file_size(lpk_file* lpk, const char* filepath);
+extern uint8_t* lpk_extract_file(lpk_file* lpk, const char* filepath, uint32_t* size);
+    
 #ifdef __cplusplus
 }
 #endif

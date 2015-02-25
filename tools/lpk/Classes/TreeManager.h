@@ -16,6 +16,8 @@
 @property (nonatomic, strong) NSString* projectPath;
 @property (nonatomic, strong) NSString* exportPath;
 @property (nonatomic, assign) BOOL dirty;
+@property (nonatomic, assign) LPKCompressAlgorithm defaultCompressAlgorithm;
+@property (nonatomic, assign) LPKEncryptAlgorithm defaultEncryptAlgorithm;
 
 - (NSArray*)stripContainedKeys:(NSArray*)keys;
 - (NSArray*)stripContainedEntries:(NSArray*)entries;

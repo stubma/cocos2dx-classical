@@ -11,6 +11,7 @@
 #import "ProgressViewController.h"
 #import "NSMutableData+ReadWrite.h"
 #import "NSData+Generator.h"
+#import "NSData+Compression.h"
 
 @interface TreeManager ()
 
@@ -18,6 +19,7 @@
 - (uint32_t)nextFreeHashIndex:(lpk_file*)f from:(uint32_t)from;
 - (void)endProgressSheet:(ProgressViewController*)pvc;
 - (void)outputExportedFileInfo;
+- (int)writeOneFile:(LpkEntry*)e branch:(LpkBranchEntry*)b toHashIndex:(uint32_t)hashIndex blockIndex:(uint32_t)blockIndex ofLPK:(lpk_file*)lpk withFileHandler:(NSFileHandle*)fh atOffset:(uint32_t)offset;
 
 @end
 
@@ -28,6 +30,8 @@
         self.root = [[LpkEntry alloc] init];
         self.exportPath = @"";
         self.projectPath = [@"~/Documents/Untitled.lpkproj" stringByExpandingTildeInPath];
+        self.defaultCompressAlgorithm = LPKC_ZLIB;
+        self.defaultEncryptAlgorithm = LPKE_NONE;
         return self;
     }
     return nil;
@@ -230,6 +234,63 @@
     [os close];
 }
 
+- (int)writeOneFile:(LpkEntry*)e branch:(LpkBranchEntry*)b toHashIndex:(uint32_t)hashIndex blockIndex:(uint32_t)blockIndex ofLPK:(lpk_file*)lpk withFileHandler:(NSFileHandle*)fh atOffset:(uint32_t)offset {
+    // get key
+    NSString* eKey = e.key;
+    const void* key = (const void*)[eKey cStringUsingEncoding:NSUTF8StringEncoding];
+    size_t len = [eKey lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+    
+    // get hash
+    lpk_hash* hash = lpk->het + hashIndex;
+    
+    // fill hash
+    hash->hash_a = hashlittle(key, len, LPK_HASH_TAG_NAME_A);
+    hash->hash_b = hashlittle(key, len, LPK_HASH_TAG_NAME_B);
+    hash->locale = b.locale;
+    hash->platform = b.platform;
+    
+    // resolve path
+    NSString* path = b.realPath;
+    if(![path isAbsolutePath]) {
+        path = [[[self.projectPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:path] stringByStandardizingPath];
+    }
+    
+    // write block
+    uint32_t blockSize = 512 << lpk->h.block_size;
+    NSData* data = [NSData dataWithContentsOfFile:path];
+    NSData* cmpData = data;
+    switch (b.compressAlgorithm) {
+        case LPKC_ZLIB:
+            cmpData = [data zlibDeflate];
+            break;
+        default:
+            break;
+    }
+    [fh writeData:cmpData];
+    uint32_t fileSize = (uint32_t)[data length];
+    uint32_t compressSize = (uint32_t)[cmpData length];
+    uint32_t blockCount = (compressSize + blockSize - 1) / blockSize;
+    
+    // fill junk to make it align with block size
+    uint32_t junk = (blockSize - (compressSize % blockSize)) % blockSize;
+    if(junk > 0) {
+        [fh writeData:[NSData dataWithByte:0 repeated:junk]];
+    }
+    
+    // fill block struct
+    lpk_block* block = lpk->bet + blockIndex;
+    block->file_size = fileSize;
+    block->packed_size = compressSize;
+    block->flags = LPK_FLAG_EXISTS;
+    block->offset = offset;
+    
+    // save block index
+    hash->block_table_index = blockIndex;
+    
+    // return block count
+    return blockCount;
+}
+
 - (void)exportLPK:(ProgressViewController*)pvc {
     // ensure dest file is here
     NSFileManager* fm = [NSFileManager defaultManager];
@@ -306,40 +367,14 @@
         [pvc.progressIndicator incrementBy:1];
         pvc.hintLabel.stringValue = [NSString stringWithFormat:@"Writting %@...", e.name];
         
-        // fill hash
-        LpkBranchEntry* b = [e getFirstBranch];
-        hash->hash_a = hashlittle(key, len, LPK_HASH_TAG_NAME_A);
-        hash->hash_b = hashlittle(key, len, LPK_HASH_TAG_NAME_B);
-        hash->locale = b.locale;
-        hash->platform = b.platform;
-        
-        // resolve path
-        NSString* path = b.realPath;
-        if(![path isAbsolutePath]) {
-            path = [[[self.projectPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:path] stringByStandardizingPath];
-        }
-        
-        // write block
-        NSData* data = [NSData dataWithContentsOfFile:path];
-        uint32_t fileSize = (uint32_t)[data length];
-        [fh writeData:data];
-        uint32_t blockCount = (fileSize + blockSize - 1) / blockSize;
-        
-        // fill junk to make it align with block size
-        uint32_t junk = (blockSize - (fileSize % blockSize)) % blockSize;
-        if(junk > 0) {
-            [fh writeData:[NSData dataWithByte:0 repeated:junk]];
-        }
-        
-        // fill block struct
-        lpk_block* block = lpk.bet + blockIndex;
-        block->file_size = fileSize;
-        block->packed_size = fileSize;
-        block->flags = LPK_FLAG_EXISTS;
-        block->offset = totalSize;
-        
-        // save block index
-        hash->block_table_index = blockIndex;
+        // write this file
+        int blockCount = [self writeOneFile:e
+                                     branch:[e getFirstBranch]
+                                toHashIndex:hashIndex
+                                 blockIndex:blockIndex
+                                      ofLPK:&lpk
+                            withFileHandler:fh
+                                   atOffset:totalSize];
         
         // add total size
         totalSize += blockCount * blockSize;
@@ -373,40 +408,14 @@
         }
         lpk_hash* chainHash = lpk.het + freeHashIndex;
         
-        // fill hash
-        LpkBranchEntry* b = [e getFirstBranch];
-        chainHash->hash_a = hashlittle(key, len, LPK_HASH_TAG_NAME_A);
-        chainHash->hash_b = hashlittle(key, len, LPK_HASH_TAG_NAME_B);
-        chainHash->locale = b.locale;
-        chainHash->platform = b.platform;
-        
-        // resolve path
-        NSString* path = b.realPath;
-        if(![path isAbsolutePath]) {
-            path = [[[self.projectPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:path] stringByStandardizingPath];
-        }
-        
-        // write block
-        NSData* data = [NSData dataWithContentsOfFile:path];
-        uint32_t fileSize = (uint32_t)[data length];
-        [fh writeData:data];
-        uint32_t blockCount = (fileSize + blockSize - 1) / blockSize;
-        
-        // fill junk to make it align with block size
-        uint32_t junk = (blockSize - (fileSize % blockSize)) % blockSize;
-        if(junk > 0) {
-            [fh writeData:[NSData dataWithByte:0 repeated:junk]];
-        }
-        
-        // fill block struct
-        lpk_block* block = lpk.bet + blockIndex;
-        block->file_size = fileSize;
-        block->packed_size = fileSize;
-        block->flags = LPK_FLAG_EXISTS;
-        block->offset = totalSize;
-        
-        // save block index
-        chainHash->block_table_index = blockIndex;
+        // write this file
+        int blockCount = [self writeOneFile:e
+                                     branch:[e getFirstBranch]
+                                toHashIndex:freeHashIndex
+                                 blockIndex:blockIndex
+                                      ofLPK:&lpk
+                            withFileHandler:fh
+                                   atOffset:totalSize];
         
         // link hash
         hash->next_hash = freeHashIndex;
@@ -436,8 +445,6 @@
         
         // iterate
         for(int i = 1; i < bc; i++) {
-            LpkBranchEntry* b = [e.branches objectAtIndex:i];
-            
             // get hash table index for this entry
             NSString* eKey = e.key;
             const void* key = (const void*)[eKey cStringUsingEncoding:NSUTF8StringEncoding];
@@ -456,39 +463,14 @@
             }
             lpk_hash* chainHash = lpk.het + freeHashIndex;
             
-            // fill hash
-            chainHash->hash_a = hashlittle(key, len, LPK_HASH_TAG_NAME_A);
-            chainHash->hash_b = hashlittle(key, len, LPK_HASH_TAG_NAME_B);
-            chainHash->locale = b.locale;
-            chainHash->platform = b.platform;
-            
-            // resolve path
-            NSString* path = b.realPath;
-            if(![path isAbsolutePath]) {
-                path = [[[self.projectPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:path] stringByStandardizingPath];
-            }
-            
-            // write block
-            NSData* data = [NSData dataWithContentsOfFile:path];
-            uint32_t fileSize = (uint32_t)[data length];
-            [fh writeData:data];
-            uint32_t blockCount = (fileSize + blockSize - 1) / blockSize;
-            
-            // fill junk to make it align with block size
-            uint32_t junk = (blockSize - (fileSize % blockSize)) % blockSize;
-            if(junk > 0) {
-                [fh writeData:[NSData dataWithByte:0 repeated:junk]];
-            }
-            
-            // fill block struct
-            lpk_block* block = lpk.bet + blockIndex;
-            block->file_size = fileSize;
-            block->packed_size = fileSize;
-            block->flags = LPK_FLAG_EXISTS;
-            block->offset = totalSize;
-            
-            // save block index
-            chainHash->block_table_index = blockIndex;
+            // write this file
+            int blockCount = [self writeOneFile:e
+                                         branch:[e.branches objectAtIndex:i]
+                                    toHashIndex:freeHashIndex
+                                     blockIndex:blockIndex
+                                          ofLPK:&lpk
+                                withFileHandler:fh
+                                       atOffset:totalSize];
             
             // link hash
             hash->next_hash = freeHashIndex;
@@ -601,6 +583,15 @@
           lpk.h.block_table_count,
           lpk.h.hash_table_offset,
           lpk.h.block_table_offset);
+    
+    // extract a file
+//    uint32_t size;
+//    uint8_t* buf = lpk_extract_file(&lpk, "/Resources/res-iphone/manual/战场攻略_封印.jpg", &size);
+//    if(buf) {
+//        NSData* data = [NSData dataWithBytes:buf length:size];
+//        [data writeToFile:@"/Users/maruojie/Desktop/a.jpg" atomically:YES];
+//        free(buf);
+//    }
     
     // output every file info
     NSMutableArray* allFileEntries = [NSMutableArray array];
