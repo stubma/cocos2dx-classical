@@ -627,7 +627,7 @@
     
     // extract a file
     uint32_t size;
-    uint8_t* buf = lpk_extract_file(&lpk, "/Resources/res-iphone/manual/战场攻略_封印.jpg", &size, "sglink", 6);
+    uint8_t* buf = lpk_extract_file(&lpk, "/Resources/res-iphone/manual/战场攻略_封印.jpg", &size, "战场攻略_封印.jpg", strlen("战场攻略_封印.jpg"));
     if(buf) {
         NSData* data = [NSData dataWithBytes:buf length:size];
         [data writeToFile:@"/Users/maruojie/Desktop/a.jpg" atomically:YES];
@@ -682,7 +682,9 @@
      * to return a proper key for one file. And in your game, you should implement it also
      * and feed it to lpk library
      */
-    return @"";
+    
+    // for test, just use file name as the key
+    return e.name;
 }
 
 - (NSString*)dynamicTEAKeyForEntry:(LpkEntry*)e andBranch:(LpkBranchEntry*)b {
@@ -691,7 +693,9 @@
      * to return a proper key for one file. And in your game, you should implement it also
      * and feed it to lpk library
      */
-    return @"";
+    
+    // for test, just use file name as the key
+    return e.name;
 }
 
 - (NSString*)dynamicXXTEAKeyForEntry:(LpkEntry*)e andBranch:(LpkBranchEntry*)b {
@@ -700,7 +704,9 @@
      * to return a proper key for one file. And in your game, you should implement it also
      * and feed it to lpk library
      */
-    return @"";
+
+    // for test, just use file name as the key
+    return e.name;
 }
 
 @end
