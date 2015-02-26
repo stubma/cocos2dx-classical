@@ -47,8 +47,13 @@
     [self.encryptCombo setDataSource:self];
     
     // init UI
+    ViewController* vc = (ViewController*)self.window.contentViewController;
     LpkBranchEntry* b = (LpkBranchEntry*)objectValue;
-    self.pathLabel.stringValue = b.realPath;
+    if([b.realPath isAbsolutePath]) {
+        self.pathLabel.stringValue = b.realPath;
+    } else {
+        self.pathLabel.stringValue = [[[vc.tree.projectPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:b.realPath] stringByStandardizingPath];
+    }
     [self.platformCombo selectItemAtIndex:b.platform];
     NSString* localeId = [NSLocale localeIdentifierFromWindowsLocaleCode:b.locale];
     NSLocale* locale = [NSLocale localeWithLocaleIdentifier:@"en_US"];
