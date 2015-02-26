@@ -39,6 +39,7 @@
 		928B556D1A9DBDCC00781D3D /* CompressSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928B556C1A9DBDCC00781D3D /* CompressSettingViewController.m */; };
 		928C0CDB1A9F327A009080BC /* ViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928C0CDA1A9F327A009080BC /* ViewerViewController.m */; };
 		928C0CDE1A9F328E009080BC /* DefaultViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928C0CDD1A9F328E009080BC /* DefaultViewerViewController.m */; };
+		928C0CE11A9F48D9009080BC /* ImageViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928C0CE01A9F48D9009080BC /* ImageViewerViewController.m */; };
 		92B090B31A9465DA003A1298 /* LpkBranchEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B090B21A9465DA003A1298 /* LpkBranchEntry.m */; };
 		92B090B61A9472EB003A1298 /* EntryInfoCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B090B51A9472EB003A1298 /* EntryInfoCellView.m */; };
 		92C3829F1A9EB61D00BF8699 /* GeneralSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C3829E1A9EB61D00BF8699 /* GeneralSettingViewController.m */; };
@@ -115,6 +116,8 @@
 		928C0CDA1A9F327A009080BC /* ViewerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewerViewController.m; sourceTree = "<group>"; };
 		928C0CDC1A9F328E009080BC /* DefaultViewerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultViewerViewController.h; sourceTree = "<group>"; };
 		928C0CDD1A9F328E009080BC /* DefaultViewerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultViewerViewController.m; sourceTree = "<group>"; };
+		928C0CDF1A9F48D9009080BC /* ImageViewerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewerViewController.h; sourceTree = "<group>"; };
+		928C0CE01A9F48D9009080BC /* ImageViewerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewerViewController.m; sourceTree = "<group>"; };
 		92B090B11A9465DA003A1298 /* LpkBranchEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LpkBranchEntry.h; sourceTree = "<group>"; };
 		92B090B21A9465DA003A1298 /* LpkBranchEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LpkBranchEntry.m; sourceTree = "<group>"; };
 		92B090B41A9472EB003A1298 /* EntryInfoCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryInfoCellView.h; sourceTree = "<group>"; };
@@ -275,6 +278,8 @@
 				928C0CDA1A9F327A009080BC /* ViewerViewController.m */,
 				928C0CDC1A9F328E009080BC /* DefaultViewerViewController.h */,
 				928C0CDD1A9F328E009080BC /* DefaultViewerViewController.m */,
+				928C0CDF1A9F48D9009080BC /* ImageViewerViewController.h */,
+				928C0CE01A9F48D9009080BC /* ImageViewerViewController.m */,
 				92B090B41A9472EB003A1298 /* EntryInfoCellView.h */,
 				92B090B51A9472EB003A1298 /* EntryInfoCellView.m */,
 				92CF2B4C1A961BC60094D6E4 /* Consts.h */,
@@ -425,6 +430,7 @@
 				9211D9CF1A91A15D0015712A /* LpkEntry.m in Sources */,
 				9247AF771A90D127006BB0C4 /* CNSplitViewDraggingHandle.m in Sources */,
 				9211D9ED1A92475E0015712A /* InputViewController.m in Sources */,
+				928C0CE11A9F48D9009080BC /* ImageViewerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

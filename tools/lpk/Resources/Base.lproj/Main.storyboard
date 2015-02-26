@@ -566,6 +566,45 @@ DQ
             </objects>
             <point key="canvasLocation" x="905" y="1089"/>
         </scene>
+        <!--Image Viewer View Controller-->
+        <scene sceneID="FRl-kv-MJU">
+            <objects>
+                <viewController storyboardIdentifier="image_viewer" id="064-Pc-BCQ" customClass="ImageViewerViewController" sceneMemberID="viewController">
+                    <view key="view" id="b4r-xG-GaG">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="259"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tBm-BK-0Nn">
+                                <rect key="frame" x="20" y="33" width="410" height="206"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="ePK-x9-d7g"/>
+                            </imageView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="imY-wg-PLU">
+                                <rect key="frame" x="206" y="8" width="38" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Test" id="1kl-Ze-woz">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="tBm-BK-0Nn" firstAttribute="leading" secondItem="b4r-xG-GaG" secondAttribute="leading" constant="20" id="32G-Dr-afd"/>
+                            <constraint firstAttribute="centerX" secondItem="imY-wg-PLU" secondAttribute="centerX" id="8iP-Hw-5t1"/>
+                            <constraint firstItem="tBm-BK-0Nn" firstAttribute="top" secondItem="b4r-xG-GaG" secondAttribute="top" constant="20" id="AhR-EG-7iY"/>
+                            <constraint firstAttribute="trailing" secondItem="tBm-BK-0Nn" secondAttribute="trailing" constant="20" id="MaK-6B-yHV"/>
+                            <constraint firstItem="imY-wg-PLU" firstAttribute="top" secondItem="tBm-BK-0Nn" secondAttribute="bottom" constant="8" id="ZcI-bO-vc4"/>
+                            <constraint firstAttribute="bottom" secondItem="imY-wg-PLU" secondAttribute="bottom" constant="8" id="q2A-aH-Xx9"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="tBm-BK-0Nn" id="7dp-Y6-XEK"/>
+                        <outlet property="infoLabel" destination="imY-wg-PLU" id="Sq3-0x-mny"/>
+                    </connections>
+                </viewController>
+                <customObject id="Aqz-VE-ieC" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="905" y="1428.5"/>
+        </scene>
         <!--Encryption-->
         <scene sceneID="d66-hw-OT6">
             <objects>

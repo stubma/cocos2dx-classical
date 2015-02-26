@@ -96,33 +96,44 @@
     
     // set new viewer
     LpkEntry* e = [self getFirstSelectedItem];
-    if(!e.isDir) {
+    if(e && !e.isDir) {
         LpkBranchEntry* b = self.infoTableView.selectedRow >= 0 ? [e.branches objectAtIndex:self.infoTableView.selectedRow] : [e getFirstBranch];
         NSString* extension = [b.realPath pathExtension];
         if(![b.realPath isAbsolutePath]) {
             b.realPath = [[[self.tree.projectPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:b.realPath] stringByStandardizingPath];
         }
+        
+        // instantiate viewer
+        NSStoryboard* sb = [NSStoryboard storyboardWithName:@"Main" bundle:nil];
+        ViewerViewController* vc = nil;
         if([@"png" isEqual:extension] || [@"jpg" isEqual:extension] || [@"jpeg" isEqual:extension]) {
-            
+            vc = (ViewerViewController*)[sb instantiateControllerWithIdentifier:@"image_viewer"];
         } else {
-            NSStoryboard* sb = [NSStoryboard storyboardWithName:@"Main" bundle:nil];
-            DefaultViewerViewController* vc = (DefaultViewerViewController*)[sb instantiateControllerWithIdentifier:@"default_viewer"];
-            [vc loadView];
-            vc.branch = b;
-            self.viewer = vc;
-            [self.viewerContainer addSubview:vc.view];
-            vc.view.translatesAutoresizingMaskIntoConstraints = NO;
-            NSMutableArray* constraints = [NSMutableArray array];
-            [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[viewer]-0-|"
-                                                                                     options:0
-                                                                                     metrics:nil
-                                                                                       views:@{ @"viewer" : vc.view }]];
-            [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[viewer]-0-|"
-                                                                                     options:0
-                                                                                     metrics:nil
-                                                                                       views:@{ @"viewer" : vc.view }]];
-            [self.viewerContainer addConstraints:constraints];
+            vc = (ViewerViewController*)[sb instantiateControllerWithIdentifier:@"default_viewer"];
         }
+        
+        // load view
+        [vc loadView];
+        
+        // set branch
+        vc.branch = b;
+        
+        // add to container
+        self.viewer = vc;
+        [self.viewerContainer addSubview:vc.view];
+        
+        // add constraints
+        vc.view.translatesAutoresizingMaskIntoConstraints = NO;
+        NSMutableArray* constraints = [NSMutableArray array];
+        [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[viewer]-0-|"
+                                                                                 options:0
+                                                                                 metrics:nil
+                                                                                   views:@{ @"viewer" : vc.view }]];
+        [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[viewer]-0-|"
+                                                                                 options:0
+                                                                                 metrics:nil
+                                                                                   views:@{ @"viewer" : vc.view }]];
+        [self.viewerContainer addConstraints:constraints];
     }
 }
 
