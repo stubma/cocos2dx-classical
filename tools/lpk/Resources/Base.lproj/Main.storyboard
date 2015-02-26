@@ -525,10 +525,10 @@ DQ
             </objects>
             <point key="canvasLocation" x="1166.5" y="667"/>
         </scene>
-        <!--View Controller-->
+        <!--Default Viewer View Controller-->
         <scene sceneID="96P-ZK-e3A">
             <objects>
-                <viewController id="pi4-qE-aTW" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="default_viewer" id="pi4-qE-aTW" customClass="DefaultViewerViewController" sceneMemberID="viewController">
                     <view key="view" id="2WM-Gz-PN9">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="306"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -557,6 +557,10 @@ DQ
                             <constraint firstItem="na0-FY-pU3" firstAttribute="centerX" secondItem="LZE-Pj-GHx" secondAttribute="centerX" constant="-0.5" id="wZ1-Ph-T89"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="iconView" destination="na0-FY-pU3" id="Tn3-Wi-gs4"/>
+                        <outlet property="nameLabel" destination="LZE-Pj-GHx" id="g21-gF-8y4"/>
+                    </connections>
                 </viewController>
                 <customObject id="7fP-AS-eyo" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -567,7 +571,7 @@ DQ
             <objects>
                 <viewController title="Encryption" id="b3Y-WH-te2" customClass="EncryptionSettingViewController" sceneMemberID="viewController">
                     <view key="view" id="65Y-nN-FJR">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="242"/>
+                        <rect key="frame" x="0.0" y="0.0" width="481" height="242"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tZJ-0d-Dx5">
@@ -584,7 +588,7 @@ DQ
                                 <tabViewItems>
                                     <tabViewItem label="XOR" identifier="1" id="myC-Kh-7ml">
                                         <view key="view" id="NiC-d7-Ref">
-                                            <rect key="frame" x="10" y="33" width="433" height="147"/>
+                                            <rect key="frame" x="10" y="33" width="435" height="147"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="ZSE-o9-xwc">
@@ -633,7 +637,7 @@ DQ
                                     </tabViewItem>
                                     <tabViewItem label="TEA" identifier="2" id="kwt-fz-l4p">
                                         <view key="view" id="VrL-hP-edS">
-                                            <rect key="frame" x="10" y="33" width="433" height="147"/>
+                                            <rect key="frame" x="10" y="33" width="434" height="147"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="RIz-k2-mgr">
@@ -695,7 +699,7 @@ DQ
                                                         <action selector="onXxteaStaticKeyChecked:" target="b3Y-WH-te2" id="br0-pg-RGc"/>
                                                     </connections>
                                                 </button>
-                                                <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CV7-4u-xdn">
+                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CV7-4u-xdn">
                                                     <rect key="frame" x="112" y="122" width="304" height="22"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="V40-LD-Q3Z">
                                                         <font key="font" metaFont="system"/>
@@ -706,7 +710,7 @@ DQ
                                                         <outlet property="delegate" destination="b3Y-WH-te2" id="Yfn-HZ-YYC"/>
                                                     </connections>
                                                 </textField>
-                                                <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Le5-Ge-5Pb">
+                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="Le5-Ge-5Pb">
                                                     <rect key="frame" x="16" y="97" width="383" height="18"/>
                                                     <buttonCell key="cell" type="radio" title="Dynamic key: you need implement method in TreeManager" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="lfE-Xe-6sk">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1518,13 +1522,13 @@ DQ
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <outlineView appearanceType="vibrantLight" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" autosaveColumns="NO" headerView="TQx-B3-ovu" indentationPerLevel="16" outlineTableColumn="Lhp-As-7fC" id="J3D-Cb-3Ha">
-                                                            <rect key="frame" x="0.0" y="0.0" width="1059" height="20"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="889" height="20"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <size key="intercellSpacing" width="2" height="3"/>
                                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                             <tableColumns>
-                                                                <tableColumn identifier="name" width="772.19140625" minWidth="40" maxWidth="1000" id="Lhp-As-7fC">
+                                                                <tableColumn identifier="name" width="942.19140625" minWidth="40" maxWidth="1000" id="Lhp-As-7fC">
                                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Name">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1860,7 +1864,7 @@ DQ
                         <outlet property="hSplitView" destination="Wgk-vR-tqA" id="VVm-U0-7A4"/>
                         <outlet property="infoTableView" destination="mmq-E6-HlL" id="oOB-sP-uZv"/>
                         <outlet property="vSplitView" destination="LBR-EP-S8A" id="zfc-pC-8zR"/>
-                        <outlet property="viewerContainer" destination="s6n-Fc-RDy" id="F31-4E-qAU"/>
+                        <outlet property="viewerContainer" destination="s6n-Fc-RDy" id="hHx-e3-7OP"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "NSOutlineView+State.h"
 #import "AddBranchViewController.h"
+#import "DefaultViewerViewController.h"
 
 #define DRAG_TYPE_LPK_ENTRY @"_dt_lpk_entry"
 
@@ -21,6 +22,9 @@
 @property (weak) IBOutlet NSView *viewerContainer;
 @property (nonatomic, assign) BOOL hasFilter;
 @property (nonatomic, strong) NSArray* expandedItems;
+@property (nonatomic, strong) ViewerViewController* viewer;
+
+- (void)updateViewer;
 
 @end
 
@@ -81,6 +85,45 @@
     
     // workaround to make scrollbar visible
     [self.fileOutlineView scrollRowToVisible:0];
+}
+
+- (void)updateViewer {
+    // remove old viewer
+    if(self.viewer) {
+        [self.viewer.view removeFromSuperview];
+        self.viewer = nil;
+    }
+    
+    // set new viewer
+    LpkEntry* e = [self getFirstSelectedItem];
+    if(!e.isDir) {
+        LpkBranchEntry* b = self.infoTableView.selectedRow >= 0 ? [e.branches objectAtIndex:self.infoTableView.selectedRow] : [e getFirstBranch];
+        NSString* extension = [b.realPath pathExtension];
+        if(![b.realPath isAbsolutePath]) {
+            b.realPath = [[[self.tree.projectPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:b.realPath] stringByStandardizingPath];
+        }
+        if([@"png" isEqual:extension] || [@"jpg" isEqual:extension] || [@"jpeg" isEqual:extension]) {
+            
+        } else {
+            NSStoryboard* sb = [NSStoryboard storyboardWithName:@"Main" bundle:nil];
+            DefaultViewerViewController* vc = (DefaultViewerViewController*)[sb instantiateControllerWithIdentifier:@"default_viewer"];
+            [vc loadView];
+            vc.branch = b;
+            self.viewer = vc;
+            [self.viewerContainer addSubview:vc.view];
+            vc.view.translatesAutoresizingMaskIntoConstraints = NO;
+            NSMutableArray* constraints = [NSMutableArray array];
+            [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[viewer]-0-|"
+                                                                                     options:0
+                                                                                     metrics:nil
+                                                                                       views:@{ @"viewer" : vc.view }]];
+            [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[viewer]-0-|"
+                                                                                     options:0
+                                                                                     metrics:nil
+                                                                                       views:@{ @"viewer" : vc.view }]];
+            [self.viewerContainer addConstraints:constraints];
+        }
+    }
 }
 
 #pragma mark -
@@ -273,6 +316,7 @@
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)notificatio {
     [self.infoTableView reloadData];
+    [self updateViewer];
 }
 
 #pragma mark -

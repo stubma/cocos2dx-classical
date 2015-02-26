@@ -37,6 +37,8 @@
 		928B55641A9DB0E000781D3D /* encrypt.png in Resources */ = {isa = PBXBuildFile; fileRef = 928B55621A9DB0E000781D3D /* encrypt.png */; };
 		928B556A1A9DB5C700781D3D /* SettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928B55691A9DB5C700781D3D /* SettingsWindowController.m */; };
 		928B556D1A9DBDCC00781D3D /* CompressSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928B556C1A9DBDCC00781D3D /* CompressSettingViewController.m */; };
+		928C0CDB1A9F327A009080BC /* ViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928C0CDA1A9F327A009080BC /* ViewerViewController.m */; };
+		928C0CDE1A9F328E009080BC /* DefaultViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928C0CDD1A9F328E009080BC /* DefaultViewerViewController.m */; };
 		92B090B31A9465DA003A1298 /* LpkBranchEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B090B21A9465DA003A1298 /* LpkBranchEntry.m */; };
 		92B090B61A9472EB003A1298 /* EntryInfoCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B090B51A9472EB003A1298 /* EntryInfoCellView.m */; };
 		92C3829F1A9EB61D00BF8699 /* GeneralSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C3829E1A9EB61D00BF8699 /* GeneralSettingViewController.m */; };
@@ -109,6 +111,10 @@
 		928B55691A9DB5C700781D3D /* SettingsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsWindowController.m; sourceTree = "<group>"; };
 		928B556B1A9DBDCC00781D3D /* CompressSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompressSettingViewController.h; sourceTree = "<group>"; };
 		928B556C1A9DBDCC00781D3D /* CompressSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompressSettingViewController.m; sourceTree = "<group>"; };
+		928C0CD91A9F327A009080BC /* ViewerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewerViewController.h; sourceTree = "<group>"; };
+		928C0CDA1A9F327A009080BC /* ViewerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewerViewController.m; sourceTree = "<group>"; };
+		928C0CDC1A9F328E009080BC /* DefaultViewerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultViewerViewController.h; sourceTree = "<group>"; };
+		928C0CDD1A9F328E009080BC /* DefaultViewerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultViewerViewController.m; sourceTree = "<group>"; };
 		92B090B11A9465DA003A1298 /* LpkBranchEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LpkBranchEntry.h; sourceTree = "<group>"; };
 		92B090B21A9465DA003A1298 /* LpkBranchEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LpkBranchEntry.m; sourceTree = "<group>"; };
 		92B090B41A9472EB003A1298 /* EntryInfoCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryInfoCellView.h; sourceTree = "<group>"; };
@@ -265,6 +271,10 @@
 				928B556C1A9DBDCC00781D3D /* CompressSettingViewController.m */,
 				92C382A01A9EB9E000BF8699 /* EncryptionSettingViewController.h */,
 				92C382A11A9EB9E000BF8699 /* EncryptionSettingViewController.m */,
+				928C0CD91A9F327A009080BC /* ViewerViewController.h */,
+				928C0CDA1A9F327A009080BC /* ViewerViewController.m */,
+				928C0CDC1A9F328E009080BC /* DefaultViewerViewController.h */,
+				928C0CDD1A9F328E009080BC /* DefaultViewerViewController.m */,
 				92B090B41A9472EB003A1298 /* EntryInfoCellView.h */,
 				92B090B51A9472EB003A1298 /* EntryInfoCellView.m */,
 				92CF2B4C1A961BC60094D6E4 /* Consts.h */,
@@ -383,7 +393,9 @@
 				92E851041A90C712005A1465 /* AppDelegate.m in Sources */,
 				9211D9DA1A91C5160015712A /* hash_bob_jenkins_v2.c in Sources */,
 				928B55601A9DAEF500781D3D /* SettingsViewController.m in Sources */,
+				928C0CDB1A9F327A009080BC /* ViewerViewController.m in Sources */,
 				9211D9D21A91A2580015712A /* TreeManager.m in Sources */,
+				928C0CDE1A9F328E009080BC /* DefaultViewerViewController.m in Sources */,
 				9247AF761A90D127006BB0C4 /* CNSplitView.m in Sources */,
 				922E43531A9ACBB700A75392 /* ProgressViewController.m in Sources */,
 				9247AF661A90D073006BB0C4 /* WindowController.m in Sources */,
