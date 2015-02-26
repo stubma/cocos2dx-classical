@@ -19,6 +19,7 @@
 @property (nonatomic, assign) LPKCompressAlgorithm defaultCompressAlgorithm;
 @property (nonatomic, assign) LPKEncryptAlgorithm defaultEncryptAlgorithm;
 @property (nonatomic, assign) BOOL autoSkipCompression;
+@property (nonatomic, assign) int blockSize;
 
 - (NSArray*)stripContainedKeys:(NSArray*)keys;
 - (NSArray*)stripContainedEntries:(NSArray*)entries;

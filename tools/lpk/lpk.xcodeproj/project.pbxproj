@@ -39,6 +39,7 @@
 		928B556D1A9DBDCC00781D3D /* CompressSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928B556C1A9DBDCC00781D3D /* CompressSettingViewController.m */; };
 		92B090B31A9465DA003A1298 /* LpkBranchEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B090B21A9465DA003A1298 /* LpkBranchEntry.m */; };
 		92B090B61A9472EB003A1298 /* EntryInfoCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B090B51A9472EB003A1298 /* EntryInfoCellView.m */; };
+		92C3829F1A9EB61D00BF8699 /* GeneralSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C3829E1A9EB61D00BF8699 /* GeneralSettingViewController.m */; };
 		92CF2B4E1A961BC60094D6E4 /* Consts.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CF2B4D1A961BC60094D6E4 /* Consts.m */; };
 		92E850FC1A90C6E9005A1465 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92E850F91A90C6E9005A1465 /* Main.storyboard */; };
 		92E850FD1A90C6E9005A1465 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92E850FB1A90C6E9005A1465 /* Images.xcassets */; };
@@ -108,6 +109,8 @@
 		92B090B21A9465DA003A1298 /* LpkBranchEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LpkBranchEntry.m; sourceTree = "<group>"; };
 		92B090B41A9472EB003A1298 /* EntryInfoCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryInfoCellView.h; sourceTree = "<group>"; };
 		92B090B51A9472EB003A1298 /* EntryInfoCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryInfoCellView.m; sourceTree = "<group>"; };
+		92C3829D1A9EB61D00BF8699 /* GeneralSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralSettingViewController.h; sourceTree = "<group>"; };
+		92C3829E1A9EB61D00BF8699 /* GeneralSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralSettingViewController.m; sourceTree = "<group>"; };
 		92CF2B4C1A961BC60094D6E4 /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Consts.h; sourceTree = "<group>"; };
 		92CF2B4D1A961BC60094D6E4 /* Consts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Consts.m; sourceTree = "<group>"; };
 		92E850D21A90C68C005A1465 /* lpk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lpk.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -244,6 +247,8 @@
 				922E43521A9ACBB700A75392 /* ProgressViewController.m */,
 				928B555E1A9DAEF500781D3D /* SettingsViewController.h */,
 				928B555F1A9DAEF500781D3D /* SettingsViewController.m */,
+				92C3829D1A9EB61D00BF8699 /* GeneralSettingViewController.h */,
+				92C3829E1A9EB61D00BF8699 /* GeneralSettingViewController.m */,
 				928B556B1A9DBDCC00781D3D /* CompressSettingViewController.h */,
 				928B556C1A9DBDCC00781D3D /* CompressSettingViewController.m */,
 				92B090B41A9472EB003A1298 /* EntryInfoCellView.h */,
@@ -370,6 +375,7 @@
 				92CF2B4E1A961BC60094D6E4 /* Consts.m in Sources */,
 				928B556A1A9DB5C700781D3D /* SettingsWindowController.m in Sources */,
 				922E43591A9AD93600A75392 /* NSMutableData+ReadWrite.m in Sources */,
+				92C3829F1A9EB61D00BF8699 /* GeneralSettingViewController.m in Sources */,
 				92E9BD011A9339B200A9D898 /* NSString+Paths.m in Sources */,
 				92E9BD041A9379BB00A9D898 /* NSOutlineView+State.m in Sources */,
 				9211D9DD1A91CE900015712A /* NSArray+Transform.m in Sources */,

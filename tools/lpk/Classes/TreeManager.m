@@ -33,6 +33,7 @@
         self.defaultCompressAlgorithm = LPKC_ZLIB;
         self.defaultEncryptAlgorithm = LPKE_NONE;
         self.autoSkipCompression = YES;
+        self.blockSize = 0;
         return self;
     }
     return nil;
@@ -212,6 +213,7 @@
         self.defaultCompressAlgorithm = (LPKCompressAlgorithm)[[dict objectForKey:@"d_cmp_alg"] intValue];
         self.defaultEncryptAlgorithm = (LPKEncryptAlgorithm)[[dict objectForKey:@"d_enc_alg"] intValue];
         self.autoSkipCompression = [[dict objectForKey:@"auto_skip_cmp"] boolValue];
+        self.blockSize = [[dict objectForKey:@"block_size"] intValue];
         
         // flag
         self.dirty = NO;
@@ -227,6 +229,7 @@
     [root setObject:[NSNumber numberWithInt:self.defaultCompressAlgorithm] forKey:@"d_cmp_alg"];
     [root setObject:[NSNumber numberWithInt:self.defaultEncryptAlgorithm] forKey:@"d_enc_alg"];
     [root setObject:[NSNumber numberWithBool:self.autoSkipCompression] forKey:@"auto_skip_cmp"];
+    [root setObject:[NSNumber numberWithInt:self.blockSize] forKey:@"block_size"];
     if(![NSPropertyListSerialization writePropertyList:root
                                               toStream:os
                                                 format:NSPropertyListXMLFormat_v1_0
@@ -347,7 +350,7 @@
     lpk_file lpk = { 0 };
     lpk.h.lpk_magic = LPK_MAGIC;
     lpk.h.header_size = sizeof(lpk_header);
-    lpk.h.block_size = 0;
+    lpk.h.block_size = self.blockSize;
     lpk.files = [self.root getFileCountIncludeBranch];
     lpk.h.hash_table_count = [self nextPOT:lpk.files];
     lpk.h.block_table_count = [self nextPOT:lpk.files];

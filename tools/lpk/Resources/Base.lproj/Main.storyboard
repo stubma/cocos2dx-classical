@@ -420,7 +420,7 @@ DQ
                                     <rect key="frame" x="1" y="119" width="223" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="Wq1-v2-GeF">
+                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Wq1-v2-GeF">
                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
@@ -472,7 +472,7 @@ DQ
         <!--General-->
         <scene sceneID="wk7-kB-yk3">
             <objects>
-                <viewController id="9WP-Eg-MJT" userLabel="General" sceneMemberID="viewController">
+                <viewController id="9WP-Eg-MJT" userLabel="General" customClass="GeneralSettingViewController" sceneMemberID="viewController">
                     <view key="view" id="uip-WW-ohJ">
                         <rect key="frame" x="0.0" y="0.0" width="479" height="242"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -485,8 +485,30 @@ DQ
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G1V-eY-nFd">
+                                <rect key="frame" x="92" y="203" width="135" height="22"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" id="gs1-2I-Dzv">
+                                    <numberFormatter key="formatter" formatterBehavior="default10_4" localizesFormat="NO" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="9Fp-By-szX">
+                                        <real key="minimum" value="512"/>
+                                    </numberFormatter>
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H49-IG-pH8">
+                                <rect key="frame" x="224" y="201" width="19" height="27"/>
+                                <stepperCell key="cell" continuous="YES" alignment="left" maxValue="20" id="ZpQ-jB-8bS"/>
+                                <connections>
+                                    <action selector="onBlockSizeChanged:" target="9WP-Eg-MJT" id="G1z-Ad-C4k"/>
+                                </connections>
+                            </stepper>
                         </subviews>
                     </view>
+                    <connections>
+                        <outlet property="blockSizeText" destination="G1V-eY-nFd" id="sWW-TR-4CC"/>
+                        <outlet property="stepper" destination="H49-IG-pH8" id="L14-HI-ZW1"/>
+                    </connections>
                 </viewController>
                 <customObject id="0dn-R3-vfd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
