@@ -46,7 +46,6 @@ using namespace std;
 NS_CC_EXT_BEGIN
 
 #define KEY_OF_VERSION   "current-version-code"
-#define TEMP_PACKAGE_FILE_NAME    "sglink.zip"
 #define BUFFER_SIZE    8192
 #define MAX_FILENAME   512
 
@@ -227,7 +226,8 @@ void AssetsManager::update()
 bool AssetsManager::uncompress()
 {
     // Open the zip file
-    string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
+    string packageFileName = CCUtils::lastPathComponent(_packageUrl);
+    string outFileName = _storagePath + packageFileName;
     
     unzFile zipfile = unzOpen(outFileName.c_str());
     if (! zipfile)
@@ -402,7 +402,8 @@ int assetsManagerProgressFunc(void *ptr, double totalToDownload, double nowDownl
 bool AssetsManager::downLoad()
 {
     // Create a file to save package.
-    string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
+    string packageFileName = CCUtils::lastPathComponent(_packageUrl);
+    string outFileName = _storagePath + packageFileName;
     FILE *fp = fopen(outFileName.c_str(), "wb");
     if (! fp)
     {
@@ -592,7 +593,8 @@ void AssetsManager::Helper::handleUpdateSucceed(Message *msg)
     CCUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_VERSION, manager->_version.c_str());
     
     // Delete unloaded zip file.
-    string zipfileName = manager->_storagePath + TEMP_PACKAGE_FILE_NAME;
+    string packageFileName = CCUtils::lastPathComponent(manager->_packageUrl);
+    string zipfileName = manager->_storagePath + packageFileName;
     if (remove(zipfileName.c_str()) != 0)
     {
         CCLOG("can not remove downloaded zip file %s", zipfileName.c_str());
