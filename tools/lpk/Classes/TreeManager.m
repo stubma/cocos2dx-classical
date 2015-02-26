@@ -659,38 +659,38 @@
     }
     
     // output every file info
-    NSMutableArray* allFileEntries = [NSMutableArray array];
-    [self.root collectFiles:allFileEntries];
-    for(LpkEntry* e in allFileEntries) {
-        // get file path as the key
-        const char* filepath = [e.key cStringUsingEncoding:NSUTF8StringEncoding];
-        
-        // get hash table index
-        uint32_t hashIndex = lpk_get_file_hash_table_index(&lpk, filepath, 0, LPKP_DEFAULT);
-        
-        // if invalid, print error
-        if(hashIndex == LPK_HASH_FREE) {
-            NSLog(@"\n%s\n\tERROR: can't find this file!!", filepath);
-            continue;
-        }
-        
-        // get block
-        lpk_hash* hash = lpk.het + hashIndex;
-        lpk_block* block = lpk.bet + hash->block_table_index;
-        
-        // print file info
-        NSString* locale = LOCALE_IDS[0];
-        if(hash->locale > 0) {
-            locale = [NSLocale localeIdentifierFromWindowsLocaleCode:hash->locale];
-        }
-        NSLog(@"\n%s\n\tfile size: %u\n\tpacked size: %u\n\toffset: %u\n\tlocale: %@\n\tplatform: %@\n\t",
-              filepath,
-              block->file_size,
-              block->packed_size,
-              block->offset,
-              locale,
-              PLATFORM_NAMES[hash->platform]);
-    }
+//    NSMutableArray* allFileEntries = [NSMutableArray array];
+//    [self.root collectFiles:allFileEntries];
+//    for(LpkEntry* e in allFileEntries) {
+//        // get file path as the key
+//        const char* filepath = [e.key cStringUsingEncoding:NSUTF8StringEncoding];
+//        
+//        // get hash table index
+//        uint32_t hashIndex = lpk_get_file_hash_table_index(&lpk, filepath, 0, LPKP_DEFAULT);
+//        
+//        // if invalid, print error
+//        if(hashIndex == LPK_HASH_FREE) {
+//            NSLog(@"\n%s\n\tERROR: can't find this file!!", filepath);
+//            continue;
+//        }
+//        
+//        // get block
+//        lpk_hash* hash = lpk.het + hashIndex;
+//        lpk_block* block = lpk.bet + hash->block_table_index;
+//        
+//        // print file info
+//        NSString* locale = LOCALE_IDS[0];
+//        if(hash->locale > 0) {
+//            locale = [NSLocale localeIdentifierFromWindowsLocaleCode:hash->locale];
+//        }
+//        NSLog(@"\n%s\n\tfile size: %u\n\tpacked size: %u\n\toffset: %u\n\tlocale: %@\n\tplatform: %@\n\t",
+//              filepath,
+//              block->file_size,
+//              block->packed_size,
+//              block->offset,
+//              locale,
+//              PLATFORM_NAMES[hash->platform]);
+//    }
     
     // close file
     result = lpk_close_file(&lpk);
