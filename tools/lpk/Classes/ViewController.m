@@ -411,4 +411,8 @@
     return YES;
 }
 
+- (void)tableViewSelectionDidChange:(NSNotification *)notification {
+    [self updateViewer];
+}
+
 @end
