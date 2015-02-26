@@ -46,16 +46,14 @@ using namespace std;
 NS_CC_EXT_BEGIN
 
 #define KEY_OF_VERSION   "current-version-code"
-#define KEY_OF_DOWNLOADED_VERSION    "downloaded-version-code"
 #define TEMP_PACKAGE_FILE_NAME    "sglink.zip"
 #define BUFFER_SIZE    8192
 #define MAX_FILENAME   512
 
 // Message type
 #define ASSETSMANAGER_MESSAGE_UPDATE_SUCCEED                0
-#define ASSETSMANAGER_MESSAGE_RECORD_DOWNLOADED_VERSION     1
-#define ASSETSMANAGER_MESSAGE_PROGRESS                      2
-#define ASSETSMANAGER_MESSAGE_ERROR                         3
+#define ASSETSMANAGER_MESSAGE_PROGRESS                      1
+#define ASSETSMANAGER_MESSAGE_ERROR                         2
 
 // Some data struct for sending messages
 
@@ -78,7 +76,6 @@ AssetsManager::AssetsManager(const char* packageUrl/* =NULL */, const char* vers
 , _version("")
 , _packageUrl(packageUrl)
 , _versionFileUrl(versionFileUrl)
-, _downloadedVersion("")
 , _curl(NULL)
 , _tid(NULL)
 , _connectionTimeout(0)
@@ -178,16 +175,9 @@ void* assetsManagerDownloadAndUncompress(void *data)
     
     do
     {
-        if (self->_downloadedVersion != self->_version)
-        {
-            if (! self->downLoad()) break;
-            
-            // Record downloaded version.
-            AssetsManager::Message *msg1 = new AssetsManager::Message();
-            msg1->what = ASSETSMANAGER_MESSAGE_RECORD_DOWNLOADED_VERSION;
-            msg1->obj = self;
-            self->_schedule->sendMessage(msg1);
-        }
+        // download
+        if (! self->downLoad())
+            break;
         
         // Uncompress zip file.
         if (! self->uncompress())
@@ -227,10 +217,8 @@ void AssetsManager::update()
     }
     
     // Check if there is a new version.
-    if (! checkUpdate()) return;
-    
-    // Is package already downloaded?
-    _downloadedVersion = CCUserDefault::sharedUserDefault()->getStringForKey(KEY_OF_DOWNLOADED_VERSION);
+    if (! checkUpdate())
+        return;
     
     _tid = new pthread_t();
     pthread_create(&(*_tid), NULL, assetsManagerDownloadAndUncompress, this);
@@ -563,13 +551,6 @@ void AssetsManager::Helper::update(float dt)
     switch (msg->what) {
         case ASSETSMANAGER_MESSAGE_UPDATE_SUCCEED:
             handleUpdateSucceed(msg);
-            
-            break;
-        case ASSETSMANAGER_MESSAGE_RECORD_DOWNLOADED_VERSION:
-            CCUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_DOWNLOADED_VERSION,
-                                                                ((AssetsManager*)msg->obj)->_version.c_str());
-            CCUserDefault::sharedUserDefault()->flush();
-            
             break;
         case ASSETSMANAGER_MESSAGE_PROGRESS:
             if (((ProgressMessage*)msg->obj)->manager->m_nfun.handler){
@@ -609,10 +590,6 @@ void AssetsManager::Helper::handleUpdateSucceed(Message *msg)
     
     // Record new version code.
     CCUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_VERSION, manager->_version.c_str());
-    
-    // Unrecord downloaded version code.
-    CCUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_DOWNLOADED_VERSION, "");
-    CCUserDefault::sharedUserDefault()->flush();
     
     // Delete unloaded zip file.
     string zipfileName = manager->_storagePath + TEMP_PACKAGE_FILE_NAME;
