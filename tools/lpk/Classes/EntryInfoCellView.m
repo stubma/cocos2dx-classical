@@ -127,23 +127,51 @@
         lcid = [NSLocale windowsLocaleCodeFromLocaleIdentifier:LOCALE_IDS[index]];
     }
     
-    // save back to branch
+    // check duplication
     LpkBranchEntry* b = (LpkBranchEntry*)self.objectValue;
-    b.locale = lcid;
-    
-    // flag
-    ViewController* vc = (ViewController*)self.window.contentViewController;
-    vc.tree.dirty = YES;
+    if([b.trunk hasLocale:lcid andPlatform:b.platform]) {
+        NSAlert* alert = [[NSAlert alloc] init];
+        [alert setMessageText:@"Combination of Locale and Platform already exists in current entry"];
+        [alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
+            // restore old index
+            NSString* localeId = [NSLocale localeIdentifierFromWindowsLocaleCode:b.locale];
+            NSLocale* locale = [NSLocale localeWithLocaleIdentifier:@"en_US"];
+            NSString* displayName = [locale displayNameForKey:NSLocaleIdentifier value:localeId];
+            if([@"Root" isEqualToString:displayName])
+                displayName = @"Default";
+            [self.localeCombo selectItemAtIndex:[gLocaleDisplayNames indexOfObject:displayName]];
+        }];
+    } else {
+        // save back to branch
+        b.locale = lcid;
+        
+        // flag
+        ViewController* vc = (ViewController*)self.window.contentViewController;
+        vc.tree.dirty = YES;
+    }
 }
 
 - (IBAction)onPlatformChanged:(id)sender {
-    // save in branch
-    LpkBranchEntry* b = (LpkBranchEntry*)self.objectValue;
-    b.platform = (LPKPlatform)[self.platformCombo indexOfSelectedItem];
+    // get new platform id
+    LPKPlatform platform = (LPKPlatform)[self.platformCombo indexOfSelectedItem];
     
-    // flag
-    ViewController* vc = (ViewController*)self.window.contentViewController;
-    vc.tree.dirty = YES;
+    // check duplication
+    LpkBranchEntry* b = (LpkBranchEntry*)self.objectValue;
+    if([b.trunk hasLocale:b.locale andPlatform:platform]) {
+        NSAlert* alert = [[NSAlert alloc] init];
+        [alert setMessageText:@"Combination of Locale and Platform already exists in current entry"];
+        [alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
+            // restore old index
+            [self.platformCombo selectItemAtIndex:b.platform];
+        }];
+    } else {
+        // save in branch
+        b.platform = platform;
+        
+        // flag
+        ViewController* vc = (ViewController*)self.window.contentViewController;
+        vc.tree.dirty = YES;
+    }
 }
 
 #pragma mark -
