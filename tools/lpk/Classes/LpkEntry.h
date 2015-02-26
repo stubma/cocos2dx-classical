@@ -29,8 +29,6 @@ static NSString* LPKE_NAMES[] = {
 @property (nonatomic, readonly, getter=getKey) NSString* key;
 @property (nonatomic, readonly, getter=getTotalSize) uint32_t totalSize;
 @property (nonatomic, readonly, getter=getFirstBranch) LpkBranchEntry* firstBranch;
-@property (nonatomic, readonly, getter=getCompressDesc) NSString* compressDesc;
-@property (nonatomic, readonly, getter=getEncryptDesc) NSString* encryptDesc;
 
 + (LpkEntry*)decodeWithDictionary:(NSDictionary*)dict;
 

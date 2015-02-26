@@ -134,10 +134,6 @@
         return e.name;
     } else if([@"size" isEqualToString:tableColumn.identifier]) {
         return [NSNumber numberWithUnsignedInt:e.totalSize];
-    } else if([@"c" isEqualToString:tableColumn.identifier]) {
-        return e.compressDesc;
-    } else if([@"e" isEqualToString:tableColumn.identifier]) {
-        return e.encryptDesc;
     } else {
         return nil;
     }

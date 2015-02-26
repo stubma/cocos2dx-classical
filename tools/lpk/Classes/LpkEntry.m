@@ -227,26 +227,6 @@
     }
 }
 
-- (NSString*)getCompressDesc {
-    if([self.branches count] > 1) {
-        return @"Multiple";
-    } else if([self.branches count] > 0) {
-        return LPKC_NAMES[self.firstBranch.compressAlgorithm];
-    } else {
-        return @"N/A";
-    }
-}
-
-- (NSString*)getEncryptDesc {
-    if([self.branches count] > 1) {
-        return @"Multiple";
-    } else if([self.branches count] > 0) {
-        return LPKE_NAMES[self.firstBranch.encryptAlgorithm];
-    } else {
-        return @"N/A";
-    }
-}
-
 - (BOOL)hasLocale:(uint16_t)locale andPlatform:(uint16_t)platform {
     for(LpkBranchEntry* b in self.branches) {
         if(b.locale == locale && b.platform == platform) {
