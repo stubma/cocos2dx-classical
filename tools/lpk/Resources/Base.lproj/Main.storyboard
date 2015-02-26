@@ -477,7 +477,7 @@ DQ
                         <rect key="frame" x="0.0" y="0.0" width="479" height="242"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IW4-g1-adN">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IW4-g1-adN">
                                 <rect key="frame" x="18" y="205" width="73" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Block Size:" id="A4b-bP-jma">
                                     <font key="font" metaFont="system"/>
@@ -485,8 +485,11 @@ DQ
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G1V-eY-nFd">
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G1V-eY-nFd">
                                 <rect key="frame" x="92" y="203" width="135" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="135" id="Z8z-RE-Tz5"/>
+                                </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" id="gs1-2I-Dzv">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" localizesFormat="NO" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="9Fp-By-szX">
                                         <real key="minimum" value="512"/>
@@ -496,7 +499,7 @@ DQ
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H49-IG-pH8">
+                            <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="H49-IG-pH8">
                                 <rect key="frame" x="224" y="201" width="19" height="27"/>
                                 <stepperCell key="cell" continuous="YES" alignment="left" maxValue="20" id="ZpQ-jB-8bS"/>
                                 <connections>
@@ -504,6 +507,14 @@ DQ
                                 </connections>
                             </stepper>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="G1V-eY-nFd" firstAttribute="top" secondItem="uip-WW-ohJ" secondAttribute="top" constant="17" id="3q2-TQ-3Rt"/>
+                            <constraint firstItem="H49-IG-pH8" firstAttribute="leading" secondItem="G1V-eY-nFd" secondAttribute="trailing" id="44C-7v-5n4"/>
+                            <constraint firstItem="G1V-eY-nFd" firstAttribute="leading" secondItem="IW4-g1-adN" secondAttribute="trailing" constant="3" id="Bjf-J8-3Ic"/>
+                            <constraint firstItem="H49-IG-pH8" firstAttribute="top" secondItem="uip-WW-ohJ" secondAttribute="top" constant="16" id="On4-jQ-Ki7"/>
+                            <constraint firstItem="IW4-g1-adN" firstAttribute="leading" secondItem="uip-WW-ohJ" secondAttribute="leading" constant="20" id="nRg-rH-I5E"/>
+                            <constraint firstItem="IW4-g1-adN" firstAttribute="top" secondItem="uip-WW-ohJ" secondAttribute="top" constant="20" id="uQR-hv-ui2"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="blockSizeText" destination="G1V-eY-nFd" id="sWW-TR-4CC"/>
@@ -512,20 +523,217 @@ DQ
                 </viewController>
                 <customObject id="0dn-R3-vfd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1163.5" y="667"/>
+            <point key="canvasLocation" x="1166.5" y="667"/>
         </scene>
         <!--Encryption-->
         <scene sceneID="d66-hw-OT6">
             <objects>
-                <viewController title="Encryption" id="b3Y-WH-te2" sceneMemberID="viewController">
+                <viewController title="Encryption" id="b3Y-WH-te2" customClass="EncryptionSettingViewController" sceneMemberID="viewController">
                     <view key="view" id="65Y-nN-FJR">
-                        <rect key="frame" x="0.0" y="0.0" width="479" height="242"/>
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="242"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tZJ-0d-Dx5">
+                                <rect key="frame" x="18" y="205" width="224" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Select default encryption algorithm:" id="AVu-Ft-enX">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <tabView misplaced="YES" allowsTruncatedLabels="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S7w-a6-L5O">
+                                <rect key="frame" x="13" y="10" width="453" height="193"/>
+                                <font key="font" metaFont="system"/>
+                                <tabViewItems>
+                                    <tabViewItem label="XOR" identifier="1" id="myC-Kh-7ml">
+                                        <view key="view" id="NiC-d7-Ref">
+                                            <rect key="frame" x="10" y="33" width="433" height="147"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="ZSE-o9-xwc">
+                                                    <rect key="frame" x="16" y="124" width="91" height="18"/>
+                                                    <buttonCell key="cell" type="radio" title="Static key: " bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="jUL-PQ-pE0">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="onXorStaticKeyChecked:" target="b3Y-WH-te2" id="GWU-Ev-nqw"/>
+                                                    </connections>
+                                                </button>
+                                                <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mqA-5i-zK0">
+                                                    <rect key="frame" x="112" y="122" width="304" height="22"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="cga-5z-xdz">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="b3Y-WH-te2" id="X2I-DK-aho"/>
+                                                    </connections>
+                                                </textField>
+                                                <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8B3-iO-NDJ">
+                                                    <rect key="frame" x="15" y="98" width="383" height="18"/>
+                                                    <buttonCell key="cell" type="radio" title="Dynamic key: you need implement method in TreeManager" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="eGh-4q-Nbx">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="onXorDynamicKeyChecked:" target="b3Y-WH-te2" id="nnY-mz-Z7w"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="mqA-5i-zK0" firstAttribute="top" secondItem="NiC-d7-Ref" secondAttribute="top" constant="3" id="22z-Wm-dYz"/>
+                                                <constraint firstAttribute="trailing" secondItem="mqA-5i-zK0" secondAttribute="trailing" constant="17" id="5yI-GO-9fZ"/>
+                                                <constraint firstAttribute="trailing" secondItem="8B3-iO-NDJ" secondAttribute="trailing" constant="38" id="Lop-j7-eeE"/>
+                                                <constraint firstItem="8B3-iO-NDJ" firstAttribute="top" secondItem="mqA-5i-zK0" secondAttribute="bottom" constant="8" id="foT-fC-YeJ"/>
+                                                <constraint firstItem="ZSE-o9-xwc" firstAttribute="top" secondItem="NiC-d7-Ref" secondAttribute="top" constant="6" id="hcm-A3-vfb"/>
+                                                <constraint firstItem="mqA-5i-zK0" firstAttribute="leading" secondItem="ZSE-o9-xwc" secondAttribute="trailing" constant="7" id="mEm-Ho-Pym"/>
+                                                <constraint firstItem="8B3-iO-NDJ" firstAttribute="leading" secondItem="NiC-d7-Ref" secondAttribute="leading" constant="17" id="pAn-Vf-sO5"/>
+                                                <constraint firstItem="ZSE-o9-xwc" firstAttribute="leading" secondItem="NiC-d7-Ref" secondAttribute="leading" constant="17" id="uww-7J-NcP"/>
+                                            </constraints>
+                                        </view>
+                                    </tabViewItem>
+                                    <tabViewItem label="TEA" identifier="2" id="kwt-fz-l4p">
+                                        <view key="view" id="VrL-hP-edS">
+                                            <rect key="frame" x="10" y="33" width="433" height="147"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="RIz-k2-mgr">
+                                                    <rect key="frame" x="16" y="124" width="91" height="18"/>
+                                                    <buttonCell key="cell" type="radio" title="Static key: " bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="QWa-Mb-DOx">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="onTeaStaticKeyChecked:" target="b3Y-WH-te2" id="s2P-jq-1oe"/>
+                                                    </connections>
+                                                </button>
+                                                <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rPR-aN-nSV">
+                                                    <rect key="frame" x="112" y="122" width="304" height="22"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="dau-vR-7eF">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="b3Y-WH-te2" id="XlW-1x-2cT"/>
+                                                    </connections>
+                                                </textField>
+                                                <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qG1-A6-zT3">
+                                                    <rect key="frame" x="16" y="99" width="382" height="16"/>
+                                                    <buttonCell key="cell" type="radio" title="Dynamic key: you need implement method in TreeManager" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="O6L-6i-TeP">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="onTeaDynamicKeyChecked:" target="b3Y-WH-te2" id="OZp-6L-wkp"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="qG1-A6-zT3" firstAttribute="leading" secondItem="VrL-hP-edS" secondAttribute="leading" constant="17" id="9gh-dF-huu"/>
+                                                <constraint firstItem="RIz-k2-mgr" firstAttribute="leading" secondItem="VrL-hP-edS" secondAttribute="leading" constant="17" id="Byj-gt-ddN"/>
+                                                <constraint firstAttribute="trailing" secondItem="rPR-aN-nSV" secondAttribute="trailing" constant="17" id="DSX-VP-WgC"/>
+                                                <constraint firstItem="RIz-k2-mgr" firstAttribute="top" secondItem="VrL-hP-edS" secondAttribute="top" constant="6" id="b3m-Ar-j3l"/>
+                                                <constraint firstItem="rPR-aN-nSV" firstAttribute="top" secondItem="VrL-hP-edS" secondAttribute="top" constant="3" id="eXg-xz-jHf"/>
+                                                <constraint firstItem="rPR-aN-nSV" firstAttribute="leading" secondItem="RIz-k2-mgr" secondAttribute="trailing" constant="7" id="hy9-uA-DRY"/>
+                                                <constraint firstItem="qG1-A6-zT3" firstAttribute="top" secondItem="rPR-aN-nSV" secondAttribute="bottom" constant="8" id="nbg-kk-pTU"/>
+                                                <constraint firstAttribute="trailing" secondItem="qG1-A6-zT3" secondAttribute="trailing" constant="37" id="trX-zM-Tvn"/>
+                                            </constraints>
+                                        </view>
+                                    </tabViewItem>
+                                    <tabViewItem label="XXTEA" identifier="" id="Uko-SI-GJi">
+                                        <view key="view" id="ju7-dk-mEc">
+                                            <rect key="frame" x="10" y="33" width="433" height="147"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="g7w-Lm-fd6">
+                                                    <rect key="frame" x="16" y="124" width="91" height="18"/>
+                                                    <buttonCell key="cell" type="radio" title="Static key: " bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="gtb-Hh-64u">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="onXxteaStaticKeyChecked:" target="b3Y-WH-te2" id="br0-pg-RGc"/>
+                                                    </connections>
+                                                </button>
+                                                <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CV7-4u-xdn">
+                                                    <rect key="frame" x="112" y="122" width="304" height="22"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="V40-LD-Q3Z">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="b3Y-WH-te2" id="Yfn-HZ-YYC"/>
+                                                    </connections>
+                                                </textField>
+                                                <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Le5-Ge-5Pb">
+                                                    <rect key="frame" x="16" y="97" width="383" height="18"/>
+                                                    <buttonCell key="cell" type="radio" title="Dynamic key: you need implement method in TreeManager" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="lfE-Xe-6sk">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="onXxteaDynamicKeyChecked:" target="b3Y-WH-te2" id="Jwg-Dj-Cw3"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="CV7-4u-xdn" firstAttribute="top" secondItem="ju7-dk-mEc" secondAttribute="top" constant="3" id="0ty-qy-qpI"/>
+                                                <constraint firstItem="g7w-Lm-fd6" firstAttribute="leading" secondItem="ju7-dk-mEc" secondAttribute="leading" constant="17" id="1iO-hg-Mbk"/>
+                                                <constraint firstItem="Le5-Ge-5Pb" firstAttribute="top" secondItem="CV7-4u-xdn" secondAttribute="bottom" constant="8" id="Ic5-Yv-p98"/>
+                                                <constraint firstItem="CV7-4u-xdn" firstAttribute="leading" secondItem="g7w-Lm-fd6" secondAttribute="trailing" constant="7" id="LbO-rc-ZS1"/>
+                                                <constraint firstItem="g7w-Lm-fd6" firstAttribute="top" secondItem="ju7-dk-mEc" secondAttribute="top" constant="6" id="VR4-B1-MRx"/>
+                                                <constraint firstItem="Le5-Ge-5Pb" firstAttribute="leading" secondItem="ju7-dk-mEc" secondAttribute="leading" constant="17" id="i0q-9H-a0R"/>
+                                                <constraint firstAttribute="trailing" secondItem="Le5-Ge-5Pb" secondAttribute="trailing" constant="36" id="l2z-VT-eOh"/>
+                                                <constraint firstAttribute="trailing" secondItem="CV7-4u-xdn" secondAttribute="trailing" constant="17" id="yts-TV-W9v"/>
+                                            </constraints>
+                                        </view>
+                                    </tabViewItem>
+                                </tabViewItems>
+                            </tabView>
+                            <comboBox verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8yx-Bv-wiD">
+                                <rect key="frame" x="248" y="201" width="214" height="26"/>
+                                <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" usesDataSource="YES" numberOfVisibleItems="5" id="q30-4Q-BjC">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </comboBoxCell>
+                                <connections>
+                                    <action selector="onDefaultAlgorithmChanged:" target="b3Y-WH-te2" id="9Cm-Kp-xb3"/>
+                                </connections>
+                            </comboBox>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="S7w-a6-L5O" secondAttribute="trailing" constant="20" id="9RB-Mk-XjW"/>
+                            <constraint firstAttribute="trailing" secondItem="8yx-Bv-wiD" secondAttribute="trailing" constant="20" id="Fiy-Rc-byx"/>
+                            <constraint firstItem="tZJ-0d-Dx5" firstAttribute="top" secondItem="65Y-nN-FJR" secondAttribute="top" constant="20" id="GeL-GF-4ww"/>
+                            <constraint firstAttribute="bottom" secondItem="S7w-a6-L5O" secondAttribute="bottom" constant="20" id="Oq4-58-yal"/>
+                            <constraint firstItem="S7w-a6-L5O" firstAttribute="leading" secondItem="65Y-nN-FJR" secondAttribute="leading" constant="20" id="YJI-lk-gJX"/>
+                            <constraint firstItem="S7w-a6-L5O" firstAttribute="top" secondItem="8yx-Bv-wiD" secondAttribute="bottom" constant="8" id="c9u-E2-Jgs"/>
+                            <constraint firstItem="8yx-Bv-wiD" firstAttribute="top" secondItem="65Y-nN-FJR" secondAttribute="top" constant="17" id="n3a-FP-5Fu"/>
+                            <constraint firstItem="tZJ-0d-Dx5" firstAttribute="leading" secondItem="65Y-nN-FJR" secondAttribute="leading" constant="20" id="qVZ-Fq-RE7"/>
+                            <constraint firstItem="8yx-Bv-wiD" firstAttribute="leading" secondItem="tZJ-0d-Dx5" secondAttribute="trailing" constant="8" id="rIi-p2-eaH"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="defaultCombo" destination="8yx-Bv-wiD" id="LcO-qf-box"/>
+                        <outlet property="teaDynamicKeyCheckbox" destination="qG1-A6-zT3" id="hdB-TU-2Ed"/>
+                        <outlet property="teaStaticKeyCheckbox" destination="RIz-k2-mgr" id="We6-5E-pTy"/>
+                        <outlet property="teaStaticKeyText" destination="rPR-aN-nSV" id="Fwf-Xv-vFj"/>
+                        <outlet property="xorDynamicKeyCheckbox" destination="8B3-iO-NDJ" id="FeK-Uw-9oS"/>
+                        <outlet property="xorStaticKeyCheckbox" destination="ZSE-o9-xwc" id="f3H-t1-gvj"/>
+                        <outlet property="xorStaticKeyText" destination="mqA-5i-zK0" id="IBo-hC-XXo"/>
+                        <outlet property="xxteaDynamicKeyCheckbox" destination="Le5-Ge-5Pb" id="64N-hq-YQo"/>
+                        <outlet property="xxteaStaticKeyCheckbox" destination="g7w-Lm-fd6" id="izh-GS-PnK"/>
+                        <outlet property="xxteaStaticKeyText" destination="CV7-4u-xdn" id="9Q1-zi-dOf"/>
+                    </connections>
                 </viewController>
                 <customObject id="b4A-YQ-ZPH" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2171.5" y="667"/>
+            <point key="canvasLocation" x="2168.5" y="667"/>
         </scene>
         <!--Application-->
         <scene sceneID="JPo-4y-FX3">

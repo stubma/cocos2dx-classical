@@ -40,6 +40,9 @@
 		92B090B31A9465DA003A1298 /* LpkBranchEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B090B21A9465DA003A1298 /* LpkBranchEntry.m */; };
 		92B090B61A9472EB003A1298 /* EntryInfoCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B090B51A9472EB003A1298 /* EntryInfoCellView.m */; };
 		92C3829F1A9EB61D00BF8699 /* GeneralSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C3829E1A9EB61D00BF8699 /* GeneralSettingViewController.m */; };
+		92C382A21A9EB9E000BF8699 /* EncryptionSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C382A11A9EB9E000BF8699 /* EncryptionSettingViewController.m */; };
+		92C382A71A9EBC6100BF8699 /* tea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92C382A31A9EBC6100BF8699 /* tea.cpp */; };
+		92C382A81A9EBC6100BF8699 /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92C382A51A9EBC6100BF8699 /* xxtea.cpp */; };
 		92CF2B4E1A961BC60094D6E4 /* Consts.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CF2B4D1A961BC60094D6E4 /* Consts.m */; };
 		92E850FC1A90C6E9005A1465 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92E850F91A90C6E9005A1465 /* Main.storyboard */; };
 		92E850FD1A90C6E9005A1465 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92E850FB1A90C6E9005A1465 /* Images.xcassets */; };
@@ -111,6 +114,12 @@
 		92B090B51A9472EB003A1298 /* EntryInfoCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryInfoCellView.m; sourceTree = "<group>"; };
 		92C3829D1A9EB61D00BF8699 /* GeneralSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralSettingViewController.h; sourceTree = "<group>"; };
 		92C3829E1A9EB61D00BF8699 /* GeneralSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralSettingViewController.m; sourceTree = "<group>"; };
+		92C382A01A9EB9E000BF8699 /* EncryptionSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EncryptionSettingViewController.h; sourceTree = "<group>"; };
+		92C382A11A9EB9E000BF8699 /* EncryptionSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EncryptionSettingViewController.m; sourceTree = "<group>"; };
+		92C382A31A9EBC6100BF8699 /* tea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tea.cpp; path = ../../../cocos2dx/support/crypto/tea.cpp; sourceTree = "<group>"; };
+		92C382A41A9EBC6100BF8699 /* tea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tea.h; path = ../../../cocos2dx/support/crypto/tea.h; sourceTree = "<group>"; };
+		92C382A51A9EBC6100BF8699 /* xxtea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xxtea.cpp; path = ../../../cocos2dx/support/crypto/xxtea.cpp; sourceTree = "<group>"; };
+		92C382A61A9EBC6100BF8699 /* xxtea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xxtea.h; path = ../../../cocos2dx/support/crypto/xxtea.h; sourceTree = "<group>"; };
 		92CF2B4C1A961BC60094D6E4 /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Consts.h; sourceTree = "<group>"; };
 		92CF2B4D1A961BC60094D6E4 /* Consts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Consts.m; sourceTree = "<group>"; };
 		92E850D21A90C68C005A1465 /* lpk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lpk.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -251,6 +260,8 @@
 				92C3829E1A9EB61D00BF8699 /* GeneralSettingViewController.m */,
 				928B556B1A9DBDCC00781D3D /* CompressSettingViewController.h */,
 				928B556C1A9DBDCC00781D3D /* CompressSettingViewController.m */,
+				92C382A01A9EB9E000BF8699 /* EncryptionSettingViewController.h */,
+				92C382A11A9EB9E000BF8699 /* EncryptionSettingViewController.m */,
 				92B090B41A9472EB003A1298 /* EntryInfoCellView.h */,
 				92B090B51A9472EB003A1298 /* EntryInfoCellView.m */,
 				92CF2B4C1A961BC60094D6E4 /* Consts.h */,
@@ -275,6 +286,10 @@
 				92B090B21A9465DA003A1298 /* LpkBranchEntry.m */,
 				9211D9D81A91C5160015712A /* hash_bob_jenkins_v2.c */,
 				9211D9D91A91C5160015712A /* hash_bob_jenkins_v2.h */,
+				92C382A31A9EBC6100BF8699 /* tea.cpp */,
+				92C382A41A9EBC6100BF8699 /* tea.h */,
+				92C382A51A9EBC6100BF8699 /* xxtea.cpp */,
+				92C382A61A9EBC6100BF8699 /* xxtea.h */,
 				9247AF811A90DEE6006BB0C4 /* lpk.c */,
 				9247AF821A90DEE6006BB0C4 /* lpk.h */,
 			);
@@ -370,6 +385,7 @@
 				92E851081A90C742005A1465 /* main.m in Sources */,
 				92F1AF331A9B72B9002635DD /* NSData+Generator.m in Sources */,
 				9247AF7B1A90D127006BB0C4 /* NSView+CNSplitViewToolbar.m in Sources */,
+				92C382A81A9EBC6100BF8699 /* xxtea.cpp in Sources */,
 				9247AF791A90D127006BB0C4 /* CNSplitViewToolbarButton.m in Sources */,
 				928B555D1A9DA48100781D3D /* NSData+Compression.m in Sources */,
 				92CF2B4E1A961BC60094D6E4 /* Consts.m in Sources */,
@@ -377,11 +393,13 @@
 				922E43591A9AD93600A75392 /* NSMutableData+ReadWrite.m in Sources */,
 				92C3829F1A9EB61D00BF8699 /* GeneralSettingViewController.m in Sources */,
 				92E9BD011A9339B200A9D898 /* NSString+Paths.m in Sources */,
+				92C382A71A9EBC6100BF8699 /* tea.cpp in Sources */,
 				92E9BD041A9379BB00A9D898 /* NSOutlineView+State.m in Sources */,
 				9211D9DD1A91CE900015712A /* NSArray+Transform.m in Sources */,
 				926F19EC1A95C9D500BD0CE0 /* AddBranchViewController.m in Sources */,
 				9247AF7A1A90D127006BB0C4 /* CNSplitViewToolbarButtonCell.m in Sources */,
 				92E851061A90C712005A1465 /* ViewController.m in Sources */,
+				92C382A21A9EB9E000BF8699 /* EncryptionSettingViewController.m in Sources */,
 				9247AF781A90D127006BB0C4 /* CNSplitViewToolbar.m in Sources */,
 				92B090B61A9472EB003A1298 /* EntryInfoCellView.m in Sources */,
 				92B090B31A9465DA003A1298 /* LpkBranchEntry.m in Sources */,

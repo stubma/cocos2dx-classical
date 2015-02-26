@@ -20,6 +20,12 @@
 @property (nonatomic, assign) LPKEncryptAlgorithm defaultEncryptAlgorithm;
 @property (nonatomic, assign) BOOL autoSkipCompression;
 @property (nonatomic, assign) int blockSize;
+@property (nonatomic, strong) NSString* xorStaticKey;
+@property (nonatomic, strong) NSString* teaStaticKey;
+@property (nonatomic, strong) NSString* xxteaStaticKey;
+@property (nonatomic, assign) BOOL xorDynamicKey;
+@property (nonatomic, assign) BOOL teaDynamicKey;
+@property (nonatomic, assign) BOOL xxteaDynamicKey;
 
 - (NSArray*)stripContainedKeys:(NSArray*)keys;
 - (NSArray*)stripContainedEntries:(NSArray*)entries;

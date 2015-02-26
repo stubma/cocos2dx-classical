@@ -20,6 +20,9 @@
 - (void)endProgressSheet:(ProgressViewController*)pvc;
 - (void)outputExportedFileInfo;
 - (int)writeOneFile:(LpkEntry*)e branch:(LpkBranchEntry*)b toHashIndex:(uint32_t)hashIndex blockIndex:(uint32_t)blockIndex ofLPK:(lpk_file*)lpk withFileHandler:(NSFileHandle*)fh atOffset:(uint32_t)offset;
+- (NSString*)dynamicXORKeyForEntry:(LpkEntry*)e andBranch:(LpkBranchEntry*)b;
+- (NSString*)dynamicTEAKeyForEntry:(LpkEntry*)e andBranch:(LpkBranchEntry*)b;
+- (NSString*)dynamicXXTEAKeyForEntry:(LpkEntry*)e andBranch:(LpkBranchEntry*)b;
 
 @end
 
@@ -34,6 +37,12 @@
         self.defaultEncryptAlgorithm = LPKE_NONE;
         self.autoSkipCompression = YES;
         self.blockSize = 0;
+        self.xorStaticKey = @"";
+        self.teaStaticKey = @"";
+        self.xxteaStaticKey = @"";
+        self.xorDynamicKey = NO;
+        self.teaDynamicKey = NO;
+        self.xxteaDynamicKey = NO;
         return self;
     }
     return nil;
@@ -214,6 +223,21 @@
         self.defaultEncryptAlgorithm = (LPKEncryptAlgorithm)[[dict objectForKey:@"d_enc_alg"] intValue];
         self.autoSkipCompression = [[dict objectForKey:@"auto_skip_cmp"] boolValue];
         self.blockSize = [[dict objectForKey:@"block_size"] intValue];
+        self.xorStaticKey = [dict objectForKey:@"xor_sk"];
+        self.teaStaticKey = [dict objectForKey:@"tea_sk"];
+        self.xxteaStaticKey = [dict objectForKey:@"xxtea_sk"];
+        self.xorDynamicKey = [[dict objectForKey:@"xor_dk"] boolValue];
+        self.teaDynamicKey = [[dict objectForKey:@"tea_dk"] boolValue];
+        self.xxteaDynamicKey = [[dict objectForKey:@"xxtea_dk"] boolValue];
+        if(!self.xorStaticKey) {
+            self.xorStaticKey = @"";
+        }
+        if(!self.teaStaticKey) {
+            self.teaStaticKey = @"";
+        }
+        if(!self.xxteaStaticKey) {
+            self.xxteaStaticKey = @"";
+        }
         
         // flag
         self.dirty = NO;
@@ -230,6 +254,12 @@
     [root setObject:[NSNumber numberWithInt:self.defaultEncryptAlgorithm] forKey:@"d_enc_alg"];
     [root setObject:[NSNumber numberWithBool:self.autoSkipCompression] forKey:@"auto_skip_cmp"];
     [root setObject:[NSNumber numberWithInt:self.blockSize] forKey:@"block_size"];
+    [root setObject:self.xorStaticKey forKey:@"xor_sk"];
+    [root setObject:self.teaStaticKey forKey:@"tea_sk"];
+    [root setObject:self.xxteaStaticKey forKey:@"xxtea_sk"];
+    [root setObject:[NSNumber numberWithBool:self.xorDynamicKey] forKey:@"xor_dk"];
+    [root setObject:[NSNumber numberWithBool:self.teaDynamicKey] forKey:@"tea_dk"];
+    [root setObject:[NSNumber numberWithBool:self.xxteaDynamicKey] forKey:@"xxtea_dk"];
     if(![NSPropertyListSerialization writePropertyList:root
                                               toStream:os
                                                 format:NSPropertyListXMLFormat_v1_0
@@ -614,6 +644,33 @@
         NSLog(@"lpk_close_file, error: %d", result);
         return;
     }
+}
+
+- (NSString*)dynamicXORKeyForEntry:(LpkEntry*)e andBranch:(LpkBranchEntry*)b {
+    /*
+     * If you set using dynamic key for TEA algorithm, you should implement this method
+     * to return a proper key for one file. And in your game, you should implement it also
+     * and feed it to lpk library
+     */
+    return @"";
+}
+
+- (NSString*)dynamicTEAKeyForEntry:(LpkEntry*)e andBranch:(LpkBranchEntry*)b {
+    /*
+     * If you set using dynamic key for TEA algorithm, you should implement this method
+     * to return a proper key for one file. And in your game, you should implement it also
+     * and feed it to lpk library
+     */
+    return @"";
+}
+
+- (NSString*)dynamicXXTEAKeyForEntry:(LpkEntry*)e andBranch:(LpkBranchEntry*)b {
+    /*
+     * If you set using dynamic key for XXTEA algorithm, you should implement this method
+     * to return a proper key for one file. And in your game, you should implement it also
+     * and feed it to lpk library
+     */
+    return @"";
 }
 
 @end
