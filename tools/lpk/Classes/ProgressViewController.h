@@ -12,5 +12,6 @@
 
 @property (weak) IBOutlet NSProgressIndicator *progressIndicator;
 @property (weak) IBOutlet NSTextField *hintLabel;
+@property (nonatomic, assign) BOOL abort;
 
 @end

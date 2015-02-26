@@ -426,155 +426,179 @@
     [pvc.progressIndicator incrementBy:50];
     pvc.hintLabel.stringValue = @"Writting header...";
     
-    // write header
-    [buf writeUInt32:lpk.h.lpk_magic];
-    [buf writeUInt32:lpk.h.header_size];
-    [buf writeUInt32:lpk.h.archive_size];
-    [buf writeUInt16:lpk.h.version];
-    [buf writeUInt16:lpk.h.block_size];
-    [buf writeUInt32:lpk.h.hash_table_offset];
-    [buf writeUInt32:lpk.h.block_table_offset];
-    [buf writeUInt32:lpk.h.hash_table_count];
-    [buf writeUInt32:lpk.h.block_table_count];
-    [fh writeData:buf];
-    [buf setLength:0];
-    
-    // start to write every file, but not include branch at first
-    uint32_t totalSize = 0;
-    uint32_t blockIndex = 0;
-    uint32_t blockSize = 512 << lpk.h.block_size;
-    uint32_t freeHashIndex = 0;
-    for(LpkEntry* e in allFileEntries) {
-        // get hash table index for this entry
-        NSString* eKey = e.key;
-        const void* key = (const void*)[eKey cStringUsingEncoding:NSUTF8StringEncoding];
-        size_t len = [eKey lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
-        uint32_t hashIndex = hashlittle(key, len, LPK_HASH_TAG_TABLE_INDEX) & (lpk.h.hash_table_count - 1);
-        lpk_hash* hash = lpk.het + hashIndex;
+    do {
+        // check abort
+        if(pvc.abort)
+            break;
         
-        // progress hint
-        [pvc.progressIndicator incrementBy:1];
-        pvc.hintLabel.stringValue = [NSString stringWithFormat:@"Writting %@...", e.name];
+        // write header
+        [buf writeUInt32:lpk.h.lpk_magic];
+        [buf writeUInt32:lpk.h.header_size];
+        [buf writeUInt32:lpk.h.archive_size];
+        [buf writeUInt16:lpk.h.version];
+        [buf writeUInt16:lpk.h.block_size];
+        [buf writeUInt32:lpk.h.hash_table_offset];
+        [buf writeUInt32:lpk.h.block_table_offset];
+        [buf writeUInt32:lpk.h.hash_table_count];
+        [buf writeUInt32:lpk.h.block_table_count];
+        [fh writeData:buf];
+        [buf setLength:0];
         
-        for(LpkBranchEntry* b in e.branches) {
-            // block count of this file
-            int blockCount = 0;
+        // start to write every file, but not include branch at first
+        uint32_t totalSize = 0;
+        uint32_t blockIndex = 0;
+        uint32_t blockSize = 512 << lpk.h.block_size;
+        uint32_t freeHashIndex = 0;
+        for(LpkEntry* e in allFileEntries) {
+            // get hash table index for this entry
+            NSString* eKey = e.key;
+            const void* key = (const void*)[eKey cStringUsingEncoding:NSUTF8StringEncoding];
+            size_t len = [eKey lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+            uint32_t hashIndex = hashlittle(key, len, LPK_HASH_TAG_TABLE_INDEX) & (lpk.h.hash_table_count - 1);
+            lpk_hash* hash = lpk.het + hashIndex;
             
-            // if it is free hash, just write it
-            // if it is not free, but it is head of hash chain, just append it to link end in next free hash entry
-            // if it is not free and not head of link, move current hash to next free index and put it here
-            if(hash->block_table_index == LPK_HASH_FREE) {
-                blockCount = [self writeOneFile:e
-                                         branch:b
-                                    toHashIndex:hashIndex
-                                     blockIndex:blockIndex
-                                          ofLPK:&lpk
-                                withFileHandler:fh
-                                       atOffset:totalSize];
-            } else if(hash->prev_hash == LPK_HASH_FREE) {
-                // find tail
-                while(hash->next_hash != LPK_HASH_FREE) {
-                    hash = lpk.het + hash->next_hash;
-                    hashIndex = hash->next_hash;
+            // progress hint
+            [pvc.progressIndicator incrementBy:1];
+            pvc.hintLabel.stringValue = [NSString stringWithFormat:@"Writting %@...", e.name];
+            
+            for(LpkBranchEntry* b in e.branches) {
+                // check abort
+                if(pvc.abort)
+                    break;
+                
+                // block count of this file
+                int blockCount = 0;
+                
+                // if it is free hash, just write it
+                // if it is not free, but it is head of hash chain, just append it to link end in next free hash entry
+                // if it is not free and not head of link, move current hash to next free index and put it here
+                if(hash->block_table_index == LPK_HASH_FREE) {
+                    blockCount = [self writeOneFile:e
+                                             branch:b
+                                        toHashIndex:hashIndex
+                                         blockIndex:blockIndex
+                                              ofLPK:&lpk
+                                    withFileHandler:fh
+                                           atOffset:totalSize];
+                } else if(hash->prev_hash == LPK_HASH_FREE) {
+                    // find tail
+                    while(hash->next_hash != LPK_HASH_FREE) {
+                        hash = lpk.het + hash->next_hash;
+                        hashIndex = hash->next_hash;
+                    }
+                    
+                    // find free entry
+                    freeHashIndex = [self nextFreeHashIndex:&lpk from:freeHashIndex];
+                    
+                    // write file
+                    blockCount = [self writeOneFile:e
+                                             branch:b
+                                        toHashIndex:freeHashIndex
+                                         blockIndex:blockIndex
+                                              ofLPK:&lpk
+                                    withFileHandler:fh
+                                           atOffset:totalSize];
+                    
+                    // link
+                    lpk_hash* chainHash = lpk.het + freeHashIndex;
+                    chainHash->prev_hash = hashIndex;
+                    hash->next_hash = freeHashIndex;
+                } else {
+                    // find free entry
+                    freeHashIndex = [self nextFreeHashIndex:&lpk from:freeHashIndex];
+                    
+                    // copy
+                    memcpy(lpk.het + freeHashIndex, hash, sizeof(lpk_hash));
+                    
+                    // fix link
+                    lpk_hash* prev = lpk.het + hash->prev_hash;
+                    prev->next_hash = freeHashIndex;
+                    if(hash->next_hash != LPK_HASH_FREE) {
+                        lpk_hash* next = lpk.het + hash->next_hash;
+                        next->prev_hash = freeHashIndex;
+                    }
+                    
+                    // write file
+                    blockCount = [self writeOneFile:e
+                                             branch:b
+                                        toHashIndex:hashIndex
+                                         blockIndex:blockIndex
+                                              ofLPK:&lpk
+                                    withFileHandler:fh
+                                           atOffset:totalSize];
                 }
                 
-                // find free entry
-                freeHashIndex = [self nextFreeHashIndex:&lpk from:freeHashIndex];
+                // add total size
+                totalSize += blockCount * blockSize;
                 
-                // write file
-                blockCount = [self writeOneFile:e
-                                         branch:b
-                                    toHashIndex:freeHashIndex
-                                     blockIndex:blockIndex
-                                          ofLPK:&lpk
-                                withFileHandler:fh
-                                       atOffset:totalSize];
-                
-                // link
-                lpk_hash* chainHash = lpk.het + freeHashIndex;
-                chainHash->prev_hash = hashIndex;
-                hash->next_hash = freeHashIndex;
-            } else {
-                // find free entry
-                freeHashIndex = [self nextFreeHashIndex:&lpk from:freeHashIndex];
-                
-                // copy
-                memcpy(lpk.het + freeHashIndex, hash, sizeof(lpk_hash));
-                
-                // fix link
-                lpk_hash* prev = lpk.het + hash->prev_hash;
-                prev->next_hash = freeHashIndex;
-                if(hash->next_hash != LPK_HASH_FREE) {
-                    lpk_hash* next = lpk.het + hash->next_hash;
-                    next->prev_hash = freeHashIndex;
-                }
-                
-                // write file
-                blockCount = [self writeOneFile:e
-                                         branch:b
-                                    toHashIndex:hashIndex
-                                     blockIndex:blockIndex
-                                          ofLPK:&lpk
-                                withFileHandler:fh
-                                       atOffset:totalSize];
+                // move to next block
+                blockIndex++;
             }
             
-            // add total size
-            totalSize += blockCount * blockSize;
-            
-            // move to next block
-            blockIndex++;
+            // check abort
+            if(pvc.abort)
+                break;
         }
-    }
-    
-    // progress hint
-    [pvc.progressIndicator incrementBy:50];
-    pvc.hintLabel.stringValue = @"Finalizing...";
-    
-    // write archive size
-    lpk.h.archive_size = totalSize;
-    [fh seekToFileOffset:sizeof(uint32_t) * 2];
-    [buf writeUInt32:lpk.h.archive_size];
-    [fh writeData:buf];
-    [buf setLength:0];
-    
-    // write hash table offset
-    lpk.h.hash_table_offset = lpk.h.archive_size + sizeof(lpk_header);
-    [fh seekToFileOffset:sizeof(uint32_t) * 4];
-    [buf writeUInt32:lpk.h.hash_table_offset];
-    [fh writeData:buf];
-    [buf setLength:0];
-    
-    // write block table offset
-    lpk.h.block_table_offset = lpk.h.hash_table_offset + sizeof(lpk_hash) * lpk.h.hash_table_count;
-    [buf writeUInt32:lpk.h.block_table_offset];
-    [fh writeData:buf];
-    [buf setLength:0];
-    
-    // write hash entry table
-    [fh seekToEndOfFile];
-    [buf appendBytes:lpk.het length:sizeof(lpk_hash) * lpk.h.hash_table_count];
-    [fh writeData:buf];
-    [buf setLength:0];
-    
-    // write block table
-    [buf appendBytes:lpk.bet length:sizeof(lpk_block) * lpk.h.block_table_count];
-    [fh writeData:buf];
-    [buf setLength:0];
+        
+        // check abort
+        if(pvc.abort)
+            break;
+        
+        // progress hint
+        [pvc.progressIndicator incrementBy:50];
+        pvc.hintLabel.stringValue = @"Finalizing...";
+        
+        // write archive size
+        lpk.h.archive_size = totalSize;
+        [fh seekToFileOffset:sizeof(uint32_t) * 2];
+        [buf writeUInt32:lpk.h.archive_size];
+        [fh writeData:buf];
+        [buf setLength:0];
+        
+        // write hash table offset
+        lpk.h.hash_table_offset = lpk.h.archive_size + sizeof(lpk_header);
+        [fh seekToFileOffset:sizeof(uint32_t) * 4];
+        [buf writeUInt32:lpk.h.hash_table_offset];
+        [fh writeData:buf];
+        [buf setLength:0];
+        
+        // write block table offset
+        lpk.h.block_table_offset = lpk.h.hash_table_offset + sizeof(lpk_hash) * lpk.h.hash_table_count;
+        [buf writeUInt32:lpk.h.block_table_offset];
+        [fh writeData:buf];
+        [buf setLength:0];
+        
+        // write hash entry table
+        [fh seekToEndOfFile];
+        [buf appendBytes:lpk.het length:sizeof(lpk_hash) * lpk.h.hash_table_count];
+        [fh writeData:buf];
+        [buf setLength:0];
+        
+        // write block table
+        [buf appendBytes:lpk.bet length:sizeof(lpk_block) * lpk.h.block_table_count];
+        [fh writeData:buf];
+        [buf setLength:0];
+        
+        // sync file
+        [fh synchronizeFile];
+        
+        // progress
+        [pvc.progressIndicator incrementBy:50];
+        
+        // check abort
+        if(pvc.abort)
+            break;
+        
+        // debug output
+        [self outputExportedFileInfo];
+    } while(false);
     
     // close file
-    [fh synchronizeFile];
     [fh closeFile];
     
     // release memory
     free(lpk.het);
     free(lpk.bet);
-    
-    // progress
-    [pvc.progressIndicator incrementBy:50];
-    
-    // debug output
-    [self outputExportedFileInfo];
     
     // close progress
     [self performSelectorOnMainThread:@selector(endProgressSheet:) withObject:pvc waitUntilDone:NO];

@@ -22,6 +22,7 @@
 }
 
 - (IBAction)onAbort:(id)sender {
+    self.abort = YES;
 }
 
 @end
