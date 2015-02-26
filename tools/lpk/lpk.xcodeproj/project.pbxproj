@@ -43,6 +43,7 @@
 		92C382A21A9EB9E000BF8699 /* EncryptionSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C382A11A9EB9E000BF8699 /* EncryptionSettingViewController.m */; };
 		92C382A71A9EBC6100BF8699 /* tea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92C382A31A9EBC6100BF8699 /* tea.cpp */; };
 		92C382A81A9EBC6100BF8699 /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92C382A51A9EBC6100BF8699 /* xxtea.cpp */; };
+		92C382AB1A9ECF0900BF8699 /* NSData+Encryption.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C382AA1A9ECF0900BF8699 /* NSData+Encryption.m */; };
 		92CF2B4E1A961BC60094D6E4 /* Consts.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CF2B4D1A961BC60094D6E4 /* Consts.m */; };
 		92E850FC1A90C6E9005A1465 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92E850F91A90C6E9005A1465 /* Main.storyboard */; };
 		92E850FD1A90C6E9005A1465 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92E850FB1A90C6E9005A1465 /* Images.xcassets */; };
@@ -120,6 +121,8 @@
 		92C382A41A9EBC6100BF8699 /* tea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tea.h; path = ../../../cocos2dx/support/crypto/tea.h; sourceTree = "<group>"; };
 		92C382A51A9EBC6100BF8699 /* xxtea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xxtea.cpp; path = ../../../cocos2dx/support/crypto/xxtea.cpp; sourceTree = "<group>"; };
 		92C382A61A9EBC6100BF8699 /* xxtea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xxtea.h; path = ../../../cocos2dx/support/crypto/xxtea.h; sourceTree = "<group>"; };
+		92C382A91A9ECF0900BF8699 /* NSData+Encryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Encryption.h"; sourceTree = "<group>"; };
+		92C382AA1A9ECF0900BF8699 /* NSData+Encryption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Encryption.m"; sourceTree = "<group>"; };
 		92CF2B4C1A961BC60094D6E4 /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Consts.h; sourceTree = "<group>"; };
 		92CF2B4D1A961BC60094D6E4 /* Consts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Consts.m; sourceTree = "<group>"; };
 		92E850D21A90C68C005A1465 /* lpk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lpk.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -276,6 +279,8 @@
 				92F1AF321A9B72B9002635DD /* NSData+Generator.m */,
 				928B555B1A9DA48100781D3D /* NSData+Compression.h */,
 				928B555C1A9DA48100781D3D /* NSData+Compression.m */,
+				92C382A91A9ECF0900BF8699 /* NSData+Encryption.h */,
+				92C382AA1A9ECF0900BF8699 /* NSData+Encryption.m */,
 				92E9BD021A9379BB00A9D898 /* NSOutlineView+State.h */,
 				92E9BD031A9379BB00A9D898 /* NSOutlineView+State.m */,
 				9211D9D01A91A2580015712A /* TreeManager.h */,
@@ -397,6 +402,7 @@
 				92E9BD041A9379BB00A9D898 /* NSOutlineView+State.m in Sources */,
 				9211D9DD1A91CE900015712A /* NSArray+Transform.m in Sources */,
 				926F19EC1A95C9D500BD0CE0 /* AddBranchViewController.m in Sources */,
+				92C382AB1A9ECF0900BF8699 /* NSData+Encryption.m in Sources */,
 				9247AF7A1A90D127006BB0C4 /* CNSplitViewToolbarButtonCell.m in Sources */,
 				92E851061A90C712005A1465 /* ViewController.m in Sources */,
 				92C382A21A9EB9E000BF8699 /* EncryptionSettingViewController.m in Sources */,

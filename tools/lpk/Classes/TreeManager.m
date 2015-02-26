@@ -12,6 +12,7 @@
 #import "NSMutableData+ReadWrite.h"
 #import "NSData+Generator.h"
 #import "NSData+Compression.h"
+#import "NSData+Encryption.h"
 
 @interface TreeManager ()
 
@@ -324,12 +325,41 @@
         }
     }
     
+    // encrypt
+    NSData* encData = cmpData;
+    switch (encAlg) {
+        case LPKE_XOR:
+            if(self.xorDynamicKey) {
+                encData = [cmpData xorData:[self dynamicXORKeyForEntry:e andBranch:b]];
+            } else {
+                encData = [cmpData xorData:self.xorStaticKey];
+            }
+            break;
+        case LPKE_TEA:
+            if(self.teaDynamicKey) {
+                encData = [cmpData teaData:[self dynamicTEAKeyForEntry:e andBranch:b]];
+            } else {
+                encData = [cmpData teaData:self.teaStaticKey];
+            }
+            break;
+        case LPKE_XXTEA:
+            if(self.xxteaDynamicKey) {
+                encData = [cmpData xxteaData:[self dynamicXXTEAKeyForEntry:e andBranch:b]];
+            } else {
+                encData = [cmpData xxteaData:self.xxteaStaticKey];
+            }
+            break;
+        default:
+            break;
+    }
+    uint32_t encSize = (uint32_t)[encData length];
+    
     // write file and get block count
-    [fh writeData:cmpData];
-    uint32_t blockCount = (compressSize + blockSize - 1) / blockSize;
+    [fh writeData:encData];
+    uint32_t blockCount = (encSize + blockSize - 1) / blockSize;
     
     // fill junk to make it align with block size
-    uint32_t junk = (blockSize - (compressSize % blockSize)) % blockSize;
+    uint32_t junk = (blockSize - (encSize % blockSize)) % blockSize;
     if(junk > 0) {
         [fh writeData:[NSData dataWithByte:0 repeated:junk]];
     }
@@ -337,7 +367,7 @@
     // fill block struct
     lpk_block* block = lpk->bet + blockIndex;
     block->file_size = fileSize;
-    block->packed_size = compressSize;
+    block->packed_size = encSize;
     block->offset = offset;
     block->flags = LPK_FLAG_EXISTS;
     if(cmpAlg > LPKC_NONE) {
@@ -597,7 +627,7 @@
     
     // extract a file
     uint32_t size;
-    uint8_t* buf = lpk_extract_file(&lpk, "/Resources/res-iphone/manual/战场攻略_封印.jpg", &size);
+    uint8_t* buf = lpk_extract_file(&lpk, "/Resources/res-iphone/manual/战场攻略_封印.jpg", &size, "sglink", 6);
     if(buf) {
         NSData* data = [NSData dataWithBytes:buf length:size];
         [data writeToFile:@"/Users/maruojie/Desktop/a.jpg" atomically:YES];

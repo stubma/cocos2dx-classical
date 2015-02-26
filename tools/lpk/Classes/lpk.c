@@ -11,6 +11,8 @@
 #include "hash_bob_jenkins_v2.h"
 #include <string.h>
 #include <zlib.h>
+#include "tea.h"
+#include "xxtea.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -82,6 +84,31 @@ static int lpk_decompress_zlib(uint8_t* in, uint32_t inLength, uint8_t** out, ui
     return err;
 }
     
+static int lpk_decrypt_xor(uint8_t* enc, uint32_t encLen, const uint8_t* key, const uint32_t keyLen, uint8_t** out, uint32_t* outLen) {
+    *out = (uint8_t*)malloc(sizeof(uint8_t) * encLen);
+    memcpy(*out, enc, sizeof(uint8_t) * encLen);
+    for(int i = 0; i < encLen; i += keyLen) {
+        int remain = (keyLen < encLen - i) ? keyLen : (encLen - i);
+        for(int j = 0; j < remain; j++) {
+            (*out)[i + j] ^= key[j];
+        }
+    }
+    if(outLen) {
+        *outLen = encLen;
+    }
+    return 0;
+}
+    
+static int lpk_decrypt_tea(uint8_t* enc, uint32_t encLen, const uint8_t* key, const uint32_t keyLen, uint8_t** out, uint32_t* outLen) {
+    *out = (uint8_t*)teadec((const char*)key, keyLen, (const char*)enc, encLen, 0, encLen, (int*)outLen);
+    return 0;
+}
+
+static int lpk_decrypt_xxtea(uint8_t* enc, uint32_t encLen, const uint8_t* key, const uint32_t keyLen, uint8_t** out, uint32_t* outLen) {
+    *out = (uint8_t*)xxtea_decrypt((unsigned char*)enc, (xxtea_long)encLen, (unsigned char*)key, (xxtea_long)keyLen, (xxtea_long*)outLen);
+    return 0;
+}
+    
 // decompress function define
 typedef int (*LPK_DECOMPRESS)(uint8_t*, uint32_t, uint8_t**, uint32_t*);
     
@@ -90,6 +117,18 @@ static LPK_DECOMPRESS s_dcmp_table[] = {
     NULL, // LPKC_DEFAULT
     NULL, // LPKC_NONE
     lpk_decompress_zlib, // LPKC_ZLIB
+};
+    
+// decrypt function define
+typedef int (*LPK_DECRYPT)(uint8_t*, uint32_t, const uint8_t*, const uint32_t, uint8_t**, uint32_t*);
+    
+// decrypt table
+static LPK_DECRYPT s_dcyt_table[] = {
+    NULL, // LPKE_DEFAULT,
+    NULL, // LPKE_NONE,
+    lpk_decrypt_xor, // LPKE_XOR,
+    lpk_decrypt_tea, // LPKE_TEA,
+    lpk_decrypt_xxtea // LPKE_XXTEA
 };
     
 int lpk_open_file(lpk_file* lpk, const char* filepath) {
@@ -216,7 +255,7 @@ uint32_t lpk_get_file_size(lpk_file* lpk, const char* filepath) {
     return block->file_size;
 }
     
-uint8_t* lpk_extract_file(lpk_file* lpk, const char* filepath, uint32_t* size) {
+uint8_t* lpk_extract_file(lpk_file* lpk, const char* filepath, uint32_t* size, const char* key, const uint32_t keyLen) {
     // init size
     if(size) {
         *size = 0;
@@ -255,10 +294,25 @@ uint8_t* lpk_extract_file(lpk_file* lpk, const char* filepath, uint32_t* size) {
         buf = NULL;
     }
     
-    // TODO decrypt
+    // decrypt
+    if(buf && block->flags & LPK_FLAG_ENCRYPTED) {
+        LPKEncryptAlgorithm encAlg = (block->flags & LPK_MASK_ENCRYPTED) >> LPK_SHIFT_ENCRYPTED;
+        uint8_t* out = NULL;;
+        uint32_t outLen;
+        if(s_dcyt_table[encAlg]) {
+            if(s_dcyt_table[encAlg](buf, bufLen, (const uint8_t*)key, keyLen, &out, &outLen) == 0) {
+                free(buf);
+                buf = out;
+                bufLen = outLen;
+            } else {
+                free(buf);
+                buf = NULL;
+            }
+        }
+    }
     
     // uncompress
-    if(block->flags & LPK_FLAG_COMPRESSED) {
+    if(buf && block->flags & LPK_FLAG_COMPRESSED) {
         LPKCompressAlgorithm cmpAlg = (block->flags & LPK_MASK_COMPRESSED) >> LPK_SHIFT_COMPRESSED;
         uint8_t* out = NULL;
         uint32_t outLen;

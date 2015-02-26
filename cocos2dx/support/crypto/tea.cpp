@@ -8,6 +8,7 @@
 static char cipher[8];
 static char* prePlain;
 static char* output = nullptr;
+static char* output_bak = nullptr;
 static char* plain;
 static int _pos;
 static int _crypt;
@@ -15,7 +16,7 @@ static int preCrypt;
 static int padding;
 static int contextStart;
 static bool header = true;
-static const char* key;
+static char key[16];
 
 static uint32_t getUInt32(const char* bytes, int offset, int length) {
     uint32_t ret = 0;
@@ -143,7 +144,7 @@ static bool decrypt8Bytes(const char* bytes, int offset, int length) {
 	return true;
 }
 
-const char* teaenc(const char* keyData, const char* src, int srcLength,
+const char* teaenc(const char* keyData, const int keyLen, const char* src, int srcLength,
                    int encOffset, int encLength, int* outLength) {
 	plain = (char*)malloc(8 * sizeof(char));
 	prePlain = (char*)calloc(8, sizeof(char));
@@ -151,7 +152,10 @@ const char* teaenc(const char* keyData, const char* src, int srcLength,
 	padding = 0;
 	_crypt = preCrypt = 0;
 	header = true;
-    key = keyData;
+    memcpy(key, keyData, keyLen >= 16 ? 16 : keyLen);
+    for(int i = keyLen; i < 16; i++) {
+        key[i] = 0;
+    }
 	int i;
     
 	// -1 means encrypt to end
@@ -167,11 +171,7 @@ const char* teaenc(const char* keyData, const char* src, int srcLength,
     int count = encLength + _pos + 10;
     if(outLength)
         *outLength = _pos + 10 + srcLength;
-    if(output) {
-        free(output);
-        output = nullptr;
-    }
-    output = (char*)malloc((_pos + 10 + srcLength) * sizeof(char));
+    output_bak = output = (char*)malloc((_pos + 10 + srcLength) * sizeof(char));
     memcpy(output, src, encOffset);
     output += encOffset;
     
@@ -215,13 +215,16 @@ const char* teaenc(const char* keyData, const char* src, int srcLength,
 	free(prePlain);
 	
 	memcpy(output + count, src + encOffset + lengthbak, srcLength - encOffset - lengthbak);
-	return output;
+	return output_bak;
 }
 
-const char* teadec(const char* keyData, const char* src, int srcLength,
+const char* teadec(const char* keyData, const int keyLen, const char* src, int srcLength,
                    int decOffset, int decLength, int* outLength) {
 	_crypt = preCrypt = 0;
-    key = keyData;
+    memcpy(key, keyData, keyLen >= 16 ? 16 : keyLen);
+    for(int i = keyLen; i < 16; i++) {
+        key[i] = 0;
+    }
 	
 	int i;
 	int count, countbak;
@@ -247,11 +250,7 @@ const char* teadec(const char* keyData, const char* src, int srcLength,
 	
     if(outLength)
         *outLength = count + srcLength - decLength;
-    if(output) {
-        free(output);
-        output = nullptr;
-    }
-    output = (char*)malloc((count + srcLength - decLength) * sizeof(char));
+    output_bak = output = (char*)malloc((count + srcLength - decLength) * sizeof(char));
 	memcpy(output, src, decOffset);
 	output += decOffset;
 	
@@ -313,5 +312,5 @@ const char* teadec(const char* keyData, const char* src, int srcLength,
 	
 	free(mbak);
 	memcpy(output + countbak, src + decOffset + decLength, srcLength - decOffset - decLength);
-	return output;
+	return output_bak;
 }
