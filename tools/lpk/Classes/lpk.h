@@ -138,10 +138,10 @@ typedef struct {
     
 extern int lpk_open_file(lpk_file* lpk, const char* filepath);
 extern int lpk_close_file(lpk_file* lpk);
-extern uint32_t lpk_get_file_hash_table_index(lpk_file* lpk, const char* filepath);
-extern uint32_t lpk_get_file_block_table_index(lpk_file* lpk, const char* filepath);
-extern uint32_t lpk_get_file_size(lpk_file* lpk, const char* filepath);
-extern uint8_t* lpk_extract_file(lpk_file* lpk, const char* filepath, uint32_t* size, const char* key, const uint32_t keyLen);
+extern uint32_t lpk_get_file_hash_table_index(lpk_file* lpk, const char* filepath, uint16_t locale, LPKPlatform platform);
+extern uint32_t lpk_get_file_block_table_index(lpk_file* lpk, const char* filepath, uint16_t locale, LPKPlatform platform);
+extern uint32_t lpk_get_file_size(lpk_file* lpk, const char* filepath, uint16_t locale, LPKPlatform platform);
+extern uint8_t* lpk_extract_file(lpk_file* lpk, const char* filepath, uint32_t* size, const char* key, const uint32_t keyLen, uint16_t locale, LPKPlatform platform);
     
 #ifdef __cplusplus
 }

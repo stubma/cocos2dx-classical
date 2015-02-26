@@ -627,7 +627,7 @@
     
     // extract a file
     uint32_t size;
-    uint8_t* buf = lpk_extract_file(&lpk, "/Resources/res-iphone/manual/战场攻略_封印.jpg", &size, "战场攻略_封印.jpg", strlen("战场攻略_封印.jpg"));
+    uint8_t* buf = lpk_extract_file(&lpk, "/Resources/res-iphone/manual/战场攻略_封印.jpg", &size, "战场攻略_封印.jpg", strlen("战场攻略_封印.jpg"), 0, LPKP_ANDROID);
     if(buf) {
         NSData* data = [NSData dataWithBytes:buf length:size];
         [data writeToFile:@"/Users/maruojie/Desktop/a.jpg" atomically:YES];
@@ -642,7 +642,7 @@
         const char* filepath = [e.key cStringUsingEncoding:NSUTF8StringEncoding];
         
         // get hash table index
-        uint32_t hashIndex = lpk_get_file_hash_table_index(&lpk, filepath);
+        uint32_t hashIndex = lpk_get_file_hash_table_index(&lpk, filepath, 0, LPKP_DEFAULT);
         
         // if invalid, print error
         if(hashIndex == LPK_HASH_FREE) {

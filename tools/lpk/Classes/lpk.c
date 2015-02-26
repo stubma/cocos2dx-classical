@@ -207,7 +207,7 @@ int lpk_close_file(lpk_file* lpk) {
     return LPK_SUCCESS;
 }
     
-uint32_t lpk_get_file_hash_table_index(lpk_file* lpk, const char* filepath) {
+uint32_t lpk_get_file_hash_table_index(lpk_file* lpk, const char* filepath, uint16_t locale, LPKPlatform platform) {
     // get hash
     size_t pathLen = strlen(filepath);
     uint32_t hashI = hashlittle(filepath, pathLen, LPK_HASH_TAG_TABLE_INDEX) & (lpk->h.hash_table_count - 1);
@@ -216,7 +216,7 @@ uint32_t lpk_get_file_hash_table_index(lpk_file* lpk, const char* filepath) {
     
     // find start entry
     lpk_hash* hash = lpk->het + hashI;
-    while((hash->hash_a != hashA || hash->hash_b != hashB) && hash->next_hash != LPK_HASH_FREE) {
+    while((hash->hash_a != hashA || hash->hash_b != hashB || hash->locale != locale || hash->platform != platform) && hash->next_hash != LPK_HASH_FREE) {
         hashI = hash->next_hash;
         hash = lpk->het + hashI;
     }
@@ -229,9 +229,9 @@ uint32_t lpk_get_file_hash_table_index(lpk_file* lpk, const char* filepath) {
     }
 }
     
-uint32_t lpk_get_file_block_table_index(lpk_file* lpk, const char* filepath) {
+uint32_t lpk_get_file_block_table_index(lpk_file* lpk, const char* filepath, uint16_t locale, LPKPlatform platform) {
     // find hash index
-    uint32_t hashIndex = lpk_get_file_hash_table_index(lpk, filepath);
+    uint32_t hashIndex = lpk_get_file_hash_table_index(lpk, filepath, locale, platform);
     if(hashIndex == LPK_HASH_FREE) {
         return LPK_BLOCK_INVALID;
     }
@@ -241,9 +241,9 @@ uint32_t lpk_get_file_block_table_index(lpk_file* lpk, const char* filepath) {
     return hash->block_table_index;
 }
     
-uint32_t lpk_get_file_size(lpk_file* lpk, const char* filepath) {
+uint32_t lpk_get_file_size(lpk_file* lpk, const char* filepath, uint16_t locale, LPKPlatform platform) {
     // find block index
-    uint32_t blockIndex = lpk_get_file_block_table_index(lpk, filepath);
+    uint32_t blockIndex = lpk_get_file_block_table_index(lpk, filepath, locale, platform);
     if(blockIndex == LPK_BLOCK_INVALID) {
         return 0;
     }
@@ -255,14 +255,14 @@ uint32_t lpk_get_file_size(lpk_file* lpk, const char* filepath) {
     return block->file_size;
 }
     
-uint8_t* lpk_extract_file(lpk_file* lpk, const char* filepath, uint32_t* size, const char* key, const uint32_t keyLen) {
+uint8_t* lpk_extract_file(lpk_file* lpk, const char* filepath, uint32_t* size, const char* key, const uint32_t keyLen, uint16_t locale, LPKPlatform platform) {
     // init size
     if(size) {
         *size = 0;
     }
     
     // find hash index
-    uint32_t hashIndex = lpk_get_file_hash_table_index(lpk, filepath);
+    uint32_t hashIndex = lpk_get_file_hash_table_index(lpk, filepath, locale, platform);
     if(hashIndex == LPK_HASH_FREE) {
         return NULL;
     }
