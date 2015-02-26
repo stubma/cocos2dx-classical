@@ -525,6 +525,43 @@ DQ
             </objects>
             <point key="canvasLocation" x="1166.5" y="667"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="96P-ZK-e3A">
+            <objects>
+                <viewController id="pi4-qE-aTW" sceneMemberID="viewController">
+                    <view key="view" id="2WM-Gz-PN9">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="306"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LZE-Pj-GHx">
+                                <rect key="frame" x="199" y="21" width="53" height="24"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="K3y-k8-zHv">
+                                    <font key="font" metaFont="system" size="20"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="na0-FY-pU3">
+                                <rect key="frame" x="125" y="53" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="AuS-lZ-zQW"/>
+                                    <constraint firstAttribute="height" constant="200" id="Rxw-fI-Syv"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="KQe-9m-haA"/>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="na0-FY-pU3" secondAttribute="centerX" id="Prs-Af-p7E"/>
+                            <constraint firstItem="LZE-Pj-GHx" firstAttribute="top" secondItem="na0-FY-pU3" secondAttribute="bottom" constant="8" id="RTY-CL-CaQ"/>
+                            <constraint firstAttribute="centerY" secondItem="na0-FY-pU3" secondAttribute="centerY" id="kJq-lj-KYA"/>
+                            <constraint firstItem="na0-FY-pU3" firstAttribute="centerX" secondItem="LZE-Pj-GHx" secondAttribute="centerX" constant="-0.5" id="wZ1-Ph-T89"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <customObject id="7fP-AS-eyo" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="905" y="1089"/>
+        </scene>
         <!--Encryption-->
         <scene sceneID="d66-hw-OT6">
             <objects>
