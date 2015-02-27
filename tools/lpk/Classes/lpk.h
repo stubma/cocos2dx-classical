@@ -92,6 +92,7 @@ typedef struct {
 
 /* hash entry, all files in the archive are searched by their hashes. */
 typedef struct {
+    uint32_t hash_i;        /* the index hash */
     uint32_t hash_a;		/* the first two uint32_ts are the encrypted file. */
     uint32_t hash_b;		/* the first two uint32_ts are the encrypted file. */
     uint16_t locale;		/* locale information, in Windows LCID. */
@@ -126,6 +127,8 @@ extern int lpk_close_file(lpk_file* lpk);
 extern uint32_t lpk_get_file_hash_table_index(lpk_file* lpk, const char* filepath, uint16_t locale, LPKPlatform platform);
 extern uint32_t lpk_get_file_size(lpk_file* lpk, const char* filepath, uint16_t locale, LPKPlatform platform);
 extern uint8_t* lpk_extract_file(lpk_file* lpk, const char* filepath, uint32_t* size, const char* key, const uint32_t keyLen, uint16_t locale, LPKPlatform platform);
+extern int lpk_apply_patch(lpk_file* lpk, lpk_file* patch);
+extern int lpk_get_used_hash_count(lpk_file* lpk);
     
 #ifdef __cplusplus
 }

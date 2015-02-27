@@ -24,6 +24,7 @@
 @property (nonatomic, strong) NSArray* expandedItems;
 @property (nonatomic, strong) ViewerViewController* viewer;
 
+- (IBAction)onToggleDeletedMark:(id)sender;
 - (void)updateViewer;
 
 @end
@@ -185,7 +186,11 @@
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item {
     LpkEntry* e = (LpkEntry*)item;
     if([@"name" isEqualToString:tableColumn.identifier]) {
-        return e.name;
+        if(e.markAsDeleted) {
+            return [NSString stringWithFormat:@"%@ (Deleted)", e.name];
+        } else {
+            return e.name;
+        }
     } else if([@"size" isEqualToString:tableColumn.identifier]) {
         return [NSNumber numberWithUnsignedInt:e.totalSize];
     } else {
@@ -303,6 +308,24 @@
 
 #pragma mark -
 #pragma mark outline delegate
+
+- (IBAction)onToggleDeletedMark:(id)sender {
+    NSIndexSet* set = [self.fileOutlineView selectedRowIndexes];
+    NSMutableArray* entries = [NSMutableArray array];
+    [set enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        LpkEntry* e = (LpkEntry*)[self.fileOutlineView itemAtRow:idx];
+        [entries addObject:e];
+    }];
+    NSArray* uniqueEntries = [self.tree stripContainedEntries:entries];
+    for(LpkEntry* e in uniqueEntries) {
+        if(e.markAsDeleted) {
+            [e unmarkDeletedRecursively];
+        } else {
+            [e markDeletedRecursively];
+        }
+    }
+    [self.fileOutlineView reloadData];
+}
 
 - (IBAction)onDelete:(id)sender {
     NSIndexSet* set = [self.fileOutlineView selectedRowIndexes];

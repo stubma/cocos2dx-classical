@@ -285,6 +285,7 @@
     lpk_hash* hash = lpk->het + hashIndex;
     
     // fill hash
+    hash->hash_i = hashlittle(key, len, LPK_HASH_TAG_TABLE_INDEX);
     hash->hash_a = hashlittle(key, len, LPK_HASH_TAG_NAME_A);
     hash->hash_b = hashlittle(key, len, LPK_HASH_TAG_NAME_B);
     hash->locale = b.locale;
@@ -292,76 +293,86 @@
     hash->next_hash = LPK_INDEX_INVALID;
     hash->prev_hash = LPK_INDEX_INVALID;
     
-    // resolve path
-    NSString* path = b.realPath;
-    if(![path isAbsolutePath]) {
-        path = [[[self.projectPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:path] stringByStandardizingPath];
-    }
+    // other info of file
+    uint32_t blockCount = 0;
+    uint32_t fileSize = 0;
+    uint32_t encSize = 0;
+    LPKCompressAlgorithm cmpAlg = LPKC_NONE;
+    LPKEncryptAlgorithm encAlg = LPKE_NONE;
     
-    // resolve compress and encrypt
-    LPKCompressAlgorithm cmpAlg = b.compressAlgorithm == LPKC_DEFAULT ? self.defaultCompressAlgorithm : b.compressAlgorithm;
-    LPKEncryptAlgorithm encAlg = b.encryptAlgorithm == LPKE_DEFAULT ? self.defaultEncryptAlgorithm : b.encryptAlgorithm;
-    
-    // get file data and compress it as needed
-    uint32_t blockSize = 512 << lpk->h.block_size;
-    NSData* data = [NSData dataWithContentsOfFile:path];
-    NSData* cmpData = data;
-    switch (cmpAlg) {
-        case LPKC_ZLIB:
-            cmpData = [data zlibDeflate];
-            break;
-        default:
-            break;
-    }
-    uint32_t fileSize = (uint32_t)[data length];
-    uint32_t compressSize = (uint32_t)[cmpData length];
-    
-    // if auto skip compression is set, cancel compression if compressed size is even larger than original size
-    if(self.autoSkipCompression) {
-        if(compressSize >= fileSize) {
-            cmpData = data;
-            compressSize = fileSize;
-            cmpAlg = LPKC_NONE;
+    // if entry is not deleted, write file
+    if(!e.markAsDeleted) {
+        // resolve path
+        NSString* path = b.realPath;
+        if(![path isAbsolutePath]) {
+            path = [[[self.projectPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:path] stringByStandardizingPath];
         }
-    }
-    
-    // encrypt
-    NSData* encData = cmpData;
-    switch (encAlg) {
-        case LPKE_XOR:
-            if(self.xorDynamicKey) {
-                encData = [cmpData xorData:[self dynamicXORKeyForEntry:e andBranch:b]];
-            } else {
-                encData = [cmpData xorData:self.xorStaticKey];
+        
+        // resolve compress and encrypt
+        cmpAlg = b.compressAlgorithm == LPKC_DEFAULT ? self.defaultCompressAlgorithm : b.compressAlgorithm;
+        encAlg = b.encryptAlgorithm == LPKE_DEFAULT ? self.defaultEncryptAlgorithm : b.encryptAlgorithm;
+        
+        // get file data and compress it as needed
+        uint32_t blockSize = 512 << lpk->h.block_size;
+        NSData* data = [NSData dataWithContentsOfFile:path];
+        NSData* cmpData = data;
+        switch (cmpAlg) {
+            case LPKC_ZLIB:
+                cmpData = [data zlibDeflate];
+                break;
+            default:
+                break;
+        }
+        fileSize = (uint32_t)[data length];
+        uint32_t compressSize = (uint32_t)[cmpData length];
+        
+        // if auto skip compression is set, cancel compression if compressed size is even larger than original size
+        if(self.autoSkipCompression) {
+            if(compressSize >= fileSize) {
+                cmpData = data;
+                compressSize = fileSize;
+                cmpAlg = LPKC_NONE;
             }
-            break;
-        case LPKE_TEA:
-            if(self.teaDynamicKey) {
-                encData = [cmpData teaData:[self dynamicTEAKeyForEntry:e andBranch:b]];
-            } else {
-                encData = [cmpData teaData:self.teaStaticKey];
-            }
-            break;
-        case LPKE_XXTEA:
-            if(self.xxteaDynamicKey) {
-                encData = [cmpData xxteaData:[self dynamicXXTEAKeyForEntry:e andBranch:b]];
-            } else {
-                encData = [cmpData xxteaData:self.xxteaStaticKey];
-            }
-            break;
-        default:
-            break;
-    }
-    uint32_t encSize = (uint32_t)[encData length];
-    
-    // write file and get block count
-    [fh writeData:encData];
-    uint32_t blockCount = (encSize + blockSize - 1) / blockSize;
-    
-    // fill junk to make it align with block size
-    uint32_t junk = (blockSize - (encSize % blockSize)) % blockSize;
-    if(junk > 0) {
-        [fh writeData:[NSData dataWithByte:0 repeated:junk]];
+        }
+        
+        // encrypt
+        NSData* encData = cmpData;
+        switch (encAlg) {
+            case LPKE_XOR:
+                if(self.xorDynamicKey) {
+                    encData = [cmpData xorData:[self dynamicXORKeyForEntry:e andBranch:b]];
+                } else {
+                    encData = [cmpData xorData:self.xorStaticKey];
+                }
+                break;
+            case LPKE_TEA:
+                if(self.teaDynamicKey) {
+                    encData = [cmpData teaData:[self dynamicTEAKeyForEntry:e andBranch:b]];
+                } else {
+                    encData = [cmpData teaData:self.teaStaticKey];
+                }
+                break;
+            case LPKE_XXTEA:
+                if(self.xxteaDynamicKey) {
+                    encData = [cmpData xxteaData:[self dynamicXXTEAKeyForEntry:e andBranch:b]];
+                } else {
+                    encData = [cmpData xxteaData:self.xxteaStaticKey];
+                }
+                break;
+            default:
+                break;
+        }
+        encSize = (uint32_t)[encData length];
+        
+        // write file and get block count
+        [fh writeData:encData];
+        blockCount = (encSize + blockSize - 1) / blockSize;
+        
+        // fill junk to make it align with block size
+        uint32_t junk = (blockSize - (encSize % blockSize)) % blockSize;
+        if(junk > 0) {
+            [fh writeData:[NSData dataWithByte:0 repeated:junk]];
+        }
     }
     
     // fill other hash info
@@ -369,6 +380,9 @@
     hash->packed_size = encSize;
     hash->offset = offset;
     hash->flags = LPK_FLAG_USED;
+    if(e.markAsDeleted) {
+        hash->flags |= LPK_FLAG_DELETED;
+    }
     if(cmpAlg > LPKC_NONE) {
         hash->flags |= LPK_FLAG_COMPRESSED;
         hash->flags |= (cmpAlg << LPK_SHIFT_COMPRESSED);
@@ -437,7 +451,6 @@
         
         // start to write every file, but not include branch at first
         uint32_t totalSize = 0;
-        uint32_t blockIndex = 0;
         uint32_t blockSize = 512 << lpk.h.block_size;
         uint32_t freeHashIndex = 0;
         for(LpkEntry* e in allFileEntries) {
@@ -518,9 +531,6 @@
                 
                 // add total size
                 totalSize += blockCount * blockSize;
-                
-                // move to next block
-                blockIndex++;
             }
             
             // check abort

@@ -1561,7 +1561,7 @@ DQ
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <outlineView appearanceType="vibrantLight" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" autosaveColumns="NO" headerView="TQx-B3-ovu" indentationPerLevel="16" outlineTableColumn="Lhp-As-7fC" id="J3D-Cb-3Ha">
-                                                            <rect key="frame" x="0.0" y="0.0" width="889" height="20"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="1059" height="20"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <size key="intercellSpacing" width="2" height="3"/>
                                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1913,6 +1913,12 @@ DQ
                             <modifierMask key="keyEquivalentModifierMask"/>
                             <connections>
                                 <action selector="onDelete:" target="XfG-lQ-9wD" id="BpM-E9-bMC"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Toggle Deleted Mark" id="FPb-H6-cZ3" userLabel="Toggle Deleted Mark">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="onToggleDeletedMark:" target="XfG-lQ-9wD" id="B5u-L1-E9H"/>
                             </connections>
                         </menuItem>
                     </items>
