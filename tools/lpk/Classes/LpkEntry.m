@@ -17,7 +17,6 @@
 + (LpkEntry*)decodeWithDictionary:(NSDictionary*)dict {
     LpkEntry* e = [[LpkEntry alloc] init];
     e.isDir = [[dict objectForKey:@"isDir"] boolValue];
-    e.markAsDeleted = [[dict objectForKey:@"deleted"] boolValue];
     e.name = [dict objectForKey:@"name"];
     {
         NSArray* children = [dict objectForKey:@"children"];
@@ -45,7 +44,6 @@
         self.filteredChildren = [NSMutableArray array];
         self.name = @"/";
         self.isDir = YES;
-        self.markAsDeleted = NO;
         return self;
     }
     return nil;
@@ -90,7 +88,6 @@
 
 - (void)encodeWithDictionary:(NSMutableDictionary*)dict relativeTo:(NSString*)projectDir; {
     [dict setObject:[NSNumber numberWithBool:self.isDir] forKey:@"isDir"];
-    [dict setObject:[NSNumber numberWithBool:self.markAsDeleted] forKey:@"deleted"];
     [dict setObject:self.name forKey:@"name"];
     {
         NSArray* encodedChildren = [self.children arrayByApplyingBlock:^id(id e) {
@@ -140,14 +137,18 @@
 }
 
 - (void)markDeletedRecursively {
-    self.markAsDeleted = YES;
+    for(LpkBranchEntry* b in self.branches) {
+        b.markAsDeleted = YES;
+    }
     for(LpkEntry* child in self.children) {
         [child markDeletedRecursively];
     }
 }
 
 - (void)unmarkDeletedRecursively {
-    self.markAsDeleted = NO;
+    for(LpkBranchEntry* b in self.branches) {
+        b.markAsDeleted = NO;
+    }
     for(LpkEntry* child in self.children) {
         [child unmarkDeletedRecursively];
     }
@@ -266,6 +267,15 @@
         }
     }
     return count;
+}
+
+- (int)deletedBranchCount {
+    int c = 0;
+    for(LpkBranchEntry* b in self.branches) {
+        if(b.markAsDeleted)
+            c++;
+    }
+    return c;
 }
 
 @end

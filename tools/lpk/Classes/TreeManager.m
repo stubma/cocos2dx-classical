@@ -301,7 +301,7 @@
     LPKEncryptAlgorithm encAlg = LPKE_NONE;
     
     // if entry is not deleted, write file
-    if(!e.markAsDeleted) {
+    if(!b.markAsDeleted) {
         // resolve path
         NSString* path = b.realPath;
         if(![path isAbsolutePath]) {
@@ -380,7 +380,7 @@
     hash->packed_size = encSize;
     hash->offset = offset;
     hash->flags = LPK_FLAG_USED;
-    if(e.markAsDeleted) {
+    if(b.markAsDeleted) {
         hash->flags |= LPK_FLAG_DELETED;
     }
     if(cmpAlg > LPKC_NONE) {
@@ -421,6 +421,7 @@
     lpk.h.lpk_magic = LPK_MAGIC;
     lpk.h.header_size = sizeof(lpk_header);
     lpk.h.block_size = self.blockSize;
+    lpk.h.deleted_hash = LPK_INDEX_INVALID;
     lpk.files = [self.root getFileCountIncludeBranch];
     lpk.h.hash_table_count = [self nextPOT:lpk.files];
     lpk.het = (lpk_hash*)calloc(lpk.h.hash_table_count, sizeof(lpk_hash));
@@ -446,6 +447,7 @@
         [buf writeUInt16:lpk.h.block_size];
         [buf writeUInt32:lpk.h.hash_table_offset];
         [buf writeUInt32:lpk.h.hash_table_count];
+        [buf writeUInt32:lpk.h.deleted_hash];
         [fh writeData:buf];
         [buf setLength:0];
         
@@ -473,10 +475,60 @@
                 // block count of this file
                 int blockCount = 0;
                 
+                // if branch is marked as deleted, save it in a free hash and add to deleted link
                 // if it is free hash, just write it
                 // if it is not free, but it is head of hash chain, just append it to link end in next free hash entry
                 // if it is not free and not head of link, move current hash to next free index and put it here
-                if(!(hash->flags & LPK_FLAG_USED)) {
+                // if it is not free and it is a deleted hash, move it
+                if(b.markAsDeleted) {
+                    // find free entry
+                    freeHashIndex = [self nextFreeHashIndex:&lpk from:freeHashIndex];
+                    
+                    // write file
+                    blockCount = [self writeOneFile:e
+                                             branch:b
+                                        toHashIndex:freeHashIndex
+                                              ofLPK:&lpk
+                                    withFileHandler:fh
+                                           atOffset:totalSize];
+                    
+                    // link
+                    if(lpk.h.deleted_hash == LPK_INDEX_INVALID) {
+                        lpk.h.deleted_hash = freeHashIndex;
+                    } else {
+                        hash = lpk.het + freeHashIndex;
+                        lpk_hash* deleted_head = lpk.het + lpk.h.deleted_hash;
+                        hash->next_hash = lpk.h.deleted_hash;
+                        deleted_head->prev_hash = freeHashIndex;
+                        lpk.h.deleted_hash = freeHashIndex;
+                    }
+                } else if(!(hash->flags & LPK_FLAG_USED)) {
+                    blockCount = [self writeOneFile:e
+                                             branch:b
+                                        toHashIndex:hashIndex
+                                              ofLPK:&lpk
+                                    withFileHandler:fh
+                                           atOffset:totalSize];
+                } else if(hash->flags & LPK_FLAG_DELETED) {
+                    // find free entry
+                    freeHashIndex = [self nextFreeHashIndex:&lpk from:freeHashIndex];
+                    
+                    // copy
+                    memcpy(lpk.het + freeHashIndex, hash, sizeof(lpk_hash));
+                    
+                    // fix link
+                    if(hash->prev_hash == LPK_INDEX_INVALID) {
+                        lpk.h.deleted_hash = freeHashIndex;
+                    } else {
+                        lpk_hash* prev = lpk.het + hash->prev_hash;
+                        prev->next_hash = freeHashIndex;
+                    }
+                    if(hash->next_hash != LPK_INDEX_INVALID) {
+                        lpk_hash* next = lpk.het + hash->next_hash;
+                        next->prev_hash = freeHashIndex;
+                    }
+                    
+                    // write file
                     blockCount = [self writeOneFile:e
                                              branch:b
                                         toHashIndex:hashIndex
@@ -566,6 +618,12 @@
         [fh writeData:buf];
         [buf setLength:0];
         
+        // write deleted hash head
+        [fh seekToFileOffset:sizeof(uint32_t) * 6];
+        [buf writeUInt32:lpk.h.deleted_hash];
+        [fh writeData:buf];
+        [buf setLength:0];
+        
         // sync file
         [fh synchronizeFile];
         
@@ -635,11 +693,28 @@
     
     // extract a file
     uint32_t size;
-    uint8_t* buf = lpk_extract_file(&lpk, "/Resources/res-iphone/manual/战场攻略_封印.jpg", &size, "战场攻略_封印.jpg", strlen("战场攻略_封印.jpg"), 0, LPKP_ANDROID);
+    uint8_t* buf = lpk_extract_file(&lpk, "/Resources/res-iphone/manual/战场攻略_封印.jpg", &size, "战场攻略_封印.jpg", strlen("战场攻略_封印.jpg"), 0, LPKP_DEFAULT);
     if(buf) {
         NSData* data = [NSData dataWithBytes:buf length:size];
         [data writeToFile:@"/Users/maruojie/Desktop/a.jpg" atomically:YES];
         free(buf);
+    }
+    
+    // output deleted link
+    if(lpk.h.deleted_hash != LPK_INDEX_INVALID) {
+        NSLog(@"+++ deleted hash link start +++");
+        uint32_t hashIndex = lpk.h.deleted_hash;
+        while (hashIndex != LPK_INDEX_INVALID) {
+            // get hash
+            lpk_hash* hash = lpk.het + hashIndex;
+            
+            // print info
+            NSLog(@"\thash index: %u, offset: %u, size: %u", hashIndex, hash->offset, hash->packed_size);
+            
+            // next hash index
+            hashIndex = hash->next_hash;
+        }
+        NSLog(@"--- deleted hash link end ---");
     }
     
     // output every file info

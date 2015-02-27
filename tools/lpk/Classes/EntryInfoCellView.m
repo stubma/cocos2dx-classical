@@ -17,12 +17,14 @@
 @property (weak) IBOutlet NSComboBox *compressCombo;
 @property (weak) IBOutlet NSComboBox *encryptCombo;
 @property (weak) IBOutlet NSTextField *pathLabel;
+@property (weak) IBOutlet NSTextField *deletedLabel;
 
 - (IBAction)onAddNewBranch:(id)sender;
 - (IBAction)onShowInFinder:(id)sender;
 - (IBAction)onDelete:(id)sender;
 - (IBAction)onLocaleChanged:(id)sender;
 - (IBAction)onPlatformChanged:(id)sender;
+- (IBAction)onToggleDeletedMark:(id)sender;
 
 @end
 
@@ -63,6 +65,7 @@
     [self.localeCombo selectItemAtIndex:[gLocaleDisplayNames indexOfObject:displayName]];
     [self.compressCombo selectItemAtIndex:b.compressAlgorithm];
     [self.encryptCombo selectItemAtIndex:b.encryptAlgorithm];
+    self.deletedLabel.hidden = !b.markAsDeleted;
 }
 
 - (IBAction)onAddNewBranch:(id)sender {
@@ -177,6 +180,14 @@
         ViewController* vc = (ViewController*)self.window.contentViewController;
         vc.tree.dirty = YES;
     }
+}
+
+- (IBAction)onToggleDeletedMark:(id)sender {
+    ViewController* vc = (ViewController*)self.window.contentViewController;
+    LpkBranchEntry* b = (LpkBranchEntry*)self.objectValue;
+    b.markAsDeleted = !b.markAsDeleted;
+    self.deletedLabel.hidden = !b.markAsDeleted;
+    [vc reloadFileOutline];
 }
 
 #pragma mark -

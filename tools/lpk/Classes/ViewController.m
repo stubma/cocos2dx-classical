@@ -186,8 +186,9 @@
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item {
     LpkEntry* e = (LpkEntry*)item;
     if([@"name" isEqualToString:tableColumn.identifier]) {
-        if(e.markAsDeleted) {
-            return [NSString stringWithFormat:@"%@ (Deleted)", e.name];
+        int c = [e deletedBranchCount];
+        if(c > 0) {
+            return [NSString stringWithFormat:@"%@ (%d Branch Deleted)", e.name, c];
         } else {
             return e.name;
         }
@@ -318,7 +319,7 @@
     }];
     NSArray* uniqueEntries = [self.tree stripContainedEntries:entries];
     for(LpkEntry* e in uniqueEntries) {
-        if(e.markAsDeleted) {
+        if([e deletedBranchCount] == [e.branches count]) {
             [e unmarkDeletedRecursively];
         } else {
             [e markDeletedRecursively];

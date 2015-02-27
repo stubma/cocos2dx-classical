@@ -14,6 +14,7 @@
 + (instancetype)decodeWithDictionary:(NSDictionary*)dict {
     LpkBranchEntry* b = [[LpkBranchEntry alloc] init];
     b.realPath = [dict objectForKey:@"realPath"];
+    b.markAsDeleted = [[dict objectForKey:@"deleted"] boolValue];
     b.size = [[dict objectForKey:@"size"] intValue];
     b.compressAlgorithm = (LPKCompressAlgorithm)[[dict objectForKey:@"compressAlgorithm"] intValue];
     b.encryptAlgorithm = (LPKEncryptAlgorithm)[[dict objectForKey:@"encryptAlgorithm"] intValue];
@@ -25,6 +26,7 @@
 - (instancetype)init {
     if(self = [super init]) {
         self.realPath = @"";
+        self.markAsDeleted = NO;
         return self;
     }
     return nil;
@@ -59,6 +61,7 @@
     [dict setObject:[NSNumber numberWithInt:self.encryptAlgorithm] forKey:@"encryptAlgorithm"];
     [dict setObject:[NSNumber numberWithInt:self.locale] forKey:@"locale"];
     [dict setObject:[NSNumber numberWithInt:self.platform] forKey:@"platform"];
+    [dict setObject:[NSNumber numberWithBool:self.markAsDeleted] forKey:@"deleted"];
 }
 
 @end

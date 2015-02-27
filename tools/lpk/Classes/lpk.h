@@ -88,6 +88,7 @@ typedef struct {
     uint16_t block_size;		/* size of file block is (512 * 2 ^ block size). */
     uint32_t hash_table_offset;	/* file position of lpk_hash. */
     uint32_t hash_table_count;	/* number of entries in hash table. */
+    uint32_t deleted_hash;      /* head of deleted hash link */
 } lpk_header;
 
 /* hash entry, all files in the archive are searched by their hashes. */

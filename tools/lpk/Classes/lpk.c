@@ -408,6 +408,52 @@ int lpk_apply_patch(lpk_file* lpk, lpk_file* patch) {
     uint32_t newFileOffset = lpk->h.hash_table_offset;
     uint32_t blockSize = 512 << lpk->h.block_size;
     
+    // first handle deleted hash
+    uint32_t nextDeletedHash = patch->h.deleted_hash;
+    while(nextDeletedHash != LPK_INDEX_INVALID) {
+        // get patch hash
+        patchHash = patch->het + nextDeletedHash;
+        
+        // get hash to be patched
+        uint32_t hashIndex = patchHash->hash_i & (lpk->h.hash_table_count - 1);
+        lpk_hash* hash = lpk->het + hashIndex;
+        
+        // mark hash deleted
+        if(hash->flags & LPK_FLAG_USED) {
+            hash->flags |= LPK_FLAG_DELETED;
+            
+            // remove hash from link
+            // it depends whether the hash is link head or not
+            if(hash->prev_hash == LPK_INDEX_INVALID) {
+                
+            } else {
+                
+            }
+            
+            // append hash to deleted link, ordered by block count
+            
+        }
+        
+        // next
+        nextDeletedHash = patchHash->next_hash;
+    }
+    
+    for(int i = 0; i < patch->h.hash_table_count; i++, patchHash++) {
+        // if hash is not deleted, skip
+        if(!(patchHash->flags & LPK_FLAG_USED) || !(patchHash->flags & LPK_FLAG_DELETED)) {
+            continue;
+        }
+        
+        // get hash to be patched
+        uint32_t hashIndex = patchHash->hash_i & (lpk->h.hash_table_count - 1);
+        lpk_hash* hash = lpk->het + hashIndex;
+        
+        // mark hash deleted
+        if(hash->flags & LPK_FLAG_USED) {
+            hash->flags |= LPK_FLAG_DELETED;
+        }
+    }
+    
     // iterate hash in patch
     uint32_t freeHashIndex = 0;
     uint32_t deletedHashIndex = 0;

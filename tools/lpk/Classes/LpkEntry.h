@@ -21,7 +21,6 @@ static NSString* LPKE_NAMES[] = {
 @interface LpkEntry : NSObject
 
 @property (nonatomic, assign) BOOL isDir;
-@property (nonatomic, assign) BOOL markAsDeleted;
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic, strong) NSMutableArray* children;
 @property (nonatomic, strong) NSMutableArray* filteredChildren;
@@ -50,5 +49,6 @@ static NSString* LPKE_NAMES[] = {
 - (void)collectFiles:(NSMutableArray*)ret;
 - (void)markDeletedRecursively;
 - (void)unmarkDeletedRecursively;
+- (int)deletedBranchCount;
 
 @end

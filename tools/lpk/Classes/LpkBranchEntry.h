@@ -10,6 +10,7 @@
 
 @interface LpkBranchEntry : NSObject
 
+@property (nonatomic, assign) BOOL markAsDeleted;
 @property (nonatomic, strong) NSString* realPath;
 @property (nonatomic, assign) LPKCompressAlgorithm compressAlgorithm;
 @property (nonatomic, assign) LPKEncryptAlgorithm encryptAlgorithm;
