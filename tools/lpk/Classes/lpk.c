@@ -155,9 +155,8 @@ int lpk_open_file(lpk_file* lpk, const char* filepath) {
             break;
         }
         
-        // allocate memory for the block table, hash table
-        if((lpk->bet = calloc(lpk->h.block_table_count, sizeof(lpk_block))) == NULL ||
-           (lpk->het = calloc(lpk->h.hash_table_count, sizeof(lpk_hash))) == NULL) {
+        // allocate memory for the hash table
+        if((lpk->het = calloc(lpk->h.hash_table_count, sizeof(lpk_hash))) == NULL) {
             result = LPK_ERROR_MALLOC;
             break;
         }
@@ -170,18 +169,6 @@ int lpk_open_file(lpk_file* lpk, const char* filepath) {
         
         // read the hash table into the buffer
         if(fread(lpk->het, sizeof(lpk_hash), lpk->h.hash_table_count, lpk->fp) != lpk->h.hash_table_count) {
-            result = LPK_ERROR_READ;
-            break;
-        }
-        
-        // seek to block table
-        if(fseeko(lpk->fp, lpk->h.block_table_offset, SEEK_SET) < 0) {
-            result = LPK_ERROR_SEEK;
-            break;
-        }
-        
-        // read block table into buffer
-        if(fread(lpk->bet, sizeof(lpk_block), lpk->h.block_table_count, lpk->fp) != lpk->h.block_table_count) {
             result = LPK_ERROR_READ;
             break;
         }
@@ -201,7 +188,6 @@ int lpk_close_file(lpk_file* lpk) {
     
     /* free header, tables and list. */
     free(lpk->het);
-    free(lpk->bet);
     
     /* if no error was found, return zero. */
     return LPK_SUCCESS;
@@ -216,43 +202,31 @@ uint32_t lpk_get_file_hash_table_index(lpk_file* lpk, const char* filepath, uint
     
     // find start entry
     lpk_hash* hash = lpk->het + hashI;
-    while((hash->hash_a != hashA || hash->hash_b != hashB || hash->locale != locale || hash->platform != platform) && hash->next_hash != LPK_HASH_FREE) {
+    while((hash->hash_a != hashA || hash->hash_b != hashB || hash->locale != locale || hash->platform != platform) && hash->next_hash != LPK_INDEX_INVALID) {
         hashI = hash->next_hash;
         hash = lpk->het + hashI;
     }
     
     // return
     if(hash->hash_a != hashA || hash->hash_b != hashB) {
-        return LPK_HASH_FREE;
+        return LPK_INDEX_INVALID;
     } else {
         return hashI;
     }
 }
     
-uint32_t lpk_get_file_block_table_index(lpk_file* lpk, const char* filepath, uint16_t locale, LPKPlatform platform) {
+uint32_t lpk_get_file_size(lpk_file* lpk, const char* filepath, uint16_t locale, LPKPlatform platform) {
     // find hash index
     uint32_t hashIndex = lpk_get_file_hash_table_index(lpk, filepath, locale, platform);
-    if(hashIndex == LPK_HASH_FREE) {
-        return LPK_BLOCK_INVALID;
-    }
-    
-    // get block index from hash
-    lpk_hash* hash = lpk->het + hashIndex;
-    return hash->block_table_index;
-}
-    
-uint32_t lpk_get_file_size(lpk_file* lpk, const char* filepath, uint16_t locale, LPKPlatform platform) {
-    // find block index
-    uint32_t blockIndex = lpk_get_file_block_table_index(lpk, filepath, locale, platform);
-    if(blockIndex == LPK_BLOCK_INVALID) {
+    if(hashIndex == LPK_INDEX_INVALID) {
         return 0;
     }
     
     // get block
-    lpk_block* block = lpk->bet + blockIndex;
+    lpk_hash* hash = lpk->het + hashIndex;
     
     // return
-    return block->file_size;
+    return hash->file_size;
 }
     
 uint8_t* lpk_extract_file(lpk_file* lpk, const char* filepath, uint32_t* size, const char* key, const uint32_t keyLen, uint16_t locale, LPKPlatform platform) {
@@ -263,29 +237,26 @@ uint8_t* lpk_extract_file(lpk_file* lpk, const char* filepath, uint32_t* size, c
     
     // find hash index
     uint32_t hashIndex = lpk_get_file_hash_table_index(lpk, filepath, locale, platform);
-    if(hashIndex == LPK_HASH_FREE) {
+    if(hashIndex == LPK_INDEX_INVALID) {
         return NULL;
     }
     
-    // find block index
+    // get hash
     lpk_hash* hash = lpk->het + hashIndex;
-    uint32_t blockIndex = hash->block_table_index;
     
-    // get block
-    lpk_block* block = lpk->bet + blockIndex;
-    
-    // if not exist, return
-    if(!(block->flags & LPK_FLAG_EXISTS)) {
+    // if not a used hash, return
+    // if file is deleted, return
+    if(!(hash->flags & LPK_FLAG_USED) || (hash->flags & LPK_FLAG_DELETED)) {
         return NULL;
     }
     
     // seek
-    if(fseeko(lpk->fp, sizeof(lpk_header) + block->offset, SEEK_SET) < 0) {
+    if(fseeko(lpk->fp, sizeof(lpk_header) + hash->offset, SEEK_SET) < 0) {
         return NULL;
     }
     
     // allocate memory
-    uint32_t bufLen = block->packed_size;
+    uint32_t bufLen = hash->packed_size;
     uint8_t* buf = (uint8_t*)malloc(sizeof(uint8_t) * bufLen);
     
     // read, if failed, release buffer
@@ -295,8 +266,8 @@ uint8_t* lpk_extract_file(lpk_file* lpk, const char* filepath, uint32_t* size, c
     }
     
     // decrypt
-    if(buf && block->flags & LPK_FLAG_ENCRYPTED) {
-        LPKEncryptAlgorithm encAlg = (block->flags & LPK_MASK_ENCRYPTED) >> LPK_SHIFT_ENCRYPTED;
+    if(buf && hash->flags & LPK_FLAG_ENCRYPTED) {
+        LPKEncryptAlgorithm encAlg = (hash->flags & LPK_MASK_ENCRYPTED) >> LPK_SHIFT_ENCRYPTED;
         uint8_t* out = NULL;;
         uint32_t outLen;
         if(s_dcyt_table[encAlg]) {
@@ -312,8 +283,8 @@ uint8_t* lpk_extract_file(lpk_file* lpk, const char* filepath, uint32_t* size, c
     }
     
     // uncompress
-    if(buf && block->flags & LPK_FLAG_COMPRESSED) {
-        LPKCompressAlgorithm cmpAlg = (block->flags & LPK_MASK_COMPRESSED) >> LPK_SHIFT_COMPRESSED;
+    if(buf && hash->flags & LPK_FLAG_COMPRESSED) {
+        LPKCompressAlgorithm cmpAlg = (hash->flags & LPK_MASK_COMPRESSED) >> LPK_SHIFT_COMPRESSED;
         uint8_t* out = NULL;
         uint32_t outLen;
         if(s_dcmp_table[cmpAlg]) {
@@ -329,14 +300,14 @@ uint8_t* lpk_extract_file(lpk_file* lpk, const char* filepath, uint32_t* size, c
     }
     
     // ensure unpacked size is same as file size
-    if(bufLen != block->file_size) {
+    if(bufLen != hash->file_size) {
         free(buf);
         buf = NULL;
     }
     
     // save size
     if(size) {
-        *size = block->file_size;
+        *size = hash->file_size;
     }
     
     // return

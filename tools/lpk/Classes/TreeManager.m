@@ -20,7 +20,7 @@
 - (uint32_t)nextFreeHashIndex:(lpk_file*)f from:(uint32_t)from;
 - (void)endProgressSheet:(ProgressViewController*)pvc;
 - (void)outputExportedFileInfo;
-- (int)writeOneFile:(LpkEntry*)e branch:(LpkBranchEntry*)b toHashIndex:(uint32_t)hashIndex blockIndex:(uint32_t)blockIndex ofLPK:(lpk_file*)lpk withFileHandler:(NSFileHandle*)fh atOffset:(uint32_t)offset;
+- (int)writeOneFile:(LpkEntry*)e branch:(LpkBranchEntry*)b toHashIndex:(uint32_t)hashIndex ofLPK:(lpk_file*)lpk withFileHandler:(NSFileHandle*)fh atOffset:(uint32_t)offset;
 - (NSString*)dynamicXORKeyForEntry:(LpkEntry*)e andBranch:(LpkBranchEntry*)b;
 - (NSString*)dynamicTEAKeyForEntry:(LpkEntry*)e andBranch:(LpkBranchEntry*)b;
 - (NSString*)dynamicXXTEAKeyForEntry:(LpkEntry*)e andBranch:(LpkBranchEntry*)b;
@@ -275,7 +275,7 @@
     [os close];
 }
 
-- (int)writeOneFile:(LpkEntry*)e branch:(LpkBranchEntry*)b toHashIndex:(uint32_t)hashIndex blockIndex:(uint32_t)blockIndex ofLPK:(lpk_file*)lpk withFileHandler:(NSFileHandle*)fh atOffset:(uint32_t)offset {
+- (int)writeOneFile:(LpkEntry*)e branch:(LpkBranchEntry*)b toHashIndex:(uint32_t)hashIndex ofLPK:(lpk_file*)lpk withFileHandler:(NSFileHandle*)fh atOffset:(uint32_t)offset {
     // get key
     NSString* eKey = e.key;
     const void* key = (const void*)[eKey cStringUsingEncoding:NSUTF8StringEncoding];
@@ -289,8 +289,8 @@
     hash->hash_b = hashlittle(key, len, LPK_HASH_TAG_NAME_B);
     hash->locale = b.locale;
     hash->platform = b.platform;
-    hash->next_hash = LPK_HASH_FREE;
-    hash->prev_hash = LPK_HASH_FREE;
+    hash->next_hash = LPK_INDEX_INVALID;
+    hash->prev_hash = LPK_INDEX_INVALID;
     
     // resolve path
     NSString* path = b.realPath;
@@ -364,23 +364,19 @@
         [fh writeData:[NSData dataWithByte:0 repeated:junk]];
     }
     
-    // fill block struct
-    lpk_block* block = lpk->bet + blockIndex;
-    block->file_size = fileSize;
-    block->packed_size = encSize;
-    block->offset = offset;
-    block->flags = LPK_FLAG_EXISTS;
+    // fill other hash info
+    hash->file_size = fileSize;
+    hash->packed_size = encSize;
+    hash->offset = offset;
+    hash->flags = LPK_FLAG_USED;
     if(cmpAlg > LPKC_NONE) {
-        block->flags |= LPK_FLAG_COMPRESSED;
-        block->flags |= (cmpAlg << LPK_SHIFT_COMPRESSED);
+        hash->flags |= LPK_FLAG_COMPRESSED;
+        hash->flags |= (cmpAlg << LPK_SHIFT_COMPRESSED);
     }
     if(encAlg > LPKE_NONE) {
-        block->flags |= LPK_FLAG_ENCRYPTED;
-        block->flags |= (encAlg << LPK_SHIFT_ENCRYPTED);
+        hash->flags |= LPK_FLAG_ENCRYPTED;
+        hash->flags |= (encAlg << LPK_SHIFT_ENCRYPTED);
     }
-    
-    // save block index
-    hash->block_table_index = blockIndex;
     
     // return block count
     return blockCount;
@@ -413,13 +409,10 @@
     lpk.h.block_size = self.blockSize;
     lpk.files = [self.root getFileCountIncludeBranch];
     lpk.h.hash_table_count = [self nextPOT:lpk.files];
-    lpk.h.block_table_count = [self nextPOT:lpk.files];
     lpk.het = (lpk_hash*)calloc(lpk.h.hash_table_count, sizeof(lpk_hash));
-    lpk.bet = (lpk_block*)calloc(lpk.h.block_table_count, sizeof(lpk_block));
     for(int i = 0; i < lpk.h.hash_table_count; i++) {
-        lpk.het[i].block_table_index = LPK_HASH_FREE;
-        lpk.het[i].next_hash = LPK_HASH_FREE;
-        lpk.het[i].prev_hash = LPK_HASH_FREE;
+        lpk.het[i].next_hash = LPK_INDEX_INVALID;
+        lpk.het[i].prev_hash = LPK_INDEX_INVALID;
     }
     
     // progress hint
@@ -438,9 +431,7 @@
         [buf writeUInt16:lpk.h.version];
         [buf writeUInt16:lpk.h.block_size];
         [buf writeUInt32:lpk.h.hash_table_offset];
-        [buf writeUInt32:lpk.h.block_table_offset];
         [buf writeUInt32:lpk.h.hash_table_count];
-        [buf writeUInt32:lpk.h.block_table_count];
         [fh writeData:buf];
         [buf setLength:0];
         
@@ -472,17 +463,16 @@
                 // if it is free hash, just write it
                 // if it is not free, but it is head of hash chain, just append it to link end in next free hash entry
                 // if it is not free and not head of link, move current hash to next free index and put it here
-                if(hash->block_table_index == LPK_HASH_FREE) {
+                if(!(hash->flags & LPK_FLAG_USED)) {
                     blockCount = [self writeOneFile:e
                                              branch:b
                                         toHashIndex:hashIndex
-                                         blockIndex:blockIndex
                                               ofLPK:&lpk
                                     withFileHandler:fh
                                            atOffset:totalSize];
-                } else if(hash->prev_hash == LPK_HASH_FREE) {
+                } else if(hash->prev_hash == LPK_INDEX_INVALID) {
                     // find tail
-                    while(hash->next_hash != LPK_HASH_FREE) {
+                    while(hash->next_hash != LPK_INDEX_INVALID) {
                         hash = lpk.het + hash->next_hash;
                         hashIndex = hash->next_hash;
                     }
@@ -494,7 +484,6 @@
                     blockCount = [self writeOneFile:e
                                              branch:b
                                         toHashIndex:freeHashIndex
-                                         blockIndex:blockIndex
                                               ofLPK:&lpk
                                     withFileHandler:fh
                                            atOffset:totalSize];
@@ -513,7 +502,7 @@
                     // fix link
                     lpk_hash* prev = lpk.het + hash->prev_hash;
                     prev->next_hash = freeHashIndex;
-                    if(hash->next_hash != LPK_HASH_FREE) {
+                    if(hash->next_hash != LPK_INDEX_INVALID) {
                         lpk_hash* next = lpk.het + hash->next_hash;
                         next->prev_hash = freeHashIndex;
                     }
@@ -522,7 +511,6 @@
                     blockCount = [self writeOneFile:e
                                              branch:b
                                         toHashIndex:hashIndex
-                                         blockIndex:blockIndex
                                               ofLPK:&lpk
                                     withFileHandler:fh
                                            atOffset:totalSize];
@@ -562,20 +550,9 @@
         [fh writeData:buf];
         [buf setLength:0];
         
-        // write block table offset
-        lpk.h.block_table_offset = lpk.h.hash_table_offset + sizeof(lpk_hash) * lpk.h.hash_table_count;
-        [buf writeUInt32:lpk.h.block_table_offset];
-        [fh writeData:buf];
-        [buf setLength:0];
-        
         // write hash entry table
         [fh seekToEndOfFile];
         [buf appendBytes:lpk.het length:sizeof(lpk_hash) * lpk.h.hash_table_count];
-        [fh writeData:buf];
-        [buf setLength:0];
-        
-        // write block table
-        [buf appendBytes:lpk.bet length:sizeof(lpk_block) * lpk.h.block_table_count];
         [fh writeData:buf];
         [buf setLength:0];
         
@@ -598,7 +575,6 @@
     
     // release memory
     free(lpk.het);
-    free(lpk.bet);
     
     // close progress
     [self performSelectorOnMainThread:@selector(endProgressSheet:) withObject:pvc waitUntilDone:NO];
@@ -610,11 +586,11 @@
 
 - (uint32_t)nextFreeHashIndex:(lpk_file*)f from:(uint32_t)from {
     for(int i = from; i < f->h.hash_table_count; i++) {
-        if(f->het[i].block_table_index == LPK_HASH_FREE) {
+        if(!(f->het[i].flags & LPK_FLAG_USED)) {
             return i;
         }
     }
-    return LPK_HASH_FREE;
+    return LPK_INDEX_INVALID;
 }
 
 - (uint32_t)nextPOT:(uint32_t)x {
@@ -641,13 +617,11 @@
     }
     
     // output header
-    NSLog(@"\nlpk file header:\n\tarchive size: %u\n\tblock size: %u\n\thash count: %u\n\tblock count: %u\n\thash offset: %u\n\tblock offset: %u",
+    NSLog(@"\nlpk file header:\n\tarchive size: %u\n\tblock size: %u\n\thash count: %u\n\thash offset: %u",
           lpk.h.archive_size,
           512 << lpk.h.block_size,
           lpk.h.hash_table_count,
-          lpk.h.block_table_count,
-          lpk.h.hash_table_offset,
-          lpk.h.block_table_offset);
+          lpk.h.hash_table_offset);
     
     // extract a file
     uint32_t size;
@@ -669,14 +643,13 @@
 //        uint32_t hashIndex = lpk_get_file_hash_table_index(&lpk, filepath, 0, LPKP_DEFAULT);
 //        
 //        // if invalid, print error
-//        if(hashIndex == LPK_HASH_FREE) {
+//        if(hashIndex == LPK_INDEX_INVALID) {
 //            NSLog(@"\n%s\n\tERROR: can't find this file!!", filepath);
 //            continue;
 //        }
 //        
-//        // get block
+//        // get hash
 //        lpk_hash* hash = lpk.het + hashIndex;
-//        lpk_block* block = lpk.bet + hash->block_table_index;
 //        
 //        // print file info
 //        NSString* locale = LOCALE_IDS[0];
@@ -685,9 +658,9 @@
 //        }
 //        NSLog(@"\n%s\n\tfile size: %u\n\tpacked size: %u\n\toffset: %u\n\tlocale: %@\n\tplatform: %@\n\t",
 //              filepath,
-//              block->file_size,
-//              block->packed_size,
-//              block->offset,
+//              hash->file_size,
+//              hash->packed_size,
+//              hash->offset,
 //              locale,
 //              PLATFORM_NAMES[hash->platform]);
 //    }
