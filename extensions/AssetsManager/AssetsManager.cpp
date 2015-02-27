@@ -156,7 +156,7 @@ bool AssetsManager::checkUpdate()
     }
     
     string recordedVersion = CCUserDefault::sharedUserDefault()->getStringForKey(KEY_OF_VERSION);
-    if (recordedVersion == _version)
+    if (atoi(recordedVersion.c_str()) >= atoi(_version.c_str()))
     {
         sendErrorMessage(kNoNewVersion);
         CCLOG("there is not new version");
