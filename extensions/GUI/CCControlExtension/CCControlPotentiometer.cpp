@@ -31,8 +31,8 @@
 NS_CC_EXT_BEGIN
 
 CCControlPotentiometer::CCControlPotentiometer()
-: m_pThumbSprite(nullptr)
-, m_pProgressTimer(nullptr)
+: m_pThumbSprite(NULL)
+, m_pProgressTimer(NULL)
 , m_fValue(0.0f)
 , m_fMinimumValue(0.0f)
 , m_fMaximumValue(0.0f)
@@ -49,7 +49,7 @@ CCControlPotentiometer::~CCControlPotentiometer()
 CCControlPotentiometer* CCControlPotentiometer::create(const char* backgroundFile, const char* progressFile, const char* thumbFile)
 {
     CCControlPotentiometer* pRet = new CCControlPotentiometer();
-    if (pRet != nullptr)
+    if (pRet != NULL)
     {
         // Prepare track for potentiometer
         CCSprite *backgroundSprite      = CCSprite::create(backgroundFile);
@@ -100,7 +100,7 @@ bool CCControlPotentiometer::initWithTrackSprite_ProgressTimer_ThumbSprite(CCSpr
 void CCControlPotentiometer::setEnabled(bool enabled)
 {
     CCControl::setEnabled(enabled);
-    if (m_pThumbSprite != nullptr)
+    if (m_pThumbSprite != NULL)
     {
         m_pThumbSprite->setOpacity((enabled) ? 255 : 128);
     }

@@ -242,7 +242,7 @@ public:
      * Composing a "tree" structure is a very important feature of Node
      * Here's a sample code of traversing children array:
      @code
-     Node* node = nullptr;
+     Node* node = NULL;
      CCARRAY_FOREACH(parent->getChildren(), node)
      {
      node->setPosition(0,0);

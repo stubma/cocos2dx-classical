@@ -39,7 +39,7 @@ _normalScaleValueY(1.0f),
 _fontName("Thonburi"),
 _fontSize(20),
 _onSelectedScaleOffset(0.5),
-_labelRenderer(nullptr)
+_labelRenderer(NULL)
 {
 }
 
@@ -57,7 +57,7 @@ Label* Label::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return nullptr;
+    return NULL;
 }
 
 bool Label::init()

@@ -7,8 +7,8 @@
 
 static char cipher[8];
 static char* prePlain;
-static char* output = nullptr;
-static char* output_bak = nullptr;
+static char* output = NULL;
+static char* output_bak = NULL;
 static char* plain;
 static int _pos;
 static int _crypt;
@@ -135,7 +135,7 @@ static bool decrypt8Bytes(const char* bytes, int offset, int length) {
 	
 	// d(crypt ^ prePlain)
 	prePlain = decipher(prePlain);
-	if(prePlain == nullptr)
+	if(prePlain == NULL)
 		return false;
 	
 	contextStart += 8;
@@ -235,7 +235,7 @@ const char* teadec(const char* keyData, const int keyLen, const char* src, int s
 		decLength = srcLength - decOffset;
         
     if((decLength % 8 != 0) || (decLength < 16))
-        return nullptr;
+        return NULL;
 	
 	prePlain = decipher(src, decOffset);
 	_pos = prePlain[0] & 0x7;
@@ -243,7 +243,7 @@ const char* teadec(const char* keyData, const int keyLen, const char* src, int s
 	count = decLength - _pos - 10;
 	countbak = count;
 	if(count < 0)
-		return nullptr;
+		return NULL;
 	
 	char* m = (char*)calloc(mlen, sizeof(char));
 	char* mbak = m;
@@ -269,7 +269,7 @@ const char* teadec(const char* keyData, const int keyLen, const char* src, int s
 			m = (char*)src;
             if(!decrypt8Bytes(src, decOffset, decLength)) {
 				free(mbak);
-				return nullptr;
+				return NULL;
 			}
 		}
 	}
@@ -287,7 +287,7 @@ const char* teadec(const char* keyData, const int keyLen, const char* src, int s
 			preCrypt = _crypt - 8;
 			if(!decrypt8Bytes(src, decOffset, decLength)) {
 				free(mbak);
-				return nullptr;
+				return NULL;
 			}
 		}
 	}
@@ -296,7 +296,7 @@ const char* teadec(const char* keyData, const int keyLen, const char* src, int s
 		if(_pos < 8) {
 			if((m[decOffset + preCrypt + _pos] ^ prePlain[_pos]) != 0) {
 				free(mbak);
-				return nullptr;
+				return NULL;
 			};
 			_pos++;
 		}
@@ -305,7 +305,7 @@ const char* teadec(const char* keyData, const int keyLen, const char* src, int s
 			preCrypt = _crypt;
 			if(!decrypt8Bytes(src, decOffset, decLength)) {
 				free(mbak);
-				return nullptr;
+				return NULL;
 			}
 		}
 	}

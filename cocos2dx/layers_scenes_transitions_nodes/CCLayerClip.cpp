@@ -47,7 +47,7 @@ CCLayerClip* CCLayerClip::create() {
     }
     
     CC_SAFE_RELEASE(l);
-    return nullptr;
+    return NULL;
 }
 
 CCLayerClip* CCLayerClip::create(const ccColor4B& color) {
@@ -57,7 +57,7 @@ CCLayerClip* CCLayerClip::create(const ccColor4B& color) {
     }
     
     CC_SAFE_RELEASE(l);
-    return nullptr;
+    return NULL;
 }
 
 void CCLayerClip::visit() {

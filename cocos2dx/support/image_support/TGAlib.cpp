@@ -179,7 +179,7 @@ void tgaFlipImage( tImageTGA *psInfo )
     unsigned char *row = (unsigned char *)malloc(rowbytes);
     int y;
     
-    if (row == nullptr) return;
+    if (row == NULL) return;
     
     for( y = 0; y < (psInfo->height/2); y++ )
     {
@@ -196,7 +196,7 @@ void tgaFlipImage( tImageTGA *psInfo )
 tImageTGA * tgaLoad(const char *pszFilename)
 {
     int mode,total;
-    tImageTGA *info = nullptr;
+    tImageTGA *info = NULL;
     
     unsigned long nSize = 0;
     unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pszFilename, "rb", &nSize);
@@ -235,7 +235,7 @@ tImageTGA * tgaLoad(const char *pszFilename)
         info->imageData = (unsigned char *)malloc(sizeof(unsigned char) * total);
 
         // check to make sure we have the memory required
-        if (info->imageData == nullptr)
+        if (info->imageData == NULL)
         {
             info->status = TGA_ERROR_MEMORY;
             break;
@@ -292,7 +292,7 @@ void tgaRGBtogreyscale(tImageTGA *psInfo) {
     // allocate an array for the new image data
     size_t size = psInfo->height * psInfo->width;
     newImageData = (unsigned char *)malloc(sizeof(unsigned char) * size);
-    if (newImageData == nullptr) {
+    if (newImageData == NULL) {
         return;
     }
     
@@ -317,8 +317,8 @@ void tgaRGBtogreyscale(tImageTGA *psInfo) {
 // releases the memory used for the image
 void tgaDestroy(tImageTGA *psInfo) {
     
-    if (psInfo != nullptr) {
-        if (psInfo->imageData != nullptr)
+    if (psInfo != NULL) {
+        if (psInfo->imageData != NULL)
         {
             free(psInfo->imageData);
         }

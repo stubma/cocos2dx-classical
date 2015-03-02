@@ -62,7 +62,7 @@ protected:
     /**
      * @js ctor
      */
-    CCSpriteFrameCache(void) : m_pSpriteFrames(nullptr), m_pSpriteFramesAliases(nullptr){}
+    CCSpriteFrameCache(void) : m_pSpriteFrames(NULL), m_pSpriteFramesAliases(NULL){}
 public:
     bool init(void);
     /**
@@ -155,7 +155,7 @@ public:
 
 private:
     // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
-//    CCSpriteFrameCache(void) : m_pSpriteFrames(nullptr), m_pSpriteFramesAliases(nullptr){}
+//    CCSpriteFrameCache(void) : m_pSpriteFrames(NULL), m_pSpriteFramesAliases(NULL){}
 protected:
     CCDictionary* m_pSpriteFrames;
     CCDictionary* m_pSpriteFramesAliases;

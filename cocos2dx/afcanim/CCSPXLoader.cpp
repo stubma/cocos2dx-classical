@@ -78,14 +78,14 @@ CCSPXFileData* CCSPXLoader::load(const char* data, size_t length, float resScale
 	s_data = data;
 	if(s_data[0] != 'S' || s_data[1] != 'P' || s_data[2] != 'R' || s_data[3] != 'X') {
 		CCLOGERROR("CCSPXLoader::load: Invalid SpriteX file header");
-		return nullptr;
+		return NULL;
 	}
 	s_pos = 4;
 
 	// verify version
 	if(readByte() != SPX_VERSION) {
 		CCLOGERROR("CCSPXLoader::load: unsupported SpriteX file version: %d", s_data[s_pos]);
-		return nullptr;
+		return NULL;
 	}
 
 	// check byte order

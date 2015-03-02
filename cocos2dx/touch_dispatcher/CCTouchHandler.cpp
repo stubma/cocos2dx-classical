@@ -89,7 +89,7 @@ CCTouchHandler* CCTouchHandler::handlerWithDelegate(CCTouchDelegate *pDelegate, 
 
 bool CCTouchHandler::initWithDelegate(CCTouchDelegate *pDelegate, int nPriority)
 {
-    CCAssert(pDelegate != nullptr, "touch delegate should not be null");
+    CCAssert(pDelegate != NULL, "touch delegate should not be null");
 
     m_pDelegate = pDelegate; 
 

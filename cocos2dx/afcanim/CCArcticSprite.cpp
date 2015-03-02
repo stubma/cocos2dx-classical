@@ -28,7 +28,7 @@
 NS_CC_BEGIN
 
 CCArcticSprite::CCArcticSprite() :
-		m_arctic(nullptr) {
+		m_arctic(NULL) {
 }
 
 CCArcticSprite::~CCArcticSprite() {
@@ -75,7 +75,7 @@ CCArcticSprite* CCArcticSprite::create(const char* path, int animIndex, CCTextur
 	CC_SAFE_RETAIN(sheet);
 
 	// add others
-	for(CCTexture2D* t = va_arg(textures, CCTexture2D*); t != nullptr; t = va_arg(textures, CCTexture2D*)) {
+	for(CCTexture2D* t = va_arg(textures, CCTexture2D*); t != NULL; t = va_arg(textures, CCTexture2D*)) {
 		sheet = CCAFCSprite::createBatchNode(t);
 		sprite->m_sheetList.push_back(sheet);
 		CC_SAFE_RETAIN(sheet);
@@ -93,7 +93,7 @@ CCArcticSprite* CCArcticSprite::create(const char* path, int animIndex, CCTextur
 
 CCAFCAnimation* CCArcticSprite::getAnimationAt(int index, CCAFCClipMapping* mapping) {
 	if(index < 0 || index >= getAnimationCount())
-		return nullptr;
+		return NULL;
 	else
 		return CCArcticManager::getInstance()->getAnimationData(m_arctic, index, mapping);
 }

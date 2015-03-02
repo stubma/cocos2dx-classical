@@ -48,9 +48,9 @@ const char kCCProgressTextureCoords = 0x4b;
 CCProgressTimer::CCProgressTimer()
 :m_eType(kCCProgressTimerTypeRadial)
 ,m_fPercentage(0.0f)
-,m_pSprite(nullptr)
+,m_pSprite(NULL)
 ,m_nVertexDataCount(0)
-,m_pVertexData(nullptr)
+,m_pVertexData(NULL)
 ,m_tMidpoint(0,0)
 ,m_tBarChangeRate(0,0)
 ,m_bReverseDirection(false)
@@ -66,7 +66,7 @@ CCProgressTimer* CCProgressTimer::create(CCSprite* sp)
     else
     {
         delete pProgressTimer;
-        pProgressTimer = nullptr;
+        pProgressTimer = NULL;
     }        
 
     return pProgressTimer;
@@ -75,7 +75,7 @@ CCProgressTimer* CCProgressTimer::create(CCSprite* sp)
 bool CCProgressTimer::initWithSprite(CCSprite* sp)
 {
     setPercentage(0.0f);
-    m_pVertexData = nullptr;
+    m_pVertexData = NULL;
     m_nVertexDataCount = 0;
 
     setAnchorPoint(ccp(0.5f,0.5f));
@@ -130,7 +130,7 @@ void CCProgressTimer::setType(CCProgressTimerType type)
         if (m_pVertexData)
         {
             CC_SAFE_FREE(m_pVertexData);
-            m_pVertexData = nullptr;
+            m_pVertexData = NULL;
             m_nVertexDataCount = 0;
         }
 

@@ -30,15 +30,15 @@ THE SOFTWARE.
 NS_CC_EXT_BEGIN
 
 	ActionObject::ActionObject()
-	: m_ActionNodeList(nullptr)
+	: m_ActionNodeList(NULL)
 	, m_name("")
 	, m_loop(false)
 	, m_bPause(false)
 	, m_bPlaying(false)
 	, m_fUnitTime(0.1f)
 	, m_CurrentTime(0.0f)
-	, m_pScheduler(nullptr)
-	, m_CallBack(nullptr)
+	, m_pScheduler(NULL)
+	, m_CallBack(NULL)
 	, m_fTotalTime(0.0f)
 {
 	m_ActionNodeList = CCArray::create();
@@ -139,7 +139,7 @@ void ActionObject::initWithDictionary(const rapidjson::Value& dic,CCObject* root
 void ActionObject::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::extension::stExpCocoNode *pCocoNode, cocos2d::CCObject *root)
 {
     stExpCocoNode *stChildNode = pCocoNode->GetChildArray(pCocoLoader);
-    stExpCocoNode *actionNodeList = nullptr;
+    stExpCocoNode *actionNodeList = NULL;
     int count = pCocoNode->GetChildNum();
     for (int i = 0; i < count; ++i) {
         std::string key = stChildNode[i].GetName(pCocoLoader);
@@ -155,7 +155,7 @@ void ActionObject::initWithBinary(cocos2d::extension::CocoLoader *pCocoLoader, c
         }
     }
     
-	if(nullptr != actionNodeList)
+	if(NULL != actionNodeList)
 	{
         int actionNodeCount = actionNodeList->GetChildNum();
         stExpCocoNode *actionNodeArray = actionNodeList->GetChildArray(pCocoLoader);
@@ -202,7 +202,7 @@ float ActionObject::valueToFloat(std::string& value)
 
 void ActionObject::addActionNode(ActionNode* node)
 {
-	if (node == nullptr)
+	if (node == NULL)
 	{
 		return;
 	}
@@ -211,7 +211,7 @@ void ActionObject::addActionNode(ActionNode* node)
 }
 void ActionObject::removeActionNode(ActionNode* node)
 {
-	if (node == nullptr)
+	if (node == NULL)
 	{
 		return;
 	}
@@ -295,7 +295,7 @@ void ActionObject::simulationActionUpdate(float dt)
 
 	if (isEnd)
 	{
-		if (m_CallBack != nullptr)
+		if (m_CallBack != NULL)
 		{
 			m_CallBack->execute();
 		}

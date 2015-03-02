@@ -75,11 +75,11 @@ public:
 public:
     CCDictMaker()        
         : m_eResultType(SAX_RESULT_NONE),
-          m_pRootArray(nullptr), 
-          m_pRootDict(nullptr),
-          m_pCurDict(nullptr),
+          m_pRootArray(NULL), 
+          m_pRootDict(NULL),
+          m_pCurDict(NULL),
           m_tState(SAX_NONE),
-          m_pArray(nullptr)
+          m_pArray(NULL)
     {
     }
 
@@ -94,7 +94,7 @@ public:
 
         if (false == parser.init("UTF-8"))
         {
-            return nullptr;
+            return NULL;
         }
         parser.setDelegator(this);
 
@@ -109,7 +109,7 @@ public:
 
         if (false == parser.init("UTF-8"))
         {
-            return nullptr;
+            return NULL;
         }
         parser.setDelegator(this);
 
@@ -125,7 +125,7 @@ public:
         if( sName == "dict" )
         {
             m_pCurDict = new CCDictionary();
-            if(m_eResultType == SAX_RESULT_DICT && m_pRootDict == nullptr)
+            if(m_eResultType == SAX_RESULT_DICT && m_pRootDict == NULL)
             {
                 // Because it will call CC_SAFE_RELEASE(m_pCurDict) later, so retain here.
                 m_pRootDict = m_pCurDict;
@@ -178,7 +178,7 @@ public:
         {
             m_tState = SAX_ARRAY;
             m_pArray = new CCArray();
-            if (m_eResultType == SAX_RESULT_ARRAY && m_pRootArray == nullptr)
+            if (m_eResultType == SAX_RESULT_ARRAY && m_pRootArray == NULL)
             {
                 m_pRootArray = m_pArray;
                 CC_SAFE_RETAIN(m_pRootArray);
@@ -341,11 +341,11 @@ bool CCFileUtils::writeToFile(cocos2d::CCDictionary *dict, const std::string &fu
 {
     //CCLOG("tinyxml2 CCDictionary %d writeToFile %s", dict->m_uID, fullPath.c_str());
     tinyxml2::XMLDocument *pDoc = new tinyxml2::XMLDocument();
-    if (nullptr == pDoc)
+    if (NULL == pDoc)
         return false;
     
     tinyxml2::XMLDeclaration *pDeclaration = pDoc->NewDeclaration("xml version=\"1.0\" encoding=\"UTF-8\"");
-    if (nullptr == pDeclaration)
+    if (NULL == pDeclaration)
     {
         delete pDoc;
         return false;
@@ -357,7 +357,7 @@ bool CCFileUtils::writeToFile(cocos2d::CCDictionary *dict, const std::string &fu
     
     tinyxml2::XMLElement *pRootEle = pDoc->NewElement("plist");
     pRootEle->SetAttribute("version", "1.0");
-    if (nullptr == pRootEle)
+    if (NULL == pRootEle)
     {
         delete pDoc;
         return false;
@@ -365,7 +365,7 @@ bool CCFileUtils::writeToFile(cocos2d::CCDictionary *dict, const std::string &fu
     pDoc->LinkEndChild(pRootEle);
     
     tinyxml2::XMLElement *innerDict = generateElementForDict(dict, pDoc);
-    if (nullptr == innerDict )
+    if (NULL == innerDict )
     {
         delete pDoc;
         return false;
@@ -401,7 +401,7 @@ static tinyxml2::XMLElement* generateElementForObject(cocos2d::CCObject *object,
         return generateElementForDict(innerDict, pDoc);
     
     CCLOG("This type cannot appear in property list");
-    return nullptr;
+    return NULL;
 }
 
 /*
@@ -411,7 +411,7 @@ static tinyxml2::XMLElement* generateElementForDict(cocos2d::CCDictionary *dict,
 {
     tinyxml2::XMLElement* rootNode = pDoc->NewElement("dict");
     
-    CCDictElement *dictElement = nullptr;
+    CCDictElement *dictElement = NULL;
     CCDICT_FOREACH(dict, dictElement)
     {
         tinyxml2::XMLElement* tmpNode = pDoc->NewElement("key");
@@ -434,7 +434,7 @@ static tinyxml2::XMLElement* generateElementForArray(cocos2d::CCArray *array, ti
 {
     tinyxml2::XMLElement* rootNode = pDoc->NewElement("array");
     
-    CCObject *object = nullptr;
+    CCObject *object = NULL;
     CCARRAY_FOREACH(array, object)
     {
         tinyxml2::XMLElement *element = generateElementForObject(object, pDoc);
@@ -449,14 +449,14 @@ static tinyxml2::XMLElement* generateElementForArray(cocos2d::CCArray *array, ti
 NS_CC_BEGIN
 
 /* The subclass CCFileUtilsIOS and CCFileUtilsMac should override these two method. */
-CCDictionary* CCFileUtils::createCCDictionaryWithContentsOfFile(const std::string& filename) {return nullptr;}
-bool CCFileUtils::writeToFile(cocos2d::CCDictionary *dict, const std::string &fullPath) {return nullptr;}
-CCArray* CCFileUtils::createCCArrayWithContentsOfFile(const std::string& filename) {return nullptr;}
+CCDictionary* CCFileUtils::createCCDictionaryWithContentsOfFile(const std::string& filename) {return NULL;}
+bool CCFileUtils::writeToFile(cocos2d::CCDictionary *dict, const std::string &fullPath) {return NULL;}
+CCArray* CCFileUtils::createCCArrayWithContentsOfFile(const std::string& filename) {return NULL;}
 
 #endif /* (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) */
 
 
-CCFileUtils* CCFileUtils::s_sharedFileUtils = nullptr;
+CCFileUtils* CCFileUtils::s_sharedFileUtils = NULL;
 
 void CCFileUtils::purgeFileUtils()
 {
@@ -464,7 +464,7 @@ void CCFileUtils::purgeFileUtils()
 }
 
 CCFileUtils::CCFileUtils()
-: m_pFilenameLookupDict(nullptr)
+: m_pFilenameLookupDict(NULL)
 {
 }
 
@@ -487,8 +487,8 @@ void CCFileUtils::purgeCachedEntries()
 
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
 {
-    unsigned char * pBuffer = nullptr;
-    CCAssert(pszFileName != nullptr && pSize != nullptr && pszMode != nullptr, "Invalid parameters.");
+    unsigned char * pBuffer = NULL;
+    CCAssert(pszFileName != NULL && pSize != NULL && pszMode != NULL, "Invalid parameters.");
     *pSize = 0;
     do
     {
@@ -517,8 +517,8 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
 
 unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize)
 {
-    unsigned char * pBuffer = nullptr;
-    unzFile pFile = nullptr;
+    unsigned char * pBuffer = NULL;
+    unzFile pFile = NULL;
     *pSize = 0;
 
     do 
@@ -534,7 +534,7 @@ unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const
 
         char szFilePathA[260];
         unz_file_info FileInfo;
-        nRet = unzGetCurrentFileInfo(pFile, &FileInfo, szFilePathA, sizeof(szFilePathA), nullptr, 0, nullptr, 0);
+        nRet = unzGetCurrentFileInfo(pFile, &FileInfo, szFilePathA, sizeof(szFilePathA), NULL, 0, NULL, 0);
         CC_BREAK_IF(UNZ_OK != nRet);
 
         nRet = unzOpenCurrentFile(pFile);
@@ -558,10 +558,10 @@ unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const
 
 std::string CCFileUtils::getNewFilename(const char* pszFileName)
 {
-    const char* pszNewFileName = nullptr;
+    const char* pszNewFileName = NULL;
     // in Lookup Filename dictionary ?
-    CCString* fileNameFound = m_pFilenameLookupDict ? (CCString*)m_pFilenameLookupDict->objectForKey(pszFileName) : nullptr;
-    if( nullptr == fileNameFound || fileNameFound->length() == 0) {
+    CCString* fileNameFound = m_pFilenameLookupDict ? (CCString*)m_pFilenameLookupDict->objectForKey(pszFileName) : NULL;
+    if( NULL == fileNameFound || fileNameFound->length() == 0) {
         pszNewFileName = pszFileName;
     }
     else {
@@ -596,7 +596,7 @@ std::string CCFileUtils::getPathForFilename(const std::string& filename, const s
 
 std::string CCFileUtils::fullPathForFilename(const char* pszFileName)
 {
-    CCAssert(pszFileName != nullptr, "CCFileUtils: Invalid path");
+    CCAssert(pszFileName != NULL, "CCFileUtils: Invalid path");
     
     std::string strFileName = pszFileName;
     if (isAbsolutePath(pszFileName))

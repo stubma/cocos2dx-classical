@@ -140,11 +140,11 @@ CCTMXLoader::TMXTag CCTMXLoader::grandpaTag() {
 }
 
 const char* CCTMXLoader::valueForKey(const char** atts, const char* name) {
-	for(int i = 0; atts[i] != nullptr; i += 2) {
+	for(int i = 0; atts[i] != NULL; i += 2) {
 		if(!strcmp(atts[i], name))
 			return atts[i + 1];
 	}
-	return nullptr;
+	return NULL;
 }
 
 CCTMXMapInfo* CCTMXLoader::load(const string& tmxFile) {
@@ -156,7 +156,7 @@ CCTMXMapInfo* CCTMXLoader::load(const string& tmxFile) {
 	unsigned char* data = CCFileUtils::sharedFileUtils()->getFileData(tmxFile.c_str(), "rb", &size);
 	bool success = load((const char*)data, (int)size);
 	free(data);
-	return success ? m_map : nullptr;
+	return success ? m_map : NULL;
 }
 
 CCTMXMapInfo* CCTMXLoader::load(const char* tmxData, int length, const string& resourcePath) {
@@ -167,7 +167,7 @@ CCTMXMapInfo* CCTMXLoader::load(const char* tmxData, int length, const string& r
 	if(load(tmxData, length)) {
 		return m_map;
 	} else {
-		return nullptr;
+		return NULL;
 	}
 }
 
@@ -186,7 +186,7 @@ void CCTMXLoader::startElement(void* ctx, const char* name, const char** atts) {
 	
 	switch(topTag()) {
 		case MAP:
-			for(int i = 0; atts[i] != nullptr; i += 2) {
+			for(int i = 0; atts[i] != NULL; i += 2) {
 				// get attr and value
 				const char* key = (const char*)atts[i];
 				const char* value = (const char*)atts[i + 1];
@@ -230,11 +230,11 @@ void CCTMXLoader::startElement(void* ctx, const char* name, const char** atts) {
 		case TILESET:
 		{
 			const char* externalFile = valueForKey((const char**)atts, "source");
-			if(externalFile == nullptr) {
+			if(externalFile == NULL) {
 				CCTMXTileSetInfo* tileset = CCTMXTileSetInfo::create();
 				m_map->getTileSets().addObject(tileset);
 				
-				for(int i = 0; atts[i] != nullptr; i += 2) {
+				for(int i = 0; atts[i] != NULL; i += 2) {
 					// get attr and value
 					const char* key = (const char*)atts[i];
 					const char* value = (const char*)atts[i + 1];
@@ -274,7 +274,7 @@ void CCTMXLoader::startElement(void* ctx, const char* name, const char** atts) {
 				// firstgid is not written in external tileset, so we must read it from current tmx
 				if(success) {
 					CCTMXTileSetInfo* tileset = (CCTMXTileSetInfo*)m_map->getTileSets().lastObject();
-					for(int i = 0; atts[i] != nullptr; i += 2) {
+					for(int i = 0; atts[i] != NULL; i += 2) {
 						// get attr and value
 						const char* key = (const char*)atts[i];
 						const char* value = (const char*)atts[i + 1];
@@ -343,7 +343,7 @@ void CCTMXLoader::startElement(void* ctx, const char* name, const char** atts) {
 			CCTMXLayerInfo* layer = CCTMXLayerInfo::create();
 			m_map->getLayers().addObject(layer);
 			
-			for(int i = 0; atts[i] != nullptr; i += 2) {
+			for(int i = 0; atts[i] != NULL; i += 2) {
 				// get attr and value
 				const char* key = (const char*)atts[i];
 				const char* value = (const char*)atts[i + 1];
@@ -351,10 +351,10 @@ void CCTMXLoader::startElement(void* ctx, const char* name, const char** atts) {
 				
 				// check some optional attribute
 				const char* visible = valueForKey((const char**)atts, "visible");
-				if(visible == nullptr)
+				if(visible == NULL)
 					layer->setVisible(true);
 				const char* alpha = valueForKey((const char**)atts, "opacity");
-				if(alpha == nullptr)
+				if(alpha == NULL)
 					layer->setAlpha(255);
 				
 				// check attr
@@ -397,8 +397,8 @@ void CCTMXLoader::startElement(void* ctx, const char* name, const char** atts) {
 			
 			// check compression
 			const char* compression = valueForKey((const char**)(atts), "compression");
-			m_compressed = compression != nullptr;
-			if(compression != nullptr && strcmp(compression, "gzip") && strcmp(compression, "zlib")) {
+			m_compressed = compression != NULL;
+			if(compression != NULL && strcmp(compression, "gzip") && strcmp(compression, "zlib")) {
 				CCLOGERROR("Unsupported layer data compression: %s", compression);
 				break;
 			}
@@ -410,7 +410,7 @@ void CCTMXLoader::startElement(void* ctx, const char* name, const char** atts) {
 			CCTMXObjectGroup* group = CCTMXObjectGroup::create();
 			m_map->getObjectGroups().addObject(group);
 			
-			for(int i = 0; atts[i] != nullptr; i += 2) {
+			for(int i = 0; atts[i] != NULL; i += 2) {
 				// get attr and value
 				const char* key = (const char*)atts[i];
 				const char* value = (const char*)atts[i + 1];
@@ -452,7 +452,7 @@ void CCTMXLoader::startElement(void* ctx, const char* name, const char** atts) {
 			CCTMXObject* object = group->newObject();
 			
 			// set object property
-			for(int i = 0; atts[i] != nullptr; i += 2) {
+			for(int i = 0; atts[i] != NULL; i += 2) {
 				// get attr and value
 				const char* key = (const char*)atts[i];
 				const char* value = (const char*)atts[i + 1];
@@ -518,7 +518,7 @@ void CCTMXLoader::startElement(void* ctx, const char* name, const char** atts) {
 					}
 					
 					// parse attributes
-					for(int i = 0; atts[i] != nullptr; i += 2) {
+					for(int i = 0; atts[i] != NULL; i += 2) {
 						// get attr and value
 						const char* key = (const char*)atts[i];
 						const char* value = (const char*)atts[i + 1];
@@ -530,9 +530,9 @@ void CCTMXLoader::startElement(void* ctx, const char* name, const char** atts) {
 							{
 								// parse space character
 								char* p = strtok((char*)value, " ");
-								char* n = nullptr;
+								char* n = NULL;
 								while(p) {
-									n = strtok(nullptr, " ");
+									n = strtok(NULL, " ");
 									
 									// parse point
 									float x, y;
@@ -582,7 +582,7 @@ void CCTMXLoader::textHandler(void* ctx, const char* s, int len) {
 			
 			// decompress
 			if(m_compressed) {
-				unsigned char* deflated = nullptr;
+				unsigned char* deflated = NULL;
 				CCTMXLayerInfo* layer = (CCTMXLayerInfo*)m_map->getLayers().lastObject();
 				int sizeHint = (int)(layer->getLayerWidth() * layer->getLayerHeight() * sizeof(unsigned int));
 				len = ZipUtils::ccInflateMemoryWithHint((unsigned char*)data, (unsigned int)len, &deflated, sizeHint);

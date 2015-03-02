@@ -43,7 +43,7 @@ class CCObject;
 class CC_DLL CCZone
 {
 public:
-    CCZone(CCObject *pObject = nullptr);
+    CCZone(CCObject *pObject = NULL);
 
 public:
     CCObject *m_pCopyObject;

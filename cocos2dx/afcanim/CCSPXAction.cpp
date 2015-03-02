@@ -29,7 +29,7 @@ CCSPXAction::CCSPXAction() :
 		m_transform(SPX_TRANS_NONE),
 		m_frameCount(0),
 		m_maxFrameTile(0),
-		m_frames(nullptr) {
+		m_frames(NULL) {
 }
 
 CCSPXAction::~CCSPXAction() {

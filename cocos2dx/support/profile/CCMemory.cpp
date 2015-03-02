@@ -87,7 +87,7 @@ void addRecord(ccMemoryRecord* r) {
 	// get hash position
 	int hash = (uintptr_t)r->start & MEMORY_RECORD_INDEX_MASK;
 	ccMemoryRecord* pTemp = sMemoryRecord[hash];
-	ccMemoryRecord* pPrev = nullptr;
+	ccMemoryRecord* pPrev = NULL;
 
 	// find a block whose start address is larger than incoming record
 	while (pTemp) {
@@ -99,7 +99,7 @@ void addRecord(ccMemoryRecord* r) {
 	}
 
 	// insert new record into linked list
-	if (pPrev == nullptr) {
+	if (pPrev == NULL) {
 		sMemoryRecord[hash] = r;
 		if (pTemp) {
 			r->next = pTemp;
@@ -118,7 +118,7 @@ void addRecord(ccMemoryRecord* r) {
 ccMemoryRecord* findRecord(void* p) {
 	int hash = (uintptr_t)p & MEMORY_RECORD_INDEX_MASK;
 	ccMemoryRecord* pTemp = sMemoryRecord[hash];
-	ccMemoryRecord* r = nullptr;
+	ccMemoryRecord* r = NULL;
 	while (pTemp) {
 		if (pTemp->start == p) {
 			r = pTemp;
@@ -132,7 +132,7 @@ ccMemoryRecord* findRecord(void* p) {
 ccMemoryRecord* removeRecord(ccMemoryRecord* r) {
 	int hash = (uintptr_t)r->start & MEMORY_RECORD_INDEX_MASK;
 	ccMemoryRecord* pTemp = sMemoryRecord[hash];
-	ccMemoryRecord* pPrev = nullptr;
+	ccMemoryRecord* pPrev = NULL;
 	while(pTemp) {
 		if(pTemp == r) {
 			break;
@@ -144,7 +144,7 @@ ccMemoryRecord* removeRecord(ccMemoryRecord* r) {
 	// didn't find?
 	if(pTemp != r) {
 		CCLOG("[MEMRECORD] Unmatched record (%p)(record=%p):%d [%s:%d]", r->start, r, r->size, r->file, r->line);
-		return nullptr;
+		return NULL;
 	}
 
 	// remove record
@@ -159,27 +159,27 @@ ccMemoryRecord* removeRecord(ccMemoryRecord* r) {
 	sTotalFree++;
 
 	// return record
-	r->next = nullptr;
+	r->next = NULL;
 	return r;
 }
 
 void* _ccMalloc(size_t size, const char* file, int line, const char* logTag) {
 	// null pointer for zero size
 	if (size == 0)
-		return nullptr;
+		return NULL;
 
 	void* p = malloc(size);
 	if (p) {
 		ccMemoryRecord* r = (ccMemoryRecord*)malloc(sizeof(ccMemoryRecord));
 		if(!r) {
 			free(p);
-			p = nullptr;
+			p = NULL;
 		} else {
 			r->start = p;
 			r->size = size;
 			r->file = file;
 			r->line = line;
-			r->next = nullptr;
+			r->next = NULL;
 			addRecord(r);
 		}
 
@@ -356,14 +356,14 @@ void CCMemory::trackCCObject(CCObject* obj, string name) {
     // create record
     ccObjRecord* r = (ccObjRecord*)malloc(sizeof(ccObjRecord));
     r->obj = obj;
-    r->next = nullptr;
-    r->firstOp = nullptr;
+    r->next = NULL;
+    r->firstOp = NULL;
     r->classname = CCUtils::copy(name.c_str());
     
     // get hash position
     int hash = r->obj->m_uID & MEMORY_RECORD_INDEX_MASK;
     ccObjRecord* pTemp = sObjRecord[hash];
-    ccObjRecord* pPrev = nullptr;
+    ccObjRecord* pPrev = NULL;
     
     // find a block whose start address is larger than incoming record
     while (pTemp) {
@@ -375,7 +375,7 @@ void CCMemory::trackCCObject(CCObject* obj, string name) {
     }
     
     // insert new record into linked list
-    if (pPrev == nullptr) {
+    if (pPrev == NULL) {
         sObjRecord[hash] = r;
         if (pTemp) {
             r->next = pTemp;
@@ -399,7 +399,7 @@ void CCMemory::untrackCCObject(CCObject* obj) {
     // get hash
     int hash = obj->m_uID & MEMORY_RECORD_INDEX_MASK;
     ccObjRecord* pTemp = sObjRecord[hash];
-    ccObjRecord* pPrev = nullptr;
+    ccObjRecord* pPrev = NULL;
     while(pTemp) {
         if(pTemp->obj->m_uID == obj->m_uID) {
             break;
@@ -455,7 +455,7 @@ void CCMemory::trackRetain(CCObject* obj, const char* file, int line) {
     newrr->line = line;
     newrr->retainCount = obj->retainCount();
     newrr->autoReleaseCount = obj->autoReleaseCount();
-    newrr->next = nullptr;
+    newrr->next = NULL;
     appendRefRecord(r, newrr);
 #endif
 }
@@ -480,7 +480,7 @@ void CCMemory::trackRelease(CCObject* obj, const char* file, int line) {
     newrr->line = line;
     newrr->retainCount = obj->retainCount();
     newrr->autoReleaseCount = obj->autoReleaseCount();
-    newrr->next = nullptr;
+    newrr->next = NULL;
     appendRefRecord(r, newrr);
 #endif
 }
@@ -505,7 +505,7 @@ void CCMemory::trackAutorelease(CCObject* obj, const char* file, int line) {
     newrr->line = line;
     newrr->retainCount = obj->retainCount();
     newrr->autoReleaseCount = obj->autoReleaseCount();
-    newrr->next = nullptr;
+    newrr->next = NULL;
     appendRefRecord(r, newrr);
 #endif
 }

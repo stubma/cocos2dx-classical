@@ -32,7 +32,7 @@ NS_CC_BEGIN
 CCUDPSocket::CCUDPSocket() :
 m_socket(kCCSocketInvalid),
 m_tag(-1) {
-    pthread_mutex_init(&m_mutex, nullptr);
+    pthread_mutex_init(&m_mutex, NULL);
 }
 
 CCUDPSocket::~CCUDPSocket() {
@@ -46,7 +46,7 @@ CCUDPSocket* CCUDPSocket::create(const string& hostname, int port, int tag, int 
 	}
 	
 	CC_SAFE_RELEASE(s);
-	return nullptr;
+	return NULL;
 }
 
 void* CCUDPSocket::udpThreadEntry(void* arg) {
@@ -76,7 +76,7 @@ void* CCUDPSocket::udpThreadEntry(void* arg) {
         FD_ZERO(&exceptset);
         FD_SET(s->m_socket, &writeset);
         FD_SET(s->m_socket, &exceptset);
-        int ret = select(FD_SETSIZE, nullptr, &writeset, &exceptset, &timeout);
+        int ret = select(FD_SETSIZE, NULL, &writeset, &exceptset, &timeout);
         if (ret == 0 || ret < 0) {
             s->closeSocket();
         } else {
@@ -98,11 +98,11 @@ void* CCUDPSocket::udpThreadEntry(void* arg) {
     setsockopt(s->m_socket, SOL_SOCKET, SO_LINGER, (const char*)&so_linger, sizeof(so_linger));
     
     // read/write loop
-    CCPacket* p = nullptr;
+    CCPacket* p = NULL;
     while(!s->m_stop && s->m_connected && s->getSocket() != kCCSocketInvalid) {
         s->recvFromSock();
         if(s->m_inBufLen > 0) {
-            CCPacket* p = nullptr;
+            CCPacket* p = NULL;
             if(s->m_hub) {
                 if(s->m_hub->isRawPolicy()) {
                     p = CCPacket::createRawPacket(s->m_inBuf, s->m_inBufLen);
@@ -127,7 +127,7 @@ void* CCUDPSocket::udpThreadEntry(void* arg) {
             ssize_t sent = sendto(s->m_socket, p->getBuffer(), p->getPacketLength(), 0, (sockaddr*)&s->m_srvAddr, sizeof(s->m_srvAddr));
             if(sent >= p->getPacketLength()) {
                 CC_SAFE_RELEASE(p);
-                p = nullptr;
+                p = NULL;
             } else {
                 if (s->hasError()) {
                     s->closeSocket();
@@ -147,9 +147,9 @@ void* CCUDPSocket::udpThreadEntry(void* arg) {
 	CC_SAFE_AUTORELEASE(s);
     
     // exit
-    pthread_exit(nullptr);
+    pthread_exit(NULL);
 	
-	return nullptr;
+	return NULL;
 }
 
 bool CCUDPSocket::init(const string& hostname, int port, int tag, int blockSec) {
@@ -192,7 +192,7 @@ bool CCUDPSocket::init(const string& hostname, int port, int tag, int blockSec) 
     // should hold it to avoid wrong pointer
 	CC_SAFE_RETAIN(this);
 	pthread_t thread;
-	pthread_create(&thread, nullptr, udpThreadEntry, (void*)this);
+	pthread_create(&thread, NULL, udpThreadEntry, (void*)this);
     pthread_detach(thread);
     
 	return true;

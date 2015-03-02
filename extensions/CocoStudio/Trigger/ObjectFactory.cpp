@@ -31,7 +31,7 @@ NS_CC_EXT_BEGIN
 
 ObjectFactory::TInfo::TInfo(void)
 :_class("")
-,_fun(nullptr)
+,_fun(NULL)
 {
 }
 
@@ -51,7 +51,7 @@ ObjectFactory::TInfo::TInfo(const TInfo &t)
 ObjectFactory::TInfo::~TInfo(void)
 {
    _class = "";
-   _fun = nullptr;
+   _fun = NULL;
 }
 
 ObjectFactory::TInfo& ObjectFactory::TInfo::operator= (const TInfo &t)
@@ -62,7 +62,7 @@ ObjectFactory::TInfo& ObjectFactory::TInfo::operator= (const TInfo &t)
 }
 
 
-ObjectFactory* ObjectFactory::_sharedFactory = nullptr;
+ObjectFactory* ObjectFactory::_sharedFactory = NULL;
 
 ObjectFactory::ObjectFactory(void)
 {
@@ -76,7 +76,7 @@ ObjectFactory::~ObjectFactory(void)
 
 ObjectFactory* ObjectFactory::getInstance()
 {
-    if ( nullptr == _sharedFactory)
+    if ( NULL == _sharedFactory)
     {
         _sharedFactory = new ObjectFactory();
     }
@@ -90,11 +90,11 @@ void ObjectFactory::destroyInstance()
 
 CCObject* ObjectFactory::createObject(std::string name)
 {
-	CCObject *o = nullptr;
+	CCObject *o = NULL;
 	do 
 	{
 		const TInfo t = _typeMap[name];
-		CC_BREAK_IF(t._fun == nullptr);
+		CC_BREAK_IF(t._fun == NULL);
 		o = t._fun();
 	} while (0);
    
@@ -128,11 +128,11 @@ CCComponent* ObjectFactory::createComponent(std::string name)
         CCAssert(false, "Unregistered Component!");
     }
     
-	CCObject *o = nullptr;
+	CCObject *o = NULL;
 	do 
 	{
 		const TInfo t = _typeMap[name];
-		CC_BREAK_IF(t._fun == nullptr);
+		CC_BREAK_IF(t._fun == NULL);
 		o = t._fun();
 	} while (0);
 
@@ -142,7 +142,7 @@ CCComponent* ObjectFactory::createComponent(std::string name)
 
 ui::Widget* ObjectFactory::createGUI(std::string name)
 {
-    CCObject* object = nullptr;
+    CCObject* object = NULL;
     
     if (name == "Panel" || name == "Node")
     {
@@ -160,7 +160,7 @@ ui::Widget* ObjectFactory::createGUI(std::string name)
     do
     {
         const TInfo t = _typeMap[name];
-        CC_BREAK_IF(t._fun == nullptr);
+        CC_BREAK_IF(t._fun == NULL);
         object = t._fun();
     } while (0);
     
@@ -169,12 +169,12 @@ ui::Widget* ObjectFactory::createGUI(std::string name)
 
 WidgetReaderProtocol* ObjectFactory::createWidgetReaderProtocol(std::string name)
 {
-    CCObject* object = nullptr;
+    CCObject* object = NULL;
     
     do
     {
         const TInfo t = _typeMap[name];
-        CC_BREAK_IF(t._fun == nullptr);
+        CC_BREAK_IF(t._fun == NULL);
         object = t._fun();
     } while (0);
     

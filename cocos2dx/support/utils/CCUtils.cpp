@@ -59,8 +59,8 @@ unsigned char CCUtils::UnitScalarToByte(float x) {
 }
 
 const char* CCUtils::copy(const char* src) {
-	if(src == nullptr)
-		return nullptr;
+	if(src == NULL)
+		return NULL;
     
 	size_t len = strlen(src);
 	char* c = (char*)calloc(len + 1, sizeof(char));
@@ -69,8 +69,8 @@ const char* CCUtils::copy(const char* src) {
 }
 
 const char* CCUtils::copy(const char* src, int start, size_t len) {
-	if(src == nullptr)
-		return nullptr;
+	if(src == NULL)
+		return NULL;
     
 	char* c = (char*)calloc(len + 1, sizeof(char));
 	memcpy(c, src + start, len);
@@ -513,7 +513,7 @@ CCScene* CCUtils::getScene(CCNode* n) {
         }
     }
     
-    return nullptr;
+    return NULL;
 }
 
 bool CCUtils::testSegmentAABB(CCPoint p0, CCPoint p1, ccAABB b) {
@@ -577,7 +577,7 @@ CCRect CCUtils::combine(const CCRect& r1, const CCRect& r2) {
 
 int64_t CCUtils::currentTimeMillis() {
 	struct timeval tv;
-	gettimeofday(&tv, (struct timezone *) nullptr);
+	gettimeofday(&tv, (struct timezone *) NULL);
 	int64_t when = tv.tv_sec * 1000LL + tv.tv_usec / 1000;
 	return when;
 }

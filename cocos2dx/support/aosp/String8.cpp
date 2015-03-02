@@ -40,8 +40,8 @@ namespace android {
 	#define OS_PATH_SEPARATOR '/'
 #endif
 
-static SharedBuffer* gEmptyStringBuf = nullptr;
-static char* gEmptyString = nullptr;
+static SharedBuffer* gEmptyStringBuf = NULL;
+static char* gEmptyString = NULL;
 
 extern int gDarwinCantLoadAllObjects;
 int gDarwinIsReallyAnnoying;
@@ -55,8 +55,8 @@ static inline char* getEmptyString()
 void terminate_string8()
 {
     SharedBuffer::bufferFromData(gEmptyString)->release();
-    gEmptyStringBuf = nullptr;
-    gEmptyString = nullptr;
+    gEmptyStringBuf = NULL;
+    gEmptyString = NULL;
 }
 
 // ---------------------------------------------------------------------------
@@ -71,7 +71,7 @@ static char* allocFromUTF8(const char* in, size_t len)
             str[len] = 0;
             return str;
         }
-        return nullptr;
+        return NULL;
     }
 
     return getEmptyString();
@@ -134,7 +134,7 @@ String8::String8(const String8& o)
 String8::String8(const char* o)
     : mString(allocFromUTF8(o, strlen(o)))
 {
-    if (mString == nullptr) {
+    if (mString == NULL) {
         mString = getEmptyString();
     }
 }
@@ -142,7 +142,7 @@ String8::String8(const char* o)
 String8::String8(const char* o, size_t len)
     : mString(allocFromUTF8(o, len))
 {
-    if (mString == nullptr) {
+    if (mString == NULL) {
         mString = getEmptyString();
     }
 }
@@ -289,7 +289,7 @@ status_t String8::appendFormat(const char* fmt, ...)
 status_t String8::appendFormatV(const char* fmt, va_list args)
 {
     int result = NO_ERROR;
-    int n = vsnprintf(nullptr, 0, fmt, args);
+    int n = vsnprintf(NULL, 0, fmt, args);
     if (n != 0) {
         size_t oldLength = length();
         char* buf = lockBuffer(oldLength + n);
@@ -328,7 +328,7 @@ char* String8::lockBuffer(size_t size)
         mString = str;
         return str;
     }
-    return nullptr;
+    return NULL;
 }
 
 void String8::unlockBuffer()
@@ -456,7 +456,7 @@ String8 String8::getPathLeaf(void) const
     const char*const buf = mString;
 
     cp = strrchr(buf, OS_PATH_SEPARATOR);
-    if (cp == nullptr)
+    if (cp == NULL)
         return String8(*this);
     else
         return String8(cp+1);
@@ -468,7 +468,7 @@ String8 String8::getPathDir(void) const
     const char*const str = mString;
 
     cp = strrchr(str, OS_PATH_SEPARATOR);
-    if (cp == nullptr)
+    if (cp == NULL)
         return String8("");
     else
         return String8(str, cp - str);
@@ -487,7 +487,7 @@ String8 String8::walkPath(String8* outRemains) const
         cp = strchr(buf, OS_PATH_SEPARATOR);
     }
 
-    if (cp == nullptr) {
+    if (cp == NULL) {
         String8 res = buf != str ? String8(buf) : *this;
         if (outRemains) *outRemains = String8("");
         return res;
@@ -501,7 +501,7 @@ String8 String8::walkPath(String8* outRemains) const
 /*
  * Helper function for finding the start of an extension in a pathname.
  *
- * Returns a pointer inside mString, or nullptr if no extension was found.
+ * Returns a pointer inside mString, or NULL if no extension was found.
  */
 char* String8::find_extension(void) const
 {
@@ -511,15 +511,15 @@ char* String8::find_extension(void) const
 
     // only look at the filename
     lastSlash = strrchr(str, OS_PATH_SEPARATOR);
-    if (lastSlash == nullptr)
+    if (lastSlash == NULL)
         lastSlash = str;
     else
         lastSlash++;
 
     // find the last dot
     lastDot = strrchr(lastSlash, '.');
-    if (lastDot == nullptr)
-        return nullptr;
+    if (lastDot == NULL)
+        return NULL;
 
     // looks good, ship it
     return const_cast<char*>(lastDot);
@@ -530,7 +530,7 @@ String8 String8::getPathExtension(void) const
     char* ext;
 
     ext = find_extension();
-    if (ext != nullptr)
+    if (ext != NULL)
         return String8(ext);
     else
         return String8("");
@@ -542,7 +542,7 @@ String8 String8::getBasePath(void) const
     const char* const str = mString;
 
     ext = find_extension();
-    if (ext == nullptr)
+    if (ext == NULL)
         return String8(*this);
     else
         return String8(str, ext - str);

@@ -37,10 +37,10 @@ static const int TITLE_RENDERER_Z = (-1);
 IMPLEMENT_CLASS_GUI_INFO(Button)
     
 Button::Button():
-_buttonNormalRenderer(nullptr),
-_buttonClickedRenderer(nullptr),
-_buttonDisableRenderer(nullptr),
-_titleRenderer(nullptr),
+_buttonNormalRenderer(NULL),
+_buttonClickedRenderer(NULL),
+_buttonDisableRenderer(NULL),
+_titleRenderer(NULL),
 _normalFileName(""),
 _clickedFileName(""),
 _disabledFileName(""),
@@ -81,7 +81,7 @@ Button* Button::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return nullptr;
+    return NULL;
 }
 
 bool Button::init()
@@ -118,9 +118,9 @@ void Button::setScale9Enabled(bool able)
     CCNode::removeChild(_buttonNormalRenderer, true);
     CCNode::removeChild(_buttonClickedRenderer, true);
     CCNode::removeChild(_buttonDisableRenderer, true);
-    _buttonNormalRenderer = nullptr;
-    _buttonClickedRenderer = nullptr;
-    _buttonDisableRenderer = nullptr;
+    _buttonNormalRenderer = NULL;
+    _buttonClickedRenderer = NULL;
+    _buttonDisableRenderer = NULL;
     if (_scale9Enabled)
     {
         _buttonNormalRenderer = extension::CCScale9Sprite::create();
@@ -532,7 +532,7 @@ CCNode* Button::getVirtualRenderer()
             case BRIGHT_HIGHLIGHT:
                 return _buttonClickedRenderer;
             default:
-                return nullptr;
+                return NULL;
         }
     }
     else

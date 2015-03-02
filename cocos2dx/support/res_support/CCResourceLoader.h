@@ -186,7 +186,7 @@ struct CustomTask : public CCResourceLoadTask {
     CCCallFunc* func;
     
     CustomTask() :
-    func(nullptr) {
+    func(NULL) {
     }
     
     virtual ~CustomTask() {

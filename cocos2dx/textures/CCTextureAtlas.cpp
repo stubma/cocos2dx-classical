@@ -45,10 +45,10 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 CCTextureAtlas::CCTextureAtlas()
-    :m_pIndices(nullptr)
+    :m_pIndices(NULL)
     ,m_bDirty(false)
-    ,m_pTexture(nullptr)
-    ,m_pQuads(nullptr)
+    ,m_pTexture(NULL)
+    ,m_pQuads(NULL)
 {}
 
 CCTextureAtlas::~CCTextureAtlas()
@@ -116,7 +116,7 @@ CCTextureAtlas * CCTextureAtlas::create(const char* file, unsigned int capacity)
         return pTextureAtlas;
     }
     CC_SAFE_DELETE(pTextureAtlas);
-    return nullptr;
+    return NULL;
 }
 
 CCTextureAtlas * CCTextureAtlas::createWithTexture(CCTexture2D *texture, unsigned int capacity)
@@ -128,7 +128,7 @@ CCTextureAtlas * CCTextureAtlas::createWithTexture(CCTexture2D *texture, unsigne
         return pTextureAtlas;
     }
     CC_SAFE_DELETE(pTextureAtlas);
-    return nullptr;
+    return NULL;
 }
 
 bool CCTextureAtlas::initWithFile(const char * file, unsigned int capacity)
@@ -149,7 +149,7 @@ bool CCTextureAtlas::initWithFile(const char * file, unsigned int capacity)
 
 bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity)
 {
-//    CCAssert(texture != nullptr, "texture should not be null");
+//    CCAssert(texture != NULL, "texture should not be null");
     m_uCapacity = capacity;
     m_uTotalQuads = 0;
 
@@ -158,7 +158,7 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
     CC_SAFE_RETAIN(m_pTexture);
 
     // Re-initialization is not allowed
-    CCAssert(m_pQuads == nullptr && m_pIndices == nullptr, "");
+    CCAssert(m_pQuads == NULL && m_pIndices == NULL, "");
 
     m_pQuads = (ccV3F_C4B_T2F_Quad*)malloc( m_uCapacity * sizeof(ccV3F_C4B_T2F_Quad) );
     m_pIndices = (GLushort *)malloc( m_uCapacity * 6 * sizeof(GLushort) );
@@ -183,7 +183,7 @@ bool CCTextureAtlas::initWithTexture(CCTexture2D *texture, unsigned int capacity
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
                                                            callfuncO_selector(CCTextureAtlas::listenBackToForeground),
                                                            EVENT_COME_TO_FOREGROUND,
-                                                           nullptr);
+                                                           NULL);
 #endif
     
     this->setupIndices();
@@ -459,15 +459,15 @@ bool CCTextureAtlas::resizeCapacity(unsigned int newCapacity)
     m_uTotalQuads = MIN(m_uTotalQuads, newCapacity);
     m_uCapacity = newCapacity;
 
-    ccV3F_C4B_T2F_Quad* tmpQuads = nullptr;
-    GLushort* tmpIndices = nullptr;
+    ccV3F_C4B_T2F_Quad* tmpQuads = NULL;
+    GLushort* tmpIndices = NULL;
     
-    // when calling initWithTexture(fileName, 0) on bada device, calloc(0, 1) will fail and return nullptr,
-    // so here must judge whether m_pQuads and m_pIndices is nullptr.
-    if (m_pQuads == nullptr)
+    // when calling initWithTexture(fileName, 0) on bada device, calloc(0, 1) will fail and return NULL,
+    // so here must judge whether m_pQuads and m_pIndices is NULL.
+    if (m_pQuads == NULL)
     {
         tmpQuads = (ccV3F_C4B_T2F_Quad*)malloc( m_uCapacity * sizeof(m_pQuads[0]) );
-        if (tmpQuads != nullptr)
+        if (tmpQuads != NULL)
         {
             memset(tmpQuads, 0, m_uCapacity * sizeof(m_pQuads[0]) );
         }
@@ -475,16 +475,16 @@ bool CCTextureAtlas::resizeCapacity(unsigned int newCapacity)
     else
     {
         tmpQuads = (ccV3F_C4B_T2F_Quad*)realloc( m_pQuads, sizeof(m_pQuads[0]) * m_uCapacity );
-        if (tmpQuads != nullptr && m_uCapacity > uOldCapactiy)
+        if (tmpQuads != NULL && m_uCapacity > uOldCapactiy)
         {
             memset(tmpQuads+uOldCapactiy, 0, (m_uCapacity - uOldCapactiy)*sizeof(m_pQuads[0]) );
         }
     }
 
-    if (m_pIndices == nullptr)
+    if (m_pIndices == NULL)
     {    
         tmpIndices = (GLushort*)malloc( m_uCapacity * 6 * sizeof(m_pIndices[0]) );
-        if (tmpIndices != nullptr)
+        if (tmpIndices != NULL)
         {
             memset( tmpIndices, 0, m_uCapacity * 6 * sizeof(m_pIndices[0]) );
         }
@@ -493,7 +493,7 @@ bool CCTextureAtlas::resizeCapacity(unsigned int newCapacity)
     else
     {
         tmpIndices = (GLushort*)realloc( m_pIndices, sizeof(m_pIndices[0]) * m_uCapacity * 6 );
-        if (tmpIndices != nullptr && m_uCapacity > uOldCapactiy)
+        if (tmpIndices != NULL && m_uCapacity > uOldCapactiy)
         {
             memset( tmpIndices+uOldCapactiy, 0, (m_uCapacity-uOldCapactiy) * 6 * sizeof(m_pIndices[0]) );
         }
@@ -613,7 +613,7 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
         //		glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
 		
 		// option 3: orphaning + glMapBuffer
-		glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * (n-start), nullptr, GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * (n-start), NULL, GL_DYNAMIC_DRAW);
 		void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 		memcpy(buf, m_pQuads, sizeof(m_pQuads[0])* (n-start));
 		glUnmapBuffer(GL_ARRAY_BUFFER);

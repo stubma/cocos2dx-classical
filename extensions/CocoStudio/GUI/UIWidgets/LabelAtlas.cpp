@@ -50,7 +50,7 @@ UICCLabelAtlas* UICCLabelAtlas::create()
     }
     CC_SAFE_DELETE(pRet);
     
-    return nullptr;
+    return NULL;
 }
 
 void UICCLabelAtlas::setProperty(const std::string& s, const std::string& charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
@@ -85,7 +85,7 @@ IMPLEMENT_CLASS_GUI_INFO(LabelAtlas)
     
 
 LabelAtlas::LabelAtlas():
-_labelAtlasRenderer(nullptr),
+_labelAtlasRenderer(NULL),
 _stringValue(""),
 _charMapFileName(""),
 _itemWidth(0),
@@ -109,7 +109,7 @@ LabelAtlas* LabelAtlas::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return nullptr;
+    return NULL;
 }
 
 void LabelAtlas::initRenderer()

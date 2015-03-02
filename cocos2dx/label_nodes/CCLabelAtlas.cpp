@@ -52,7 +52,7 @@ CCLabelAtlas* CCLabelAtlas::create(const char *string, const char *charMapFile, 
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return nullptr;
+    return NULL;
 }
 
 bool CCLabelAtlas::initWithString(const char *string, const char *charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
@@ -63,7 +63,7 @@ bool CCLabelAtlas::initWithString(const char *string, const char *charMapFile, u
 
 bool CCLabelAtlas::initWithString(const char *string, CCTexture2D* texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
 {
-    CCAssert(string != nullptr, "");
+    CCAssert(string != NULL, "");
     if (CCAtlasNode::initWithTexture(texture, itemWidth, itemHeight, strlen(string)))
     {
         m_uMapStartChar = startCharMap;

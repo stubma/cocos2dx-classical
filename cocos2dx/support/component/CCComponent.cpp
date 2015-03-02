@@ -29,7 +29,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 CCComponent::CCComponent(void)
-: m_pOwner(nullptr)
+: m_pOwner(NULL)
 , m_bEnabled(true)
 {
 }
@@ -63,7 +63,7 @@ bool CCComponent::serialize(void *ar)
 CCComponent* CCComponent::create(void)
 {
     CCComponent * pRet = new CCComponent();
-    if (pRet != nullptr && pRet->init())
+    if (pRet != NULL && pRet->init())
     {
         CC_SAFE_AUTORELEASE(pRet);
     }

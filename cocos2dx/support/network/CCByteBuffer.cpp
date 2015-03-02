@@ -29,7 +29,7 @@ NS_CC_BEGIN
 #define DEFAULT_SIZE 0x1000
 
 CCByteBuffer::CCByteBuffer() :
-m_buffer(nullptr),
+m_buffer(NULL),
 m_readPos(0),
 m_writePos(0),
 m_external(false) {
@@ -37,7 +37,7 @@ m_external(false) {
 }
 
 CCByteBuffer::CCByteBuffer(size_t res) :
-m_buffer(nullptr),
+m_buffer(NULL),
 m_readPos(0),
 m_writePos(0),
 m_external(false) {
@@ -45,7 +45,7 @@ m_external(false) {
 }
 
 CCByteBuffer::CCByteBuffer(const CCByteBuffer& b) :
-m_buffer(nullptr),
+m_buffer(NULL),
 m_readPos(0),
 m_writePos(0),
 m_external(false) {

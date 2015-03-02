@@ -84,10 +84,10 @@ NS_CC_BEGIN
 CCParticleSystem::CCParticleSystem()
 : m_sPlistFile("")
 , m_fElapsed(0)
-, m_pParticles(nullptr)
+, m_pParticles(NULL)
 , m_fEmitCounter(0)
 , m_uParticleIdx(0)
-, m_pBatchNode(nullptr)
+, m_pBatchNode(NULL)
 , m_uAtlasIndex(0)
 , m_bTransformSystemDirty(false)
 , m_uAllocatedParticles(0)
@@ -110,7 +110,7 @@ CCParticleSystem::CCParticleSystem()
 , m_fEndSpinVar(0)
 , m_fEmissionRate(0)
 , m_uTotalParticles(0)
-, m_pTexture(nullptr)
+, m_pTexture(NULL)
 , m_bOpacityModifyRGB(false)
 , m_bIsBlendAdditive(false)
 , m_ePositionType(kCCPositionTypeFree)
@@ -171,7 +171,7 @@ bool CCParticleSystem::initWithFile(const char *plistFile)
     m_sPlistFile = CCFileUtils::sharedFileUtils()->fullPathForFilename(plistFile);
     CCDictionary *dict = CCDictionary::createWithContentsOfFileThreadSafe(m_sPlistFile.c_str());
 
-    CCAssert( dict != nullptr, "Particles: file not found");
+    CCAssert( dict != NULL, "Particles: file not found");
     
     // XXX compute path from a path, should define a function somewhere to do it
     string listFilePath = plistFile;
@@ -198,9 +198,9 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary)
 bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary, const char *dirname)
 {
     bool bRet = false;
-    unsigned char *buffer = nullptr;
-    unsigned char *deflated = nullptr;
-    CCImage *image = nullptr;
+    unsigned char *buffer = NULL;
+    unsigned char *deflated = NULL;
+    CCImage *image = NULL;
     do 
     {
         int maxParticles = dictionary->valueForKey("maxParticles")->intValue();
@@ -321,7 +321,7 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary, const char *
                 {
                     string textureDir = textureName.substr(0, rPos + 1);
                     
-                    if (dirname != nullptr && textureDir != dirname)
+                    if (dirname != NULL && textureDir != dirname)
                     {
                         textureName = textureName.substr(rPos+1);
                         textureName = string(dirname) + textureName;
@@ -329,13 +329,13 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary, const char *
                 }
                 else
                 {
-                    if (dirname != nullptr)
+                    if (dirname != NULL)
                     {
                         textureName = string(dirname) + textureName;
                     }
                 }
                 
-                CCTexture2D *tex = nullptr;
+                CCTexture2D *tex = NULL;
                 
                 if (textureName.length() > 0)
                 {
@@ -361,11 +361,11 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary, const char *
                     {
                         // if it fails, try to get it from the base64-gzipped data    
                         int decodeLen = CCBase64::decode((unsigned char*)textureData, (unsigned int)dataLen, &buffer);
-                        CCAssert( buffer != nullptr, "CCParticleSystem: error decoding textureImageData");
+                        CCAssert( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
                         CC_BREAK_IF(!buffer);
                         
                         int deflatedLen = ZipUtils::ccInflateMemory(buffer, decodeLen, &deflated);
-                        CCAssert( deflated != nullptr, "CCParticleSystem: error ungzipping textureImageData");
+                        CCAssert( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
                         CC_BREAK_IF(!deflated);
                         
                         // For android, we should retain it in VolatileTexture::addCCImage which invoked in CCTextureCache::sharedTextureCache()->addUIImage()
@@ -379,7 +379,7 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary, const char *
                         CC_SAFE_RELEASE(image);
                     }
                 }
-                CCAssert( this->m_pTexture != nullptr, "CCParticleSystem: error loading the texture");
+                CCAssert( this->m_pTexture != NULL, "CCParticleSystem: error loading the texture");
             }
             bRet = true;
         }

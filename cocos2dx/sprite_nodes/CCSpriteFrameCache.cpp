@@ -43,7 +43,7 @@ using namespace std;
 
 NS_CC_BEGIN
 
-static CCSpriteFrameCache *pSharedSpriteFrameCache = nullptr;
+static CCSpriteFrameCache *pSharedSpriteFrameCache = NULL;
 
 CCSpriteFrameCache* CCSpriteFrameCache::sharedSpriteFrameCache(void)
 {
@@ -92,7 +92,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
     int format = 0;
 
     // get the format
-    if(metadataDict != nullptr) 
+    if(metadataDict != NULL) 
     {
         format = metadataDict->valueForKey("format")->intValue();
     }
@@ -100,7 +100,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
     // check the format
     CCAssert(format >=0 && format <= 3, "format is not supported for CCSpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
 
-    CCDictElement* pElement = nullptr;
+    CCDictElement* pElement = NULL;
     CCDICT_FOREACH(framesDict, pElement)
     {
         CCDictionary* frameDict = (CCDictionary*)pElement->getObject();
@@ -174,7 +174,7 @@ void CCSpriteFrameCache::addSpriteFramesWithDictionary(CCDictionary* dictionary,
             CCArray* aliases = (CCArray*) (frameDict->objectForKey("aliases"));
             CCString * frameKey = new CCString(spriteFrameName);
 
-            CCObject* pObj = nullptr;
+            CCObject* pObj = NULL;
             CCARRAY_FOREACH(aliases, pObj)
             {
                 std::string oneAlias = ((CCString*)pObj)->getCString();
@@ -233,7 +233,7 @@ void CCSpriteFrameCache::addSpriteFramesWithFile(const char* plist, const char* 
 
 void CCSpriteFrameCache::addSpriteFramesWithFile(const char *pszPlist)
 {
-    CCAssert(pszPlist, "plist filename should not be nullptr");
+    CCAssert(pszPlist, "plist filename should not be NULL");
 
     if (m_pLoadedFileNames->find(pszPlist) == m_pLoadedFileNames->end())
     {
@@ -301,7 +301,7 @@ void CCSpriteFrameCache::removeSpriteFrames(void)
 void CCSpriteFrameCache::removeUnusedSpriteFrames(void)
 {
     bool bRemoved = false;
-    CCDictElement* pElement = nullptr;
+    CCDictElement* pElement = NULL;
     CCDICT_FOREACH(m_pSpriteFrames, pElement)
     {
         CCSpriteFrame* spriteFrame = (CCSpriteFrame*)pElement->getObject();
@@ -368,7 +368,7 @@ void CCSpriteFrameCache::removeSpriteFramesFromDictionary(CCDictionary* dictiona
     CCDictionary* framesDict = (CCDictionary*)dictionary->objectForKey("frames");
     CCArray* keysToRemove = CCArray::create();
 
-    CCDictElement* pElement = nullptr;
+    CCDictElement* pElement = NULL;
     CCDICT_FOREACH(framesDict, pElement)
     {
         if (m_pSpriteFrames->objectForKey(pElement->getStrKey()))
@@ -384,7 +384,7 @@ void CCSpriteFrameCache::removeSpriteFramesFromTexture(CCTexture2D* texture)
 {
     CCArray* keysToRemove = CCArray::create();
 
-    CCDictElement* pElement = nullptr;
+    CCDictElement* pElement = NULL;
     CCDICT_FOREACH(m_pSpriteFrames, pElement)
     {
         string key = pElement->getStrKey();

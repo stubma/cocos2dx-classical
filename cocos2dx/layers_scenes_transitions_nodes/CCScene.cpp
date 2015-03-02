@@ -65,7 +65,7 @@ CCScene *CCScene::create()
     else
     {
         CC_SAFE_DELETE(pRet);
-        return nullptr;
+        return NULL;
     }
 }
 

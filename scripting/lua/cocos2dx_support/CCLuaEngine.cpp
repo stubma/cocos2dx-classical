@@ -31,7 +31,7 @@
 
 NS_CC_BEGIN
 
-CCLuaEngine* CCLuaEngine::m_defaultEngine = nullptr;
+CCLuaEngine* CCLuaEngine::m_defaultEngine = NULL;
 
 CCLuaEngine* CCLuaEngine::defaultEngine(void)
 {
@@ -46,7 +46,7 @@ CCLuaEngine* CCLuaEngine::defaultEngine(void)
 CCLuaEngine::~CCLuaEngine(void)
 {
     CC_SAFE_RELEASE(m_stack);
-    m_defaultEngine = nullptr;
+    m_defaultEngine = NULL;
 }
 
 bool CCLuaEngine::init(void)
@@ -104,7 +104,7 @@ void CCLuaEngine::executeObjectDestructor(CCObject* obj) {
     }
 }
 
-int CCLuaEngine::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget/* = nullptr*/)
+int CCLuaEngine::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget/* = NULL*/)
 {
     ccScriptFunction& func = pAction->getScriptHandler();
     if (!func.handler) return 0;
@@ -237,39 +237,39 @@ int CCLuaEngine::executeEventWithArgs(ccScriptFunction& func, CCArray* pArgs, CC
     }
     
     // push args
-    CCObject*   pObject = nullptr;
-    CCInteger*  pIntVal = nullptr;
-    CCString*   pStrVal = nullptr;
-    CCDouble*   pDoubleVal = nullptr;
-    CCFloat*    pFloatVal = nullptr;
-    CCBool*     pBoolVal = nullptr;
-    CCArray* pArrayVal = nullptr;
-    CCDictionary* pDictVal = nullptr;
+    CCObject*   pObject = NULL;
+    CCInteger*  pIntVal = NULL;
+    CCString*   pStrVal = NULL;
+    CCDouble*   pDoubleVal = NULL;
+    CCFloat*    pFloatVal = NULL;
+    CCBool*     pBoolVal = NULL;
+    CCArray* pArrayVal = NULL;
+    CCDictionary* pDictVal = NULL;
     if(pArgs) {
         for (unsigned int i = 0; i < pArgs->count(); i++) {
             pObject = pArgs->objectAtIndex(i);
-            if (nullptr != (pIntVal = dynamic_cast<CCInteger*>(pObject))) {
+            if (NULL != (pIntVal = dynamic_cast<CCInteger*>(pObject))) {
                 m_stack->pushInt(pIntVal->getValue());
                 nArgNums++;
-            } else if (nullptr != (pStrVal = dynamic_cast<CCString*>(pObject))) {
+            } else if (NULL != (pStrVal = dynamic_cast<CCString*>(pObject))) {
                 m_stack->pushString(pStrVal->getCString());
                 nArgNums++;
-            } else if (nullptr != (pDoubleVal = dynamic_cast<CCDouble*>(pObject))) {
+            } else if (NULL != (pDoubleVal = dynamic_cast<CCDouble*>(pObject))) {
                 m_stack->pushFloat(pDoubleVal->getValue());
                 nArgNums++;
-            } else if (nullptr != (pFloatVal = dynamic_cast<CCFloat*>(pObject))) {
+            } else if (NULL != (pFloatVal = dynamic_cast<CCFloat*>(pObject))) {
                 m_stack->pushFloat(pFloatVal->getValue());
                 nArgNums++;
-            } else if (nullptr != (pBoolVal = dynamic_cast<CCBool*>(pObject))) {
+            } else if (NULL != (pBoolVal = dynamic_cast<CCBool*>(pObject))) {
                 m_stack->pushBoolean(pBoolVal->getValue());
                 nArgNums++;
-            } else if(nullptr != (pArrayVal = dynamic_cast<CCArray*>(pObject))) {
+            } else if(NULL != (pArrayVal = dynamic_cast<CCArray*>(pObject))) {
                 m_stack->pushCCArray(pArrayVal);
                 nArgNums++;
-            } else if(nullptr != (pDictVal = dynamic_cast<CCDictionary*>(pObject))) {
+            } else if(NULL != (pDictVal = dynamic_cast<CCDictionary*>(pObject))) {
                 m_stack->pushCCDictionary(pDictVal);
                 nArgNums++;
-            } else if(nullptr != pObject) {
+            } else if(NULL != pObject) {
                 m_stack->pushCCObject(pObject, getLuaTypeNameByTypeId(typeid(*pObject).name()));
                 nArgNums++;
             }

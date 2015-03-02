@@ -49,9 +49,9 @@ public:
      * @param content content node will display real info. You must set proper anchor and position for content node
      * @param tag tag of this toast, if not -1, this toast will not show more than one instance at the same time
      * @param duration duration time, default is 0 which means default duration, about 3 seconds
-     * @param inAction the custom in action of content node, default is nullptr which means the content node  
+     * @param inAction the custom in action of content node, default is NULL which means the content node  
      *      will be faded in
-     * @param outAction the custom out action of content node, default is nullptr which means the content node
+     * @param outAction the custom out action of content node, default is NULL which means the content node
      *      will be faded out
      * @return CCToast instance
      */
@@ -59,8 +59,8 @@ public:
                            CCNode* content,
                            int tag = -1,
                            float duration = 0,
-                           CCFiniteTimeAction* inAction = nullptr,
-                           CCFiniteTimeAction* outAction = nullptr);
+                           CCFiniteTimeAction* inAction = NULL,
+                           CCFiniteTimeAction* outAction = NULL);
     
     /// force remove a toast with given tag
     static void forceRemove(CCNode* owner, int tag);

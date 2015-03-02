@@ -39,7 +39,7 @@ public: \
 	return var;\
 }\
 	CC_SAFE_DELETE(var);\
-	return nullptr;\
+	return NULL;\
 }
 
 #define CC_CREATE_NO_PARAM(varType)\
@@ -52,7 +52,7 @@ public: \
 	return var;\
 }\
 	CC_SAFE_DELETE(var);\
-	return nullptr;\
+	return NULL;\
 }
 
 NS_CC_EXT_BEGIN

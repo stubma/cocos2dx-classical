@@ -70,7 +70,7 @@ CCTexture2D::CCTexture2D()
 , m_fMaxT(0.0)
 , m_bHasPremultipliedAlpha(false)
 , m_bHasMipmaps(false)
-, m_pShaderProgram(nullptr)
+, m_pShaderProgram(NULL)
 , m_shadowStrokePadding(CCPointZero)
 {
 }
@@ -273,7 +273,7 @@ const char* CCTexture2D::description(void)
 
 bool CCTexture2D::initWithImage(CCImage *uiImage)
 {
-    if (uiImage == nullptr)
+    if (uiImage == NULL)
     {
         CCLOG("cocos2d: CCTexture2D. Can't create Texture. UIImage is nil");
         return false;
@@ -298,9 +298,9 @@ bool CCTexture2D::initWithImage(CCImage *uiImage)
 bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned int width, unsigned int height)
 {
     unsigned char*            tempData = image->getData();
-    unsigned int*             inPixel32  = nullptr;
-    unsigned char*            inPixel8 = nullptr;
-    unsigned short*           outPixel16 = nullptr;
+    unsigned int*             inPixel32  = NULL;
+    unsigned char*            inPixel8 = NULL;
+    unsigned short*           outPixel16 = NULL;
     bool                      hasAlpha = image->hasAlpha();
     CCSize                    imageSize = CCSizeMake((float)(image->getWidth()), (float)(image->getHeight()));
     CCTexture2DPixelFormat    pixelFormat;
@@ -489,7 +489,7 @@ bool CCTexture2D::initWithString(const char *text, const char *fontName, float f
         do
         {
             CCImage* pImage = new CCImage();
-            CC_BREAK_IF(nullptr == pImage);
+            CC_BREAK_IF(NULL == pImage);
             bRet = pImage->initWithString(text, (int)dimensions.width, (int)dimensions.height, eAlign, fontName, (int)fontSize);
             CC_BREAK_IF(!bRet);
             bRet = initWithImage(pImage);
@@ -568,7 +568,7 @@ bool CCTexture2D::initWithString(const char *text, ccFontDefinition *textDefinit
     CCImage* pImage = new CCImage();
     do
     {
-        CC_BREAK_IF(nullptr == pImage);
+        CC_BREAK_IF(NULL == pImage);
         
         bRet = pImage->initWithStringShadowStroke(text,
                                                   (int)textDefinition->m_dimensions.width,
@@ -868,7 +868,7 @@ const char* CCTexture2D::stringForFormat()
 			break;
 	}
 
-	return  nullptr;
+	return  NULL;
 }
 
 //

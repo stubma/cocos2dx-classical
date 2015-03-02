@@ -36,8 +36,8 @@
 NS_CC_BEGIN
 
 CCAFCSprite::CCAFCSprite() :
-		m_animationData(nullptr),
-        m_drawMarkers(nullptr),
+		m_animationData(NULL),
+        m_drawMarkers(NULL),
 		m_curAnimationIndex(-1),
 		m_curFrame(0),
 		m_numOfFrame(0),
@@ -52,7 +52,7 @@ CCAFCSprite::CCAFCSprite() :
 		m_paused(false),
 		m_debugDrawFrameRect(false),
 		m_debugDrawCollisionRect(false),
-		m_callback(nullptr),
+		m_callback(NULL),
 		m_frameOffset(CCPointZero),
 		m_ignoreFrameOffset(false),
 		m_flipX(false),
@@ -80,7 +80,7 @@ CCAFCSprite::~CCAFCSprite() {
     
     if(m_drawMarkers) {
         free(m_drawMarkers);
-        m_drawMarkers = nullptr;
+        m_drawMarkers = NULL;
     }
 }
 
@@ -153,7 +153,7 @@ void CCAFCSprite::draw() {
     
     // draw by clip order
     int numOfQuads = 0;
-    CCSpriteBatchNode* lastSheet = nullptr;
+    CCSpriteBatchNode* lastSheet = NULL;
     for(SpritePtrList::iterator iter = m_spriteList.begin(); iter != m_spriteList.end(); iter++) {
         CCSprite* sprite = *iter;
 		if(sprite->isVisible()) {
@@ -264,7 +264,7 @@ void CCAFCSprite::replaceTextures(CCTexture2D* tex, ...) {
 	// create new sprite batch node for new set of textures
 	va_list textures;
 	va_start(textures, tex);
-	for(CCTexture2D* t = va_arg(textures, CCTexture2D*); t != nullptr; t = va_arg(textures, CCTexture2D*)) {
+	for(CCTexture2D* t = va_arg(textures, CCTexture2D*); t != NULL; t = va_arg(textures, CCTexture2D*)) {
 		sheet = CCAFCSprite::createBatchNode(t);
 		m_sheetList.push_back(sheet);
 		CC_SAFE_RETAIN(sheet);
@@ -274,7 +274,7 @@ void CCAFCSprite::replaceTextures(CCTexture2D* tex, ...) {
     // release draw marker
     if(m_drawMarkers) {
         free(m_drawMarkers);
-        m_drawMarkers = nullptr;
+        m_drawMarkers = NULL;
     }
 
 	// start animation from very beginning
@@ -305,7 +305,7 @@ void CCAFCSprite::replaceTextures(CCTexture2D** tex, int count) {
     // release draw marker
     if(m_drawMarkers) {
         free(m_drawMarkers);
-        m_drawMarkers = nullptr;
+        m_drawMarkers = NULL;
     }
 
 	// start animation from very beginning
@@ -428,7 +428,7 @@ void CCAFCSprite::setFrameIndex(int index) {
 			if(flipY)
 				clipPos.y = -clipPos.y;
 
-			// get related sprite sheet, if the sheet in data is nullptr, then we use original sheet
+			// get related sprite sheet, if the sheet in data is NULL, then we use original sheet
 			CCSpriteBatchNode* sheet = clipData.i.sheet;
 			if(!sheet)
 				sheet = m_sheetList.at(clipData.i.imageIndex);
@@ -697,7 +697,7 @@ CCAFCClipMapping* CCAFCSprite::getClipMappingByTag(int tag) {
 			return mapping;
 		}
 	}
-	return nullptr;
+	return NULL;
 }
 
 NS_CC_END

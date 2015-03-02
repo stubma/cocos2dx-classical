@@ -409,7 +409,7 @@ CCGLProgram* CCShaderCache::programForKey(ccShaderType key)
     if(iter != m_pPrograms.end()) {
         return iter->second;
     } else {
-        return nullptr;
+        return NULL;
     }
 }
 

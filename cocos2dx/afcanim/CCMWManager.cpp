@@ -36,11 +36,11 @@ CCMWManager::CCMWManager() {
 
 CCMWManager::~CCMWManager() {
 	releaseAllAnimationFileData();
-	gMWManager = nullptr;
+	gMWManager = NULL;
 }
 
 CCMWManager* CCMWManager::getInstance() {
-	if(gMWManager == nullptr) {
+	if(gMWManager == NULL) {
 		gMWManager = new CCMWManager();
 	}
 	return gMWManager;
@@ -59,19 +59,19 @@ CCMWFileData* CCMWManager::getAnimationFileData(const string& path) {
 			return *iter;
 		}
 	}
-	return nullptr;
+	return NULL;
 }
 
 CCMWFileData* CCMWManager::load(const char* path) {
 	// search cache first
 	CCMWFileData* data = getAnimationFileData(path);
-	if(data != nullptr) {
+	if(data != NULL) {
 		return data;
 	}
 
 	// load data
 	data = CCMWLoader::load(path);
-	if(data != nullptr) {
+	if(data != NULL) {
 		m_animationFileDataList.push_back(data);
 		CC_SAFE_RETAIN(data);
 	}

@@ -27,7 +27,7 @@
 
 NS_CC_BEGIN
 
-CCArcticManager* gArcticManager = nullptr;
+CCArcticManager* gArcticManager = NULL;
 
 CCArcticManager::CCArcticManager() :
 		m_resScale(1) {
@@ -35,11 +35,11 @@ CCArcticManager::CCArcticManager() :
 
 CCArcticManager::~CCArcticManager() {
 	releaseAllAnimationFileData();
-	gArcticManager = nullptr;
+	gArcticManager = NULL;
 }
 
 CCArcticManager* CCArcticManager::getInstance() {
-	if(gArcticManager == nullptr) {
+	if(gArcticManager == NULL) {
 		gArcticManager = new CCArcticManager();
 	}
 	return gArcticManager;
@@ -55,12 +55,12 @@ void CCArcticManager::releaseAllAnimationFileData() {
 CCArcticFileData* CCArcticManager::load(const char* spxPath) {
 	// search cache first
 	CCArcticFileData* data = getArcticFileData(spxPath);
-	if(data != nullptr) {
+	if(data != NULL) {
 		return data;
 	}
 
 	data = CCArcticLoader::load(spxPath);
-	if(data != nullptr) {
+	if(data != NULL) {
 		m_arcticFileDataList.push_back(data);
 		CC_SAFE_RETAIN(data);
 	}
@@ -74,7 +74,7 @@ CCArcticFileData* CCArcticManager::getArcticFileData(const string& asPath) {
 			return *iter;
 		}
 	}
-	return nullptr;
+	return NULL;
 }
 
 float CCArcticManager::resolve(short v) {
@@ -125,7 +125,7 @@ void CCArcticManager::parseFrameModules(CCArcticFileData* afd, CCArcticFrame* ar
 			parseFrameModules(afd, hyperFrame, afcFrame, arcticFrameModule->x, arcticFrameModule->y, mapping);
 		} else {
 			// need search clip mapping first
-			CCAFCClipMappingRule* rule = nullptr;
+			CCAFCClipMappingRule* rule = NULL;
 			if(mapping)
 				rule = mapping->findRule(index);
 			

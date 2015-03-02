@@ -61,12 +61,12 @@ CCTransitionScene * CCTransitionScene::create(float t, CCScene *scene)
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 bool CCTransitionScene::initWithDuration(float t, CCScene *scene)
 {
-    CCAssert( scene != nullptr, "Argument scene must be non-nil");
+    CCAssert( scene != NULL, "Argument scene must be non-nil");
 
     if (CCScene::init())
     {
@@ -76,7 +76,7 @@ bool CCTransitionScene::initWithDuration(float t, CCScene *scene)
         m_pInScene = scene;
         CC_SAFE_RETAIN(m_pInScene);
         m_pOutScene = CCDirector::sharedDirector()->getRunningScene();
-        if (m_pOutScene == nullptr)
+        if (m_pOutScene == NULL)
         {
             m_pOutScene = CCScene::create();
             m_pOutScene->init();
@@ -240,7 +240,7 @@ CCTransitionRotoZoom* CCTransitionRotoZoom::create(float t, CCScene* scene)
         return pScene;                                          
     }                                                           
     CC_SAFE_DELETE(pScene);                                     
-    return nullptr;                                                
+    return NULL;                                                
 }
 
 CCTransitionRotoZoom::~CCTransitionRotoZoom()
@@ -263,10 +263,10 @@ void CCTransitionRotoZoom:: onEnter()
         (
             CCScaleBy::create(m_fDuration/2, 0.001f),
             CCRotateBy::create(m_fDuration/2, 360 * 2),
-            nullptr
+            NULL
         ),
         CCDelayTime::create(m_fDuration/2),
-        nullptr
+        NULL
     ));
 
     m_pOutScene->runAction(rotozoom);
@@ -276,7 +276,7 @@ void CCTransitionRotoZoom:: onEnter()
         (
             rotozoom->reverse(),
             CCCallFunc::create(this, callfunc_selector(CCTransitionScene::finish)),
-            nullptr
+            NULL
         )
     );
 }
@@ -300,7 +300,7 @@ CCTransitionJumpZoom* CCTransitionJumpZoom::create(float t, CCScene* scene)
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 void CCTransitionJumpZoom::onEnter()
@@ -317,8 +317,8 @@ void CCTransitionJumpZoom::onEnter()
     CCActionInterval *scaleIn = CCScaleTo::create(m_fDuration/4, 1.0f);
     CCActionInterval *scaleOut = CCScaleTo::create(m_fDuration/4, 0.5f);
 
-    CCActionInterval *jumpZoomOut = (CCActionInterval*)(CCSequence::create(scaleOut, jump, nullptr));
-    CCActionInterval *jumpZoomIn = (CCActionInterval*)(CCSequence::create(jump, scaleIn, nullptr));
+    CCActionInterval *jumpZoomOut = (CCActionInterval*)(CCSequence::create(scaleOut, jump, NULL));
+    CCActionInterval *jumpZoomIn = (CCActionInterval*)(CCSequence::create(jump, scaleIn, NULL));
 
     CCActionInterval *delay = CCDelayTime::create(m_fDuration/2);
 
@@ -330,7 +330,7 @@ void CCTransitionJumpZoom::onEnter()
             delay,
             jumpZoomIn,
             CCCallFunc::create(this, callfunc_selector(CCTransitionScene::finish)),
-            nullptr
+            NULL
         )
     );
 }
@@ -355,7 +355,7 @@ CCTransitionMoveInL* CCTransitionMoveInL::create(float t, CCScene* scene)
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 void CCTransitionMoveInL::onEnter()
@@ -371,7 +371,7 @@ void CCTransitionMoveInL::onEnter()
         (
             this->easeActionWithAction(a),
             CCCallFunc::create(this, callfunc_selector(CCTransitionScene::finish)),
-            nullptr
+            NULL
         )
     );
 }
@@ -412,7 +412,7 @@ CCTransitionMoveInR* CCTransitionMoveInR::create(float t, CCScene* scene)
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 void CCTransitionMoveInR::initScenes()
@@ -440,7 +440,7 @@ CCTransitionMoveInT* CCTransitionMoveInT::create(float t, CCScene* scene)
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 void CCTransitionMoveInT::initScenes()
@@ -468,7 +468,7 @@ CCTransitionMoveInB* CCTransitionMoveInB::create(float t, CCScene* scene)
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 void CCTransitionMoveInB::initScenes()
@@ -508,7 +508,7 @@ void CCTransitionSlideInL::onEnter()
     (
         easeActionWithAction(out),
         CCCallFunc::create(this, callfunc_selector(CCTransitionScene::finish)), 
-        nullptr
+        NULL
     );
     m_pInScene->runAction(inAction);
     m_pOutScene->runAction(outAction);
@@ -545,7 +545,7 @@ CCTransitionSlideInL* CCTransitionSlideInL::create(float t, CCScene* scene)
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 //
@@ -567,7 +567,7 @@ CCTransitionSlideInR* CCTransitionSlideInR::create(float t, CCScene* scene)
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 void CCTransitionSlideInR::sceneOrder()
@@ -608,7 +608,7 @@ CCTransitionSlideInT* CCTransitionSlideInT::create(float t, CCScene* scene)
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 void CCTransitionSlideInT::sceneOrder()
@@ -648,7 +648,7 @@ CCTransitionSlideInB* CCTransitionSlideInB::create(float t, CCScene* scene)
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 void CCTransitionSlideInB::sceneOrder()
@@ -688,7 +688,7 @@ CCTransitionShrinkGrow* CCTransitionShrinkGrow::create(float t, CCScene* scene)
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 void CCTransitionShrinkGrow::onEnter()
@@ -711,7 +711,7 @@ void CCTransitionShrinkGrow::onEnter()
         (
             this->easeActionWithAction(scaleOut),
             CCCallFunc::create(this, callfunc_selector(CCTransitionScene::finish)), 
-            nullptr
+            NULL
         )
     );
 }
@@ -762,7 +762,7 @@ void CCTransitionFlipX::onEnter()
             CCShow::create(),
             CCOrbitCamera::create(m_fDuration/2, 1, 0, inAngleZ, inDeltaZ, 0, 0),
             CCCallFunc::create(this, callfunc_selector(CCTransitionScene::finish)), 
-            nullptr
+            NULL
         );
 
     outA = (CCActionInterval *)CCSequence::create
@@ -770,7 +770,7 @@ void CCTransitionFlipX::onEnter()
             CCOrbitCamera::create(m_fDuration/2, 1, 0, outAngleZ, outDeltaZ, 0, 0),
             CCHide::create(),
             CCDelayTime::create(m_fDuration/2),                            
-            nullptr 
+            NULL 
         );
 
     m_pInScene->runAction(inA);
@@ -832,14 +832,14 @@ void CCTransitionFlipY::onEnter()
             CCShow::create(),
             CCOrbitCamera::create(m_fDuration/2, 1, 0, inAngleZ, inDeltaZ, 90, 0),
             CCCallFunc::create(this, callfunc_selector(CCTransitionScene::finish)), 
-            nullptr
+            NULL
         );
     outA = (CCActionInterval*)CCSequence::create
         (
             CCOrbitCamera::create(m_fDuration/2, 1, 0, outAngleZ, outDeltaZ, 90, 0),
             CCHide::create(),
             CCDelayTime::create(m_fDuration/2),                            
-            nullptr
+            NULL
         );
 
     m_pInScene->runAction(inA);
@@ -903,14 +903,14 @@ void CCTransitionFlipAngular::onEnter()
             CCShow::create(),
             CCOrbitCamera::create(m_fDuration/2, 1, 0, inAngleZ, inDeltaZ, -45, 0),
             CCCallFunc::create(this, callfunc_selector(CCTransitionScene::finish)), 
-            nullptr
+            NULL
         );
     outA = (CCActionInterval *)CCSequence::create
         (
             CCOrbitCamera::create(m_fDuration/2, 1, 0, outAngleZ, outDeltaZ, 45, 0),
             CCHide::create(),
             CCDelayTime::create(m_fDuration/2),                            
-            nullptr
+            NULL
         );
 
     m_pInScene->runAction(inA);
@@ -972,10 +972,10 @@ void CCTransitionZoomFlipX::onEnter()
                 CCOrbitCamera::create(m_fDuration/2, 1, 0, inAngleZ, inDeltaZ, 0, 0),
                 CCScaleTo::create(m_fDuration/2, 1),
                 CCShow::create(),
-                nullptr
+                NULL
             ),
             CCCallFunc::create(this, callfunc_selector(CCTransitionScene::finish)),
-            nullptr
+            NULL
         );
     outA = (CCActionInterval *)CCSequence::create
         (
@@ -983,11 +983,11 @@ void CCTransitionZoomFlipX::onEnter()
             (
                 CCOrbitCamera::create(m_fDuration/2, 1, 0, outAngleZ, outDeltaZ, 0, 0),
                 CCScaleTo::create(m_fDuration/2, 0.5f),
-                nullptr
+                NULL
             ),
             CCHide::create(),
             CCDelayTime::create(m_fDuration/2),                            
-            nullptr
+            NULL
         );
 
     m_pInScene->setScale(0.5f);
@@ -1050,10 +1050,10 @@ void CCTransitionZoomFlipY::onEnter()
                 CCOrbitCamera::create(m_fDuration/2, 1, 0, inAngleZ, inDeltaZ, 90, 0),
                 CCScaleTo::create(m_fDuration/2, 1),
                 CCShow::create(),
-                nullptr
+                NULL
             ),
             CCCallFunc::create(this, callfunc_selector(CCTransitionScene::finish)),
-            nullptr
+            NULL
         );
 
     outA = (CCActionInterval *)CCSequence::create
@@ -1062,11 +1062,11 @@ void CCTransitionZoomFlipY::onEnter()
             (
                 CCOrbitCamera::create(m_fDuration/2, 1, 0, outAngleZ, outDeltaZ, 90, 0),
                 CCScaleTo::create(m_fDuration/2, 0.5f),
-                nullptr
+                NULL
             ),                            
             CCHide::create(),
             CCDelayTime::create(m_fDuration/2),
-            nullptr
+            NULL
         );
 
     m_pInScene->setScale(0.5f);
@@ -1131,11 +1131,11 @@ void CCTransitionZoomFlipAngular::onEnter()
                 CCOrbitCamera::create(m_fDuration/2, 1, 0, inAngleZ, inDeltaZ, -45, 0),
                 CCScaleTo::create(m_fDuration/2, 1),
                 CCShow::create(),
-                nullptr
+                NULL
             ),
             CCShow::create(),
             CCCallFunc::create(this, callfunc_selector(CCTransitionScene::finish)),
-            nullptr
+            NULL
         );
     outA = (CCActionInterval *)CCSequence::create
         (
@@ -1143,11 +1143,11 @@ void CCTransitionZoomFlipAngular::onEnter()
             (
                 CCOrbitCamera::create(m_fDuration/2, 1, 0 , outAngleZ, outDeltaZ, 45, 0),
                 CCScaleTo::create(m_fDuration/2, 0.5f),
-                nullptr
+                NULL
             ),                            
             CCHide::create(),
             CCDelayTime::create(m_fDuration/2),                            
-            nullptr
+            NULL
         );
 
     m_pInScene->setScale(0.5f);
@@ -1226,7 +1226,7 @@ void CCTransitionFade :: onEnter()
             CCCallFunc::create(this, callfunc_selector(CCTransitionScene::hideOutShowIn)),//CCCallFunc::create:self selector:@selector(hideOutShowIn)],
             CCFadeOut::create(m_fDuration/2),
             CCCallFunc::create(this, callfunc_selector(CCTransitionScene::finish)), //:self selector:@selector(finish)],
-            nullptr
+            NULL
         );
     f->runAction(a);
 }
@@ -1256,7 +1256,7 @@ CCTransitionCrossFade* CCTransitionCrossFade::create(float t, CCScene* scene)
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 void CCTransitionCrossFade:: draw()
@@ -1277,7 +1277,7 @@ void CCTransitionCrossFade::onEnter()
     // create the first render texture for inScene
     CCRenderTexture* inTexture = CCRenderTexture::create((int)size.width, (int)size.height);
 
-    if (nullptr == inTexture)
+    if (NULL == inTexture)
     {
         return;
     }
@@ -1325,7 +1325,7 @@ void CCTransitionCrossFade::onEnter()
         CCFadeTo::create(m_fDuration, 0),
         CCCallFunc::create(this, callfunc_selector(CCTransitionScene::hideOutShowIn)),
         CCCallFunc::create(this, callfunc_selector(CCTransitionScene::finish)),
-        nullptr
+        NULL
     );
 
 
@@ -1364,7 +1364,7 @@ CCTransitionTurnOffTiles* CCTransitionTurnOffTiles::create(float t, CCScene* sce
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 // override addScenes, and change the order
@@ -1390,7 +1390,7 @@ void CCTransitionTurnOffTiles::onEnter()
             action,
             CCCallFunc::create(this, callfunc_selector(CCTransitionScene::finish)), 
             CCStopGrid::create(),
-            nullptr
+            NULL
         )
     );
 }
@@ -1420,7 +1420,7 @@ CCTransitionSplitCols* CCTransitionSplitCols::create(float t, CCScene* scene)
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 void CCTransitionSplitCols::onEnter()
@@ -1434,7 +1434,7 @@ void CCTransitionSplitCols::onEnter()
         split,
         CCCallFunc::create(this, callfunc_selector(CCTransitionScene::hideOutShowIn)),
         split->reverse(),
-        nullptr
+        NULL
     );
 
     this->runAction
@@ -1444,7 +1444,7 @@ void CCTransitionSplitCols::onEnter()
             easeActionWithAction(seq),
             CCCallFunc::create(this, callfunc_selector(CCTransitionScene::finish)),
             CCStopGrid::create(),
-            nullptr
+            NULL
         )
     );
 }
@@ -1486,7 +1486,7 @@ CCTransitionSplitRows* CCTransitionSplitRows::create(float t, CCScene* scene)
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 //
@@ -1508,7 +1508,7 @@ CCTransitionFadeTR* CCTransitionFadeTR::create(float t, CCScene* scene)
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 void CCTransitionFadeTR::sceneOrder()
@@ -1534,7 +1534,7 @@ void CCTransitionFadeTR::onEnter()
             easeActionWithAction(action),
             CCCallFunc::create(this, callfunc_selector(CCTransitionScene::finish)), 
             CCStopGrid::create(),
-            nullptr
+            NULL
         )
     );
 }
@@ -1571,7 +1571,7 @@ CCTransitionFadeBL* CCTransitionFadeBL::create(float t, CCScene* scene)
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 CCActionInterval*  CCTransitionFadeBL::actionWithSize(const CCSize& size)
@@ -1599,7 +1599,7 @@ CCTransitionFadeUp* CCTransitionFadeUp::create(float t, CCScene* scene)
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 CCActionInterval* CCTransitionFadeUp::actionWithSize(const CCSize& size)
@@ -1626,7 +1626,7 @@ CCTransitionFadeDown* CCTransitionFadeDown::create(float t, CCScene* scene)
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 CCActionInterval* CCTransitionFadeDown::actionWithSize(const CCSize& size)

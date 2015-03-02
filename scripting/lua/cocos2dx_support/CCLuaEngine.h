@@ -116,7 +116,7 @@ public:
      */
     virtual int executeGlobalFunction(const char* functionName);
 
-    virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = nullptr);
+    virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = NULL);
     virtual int executeSchedule(ccScriptFunction& func, float dt);
     virtual int executeLayerTouchesEvent(CCLayer* pLayer, const char* pEventName, CCSet *pTouches);
     virtual int executeLayerTouchEvent(CCLayer* pLayer, const char* pEventName, CCTouch *pTouch);
@@ -125,9 +125,9 @@ public:
     virtual int executeAccelerometerEvent(ccScriptFunction& func, CCAcceleration* pAccelerationValue);
     
     /// common event
-    virtual int executeEvent(ccScriptFunction& func, const char* pEventName, CCObject* collector = nullptr, SEL_ScriptReturnedValueCollector sel = nullptr);
+    virtual int executeEvent(ccScriptFunction& func, const char* pEventName, CCObject* collector = NULL, SEL_ScriptReturnedValueCollector sel = NULL);
     
-    virtual int executeEventWithArgs(ccScriptFunction& func, CCArray* pArgs, CCObject* collector = nullptr, SEL_ScriptReturnedValueCollector sel = nullptr);
+    virtual int executeEventWithArgs(ccScriptFunction& func, CCArray* pArgs, CCObject* collector = NULL, SEL_ScriptReturnedValueCollector sel = NULL);
 
     virtual void executeObjectDestructor(CCObject* obj);
     
@@ -136,7 +136,7 @@ public:
     
 private:
     CCLuaEngine(void)
-    : m_stack(nullptr)
+    : m_stack(NULL)
     {
     }
     

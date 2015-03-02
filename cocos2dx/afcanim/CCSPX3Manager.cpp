@@ -26,7 +26,7 @@
 
 NS_CC_BEGIN
 
-CCSPX3Manager* gSPX3Manager = nullptr;
+CCSPX3Manager* gSPX3Manager = NULL;
 
 CCSPX3Manager::CCSPX3Manager() :
 		m_resScale(1) {
@@ -34,11 +34,11 @@ CCSPX3Manager::CCSPX3Manager() :
 
 CCSPX3Manager::~CCSPX3Manager() {
 	releaseAllAnimationFileData();
-	gSPX3Manager = nullptr;
+	gSPX3Manager = NULL;
 }
 
 CCSPX3Manager* CCSPX3Manager::getInstance() {
-	if(gSPX3Manager == nullptr) {
+	if(gSPX3Manager == NULL) {
 		gSPX3Manager = new CCSPX3Manager();
 	}
 	return gSPX3Manager;
@@ -54,12 +54,12 @@ void CCSPX3Manager::releaseAllAnimationFileData() {
 CCSPX3FileData* CCSPX3Manager::load(const char* spxPath) {
 	// search cache first
 	CCSPX3FileData* data = getSPX3FileData(spxPath);
-	if(data != nullptr) {
+	if(data != NULL) {
 		return data;
 	}
 
 	data = CCSPX3Loader::load(spxPath);
-	if(data != nullptr) {
+	if(data != NULL) {
 		m_spxFileDataList.push_back(data);
 		CC_SAFE_RETAIN(data);
 	}
@@ -73,7 +73,7 @@ CCSPX3FileData* CCSPX3Manager::getSPX3FileData(const string& spxPath) {
 			return *iter;
 		}
 	}
-	return nullptr;
+	return NULL;
 }
 
 float CCSPX3Manager::resolve(short v) {

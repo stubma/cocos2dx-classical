@@ -29,12 +29,12 @@
 
 NS_CC_EXT_BEGIN
 
-SceneReader* SceneReader::_sharedReader = nullptr;
-CCObject*  SceneReader::_pListener = nullptr;
-SEL_CallFuncOD  SceneReader::_pfnSelector = nullptr;
+SceneReader* SceneReader::_sharedReader = NULL;
+CCObject*  SceneReader::_pListener = NULL;
+SEL_CallFuncOD  SceneReader::_pfnSelector = NULL;
 
 SceneReader::SceneReader()
-:_pNode(nullptr)
+:_pNode(NULL)
 ,_eAttachComponent(ATTACH_EMPTY_NODE)
 {
     ObjectFactory::getInstance()->registerType(CREATE_CLASS_COMPONENT_INFO(CCComAttribute));
@@ -56,12 +56,12 @@ bool SceneReader::readJson(const char *pszFileName, rapidjson::Document &doc)
 {
 	bool bRet = false;
 	unsigned long size = 0;
-	unsigned char *pBytes = nullptr;
+	unsigned char *pBytes = NULL;
 	do {
-		CC_BREAK_IF(pszFileName == nullptr);
+		CC_BREAK_IF(pszFileName == NULL);
 		std::string jsonpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFileName);
 		pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(jsonpath.c_str(), "r", &size);
-		CC_BREAK_IF(pBytes == nullptr || strcmp((char*)pBytes, "") == 0);
+		CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
 		std::string load_str((const char*)pBytes, size);
 		CC_SAFE_DELETE_ARRAY(pBytes);
 		doc.Parse<0>(load_str.c_str());
@@ -73,11 +73,11 @@ bool SceneReader::readJson(const char *pszFileName, rapidjson::Document &doc)
 
 CCNode* SceneReader::nodeByTag(CCNode *pParent, int nTag)
 {		
-	if (pParent == nullptr)
+	if (pParent == NULL)
 	{
-		return nullptr;
+		return NULL;
 	}
-	CCNode *_retNode = nullptr;
+	CCNode *_retNode = NULL;
 	CCArray *pChildren = pParent->getChildren();
 	if(pChildren && pChildren->count() > 0)
 	{
@@ -93,7 +93,7 @@ CCNode* SceneReader::nodeByTag(CCNode *pParent, int nTag)
 			else
 			{
 				_retNode = nodeByTag(pNode, nTag);
-				if (_retNode != nullptr)
+				if (_retNode != NULL)
 				{
 					break;
 				}
@@ -109,14 +109,14 @@ CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode*
 	const char *className = DICTOOL->getStringValue_json(root, "classname");
 	if(strcmp(className, "CCNode") == 0)
 	{
-		CCNode* gb = nullptr;
-		if(nullptr == parent)
+		CCNode* gb = NULL;
+		if(NULL == parent)
 		{
 			gb = CCNode::create();
 		}
 
         std::vector<CCComponent*> _vecComs;
-        CCComRender *pRender = nullptr;
+        CCComRender *pRender = NULL;
 		int count = DICTOOL->getArrayCount_json(root, "components");
 		for (int i = 0; i < count; i++)
 		{
@@ -128,15 +128,15 @@ CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode*
 			const char *comName = DICTOOL->getStringValue_json(subDict, "classname");
 			CCComponent *pCom = ObjectFactory::getInstance()->createComponent(comName);
             SerData *pData = new SerData();
-			if (pCom != nullptr)
+			if (pCom != NULL)
 			{
 				pData->prData = &subDict;
-				pData->pCocoNode = nullptr;
-				pData->pCocoLoader = nullptr;
+				pData->pCocoNode = NULL;
+				pData->pCocoLoader = NULL;
 				if (pCom->serialize(pData))
 				{
                     CCComRender *pTRender = dynamic_cast<CCComRender*>(pCom);
-                    if (pTRender != nullptr)
+                    if (pTRender != NULL)
                     {
                         pRender = pTRender;
                     }
@@ -159,12 +159,12 @@ CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode*
 		}
         
 
-        if (parent != nullptr)
+        if (parent != NULL)
         {
-            if (pRender == nullptr || eAttachComponent == ATTACH_EMPTY_NODE)
+            if (pRender == NULL || eAttachComponent == ATTACH_EMPTY_NODE)
             {
                 gb = CCNode::create();
-                if (pRender != nullptr)
+                if (pRender != NULL)
                 {
                     _vecComs.push_back(pRender);
                 }
@@ -173,7 +173,7 @@ CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode*
             {
                 gb = pRender->getNode();
                 CC_SAFE_RETAIN(gb);
-                pRender->setNode(nullptr);
+                pRender->setNode(NULL);
                 CC_SAFE_RELEASE_NULL(pRender);
             }
             parent->addChild(gb);
@@ -196,12 +196,12 @@ CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode*
 		}
 		return gb;
 	}
-	return nullptr;
+	return NULL;
 }
 
 cocos2d::CCNode* SceneReader::createObject(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, cocos2d::CCNode* parent, AttachComponentType eAttachComponent)
 {
-	const char *className = nullptr;
+	const char *className = NULL;
 	stExpCocoNode *pNodeArray = pCocoNode->GetChildArray(pCocoLoader);
 	std::string Key = pNodeArray[1].GetName(pCocoLoader);
 	if (Key == "classname")
@@ -210,9 +210,9 @@ cocos2d::CCNode* SceneReader::createObject(CocoLoader *pCocoLoader, stExpCocoNod
 	}
 	if(strcmp(className, "CCNode") == 0)
 	{
-		CCNode* gb = nullptr;
+		CCNode* gb = NULL;
 		std::vector<CCComponent*> _vecComs;
-		CCComRender *pRender = nullptr;
+		CCComRender *pRender = NULL;
 		int count = 0;
 		std::string key = pNodeArray[13].GetName(pCocoLoader);
 		if (key == "components")
@@ -224,28 +224,28 @@ cocos2d::CCNode* SceneReader::createObject(CocoLoader *pCocoLoader, stExpCocoNod
 		for (int i = 0; i < count; ++i)
 		{
 			stExpCocoNode *subDict = pComponents[i].GetChildArray(pCocoLoader);
-			if (subDict == nullptr)
+			if (subDict == NULL)
 			{
 				continue;
 			}
 			std::string key = subDict[1].GetName(pCocoLoader);
 			const char *comName = subDict[1].GetValue(pCocoLoader);//DICTOOL->getStringValue_json(subDict, "classname");
-			CCComponent *pCom = nullptr;
-			if (key == "classname" && comName != nullptr)
+			CCComponent *pCom = NULL;
+			if (key == "classname" && comName != NULL)
 			{
 				pCom = ObjectFactory::getInstance()->createComponent(comName);
 			}
 			CCLOG("classname = %s", comName);
             SerData *data = new SerData();
-			if (pCom != nullptr)
+			if (pCom != NULL)
 			{
-				data->prData = nullptr;
+				data->prData = NULL;
 				data->pCocoNode = subDict;
 				data->pCocoLoader = pCocoLoader;
 				if (pCom->serialize(data))
 				{
 					CCComRender *pTRender = dynamic_cast<CCComRender*>(pCom);
-					if (pTRender != nullptr)
+					if (pTRender != NULL)
 					{
 						pRender = pTRender;
 					}
@@ -266,12 +266,12 @@ cocos2d::CCNode* SceneReader::createObject(CocoLoader *pCocoLoader, stExpCocoNod
             CC_SAFE_DELETE(data);
 		}
 
-		if (parent != nullptr)
+		if (parent != NULL)
 		{
-			if (pRender == nullptr || eAttachComponent == ATTACH_EMPTY_NODE)
+			if (pRender == NULL || eAttachComponent == ATTACH_EMPTY_NODE)
 			{
 				gb = CCNode::create();
-				if (pRender != nullptr)
+				if (pRender != NULL)
 				{
 					_vecComs.push_back(pRender);
 				}
@@ -280,7 +280,7 @@ cocos2d::CCNode* SceneReader::createObject(CocoLoader *pCocoLoader, stExpCocoNod
 			{
 				gb = pRender->getNode();
 				CC_SAFE_RETAIN(gb);
-				pRender->setNode(nullptr);
+				pRender->setNode(NULL);
 				CC_SAFE_RELEASE_NULL(pRender);
 			}
 			parent->addChild(gb);
@@ -292,7 +292,7 @@ cocos2d::CCNode* SceneReader::createObject(CocoLoader *pCocoLoader, stExpCocoNod
 		}
 
 		stExpCocoNode *pGameObjects = pNodeArray[12].GetChildArray(pCocoLoader);
-		if (pGameObjects != nullptr)
+		if (pGameObjects != NULL)
 		{
 			int length = pNodeArray[12].GetChildNum();
 			for (int i = 0; i < length; ++i)
@@ -302,7 +302,7 @@ cocos2d::CCNode* SceneReader::createObject(CocoLoader *pCocoLoader, stExpCocoNod
 		}
 		return gb;
 	}
-	return nullptr;
+	return NULL;
 }
 
 
@@ -314,9 +314,9 @@ void SceneReader::setTarget(CCObject *rec, SEL_CallFuncOD selector)
 
 CCNode* SceneReader::getNodeByTag(int nTag)
 {
-	if (_pNode == nullptr)
+	if (_pNode == NULL)
 	{
-		return nullptr;
+		return NULL;
 	}
 	if (_pNode->getTag() == nTag)
 	{
@@ -407,7 +407,7 @@ void SceneReader::setPropertyFromJsonDict(CocoLoader *pCocoLoader, stExpCocoNode
 
 SceneReader* SceneReader::sharedSceneReader()
 {
-	if (_sharedReader == nullptr)
+	if (_sharedReader == NULL)
 	{
 		_sharedReader = new SceneReader();
 	}
@@ -417,8 +417,8 @@ SceneReader* SceneReader::sharedSceneReader()
 void SceneReader::purge()
 {		
     cocos2d::extension::DictionaryHelper::shareHelper()->purgeDictionaryHelper();
-    _pfnSelector = nullptr;
-    _pListener = nullptr;
+    _pfnSelector = NULL;
+    _pListener = NULL;
     CocosDenshion::SimpleAudioEngine::sharedEngine()->end();
     CC_SAFE_DELETE(_sharedReader);
 }

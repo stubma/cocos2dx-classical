@@ -37,7 +37,7 @@ LoadingBar::LoadingBar():
 _barType(LoadingBarTypeLeft),
 _percent(100),
 _totalLength(0),
-_barRenderer(nullptr),
+_barRenderer(NULL),
 _renderBarTexType(UI_TEX_TYPE_LOCAL),
 _barRendererTextureSize(CCSizeZero),
 _scale9Enabled(false),
@@ -61,7 +61,7 @@ LoadingBar* LoadingBar::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return nullptr;
+    return NULL;
 }
 
 void LoadingBar::initRenderer()
@@ -173,7 +173,7 @@ void LoadingBar::setScale9Enabled(bool enabled)
     }
     _scale9Enabled = enabled;
     CCNode::removeChild(_barRenderer, true);
-    _barRenderer = nullptr;
+    _barRenderer = NULL;
     if (_scale9Enabled)
     {
         _barRenderer = extension::CCScale9Sprite::create();

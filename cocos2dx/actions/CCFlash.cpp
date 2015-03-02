@@ -28,7 +28,7 @@
 NS_CC_BEGIN
 
 CCFlash::CCFlash() :
-m_oldProgram(nullptr) {
+m_oldProgram(NULL) {
 }
 
 CCFlash::~CCFlash() {
@@ -96,8 +96,8 @@ CCActionInterval* CCFlash::reverse() {
 }
 
 CCObject* CCFlash::copyWithZone(CCZone *pZone) {
-    CCZone* pNewZone = nullptr;
-    CCFlash* pCopy = nullptr;
+    CCZone* pNewZone = NULL;
+    CCFlash* pCopy = NULL;
     if(pZone && pZone->m_pCopyObject) {
         // in case of being called at sub class
         pCopy = (CCFlash*)(pZone->m_pCopyObject);

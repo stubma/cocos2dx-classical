@@ -246,9 +246,9 @@ public:
      * @param interval the interval of char display speed
      * @param repeat repeat times, by default it is zero, means no repeat. kCCRepeatForever means repeat forever
      * @param delay delay time before this animation, by default it is zero
-     * @param loopFunc function to be called when all characters are displayed, invoked for every loop. by default it is nullptr
+     * @param loopFunc function to be called when all characters are displayed, invoked for every loop. by default it is NULL
      */
-    void startLoopDisplay(float interval, unsigned int repeat = 0, int delay = 0, CCCallFunc* loopFunc = nullptr);
+    void startLoopDisplay(float interval, unsigned int repeat = 0, int delay = 0, CCCallFunc* loopFunc = NULL);
     
     /// stop displaying label char by char, reset to normal state
     void stopLoopDisplay();

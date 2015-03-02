@@ -56,7 +56,7 @@ CCGLProgram::CCGLProgram()
 : m_uProgram(0)
 , m_uVertShader(0)
 , m_uFragShader(0)
-, m_pHashForUniforms(nullptr)
+, m_pHashForUniforms(NULL)
 , m_bUsesTime(false)
 , m_hasShaderCompiler(true)
 {
@@ -134,7 +134,7 @@ bool CCGLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, 
     {
         glAttachShader(m_uProgram, m_uFragShader);
     }
-    m_pHashForUniforms = nullptr;
+    m_pHashForUniforms = NULL;
     
     CHECK_GL_ERROR_DEBUG();
 
@@ -158,7 +158,7 @@ bool CCGLProgram::initWithPrecompiledProgramByteArray(const GLchar* vShaderByteA
     haveProgram = CCPrecompiledShaders::sharedPrecompiledShaders()->loadProgram(m_uProgram, vShaderByteArray, fShaderByteArray);
 
     CHECK_GL_ERROR_DEBUG();
-    m_pHashForUniforms = nullptr;
+    m_pHashForUniforms = NULL;
 
     CHECK_GL_ERROR_DEBUG();  
 
@@ -211,7 +211,7 @@ bool CCGLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* sour
     };
 
     *shader = glCreateShader(type);
-    glShaderSource(*shader, sizeof(sources)/sizeof(*sources), sources, nullptr);
+    glShaderSource(*shader, sizeof(sources)/sizeof(*sources), sources, NULL);
     glCompileShader(*shader);
 
     glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
@@ -222,7 +222,7 @@ bool CCGLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* sour
 		glGetShaderiv(*shader, GL_SHADER_SOURCE_LENGTH, &length);
 		GLchar* src = (GLchar *)malloc(sizeof(GLchar) * length);
 		
-		glGetShaderSource(*shader, length, nullptr, src);
+		glGetShaderSource(*shader, length, NULL, src);
 		CCLOG("cocos2d: ERROR: Failed to compile shader:\n%s", src);
         
         if (type == GL_VERTEX_SHADER)
@@ -401,7 +401,7 @@ bool CCGLProgram::updateUniformLocation(GLint location, GLvoid* data, unsigned i
     }
     
     bool updated = true;
-    tHashUniformEntry *element = nullptr;
+    tHashUniformEntry *element = NULL;
     HASH_FIND_INT(m_pHashForUniforms, &location, element);
 
     if (! element)
@@ -434,7 +434,7 @@ bool CCGLProgram::updateUniformLocation(GLint location, GLvoid* data, unsigned i
 
 GLint CCGLProgram::getUniformLocationForName(const char* name)
 {
-    CCAssert(name != nullptr, "Invalid uniform name" );
+    CCAssert(name != NULL, "Invalid uniform name" );
     CCAssert(m_uProgram != 0, "Invalid operation. Cannot get uniform location when program is not initialized");
     
     return glGetUniformLocation(m_uProgram, name);
@@ -707,7 +707,7 @@ void CCGLProgram::reset()
         free(current_element->value);
         free(current_element);
     }
-    m_pHashForUniforms = nullptr;
+    m_pHashForUniforms = NULL;
 }
 
 NS_CC_END

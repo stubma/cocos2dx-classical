@@ -49,7 +49,7 @@ CCTrailMoveTo* CCTrailMoveTo::createWithSpriteFrameName(float duration, const CC
         CC_SAFE_AUTORELEASE_RETURN(m, CCTrailMoveTo*);
     }
     CC_SAFE_RELEASE(m);
-    return nullptr;
+    return NULL;
 }
 
 CCTrailMoveTo* CCTrailMoveTo::createWithFileName(float duration, const CCPoint& position, const string& fileName,
@@ -61,7 +61,7 @@ CCTrailMoveTo* CCTrailMoveTo::createWithFileName(float duration, const CCPoint& 
         CC_SAFE_AUTORELEASE_RETURN(m, CCTrailMoveTo*);
     }
     CC_SAFE_RELEASE(m);
-    return nullptr;
+    return NULL;
 }
 
 CCTrailMoveTo* CCTrailMoveTo::createWithArmature(float duration, const CCPoint& position, const string& armatureName,
@@ -73,7 +73,7 @@ CCTrailMoveTo* CCTrailMoveTo::createWithArmature(float duration, const CCPoint& 
         CC_SAFE_AUTORELEASE_RETURN(m, CCTrailMoveTo*);
     }
     CC_SAFE_RELEASE(m);
-    return nullptr;
+    return NULL;
 }
 
 CCTrailMoveTo* CCTrailMoveTo::createWithArmature(float duration, const CCPoint& position, const string& armatureName,
@@ -85,7 +85,7 @@ CCTrailMoveTo* CCTrailMoveTo::createWithArmature(float duration, const CCPoint& 
         CC_SAFE_AUTORELEASE_RETURN(m, CCTrailMoveTo*);
     }
     CC_SAFE_RELEASE(m);
-    return nullptr;
+    return NULL;
 }
 
 bool CCTrailMoveTo::initWithDurationAndSpriteTrail(float duration, const CCPoint& position, const string& spriteName,
@@ -145,8 +145,8 @@ bool CCTrailMoveTo::initWithDurationAndArmatureTrail(float duration, const CCPoi
 }
 
 CCObject* CCTrailMoveTo::copyWithZone(CCZone* pZone) {
-    CCZone* pNewZone = nullptr;
-    CCTrailMoveTo* pCopy = nullptr;
+    CCZone* pNewZone = NULL;
+    CCTrailMoveTo* pCopy = NULL;
     if(pZone && pZone->m_pCopyObject) {
         pCopy = (CCTrailMoveTo*)(pZone->m_pCopyObject);
     } else {
@@ -243,7 +243,7 @@ void CCTrailMoveTo::update(float time) {
             float d = ccpLength(ccpSub(currentPos, previousPos));
             m_distance += d;
             while(m_trails.count() < m_trailSegments && m_distance >= m_trailDistance) {
-                CCSprite* trail = nullptr;
+                CCSprite* trail = NULL;
                 if(m_mode == SPRITE_FRAME_NAME)
                     trail = CCSprite::createWithSpriteFrameName(m_spriteName.c_str());
                 else

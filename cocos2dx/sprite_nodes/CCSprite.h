@@ -327,7 +327,7 @@ public:
      * Returns the batch node object if this sprite is rendered by CCSpriteBatchNode
      *
      * @return The CCSpriteBatchNode object if this sprite is rendered by CCSpriteBatchNode,
-     *         nullptr if the sprite isn't used batch node.
+     *         NULL if the sprite isn't used batch node.
      */
     virtual CCSpriteBatchNode* getBatchNode(void);
     /**

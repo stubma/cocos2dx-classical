@@ -53,7 +53,7 @@ const unsigned int    kDisableTag = 0x3;
 
 CCMenuItem* CCMenuItem::create()
 {
-    return CCMenuItem::create(nullptr, nullptr);
+    return CCMenuItem::create(NULL, NULL);
 }
 
 CCMenuItem* CCMenuItem::create(CCObject *rec, SEL_MenuHandler selector)
@@ -196,7 +196,7 @@ CCMenuItemLabel * CCMenuItemLabel::create(CCNode*label, CCObject* target, SEL_Me
 CCMenuItemLabel* CCMenuItemLabel::create(CCNode *label)
 {
     CCMenuItemLabel *pRet = new CCMenuItemLabel();
-    pRet->initWithLabel(label, nullptr, nullptr);
+    pRet->initWithLabel(label, NULL, NULL);
     CC_SAFE_AUTORELEASE(pRet);
     return pRet;
 }
@@ -294,7 +294,7 @@ void CCMenuItemLabel::setEnabled(bool enabled)
 
 CCMenuItemAtlasFont * CCMenuItemAtlasFont::create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap)
 {
-    return CCMenuItemAtlasFont::create(value, charMapFile, itemWidth, itemHeight, startCharMap, nullptr, nullptr);
+    return CCMenuItemAtlasFont::create(value, charMapFile, itemWidth, itemHeight, startCharMap, NULL, NULL);
 }
 
 CCMenuItemAtlasFont * CCMenuItemAtlasFont::create(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, CCObject* target, SEL_MenuHandler selector)
@@ -307,7 +307,7 @@ CCMenuItemAtlasFont * CCMenuItemAtlasFont::create(const char *value, const char 
 
 bool CCMenuItemAtlasFont::initWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, CCObject* target, SEL_MenuHandler selector)
 {
-    CCAssert( value != nullptr && strlen(value) != 0, "value length must be greater than 0");
+    CCAssert( value != NULL && strlen(value) != 0, "value length must be greater than 0");
     CCLabelAtlas *label = new CCLabelAtlas();
     label->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap);
     CC_SAFE_AUTORELEASE(label);
@@ -357,14 +357,14 @@ CCMenuItemFont * CCMenuItemFont::create(const char *value, CCObject* target, SEL
 CCMenuItemFont * CCMenuItemFont::create(const char *value)
 {
     CCMenuItemFont *pRet = new CCMenuItemFont();
-    pRet->initWithString(value, nullptr, nullptr);
+    pRet->initWithString(value, NULL, NULL);
     CC_SAFE_AUTORELEASE(pRet);
     return pRet;
 }
 
 bool CCMenuItemFont::initWithString(const char *value, CCObject* target, SEL_MenuHandler selector)
 {
-    CCAssert( value != nullptr && strlen(value) != 0, "Value length must be greater than 0");
+    CCAssert( value != NULL && strlen(value) != 0, "Value length must be greater than 0");
     
     m_strFontName = _globalFontName;
     m_uFontSize = _globalFontSize;
@@ -492,19 +492,19 @@ void CCMenuItemSprite::setDisabledImage(CCNode* pImage)
 
 CCMenuItemSprite* CCMenuItemSprite::create(CCNode* sprite, CCObject* target, SEL_MenuHandler selector) {
     CCMenuItemSprite* pRet = new CCMenuItemSprite();
-    pRet->initWithNormalSprite(sprite, nullptr, nullptr, target, selector);
+    pRet->initWithNormalSprite(sprite, NULL, NULL, target, selector);
     CC_SAFE_AUTORELEASE(pRet);
     return pRet;
 }
 
 CCMenuItemSprite * CCMenuItemSprite::create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite)
 {
-    return CCMenuItemSprite::create(normalSprite, selectedSprite, disabledSprite, nullptr, nullptr);
+    return CCMenuItemSprite::create(normalSprite, selectedSprite, disabledSprite, NULL, NULL);
 }
 
 CCMenuItemSprite * CCMenuItemSprite::create(CCNode* normalSprite, CCNode* selectedSprite, CCObject* target, SEL_MenuHandler selector)
 {
-    return CCMenuItemSprite::create(normalSprite, selectedSprite, nullptr, target, selector);
+    return CCMenuItemSprite::create(normalSprite, selectedSprite, NULL, target, selector);
 }
 
 CCMenuItemSprite * CCMenuItemSprite::create(CCNode *normalSprite, CCNode *selectedSprite, CCNode *disabledSprite, CCObject *target, SEL_MenuHandler selector)
@@ -730,22 +730,22 @@ CCMenuItemImage* CCMenuItemImage::create()
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return nullptr;
+    return NULL;
 }
 
 bool CCMenuItemImage::init(void)
 {
-    return initWithNormalImage(nullptr, nullptr, nullptr, nullptr, nullptr);
+    return initWithNormalImage(NULL, NULL, NULL, NULL, NULL);
 }
 
 CCMenuItemImage * CCMenuItemImage::create(const char *normalImage, const char *selectedImage)
 {
-    return CCMenuItemImage::create(normalImage, selectedImage, nullptr, nullptr, nullptr);
+    return CCMenuItemImage::create(normalImage, selectedImage, NULL, NULL, NULL);
 }
 
 CCMenuItemImage * CCMenuItemImage::create(const char *normalImage, const char *selectedImage, CCObject* target, SEL_MenuHandler selector)
 {
-    return CCMenuItemImage::create(normalImage, selectedImage, nullptr, target, selector);
+    return CCMenuItemImage::create(normalImage, selectedImage, NULL, target, selector);
 }
 
 CCMenuItemImage * CCMenuItemImage::create(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector)
@@ -757,26 +757,26 @@ CCMenuItemImage * CCMenuItemImage::create(const char *normalImage, const char *s
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return nullptr;
+    return NULL;
 }
 
 CCMenuItemImage * CCMenuItemImage::create(const char *normalImage, const char *selectedImage, const char *disabledImage)
 {
     CCMenuItemImage *pRet = new CCMenuItemImage();
-    if (pRet && pRet->initWithNormalImage(normalImage, selectedImage, disabledImage, nullptr, nullptr))
+    if (pRet && pRet->initWithNormalImage(normalImage, selectedImage, disabledImage, NULL, NULL))
     {
         CC_SAFE_AUTORELEASE(pRet);
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return nullptr;
+    return NULL;
 }
 
 bool CCMenuItemImage::initWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, CCObject* target, SEL_MenuHandler selector)
 {
-    CCNode *normalSprite = nullptr;
-    CCNode *selectedSprite = nullptr;
-    CCNode *disabledSprite = nullptr;
+    CCNode *normalSprite = NULL;
+    CCNode *selectedSprite = NULL;
+    CCNode *disabledSprite = NULL;
 
     if (normalImage)
     {
@@ -860,7 +860,7 @@ CCMenuItemToggle * CCMenuItemToggle::createWithTarget(CCObject* target, SEL_Menu
 CCMenuItemToggle * CCMenuItemToggle::create()
 {
     CCMenuItemToggle *pRet = new CCMenuItemToggle();
-    pRet->initWithItem(nullptr);
+    pRet->initWithItem(NULL);
     CC_SAFE_AUTORELEASE(pRet);
     return pRet;
 }
@@ -893,7 +893,7 @@ CCMenuItemToggle* CCMenuItemToggle::create(CCMenuItem *item)
 
 bool CCMenuItemToggle::initWithItem(CCMenuItem *item)
 {
-    CCMenuItem::initWithTarget(nullptr, nullptr);
+    CCMenuItem::initWithTarget(NULL, NULL);
     setSubItems(CCArray::create());
 
     if (item)
@@ -968,7 +968,7 @@ void CCMenuItemToggle::setEnabled(bool enabled)
 
         if(m_pSubItems && m_pSubItems->count() > 0)
         {
-            CCObject* pObj = nullptr;
+            CCObject* pObj = NULL;
             CCARRAY_FOREACH(m_pSubItems, pObj)
             {
                 CCMenuItem* pItem = (CCMenuItem*)pObj;

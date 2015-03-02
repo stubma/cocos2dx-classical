@@ -9,12 +9,12 @@
 
 #define CC_UNUSED_PARAM(unusedparam) (void)unusedparam
 
-/* Define nullptr pointer value */
-#ifndef nullptr
+/* Define NULL pointer value */
+#ifndef NULL
     #ifdef __cplusplus
-        #define nullptr    0
+        #define NULL    0
     #else
-        #define nullptr    ((void *)0)
+        #define NULL    ((void *)0)
     #endif
 #endif
 

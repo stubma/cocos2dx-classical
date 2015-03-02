@@ -30,8 +30,8 @@ CCSPX3Frame::CCSPX3Frame() :
 		m_flags(0),
 		m_patchCount(0),
 		m_collisionCount(0),
-		m_patches(nullptr),
-		m_collisionRects(nullptr) {
+		m_patches(NULL),
+		m_collisionRects(NULL) {
 	memset(&m_rect, 0, sizeof(CCSPX3Tile));
 }
 

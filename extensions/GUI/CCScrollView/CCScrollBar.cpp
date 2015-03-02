@@ -31,12 +31,12 @@ NS_CC_BEGIN
 #define TAG_FADE_OUT 1000
 
 CCScrollBar::CCScrollBar() :
-m_thumb(nullptr),
-m_track(nullptr),
-m_fixedThumb(nullptr),
+m_thumb(NULL),
+m_track(NULL),
+m_fixedThumb(NULL),
 m_fadingOut(false),
 m_fadeOutTimer(0),
-m_oldCCDelegate(nullptr),
+m_oldCCDelegate(NULL),
 m_autoFade(false),
 m_initFadeOut(false) {
 	

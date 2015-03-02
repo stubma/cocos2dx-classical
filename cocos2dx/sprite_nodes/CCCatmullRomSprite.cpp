@@ -33,12 +33,12 @@
 NS_CC_BEGIN
 
 CCCatmullRomSprite::CCCatmullRomSprite(CCSprite* sprite) :
-m_sprite(nullptr),
+m_sprite(NULL),
 m_dirty(false),
 m_allVisible(true),
 m_tension(0.1f),
-m_atlas(nullptr) {
-	CCAssert(sprite != nullptr, "CCCatmullRomSprite doesn't accept nullptr sprite");
+m_atlas(NULL) {
+	CCAssert(sprite != NULL, "CCCatmullRomSprite doesn't accept NULL sprite");
     
 	// save sprite
 	m_sprite = sprite;

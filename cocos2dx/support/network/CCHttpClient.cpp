@@ -83,13 +83,13 @@ public:
     
 public:
     CURLHandler(ccHttpContext* ctx) :
-    m_ctx(nullptr),
-    m_curl(nullptr),
+    m_ctx(NULL),
+    m_curl(NULL),
     m_done(false),
     m_responseCode(500),
     isHttpDidReceiveResponseDelivered(false),
     isHeaderAllReceived(false),
-    m_headers(nullptr) {
+    m_headers(NULL) {
         // data
         m_data = new CCData();
         m_ctx = (ccHttpContext*)calloc(1, sizeof(ccHttpContext));
@@ -399,9 +399,9 @@ void* CCHttpClient::httpThreadEntry(void* arg) {
     }
 
     // exit
-    pthread_exit(nullptr);
+    pthread_exit(NULL);
     
-    return nullptr;
+    return NULL;
 }
 
 CCHttpClient::CCHttpClient() :
@@ -424,7 +424,7 @@ CCHttpClient* CCHttpClient::create() {
         CC_SAFE_AUTORELEASE_RETURN(c, CCHttpClient*);
     }
     CC_SAFE_RELEASE(c);
-    return nullptr;
+    return NULL;
 }
 
 bool CCHttpClient::init() {
@@ -450,7 +450,7 @@ void CCHttpClient::asyncExecute(CCHttpRequest* request) {
 
     // start network thread
     pthread_t thread;
-    pthread_create(&thread, nullptr, httpThreadEntry, ctx);
+    pthread_create(&thread, NULL, httpThreadEntry, ctx);
     pthread_detach(thread);
 }
 

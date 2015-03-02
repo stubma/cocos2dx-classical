@@ -35,16 +35,16 @@ CCDecorativeDisplay *CCDecorativeDisplay::create()
         return pDisplay;
     }
     CC_SAFE_DELETE(pDisplay);
-    return nullptr;
+    return NULL;
 }
 
 CCDecorativeDisplay::CCDecorativeDisplay()
-    : m_pDisplay(nullptr)
-    , m_pDisplayData(nullptr)
+    : m_pDisplay(NULL)
+    , m_pDisplayData(NULL)
 
 {
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    m_pColliderDetector = nullptr;
+    m_pColliderDetector = NULL;
 #endif
 }
 

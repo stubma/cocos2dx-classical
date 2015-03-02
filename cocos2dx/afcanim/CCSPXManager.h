@@ -92,7 +92,7 @@ public:
 	 *
 	 * @param spx \link CCSPXFileData CCSPXFileData\endlink
 	 * @param animIndex animation index
-	 * @param mapping clip mapping rules, can be nullptr
+	 * @param mapping clip mapping rules, can be NULL
 	 * @return \link CCAFCAnimation CCAFCAnimation\endlink
 	 */
 	CCAFCAnimation* getAnimationData(CCSPXFileData* spx, int animIndex, CCAFCClipMapping* mapping);

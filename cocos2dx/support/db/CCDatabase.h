@@ -65,7 +65,7 @@ private:
 	/// cache statement
 	void setCachedStatement(const char* sql, CCStatement* statement);
 
-	/// execute a sql query statement, return result set if query is ok, or nullptr if failed
+	/// execute a sql query statement, return result set if query is ok, or NULL if failed
 	CCResultSet* _executeQuery(const char* sql);
 
 	/// execute a sql non-query statement, return true if execution is ok

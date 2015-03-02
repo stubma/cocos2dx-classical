@@ -35,9 +35,9 @@
 NS_CC_EXT_BEGIN
 
 CCControlSlider::CCControlSlider() :
-m_thumbSprite(nullptr),
-m_backgroundSprite(nullptr),
-m_progressSprite(nullptr),
+m_thumbSprite(NULL),
+m_backgroundSprite(NULL),
+m_progressSprite(NULL),
 m_value(0),
 m_intValue(0),
 m_minimumValue(0),
@@ -58,7 +58,7 @@ CCControlSlider* CCControlSlider::create(CCSprite* bg, CCSprite* thumb, CCSprite
     }
     
     CC_SAFE_RELEASE(s);
-    return nullptr;
+    return NULL;
 }
 
 bool CCControlSlider::initWithSprites(CCSprite* bg, CCSprite* thumb, CCSprite* progress) {
@@ -88,12 +88,12 @@ bool CCControlSlider::initWithSprites(CCSprite* bg, CCSprite* thumb, CCSprite* p
 }
 
 void CCControlSlider::setBackgroundSprite(CCSprite* bg) {
-    CCAssert(bg != nullptr, "Slider background can't be nullptr");
+    CCAssert(bg != NULL, "Slider background can't be NULL");
     
     // remove old and add new
     if(m_backgroundSprite) {
         m_backgroundSprite->removeFromParent();
-        m_backgroundSprite = nullptr;
+        m_backgroundSprite = NULL;
     }
     m_backgroundSprite = bg;
     addChild(m_backgroundSprite);
@@ -104,12 +104,12 @@ void CCControlSlider::setBackgroundSprite(CCSprite* bg) {
 }
 
 void CCControlSlider::setThumbSprite(CCSprite* thumb) {
-    CCAssert(thumb != nullptr, "Slider thumb can't be nullptr");
+    CCAssert(thumb != NULL, "Slider thumb can't be NULL");
     
     // remove old and add new
     if(m_thumbSprite) {
         m_thumbSprite->removeFromParent();
-        m_thumbSprite = nullptr;
+        m_thumbSprite = NULL;
     }
     m_thumbSprite = thumb;
     addChild(m_backgroundSprite, 2);
@@ -123,7 +123,7 @@ void CCControlSlider::setProgressSprite(CCSprite* progress) {
     // remove old and add new
     if(m_progressSprite) {
         m_progressSprite->removeFromParent();
-        m_progressSprite = nullptr;
+        m_progressSprite = NULL;
     }
     m_progressSprite = progress;
     addChild(m_progressSprite, 1);

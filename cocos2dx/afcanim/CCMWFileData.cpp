@@ -28,17 +28,17 @@ NS_CC_BEGIN
 CCMWFileData::CCMWFileData() :
 		m_numOfImage(0),
 		m_numOfAnimation(0),
-		m_animationTable(nullptr),
-		m_frameTable(nullptr),
-		m_framePoolTable(nullptr),
-		m_imageClipPool(nullptr),
-		m_ellipseClipPool(nullptr),
-		m_lineClipPool(nullptr),
-		m_rectangleClipPool(nullptr),
-		m_roundedRectangleClipPool(nullptr),
-		m_positionerRectangleClipPool(nullptr),
-		m_frameTableIndex(nullptr),
-		m_imageIndex(nullptr) {
+		m_animationTable(NULL),
+		m_frameTable(NULL),
+		m_framePoolTable(NULL),
+		m_imageClipPool(NULL),
+		m_ellipseClipPool(NULL),
+		m_lineClipPool(NULL),
+		m_rectangleClipPool(NULL),
+		m_roundedRectangleClipPool(NULL),
+		m_positionerRectangleClipPool(NULL),
+		m_frameTableIndex(NULL),
+		m_imageIndex(NULL) {
 }
 
 CCMWFileData::~CCMWFileData() {

@@ -29,7 +29,7 @@
 NS_CC_BEGIN
 
 CCAuroraSprite::CCAuroraSprite() :
-		m_aurora(nullptr) {
+		m_aurora(NULL) {
 }
 
 CCAuroraSprite::~CCAuroraSprite() {
@@ -76,7 +76,7 @@ CCAuroraSprite* CCAuroraSprite::create(const char* path, int animIndex, CCTextur
 	CC_SAFE_RETAIN(sheet);
 
 	// add others
-	for(CCTexture2D* t = va_arg(textures, CCTexture2D*); t != nullptr; t = va_arg(textures, CCTexture2D*)) {
+	for(CCTexture2D* t = va_arg(textures, CCTexture2D*); t != NULL; t = va_arg(textures, CCTexture2D*)) {
 		sheet = CCAFCSprite::createBatchNode(t);
 		sprite->m_sheetList.push_back(sheet);
 		CC_SAFE_RETAIN(sheet);
@@ -94,7 +94,7 @@ CCAuroraSprite* CCAuroraSprite::create(const char* path, int animIndex, CCTextur
 
 CCAFCAnimation* CCAuroraSprite::getAnimationAt(int index, CCAFCClipMapping* mapping) {
 	if(index < 0 || index >= getAnimationCount())
-		return nullptr;
+		return NULL;
 	else
 		return CCAuroraManager::getInstance()->getAnimationData(m_aurora, index, mapping);
 }

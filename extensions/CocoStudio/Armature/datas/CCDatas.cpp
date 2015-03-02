@@ -254,7 +254,7 @@ CCFrameData::CCFrameData(void)
     , duration(1)
     , tweenEasing(Linear)
     , easingParamNumber(0)
-    , easingParams(nullptr)
+    , easingParams(NULL)
     , isTween(true)
     , displayIndex(0)
 

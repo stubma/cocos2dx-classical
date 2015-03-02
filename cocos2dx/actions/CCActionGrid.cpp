@@ -72,7 +72,7 @@ void CCGridAction::startWithTarget(CCNode *pTarget)
     if (targetGrid && targetGrid->getReuseGrid() > 0)
     {
         if (targetGrid->isActive() && targetGrid->getGridSize().width == m_sGridSize.width
-            && targetGrid->getGridSize().height == m_sGridSize.height /*&& dynamic_cast<CCGridBase*>(targetGrid) != nullptr*/)
+            && targetGrid->getGridSize().height == m_sGridSize.height /*&& dynamic_cast<CCGridBase*>(targetGrid) != NULL*/)
         {
             targetGrid->reuse();
         }
@@ -98,7 +98,7 @@ CCGridBase* CCGridAction::getGrid(void)
     // Abstract class needs implementation
     CCAssert(0, "");
 
-    return nullptr;
+    return NULL;
 }
 
 CCActionInterval* CCGridAction::reverse(void)
@@ -108,8 +108,8 @@ CCActionInterval* CCGridAction::reverse(void)
 
 CCObject* CCGridAction::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = nullptr;
-    CCGridAction* pCopy = nullptr;
+    CCZone* pNewZone = NULL;
+    CCGridAction* pCopy = NULL;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -139,7 +139,7 @@ CCGrid3DAction* CCGrid3DAction::create(float duration, const CCSize& gridSize) {
         return a;
     }
     CC_SAFE_RELEASE(a);
-    return nullptr;
+    return NULL;
 }
 
 CCGridBase* CCGrid3DAction::getGrid(void)

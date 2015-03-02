@@ -77,7 +77,7 @@ CCObject::~CCObject(void)
     else
     {
         CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
-        if (pEngine != nullptr && pEngine->getScriptType() == kScriptTypeJavascript)
+        if (pEngine != NULL && pEngine->getScriptType() == kScriptTypeJavascript)
         {
             pEngine->removeScriptObjectByCCObject(this);
         }

@@ -28,7 +28,7 @@
 NS_CC_BEGIN
 
 CCSPXSprite::CCSPXSprite() :
-		m_spx(nullptr) {
+		m_spx(NULL) {
 }
 
 CCSPXSprite::~CCSPXSprite() {
@@ -57,7 +57,7 @@ CCSPXSprite* CCSPXSprite::create(const char* spxPath, CCTexture2D* tex, int acti
 
 CCAFCAnimation* CCSPXSprite::getAnimationAt(int index, CCAFCClipMapping* mapping) {
 	if(index < 0 || index >= getAnimationCount())
-		return nullptr;
+		return NULL;
 	else
 		return CCSPXManager::getInstance()->getAnimationData(m_spx, index, mapping);
 }

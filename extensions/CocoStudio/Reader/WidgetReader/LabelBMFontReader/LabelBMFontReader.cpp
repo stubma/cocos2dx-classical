@@ -5,7 +5,7 @@
 
 NS_CC_EXT_BEGIN
 
-static LabelBMFontReader* instanceLabelBMFontReader = nullptr;
+static LabelBMFontReader* instanceLabelBMFontReader = NULL;
 
 IMPLEMENT_CLASS_WIDGET_READER_INFO(LabelBMFontReader)
 

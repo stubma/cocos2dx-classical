@@ -105,7 +105,7 @@ bool luaval_to_vector_bool(lua_State* L, int lo, std::vector<bool>* ret, const c
 template <class T>
 bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret)
 {
-    if(nullptr == L || lua_gettop(L) < lo)
+    if(NULL == L || lua_gettop(L) < lo)
         return false;
     
     if (!luaval_is_usertype(L, lo, type, 0))
@@ -113,7 +113,7 @@ bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret)
     
     *ret = static_cast<T*>(tolua_tousertype(L, lo, 0));
     
-    if (nullptr == ret)
+    if (NULL == ret)
         LUA_PRECONDITION(ret, "Invalid Native Object");
     
     return true;
@@ -169,7 +169,7 @@ extern const char* getLuaTypeNameByTypeId(const string& typeName);
 template <class T>
 const char* getLuaTypeName(T* ret,const char* type)
 {
-    if (nullptr != ret)
+    if (NULL != ret)
     {
         std::string hashName = typeid(*ret).name();
         auto iter = g_luaType.find(hashName);
@@ -183,13 +183,13 @@ const char* getLuaTypeName(T* ret,const char* type)
         }
     }
     
-    return nullptr;
+    return NULL;
 }
 
 template <class T>
 void object_to_luaval(lua_State* L,const char* type, T* ret)
 {
-    if(nullptr != ret) {
+    if(NULL != ret) {
         cocos2d::CCObject* dynObject = dynamic_cast<cocos2d::CCObject*>(ret);
         if (dynObject) {
             // use c style cast, T may not polymorphic

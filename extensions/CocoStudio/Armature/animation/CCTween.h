@@ -105,7 +105,7 @@ protected:
     /**
      * According to the percent to calculate current CCFrameData with tween effect
      */
-    virtual CCFrameData *tweenNodeTo(float percent, CCFrameData *node = nullptr);
+    virtual CCFrameData *tweenNodeTo(float percent, CCFrameData *node = NULL);
 
     /**
      * According to the percent to calculate current color with tween effect

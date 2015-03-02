@@ -33,16 +33,16 @@ IMPLEMENT_CLASS_GUI_INFO(PageView)
     
 PageView::PageView():
 _curPageIdx(0),
-m_tracker(nullptr),
-m_dataSource(nullptr),
-m_curPage(nullptr),
-m_dstPage(nullptr),
+m_tracker(NULL),
+m_dataSource(NULL),
+m_curPage(NULL),
+m_dstPage(NULL),
 _touchMoveDir(PAGEVIEW_TOUCHLEFT),
 _touchStartLocation(0.0f),
 _touchMoveStartLocation(0.0f),
 _movePagePoint(CCPointZero),
-m_leftChild(nullptr),
-m_rightChild(nullptr),
+m_leftChild(NULL),
+m_rightChild(NULL),
 _leftBoundary(0.0f),
 _rightBoundary(0.0f),
 _isAutoScrolling(false),
@@ -50,8 +50,8 @@ _autoScrollDistance(0.0f),
 _autoScrollSpeed(0.0f),
 _autoScrollDir(0),
 _childFocusCancelOffset(5.0f),
-_pageViewEventListener(nullptr),
-_pageViewEventSelector(nullptr)
+_pageViewEventListener(NULL),
+_pageViewEventSelector(NULL)
 {
     memset(&m_scriptHandler, 0, sizeof(ccScriptFunction));
 }
@@ -61,8 +61,8 @@ PageView::~PageView()
     // release others
     unregisterScriptPageViewEventHandler();
     CC_SAFE_RELEASE(m_tracker);
-    _pageViewEventListener = nullptr;
-    _pageViewEventSelector = nullptr;
+    _pageViewEventListener = NULL;
+    _pageViewEventSelector = NULL;
 }
 
 PageView* PageView::create()
@@ -74,7 +74,7 @@ PageView* PageView::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return nullptr;
+    return NULL;
 }
     
 void PageView::onEnter()
@@ -99,7 +99,7 @@ void PageView::recyclePage(Widget* page) {
         enqueuePageItem(page, page->getName());
         page->removeFromParent();
         onPageViewEventPageDidRecycled(page);
-        page = nullptr;
+        page = NULL;
     }
 }
     
@@ -110,10 +110,10 @@ void PageView::reloadData() {
         recyclePage(m_dstPage);
     recyclePage(m_leftChild);
     recyclePage(m_rightChild);
-    m_curPage = nullptr;
-    m_leftChild = nullptr;
-    m_rightChild = nullptr;
-    m_dstPage = nullptr;
+    m_curPage = NULL;
+    m_leftChild = NULL;
+    m_rightChild = NULL;
+    m_dstPage = NULL;
     
     // recreate current page
     if(m_dataSource || m_scriptHandler.handler) {
@@ -431,14 +431,14 @@ void PageView::pageTurningEvent() {
         recyclePage(m_rightChild);
         m_rightChild = m_curPage;
         m_curPage = m_leftChild;
-        m_leftChild = m_dstIndex > 0 ? onPageViewEventPageAtIndex(m_dstIndex - 1) : nullptr;
+        m_leftChild = m_dstIndex > 0 ? onPageViewEventPageAtIndex(m_dstIndex - 1) : NULL;
         if(m_leftChild)
             addPage(m_leftChild, -1);
     } else if(m_dstPage == m_rightChild) {
         recyclePage(m_leftChild);
         m_leftChild = m_curPage;
         m_curPage = m_rightChild;
-        m_rightChild = (m_dstIndex < onPageViewEventPageCount() - 1) ? onPageViewEventPageAtIndex(m_dstIndex + 1) : nullptr;
+        m_rightChild = (m_dstIndex < onPageViewEventPageCount() - 1) ? onPageViewEventPageAtIndex(m_dstIndex + 1) : NULL;
         if(m_rightChild)
             addPage(m_rightChild, 1);
     } else if(m_dstPage != m_curPage) {
@@ -448,7 +448,7 @@ void PageView::pageTurningEvent() {
             recyclePage(m_curPage);
             m_leftChild = m_rightChild;
             m_curPage = m_dstPage;
-            m_rightChild = (m_dstIndex < onPageViewEventPageCount() - 1) ? onPageViewEventPageAtIndex(m_dstIndex + 1) : nullptr;
+            m_rightChild = (m_dstIndex < onPageViewEventPageCount() - 1) ? onPageViewEventPageAtIndex(m_dstIndex + 1) : NULL;
             if(m_rightChild)
                 addPage(m_rightChild, 1);
         } else if(delta == -2) {
@@ -456,7 +456,7 @@ void PageView::pageTurningEvent() {
             recyclePage(m_curPage);
             m_rightChild = m_leftChild;
             m_curPage = m_dstPage;
-            m_leftChild = m_dstIndex > 0 ? onPageViewEventPageAtIndex(m_dstIndex - 1) : nullptr;
+            m_leftChild = m_dstIndex > 0 ? onPageViewEventPageAtIndex(m_dstIndex - 1) : NULL;
             if(m_leftChild)
                 addPage(m_leftChild, -1);
         } else {
@@ -464,17 +464,17 @@ void PageView::pageTurningEvent() {
             recyclePage(m_curPage);
             recyclePage(m_rightChild);
             m_curPage = m_dstPage;
-            m_leftChild = m_dstIndex > 0 ? onPageViewEventPageAtIndex(m_dstIndex - 1) : nullptr;
+            m_leftChild = m_dstIndex > 0 ? onPageViewEventPageAtIndex(m_dstIndex - 1) : NULL;
             if(m_leftChild)
                 addPage(m_leftChild, -1);
-            m_rightChild = (m_dstIndex < onPageViewEventPageCount() - 1) ? onPageViewEventPageAtIndex(m_dstIndex + 1) : nullptr;
+            m_rightChild = (m_dstIndex < onPageViewEventPageCount() - 1) ? onPageViewEventPageAtIndex(m_dstIndex + 1) : NULL;
             if(m_rightChild)
                 addPage(m_rightChild, 1);
         }
     }
     _isAutoScrolling = false;
     _curPageIdx = m_dstIndex;
-    m_dstPage = nullptr;
+    m_dstPage = NULL;
     
     // notify event
     onPageViewEventTurning();
@@ -551,7 +551,7 @@ Widget* PageView::dequeuePageItem(const string& itemId) {
         }
     }
     
-    return nullptr;
+    return NULL;
 }
  
 void PageView::registerScriptPageViewEventHandler(ccScriptFunction func) {
@@ -603,7 +603,7 @@ Widget* PageView::onPageViewEventPageAtIndex(int idx) {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs, this, valuecollector_selector(PageView::collectReturnedPage));
         return m_scriptRetPage;
     } else {
-        return nullptr;
+        return NULL;
     }
 }
 
@@ -625,7 +625,7 @@ void PageView::collectReturnedPage() {
     CCLuaEngine* engine = (CCLuaEngine*)CCScriptEngineManager::sharedManager()->getScriptEngine();
     lua_State* L = engine->getLuaStack()->getLuaState();
     if(!luaval_to_object<Widget>(L, -1, "Widget", &m_scriptRetPage)) {
-        m_scriptRetPage = nullptr;
+        m_scriptRetPage = NULL;
     }
 }
 

@@ -26,7 +26,7 @@
 
 NS_CC_BEGIN
 
-CCSPXManager* gSPXManager = nullptr;
+CCSPXManager* gSPXManager = NULL;
 
 CCSPXManager::CCSPXManager() :
 		m_resScale(1) {
@@ -34,11 +34,11 @@ CCSPXManager::CCSPXManager() :
 
 CCSPXManager::~CCSPXManager() {
 	releaseAllAnimationFileData();
-	gSPXManager = nullptr;
+	gSPXManager = NULL;
 }
 
 CCSPXManager* CCSPXManager::getInstance() {
-	if(gSPXManager == nullptr) {
+	if(gSPXManager == NULL) {
 		gSPXManager = new CCSPXManager();
 	}
 	return gSPXManager;
@@ -54,12 +54,12 @@ void CCSPXManager::releaseAllAnimationFileData() {
 CCSPXFileData* CCSPXManager::load(const char* spxPath) {
 	// search cache first
 	CCSPXFileData* data = getSPXFileData(spxPath);
-	if(data != nullptr) {
+	if(data != NULL) {
 		return data;
 	}
 
 	data = CCSPXLoader::load(spxPath);
-	if(data != nullptr) {
+	if(data != NULL) {
 		m_spxFileDataList.push_back(data);
 		CC_SAFE_RETAIN(data);
 	}
@@ -73,7 +73,7 @@ CCSPXFileData* CCSPXManager::getSPXFileData(const string& spxPath) {
 			return *iter;
 		}
 	}
-	return nullptr;
+	return NULL;
 }
 
 float CCSPXManager::resolve(short v) {
@@ -176,7 +176,7 @@ CCAFCAnimation* CCSPXManager::getAnimationData(CCSPXFileData* spx, int animIndex
 
 			// need search clip mapping first
 			int index = spxFrameTile->index;
-			CCAFCClipMappingRule* rule = nullptr;
+			CCAFCClipMappingRule* rule = NULL;
 			if(mapping)
 				rule = mapping->findRule(index);
 

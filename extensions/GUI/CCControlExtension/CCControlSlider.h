@@ -81,7 +81,7 @@ protected:
     
 public:
     virtual ~CCControlSlider();
-    static CCControlSlider* create(CCSprite* bg, CCSprite* thumb, CCSprite* progress = nullptr);
+    static CCControlSlider* create(CCSprite* bg, CCSprite* thumb, CCSprite* progress = NULL);
     
     // override
     virtual bool ccTouchBegan(CCTouch* touch, CCEvent* pEvent);

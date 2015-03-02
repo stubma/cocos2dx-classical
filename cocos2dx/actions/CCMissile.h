@@ -68,7 +68,7 @@ public:
 	 * @param targetPresetDegree a degree should be reduced when set target node rotation,
 	 *		positive means clockwise
 	 */
-	static CCMissile* create(float velocity, CCNode* aimed, float targetPresetDegree = 0, CCCallFunc* doneCallFunc = nullptr);
+	static CCMissile* create(float velocity, CCNode* aimed, float targetPresetDegree = 0, CCCallFunc* doneCallFunc = NULL);
 	
 	CCMissile();
 	virtual ~CCMissile();

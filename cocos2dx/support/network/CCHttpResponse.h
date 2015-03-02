@@ -44,7 +44,7 @@ private:
 public:
     CCHttpResponse(CCHttpRequest* request) :
     m_success(false),
-    m_request(nullptr),
+    m_request(NULL),
     m_responseCode(0) {
         m_request = request;
         CC_SAFE_RETAIN(m_request);

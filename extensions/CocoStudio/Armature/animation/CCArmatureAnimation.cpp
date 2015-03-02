@@ -42,28 +42,28 @@ CCArmatureAnimation *CCArmatureAnimation::create(CCArmature *armature)
         return pArmatureAnimation;
     }
     CC_SAFE_DELETE(pArmatureAnimation);
-    return nullptr;
+    return NULL;
 }
 
 
 CCArmatureAnimation::CCArmatureAnimation()
-: m_pAnimationData(nullptr)
+: m_pAnimationData(NULL)
 , m_fSpeedScale(1)
-, m_pMovementData(nullptr)
-, m_pArmature(nullptr)
+, m_pMovementData(NULL)
+, m_pArmature(NULL)
 , m_strMovementID("")
 , m_iToIndex(0)
-, m_pTweenList(nullptr)
+, m_pTweenList(NULL)
 , m_bIgnoreFrameEvent(false)
 , m_bOnMovementList(false)
 , m_bMovementListLoop(false)
 , m_iMovementListDurationTo(-1)
-, m_pUserObject(nullptr)
-, m_sMovementEventCallFunc(nullptr)
-, m_sFrameEventCallFunc(nullptr)
-, m_sMovementEventTarget(nullptr)
-, m_sFrameEventTarget(nullptr)
-, m_pScriptObjectDict(nullptr)
+, m_pUserObject(NULL)
+, m_sMovementEventCallFunc(NULL)
+, m_sFrameEventCallFunc(NULL)
+, m_sMovementEventTarget(NULL)
+, m_sFrameEventTarget(NULL)
+, m_pScriptObjectDict(NULL)
 {
     memset(&m_movementEventHandler, 0, sizeof(ccScriptFunction));
     memset(&m_frameEventHandler, 0, sizeof(ccScriptFunction));
@@ -102,7 +102,7 @@ bool CCArmatureAnimation::init(CCArmature *armature)
 
 void CCArmatureAnimation:: pause()
 {
-    CCObject *object = nullptr;
+    CCObject *object = NULL;
     CCARRAY_FOREACH(m_pTweenList, object)
     {
         ((CCTween *)object)->pause();
@@ -112,7 +112,7 @@ void CCArmatureAnimation:: pause()
 
 void CCArmatureAnimation::resume()
 {
-    CCObject *object = nullptr;
+    CCObject *object = NULL;
     CCARRAY_FOREACH(m_pTweenList, object)
     {
         ((CCTween *)object)->resume();
@@ -122,7 +122,7 @@ void CCArmatureAnimation::resume()
 
 void CCArmatureAnimation::stop()
 {
-    CCObject *object = nullptr;
+    CCObject *object = NULL;
     CCARRAY_FOREACH(m_pTweenList, object)
     {
         ((CCTween *)object)->stop();
@@ -153,7 +153,7 @@ void CCArmatureAnimation::setSpeedScale(float speedScale)
 
     m_fProcessScale = !m_pMovementData ? m_fSpeedScale : m_fSpeedScale * m_pMovementData->scale;
 
-    CCDictElement *element = nullptr;
+    CCDictElement *element = NULL;
     CCDictionary *dict = m_pArmature->getBoneDic();
     CCDICT_FOREACH(dict, element)
     {
@@ -218,10 +218,10 @@ void CCArmatureAnimation::play(const char *animationName, int durationTo, int du
         m_iDurationTween = durationTween;
     }
 
-    CCMovementBoneData *movementBoneData = nullptr;
+    CCMovementBoneData *movementBoneData = NULL;
     m_pTweenList->removeAllObjects();
 
-    CCDictElement *element = nullptr;
+    CCDictElement *element = NULL;
     CCDictionary *dict = m_pArmature->getBoneDic();
 
     CCDICT_FOREACH(dict, element)
@@ -338,7 +338,7 @@ void CCArmatureAnimation::playWithArray(CCArray *movementNames, int durationTo, 
 {
     std::vector<std::string> names;
     
-    CCObject *object = nullptr;
+    CCObject *object = NULL;
     CCARRAY_FOREACH(movementNames, object)
     {
         names.push_back(static_cast<CCString*>(object)->getCString());
@@ -350,7 +350,7 @@ void CCArmatureAnimation::playWithIndexArray(CCArray *movementIndexes, int durat
 {
     std::vector<int> indexes;
 
-    CCObject *object = nullptr;
+    CCObject *object = NULL;
     CCARRAY_FOREACH(movementIndexes, object)
     {
         indexes.push_back(static_cast<CCInteger*>(object)->getValue());
@@ -376,7 +376,7 @@ void CCArmatureAnimation::gotoAndPlay(int frameIndex)
     m_fCurrentPercent = (float)m_iCurFrameIndex / ((float)m_pMovementData->duration - 1);
     m_fCurrentFrame = m_iNextFrameIndex * m_fCurrentPercent;
 
-    CCObject *object = nullptr;
+    CCObject *object = NULL;
     CCARRAY_FOREACH(m_pTweenList, object)
     {
         ((CCTween *)object)->gotoAndPlay(frameIndex);
@@ -401,7 +401,7 @@ int CCArmatureAnimation::getMovementCount()
 void CCArmatureAnimation::update(float dt)
 {
     CCProcessBase::update(dt);
-    CCObject *object = nullptr;
+    CCObject *object = NULL;
     CCARRAY_FOREACH(m_pTweenList, object)
     {
         ((CCTween *)object)->update(dt);

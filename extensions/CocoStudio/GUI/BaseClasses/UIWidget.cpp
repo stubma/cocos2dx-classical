@@ -40,8 +40,8 @@ _brightStyle(BRIGHT_NONE),
 _touchStartPos(CCPointZero),
 _touchMovePos(CCPointZero),
 _touchEndPos(CCPointZero),
-_touchEventListener(nullptr),
-_touchEventSelector(nullptr),
+_touchEventListener(NULL),
+_touchEventSelector(NULL),
 _name("default"),
 _widgetType(WidgetTypeWidget),
 _actionTag(0),
@@ -55,22 +55,22 @@ _positionType(POSITION_ABSOLUTE),
 _positionPercent(CCPointZero),
 _reorderWidgetChildDirty(true),
 _hitted(false),
-_widgetChildren(nullptr),
-_layoutParameterDictionary(nullptr),
-_nodes(nullptr),
+_widgetChildren(NULL),
+_layoutParameterDictionary(NULL),
+_nodes(NULL),
 _color(ccWHITE),
 _opacity(255),
 _flippedX(false),
 _flippedY(false),
-_scriptObjectDict(nullptr)
+_scriptObjectDict(NULL)
 {
     memset(&m_scriptTouchHandler, 0, sizeof(ccScriptFunction));
 }
 
 Widget::~Widget()
 {
-    _touchEventListener = nullptr;
-    _touchEventSelector = nullptr;
+    _touchEventListener = NULL;
+    _touchEventSelector = NULL;
     _widgetChildren->removeAllObjects();
     CC_SAFE_RELEASE(_widgetChildren);
     _layoutParameterDictionary->removeAllObjects();
@@ -90,7 +90,7 @@ Widget* Widget::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return nullptr;
+    return NULL;
 }
 
 bool Widget::init()
@@ -144,7 +144,7 @@ void Widget::addChild(CCNode * child, int zOrder)
     
 void Widget::addChild(CCNode* child, int zOrder, int tag)
 {
-    CCAssert(dynamic_cast<Widget*>(child) != nullptr, "Widget only supports Widgets as children");
+    CCAssert(dynamic_cast<Widget*>(child) != NULL, "Widget only supports Widgets as children");
     CCNode::addChild(child, zOrder, tag);
     _widgetChildren->addObject(child);
 }
@@ -194,7 +194,7 @@ CCNode* Widget::getChildByTag(int aTag)
                 return pNode;
         }
     }
-    return nullptr;
+    return NULL;
 }
 
 CCArray* Widget::getChildren()
@@ -239,7 +239,7 @@ void Widget::removeChildByTag(int tag, bool cleanup)
     
     CCNode *child = this->getChildByTag(tag);
     
-    if (child == nullptr)
+    if (child == NULL)
     {
 //        CCLOG("cocos2d: removeChildByTag(tag = %d): child not found!", tag);
     }
@@ -292,7 +292,7 @@ Widget* Widget::getChildByName(const char *name)
                 return pNode;
         }
     }
-    return nullptr;
+    return NULL;
 }
     
 void Widget::addNode(CCNode* node)
@@ -307,7 +307,7 @@ void Widget::addNode(CCNode * node, int zOrder)
     
 void Widget::addNode(CCNode* node, int zOrder, int tag)
 {
-    CCAssert(dynamic_cast<Widget*>(node) == nullptr, "Widget only supports Nodes as renderer");
+    CCAssert(dynamic_cast<Widget*>(node) == NULL, "Widget only supports Nodes as renderer");
     CCNode::addChild(node, zOrder, tag);
     _nodes->addObject(node);
 }
@@ -326,7 +326,7 @@ CCNode* Widget::getNodeByTag(int tag)
                 return pNode;
         }
     }
-    return nullptr;
+    return NULL;
 }
     
 CCArray* Widget::getNodes()
@@ -346,7 +346,7 @@ void Widget::removeNodeByTag(int tag)
     
     CCNode *node = this->getNodeByTag(tag);
     
-    if (node == nullptr)
+    if (node == NULL)
     {
 //        CCLOG("cocos2d: removeNodeByTag(tag = %d): child not found!", tag);
     }
@@ -840,7 +840,7 @@ bool Widget::clippingParentAreaContainPoint(const CCPoint &pt)
 {
     _affectByClipping = false;
     Widget* parent = getWidgetParent();
-    Widget* clippingParent = nullptr;
+    Widget* clippingParent = NULL;
     while (parent)
     {
         Layout* layoutParent = dynamic_cast<Layout*>(parent);
@@ -1081,7 +1081,7 @@ void Widget::copyProperties(Widget *widget)
     setFlipY(widget->isFlipY());
     setColor(widget->getColor());
     setOpacity(widget->getOpacity());
-    CCDictElement* parameterElement = nullptr;
+    CCDictElement* parameterElement = NULL;
     CCDictionary* layoutParameterDic = widget->_layoutParameterDictionary;
     CCDICT_FOREACH(layoutParameterDic, parameterElement)
     {

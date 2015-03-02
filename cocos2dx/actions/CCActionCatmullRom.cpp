@@ -57,7 +57,7 @@ CCPointArray* CCPointArray::create(unsigned int capacity)
         else 
         {
             delete ret;
-            ret = nullptr;
+            ret = NULL;
         }
     }
 
@@ -99,7 +99,7 @@ CCPointArray::~CCPointArray()
     delete m_pControlPoints;
 }
 
-CCPointArray::CCPointArray() :m_pControlPoints(nullptr){}
+CCPointArray::CCPointArray() :m_pControlPoints(NULL){}
 
 const std::vector<CCPoint*>* CCPointArray::getControlPoints()
 {
@@ -108,7 +108,7 @@ const std::vector<CCPoint*>* CCPointArray::getControlPoints()
 
 void CCPointArray::setControlPoints(vector<CCPoint*> *controlPoints)
 {
-    CCAssert(controlPoints != nullptr, "control points should not be nullptr");
+    CCAssert(controlPoints != NULL, "control points should not be NULL");
     
     // delete old points
     vector<CCPoint*>::iterator iter;
@@ -163,7 +163,7 @@ CCPointArray* CCPointArray::reverse()
 {
     vector<CCPoint*> *newArray = new vector<CCPoint*>();
     vector<CCPoint*>::reverse_iterator iter;
-    CCPoint *point = nullptr;
+    CCPoint *point = NULL;
     for (iter = m_pControlPoints->rbegin(); iter != m_pControlPoints->rend(); ++iter)
     {
         point = *iter;
@@ -178,8 +178,8 @@ CCPointArray* CCPointArray::reverse()
 void CCPointArray::reverseInline()
 {
     unsigned int l = m_pControlPoints->size();
-    CCPoint *p1 = nullptr;
-    CCPoint *p2 = nullptr;
+    CCPoint *p1 = NULL;
+    CCPoint *p2 = NULL;
     int x, y;
     for (unsigned int i = 0; i < l/2; ++i)
     {
@@ -261,7 +261,7 @@ CCCardinalSplineTo::~CCCardinalSplineTo()
 }
 
 CCCardinalSplineTo::CCCardinalSplineTo()
-: m_pPoints(nullptr)
+: m_pPoints(NULL)
 , m_fDeltaT(0.f)
 , m_fTension(0.f)
 {
@@ -282,8 +282,8 @@ void CCCardinalSplineTo::startWithTarget(cocos2d::CCNode *pTarget)
 
 CCCardinalSplineTo* CCCardinalSplineTo::copyWithZone(cocos2d::CCZone *pZone)
 {
-    CCZone* pNewZone = nullptr;
-    CCCardinalSplineTo* pRet = nullptr;
+    CCZone* pNewZone = NULL;
+    CCCardinalSplineTo* pRet = NULL;
     if(pZone && pZone->m_pCopyObject) //in case of being called at sub class
     {
         pRet = (CCCardinalSplineTo*)(pZone->m_pCopyObject);

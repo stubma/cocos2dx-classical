@@ -28,12 +28,12 @@
 
 NS_CC_BEGIN
 
-static CC_MULTI_ENCRYPT_FUNC sEncryptFunc = nullptr;
-static CC_MULTI_DECRYPT_FUNC sDecryptFunc = nullptr;
+static CC_MULTI_ENCRYPT_FUNC sEncryptFunc = NULL;
+static CC_MULTI_DECRYPT_FUNC sDecryptFunc = NULL;
 
 CCUDPSocketHub::CCUDPSocketHub() :
 m_rawPolicy(false) {
-    pthread_mutex_init(&m_mutex, nullptr);
+    pthread_mutex_init(&m_mutex, NULL);
     
     CCScheduler* s = CCDirector::sharedDirector()->getScheduler();
     s->scheduleSelector(schedule_selector(CCUDPSocketHub::mainLoop), this, 0, false);
@@ -77,7 +77,7 @@ void CCUDPSocketHub::stopAll() {
             CCNotificationCenter::sharedNotificationCenter()->postNotification(kCCNotificationUDPSocketDisconnected, s);
         }
         s->setStop(true);
-        s->setHub(nullptr);
+        s->setHub(NULL);
     }
     m_sockets.removeAllObjects();
     
@@ -125,7 +125,7 @@ CCUDPSocket* CCUDPSocketHub::getSocket(int tag) {
             return s;
         }
     }
-	return nullptr;
+	return NULL;
 }
 
 void CCUDPSocketHub::mainLoop(float delta) {

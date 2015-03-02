@@ -244,7 +244,7 @@ public:
 	 * Search mapping rule set, and return a matched rule if found
 	 *
 	 * @param sourceClipIndex index of clip
-	 * @return \link CCAFCClipMappingRule CCAFCClipMappingRule\endlink, or nullptr if not found
+	 * @return \link CCAFCClipMappingRule CCAFCClipMappingRule\endlink, or NULL if not found
 	 */
 	CCAFCClipMappingRule* findRule(int sourceClipIndex);
 };

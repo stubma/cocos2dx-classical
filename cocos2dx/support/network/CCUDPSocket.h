@@ -97,7 +97,7 @@ public:
 	 * @param port port
 	 * @param tag tag of socket
 	 * @param blockSec block time when create this socket, 0 means not block
-	 * @return instance or nullptr if failed
+	 * @return instance or NULL if failed
 	 */
 	static CCUDPSocket* create(const string& hostname, int port, int tag = -1, int blockSec = kCCSocketDefaultTimeout);
 	

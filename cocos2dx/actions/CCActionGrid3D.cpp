@@ -66,8 +66,8 @@ bool CCWaves3D::initWithDuration(float duration, const CCSize& gridSize, unsigne
 
 CCObject* CCWaves3D::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = nullptr;
-    CCWaves3D* pCopy = nullptr;
+    CCZone* pNewZone = NULL;
+    CCWaves3D* pCopy = NULL;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -145,8 +145,8 @@ bool CCFlipX3D::initWithSize(const CCSize& gridSize, float duration)
 
 CCObject* CCFlipX3D::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = nullptr;
-    CCFlipX3D* pCopy = nullptr;
+    CCZone* pNewZone = NULL;
+    CCFlipX3D* pCopy = NULL;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -254,8 +254,8 @@ CCFlipY3D* CCFlipY3D::create(float duration)
 
 CCObject* CCFlipY3D::copyWithZone(CCZone* pZone)
 {
-    CCZone* pNewZone = nullptr;
-    CCFlipY3D* pCopy = nullptr;
+    CCZone* pNewZone = NULL;
+    CCFlipY3D* pCopy = NULL;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -381,8 +381,8 @@ bool CCLens3D::initWithDuration(float duration, const CCSize& gridSize, const CC
 
 CCObject* CCLens3D::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = nullptr;
-    CCLens3D* pCopy = nullptr;
+    CCZone* pNewZone = NULL;
+    CCLens3D* pCopy = NULL;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -499,8 +499,8 @@ void CCRipple3D::setPosition(const CCPoint& position)
 
 CCObject* CCRipple3D::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = nullptr;
-    CCRipple3D* pCopy = nullptr;
+    CCZone* pNewZone = NULL;
+    CCRipple3D* pCopy = NULL;
     if(pZone && pZone->m_pCopyObject)
     {
         //in case of being called at sub class
@@ -581,8 +581,8 @@ bool CCShaky3D::initWithDuration(float duration, const CCSize& gridSize, int ran
 
 CCObject* CCShaky3D::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = nullptr;
-    CCShaky3D* pCopy = nullptr;
+    CCZone* pNewZone = NULL;
+    CCShaky3D* pCopy = NULL;
     if(pZone && pZone->m_pCopyObject)
     {
         //in case of being called at sub class
@@ -662,8 +662,8 @@ bool CCLiquid::initWithDuration(float duration, const CCSize& gridSize, unsigned
 
 CCObject* CCLiquid::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = nullptr;
-    CCLiquid* pCopy = nullptr;
+    CCZone* pNewZone = NULL;
+    CCLiquid* pCopy = NULL;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -739,8 +739,8 @@ bool CCWaves::initWithDuration(float duration, const CCSize& gridSize, unsigned 
 
 CCObject* CCWaves::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = nullptr;
-    CCWaves* pCopy = nullptr;
+    CCZone* pNewZone = NULL;
+    CCWaves* pCopy = NULL;
     if(pZone && pZone->m_pCopyObject) 
     {
         //in case of being called at sub class
@@ -829,8 +829,8 @@ void CCTwirl::setPosition(const CCPoint& position)
 
 CCObject* CCTwirl::copyWithZone(CCZone *pZone)
 {
-    CCZone* pNewZone = nullptr;
-    CCTwirl* pCopy = nullptr;
+    CCZone* pNewZone = NULL;
+    CCTwirl* pCopy = NULL;
     if(pZone && pZone->m_pCopyObject)
     {
         //in case of being called at sub class

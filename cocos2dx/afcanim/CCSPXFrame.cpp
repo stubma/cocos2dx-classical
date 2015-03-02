@@ -31,9 +31,9 @@ CCSPXFrame::CCSPXFrame() :
 		m_frameTileCount(0),
 		m_collisionCount(0),
 		m_referencePointCount(0),
-		m_tiles(nullptr),
-		m_collisions(nullptr),
-		m_refPoints(nullptr) {
+		m_tiles(NULL),
+		m_collisions(NULL),
+		m_refPoints(NULL) {
 }
 
 CCSPXFrame::~CCSPXFrame() {

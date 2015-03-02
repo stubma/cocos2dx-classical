@@ -65,7 +65,7 @@ bool CCImage::_initWithWebpData(void *pData, int nDataLen)
         if (WebPDecode((uint8_t*)pData, nDataLen, &config) != VP8_STATUS_OK)
         {
             delete []m_pData;
-            m_pData = nullptr;
+            m_pData = NULL;
             break;
         }
                

@@ -81,7 +81,7 @@ public:
     /**
      *  @js ctor
      */
-    CCMenu() : m_pSelectedItem(nullptr) {}
+    CCMenu() : m_pSelectedItem(NULL) {}
     /**
      *  @js NA
      *  @lua NA

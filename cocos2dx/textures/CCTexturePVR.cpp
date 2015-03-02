@@ -236,7 +236,7 @@ CCTexturePVR::CCTexturePVR()
 , m_bForcePremultipliedAlpha(false)
 , m_bRetainName(false)
 , m_eFormat(kCCTexture2DPixelFormat_Default)
-, m_pPixelFormatInfo(nullptr)
+, m_pPixelFormatInfo(NULL)
 {
 }
 
@@ -253,12 +253,12 @@ CCTexturePVR::~CCTexturePVR()
 bool CCTexturePVR::unpackPVRv2Data(unsigned char* data, unsigned int len)
 {
     bool success = false;
-    ccPVRv2TexHeader *header = nullptr;
+    ccPVRv2TexHeader *header = NULL;
     unsigned int flags, pvrTag;
     unsigned int dataLength = 0, dataOffset = 0, dataSize = 0;
     unsigned int blockSize = 0, widthBlocks = 0, heightBlocks = 0;
     unsigned int width = 0, height = 0, bpp = 4;
-    unsigned char *bytes = nullptr;
+    unsigned char *bytes = NULL;
     unsigned int formatFlags;
 
     //Cast first sizeof(PVRTexHeader) bytes of data stream as PVRTexHeader
@@ -464,7 +464,7 @@ bool CCTexturePVR::unpackPVRv3Data(unsigned char* dataPointer, unsigned int data
 	m_uHeight = height;
 	uint32_t dataOffset = 0, dataSize = 0;
 	uint32_t blockSize = 0, widthBlocks = 0, heightBlocks = 0;
-	uint8_t *bytes = nullptr;
+	uint8_t *bytes = NULL;
 	
 	dataOffset = (sizeof(ccPVRv3TexHeader) + header->metadataLength);
 	bytes = dataPointer;
@@ -613,7 +613,7 @@ bool CCTexturePVR::createGLTexture()
 
 bool CCTexturePVR::initWithContentsOfFile(const char* path)
 {
-    unsigned char* pvrdata = nullptr;
+    unsigned char* pvrdata = NULL;
     int pvrlen = 0;
     
     std::string lowerCase(path);
@@ -645,7 +645,7 @@ bool CCTexturePVR::initWithContentsOfFile(const char* path)
 
     m_uName = 0;
     m_uWidth = m_uHeight = 0;
-    m_pPixelFormatInfo = nullptr;
+    m_pPixelFormatInfo = NULL;
     m_bHasAlpha = false;
     m_bForcePremultipliedAlpha = false;
     m_bHasPremultipliedAlpha = false;
@@ -676,7 +676,7 @@ CCTexturePVR * CCTexturePVR::create(const char* path)
         else
         {
             delete pTexture;
-            pTexture = nullptr;
+            pTexture = NULL;
         }
     }
 

@@ -306,7 +306,7 @@ float CCTweenFunction::elasticEaseIn(float time, float *easingParam)
 {
     float period = 0.3f;
 
-    if (easingParam != nullptr)
+    if (easingParam != NULL)
     {
         period = easingParam[0];
     }
@@ -329,7 +329,7 @@ float CCTweenFunction::elasticEaseOut(float time, float *easingParam)
 {
     float period = 0.3f;
 
-    if (easingParam != nullptr)
+    if (easingParam != NULL)
     {
         period = easingParam[0];
     }
@@ -351,7 +351,7 @@ float CCTweenFunction::elasticEaseInOut(float time, float *easingParam)
 {
     float period = 0.3f;
 
-    if (easingParam != nullptr)
+    if (easingParam != NULL)
     {
         period = easingParam[0];
     }

@@ -102,7 +102,7 @@ public:
 	 * @param tag tag of socket
 	 * @param blockSec block time when create this socket, 0 means not block
 	 * @param keepAlive true means keep socket alive
-	 * @return instance or nullptr if failed
+	 * @return instance or NULL if failed
 	 */
 	static CCTCPSocket* create(const string& hostname, int port, int tag = -1, int blockSec = kCCSocketDefaultTimeout, bool keepAlive = false);
 	

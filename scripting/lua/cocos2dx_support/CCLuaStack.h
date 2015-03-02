@@ -117,10 +117,10 @@ public:
     virtual bool pushFunctionByHandler(int nHandler);
     virtual void pushCCArray(CCArray* array);
     virtual void pushCCDictionary(CCDictionary* dict);
-    virtual int executeFunction(int numArgs, CCObject* collector = nullptr, SEL_ScriptReturnedValueCollector sel = nullptr);
+    virtual int executeFunction(int numArgs, CCObject* collector = NULL, SEL_ScriptReturnedValueCollector sel = NULL);
     virtual void pop(int count);
     
-    virtual int executeFunctionByHandler(int nHandler, int numArgs, CCObject* collector = nullptr, SEL_ScriptReturnedValueCollector sel = nullptr);
+    virtual int executeFunctionByHandler(int nHandler, int numArgs, CCObject* collector = NULL, SEL_ScriptReturnedValueCollector sel = NULL);
     
     virtual int executeFunctionReturnArray(int nHandler,int nNumArgs,int nNummResults,CCArray* pResultArray);
     
@@ -134,7 +134,7 @@ public:
 
 protected:
     CCLuaStack(void)
-    : m_state(nullptr)
+    : m_state(NULL)
     , m_callFromLua(0)
     , m_xxteaEnabled(false)
     , m_xxteaKey(NULL)

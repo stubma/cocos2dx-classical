@@ -212,8 +212,8 @@ namespace cocos2d
         * Get resource file data from a zip file.
         * @param fileName File name
         * @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
-        * @return Upon success, a pointer to the data is returned, otherwise nullptr.
-        * @warning Recall: you are responsible for calling delete[] on any Non-nullptr pointer returned.
+        * @return Upon success, a pointer to the data is returned, otherwise NULL.
+        * @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
         *
         * @since v2.0.5
         */

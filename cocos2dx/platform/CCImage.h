@@ -156,7 +156,7 @@ public:
      * pixel
      */
     static CCSize measureString(const char* pText,
-                                const char* pFontName = nullptr,
+                                const char* pFontName = NULL,
                                 int nSize = 0,
                                 int maxWidth = 0,
                                 float shadowOffsetX = 0,

@@ -30,11 +30,11 @@ NS_CC_EXT_BEGIN
 
 CCTableView* CCTableView::create(CCTableViewDataSource* dataSource, CCSize size)
 {
-    return CCTableView::create(dataSource, size, nullptr);
+    return CCTableView::create(dataSource, size, NULL);
 }
 
 CCTableView* CCTableView::create(CCSize size) {
-    return CCTableView::create(nullptr, size);
+    return CCTableView::create(NULL, size);
 }
 
 CCTableView* CCTableView::create(CCTableViewDataSource* dataSource, CCSize size, CCNode *container)
@@ -49,7 +49,7 @@ CCTableView* CCTableView::create(CCTableViewDataSource* dataSource, CCSize size,
     return table;
 }
 
-bool CCTableView::initWithViewSize(CCSize size, CCNode* container/* = nullptr*/)
+bool CCTableView::initWithViewSize(CCSize size, CCNode* container/* = NULL*/)
 {
     if (CCScrollView::initWithViewSize(size,container))
     {
@@ -66,12 +66,12 @@ bool CCTableView::initWithViewSize(CCSize size, CCNode* container/* = nullptr*/)
 }
 
 CCTableView::CCTableView()
-: m_pTouchedCell(nullptr)
-, m_pIndices(nullptr)
-, m_pCellsUsed(nullptr)
-, m_pCellsFreed(nullptr)
-, m_pDataSource(nullptr)
-, m_pTableViewDelegate(nullptr)
+: m_pTouchedCell(NULL)
+, m_pIndices(NULL)
+, m_pCellsUsed(NULL)
+, m_pCellsFreed(NULL)
+, m_pDataSource(NULL)
+, m_pTableViewDelegate(NULL)
 , m_viewRows(-1)
 , m_rowSpacing(0)
 , m_colSpacing(0)
@@ -90,7 +90,7 @@ CCTableView::~CCTableView()
 
 void CCTableView::reloadData(bool keepOffset)
 {
-    CCObject* pObj = nullptr;
+    CCObject* pObj = NULL;
     CCARRAY_FOREACH(m_pCellsUsed, pObj)
     {
         CCTableViewCell* cell = (CCTableViewCell*)pObj;
@@ -119,7 +119,7 @@ void CCTableView::reloadData(bool keepOffset)
 
 CCTableViewCell *CCTableView::cellAtIndex(unsigned int idx)
 {
-    CCTableViewCell *found = nullptr;
+    CCTableViewCell *found = NULL;
     
     if (m_pIndices->find(idx) != m_pIndices->end())
     {
@@ -164,7 +164,7 @@ void CCTableView::insertCellAtIndex(unsigned  int idx)
         return;
     }
     
-    CCTableViewCell* cell = nullptr;
+    CCTableViewCell* cell = NULL;
     int newIdx = 0;
     
     cell = (CCTableViewCell*)m_pCellsUsed->objectWithObjectID(idx);
@@ -223,10 +223,10 @@ void CCTableView::removeCellAtIndex(unsigned int idx)
 
 CCTableViewCell *CCTableView::dequeueCell(const string& name)
 {
-    CCTableViewCell *cell = nullptr;
+    CCTableViewCell *cell = NULL;
     
     if (m_pCellsFreed->count() == 0) {
-        cell = nullptr;
+        cell = NULL;
     } else {
         if(name.empty()) {
             cell = (CCTableViewCell*)m_pCellsFreed->objectAtIndex(0);
@@ -492,7 +492,7 @@ void CCTableView::scrollViewDidScroll(CCScrollView* view)
         return;
     }
     
-    if(m_pTableViewDelegate != nullptr) {
+    if(m_pTableViewDelegate != NULL) {
         m_pTableViewDelegate->scrollViewDidScroll(this);
     }
     
@@ -603,7 +603,7 @@ void CCTableView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
             onTableCellTouched();
         }
         
-        m_pTouchedCell = nullptr;
+        m_pTouchedCell = NULL;
     }
     
     CCScrollView::ccTouchEnded(pTouch, pEvent);
@@ -626,7 +626,7 @@ bool CCTableView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
         index = _indexFromOffset(point, true);
 		if (index == CC_INVALID_INDEX)
 		{
-			m_pTouchedCell = nullptr;
+			m_pTouchedCell = NULL;
 		}
         else
 		{
@@ -639,7 +639,7 @@ bool CCTableView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
     }
     else if(m_pTouchedCell) {
         onTableCellUnhighlight();
-        m_pTouchedCell = nullptr;
+        m_pTouchedCell = NULL;
     }
     
     return touchResult;
@@ -651,7 +651,7 @@ void CCTableView::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
     
     if (m_pTouchedCell && isTouchMoved()) {
         onTableCellUnhighlight();
-        m_pTouchedCell = nullptr;
+        m_pTouchedCell = NULL;
     }
 }
 
@@ -661,7 +661,7 @@ void CCTableView::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
     
     if (m_pTouchedCell) {
         onTableCellUnhighlight();
-        m_pTouchedCell = nullptr;
+        m_pTouchedCell = NULL;
     }
 }
 
@@ -760,7 +760,7 @@ CCTableViewCell* CCTableView::onTableCellAtIndex(unsigned int idx) {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs, this, valuecollector_selector(CCTableView::collectReturnedCell));
         return m_scriptRetCell;
     } else {
-        return nullptr;
+        return NULL;
     }
 }
 
@@ -777,7 +777,7 @@ void CCTableView::collectReturnedCell() {
     CCLuaEngine* engine = (CCLuaEngine*)CCScriptEngineManager::sharedManager()->getScriptEngine();
     lua_State* L = engine->getLuaStack()->getLuaState();
     if(!luaval_to_object<CCTableViewCell>(L, -1, "CCTableViewCell", &m_scriptRetCell)) {
-        m_scriptRetCell = nullptr;
+        m_scriptRetCell = NULL;
     }
 }
 

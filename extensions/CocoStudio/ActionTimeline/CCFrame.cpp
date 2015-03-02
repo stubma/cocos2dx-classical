@@ -34,8 +34,8 @@ NS_TIMELINE_BEGIN
 Frame::Frame()
     : _frameIndex(0)
     , _tween(true)
-    , _timeline(nullptr)
-    , _node(nullptr)
+    , _timeline(NULL)
+    , _node(NULL)
 {
 }
 
@@ -68,7 +68,7 @@ VisibleFrame* VisibleFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return nullptr;
+    return NULL;
 }
 
 VisibleFrame::VisibleFrame()
@@ -103,7 +103,7 @@ TextureFrame* TextureFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return nullptr;
+    return NULL;
 }
 
 TextureFrame::TextureFrame()
@@ -124,7 +124,7 @@ void TextureFrame::onEnter(Frame *nextFrame)
     {
         CCSpriteFrame* spriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(_textureName.c_str());
 
-        if(spriteFrame != nullptr)
+        if(spriteFrame != NULL)
             _sprite->initWithSpriteFrame(spriteFrame);
         else
             _sprite->initWithFile(_textureName.c_str());
@@ -153,7 +153,7 @@ RotationFrame* RotationFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return nullptr;
+    return NULL;
 }
 
 RotationFrame::RotationFrame()
@@ -202,7 +202,7 @@ SkewFrame* SkewFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return nullptr;
+    return NULL;
 }
 
 SkewFrame::SkewFrame()
@@ -260,7 +260,7 @@ RotationSkewFrame* RotationSkewFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return nullptr;
+    return NULL;
 }
 
 RotationSkewFrame::RotationSkewFrame()
@@ -313,7 +313,7 @@ PositionFrame* PositionFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return nullptr;
+    return NULL;
 }
 
 PositionFrame::PositionFrame()
@@ -365,7 +365,7 @@ ScaleFrame* ScaleFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return nullptr;
+    return NULL;
 }
 
 ScaleFrame::ScaleFrame()
@@ -420,7 +420,7 @@ AnchorPointFrame* AnchorPointFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return nullptr;
+    return NULL;
 }
 
 AnchorPointFrame::AnchorPointFrame()
@@ -456,7 +456,7 @@ InnerActionFrame* InnerActionFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return nullptr;
+    return NULL;
 }
 
 InnerActionFrame::InnerActionFrame()
@@ -492,7 +492,7 @@ ColorFrame* ColorFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return nullptr;
+    return NULL;
 }
 
 ColorFrame::ColorFrame()
@@ -566,7 +566,7 @@ EventFrame* EventFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return nullptr;
+    return NULL;
 }
 
 EventFrame::EventFrame()
@@ -601,7 +601,7 @@ ZOrderFrame* ZOrderFrame::create()
         return frame;
     }
     CC_SAFE_DELETE(frame);
-    return nullptr;
+    return NULL;
 }
 
 ZOrderFrame::ZOrderFrame()

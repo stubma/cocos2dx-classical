@@ -48,8 +48,8 @@ class CC_DLL CCHttpRequest : public CCObject {
 public:
     CCHttpRequest() {
         m_method = kHttpUnknown;
-        m_requestData = nullptr;
-        m_userData = nullptr;
+        m_requestData = NULL;
+        m_userData = NULL;
         m_tag = -1;
         m_cancel = false;
     }

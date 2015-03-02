@@ -62,8 +62,8 @@ public:
     };
 
     // Creates a velocity tracker using the specified strategy.
-    // If strategy is nullptr, uses the default strategy for the platform.
-    VelocityTracker(const char* strategy = nullptr);
+    // If strategy is NULL, uses the default strategy for the platform.
+    VelocityTracker(const char* strategy = NULL);
 
     ~VelocityTracker();
 

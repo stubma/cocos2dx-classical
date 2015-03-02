@@ -37,14 +37,14 @@ static const int FRONTCROSSDISABLED_RENDERER_Z = (-1);
 IMPLEMENT_CLASS_GUI_INFO(CheckBox)
 
 CheckBox::CheckBox():
-_backGroundBoxRenderer(nullptr),
-_backGroundSelectedBoxRenderer(nullptr),
-_frontCrossRenderer(nullptr),
-_backGroundBoxDisabledRenderer(nullptr),
-_frontCrossDisabledRenderer(nullptr),
+_backGroundBoxRenderer(NULL),
+_backGroundSelectedBoxRenderer(NULL),
+_frontCrossRenderer(NULL),
+_backGroundBoxDisabledRenderer(NULL),
+_frontCrossDisabledRenderer(NULL),
 _isSelected(true),
-_checkBoxEventListener(nullptr),
-_checkBoxEventSelector(nullptr),
+_checkBoxEventListener(NULL),
+_checkBoxEventSelector(NULL),
 _backGroundTexType(UI_TEX_TYPE_LOCAL),
 _backGroundSelectedTexType(UI_TEX_TYPE_LOCAL),
 _frontCrossTexType(UI_TEX_TYPE_LOCAL),
@@ -60,8 +60,8 @@ _frontCrossDisabledFileName("")
 
 CheckBox::~CheckBox()
 {
-    _checkBoxEventListener = nullptr;
-    _checkBoxEventSelector = nullptr;
+    _checkBoxEventListener = NULL;
+    _checkBoxEventSelector = NULL;
 }
 
 CheckBox* CheckBox::create()
@@ -73,7 +73,7 @@ CheckBox* CheckBox::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return nullptr;
+    return NULL;
 }
 
 bool CheckBox::init()

@@ -112,7 +112,7 @@ public:
      * It will not set the CCArmature, if you want to add the bone to a CCArmature, you should use CCArmature::addBone(CCBone *bone, const char* parentName).
      *
      * @param parent  the parent bone.
-     *          nullptr : remove this bone from armature
+     *          NULL : remove this bone from armature
      */
     void setParentBone(CCBone *parent);
 

@@ -32,7 +32,7 @@ NS_CC_BEGIN
 CCCount::CCCount() :
 m_from(0),
 m_to(0),
-m_buf(nullptr) {
+m_buf(NULL) {
 }
 
 CCCount::~CCCount() {
@@ -46,7 +46,7 @@ CCCount* CCCount::create(float duration, int from, int to, const string& pattern
         return a;
     }
     CC_SAFE_RELEASE(a);
-    return nullptr;
+    return NULL;
 }
 
 bool CCCount::initWithDuration(float d, int from, int to, const string& pattern) {
@@ -90,8 +90,8 @@ void CCCount::update(float time) {
 }
 
 CCObject* CCCount::copyWithZone(CCZone *pZone) {
-    CCZone* pNewZone = nullptr;
-    CCCount* pCopy = nullptr;
+    CCZone* pNewZone = NULL;
+    CCCount* pCopy = NULL;
     if(pZone && pZone->m_pCopyObject) {
         // in case of being called at sub class
         pCopy = (CCCount*)(pZone->m_pCopyObject);

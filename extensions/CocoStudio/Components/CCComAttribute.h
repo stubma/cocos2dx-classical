@@ -58,7 +58,7 @@ public:
    int    getInt(const char *key, int def = 0) const;
    float  getFloat(const char *key, float def = 0.0f) const;
    bool   getBool(const char *key, bool def = false) const;
-   const char* getCString(const char *key, const char *def = nullptr) const;
+   const char* getCString(const char *key, const char *def = NULL) const;
    
    bool parse(const std::string &jsonPath);
 private:

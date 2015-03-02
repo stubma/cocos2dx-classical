@@ -44,15 +44,15 @@ CCScrollView::CCScrollView()
 : m_fZoomScale(0.0f)
 , m_fMinZoomScale(0.0f)
 , m_fMaxZoomScale(0.0f)
-, m_pDelegate(nullptr)
+, m_pDelegate(NULL)
 , m_eDirection(kCCScrollViewDirectionBoth)
 , m_bDragging(false)
-, m_pContainer(nullptr)
+, m_pContainer(NULL)
 , m_bTouchMoved(false)
 , m_bBounceable(false)
 , m_bClippingToBounds(false)
 , m_fTouchLength(0.0f)
-, m_pTouches(nullptr)
+, m_pTouches(NULL)
 , m_fMinScale(0.0f)
 , m_fMaxScale(0.0f)
 {
@@ -66,7 +66,7 @@ CCScrollView::~CCScrollView()
     unregisterScriptScrollViewEventHandler();
 }
 
-CCScrollView* CCScrollView::create(CCSize size, CCNode* container/* = nullptr*/)
+CCScrollView* CCScrollView::create(CCSize size, CCNode* container/* = NULL*/)
 {
     CCScrollView* pRet = new CCScrollView();
     if (pRet && pRet->initWithViewSize(size, container))
@@ -95,7 +95,7 @@ CCScrollView* CCScrollView::create()
 }
 
 
-bool CCScrollView::initWithViewSize(CCSize size, CCNode *container/* = nullptr*/)
+bool CCScrollView::initWithViewSize(CCSize size, CCNode *container/* = NULL*/)
 {
     if (CCLayer::init())
     {
@@ -112,7 +112,7 @@ bool CCScrollView::initWithViewSize(CCSize size, CCNode *container/* = nullptr*/
 
         setTouchEnabled(true);
         m_pTouches = new CCArray();
-        m_pDelegate = nullptr;
+        m_pDelegate = NULL;
         m_bBounceable = true;
         m_bClippingToBounds = true;
         //m_pContainer->setContentSize(CCSizeZero);
@@ -129,7 +129,7 @@ bool CCScrollView::initWithViewSize(CCSize size, CCNode *container/* = nullptr*/
 
 bool CCScrollView::init()
 {
-    return this->initWithViewSize(CCSizeMake(200, 200), nullptr);
+    return this->initWithViewSize(CCSizeMake(200, 200), NULL);
 }
 
 void CCScrollView::registerWithTouchDispatcher()
@@ -154,7 +154,7 @@ void CCScrollView::pause(CCObject* sender)
 {
     m_pContainer->pauseSchedulerAndActions();
 
-    CCObject* pObj = nullptr;
+    CCObject* pObj = NULL;
     CCArray* pChildren = m_pContainer->getChildren();
 
     CCARRAY_FOREACH(pChildren, pObj)
@@ -166,7 +166,7 @@ void CCScrollView::pause(CCObject* sender)
 
 void CCScrollView::resume(CCObject* sender)
 {
-    CCObject* pObj = nullptr;
+    CCObject* pObj = NULL;
     CCArray* pChildren = m_pContainer->getChildren();
 
     CCARRAY_FOREACH(pChildren, pObj)
@@ -218,7 +218,7 @@ void CCScrollView::setContentOffsetInDuration(CCPoint offset, float dt)
     
     scroll = CCMoveTo::create(dt, offset);
     expire = CCCallFuncN::create(this, callfuncN_selector(CCScrollView::stoppedAnimatedScroll));
-    m_pContainer->runAction(CCSequence::create(scroll, expire, nullptr));
+    m_pContainer->runAction(CCSequence::create(scroll, expire, NULL));
     this->schedule(schedule_selector(CCScrollView::performedAnimatedScroll));
 }
 
@@ -301,9 +301,9 @@ CCNode * CCScrollView::getContainer()
 
 void CCScrollView::setContainer(CCNode * pContainer)
 {
-    // Make sure that 'm_pContainer' has a non-nullptr value since there are
+    // Make sure that 'm_pContainer' has a non-NULL value since there are
     // lots of logic that use 'm_pContainer'.
-    if (nullptr == pContainer)
+    if (NULL == pContainer)
         return;
 
     this->removeAllChildrenWithCleanup(true);
@@ -408,7 +408,7 @@ void CCScrollView::deaccelerateScrolling(float dt)
 }
 
 void CCScrollView::onScrollViewDidScroll() {
-    if (m_pDelegate != nullptr) {
+    if (m_pDelegate != NULL) {
         m_pDelegate->scrollViewDidScroll(this);
     }
     
@@ -421,7 +421,7 @@ void CCScrollView::onScrollViewDidScroll() {
 }
 
 void CCScrollView::onScrollViewDidZoom() {
-    if (m_pDelegate != nullptr) {
+    if (m_pDelegate != NULL) {
         m_pDelegate->scrollViewDidZoom(this);
     }
     
@@ -460,7 +460,7 @@ const CCSize& CCScrollView::getContentSize() const
 
 void CCScrollView::setContentSize(const CCSize & size)
 {
-    if (this->getContainer() != nullptr)
+    if (this->getContainer() != NULL)
     {
         this->getContainer()->setContentSize(size);
 		this->updateInset();
@@ -469,7 +469,7 @@ void CCScrollView::setContentSize(const CCSize & size)
 
 void CCScrollView::updateInset()
 {
-	if (this->getContainer() != nullptr)
+	if (this->getContainer() != NULL)
 	{
 		m_fMaxInset = this->maxContainerOffset();
 		m_fMaxInset = ccp(m_fMaxInset.x + m_tViewSize.width * INSET_RATIO,
@@ -777,7 +777,7 @@ CCRect CCScrollView::getViewRect()
     float scaleX = this->getScaleX();
     float scaleY = this->getScaleY();
     
-    for (CCNode *p = m_pParent; p != nullptr; p = p->getParent()) {
+    for (CCNode *p = m_pParent; p != NULL; p = p->getParent()) {
         scaleX *= p->getScaleX();
         scaleY *= p->getScaleY();
     }

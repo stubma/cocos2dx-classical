@@ -5,7 +5,7 @@
 
 NS_CC_EXT_BEGIN
 
-static ButtonReader* instanceButtonReader = nullptr;
+static ButtonReader* instanceButtonReader = NULL;
 
 IMPLEMENT_CLASS_WIDGET_READER_INFO(ButtonReader)
 
@@ -52,7 +52,7 @@ void ButtonReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
         {
             std::string tp_n = jsonPath;
             const char* normalFileName = DICTOOL->getStringValue_json(normalDic, "path");
-            const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():nullptr;
+            const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():NULL;
             button->loadTextureNormal(normalFileName_tp);
             break;
         }
@@ -73,7 +73,7 @@ void ButtonReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
         {
             std::string tp_p = jsonPath;
             const char* pressedFileName = DICTOOL->getStringValue_json(pressedDic, "path");
-            const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():nullptr;
+            const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():NULL;
             button->loadTexturePressed(pressedFileName_tp);
             break;
         }
@@ -94,7 +94,7 @@ void ButtonReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
         {
             std::string tp_d = jsonPath;
             const char* disabledFileName = DICTOOL->getStringValue_json(disabledDic, "path");
-            const char* disabledFileName_tp = (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():nullptr;
+            const char* disabledFileName_tp = (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():NULL;
             button->loadTextureDisabled(disabledFileName_tp);
             break;
         }

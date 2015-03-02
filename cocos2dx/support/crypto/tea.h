@@ -15,7 +15,7 @@ extern "C" {
  * @param encOffset offset in plain text to start encryption
  * @param encLength length in plain text to get encrypted
  * @param outLength byte length of returned encrypted content
- * @return encrypted content, caller should free it. If failed, returns nullptr
+ * @return encrypted content, caller should free it. If failed, returns NULL
  */
 const char* teaenc(const char* keyData, const int keyLen, const char* src, int srcLength,
                    int encOffset, int encLength, int* outLength);
@@ -30,7 +30,7 @@ const char* teaenc(const char* keyData, const int keyLen, const char* src, int s
  * @param decOffset decrypt offset in encrypted text
  * @param decLength length of encrypted content to be decrypted
  * @param outLength byte length of returned plain content
- * @return plain content, caller should free it. If failed, returns nullptr
+ * @return plain content, caller should free it. If failed, returns NULL
  */
 const char* teadec(const char* keyData, const int keyLen, const char* src, int srcLength,
                    int decOffset, int decLength, int* outLength);

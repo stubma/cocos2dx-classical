@@ -128,10 +128,10 @@ public:
 
 	/**
 	 * Get \link CCMWFileData CCMWFileData\endlink from a path. If this file data is
-	 * already loaded, then returns it directly. If not, returns nullptr.
+	 * already loaded, then returns it directly. If not, returns NULL.
 	 *
 	 * @param path anu file path in file system or assets
-	 * @return \link CCMWFileData CCMWFileData\endlink pointer or nullptr if not found
+	 * @return \link CCMWFileData CCMWFileData\endlink pointer or NULL if not found
 	 */
 	CCMWFileData* getAnimationFileData(const string& path);
 
@@ -140,7 +140,7 @@ public:
 	 *
 	 * @param fileData \link CCMWFileData CCMWFileData\endlink
 	 * @param animIndex animation index
-	 * @param mapping clip mapping rules, can be nullptr
+	 * @param mapping clip mapping rules, can be NULL
 	 * @return \link CCAFCAnimation CCAFCAnimation\endlink
 	 */
 	CCAFCAnimation* getAnimationData(CCMWFileData* fileData, int animIndex, CCAFCClipMapping* mapping);

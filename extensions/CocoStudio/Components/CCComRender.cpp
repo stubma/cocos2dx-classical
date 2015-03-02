@@ -31,14 +31,14 @@ NS_CC_EXT_BEGIN
 
 IMPLEMENT_CLASS_COMPONENT_INFO(CCComRender)
 CCComRender::CCComRender(void)
-: m_pRender(nullptr)
+: m_pRender(NULL)
 {
 	m_strName = "CCComRender";
 }
 
 CCComRender::CCComRender(cocos2d::CCNode *node, const char *comName)
 {
-    if (node != nullptr)
+    if (node != NULL)
     {		
         m_pRender = node;
         CC_SAFE_RETAIN(m_pRender);    
@@ -53,7 +53,7 @@ CCComRender::~CCComRender(void)
 
 void CCComRender::onEnter()
 {
-    if (m_pOwner != nullptr)
+    if (m_pOwner != NULL)
     {
         m_pOwner->addChild(m_pRender);
     }
@@ -61,7 +61,7 @@ void CCComRender::onEnter()
 
 void CCComRender::onExit()
 {
-    if (m_pOwner != nullptr)
+    if (m_pOwner != NULL)
     {
         m_pOwner->removeChild(m_pRender, true);
     }
@@ -74,12 +74,12 @@ cocos2d::CCNode* CCComRender::getNode()
 
 void CCComRender::setNode(cocos2d::CCNode *pNode)
 {
-	if (m_pRender != nullptr)
+	if (m_pRender != NULL)
 	{
 		CC_SAFE_RELEASE(m_pRender);
-		m_pRender = nullptr;
+		m_pRender = NULL;
 	}
-    if (pNode != nullptr)
+    if (pNode != NULL)
     {		
 		m_pRender = pNode;
         CC_SAFE_RETAIN(m_pRender);    
@@ -91,43 +91,43 @@ bool CCComRender::serialize(void* r)
     bool bRet = false;
     do 
     {
-        CC_BREAK_IF(r == nullptr);
+        CC_BREAK_IF(r == NULL);
 		SerData *pSerData = (SerData *)(r);
         const rapidjson::Value *v = pSerData->prData;
 		stExpCocoNode *pCocoNode = pSerData->pCocoNode;
 		CocoLoader *pCocoLoader = pSerData->pCocoLoader;
-		const char *pClassName = nullptr;
-		const char *pComName = nullptr;
-		const char *pFile = nullptr;
-		const char *pPlist = nullptr;
+		const char *pClassName = NULL;
+		const char *pComName = NULL;
+		const char *pFile = NULL;
+		const char *pPlist = NULL;
 		std::string strFilePath;
 		std::string strPlistPath;
 		int nResType = 0;
-		if (v != nullptr)
+		if (v != NULL)
 		{
 			pClassName = DICTOOL->getStringValue_json(*v, "classname");
-			CC_BREAK_IF(pClassName == nullptr);
+			CC_BREAK_IF(pClassName == NULL);
 			pComName = DICTOOL->getStringValue_json(*v, "name");
 			const rapidjson::Value &fileData = DICTOOL->getSubDictionary_json(*v, "fileData");
 			CC_BREAK_IF(!DICTOOL->checkObjectExist_json(fileData));
 			pFile = DICTOOL->getStringValue_json(fileData, "path");
 			pPlist = DICTOOL->getStringValue_json(fileData, "plistFile");
-			CC_BREAK_IF(pFile == nullptr && pPlist == nullptr);
+			CC_BREAK_IF(pFile == NULL && pPlist == NULL);
 			nResType = DICTOOL->getIntValue_json(fileData, "resourceType", -1);
 		}
-		else if(pCocoNode != nullptr)
+		else if(pCocoNode != NULL)
 		{
 			pClassName = pCocoNode[1].GetValue(pCocoLoader);
-			CC_BREAK_IF(pClassName == nullptr);
+			CC_BREAK_IF(pClassName == NULL);
 			pComName = pCocoNode[2].GetValue(pCocoLoader);
 			stExpCocoNode *pfileData = pCocoNode[4].GetChildArray(pCocoLoader);
 			CC_BREAK_IF(!pfileData);
 			pFile = pfileData[0].GetValue(pCocoLoader); 
 			pPlist = pfileData[1].GetValue(pCocoLoader); 
-			CC_BREAK_IF(pFile == nullptr && pPlist == nullptr);
+			CC_BREAK_IF(pFile == NULL && pPlist == NULL);
 			nResType = atoi(pfileData[2].GetValue(pCocoLoader));
 		}  
-		if (pComName != nullptr)
+		if (pComName != NULL)
 		{
 			setName(pComName);
 		}
@@ -136,11 +136,11 @@ bool CCComRender::serialize(void* r)
 			setName(pClassName);
 		}
 
-		if (pFile != nullptr)
+		if (pFile != NULL)
 		{
 			strFilePath.assign(cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(pFile));
 		}
-		if (pPlist != nullptr)
+		if (pPlist != NULL)
 		{
 			strPlistPath.assign(cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(pPlist));
 		}
@@ -191,8 +191,8 @@ bool CCComRender::serialize(void* r)
 					CCArmature *pAr = CCArmature::create(name);
 					m_pRender = pAr;
 					CC_SAFE_RETAIN(m_pRender);
-					const char *actionName = nullptr;
-					if (pCocoNode != nullptr)
+					const char *actionName = NULL;
+					if (pCocoNode != NULL)
 					{
 						actionName = pCocoNode[6].GetValue(pCocoLoader);//DICTOOL->getStringValue_json(*v, "selectedactionname");
 					}
@@ -200,7 +200,7 @@ bool CCComRender::serialize(void* r)
 					{
 						actionName = DICTOOL->getStringValue_json(*v, "selectedactionname");
 					}
-					if (actionName != nullptr && pAr->getAnimation() != nullptr)
+					if (actionName != NULL && pAr->getAnimation() != NULL)
 					{
 						pAr->getAnimation()->play(actionName);
 					}
@@ -209,10 +209,10 @@ bool CCComRender::serialize(void* r)
 				else if (file_extension == ".CSB")
 				{
 					unsigned long size = 0;
-					unsigned char *pBytes = nullptr;
+					unsigned char *pBytes = NULL;
 					std::string binaryFilePath = CCFileUtils::sharedFileUtils()->fullPathForFilename(strFilePath.c_str());
 					pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(binaryFilePath.c_str(), "rb", &size);
-					CC_BREAK_IF(pBytes == nullptr || strcmp((char*)pBytes, "") == 0);
+					CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
 					CocoLoader tCocoLoader;
 					if (tCocoLoader.ReadCocoBinBuff((char*)pBytes))
 					{
@@ -243,14 +243,14 @@ bool CCComRender::serialize(void* r)
                                         const char *str = armature_data[i].GetValue(&tCocoLoader);
                                         if (key.compare("name") == 0)
                                         {
-                                            if (str != nullptr)
+                                            if (str != NULL)
                                             {
                                                 CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(strFilePath.c_str());
                                                 CCArmature *pAr = CCArmature::create(str);
                                                 m_pRender = pAr;
                                                 CC_SAFE_RETAIN(m_pRender);
-                                                const char *actionName = nullptr;
-                                                if (pCocoNode != nullptr)
+                                                const char *actionName = NULL;
+                                                if (pCocoNode != NULL)
                                                 {
                                                     actionName = pCocoNode[6].GetValue(&tCocoLoader);//DICTOOL->getStringValue_json(*v, "selectedactionname");
                                                 }
@@ -258,7 +258,7 @@ bool CCComRender::serialize(void* r)
                                                 {
                                                     actionName = DICTOOL->getStringValue_json(*v, "selectedactionname");
                                                 }
-                                                if (actionName != nullptr && pAr->getAnimation() != nullptr)
+                                                if (actionName != NULL && pAr->getAnimation() != NULL)
                                                 {
                                                     pAr->getAnimation()->play(actionName);
                                                 }
@@ -349,7 +349,7 @@ bool CCComRender::serialize(void* r)
 CCComRender* CCComRender::create(cocos2d::CCNode *pNode, const char *comName)
 {
     CCComRender * pRet = new CCComRender(pNode, comName);
-    if (pRet != nullptr && pRet->init())
+    if (pRet != NULL && pRet->init())
     {
         CC_SAFE_AUTORELEASE(pRet);
     }
@@ -363,7 +363,7 @@ CCComRender* CCComRender::create(cocos2d::CCNode *pNode, const char *comName)
 CCComRender* CCComRender::create(void)
 {
     CCComRender * pRet = new CCComRender();
-    if (pRet != nullptr && pRet->init())
+    if (pRet != NULL && pRet->init())
     {
         CC_SAFE_AUTORELEASE(pRet);
     }
@@ -378,12 +378,12 @@ bool CCComRender::readJson(const char *pszFileName, rapidjson::Document &doc)
 {
     bool bRet = false;
     unsigned long size = 0;
-    unsigned char *pBytes = nullptr;
+    unsigned char *pBytes = NULL;
     do {
-        CC_BREAK_IF(pszFileName == nullptr);
+        CC_BREAK_IF(pszFileName == NULL);
         std::string jsonpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFileName);
         pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(jsonpath.c_str(), "r", &size);
-        CC_BREAK_IF(pBytes == nullptr || strcmp((char*)pBytes, "") == 0);
+        CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
         std::string load_str((const char*)pBytes, size);
         CC_SAFE_DELETE_ARRAY(pBytes);
         doc.Parse<0>(load_str.c_str());

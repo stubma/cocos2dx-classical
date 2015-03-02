@@ -114,8 +114,8 @@ bool CCSpriteBatchNode::initWithFile(const char* fileImage, unsigned int capacit
 }
 
 CCSpriteBatchNode::CCSpriteBatchNode()
-: m_pobTextureAtlas(nullptr)
-, m_pobDescendants(nullptr)
+: m_pobTextureAtlas(NULL)
+, m_pobDescendants(NULL)
 {
 }
 
@@ -170,8 +170,8 @@ void CCSpriteBatchNode::visit(void)
 
 void CCSpriteBatchNode::addChild(CCNode *child, int zOrder, int tag)
 {
-    CCAssert(child != nullptr, "child should not be null");
-    CCAssert(dynamic_cast<CCSprite*>(child) != nullptr, "CCSpriteBatchNode only supports CCSprites as children");
+    CCAssert(child != NULL, "child should not be null");
+    CCAssert(dynamic_cast<CCSprite*>(child) != NULL, "CCSpriteBatchNode only supports CCSprites as children");
     CCSprite *pSprite = (CCSprite*)(child);
     // check CCSprite is using the same texture id
     CCAssert(pSprite->getTexture()->getName() == m_pobTextureAtlas->getTexture()->getName(), "CCSprite is not using the same texture id");
@@ -194,7 +194,7 @@ void CCSpriteBatchNode::addChild(CCNode *child, int zOrder)
 // override reorderChild
 void CCSpriteBatchNode::reorderChild(CCNode *child, int zOrder)
 {
-    CCAssert(child != nullptr, "the child should not be null");
+    CCAssert(child != NULL, "the child should not be null");
     CCAssert(m_pChildren->containsObject(child), "Child doesn't belong to Sprite");
 
     if (zOrder == child->getZOrder())
@@ -212,7 +212,7 @@ void CCSpriteBatchNode::removeChild(CCNode *child, bool cleanup)
     CCSprite *pSprite = (CCSprite*)(child);
 
     // explicit null handling
-    if (pSprite == nullptr)
+    if (pSprite == NULL)
     {
         return;
     }
@@ -234,7 +234,7 @@ void CCSpriteBatchNode::removeAllChildrenWithCleanup(bool bCleanup)
 {
     // Invalidate atlas index. issue #569
     // useSelfRender should be performed on all descendants. issue #1216
-    arrayMakeObjectsPerformSelectorWithObject(m_pobDescendants, setBatchNode, nullptr, CCSprite*);
+    arrayMakeObjectsPerformSelectorWithObject(m_pobDescendants, setBatchNode, NULL, CCSprite*);
 
     CCNode::removeAllChildrenWithCleanup(bCleanup);
 
@@ -249,7 +249,7 @@ void CCSpriteBatchNode::sortAllChildren()
     {
         int i = 0,j = 0,length = m_pChildren->data->num;
         CCNode ** x = (CCNode**)m_pChildren->data->arr;
-        CCNode *tempItem = nullptr;
+        CCNode *tempItem = NULL;
 
         //insertion sort
         for(i=1; i<length; i++)
@@ -275,7 +275,7 @@ void CCSpriteBatchNode::sortAllChildren()
 
             int index=0;
 
-            CCObject* pObj = nullptr;
+            CCObject* pObj = NULL;
             //fast dispatch, give every child a new atlasIndex based on their relative zOrder (keep parent -> child relations intact)
             // and at the same time reorder descendants and the quads to the right index
             CCARRAY_FOREACH(m_pChildren, pObj)
@@ -293,7 +293,7 @@ void CCSpriteBatchNode::updateAtlasIndex(CCSprite* sprite, int* curIndex)
 {
     unsigned int count = 0;
     CCArray* pArray = sprite->getChildren();
-    if (pArray != nullptr)
+    if (pArray != NULL)
     {
         count = pArray->count();
     }
@@ -329,7 +329,7 @@ void CCSpriteBatchNode::updateAtlasIndex(CCSprite* sprite, int* curIndex)
             needNewIndex = false;
         }
 
-        CCObject* pObj = nullptr;
+        CCObject* pObj = NULL;
         CCARRAY_FOREACH(pArray,pObj)
         {
             CCSprite* child = (CCSprite*)pObj;
@@ -431,7 +431,7 @@ unsigned int CCSpriteBatchNode::rebuildIndexInOrder(CCSprite *pobParent, unsigne
 
     if (pChildren && pChildren->count() > 0)
     {
-        CCObject* pObject = nullptr;
+        CCObject* pObject = NULL;
         CCARRAY_FOREACH(pChildren, pObject)
         {
             CCSprite* pChild = (CCSprite*) pObject;
@@ -451,7 +451,7 @@ unsigned int CCSpriteBatchNode::rebuildIndexInOrder(CCSprite *pobParent, unsigne
 
     if (pChildren && pChildren->count() > 0)
     {
-        CCObject* pObject = nullptr;
+        CCObject* pObject = NULL;
         CCARRAY_FOREACH(pChildren, pObject)
         {
             CCSprite* pChild = (CCSprite*) pObject;
@@ -500,7 +500,7 @@ unsigned int CCSpriteBatchNode::atlasIndexForChild(CCSprite *pobSprite, int nZ)
 
     // ignore parent Z if parent is spriteSheet
     bool bIgnoreParent = (CCSpriteBatchNode*)(pobSprite->getParent()) == this;
-    CCSprite *pPrevious = nullptr;
+    CCSprite *pPrevious = NULL;
     if (uChildIndex > 0 &&
         uChildIndex < UINT_MAX)
     {
@@ -576,14 +576,14 @@ void CCSpriteBatchNode::insertChild(CCSprite *pSprite, unsigned int uIndex)
     // update indices
     unsigned int i = uIndex+1;
     
-    CCSprite* pChild = nullptr;
+    CCSprite* pChild = NULL;
     for(; i<descendantsData->num; i++){
         pChild = (CCSprite*)descendantsData->arr[i];
         pChild->setAtlasIndex(pChild->getAtlasIndex() + 1);
     }
 
     // add children recursively
-    CCObject* pObj = nullptr;
+    CCObject* pObj = NULL;
     CCARRAY_FOREACH(pSprite->getChildren(), pObj)
     {
         pChild = (CCSprite*)pObj;
@@ -616,7 +616,7 @@ void CCSpriteBatchNode::appendChild(CCSprite* sprite)
 
     // add children recursively
     
-    CCObject* pObj = nullptr;
+    CCObject* pObj = NULL;
     CCARRAY_FOREACH(sprite->getChildren(), pObj)
     {
         CCSprite* child = (CCSprite*)pObj;
@@ -630,7 +630,7 @@ void CCSpriteBatchNode::removeSpriteFromAtlas(CCSprite *pobSprite)
     m_pobTextureAtlas->removeQuadAtIndex(pobSprite->getAtlasIndex());
 
     // Cleanup sprite. It might be reused (issue #569)
-    pobSprite->setBatchNode(nullptr);
+    pobSprite->setBatchNode(NULL);
 
     unsigned int uIndex = m_pobDescendants->indexOfObject(pobSprite);
     if (uIndex != UINT_MAX)
@@ -651,7 +651,7 @@ void CCSpriteBatchNode::removeSpriteFromAtlas(CCSprite *pobSprite)
     CCArray *pChildren = pobSprite->getChildren();
     if (pChildren && pChildren->count() > 0)
     {
-        CCObject* pObject = nullptr;
+        CCObject* pObject = NULL;
         CCARRAY_FOREACH(pChildren, pObject)
         {
             CCSprite* pChild = (CCSprite*) pObject;
@@ -700,7 +700,7 @@ void CCSpriteBatchNode::setTexture(CCTexture2D *texture)
 
 void CCSpriteBatchNode::insertQuadFromSprite(CCSprite *sprite, unsigned int index)
 {
-    CCAssert( sprite != nullptr, "Argument must be non-nullptr");
+    CCAssert( sprite != NULL, "Argument must be non-NULL");
     CCAssert( dynamic_cast<CCSprite*>(sprite), "CCSpriteBatchNode only supports CCSprites as children");
 
     // make needed room
@@ -725,8 +725,8 @@ void CCSpriteBatchNode::insertQuadFromSprite(CCSprite *sprite, unsigned int inde
 
 void CCSpriteBatchNode::updateQuadFromSprite(CCSprite *sprite, unsigned int index)
 {
-    CCAssert(sprite != nullptr, "Argument must be non-nil");
-    CCAssert(dynamic_cast<CCSprite*>(sprite) != nullptr, "CCSpriteBatchNode only supports CCSprites as children");
+    CCAssert(sprite != NULL, "Argument must be non-nil");
+    CCAssert(dynamic_cast<CCSprite*>(sprite) != NULL, "CCSpriteBatchNode only supports CCSprites as children");
     
 	// make needed room
 	while (index >= m_pobTextureAtlas->getCapacity() || m_pobTextureAtlas->getCapacity() == m_pobTextureAtlas->getTotalQuads())
@@ -748,7 +748,7 @@ void CCSpriteBatchNode::updateQuadFromSprite(CCSprite *sprite, unsigned int inde
 
 CCSpriteBatchNode * CCSpriteBatchNode::addSpriteWithoutQuad(CCSprite*child, unsigned int z, int aTag)
 {
-    CCAssert( child != nullptr, "Argument must be non-nullptr");
+    CCAssert( child != NULL, "Argument must be non-NULL");
     CCAssert( dynamic_cast<CCSprite*>(child), "CCSpriteBatchNode only supports CCSprites as children");
 
     // quad index is Z
@@ -757,7 +757,7 @@ CCSpriteBatchNode * CCSpriteBatchNode::addSpriteWithoutQuad(CCSprite*child, unsi
     // XXX: optimize with a binary search
     int i=0;
  
-    CCObject* pObject = nullptr;
+    CCObject* pObject = NULL;
     CCARRAY_FOREACH(m_pobDescendants, pObject)
     {
         CCSprite* pChild = (CCSprite*) pObject;

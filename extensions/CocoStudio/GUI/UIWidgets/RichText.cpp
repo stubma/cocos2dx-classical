@@ -64,7 +64,7 @@ RichElementText* RichElementText::create(int tag, const ccColor3B &color, GLubyt
         return element;
     }
     CC_SAFE_DELETE(element);
-    return nullptr;
+    return NULL;
 }
     
 bool RichElementText::init(int tag, const ccColor3B &color, GLubyte opacity, const char *text, const char *fontName, float fontSize)
@@ -88,7 +88,7 @@ RichElementImage* RichElementImage::create(int tag, const ccColor3B &color, GLub
         return element;
     }
     CC_SAFE_DELETE(element);
-    return nullptr;
+    return NULL;
 }
     
 bool RichElementImage::init(int tag, const ccColor3B &color, GLubyte opacity, const char *filePath)
@@ -110,7 +110,7 @@ RichElementCustomNode* RichElementCustomNode::create(int tag, const ccColor3B &c
         return element;
     }
     CC_SAFE_DELETE(element);
-    return nullptr;
+    return NULL;
 }
     
 bool RichElementCustomNode::init(int tag, const ccColor3B &color, GLubyte opacity, cocos2d::CCNode *customNode)
@@ -126,10 +126,10 @@ bool RichElementCustomNode::init(int tag, const ccColor3B &color, GLubyte opacit
     
 RichText::RichText():
 _formatTextDirty(true),
-_richElements(nullptr),
+_richElements(NULL),
 _leftSpaceWidth(0.0f),
 _verticalSpace(0.0f),
-_elementRenderersContainer(nullptr)
+_elementRenderersContainer(NULL)
 {
     
 }
@@ -148,7 +148,7 @@ RichText* RichText::create()
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return nullptr;
+    return NULL;
 }
     
 bool RichText::init()
@@ -205,7 +205,7 @@ void RichText::formatText()
             for (unsigned int i=0; i<_richElements->count(); i++)
             {
                 RichElement* element = static_cast<RichElement*>(_richElements->objectAtIndex(i));
-                CCNode* elementRenderer = nullptr;
+                CCNode* elementRenderer = NULL;
                 switch (element->_type)
                 {
                     case RICH_TEXT:

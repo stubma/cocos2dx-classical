@@ -120,7 +120,7 @@ kmVec3* const kmPlaneIntersectLine(kmVec3* pOut, const kmPlane* pP, const kmVec3
     /*if (fabs(kmVec3Dot(&pP->m_N, &d)) > kmEpsilon)
     {
         //If we get here then the plane and line are parallel (i.e. no intersection)
-        pOut = nullptr; //Set to nullptr
+        pOut = NULL; //Set to NULL
 
         return pOut;
     } */

@@ -66,8 +66,8 @@ void CCEaseBezierAction::setBezierParamer( float p0, float p1, float p2, float p
 
 CCObject* CCEaseBezierAction::copyWithZone(CCZone *pZone)
 {
-	CCZone* pNewZone = nullptr;
-	CCEaseBezierAction* pCopy = nullptr;
+	CCZone* pNewZone = NULL;
+	CCEaseBezierAction* pCopy = NULL;
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
@@ -122,8 +122,8 @@ CCEaseQuadraticActionIn* CCEaseQuadraticActionIn::create(CCActionInterval* pActi
 
 CCObject* CCEaseQuadraticActionIn::copyWithZone(CCZone *pZone)
 {
-	CCZone* pNewZone = nullptr;
-	CCEaseQuadraticActionIn* pCopy = nullptr;
+	CCZone* pNewZone = NULL;
+	CCEaseQuadraticActionIn* pCopy = NULL;
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
@@ -176,8 +176,8 @@ CCEaseQuadraticActionOut* CCEaseQuadraticActionOut::create(CCActionInterval* pAc
 
 CCObject* CCEaseQuadraticActionOut::copyWithZone(CCZone *pZone)
 {
-	CCZone* pNewZone = nullptr;
-	CCEaseQuadraticActionOut* pCopy = nullptr;
+	CCZone* pNewZone = NULL;
+	CCEaseQuadraticActionOut* pCopy = NULL;
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
@@ -230,8 +230,8 @@ CCEaseQuadraticActionInOut* CCEaseQuadraticActionInOut::create(CCActionInterval*
 
 CCObject* CCEaseQuadraticActionInOut::copyWithZone(CCZone *pZone)
 {
-	CCZone* pNewZone = nullptr;
-	CCEaseQuadraticActionInOut* pCopy = nullptr;
+	CCZone* pNewZone = NULL;
+	CCEaseQuadraticActionInOut* pCopy = NULL;
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
@@ -296,8 +296,8 @@ CCEaseQuarticActionIn* CCEaseQuarticActionIn::create(CCActionInterval* pAction)
 
 CCObject* CCEaseQuarticActionIn::copyWithZone(CCZone *pZone)
 {
-	CCZone* pNewZone = nullptr;
-	CCEaseQuarticActionIn* pCopy = nullptr;
+	CCZone* pNewZone = NULL;
+	CCEaseQuarticActionIn* pCopy = NULL;
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
@@ -350,8 +350,8 @@ CCEaseQuarticActionOut* CCEaseQuarticActionOut::create(CCActionInterval* pAction
 
 CCObject* CCEaseQuarticActionOut::copyWithZone(CCZone *pZone)
 {
-	CCZone* pNewZone = nullptr;
-	CCEaseQuarticActionOut* pCopy = nullptr;
+	CCZone* pNewZone = NULL;
+	CCEaseQuarticActionOut* pCopy = NULL;
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
@@ -405,8 +405,8 @@ CCEaseQuarticActionInOut* CCEaseQuarticActionInOut::create(CCActionInterval* pAc
 
 CCObject* CCEaseQuarticActionInOut::copyWithZone(CCZone *pZone)
 {
-	CCZone* pNewZone = nullptr;
-	CCEaseQuarticActionInOut* pCopy = nullptr;
+	CCZone* pNewZone = NULL;
+	CCEaseQuarticActionInOut* pCopy = NULL;
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
@@ -468,8 +468,8 @@ CCEaseQuinticActionIn* CCEaseQuinticActionIn::create(CCActionInterval* pAction)
 
 CCObject* CCEaseQuinticActionIn::copyWithZone(CCZone *pZone)
 {
-	CCZone* pNewZone = nullptr;
-	CCEaseQuinticActionIn* pCopy = nullptr;
+	CCZone* pNewZone = NULL;
+	CCEaseQuinticActionIn* pCopy = NULL;
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
@@ -522,8 +522,8 @@ CCEaseQuinticActionOut* CCEaseQuinticActionOut::create(CCActionInterval* pAction
 
 CCObject* CCEaseQuinticActionOut::copyWithZone(CCZone *pZone)
 {
-	CCZone* pNewZone = nullptr;
-	CCEaseQuinticActionOut* pCopy = nullptr;
+	CCZone* pNewZone = NULL;
+	CCEaseQuinticActionOut* pCopy = NULL;
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
@@ -577,8 +577,8 @@ CCEaseQuinticActionInOut* CCEaseQuinticActionInOut::create(CCActionInterval* pAc
 
 CCObject* CCEaseQuinticActionInOut::copyWithZone(CCZone *pZone)
 {
-	CCZone* pNewZone = nullptr;
-	CCEaseQuinticActionInOut* pCopy = nullptr;
+	CCZone* pNewZone = NULL;
+	CCEaseQuinticActionInOut* pCopy = NULL;
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
@@ -640,8 +640,8 @@ CCEaseCircleActionIn* CCEaseCircleActionIn::create(CCActionInterval* pAction)
 
 CCObject* CCEaseCircleActionIn::copyWithZone(CCZone *pZone)
 {
-	CCZone* pNewZone = nullptr;
-	CCEaseCircleActionIn* pCopy = nullptr;
+	CCZone* pNewZone = NULL;
+	CCEaseCircleActionIn* pCopy = NULL;
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
@@ -694,8 +694,8 @@ CCEaseCircleActionOut* CCEaseCircleActionOut::create(CCActionInterval* pAction)
 
 CCObject* CCEaseCircleActionOut::copyWithZone(CCZone *pZone)
 {
-	CCZone* pNewZone = nullptr;
-	CCEaseCircleActionOut* pCopy = nullptr;
+	CCZone* pNewZone = NULL;
+	CCEaseCircleActionOut* pCopy = NULL;
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
@@ -749,8 +749,8 @@ CCEaseCircleActionInOut* CCEaseCircleActionInOut::create(CCActionInterval* pActi
 
 CCObject* CCEaseCircleActionInOut::copyWithZone(CCZone *pZone)
 {
-	CCZone* pNewZone = nullptr;
-	CCEaseCircleActionInOut* pCopy = nullptr;
+	CCZone* pNewZone = NULL;
+	CCEaseCircleActionInOut* pCopy = NULL;
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
@@ -812,8 +812,8 @@ CCEaseCubicActionIn* CCEaseCubicActionIn::create(CCActionInterval* pAction)
 
 CCObject* CCEaseCubicActionIn::copyWithZone(CCZone *pZone)
 {
-	CCZone* pNewZone = nullptr;
-	CCEaseCubicActionIn* pCopy = nullptr;
+	CCZone* pNewZone = NULL;
+	CCEaseCubicActionIn* pCopy = NULL;
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
@@ -866,8 +866,8 @@ CCEaseCubicActionOut* CCEaseCubicActionOut::create(CCActionInterval* pAction)
 
 CCObject* CCEaseCubicActionOut::copyWithZone(CCZone *pZone)
 {
-	CCZone* pNewZone = nullptr;
-	CCEaseCubicActionOut* pCopy = nullptr;
+	CCZone* pNewZone = NULL;
+	CCEaseCubicActionOut* pCopy = NULL;
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class
@@ -921,8 +921,8 @@ CCEaseCubicActionInOut* CCEaseCubicActionInOut::create(CCActionInterval* pAction
 
 CCObject* CCEaseCubicActionInOut::copyWithZone(CCZone *pZone)
 {
-	CCZone* pNewZone = nullptr;
-	CCEaseCubicActionInOut* pCopy = nullptr;
+	CCZone* pNewZone = NULL;
+	CCEaseCubicActionInOut* pCopy = NULL;
 	if(pZone && pZone->m_pCopyObject) 
 	{
 		//in case of being called at sub class

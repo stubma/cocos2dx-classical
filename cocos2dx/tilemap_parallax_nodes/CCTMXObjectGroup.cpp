@@ -68,12 +68,12 @@ CCTMXObject* CCTMXObjectGroup::getObject(const string& name) {
 			return to;
 	}
 	
-	return nullptr;
+	return NULL;
 }
 
 CCTMXObject* CCTMXObjectGroup::getObjectAt(int index) {
 	if(index < 0 || index >= m_objects.count())
-		return nullptr;
+		return NULL;
 	else
 		return (CCTMXObject*)m_objects.objectAtIndex(index);
 }

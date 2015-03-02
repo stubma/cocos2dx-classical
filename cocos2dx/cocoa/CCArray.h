@@ -51,13 +51,13 @@ I found that it's not work in C++. So it keep what it's look like in version 1.0
 #define CCARRAY_FOREACH(__array__, __object__)                                                                         \
     if ((__array__) && (__array__)->data->num > 0)                                                                     \
     for(CCObject** __arr__ = (__array__)->data->arr, **__end__ = (__array__)->data->arr + (__array__)->data->num-1;    \
-    __arr__ <= __end__ && (((__object__) = *__arr__) != nullptr/* || true*/);                                             \
+    __arr__ <= __end__ && (((__object__) = *__arr__) != NULL/* || true*/);                                             \
     __arr__++)
 
 #define CCARRAY_FOREACH_REVERSE(__array__, __object__)                                                                  \
     if ((__array__) && (__array__)->data->num > 0)                                                                      \
     for(CCObject** __arr__ = (__array__)->data->arr + (__array__)->data->num-1, **__end__ = (__array__)->data->arr;     \
-    __arr__ >= __end__ && (((__object__) = *__arr__) != nullptr/* || true*/);                                              \
+    __arr__ >= __end__ && (((__object__) = *__arr__) != NULL/* || true*/);                                              \
     __arr__--)
 
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
@@ -93,7 +93,7 @@ while(false)
 do {                                                                  \
     if(pArray && pArray->count() > 0)                                 \
     {                                                                 \
-        CCObject* child = nullptr;                                       \
+        CCObject* child = NULL;                                       \
         CCARRAY_FOREACH(pArray, child)                                \
         {                                                             \
             elementType pNode = (elementType) child;                  \

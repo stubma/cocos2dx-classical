@@ -159,7 +159,7 @@ public:
      * "/tmp" --> "tmp" (remain = "")
      * "bar.c" --> "bar.c" (remain = "")
      */
-    String8 walkPath(String8* outRemains = nullptr) const;
+    String8 walkPath(String8* outRemains = NULL) const;
 
     /*
      * Return the filename extension.  This is the last '.' and any number

@@ -54,7 +54,7 @@ NS_CC_BEGIN
 #endif
 
 static bool s_bInitialized = false;
-static CCGLProgram* s_pShader = nullptr;
+static CCGLProgram* s_pShader = NULL;
 static int s_nColorLocation = -1;
 static ccColor4F s_tColor = {1.0f,1.0f,1.0f,1.0f};
 static int s_nPointSizeLocation = -1;

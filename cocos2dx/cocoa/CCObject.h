@@ -79,9 +79,9 @@ public:
      */
     virtual ~CCObject(void);
     
-    void release(const char* file = nullptr, int line = 0);
-    void retain(const char* file = nullptr, int line = 0);
-    CCObject* autorelease(const char* file = nullptr, int line = 0);
+    void release(const char* file = NULL, int line = 0);
+    void retain(const char* file = NULL, int line = 0);
+    CCObject* autorelease(const char* file = NULL, int line = 0);
     CCObject* copy(void);
     bool isSingleReference(void) const;
     unsigned int retainCount(void) const;

@@ -121,7 +121,7 @@ bool CCTouchScriptHandlerEntry::init()
 // #pragma mark CCScriptEngineManager
 #endif
 
-static CCScriptEngineManager* s_pSharedScriptEngineManager = nullptr;
+static CCScriptEngineManager* s_pSharedScriptEngineManager = NULL;
 
 
 CCScriptEngineManager::~CCScriptEngineManager(void)
@@ -140,7 +140,7 @@ void CCScriptEngineManager::removeScriptEngine(void)
     if (m_pScriptEngine)
     {
         delete m_pScriptEngine;
-        m_pScriptEngine = nullptr;
+        m_pScriptEngine = NULL;
     }
 }
 
@@ -158,7 +158,7 @@ void CCScriptEngineManager::purgeSharedManager(void)
     if (s_pSharedScriptEngineManager)
     {
         delete s_pSharedScriptEngineManager;
-        s_pSharedScriptEngineManager = nullptr;
+        s_pSharedScriptEngineManager = NULL;
     }
 }
 

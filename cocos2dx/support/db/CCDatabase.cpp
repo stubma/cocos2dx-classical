@@ -34,7 +34,7 @@
 NS_CC_BEGIN
 
 CCDatabase::CCDatabase(string path) :
-		m_db(nullptr),
+		m_db(NULL),
 		m_databasePath(path),
 		m_inUse(false),
 		m_inTransaction(false),
@@ -87,7 +87,7 @@ bool CCDatabase::open(int flags) {
     int err = SQLITE_OK;
 #if SQLITE_VERSION_NUMBER >= 3005000
     if(flags != 0)
-		err = sqlite3_open_v2(path.c_str(), &m_db, flags, nullptr);
+		err = sqlite3_open_v2(path.c_str(), &m_db, flags, NULL);
     else
 #endif
     	err = sqlite3_open(path.c_str(), &m_db);
@@ -95,7 +95,7 @@ bool CCDatabase::open(int flags) {
 	// check error
     if(err != SQLITE_OK) {
         CCLOGERROR("CCDatabase:open: error opening: %d", err);
-        m_db = nullptr;
+        m_db = NULL;
         return false;
     }
 
@@ -134,7 +134,7 @@ bool CCDatabase::close() {
 	} while(retry);
 
     // nullify reference
-	m_db = nullptr;
+	m_db = NULL;
 
 	return true;
 }
@@ -202,12 +202,12 @@ bool CCDatabase::_executeUpdate(const char* sql) {
 
     // variables
     int rc = 0;
-	sqlite3_stmt* pStmt = nullptr;
-	CCStatement* cachedStmt = nullptr;
+	sqlite3_stmt* pStmt = NULL;
+	CCStatement* cachedStmt = NULL;
 
 	// get cached statement
 	cachedStmt = getCachedStatement(sql);
-	pStmt = cachedStmt ? cachedStmt->getStatement() : nullptr;
+	pStmt = cachedStmt ? cachedStmt->getStatement() : NULL;
 
 	// reset if statement is cached
 	if(cachedStmt)
@@ -327,27 +327,27 @@ CCResultSet* CCDatabase::executeQuery(string sql, ...) {
 CCResultSet* CCDatabase::_executeQuery(const char* sql) {
 	// database check
     if (!databaseOpened()) {
-        return nullptr;
+        return NULL;
     }
 
     // is in use?
     if (m_inUse) {
         warnInUse();
-        return nullptr;
+        return NULL;
     }
 
     // use it now
     setInUse(true);
 
     // variables
-    CCResultSet* rs = nullptr;
+    CCResultSet* rs = NULL;
 	int rc = 0;
-	sqlite3_stmt* pStmt = nullptr;
-	CCStatement* statement = nullptr;
+	sqlite3_stmt* pStmt = NULL;
+	CCStatement* statement = NULL;
 
 	// get cached statement
 	statement = getCachedStatement(sql);
-	pStmt = statement ? statement->getStatement() : nullptr;
+	pStmt = statement ? statement->getStatement() : NULL;
 	
 	// reset if statement is cached
 	if(statement)
@@ -373,7 +373,7 @@ CCResultSet* CCDatabase::_executeQuery(const char* sql) {
 					CCLOGWARN("CCDatabase:_executeQuery: Database busy");
 					sqlite3_finalize(pStmt);
 					setInUse(false);
-					return nullptr;
+					return NULL;
 				}
 			} else if(SQLITE_OK != rc) {
 				// log error
@@ -384,7 +384,7 @@ CCResultSet* CCDatabase::_executeQuery(const char* sql) {
 
 				// set in use
 				setInUse(false);
-				return nullptr;
+				return NULL;
 			}
 		} while(retry);
 	}
@@ -485,7 +485,7 @@ CCStatement* CCDatabase::getCachedStatement(const char* sql) {
 	if(iter != m_cachedStatements.end()) {
 		return iter->second;
 	} else {
-		return nullptr;
+		return NULL;
 	}
 }
 
@@ -659,7 +659,7 @@ const void* CCDatabase::dataForQuery(string sql, size_t* outLen, ...) {
     if(rs->next())
 		return rs->dataForColumnIndex(0, outLen);
 	else
-		return nullptr;
+		return NULL;
 }
 
 const void* CCDatabase::dataNoCopyForQuery(string sql, size_t* outLen, ...) {
@@ -674,7 +674,7 @@ const void* CCDatabase::dataNoCopyForQuery(string sql, size_t* outLen, ...) {
     if(rs->next())
 		return rs->dataNoCopyForColumnIndex(0, outLen);
 	else
-		return nullptr;
+		return NULL;
 }
 
 string CCDatabase::validateSQL(string sql, ...) {
@@ -686,7 +686,7 @@ string CCDatabase::validateSQL(string sql, ...) {
 	va_end(args);
 
 	// variables
-	sqlite3_stmt* pStmt = nullptr;
+	sqlite3_stmt* pStmt = NULL;
 	bool keepTrying = true;
 	int numberOfRetries = 0;
 	string ret;

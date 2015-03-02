@@ -43,7 +43,7 @@ void ZwoptexAnimLoadTask2::load() {
             CCSpriteFrame* sf = cache->spriteFrameByName(frames.at(i).c_str());
             float& delay = durations.at(i);
             CCAnimationFrame* af = new CCAnimationFrame();
-            af->initWithSpriteFrame(sf, delay, nullptr);
+            af->initWithSpriteFrame(sf, delay, NULL);
             CC_SAFE_AUTORELEASE(af);
             array->addObject(af);
         }
@@ -77,7 +77,7 @@ void ZwoptexLoadTask::load() {
         
         // create texture
         int decLen;
-        const char* dec = nullptr;
+        const char* dec = NULL;
         if(gResDecrypt) {
             dec = (*gResDecrypt)(data, len, &decLen);
         } else {
@@ -114,7 +114,7 @@ void ImageLoadTask::load() {
         
         // create texture
         int decLen;
-        const char* dec = nullptr;
+        const char* dec = NULL;
         if(gResDecrypt) {
             dec = (*gResDecrypt)(data, len, &decLen);
         } else {
@@ -145,7 +145,7 @@ void BMFontLoadTask::load() {
         
         // create texture
         int decLen;
-        const char* dec = nullptr;
+        const char* dec = NULL;
         if(gResDecrypt) {
             dec = (*gResDecrypt)(data, len, &decLen);
         } else {
@@ -193,7 +193,7 @@ m_loading(false) {
 }
 
 CCResourceLoader::CCResourceLoader(ccScriptFunction func) :
-m_listener(nullptr),
+m_listener(NULL),
 m_func(func),
 m_delay(0),
 m_remainingIdle(0),
@@ -264,7 +264,7 @@ unsigned char* CCResourceLoader::loadRaw(const string& name, unsigned long* size
     
     // create texture
 	int decLen;
-    const char* dec = nullptr;
+    const char* dec = NULL;
 	if(gResDecrypt) {
         dec = (*gResDecrypt)(data, len, &decLen);
     } else {
@@ -298,7 +298,7 @@ char* CCResourceLoader::loadCString(const string& name) {
 
 	// create texture
 	int decLen;
-    const char* dec = nullptr;
+    const char* dec = NULL;
 	if(gResDecrypt) {
         dec = (*gResDecrypt)(data, len, &decLen);
     } else {
@@ -327,7 +327,7 @@ void CCResourceLoader::loadImage(const string& name) {
 	
 	// create texture
 	int decLen;
-    const char* dec = nullptr;
+    const char* dec = NULL;
 	if(gResDecrypt) {
         dec = (*gResDecrypt)(data, len, &decLen);
     } else {
@@ -367,7 +367,7 @@ void CCResourceLoader::loadZwoptex(const string& plistName, const string& texNam
 	
 	// create texture
 	int decLen;
-	const char* dec = nullptr;
+	const char* dec = NULL;
 	if(gResDecrypt) {
         dec = (*gResDecrypt)(data, len, &decLen);
     } else {

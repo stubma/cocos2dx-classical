@@ -222,7 +222,7 @@ CCAFCClipMappingRule* CCAFCClipMapping::findRule(int sourceClipIndex) {
 	if(index >= 0)
 		return m_rules + index;
 	else
-		return nullptr;
+		return NULL;
 }
 
 NS_CC_END

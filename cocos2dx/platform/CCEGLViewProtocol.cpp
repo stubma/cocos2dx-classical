@@ -8,7 +8,7 @@
 
 NS_CC_BEGIN
 
-static CCTouch* s_pTouches[CC_MAX_TOUCHES] = { nullptr };
+static CCTouch* s_pTouches[CC_MAX_TOUCHES] = { NULL };
 static unsigned int s_indexBitsUsed = 0;
 static CCDictionary s_TouchesIntergerDict;
 
@@ -43,7 +43,7 @@ static void removeUsedIndexBit(int index)
 }
 
 CCEGLViewProtocol::CCEGLViewProtocol()
-: m_pDelegate(nullptr)
+: m_pDelegate(NULL)
 , m_fScaleX(1.0f)
 , m_fScaleY(1.0f)
 , m_eResolutionPolicy(kResolutionUnKnown)
@@ -183,7 +183,7 @@ CCRect CCEGLViewProtocol::getScissorRect()
 
 void CCEGLViewProtocol::setViewName(const char* pszViewName)
 {
-    if (pszViewName != nullptr && strlen(pszViewName) > 0)
+    if (pszViewName != NULL && strlen(pszViewName) > 0)
     {
         strncpy(m_szViewName, pszViewName, sizeof(m_szViewName));
     }
@@ -207,7 +207,7 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float
         int nUnusedIndex = 0;
 
         // it is a new touch
-        if (pIndex == nullptr)
+        if (pIndex == NULL)
         {
             nUnusedIndex = getUnUsedIndex();
 
@@ -236,7 +236,7 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float
         return;
     }
 
-    m_pDelegate->touchesBegan(&set, nullptr);
+    m_pDelegate->touchesBegan(&set, NULL);
 }
 
 void CCEGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys[])
@@ -249,7 +249,7 @@ void CCEGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float 
         float y = ys[i];
 
         CCInteger* pIndex = (CCInteger*)s_TouchesIntergerDict.objectForKey(id);
-        if (pIndex == nullptr) {
+        if (pIndex == NULL) {
             CCLOG("if the index doesn't exist, it is an error");
             continue;
         }
@@ -277,7 +277,7 @@ void CCEGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float 
         return;
     }
 
-    m_pDelegate->touchesMoved(&set, nullptr);
+    m_pDelegate->touchesMoved(&set, NULL);
 }
 
 void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, int ids[], float xs[], float ys[])
@@ -289,7 +289,7 @@ void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, int ids[
         float y = ys[i];
 
         CCInteger* pIndex = (CCInteger*)s_TouchesIntergerDict.objectForKey(id);
-        if (pIndex == nullptr)
+        if (pIndex == NULL)
         {
             CCLOG("if the index doesn't exist, it is an error");
             continue;
@@ -306,7 +306,7 @@ void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, int ids[
 
             // release the object
             CC_SAFE_RELEASE(pTouch);
-            s_pTouches[pIndex->getValue()] = nullptr;
+            s_pTouches[pIndex->getValue()] = NULL;
             removeUsedIndexBit(pIndex->getValue());
 
             s_TouchesIntergerDict.removeObjectForKey(id);
@@ -331,14 +331,14 @@ void CCEGLViewProtocol::handleTouchesEnd(int num, int ids[], float xs[], float y
 {
     CCSet set;
     getSetOfTouchesEndOrCancel(set, num, ids, xs, ys);
-    m_pDelegate->touchesEnded(&set, nullptr);
+    m_pDelegate->touchesEnded(&set, NULL);
 }
 
 void CCEGLViewProtocol::handleTouchesCancel(int num, int ids[], float xs[], float ys[])
 {
     CCSet set;
     getSetOfTouchesEndOrCancel(set, num, ids, xs, ys);
-    m_pDelegate->touchesCancelled(&set, nullptr);
+    m_pDelegate->touchesCancelled(&set, NULL);
 }
 
 const CCRect& CCEGLViewProtocol::getViewPortRect() const

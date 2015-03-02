@@ -41,7 +41,7 @@ CCToast* CCToast::create(CCNode* owner, CCNode* content, int tag, float duration
     // tag
     if(tag != -1) {
         if(owner->getChildByTag(tag)) {
-            return nullptr;
+            return NULL;
         }
     }
     
@@ -56,18 +56,18 @@ CCToast* CCToast::create(CCNode* owner, CCNode* content, int tag, float duration
     t->addChild(content);
     
     // run action for content node
-    if(inAction == nullptr) {
+    if(inAction == NULL) {
         CCUtils::setOpacityRecursively(content, 0);
         inAction = CCTreeFadeIn::create(0.5f);
     }
-    if(outAction == nullptr) {
+    if(outAction == NULL) {
         outAction = CCTreeFadeOut::create(0.5f);
     }
     content->runAction(CCSequence::create(inAction,
                                           CCDelayTime::create(duration > 0 ? duration : 3),
                                           outAction,
                                           CCCallFunc::create(t, callfunc_selector(CCNode::removeFromParent)),
-                                          nullptr));
+                                          NULL));
     
     // return
     CC_SAFE_AUTORELEASE(t);

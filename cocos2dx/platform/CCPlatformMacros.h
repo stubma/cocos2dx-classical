@@ -47,8 +47,8 @@ static __TYPE__* create() \
     else \
     { \
         delete pRet; \
-        pRet = nullptr; \
-        return nullptr; \
+        pRet = NULL; \
+        return NULL; \
     } \
 }
 
@@ -69,8 +69,8 @@ CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
     else \
     { \
         delete pRet; \
-        pRet = nullptr; \
-        return nullptr; \
+        pRet = NULL; \
+        return NULL; \
     } \
 }
 
@@ -256,7 +256,7 @@ public: virtual void set##funName(varType var)   \
         if(p) { \
             return (t)(p)->autorelease(__FILE__, __LINE__); \
         } else { \
-            return nullptr; \
+            return NULL; \
         } \
     } while(0)
 

@@ -60,14 +60,14 @@ CC_DLL bool iscjk_unicode(unsigned short ch);
 
 /**
  * Returns the character count in UTF16 string
- * @param str pointer to the start of a UTF-16 encoded string. It must be an nullptr terminal UTF8 string.
+ * @param str pointer to the start of a UTF-16 encoded string. It must be an NULL terminal UTF8 string.
  */
 CC_DLL int cc_wcslen(const unsigned short* str);
 
 /**
  * Returns the length of the string in characters.
  *
- * @param p pointer to the start of a UTF-8 encoded string. It must be an nullptr terminal UTF8 string.
+ * @param p pointer to the start of a UTF-8 encoded string. It must be an NULL terminal UTF8 string.
  *
  * @returns the length of the string in characters
  **/
@@ -89,24 +89,24 @@ CC_DLL std::vector<unsigned short> cc_utf16_vec_from_utf16_str(const unsigned sh
 /**
  * Creates an utf8 string from a c string. The result will be null terminated.
  *
- * @param utf8 pointer to the start of a C string. It must be an nullptr terminal UTF8 string.
+ * @param utf8 pointer to the start of a C string. It must be an NULL terminal UTF8 string.
  * @param outUTF16CharacterCount The character count in the return UTF16 string.
  *
  * @returns the newly created utf16 string, it must be released with `delete[]`,
- *          If an error occurs, %nullptr will be returned.
+ *          If an error occurs, %NULL will be returned.
  * */
-CC_DLL unsigned short* cc_utf8_to_utf16(const char* utf8, int* outUTF16CharacterCount = nullptr);
+CC_DLL unsigned short* cc_utf8_to_utf16(const char* utf8, int* outUTF16CharacterCount = NULL);
 
 /**
  * Converts a string from UTF-16 to UTF-8. The result will be null terminated.
  *
- * @param utf16 an UTF-16 encoded string, It must be an nullptr terminal UTF16 string.
+ * @param utf16 an UTF-16 encoded string, It must be an NULL terminal UTF16 string.
  * @param outUTF8CharacterCount The character count in the return UTF8 string.
  *
  * @returns a pointer to a newly allocated UTF-8 string. This value must be
- *          released with `delete[]`. If an error occurs, %nullptr will be returned.
+ *          released with `delete[]`. If an error occurs, %NULL will be returned.
  **/
-CC_DLL char* cc_utf16_to_utf8(const unsigned short* utf16, int* outUTF8CharacterCount = nullptr);
+CC_DLL char* cc_utf16_to_utf8(const unsigned short* utf16, int* outUTF8CharacterCount = NULL);
 
 
 NS_CC_END

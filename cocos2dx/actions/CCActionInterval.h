@@ -56,7 +56,7 @@ then running it again in Reverse mode.
 
 Example:
 
-CCAction *pingPongAction = CCSequence::actions(action, action->reverse(), nullptr);
+CCAction *pingPongAction = CCSequence::actions(action, action->reverse(), NULL);
 */
 class CC_DLL CCActionInterval : public CCFiniteTimeAction
 {
@@ -218,7 +218,7 @@ public:
      *  @js ctor
      */
     CCRepeatForever()
-        : m_pInnerAction(nullptr)
+        : m_pInnerAction(NULL)
     {}
     /**
      *  @js NA

@@ -89,7 +89,7 @@ public:
      @param plist The path of the relative file,it use to find the plist path for load SpriteFrames.
      @since v1.1
      */
-    void addAnimationsWithDictionary(CCDictionary* dictionary,const char* plist = nullptr);
+    void addAnimationsWithDictionary(CCDictionary* dictionary,const char* plist = NULL);
 
     /** Adds an animation from a plist file.
      Make sure that the frames were previously loaded in the CCSpriteFrameCache.

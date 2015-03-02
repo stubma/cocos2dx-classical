@@ -32,7 +32,7 @@ using namespace std;
 
 NS_CC_BEGIN
 
-static CCNotificationCenter *s_sharedNotifCenter = nullptr;
+static CCNotificationCenter *s_sharedNotifCenter = NULL;
 
 CCNotificationCenter::CCNotificationCenter()
 {
@@ -64,7 +64,7 @@ void CCNotificationCenter::purgeNotificationCenter(void)
 //
 bool CCNotificationCenter::observerExisted(CCObject *target,const char *name)
 {
-    CCObject* obj = nullptr;
+    CCObject* obj = NULL;
     CCARRAY_FOREACH(m_observers, obj)
     {
         CCNotificationObserver* observer = (CCNotificationObserver*) obj;
@@ -98,7 +98,7 @@ void CCNotificationCenter::addObserver(CCObject *target,
 
 void CCNotificationCenter::removeObserver(CCObject *target,const char *name)
 {
-    CCObject* obj = nullptr;
+    CCObject* obj = NULL;
     CCARRAY_FOREACH(m_observers, obj)
     {
         CCNotificationObserver* observer = (CCNotificationObserver*) obj;
@@ -115,7 +115,7 @@ void CCNotificationCenter::removeObserver(CCObject *target,const char *name)
 
 int CCNotificationCenter::removeAllObservers(CCObject *target)
 {
-    CCObject *obj = nullptr;
+    CCObject *obj = NULL;
     CCArray *toRemove = CCArray::create();
 
     CCARRAY_FOREACH(m_observers, obj)
@@ -140,7 +140,7 @@ void CCNotificationCenter::registerScriptObserver(ccScriptFunction func, const c
     if (this->observerExisted(func.target, name))
         return;
     
-    CCNotificationObserver *observer = new CCNotificationObserver(func, name, nullptr);
+    CCNotificationObserver *observer = new CCNotificationObserver(func, name, NULL);
     if (!observer)
         return;
     
@@ -150,7 +150,7 @@ void CCNotificationCenter::registerScriptObserver(ccScriptFunction func, const c
 
 void CCNotificationCenter::unregisterScriptObserver(CCObject *target,const char* name)
 {        
-    CCObject* obj = nullptr;
+    CCObject* obj = NULL;
     CCARRAY_FOREACH(m_observers, obj)
     {
         CCNotificationObserver* observer = (CCNotificationObserver*) obj;
@@ -168,14 +168,14 @@ void CCNotificationCenter::postNotification(const char *name, CCObject *object)
 {
     CCArray* ObserversCopy = CCArray::createWithCapacity(m_observers->count());
     ObserversCopy->addObjectsFromArray(m_observers);
-    CCObject* obj = nullptr;
+    CCObject* obj = NULL;
     CCARRAY_FOREACH(ObserversCopy, obj)
     {
         CCNotificationObserver* observer = (CCNotificationObserver*) obj;
         if (!observer)
             continue;
         
-        if (!strcmp(name,observer->getName()) && (observer->getObject() == object || observer->getObject() == nullptr || object == nullptr))
+        if (!strcmp(name,observer->getName()) && (observer->getObject() == object || observer->getObject() == NULL || object == NULL))
         {
             if (0 != observer->getHandler().handler)
             {
@@ -197,22 +197,22 @@ void CCNotificationCenter::postNotification(const char *name, CCObject *object)
 
 void CCNotificationCenter::postNotification(const char *name)
 {
-    this->postNotification(name,nullptr);
+    this->postNotification(name,NULL);
 }
 
 ccScriptFunction CCNotificationCenter::getObserverHandlerByName(const char* name)
 {
-    ccScriptFunction dummy = { nullptr, 0 };
-    if (nullptr == name || strlen(name) == 0)
+    ccScriptFunction dummy = { NULL, 0 };
+    if (NULL == name || strlen(name) == 0)
     {
         return dummy;
     }
     
-    CCObject* obj = nullptr;
+    CCObject* obj = NULL;
     CCARRAY_FOREACH(m_observers, obj)
     {
         CCNotificationObserver* observer = (CCNotificationObserver*) obj;
-        if (nullptr == observer)
+        if (NULL == observer)
             continue;
         
         if ( 0 == strcmp(observer->getName(),name) )
@@ -247,8 +247,8 @@ CCNotificationObserver::CCNotificationObserver(CCObject *target,
 }
 
 CCNotificationObserver::CCNotificationObserver(ccScriptFunction func, const char* name, CCObject* obj) {
-    m_target = nullptr;
-    m_selector = nullptr;
+    m_target = NULL;
+    m_selector = NULL;
     m_object = obj;
     m_func = func;
     m_name = new char[strlen(name)+1];

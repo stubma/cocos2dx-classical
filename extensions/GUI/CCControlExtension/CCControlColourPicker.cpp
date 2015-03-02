@@ -37,9 +37,9 @@
 NS_CC_EXT_BEGIN
 
 CCControlColourPicker::CCControlColourPicker()
-: m_colourPicker(nullptr)
-, m_huePicker(nullptr)
-, m_background(nullptr)
+: m_colourPicker(NULL)
+, m_huePicker(NULL)
+, m_background(NULL)
 {
 
 }
@@ -61,9 +61,9 @@ CCControlColourPicker::~CCControlColourPicker()
         m_colourPicker->removeFromParentAndCleanup(true);
     }
     
-    m_background     = nullptr;
-    m_huePicker      = nullptr;
-    m_colourPicker   = nullptr;
+    m_background     = NULL;
+    m_huePicker      = NULL;
+    m_colourPicker   = NULL;
 }
 
 bool CCControlColourPicker::init()
@@ -151,7 +151,7 @@ void CCControlColourPicker::setColor(const ccColor3B& color)
 void CCControlColourPicker::setEnabled(bool enabled)
 {
     CCControl::setEnabled(enabled);
-    if (m_huePicker != nullptr)
+    if (m_huePicker != NULL)
     {
         m_huePicker->setEnabled(enabled);
     }

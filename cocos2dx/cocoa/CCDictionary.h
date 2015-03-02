@@ -139,7 +139,7 @@ public:
  *        It's also safe to remove elements while traversing.
  */
 #define CCDICT_FOREACH(__dict__, __el__) \
-    CCDictElement* pTmp##__dict__##__el__ = nullptr; \
+    CCDictElement* pTmp##__dict__##__el__ = NULL; \
     if (__dict__) \
     HASH_ITER(hh, (__dict__)->m_pElements, __el__, pTmp##__dict__##__el__)
 
@@ -219,7 +219,7 @@ public:
      *     // Do something about pStr.
      *     // If you don't know the object type, properly you need to use dynamic_cast<SomeType*> to check it.
      *     CCString* pStr2 = dynamic_cast<CCString*>(pDict->objectForKey("key1"));
-     *     if (pStr2 != nullptr) {
+     *     if (pStr2 != NULL) {
      *          // Do something about pStr2
      *     }
      *  @endcode

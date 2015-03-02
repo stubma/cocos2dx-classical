@@ -58,7 +58,7 @@ public:
 	 * @param path path of ASprite file
 	 * @param animIndex animation index
 	 * @param tex related textures, if more than one, can follow this argument. Must ends
-	 * 		with nullptr.
+	 * 		with NULL.
 	 */
 	static CCArcticSprite* create(const char* path, int animIndex, CCTexture2D* tex, ...);
 
@@ -76,7 +76,7 @@ public:
 	virtual CCAFCFileData* getFileData() { return m_arctic; }
 
 	/// @see CCAFCSprite::getAnimationAt
-	virtual CCAFCAnimation* getAnimationAt(int index, CCAFCClipMapping* mapping = nullptr);
+	virtual CCAFCAnimation* getAnimationAt(int index, CCAFCClipMapping* mapping = NULL);
 
 	/// @see CCAFCSprite::getAnimationCount
 	virtual int getAnimationCount();

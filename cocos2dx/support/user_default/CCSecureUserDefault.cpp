@@ -27,13 +27,13 @@
 
 NS_CC_BEGIN
 
-static CCSecureUserDefault* s_instance = nullptr;
+static CCSecureUserDefault* s_instance = NULL;
 
 CCSecureUserDefault::CCSecureUserDefault() {
 }
 
 CCSecureUserDefault::~CCSecureUserDefault() {
-	s_instance = nullptr;
+	s_instance = NULL;
 }
 
 CCSecureUserDefault* CCSecureUserDefault::getInstance() {
@@ -51,7 +51,7 @@ const char* CCSecureUserDefault::getSecureValue(const char* pKey, int* outLen) {
 	string v = CCUserDefault::sharedUserDefault()->getStringForKey(pKey);
 	int len;
 	const char* dec = CCBase64::decodeAsCString(v, &len);
-	const char* plain = dec ? (*gUserDefaultDecrypt)(dec, len, outLen) : nullptr;
+	const char* plain = dec ? (*gUserDefaultDecrypt)(dec, len, outLen) : NULL;
 	
 	// free dec
 	if(dec && plain != dec)

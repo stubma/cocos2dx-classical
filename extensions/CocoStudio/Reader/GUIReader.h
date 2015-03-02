@@ -182,10 +182,10 @@ public:
     //added for binary parsing
     virtual cocos2d::ui::Widget* createWidgetFromBinary(CocoLoader* pCocoLoader,
                                                         stExpCocoNode*	pCocoNode,
-                                                        const char* fileName){return nullptr;}
+                                                        const char* fileName){return NULL;}
     
     virtual cocos2d::ui::Widget* widgetFromBinary(CocoLoader* pCocoLoader,
-                                                  stExpCocoNode*	pCocoNode){return nullptr;}
+                                                  stExpCocoNode*	pCocoNode){return NULL;}
     
     virtual void setPropsForAllWidgetFromBinary(WidgetReaderProtocol* reader,
                                                 cocos2d::ui::Widget* widget,

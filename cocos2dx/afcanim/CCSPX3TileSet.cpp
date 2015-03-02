@@ -33,7 +33,7 @@ CCSPX3TileSet::CCSPX3TileSet() :
 		m_tileColumns(0),
 		m_tileRows(0),
 		m_tileCount(0),
-		m_tiles(nullptr) {
+		m_tiles(NULL) {
 }
 
 CCSPX3TileSet::~CCSPX3TileSet() {

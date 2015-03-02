@@ -170,7 +170,7 @@ public:
     *
     * @param target The target object that is, the object to which the action 
     * message is sent. It cannot be nil. The target is not retained.
-    * @param action A selector identifying an action message. It cannot be nullptr.
+    * @param action A selector identifying an action message. It cannot be NULL.
     * @param controlEvents A bitmask specifying the control events for which the 
     * action message is sent. See "CCControlEvent" for bitmask constants.
     */
@@ -183,7 +183,7 @@ public:
     * @param target The target object—that is, the object to which the action 
     * message is sent. Pass nil to remove all targets paired with action and the
     * specified control events.
-    * @param action A selector identifying an action message. Pass nullptr to remove
+    * @param action A selector identifying an action message. Pass NULL to remove
     * all action messages paired with target.
     * @param controlEvents A bitmask specifying the control events associated with
     * target and action. See "CCControlEvent" for bitmask constants.
@@ -247,7 +247,7 @@ protected:
      *
      * @param target The target object¡ªthat is, the object to which the action 
      * message is sent. It cannot be nil. The target is not retained.
-     * @param action A selector identifying an action message. It cannot be nullptr.
+     * @param action A selector identifying an action message. It cannot be NULL.
      * @param controlEvent A control event for which the action message is sent.
      * See "CCControlEvent" for constants.
      */
@@ -260,7 +260,7 @@ protected:
      * @param target The target object¡ªthat is, the object to which the action 
      * message is sent. Pass nil to remove all targets paired with action and the
      * specified control events.
-     * @param action A selector identifying an action message. Pass nullptr to remove
+     * @param action A selector identifying an action message. Pass NULL to remove
      * all action messages paired with target.
      * @param controlEvent A control event for which the action message is sent.
      * See "CCControlEvent" for constants.

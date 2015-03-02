@@ -72,7 +72,7 @@ CCJSONObject* CCJSONObject::safeCast(CCObject* obj) {
 			jo->addArray("array", ja);
 			return jo;
 		} else {
-			return nullptr;
+			return NULL;
 		}
 	}
 }
@@ -303,7 +303,7 @@ CCJSONObject* CCJSONObject::optJSONObject(const char* key) {
 	if(iter != m_pairs.end()) {
 		return CCJSONValue::castToObject(iter->second);
 	} else {
-		return nullptr;
+		return NULL;
 	}
 }
 
@@ -312,7 +312,7 @@ CCJSONArray* CCJSONObject::optJSONArray(const char* key) {
 	if(iter != m_pairs.end()) {
 		return CCJSONValue::castToArray(iter->second);
 	} else {
-		return nullptr;
+		return NULL;
 	}
 }
 
@@ -367,7 +367,7 @@ double CCJSONObject::optDouble(int index, double def) {
 
 CCJSONObject* CCJSONObject::optJSONObject(int index) {
 	if(index < 0 || index >= m_keyvalues.size()) {
-		return nullptr;
+		return NULL;
 	}
 
 	return CCJSONValue::castToObject(m_keyvalues.at(index));
@@ -375,7 +375,7 @@ CCJSONObject* CCJSONObject::optJSONObject(int index) {
 
 CCJSONArray* CCJSONObject::optJSONArray(int index) {
 	if(index < 0 || index >= m_keyvalues.size()) {
-		return nullptr;
+		return NULL;
 	}
 
 	return CCJSONValue::castToArray(m_keyvalues.at(index));
@@ -391,7 +391,7 @@ string CCJSONObject::optString(int index, const char* def) {
 
 const char* CCJSONObject::keyAt(int index) {
 	if(index < 0 || index >= m_keyvalues.size()) {
-		return nullptr;
+		return NULL;
 	}
 
 	return m_keyvalues.at(index).k;

@@ -96,7 +96,7 @@ public:
     std::string getJsonPath() const { return _jsonPath; }
 protected:
 
-    cocos2d::CCNode* loadNode(const rapidjson::Value& json, cocos2d::CCNode* parent = nullptr);
+    cocos2d::CCNode* loadNode(const rapidjson::Value& json, cocos2d::CCNode* parent = NULL);
 
     void initNode(cocos2d::CCNode* node, const rapidjson::Value& json);
 

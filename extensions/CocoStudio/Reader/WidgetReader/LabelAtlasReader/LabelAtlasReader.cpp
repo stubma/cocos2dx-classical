@@ -5,7 +5,7 @@
 
 NS_CC_EXT_BEGIN
 
-static LabelAtlasReader* instanceLabelAtalsReader = nullptr;
+static LabelAtlasReader* instanceLabelAtalsReader = NULL;
 
 IMPLEMENT_CLASS_WIDGET_READER_INFO(LabelAtlasReader)
 

@@ -119,7 +119,7 @@ bool CCLuaStack::init(void)
     // Register our version of the global "print" function
     const luaL_reg global_functions [] = {
         {"print", lua_print},
-        {nullptr, nullptr}
+        {NULL, NULL}
     };
     luaL_register(m_state, "_G", global_functions);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
@@ -466,7 +466,7 @@ int CCLuaStack::reallocateScriptHandler(int nHandler)
 
 int CCLuaStack::executeFunctionReturnArray(int nHandler,int nNumArgs,int nNummResults,CCArray* pResultArray)
 {
-    if (nullptr == pResultArray)
+    if (NULL == pResultArray)
         return 0;
 
     if (pushFunctionByHandler(nHandler))                 /* L: ... arg1 arg2 ... func */
@@ -535,7 +535,7 @@ int CCLuaStack::executeFunctionReturnArray(int nHandler,int nNumArgs,int nNummRe
                     
                 }else{
                     
-                    pResultArray->addObject(static_cast<CCObject*>(tolua_tousertype(m_state, -1, nullptr)));
+                    pResultArray->addObject(static_cast<CCObject*>(tolua_tousertype(m_state, -1, NULL)));
                 }
                 // remove return value from stack
                 lua_pop(m_state, 1);                                                /* L: ... [G] ret1 ret2 ... ret*/

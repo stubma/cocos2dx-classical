@@ -68,7 +68,7 @@ CCJSONArray* CCJSONArray::safeCast(CCObject* obj) {
 			ja->addObject(jo);
 			return ja;
 		} else {
-			return nullptr;
+			return NULL;
 		}
 	}
 }
@@ -95,7 +95,7 @@ void CCJSONArray::addNull() {
 	CCJSONObject::Value v;
 	memset(&v, 0, sizeof(CCJSONObject::Value));
 	CCJSONObject::KeyValue kv = {
-			nullptr,
+			NULL,
 			CCJSONObject::NIL,
 			v
 	};
@@ -106,7 +106,7 @@ void CCJSONArray::addBool(bool b) {
 	CCJSONObject::Value v;
 	v.b = b;
 	CCJSONObject::KeyValue kv = {
-			nullptr,
+			NULL,
 			CCJSONObject::BOOLEAN,
 			v
 	};
@@ -119,7 +119,7 @@ void CCJSONArray::addInt(int i) {
 	CCJSONObject::Value v;
 	v.s = CCUtils::copy(buf);
 	CCJSONObject::KeyValue kv = {
-			nullptr,
+			NULL,
 			CCJSONObject::STRING,
 			v
 	};
@@ -132,7 +132,7 @@ void CCJSONArray::addLong(long l) {
 	CCJSONObject::Value v;
 	v.s = CCUtils::copy(buf);
 	CCJSONObject::KeyValue kv = {
-			nullptr,
+			NULL,
 			CCJSONObject::STRING,
 			v
 	};
@@ -145,7 +145,7 @@ void CCJSONArray::addFloat(float f) {
 	CCJSONObject::Value v;
 	v.s = CCUtils::copy(buf);
 	CCJSONObject::KeyValue kv = {
-			nullptr,
+			NULL,
 			CCJSONObject::STRING,
 			v
 	};
@@ -158,7 +158,7 @@ void CCJSONArray::addDouble(double d) {
 	CCJSONObject::Value v;
 	v.s = CCUtils::copy(buf);
 	CCJSONObject::KeyValue kv = {
-			nullptr,
+			NULL,
 			CCJSONObject::STRING,
 			v
 	};
@@ -169,7 +169,7 @@ void CCJSONArray::addString(const char* s) {
 	CCJSONObject::Value v;
 	v.s = CCUtils::copy(s);
 	CCJSONObject::KeyValue kv = {
-			nullptr,
+			NULL,
 			CCJSONObject::STRING,
 			v
 	};
@@ -180,7 +180,7 @@ void CCJSONArray::addObject(CCJSONObject* jo) {
 	CCJSONObject::Value v;
 	v.jo = jo;
 	CCJSONObject::KeyValue kv = {
-			nullptr,
+			NULL,
 			CCJSONObject::OBJECT,
 			v
 	};
@@ -192,7 +192,7 @@ void CCJSONArray::addArray(CCJSONArray* ja) {
 	CCJSONObject::Value v;
 	v.ja = ja;
 	CCJSONObject::KeyValue kv = {
-			nullptr,
+			NULL,
 			CCJSONObject::ARRAY,
 			v
 	};
@@ -242,7 +242,7 @@ double CCJSONArray::optDouble(int index, double def) {
 
 CCJSONObject* CCJSONArray::optJSONObject(int index) {
 	if(index < 0 || index >= m_array.size()) {
-		return nullptr;
+		return NULL;
 	}
 
 	return CCJSONValue::castToObject(m_array.at(index));
@@ -250,7 +250,7 @@ CCJSONObject* CCJSONArray::optJSONObject(int index) {
 
 CCJSONArray* CCJSONArray::optJSONArray(int index) {
 	if(index < 0 || index >= m_array.size()) {
-		return nullptr;
+		return NULL;
 	}
 
 	return CCJSONValue::castToArray(m_array.at(index));

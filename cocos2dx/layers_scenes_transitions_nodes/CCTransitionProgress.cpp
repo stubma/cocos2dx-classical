@@ -43,7 +43,7 @@ enum {
 CCTransitionProgress::CCTransitionProgress()
 : m_fTo(0.0f)
 , m_fFrom(0.0f)
-, m_pSceneToBeModified(nullptr)
+, m_pSceneToBeModified(NULL)
 {
 
 }
@@ -57,7 +57,7 @@ CCTransitionProgress* CCTransitionProgress::create(float t, CCScene* scene)
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 // CCTransitionProgress
@@ -96,7 +96,7 @@ void CCTransitionProgress::onEnter()
     CCActionInterval* layerAction = (CCActionInterval*)CCSequence::create(
         CCProgressFromTo::create(m_fDuration, m_fFrom, m_fTo),
         CCCallFunc::create(this, callfunc_selector(CCTransitionProgress::finish)), 
-        nullptr);
+        NULL);
     // run the blend action
     pNode->runAction(layerAction);
 
@@ -127,7 +127,7 @@ void CCTransitionProgress::setupTransition()
 CCProgressTimer* CCTransitionProgress::progressTimerNodeWithRenderTexture(CCRenderTexture* texture)
 {
     CCAssert(false, "override me - abstract class");
-    return nullptr;
+    return NULL;
 }
 
 
@@ -161,7 +161,7 @@ CCTransitionProgressRadialCCW* CCTransitionProgressRadialCCW::create(float t, CC
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 // CCTransitionProgressRadialCW
@@ -174,7 +174,7 @@ CCTransitionProgressRadialCW* CCTransitionProgressRadialCW::create(float t, CCSc
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 CCProgressTimer* CCTransitionProgressRadialCW::progressTimerNodeWithRenderTexture(CCRenderTexture* texture)
@@ -206,7 +206,7 @@ CCTransitionProgressHorizontal* CCTransitionProgressHorizontal::create(float t, 
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 CCProgressTimer* CCTransitionProgressHorizontal::progressTimerNodeWithRenderTexture(CCRenderTexture* texture)
@@ -239,7 +239,7 @@ CCTransitionProgressVertical* CCTransitionProgressVertical::create(float t, CCSc
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 CCProgressTimer* CCTransitionProgressVertical::progressTimerNodeWithRenderTexture(CCRenderTexture* texture)
@@ -273,7 +273,7 @@ CCTransitionProgressInOut* CCTransitionProgressInOut::create(float t, CCScene* s
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 void CCTransitionProgressInOut::sceneOrder()
@@ -319,7 +319,7 @@ CCTransitionProgressOutIn* CCTransitionProgressOutIn::create(float t, CCScene* s
         return pScene;
     }
     CC_SAFE_DELETE(pScene);
-    return nullptr;
+    return NULL;
 }
 
 CCProgressTimer* CCTransitionProgressOutIn::progressTimerNodeWithRenderTexture(CCRenderTexture* texture)

@@ -71,45 +71,45 @@ bool CCComAudio::serialize(void* r)
 	bool bRet = false;
 	do 
 	{
-		CC_BREAK_IF(r == nullptr);
+		CC_BREAK_IF(r == NULL);
 		SerData *pSerData = (SerData *)(r);
 		const rapidjson::Value *v = pSerData->prData;
 		stExpCocoNode *pCocoNode = pSerData->pCocoNode;
 		CocoLoader *pCocoLoader = pSerData->pCocoLoader;
-		const char *pClassName = nullptr;
-		const char *pComName = nullptr;
-		const char *pFile = nullptr;
+		const char *pClassName = NULL;
+		const char *pComName = NULL;
+		const char *pFile = NULL;
 		std::string strFilePath;
 		int nResType = 0;
 		bool bLoop = false;
-		if (v != nullptr)
+		if (v != NULL)
 		{
 			pClassName = DICTOOL->getStringValue_json(*v, "classname");
-			CC_BREAK_IF(pClassName == nullptr);
+			CC_BREAK_IF(pClassName == NULL);
 			pComName = DICTOOL->getStringValue_json(*v, "name");
 			const rapidjson::Value &fileData = DICTOOL->getSubDictionary_json(*v, "fileData");
 			CC_BREAK_IF(!DICTOOL->checkObjectExist_json(fileData));
 			pFile = DICTOOL->getStringValue_json(fileData, "path");
-			CC_BREAK_IF(pFile == nullptr);
+			CC_BREAK_IF(pFile == NULL);
 			nResType = DICTOOL->getIntValue_json(fileData, "resourceType", -1);
 			CC_BREAK_IF(nResType != 0);
 			bLoop = DICTOOL->getIntValue_json(*v, "loop") != 0? true:false;
 		}
-		else if (pCocoNode != nullptr)
+		else if (pCocoNode != NULL)
 		{
 			pClassName = pCocoNode[1].GetValue(pCocoLoader);
-			CC_BREAK_IF(pClassName == nullptr);
+			CC_BREAK_IF(pClassName == NULL);
 			pComName = pCocoNode[2].GetValue(pCocoLoader);
 			stExpCocoNode *pfileData = pCocoNode[4].GetChildArray(pCocoLoader);
 			CC_BREAK_IF(!pfileData);
 			pFile = pfileData[0].GetValue(pCocoLoader);
-			CC_BREAK_IF(pFile == nullptr);
+			CC_BREAK_IF(pFile == NULL);
 			nResType = atoi(pfileData[2].GetValue(pCocoLoader));
 			CC_BREAK_IF(nResType != 0);
 			bLoop = atoi(pCocoNode[5].GetValue(pCocoLoader)) != 0? true:false;
 			bRet = true;
 		}
-		if (pComName != nullptr)
+		if (pComName != NULL)
 		{
 			setName(pComName);
 		}
@@ -117,7 +117,7 @@ bool CCComAudio::serialize(void* r)
 		{
 			setName(pClassName);
 		}
-		if (pFile != nullptr)
+		if (pFile != NULL)
 		{
             if (strcmp(pFile, "") == 0)
             {

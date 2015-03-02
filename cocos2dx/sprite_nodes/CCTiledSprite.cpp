@@ -30,10 +30,10 @@
 NS_CC_BEGIN
 
 CCTiledSprite::CCTiledSprite(CCSprite* sprite) :
-m_sprite(nullptr),
+m_sprite(NULL),
 m_dirty(false),
-m_atlas(nullptr) {
-	CCAssert(sprite != nullptr, "CCTiledSprite doesn't accept nullptr sprite");
+m_atlas(NULL) {
+	CCAssert(sprite != NULL, "CCTiledSprite doesn't accept NULL sprite");
 			
 	// save sprite
 	m_sprite = sprite;
@@ -77,7 +77,7 @@ CCTiledSprite* CCTiledSprite::createWithSprite(CCSprite* sprite) {
         CC_SAFE_AUTORELEASE_RETURN(s, CCTiledSprite*);
     }
 	CC_SAFE_RELEASE(s);
-    return nullptr;
+    return NULL;
 }
 
 bool CCTiledSprite::initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool rotated) {

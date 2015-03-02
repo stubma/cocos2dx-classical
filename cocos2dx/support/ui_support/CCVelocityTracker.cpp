@@ -178,7 +178,7 @@ bool VelocityTrackerState::getEstimator(int32_t id, VelocityTracker::Estimator* 
 }
 
 CCVelocityTracker::CCVelocityTracker() {
-	m_state = new VelocityTrackerState(nullptr);
+	m_state = new VelocityTrackerState(NULL);
 }
 
 CCVelocityTracker::~CCVelocityTracker() {
@@ -226,25 +226,25 @@ void CCVelocityTracker::computeCurrentVelocity(int units, float maxVelocity) {
 
 float CCVelocityTracker::getXVelocity() {
 	float vx;
-	m_state->getVelocity(ACTIVE_POINTER_ID, &vx, nullptr);
+	m_state->getVelocity(ACTIVE_POINTER_ID, &vx, NULL);
 	return vx;
 }
 
 float CCVelocityTracker::getYVelocity() {
 	float vy;
-	m_state->getVelocity(ACTIVE_POINTER_ID, nullptr, &vy);
+	m_state->getVelocity(ACTIVE_POINTER_ID, NULL, &vy);
 	return vy;
 }
 
 float CCVelocityTracker::getXVelocity(int id) {
 	float vx;
-	m_state->getVelocity(id, &vx, nullptr);
+	m_state->getVelocity(id, &vx, NULL);
 	return vx;
 }
 
 float CCVelocityTracker::getYVelocity(int id) {
 	float vy;
-	m_state->getVelocity(id, nullptr, &vy);
+	m_state->getVelocity(id, NULL, &vy);
 	return vy;
 }
 

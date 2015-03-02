@@ -209,7 +209,7 @@ public:
 
     /**
      * Set armature's movement event callback function
-     * To disconnect this event, just setMovementEventCallFunc(nullptr, nullptr);
+     * To disconnect this event, just setMovementEventCallFunc(NULL, NULL);
      */
     void setMovementEventCallFunc(CCObject *target, SEL_MovementEventCallFunc callFunc);
     
@@ -223,7 +223,7 @@ public:
 
     /**
      * Set armature's frame event callback function
-     * To disconnect this event, just setFrameEventCallFunc(nullptr, nullptr);
+     * To disconnect this event, just setFrameEventCallFunc(NULL, NULL);
      */
     void setFrameEventCallFunc(CCObject *target, SEL_FrameEventCallFunc callFunc);
 

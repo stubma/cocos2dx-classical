@@ -71,7 +71,7 @@ bool CCParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles
         CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
                                                                       callfuncO_selector(CCParticleSystemQuad::listenBackToForeground),
                                                                       EVENT_COME_TO_FOREGROUND,
-                                                                      nullptr);
+                                                                      NULL);
 #endif
 
         return true;
@@ -80,8 +80,8 @@ bool CCParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles
 }
 
 CCParticleSystemQuad::CCParticleSystemQuad()
-:m_pQuads(nullptr)
-,m_pIndices(nullptr)
+:m_pQuads(NULL)
+,m_pIndices(NULL)
 #if CC_TEXTURE_ATLAS_USE_VAO
 ,m_uVAOname(0)
 #endif
@@ -91,7 +91,7 @@ CCParticleSystemQuad::CCParticleSystemQuad()
 
 CCParticleSystemQuad::~CCParticleSystemQuad()
 {
-    if (nullptr == m_pBatchNode)
+    if (NULL == m_pBatchNode)
     {
         CC_SAFE_FREE(m_pQuads);
         CC_SAFE_FREE(m_pIndices);
@@ -168,7 +168,7 @@ void CCParticleSystemQuad::initTexCoordsWithRect(const CCRect& pointRect)
     // Important. Texture in cocos2d are inverted, so the Y component should be inverted
     CC_SWAP( top, bottom, float);
 
-    ccV3F_C4B_T2F_Quad *quads = nullptr;
+    ccV3F_C4B_T2F_Quad *quads = NULL;
     unsigned int start = 0, end = 0;
     if (m_pBatchNode)
     {
@@ -334,7 +334,7 @@ void CCParticleSystemQuad::postStep()
     //	glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * particleCount, quads_, GL_DYNAMIC_DRAW);
 	
 	// Option 3: Orphaning + glMapBuffer
-	// glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*m_uTotalParticles, nullptr, GL_STREAM_DRAW);
+	// glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*m_uTotalParticles, NULL, GL_STREAM_DRAW);
 	// void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 	// memcpy(buf, m_pQuads, sizeof(m_pQuads[0])*m_uTotalParticles);
 	// glUnmapBuffer(GL_ARRAY_BUFFER);
@@ -348,7 +348,7 @@ void CCParticleSystemQuad::postStep()
 void CCParticleSystemQuad::draw()
 {    
 
-	if (nullptr == m_pTexture)
+	if (NULL == m_pTexture)
 	{
 		return;
 	}
@@ -621,7 +621,7 @@ CCParticleSystemQuad * CCParticleSystemQuad::create() {
         return pParticleSystemQuad;
     }
     CC_SAFE_DELETE(pParticleSystemQuad);
-    return nullptr;
+    return NULL;
 }
 
 NS_CC_END

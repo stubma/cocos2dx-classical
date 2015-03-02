@@ -39,19 +39,19 @@ CCDisplayManager *CCDisplayManager::create(CCBone *bone)
         return pDisplayManager;
     }
     CC_SAFE_DELETE(pDisplayManager);
-    return nullptr;
+    return NULL;
 }
 
 
 CCDisplayManager::CCDisplayManager()
-    : m_pDecoDisplayList(nullptr)
-    , m_pDisplayRenderNode(nullptr)
+    : m_pDecoDisplayList(NULL)
+    , m_pDisplayRenderNode(NULL)
     , m_eDisplayType(CS_DISPLAY_MAX)
-    , m_pCurrentDecoDisplay(nullptr)
+    , m_pCurrentDecoDisplay(NULL)
     , m_iDisplayIndex(-1)
     , m_bForceChangeDisplay(false)
     , m_bVisible(true)
-    , m_pBone(nullptr)
+    , m_pBone(NULL)
 {
 }
 
@@ -88,7 +88,7 @@ bool CCDisplayManager::init(CCBone *bone)
 
 void CCDisplayManager::addDisplay(CCDisplayData *displayData, int index)
 {
-    CCDecorativeDisplay *decoDisplay = nullptr;
+    CCDecorativeDisplay *decoDisplay = NULL;
 
     if(index >= 0 && (unsigned int)index < m_pDecoDisplayList->count())
     {
@@ -112,7 +112,7 @@ void CCDisplayManager::addDisplay(CCDisplayData *displayData, int index)
 
 void CCDisplayManager::addDisplay(CCNode *display, int index)
 {
-    CCDecorativeDisplay *decoDisplay = nullptr;
+    CCDecorativeDisplay *decoDisplay = NULL;
 
     if(index >= 0 && (unsigned int)index < m_pDecoDisplayList->count())
     {
@@ -124,7 +124,7 @@ void CCDisplayManager::addDisplay(CCNode *display, int index)
         m_pDecoDisplayList->addObject(decoDisplay);
     }
 
-    CCDisplayData *displayData = nullptr;
+    CCDisplayData *displayData = NULL;
     if (CCSkin *skin = dynamic_cast<CCSkin *>(display))
     {
         skin->setBone(m_pBone);
@@ -199,7 +199,7 @@ void CCDisplayManager::removeDisplay(int index)
 {
     if(index == m_iDisplayIndex)
     {
-        setCurrentDecorativeDisplay(nullptr);
+        setCurrentDecorativeDisplay(NULL);
         m_iDisplayIndex = -1;
     }
 
@@ -240,7 +240,7 @@ void CCDisplayManager::changeDisplayWithIndex(int index, bool force)
         if(m_pDisplayRenderNode)
         {
             m_pDisplayRenderNode->removeFromParentAndCleanup(true);
-            setCurrentDecorativeDisplay(nullptr);
+            setCurrentDecorativeDisplay(NULL);
         }
         return;
     }
@@ -281,12 +281,12 @@ void CCDisplayManager::setCurrentDecorativeDisplay(CCDecorativeDisplay *decoDisp
     }
 #endif
 
-    CCNode *displayRenderNode = m_pCurrentDecoDisplay == nullptr ? nullptr : m_pCurrentDecoDisplay->getDisplay();
+    CCNode *displayRenderNode = m_pCurrentDecoDisplay == NULL ? NULL : m_pCurrentDecoDisplay->getDisplay();
     if (m_pDisplayRenderNode)
     {
-        if (dynamic_cast<CCArmature *>(m_pDisplayRenderNode) != nullptr)
+        if (dynamic_cast<CCArmature *>(m_pDisplayRenderNode) != NULL)
         {
-            m_pBone->setChildArmature(nullptr);
+            m_pBone->setChildArmature(NULL);
         }
         m_pDisplayRenderNode->removeFromParentAndCleanup(true);
         CC_SAFE_RELEASE(m_pDisplayRenderNode);
@@ -357,7 +357,7 @@ void CCDisplayManager::initDisplayList(CCBoneData *boneData)
 
     CS_RETURN_IF(!boneData);
 
-    CCObject *object = nullptr;
+    CCObject *object = NULL;
     CCArray *displayDataList = &boneData->displayDataList;
     CCARRAY_FOREACH(displayDataList, object)
     {

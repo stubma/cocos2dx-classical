@@ -5,7 +5,7 @@
 
 NS_CC_EXT_BEGIN
 
-static ScrollViewReader* instanceScrollViewReader = nullptr;
+static ScrollViewReader* instanceScrollViewReader = NULL;
 
 IMPLEMENT_CLASS_WIDGET_READER_INFO(ScrollViewReader)
 

@@ -39,16 +39,16 @@ static const unsigned int s_spinner_png[] = {
 };
 
 // single instance
-static CCProgressHUD* s_hud = nullptr;
+static CCProgressHUD* s_hud = NULL;
 
 CCProgressHUD::CCProgressHUD() :
 m_cancellable(false),
 m_dimColor(cc4TRANSPARENT),
 m_panelColor(ccc4(0, 0, 0, 200)),
-m_icon(nullptr),
+m_icon(NULL),
 m_panelSize(CCSizeZero),
-m_msgLabel(nullptr),
-m_indicator(nullptr),
+m_msgLabel(NULL),
+m_indicator(NULL),
 m_time(0),
 m_forceSquare(false) {
 }
@@ -128,7 +128,7 @@ CCProgressHUD* CCProgressHUD::show(const string& message, CCNode* parent) {
 void CCProgressHUD::hide() {
     if(s_hud) {
         s_hud->removeFromParent();
-        s_hud = nullptr;
+        s_hud = NULL;
     }
 }
 
@@ -224,7 +224,7 @@ void CCProgressHUD::setIcon(cocos2d::CCSprite* icon) {
 	if(m_icon) {
 		m_icon->removeFromParent();
 		CC_SAFE_RELEASE(m_icon);
-		m_icon = nullptr;
+		m_icon = NULL;
 	}
     m_icon = icon;
 	CC_SAFE_RETAIN(m_icon);

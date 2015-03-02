@@ -46,7 +46,7 @@
 NS_CC_BEGIN
 
 CCParticleBatchNode::CCParticleBatchNode()
-: m_pTextureAtlas(nullptr)
+: m_pTextureAtlas(NULL)
 {
 
 }
@@ -68,7 +68,7 @@ CCParticleBatchNode* CCParticleBatchNode::createWithTexture(CCTexture2D *tex, un
         return p;
     }
     CC_SAFE_DELETE(p);
-    return nullptr;
+    return NULL;
 }
 
 /*
@@ -84,7 +84,7 @@ CCParticleBatchNode* CCParticleBatchNode::create(const char* imageFile, unsigned
         return p;
     }
     CC_SAFE_DELETE(p);
-    return nullptr;
+    return NULL;
 }
 
 /*
@@ -167,8 +167,8 @@ void CCParticleBatchNode::addChild(CCNode * child, int zOrder)
 
 void CCParticleBatchNode::addChild(CCNode * child, int zOrder, int tag)
 {
-    CCAssert( child != nullptr, "Argument must be non-nullptr");
-    CCAssert( dynamic_cast<CCParticleSystem*>(child) != nullptr, "CCParticleBatchNode only supports CCQuadParticleSystems as children");
+    CCAssert( child != NULL, "Argument must be non-NULL");
+    CCAssert( dynamic_cast<CCParticleSystem*>(child) != NULL, "CCParticleBatchNode only supports CCQuadParticleSystems as children");
     CCParticleSystem* pChild = (CCParticleSystem*)child;
     CCAssert( pChild->getTexture()->getName() == m_pTextureAtlas->getTexture()->getName(), "CCParticleSystem is not using the same texture id");
     // If this is the 1st children, then copy blending function
@@ -208,8 +208,8 @@ void CCParticleBatchNode::addChild(CCNode * child, int zOrder, int tag)
 // this helper is almost equivalent to CCNode's addChild, but doesn't make use of the lazy sorting
 unsigned int CCParticleBatchNode::addChildHelper(CCParticleSystem* child, int z, int aTag)
 {
-    CCAssert( child != nullptr, "Argument must be non-nil");
-    CCAssert( child->getParent() == nullptr, "child already added. It can't be added again");
+    CCAssert( child != NULL, "Argument must be non-nil");
+    CCAssert( child->getParent() == NULL, "child already added. It can't be added again");
 
     if( ! m_pChildren ) 
     {
@@ -238,8 +238,8 @@ unsigned int CCParticleBatchNode::addChildHelper(CCParticleSystem* child, int z,
 // Reorder will be done in this function, no "lazy" reorder to particles
 void CCParticleBatchNode::reorderChild(CCNode * child, int zOrder)
 {
-    CCAssert( child != nullptr, "Child must be non-nullptr");
-    CCAssert( dynamic_cast<CCParticleSystem*>(child) != nullptr, "CCParticleBatchNode only supports CCQuadParticleSystems as children");
+    CCAssert( child != NULL, "Child must be non-NULL");
+    CCAssert( dynamic_cast<CCParticleSystem*>(child) != NULL, "CCParticleBatchNode only supports CCQuadParticleSystems as children");
     CCAssert( m_pChildren->containsObject(child), "Child doesn't belong to batch" );
 
     CCParticleSystem* pChild = (CCParticleSystem*)(child);
@@ -363,12 +363,12 @@ unsigned int CCParticleBatchNode::searchNewPositionInChildrenForZ(int z)
 void  CCParticleBatchNode::removeChild(CCNode* child, bool cleanup)
 {
     // explicit nil handling
-    if (child == nullptr)
+    if (child == NULL)
     {
         return;
     }
     
-    CCAssert( dynamic_cast<CCParticleSystem*>(child) != nullptr, "CCParticleBatchNode only supports CCQuadParticleSystems as children");
+    CCAssert( dynamic_cast<CCParticleSystem*>(child) != NULL, "CCParticleBatchNode only supports CCQuadParticleSystems as children");
     CCAssert(m_pChildren->containsObject(child), "CCParticleBatchNode doesn't contain the sprite. Can't remove it");
 
     CCParticleSystem* pChild = (CCParticleSystem*)child;
@@ -381,7 +381,7 @@ void  CCParticleBatchNode::removeChild(CCNode* child, bool cleanup)
     m_pTextureAtlas->fillWithEmptyQuadsFromIndex(m_pTextureAtlas->getTotalQuads(), pChild->getTotalParticles());
 
     // particle could be reused for self rendering
-    pChild->setBatchNode(nullptr);
+    pChild->setBatchNode(NULL);
 
     updateAllAtlasIndexes();
 }
@@ -393,7 +393,7 @@ void CCParticleBatchNode::removeChildAtIndex(unsigned int index, bool doCleanup)
 
 void CCParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
 {
-    arrayMakeObjectsPerformSelectorWithObject(m_pChildren, setBatchNode, nullptr, CCParticleSystem*);
+    arrayMakeObjectsPerformSelectorWithObject(m_pChildren, setBatchNode, NULL, CCParticleSystem*);
 
     CCNode::removeAllChildrenWithCleanup(doCleanup);
 
@@ -470,7 +470,7 @@ void CCParticleBatchNode::insertChild(CCParticleSystem* pSystem, unsigned int in
 //rebuild atlas indexes
 void CCParticleBatchNode::updateAllAtlasIndexes()
 {
-    CCObject *pObj = nullptr;
+    CCObject *pObj = NULL;
     unsigned int index = 0;
 
     CCARRAY_FOREACH(m_pChildren,pObj)

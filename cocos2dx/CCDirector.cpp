@@ -83,12 +83,12 @@ NS_CC_BEGIN
 // XXX it should be a Director ivar. Move it there once support for multiple directors is added
 
 // global decrypt/encrypt functions, set by CCDirector
-CC_DECRYPT_FUNC gResDecrypt = nullptr;
-CC_DECRYPT_FUNC gUserDefaultDecrypt = nullptr;
-CC_ENCRYPT_FUNC gUserDefaultEncrypt = nullptr;
+CC_DECRYPT_FUNC gResDecrypt = NULL;
+CC_DECRYPT_FUNC gUserDefaultDecrypt = NULL;
+CC_ENCRYPT_FUNC gUserDefaultEncrypt = NULL;
 
 // singleton stuff
-static CCDisplayLinkDirector *s_SharedDirector = nullptr;
+static CCDisplayLinkDirector *s_SharedDirector = NULL;
 
 #define kDefaultFPS        60  // 60 frames per second
 extern const char* cocos2dVersion(void);
@@ -114,23 +114,23 @@ bool CCDirector::init(void)
 	setDefaultValues();
 
     // scenes
-    m_pRunningScene = nullptr;
-    m_pNextScene = nullptr;
+    m_pRunningScene = NULL;
+    m_pNextScene = NULL;
 
-    m_pNotificationNode = nullptr;
+    m_pNotificationNode = NULL;
 
     m_pobScenesStack = new CCArray();
     m_pobScenesStack->init();
 
     // projection delegate if "Custom" projection is used
-    m_pProjectionDelegate = nullptr;
+    m_pProjectionDelegate = NULL;
 
     // FPS
     m_fAccumDt = 0.0f;
     m_fFrameRate = 0.0f;
-    m_pFPSLabel = nullptr;
-    m_pSPFLabel = nullptr;
-    m_pDrawsLabel = nullptr;
+    m_pFPSLabel = NULL;
+    m_pSPFLabel = NULL;
+    m_pDrawsLabel = NULL;
     m_uTotalFrames = m_uFrames = 0;
     m_pszFPS = new char[10];
     m_pLastUpdate = new struct cc_timeval();
@@ -144,7 +144,7 @@ bool CCDirector::init(void)
 
     m_obWinSizeInPoints = CCSizeZero;    
 
-    m_pobOpenGLView = nullptr;
+    m_pobOpenGLView = NULL;
 
     m_fContentScaleFactor = 1.0f;
 
@@ -195,7 +195,7 @@ CCDirector::~CCDirector(void)
     // delete fps string
     delete []m_pszFPS;
 
-    s_SharedDirector = nullptr;
+    s_SharedDirector = NULL;
 }
 
 void CCDirector::setResDecrypt(CC_DECRYPT_FUNC dec) {
@@ -321,7 +321,7 @@ void CCDirector::calculateDeltaTime(void)
 {
     struct cc_timeval now;
 
-    if (CCTime::gettimeofdayCocos2d(&now, nullptr) != 0)
+    if (CCTime::gettimeofdayCocos2d(&now, NULL) != 0)
     {
         CCLOG("error in gettimeofday");
         m_fDeltaTime = 0;
@@ -618,8 +618,8 @@ CCPoint CCDirector::getVisibleOrigin()
 
 void CCDirector::runWithScene(CCScene *pScene)
 {
-    CCAssert(pScene != nullptr, "This command can only be used to start the CCDirector. There is already a scene present.");
-    CCAssert(m_pRunningScene == nullptr, "m_pRunningScene should be null");
+    CCAssert(pScene != NULL, "This command can only be used to start the CCDirector. There is already a scene present.");
+    CCAssert(m_pRunningScene == NULL, "m_pRunningScene should be null");
 
     pushScene(pScene);
     startAnimation();
@@ -628,7 +628,7 @@ void CCDirector::runWithScene(CCScene *pScene)
 void CCDirector::replaceScene(CCScene *pScene)
 {
     CCAssert(m_pRunningScene, "Use runWithScene: instead to start the director");
-    CCAssert(pScene != nullptr, "the scene should not be null");
+    CCAssert(pScene != NULL, "the scene should not be null");
 
     unsigned int index = m_pobScenesStack->count();
 
@@ -650,7 +650,7 @@ void CCDirector::pushScene(CCScene *pScene)
 
 void CCDirector::popScene(void)
 {
-    CCAssert(m_pRunningScene != nullptr, "running scene should not null");
+    CCAssert(m_pRunningScene != NULL, "running scene should not null");
 
     m_pobScenesStack->removeLastObject();
     unsigned int c = m_pobScenesStack->count();
@@ -673,7 +673,7 @@ void CCDirector::popToRootScene(void)
 
 void CCDirector::popToSceneStackLevel(int level)
 {
-    CCAssert(m_pRunningScene != nullptr, "A running Scene is needed");
+    CCAssert(m_pRunningScene != NULL, "A running Scene is needed");
     int c = (int)m_pobScenesStack->count();
 
     // level 0? -> end
@@ -729,8 +729,8 @@ void CCDirector::purgeDirector()
         CC_SAFE_RELEASE(m_pRunningScene);
     }
     
-    m_pRunningScene = nullptr;
-    m_pNextScene = nullptr;
+    m_pRunningScene = NULL;
+    m_pNextScene = NULL;
 
     // remove all objects, but don't release it.
     // runWithScene might be executed after 'end'.
@@ -764,7 +764,7 @@ void CCDirector::purgeDirector()
     
     // OpenGL view
     m_pobOpenGLView->end();
-    m_pobOpenGLView = nullptr;
+    m_pobOpenGLView = NULL;
 
     // delete CCDirector
     release();
@@ -772,8 +772,8 @@ void CCDirector::purgeDirector()
 
 void CCDirector::setNextScene(void)
 {
-    bool runningIsTransition = dynamic_cast<CCTransitionScene*>(m_pRunningScene) != nullptr;
-    bool newIsTransition = dynamic_cast<CCTransitionScene*>(m_pNextScene) != nullptr;
+    bool runningIsTransition = dynamic_cast<CCTransitionScene*>(m_pRunningScene) != NULL;
+    bool newIsTransition = dynamic_cast<CCTransitionScene*>(m_pNextScene) != NULL;
 
     // If it is not a transition, call onExit/cleanup
      if (! newIsTransition)
@@ -798,7 +798,7 @@ void CCDirector::setNextScene(void)
     }
     m_pRunningScene = m_pNextScene;
     CC_SAFE_RETAIN(m_pNextScene);
-    m_pNextScene = nullptr;
+    m_pNextScene = NULL;
 
     if ((! runningIsTransition) && m_pRunningScene)
     {
@@ -830,7 +830,7 @@ void CCDirector::resume(void)
 
     setAnimationInterval(m_dOldAnimationInterval);
 
-    if (CCTime::gettimeofdayCocos2d(m_pLastUpdate, nullptr) != 0)
+    if (CCTime::gettimeofdayCocos2d(m_pLastUpdate, NULL) != 0)
     {
         CCLOG("cocos2d: Director: Error in gettimeofday");
     }
@@ -878,7 +878,7 @@ void CCDirector::showStats(void)
 void CCDirector::calculateMPF()
 {
     struct cc_timeval now;
-    CCTime::gettimeofdayCocos2d(&now, nullptr);
+    CCTime::gettimeofdayCocos2d(&now, NULL);
     
     m_fSecondsPerFrame = (now.tv_sec - m_pLastUpdate->tv_sec) + (now.tv_usec - m_pLastUpdate->tv_usec) / 1000000.0f;
 }
@@ -893,7 +893,7 @@ void CCDirector::getFPSImageData(unsigned char** datapointer, unsigned int* leng
 
 void CCDirector::createStatsLabel()
 {
-    CCTexture2D *texture = nullptr;
+    CCTexture2D *texture = NULL;
     CCTextureCache *textureCache = CCTextureCache::sharedTextureCache();
 
     if( m_pFPSLabel && m_pSPFLabel )
@@ -907,7 +907,7 @@ void CCDirector::createStatsLabel()
 
     CCTexture2DPixelFormat currentFormat = CCTexture2D::defaultAlphaPixelFormat();
     CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
-    unsigned char *data = nullptr;
+    unsigned char *data = NULL;
     unsigned int data_len = 0;
     getFPSImageData(&data, &data_len);
 
@@ -1074,7 +1074,7 @@ CCAccelerometer* CCDirector::getAccelerometer()
 // so we now only support DisplayLinkDirector
 void CCDisplayLinkDirector::startAnimation(void)
 {
-    if (CCTime::gettimeofdayCocos2d(m_pLastUpdate, nullptr) != 0)
+    if (CCTime::gettimeofdayCocos2d(m_pLastUpdate, NULL) != 0)
     {
         CCLOG("cocos2d: DisplayLinkDirector: Error on gettimeofday");
     }

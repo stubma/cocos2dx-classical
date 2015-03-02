@@ -32,7 +32,7 @@ Widget* UIHelper::seekWidgetByTag(Widget* root, int tag)
 {
     if (!root)
     {
-        return nullptr;
+        return NULL;
     }
     if (root->getTag() == tag)
     {
@@ -44,19 +44,19 @@ Widget* UIHelper::seekWidgetByTag(Widget* root, int tag)
     {
         Widget* child = static_cast<Widget*>(arrayRootChildren->arr[i]);
         Widget* res = seekWidgetByTag(child,tag);
-        if (res != nullptr)
+        if (res != NULL)
         {
             return res;
         }
     }
-    return nullptr;
+    return NULL;
 }
 
 Widget* UIHelper::seekWidgetByName(Widget* root, const char *name)
 {
     if (!root)
     {
-        return nullptr;
+        return NULL;
     }
     if (strcmp(root->getName(), name) == 0)
     {
@@ -68,19 +68,19 @@ Widget* UIHelper::seekWidgetByName(Widget* root, const char *name)
     {
         Widget* child = static_cast<Widget*>(arrayRootChildren->arr[i]);
         Widget* res = seekWidgetByName(child,name);
-        if (res != nullptr)
+        if (res != NULL)
         {
             return res;
         }
     }
-    return nullptr;
+    return NULL;
 }
 
 Widget* UIHelper::seekWidgetByRelativeName(Widget *root, const char *name)
 {
     if (!root)
     {
-        return nullptr;
+        return NULL;
     }
     ccArray* arrayRootChildren = root->getChildren()->data;
     int length = arrayRootChildren->num;
@@ -93,7 +93,7 @@ Widget* UIHelper::seekWidgetByRelativeName(Widget *root, const char *name)
             return child;
         }
     }
-    return nullptr;
+    return NULL;
 }
 
 /*temp action*/
@@ -101,7 +101,7 @@ Widget* UIHelper::seekActionWidgetByActionTag(Widget* root, int tag)
 {
 	if (!root)
 	{
-		return nullptr;
+		return NULL;
 	}
 	if (root->getActionTag() == tag)
 	{
@@ -113,12 +113,12 @@ Widget* UIHelper::seekActionWidgetByActionTag(Widget* root, int tag)
 	{
 		Widget* child = static_cast<Widget*>(arrayRootChildren->arr[i]);
 		Widget* res = seekActionWidgetByActionTag(child,tag);
-		if (res != nullptr)
+		if (res != NULL)
 		{
 			return res;
 		}
 	}
-	return nullptr;
+	return NULL;
 }
 
 }

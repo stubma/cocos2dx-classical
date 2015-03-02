@@ -178,7 +178,7 @@ void CCInputDelegate::setAccelerometerEnabled(bool enabled)
         }
         else
         {
-            pDirector->getAccelerometer()->setDelegate(nullptr);
+            pDirector->getAccelerometer()->setDelegate(NULL);
         }
     }
 }

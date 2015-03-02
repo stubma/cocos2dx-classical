@@ -128,7 +128,7 @@ public:
 private:
     CCSchedulerScriptHandlerEntry(ccScriptFunction nHandler)
     : CCScriptHandlerEntry(nHandler)
-    , m_pTimer(nullptr)
+    , m_pTimer(NULL)
     , m_bPaused(false)
     , m_bMarkedForDeletion(false)
     {
@@ -207,7 +207,7 @@ public:
     virtual int executeGlobalFunction(const char* functionName) = 0;
     
     /** execute a callfun event */
-    virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = nullptr) = 0;
+    virtual int executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarget = NULL) = 0;
     /** execute a schedule function */
     virtual int executeSchedule(ccScriptFunction& func, float dt) = 0;
     
@@ -223,12 +223,12 @@ public:
      * @param func script funcation, if target is not null, it will be passed as first argument
      * @param pEventName event name
      */
-    virtual int executeEvent(ccScriptFunction& func, const char* pEventName, CCObject* collector = nullptr, SEL_ScriptReturnedValueCollector sel = nullptr) = 0;
+    virtual int executeEvent(ccScriptFunction& func, const char* pEventName, CCObject* collector = NULL, SEL_ScriptReturnedValueCollector sel = NULL) = 0;
     
     /** 
      * function for c++ call back lua funtion 
      */
-    virtual int executeEventWithArgs(ccScriptFunction& func, CCArray* pArgs, CCObject* collector = nullptr, SEL_ScriptReturnedValueCollector sel = nullptr) = 0;
+    virtual int executeEventWithArgs(ccScriptFunction& func, CCArray* pArgs, CCObject* collector = NULL, SEL_ScriptReturnedValueCollector sel = NULL) = 0;
     
     /// notify object destructor
     virtual void executeObjectDestructor(CCObject* obj) = 0;
@@ -272,7 +272,7 @@ public:
     
 private:
     CCScriptEngineManager(void)
-    : m_pScriptEngine(nullptr)
+    : m_pScriptEngine(NULL)
     {
     }
     

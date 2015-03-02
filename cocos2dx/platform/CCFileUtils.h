@@ -92,8 +92,8 @@ public:
      *  @param[in]  pszFileName The resource file name which contains the path.
      *  @param[in]  pszMode The read mode of the file.
      *  @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
-     *  @return Upon success, a pointer to the data is returned, otherwise nullptr.
-     *  @warning Recall: you are responsible for calling delete[] on any Non-nullptr pointer returned.
+     *  @return Upon success, a pointer to the data is returned, otherwise NULL.
+     *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
      *  @js NA
      */
     virtual unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize);
@@ -103,8 +103,8 @@ public:
      *
      *  @param[in]  pszFileName The resource file name which contains the relative path of the zip file.
      *  @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
-     *  @return Upon success, a pointer to the data is returned, otherwise nullptr.
-     *  @warning Recall: you are responsible for calling delete[] on any Non-nullptr pointer returned.
+     *  @return Upon success, a pointer to the data is returned, otherwise NULL.
+     *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
      *  @js NA
      */
     virtual unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize);

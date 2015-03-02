@@ -34,7 +34,7 @@ m_selectedColor(ccc4(0, 0, 0, 0)),
 m_disabledColor(ccc4(0, 0, 0, 0)),
 m_focusColor(ccc4(0, 0, 0, 0)),
 m_focus(false),
-m_stateListener(nullptr) {
+m_stateListener(NULL) {
     // init other
     m_bEnabled = true;
     m_tBlendFunc.src = CC_BLEND_SRC;
@@ -54,8 +54,8 @@ CCMenuItemColor* CCMenuItemColor::create(ccColor4B normal) {
                                  ccc4(0, 0, 0, 0),
                                  ccc4(0, 0, 0, 0),
                                  ccc4(0, 0, 0, 0),
-                                 nullptr,
-                                 nullptr);
+                                 NULL,
+                                 NULL);
     CC_SAFE_AUTORELEASE_RETURN(item, CCMenuItemColor*);
 }
 
@@ -65,8 +65,8 @@ CCMenuItemColor* CCMenuItemColor::create(ccColor4B normal, ccColor4B focus) {
                                  focus,
                                  ccc4(0, 0, 0, 0),
                                  ccc4(0, 0, 0, 0),
-                                 nullptr,
-                                 nullptr);
+                                 NULL,
+                                 NULL);
     CC_SAFE_AUTORELEASE_RETURN(item, CCMenuItemColor*);
 }
 
@@ -76,8 +76,8 @@ CCMenuItemColor* CCMenuItemColor::create(ccColor4B normal, ccColor4B selected, c
                                  focus,
                                  selected,
                                  ccc4(0, 0, 0, 0),
-                                 nullptr,
-                                 nullptr);
+                                 NULL,
+                                 NULL);
     CC_SAFE_AUTORELEASE_RETURN(item, CCMenuItemColor*);
 }
 
@@ -87,8 +87,8 @@ CCMenuItemColor* CCMenuItemColor::create(ccColor4B normal, ccColor4B selected, c
                                  focus,
                                  selected,
                                  disabled,
-                                 nullptr,
-                                 nullptr);
+                                 NULL,
+                                 NULL);
     CC_SAFE_AUTORELEASE_RETURN(item, CCMenuItemColor*);
 }
 

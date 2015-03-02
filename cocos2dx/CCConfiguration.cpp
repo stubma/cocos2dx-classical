@@ -38,7 +38,7 @@ using namespace std;
 NS_CC_BEGIN
 
 
-CCConfiguration* CCConfiguration::s_gSharedConfiguration = nullptr;
+CCConfiguration* CCConfiguration::s_gSharedConfiguration = NULL;
 
 CCConfiguration::CCConfiguration(void)
 : m_nMaxTextureSize(0) 
@@ -50,8 +50,8 @@ CCConfiguration::CCConfiguration(void)
 , m_bSupportsShareableVAO(false)
 , m_nMaxSamplesAllowed(0)
 , m_nMaxTextureUnits(0)
-, m_pGlExtensions(nullptr)
-, m_pValueDict(nullptr)
+, m_pGlExtensions(NULL)
+, m_pValueDict(NULL)
 {
 }
 

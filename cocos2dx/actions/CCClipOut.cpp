@@ -49,14 +49,14 @@ bool CCClipOut::initWithDuration(float d, const CCPoint& v) {
 }
 
 void CCClipOut::startWithTarget(CCNode *pTarget) {
-    CCAssert(dynamic_cast<CCClippingNode*>(pTarget) != nullptr, "CCClipOut target must be a CCClippingNode instance");
+    CCAssert(dynamic_cast<CCClippingNode*>(pTarget) != NULL, "CCClipOut target must be a CCClippingNode instance");
     
     CCActionInterval::startWithTarget(pTarget);
     
     // ensure the stencil of clipper is CCDrawNode
     CCClippingNode* clipper = (CCClippingNode*)pTarget;
     CCNode* stencil = clipper->getStencil();
-    if(dynamic_cast<CCDrawNode*>(stencil) == nullptr) {
+    if(dynamic_cast<CCDrawNode*>(stencil) == NULL) {
         clipper->setStencil(CCDrawNode::create());
     }
     

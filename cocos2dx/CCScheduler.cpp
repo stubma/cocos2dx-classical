@@ -70,7 +70,7 @@ typedef struct _hashSelectorEntry
 // implementation CCTimer
 
 CCTimer::CCTimer()
-: m_pTarget(nullptr)
+: m_pTarget(NULL)
 , m_fElapsed(-1)
 , m_bRunForever(false)
 , m_bUseDelay(false)
@@ -78,7 +78,7 @@ CCTimer::CCTimer()
 , m_uRepeat(0)
 , m_fDelay(0.0f)
 , m_fInterval(0.0f)
-, m_pfnSelector(nullptr)
+, m_pfnSelector(NULL)
 {
     memset(&m_nScriptHandler, 0, sizeof(ccScriptFunction));
 }
@@ -239,15 +239,15 @@ SEL_SCHEDULE CCTimer::getSelector() const
 
 CCScheduler::CCScheduler(void)
 : m_fTimeScale(1.0f)
-, m_pUpdatesNegList(nullptr)
-, m_pUpdates0List(nullptr)
-, m_pUpdatesPosList(nullptr)
-, m_pHashForUpdates(nullptr)
-, m_pHashForTimers(nullptr)
-, m_pCurrentTarget(nullptr)
+, m_pUpdatesNegList(NULL)
+, m_pUpdates0List(NULL)
+, m_pUpdatesPosList(NULL)
+, m_pHashForUpdates(NULL)
+, m_pHashForTimers(NULL)
+, m_pCurrentTarget(NULL)
 , m_bCurrentTargetSalvaged(false)
 , m_bUpdateHashLocked(false)
-, m_pScriptHandlerEntries(nullptr)
+, m_pScriptHandlerEntries(NULL)
 {
 
 }
@@ -281,10 +281,10 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, 
 
 void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, unsigned int repeat, float delay, bool bPaused)
 {
-    CCAssert(pfnSelector, "Argument selector must be non-nullptr");
-    CCAssert(pTarget, "Argument target must be non-nullptr");
+    CCAssert(pfnSelector, "Argument selector must be non-NULL");
+    CCAssert(pTarget, "Argument target must be non-NULL");
 
-    tHashTimerEntry *pElement = nullptr;
+    tHashTimerEntry *pElement = NULL;
     HASH_FIND_INT(m_pHashForTimers, &pTarget, pElement);
 
     if (! pElement)
@@ -305,7 +305,7 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, 
         CCAssert(pElement->paused == bPaused, "");
     }
 
-    if (pElement->timers == nullptr)
+    if (pElement->timers == NULL)
     {
         pElement->timers = ccArrayNew(10);
     }
@@ -342,7 +342,7 @@ void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget
     //CCAssert(pTarget);
     //CCAssert(pfnSelector);
 
-    tHashTimerEntry *pElement = nullptr;
+    tHashTimerEntry *pElement = NULL;
     HASH_FIND_INT(m_pHashForTimers, &pTarget, pElement);
 
     if (pElement)
@@ -392,7 +392,7 @@ void CCScheduler::priorityIn(tListEntry **ppList, CCObject *pTarget, int nPriori
     pListElement->target = pTarget;
     pListElement->priority = nPriority;
     pListElement->paused = bPaused;
-    pListElement->next = pListElement->prev = nullptr;
+    pListElement->next = pListElement->prev = NULL;
     pListElement->markedForDeletion = false;
 
     // empty list ?
@@ -464,7 +464,7 @@ void CCScheduler::appendIn(_listEntry **ppList, CCObject *pTarget, bool bPaused)
 void CCScheduler::scheduleUpdateForTarget(CCObject *pTarget, int nPriority, bool bPaused)
 {
 
-    tHashUpdateEntry *pHashElement = nullptr;
+    tHashUpdateEntry *pHashElement = NULL;
     HASH_FIND_INT(m_pHashForUpdates, &pTarget, pHashElement);
     if (pHashElement)
     {
@@ -496,7 +496,7 @@ void CCScheduler::scheduleUpdateForTarget(CCObject *pTarget, int nPriority, bool
 
 void CCScheduler::removeUpdateFromHash(struct _listEntry *entry)
 {
-    tHashUpdateEntry *element = nullptr;
+    tHashUpdateEntry *element = NULL;
 
     HASH_FIND_INT(m_pHashForUpdates, &entry->target, element);
     if (element)
@@ -518,12 +518,12 @@ void CCScheduler::removeUpdateFromHash(struct _listEntry *entry)
 
 void CCScheduler::unscheduleUpdateForTarget(const CCObject *pTarget)
 {
-    if (pTarget == nullptr)
+    if (pTarget == NULL)
     {
         return;
     }
 
-    tHashUpdateEntry *pElement = nullptr;
+    tHashUpdateEntry *pElement = NULL;
     HASH_FIND_INT(m_pHashForUpdates, &pTarget, pElement);
     if (pElement)
     {
@@ -546,9 +546,9 @@ void CCScheduler::unscheduleAll(void)
 void CCScheduler::unscheduleAllWithMinPriority(int nMinPriority)
 {
     // Custom Selectors
-    tHashTimerEntry *pElement = nullptr;
-    tHashTimerEntry *pNextElement = nullptr;
-    for (pElement = m_pHashForTimers; pElement != nullptr;)
+    tHashTimerEntry *pElement = NULL;
+    tHashTimerEntry *pNextElement = NULL;
+    for (pElement = m_pHashForTimers; pElement != NULL;)
     {
         // pElement may be removed in unscheduleAllSelectorsForTarget
         pNextElement = (tHashTimerEntry *)pElement->hh.next;
@@ -594,14 +594,14 @@ void CCScheduler::unscheduleAllWithMinPriority(int nMinPriority)
 
 void CCScheduler::unscheduleAllForTarget(CCObject *pTarget)
 {
-    // explicit nullptr handling
-    if (pTarget == nullptr)
+    // explicit NULL handling
+    if (pTarget == NULL)
     {
         return;
     }
 
     // Custom Selectors
-    tHashTimerEntry *pElement = nullptr;
+    tHashTimerEntry *pElement = NULL;
     HASH_FIND_INT(m_pHashForTimers, &pTarget, pElement);
 
     if (pElement)
@@ -667,10 +667,10 @@ void CCScheduler::unscheduleScriptEntry(unsigned int uScheduleScriptEntryID)
 
 void CCScheduler::resumeTarget(CCObject *pTarget)
 {
-    CCAssert(pTarget != nullptr, "");
+    CCAssert(pTarget != NULL, "");
 
     // custom selectors
-    tHashTimerEntry *pElement = nullptr;
+    tHashTimerEntry *pElement = NULL;
     HASH_FIND_INT(m_pHashForTimers, &pTarget, pElement);
     if (pElement)
     {
@@ -678,21 +678,21 @@ void CCScheduler::resumeTarget(CCObject *pTarget)
     }
 
     // update selector
-    tHashUpdateEntry *pElementUpdate = nullptr;
+    tHashUpdateEntry *pElementUpdate = NULL;
     HASH_FIND_INT(m_pHashForUpdates, &pTarget, pElementUpdate);
     if (pElementUpdate)
     {
-        CCAssert(pElementUpdate->entry != nullptr, "");
+        CCAssert(pElementUpdate->entry != NULL, "");
         pElementUpdate->entry->paused = false;
     }
 }
 
 void CCScheduler::pauseTarget(CCObject *pTarget)
 {
-    CCAssert(pTarget != nullptr, "");
+    CCAssert(pTarget != NULL, "");
 
     // custom selectors
-    tHashTimerEntry *pElement = nullptr;
+    tHashTimerEntry *pElement = NULL;
     HASH_FIND_INT(m_pHashForTimers, &pTarget, pElement);
     if (pElement)
     {
@@ -700,21 +700,21 @@ void CCScheduler::pauseTarget(CCObject *pTarget)
     }
 
     // update selector
-    tHashUpdateEntry *pElementUpdate = nullptr;
+    tHashUpdateEntry *pElementUpdate = NULL;
     HASH_FIND_INT(m_pHashForUpdates, &pTarget, pElementUpdate);
     if (pElementUpdate)
     {
-        CCAssert(pElementUpdate->entry != nullptr, "");
+        CCAssert(pElementUpdate->entry != NULL, "");
         pElementUpdate->entry->paused = true;
     }
 }
 
 bool CCScheduler::isTargetPaused(CCObject *pTarget)
 {
-    CCAssert( pTarget != nullptr, "target must be non nil" );
+    CCAssert( pTarget != NULL, "target must be non nil" );
 
     // Custom selectors
-    tHashTimerEntry *pElement = nullptr;
+    tHashTimerEntry *pElement = NULL;
     HASH_FIND_INT(m_pHashForTimers, &pTarget, pElement);
     if( pElement )
     {
@@ -722,7 +722,7 @@ bool CCScheduler::isTargetPaused(CCObject *pTarget)
     }
     
     // We should check update selectors if target does not have custom selectors
-	tHashUpdateEntry *elementUpdate = nullptr;
+	tHashUpdateEntry *elementUpdate = NULL;
 	HASH_FIND_INT(m_pHashForUpdates, &pTarget, elementUpdate);
 	if ( elementUpdate )
     {
@@ -743,7 +743,7 @@ CCSet* CCScheduler::pauseAllTargetsWithMinPriority(int nMinPriority)
     CC_SAFE_AUTORELEASE(idsWithSelectors);
 
     // Custom Selectors
-    for(tHashTimerEntry *element = m_pHashForTimers; element != nullptr;
+    for(tHashTimerEntry *element = m_pHashForTimers; element != NULL;
         element = (tHashTimerEntry*)element->hh.next)
     {
         element->paused = true;
@@ -835,7 +835,7 @@ void CCScheduler::update(float dt)
     }
 
     // Iterate over all the custom selectors
-    for (tHashTimerEntry *elt = m_pHashForTimers; elt != nullptr; )
+    for (tHashTimerEntry *elt = m_pHashForTimers; elt != NULL; )
     {
         m_pCurrentTarget = elt;
         m_bCurrentTargetSalvaged = false;
@@ -858,7 +858,7 @@ void CCScheduler::update(float dt)
                     CC_SAFE_RELEASE(elt->currentTimer);
                 }
 
-                elt->currentTimer = nullptr;
+                elt->currentTimer = NULL;
             }
         }
 
@@ -920,7 +920,7 @@ void CCScheduler::update(float dt)
 
     m_bUpdateHashLocked = false;
 
-    m_pCurrentTarget = nullptr;
+    m_pCurrentTarget = NULL;
 }
 
 

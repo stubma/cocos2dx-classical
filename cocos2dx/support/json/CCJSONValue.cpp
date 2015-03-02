@@ -39,9 +39,9 @@ bool CCJSONValue::castToBool(CCJSONObject::KeyValue& kv) {
 		case CCJSONObject::STRING:
 			return !strcmp("true", kv.v.s);
 		case CCJSONObject::OBJECT:
-			return kv.v.jo != nullptr;
+			return kv.v.jo != NULL;
 		case CCJSONObject::ARRAY:
-			return kv.v.ja != nullptr;
+			return kv.v.ja != NULL;
 		default:
 			CCLOGERROR("CCJSONValue::castToBool: unexpected json value type: %d", kv.t);
 			return false;
@@ -126,7 +126,7 @@ CCJSONObject* CCJSONValue::castToObject(CCJSONObject::KeyValue& kv) {
 		case CCJSONObject::BOOLEAN:
 		case CCJSONObject::STRING:
 		case CCJSONObject::ARRAY:
-			return nullptr;
+			return NULL;
 		case CCJSONObject::OBJECT:
 			return kv.v.jo;
 		default:
@@ -141,7 +141,7 @@ CCJSONArray* CCJSONValue::castToArray(CCJSONObject::KeyValue& kv) {
 		case CCJSONObject::BOOLEAN:
 		case CCJSONObject::STRING:
 		case CCJSONObject::OBJECT:
-			return nullptr;
+			return NULL;
 		case CCJSONObject::ARRAY:
 			return kv.v.ja;
 		default:
@@ -153,7 +153,7 @@ CCJSONArray* CCJSONValue::castToArray(CCJSONObject::KeyValue& kv) {
 const char* CCJSONValue::castToString(CCJSONObject::KeyValue& kv) {
 	switch(kv.t) {
 		case CCJSONObject::NIL:
-			return nullptr;
+			return NULL;
 		case CCJSONObject::BOOLEAN:
 			if(kv.v.b) {
 				sprintf(s_buf, "true");
@@ -171,7 +171,7 @@ const char* CCJSONValue::castToString(CCJSONObject::KeyValue& kv) {
 			return s_buf;
 		default:
 			CCLOGERROR("CCJSONValue::castToString: unexpected json value type: %d", kv.t);
-			return nullptr;
+			return NULL;
 	}
 }
 

@@ -27,7 +27,7 @@
 NS_CC_BEGIN
 
 CCTMXTileSetInfo::CCTMXTileSetInfo() :
-m_texture(nullptr),
+m_texture(NULL),
 m_imageHeight(0),
 m_imageWidth(0),
 m_spacing(0),

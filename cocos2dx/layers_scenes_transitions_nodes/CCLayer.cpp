@@ -46,9 +46,9 @@ CCLayer::CCLayer()
 : m_bTouchEnabled(false)
 , m_bAccelerometerEnabled(false)
 , m_bKeypadEnabled(false)
-, m_pScriptTouchHandlerEntry(nullptr)
-, m_pScriptKeypadHandlerEntry(nullptr)
-, m_pScriptAccelerateHandlerEntry(nullptr)
+, m_pScriptTouchHandlerEntry(NULL)
+, m_pScriptKeypadHandlerEntry(NULL)
+, m_pScriptAccelerateHandlerEntry(NULL)
 , m_nTouchPriority(0)
 , m_bSwallowTouch(true)
 , m_eTouchMode(kCCTouchesAllAtOnce)
@@ -91,7 +91,7 @@ CCLayer *CCLayer::create()
     else
     {
         CC_SAFE_DELETE(pRet);
-        return nullptr;
+        return NULL;
     }
 }
 
@@ -229,7 +229,7 @@ void CCLayer::setAccelerometerEnabled(bool enabled)
             }
             else
             {
-                pDirector->getAccelerometer()->setDelegate(nullptr);
+                pDirector->getAccelerometer()->setDelegate(NULL);
             }
         }
     }
@@ -364,7 +364,7 @@ void CCLayer::onExit()
     // remove this layer from the delegates who concern Accelerometer Sensor
     if (m_bAccelerometerEnabled)
     {
-        pDirector->getAccelerometer()->setDelegate(nullptr);
+        pDirector->getAccelerometer()->setDelegate(NULL);
     }
 
     // remove this layer from the delegates who concern the keypad msg
@@ -573,7 +573,7 @@ void CCLayerRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
     
     if (_cascadeOpacityEnabled)
     {
-        CCObject *obj = nullptr;
+        CCObject *obj = NULL;
         CCARRAY_FOREACH(m_pChildren, obj)
         {
             CCRGBAProtocol *item = dynamic_cast<CCRGBAProtocol*>(obj);
@@ -593,7 +593,7 @@ void CCLayerRGBA::updateDisplayedColor(const ccColor3B& parentColor)
     
     if (_cascadeColorEnabled)
     {
-        CCObject *obj = nullptr;
+        CCObject *obj = NULL;
         CCARRAY_FOREACH(m_pChildren, obj)
         {
             CCRGBAProtocol *item = dynamic_cast<CCRGBAProtocol*>(obj);
@@ -672,7 +672,7 @@ CCLayerColor * CCLayerColor::create(const ccColor4B& color, GLfloat width, GLflo
         return pLayer;
     }
     CC_SAFE_DELETE(pLayer);
-    return nullptr;
+    return NULL;
 }
 
 CCLayerColor * CCLayerColor::create(const ccColor4B& color)
@@ -684,7 +684,7 @@ CCLayerColor * CCLayerColor::create(const ccColor4B& color)
         return pLayer;
     }
     CC_SAFE_DELETE(pLayer);
-    return nullptr;
+    return NULL;
 }
 
 bool CCLayerColor::init()
@@ -817,7 +817,7 @@ CCLayerGradient* CCLayerGradient::create(const ccColor4B& start, const ccColor4B
         return pLayer;
     }
     CC_SAFE_DELETE(pLayer);
-    return nullptr;
+    return NULL;
 }
 
 CCLayerGradient* CCLayerGradient::create(const ccColor4B& start, const ccColor4B& end, const CCPoint& v)
@@ -829,7 +829,7 @@ CCLayerGradient* CCLayerGradient::create(const ccColor4B& start, const ccColor4B
         return pLayer;
     }
     CC_SAFE_DELETE(pLayer);
-    return nullptr;
+    return NULL;
 }
 
 CCLayerGradient* CCLayerGradient::create()
@@ -996,7 +996,7 @@ void CCLayerGradient::setCompressedInterpolation(bool compress)
 
 CCLayerMultiplex::CCLayerMultiplex() :
 m_nEnabledLayer(0),
-m_pLayers(nullptr) {
+m_pLayers(NULL) {
 }
 
 CCLayerMultiplex::~CCLayerMultiplex() {
@@ -1017,11 +1017,11 @@ CCLayerMultiplex* CCLayerMultiplex::create(CCLayer * layer, ...) {
     
     va_end(args);
     CC_SAFE_DELETE(pMultiplexLayer);
-    return nullptr;
+    return NULL;
 }
 
 CCLayerMultiplex* CCLayerMultiplex::createWithLayer(CCLayer* layer) {
-    return CCLayerMultiplex::create(layer, nullptr);
+    return CCLayerMultiplex::create(layer, NULL);
 }
 
 CCLayerMultiplex* CCLayerMultiplex::create() {

@@ -83,7 +83,7 @@ CCTextFieldTTF * CCTextFieldTTF::textFieldWithPlaceHolder(const char *placeholde
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return nullptr;
+    return NULL;
 }
 
 CCTextFieldTTF * CCTextFieldTTF::textFieldWithPlaceHolder(const char *placeholder, const char *fontName, float fontSize)
@@ -99,7 +99,7 @@ CCTextFieldTTF * CCTextFieldTTF::textFieldWithPlaceHolder(const char *placeholde
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return nullptr;
+    return NULL;
 }
 
 //////////////////////////////////////////////////////////////////////////

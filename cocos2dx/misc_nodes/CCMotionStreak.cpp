@@ -37,7 +37,7 @@ NS_CC_BEGIN
 CCMotionStreak::CCMotionStreak()
 : m_bFastMode(false)
 , m_bStartingPositionInitialized(false)
-, m_pTexture(nullptr)
+, m_pTexture(NULL)
 , m_tPositionR(CCPointZero)
 , m_fStroke(0.0f)
 , m_fFadeDelta(0.0f)
@@ -45,11 +45,11 @@ CCMotionStreak::CCMotionStreak()
 , m_uMaxPoints(0)
 , m_uNuPoints(0)
 , m_uPreviousNuPoints(0)
-, m_pPointVertexes(nullptr)
-, m_pPointState(nullptr)
-, m_pVertices(nullptr)
-, m_pColorPointer(nullptr)
-, m_pTexCoords(nullptr)
+, m_pPointVertexes(NULL)
+, m_pPointState(NULL)
+, m_pVertices(NULL)
+, m_pColorPointer(NULL)
+, m_pTexCoords(NULL)
 {
     m_tBlendFunc.src = GL_SRC_ALPHA;
     m_tBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
@@ -75,7 +75,7 @@ CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, c
     }
 
     CC_SAFE_DELETE(pRet);
-    return nullptr;
+    return NULL;
 }
 
 CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, const ccColor3B& color, CCTexture2D* texture)
@@ -88,12 +88,12 @@ CCMotionStreak* CCMotionStreak::create(float fade, float minSeg, float stroke, c
     }
 
     CC_SAFE_DELETE(pRet);
-    return nullptr;
+    return NULL;
 }
 
 bool CCMotionStreak::initWithFade(float fade, float minSeg, float stroke, const ccColor3B& color, const char* path)
 {
-    CCAssert(path != nullptr, "Invalid filename");
+    CCAssert(path != NULL, "Invalid filename");
 
     CCTexture2D *texture = CCTextureCache::sharedTextureCache()->addImage(path);
     return initWithFade(fade, minSeg, stroke, color, texture);

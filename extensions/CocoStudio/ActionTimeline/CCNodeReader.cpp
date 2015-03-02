@@ -100,12 +100,12 @@ NodeCreateCallFunc* NodeCreateCallFunc::create(CCObject* target, NodeCreateCallb
         return func;
     }
     CC_SAFE_DELETE(func);
-    return nullptr;
+    return NULL;
 }
 
 NodeCreateCallFunc::NodeCreateCallFunc()
-    : _target(nullptr)
-    , _callback(nullptr)
+    : _target(NULL)
+    , _callback(NULL)
 {
 }
 
@@ -116,7 +116,7 @@ NodeCreateCallFunc::~NodeCreateCallFunc()
 
 bool NodeCreateCallFunc::init(CCObject* target, NodeCreateCallback callback)
 {
-    if(target == nullptr)
+    if(target == NULL)
         return false;
 
     _target = target;
@@ -163,7 +163,7 @@ bool TimelineActionData::init(int actionTag)
 
 // NodeReader
 
-static NodeReader* _sharedNodeReader = nullptr;
+static NodeReader* _sharedNodeReader = NULL;
 
 NodeReader* NodeReader::getInstance()
 {
@@ -289,12 +289,12 @@ cocos2d::CCNode* NodeReader::loadNodeWithContent(const std::string& content)
 
 cocos2d::CCNode* NodeReader::loadNode(const rapidjson::Value& json, cocos2d::CCNode* parent)
 {
-    cocos2d::CCNode* node = nullptr;
+    cocos2d::CCNode* node = NULL;
 
     std::string nodeType = DICTOOL->getStringValue_json(json, NODETYPE);
 
     NodeCreateCallFunc* func = static_cast<NodeCreateCallFunc*>(_funcs->objectForKey(nodeType));
-    if (func != nullptr)
+    if (func != NULL)
     {
         if (isUiWidget(nodeType))
         {
@@ -331,7 +331,7 @@ cocos2d::CCNode* NodeReader::loadNode(const rapidjson::Value& json, cocos2d::CCN
             {
                 const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, CHILDREN, i);
                 cocos2d::CCNode* child = loadNode(dic, node);
-                if (child && child->getParent() == nullptr)
+                if (child && child->getParent() == NULL)
                 {
                     node->addChild(child);
                 }
@@ -413,7 +413,7 @@ CCNode* NodeReader::loadSimpleNode(const rapidjson::Value& json, cocos2d::CCNode
 {
     const char* filePath = DICTOOL->getStringValue_json(json, FILE_PATH);
 
-    CCNode* node = nullptr;
+    CCNode* node = NULL;
     if(filePath)
     {
         node = createNode(filePath);
@@ -432,9 +432,9 @@ CCNode* NodeReader::loadSprite(const rapidjson::Value& json, cocos2d::CCNode* pa
 {
     const char* filePath = DICTOOL->getStringValue_json(json, FILE_PATH);
 
-    CCSprite *sprite = nullptr;
+    CCSprite *sprite = NULL;
 
-	if(filePath != nullptr)
+	if(filePath != NULL)
 	{
         std::string path = filePath;
 		CCSpriteFrame* spriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(path.c_str());
@@ -448,7 +448,7 @@ CCNode* NodeReader::loadSprite(const rapidjson::Value& json, cocos2d::CCNode* pa
 			sprite = CCSprite::createWithSpriteFrame(spriteFrame);
 		}
 
-		if(sprite == nullptr)
+		if(sprite == NULL)
 			CCLOG("create sprite with file name : %s  failed.", filePath);
 	}
 	else

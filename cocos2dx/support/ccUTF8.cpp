@@ -1127,7 +1127,7 @@ int cc_wcslen(const unsigned short* str)
 
 long cc_utf8_strlen (const char * p)
 {
-    if (p == nullptr)
+    if (p == NULL)
         return 0;
     return getCharacterCountInUTF8String(p);
 }
@@ -1144,12 +1144,12 @@ std::vector<unsigned short> cc_utf16_vec_from_utf16_str(const unsigned short* st
     return str_new;
 }
 
-unsigned short* cc_utf8_to_utf16(const char* utf8, int* outUTF16CharacterCount /*= nullptr*/)
+unsigned short* cc_utf8_to_utf16(const char* utf8, int* outUTF16CharacterCount /*= NULL*/)
 {
-    if (utf8 == nullptr)
-        return nullptr;
+    if (utf8 == NULL)
+        return NULL;
     
-    unsigned short* ret = nullptr;
+    unsigned short* ret = NULL;
     
     std::string utf8Str = utf8;
     
@@ -1158,7 +1158,7 @@ unsigned short* cc_utf8_to_utf16(const char* utf8, int* outUTF16CharacterCount /
     memset(utf16, 0, utf16Size * sizeof(unsigned short));
     
     char* utf16ptr = reinterpret_cast<char*>(utf16);
-    const UTF8* error = nullptr;
+    const UTF8* error = NULL;
     
     if (utf8Str.empty() || llvm::ConvertUTF8toWide(2, utf8Str, utf16ptr, error))
     {
@@ -1176,10 +1176,10 @@ unsigned short* cc_utf8_to_utf16(const char* utf8, int* outUTF16CharacterCount /
     return ret;
 }
 
-char * cc_utf16_to_utf8(const unsigned short* utf16, int* outUTF8CharacterCount /*= nullptr*/)
+char * cc_utf16_to_utf8(const unsigned short* utf16, int* outUTF8CharacterCount /*= NULL*/)
 {
-    if (utf16 == nullptr)
-        return nullptr;
+    if (utf16 == NULL)
+        return NULL;
     
     CCWideString utf16Str;
     int utf16Len = cc_wcslen(utf16);
@@ -1189,7 +1189,7 @@ char * cc_utf16_to_utf8(const unsigned short* utf16, int* outUTF8CharacterCount 
         utf16Str.push_back(utf16[i]);
     }
     
-    char* ret = nullptr;
+    char* ret = NULL;
     std::string outUtf8;
     
     if (utf16Len == 0 || llvm::convertUTF16ToUTF8String(utf16Str, outUtf8))
