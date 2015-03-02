@@ -45,6 +45,30 @@ static uint32_t lpk_get_file_hash_table_index_by_hash(lpk_file* lpk, uint32_t ha
     }
 }
     
+static uint32_t lpk_delete_hash(lpk_file* lpk, uint32_t hashIndex) {
+    // mark
+    lpk_hash* hash = lpk->het + hashIndex;
+    hash->flags |= LPK_FLAG_DELETED;
+    
+    // fix prev hash next link
+    if(hash->prev_hash != LPK_INDEX_INVALID) {
+        lpk->het[hash->prev_hash].next_hash = hash->next_hash;
+    }
+    
+    // swap hash and next hash
+    lpk_hash* nextHash = hash->next_hash == LPK_INDEX_INVALID ? NULL : (lpk->het + hash->next_hash);
+    if(nextHash) {
+        lpk_hash tmp;
+        memcpy(&tmp, hash, sizeof(lpk_hash));
+        memcpy(hash, nextHash, sizeof(lpk_hash));
+        hash->prev_hash = tmp.prev_hash;
+        memcpy(nextHash, &tmp, sizeof(lpk_hash));
+        return tmp.next_hash;
+    } else {
+        return hashIndex;
+    }
+}
+    
 static uint32_t lpk_find_deleted_hash(lpk_file* lpk, int blockCount) {
     if(lpk->h.deleted_hash != LPK_INDEX_INVALID) {
         uint32_t blockSize = 512 << lpk->h.block_size;
@@ -65,8 +89,9 @@ static uint32_t lpk_find_deleted_hash(lpk_file* lpk, int blockCount) {
     return LPK_INDEX_INVALID;
 }
     
-static void lpk_release_deleted_hash(lpk_file* lpk, lpk_hash* deleted_hash) {
+static void lpk_release_deleted_hash(lpk_file* lpk, uint32_t deletedHashIndex) {
     // unlink
+    lpk_hash* deleted_hash = lpk->het + deletedHashIndex;
     if(deleted_hash->prev_hash == LPK_INDEX_INVALID) {
         lpk->h.deleted_hash = deleted_hash->next_hash;
     } else {
@@ -77,7 +102,7 @@ static void lpk_release_deleted_hash(lpk_file* lpk, lpk_hash* deleted_hash) {
     }
     
     // flag it as unused
-    deleted_hash->flags = 0;
+    memset(deleted_hash, 0, sizeof(lpk_hash));
 }
     
 static void lpk_link_deleted_hash(lpk_file* lpk, uint32_t hashIndex) {
@@ -495,37 +520,8 @@ int lpk_apply_patch(lpk_file* lpk, lpk_file* patch) {
         if(patchHash->flags & LPK_FLAG_DELETED) {
             hashIndex = lpk_get_file_hash_table_index_by_hash(lpk, patchHash->hash_i, patchHash->hash_a, patchHash->hash_b, patchHash->locale, patchHash->platform);
             if(hashIndex != LPK_INDEX_INVALID) {
-                hash = lpk->het + hashIndex;
-                if(hash->prev_hash == LPK_INDEX_INVALID) {
-                    if(hash->next_hash == LPK_INDEX_INVALID) {
-                        hash->flags |= LPK_FLAG_DELETED;
-                        lpk_link_deleted_hash(lpk, hashIndex);
-                    } else {
-                        lpk_hash tmp;
-                        memcpy(&tmp, hash, sizeof(lpk_hash));
-                        lpk_hash* nextHash = lpk->het + hash->next_hash;
-                        memcpy(hash, nextHash, sizeof(lpk_hash));
-                        hash->prev_hash = LPK_INDEX_INVALID;
-                        memcpy(nextHash, &tmp, sizeof(lpk_hash));
-                        nextHash->flags |= LPK_FLAG_DELETED;
-                        lpk_link_deleted_hash(lpk, tmp.next_hash);
-                    }
-                } else {
-                    if(hash->next_hash == LPK_INDEX_INVALID) {
-                        lpk->het[hash->prev_hash].next_hash = LPK_INDEX_INVALID;
-                        hash->flags |= LPK_FLAG_DELETED;
-                        lpk_link_deleted_hash(lpk, hashIndex);
-                    } else {
-                        lpk_hash tmp;
-                        memcpy(&tmp, hash, sizeof(lpk_hash));
-                        lpk_hash* nextHash = lpk->het + hash->next_hash;
-                        memcpy(hash, nextHash, sizeof(lpk_hash));
-                        hash->prev_hash = tmp.prev_hash;
-                        memcpy(nextHash, &tmp, sizeof(lpk_hash));
-                        nextHash->flags |= LPK_FLAG_DELETED;
-                        lpk_link_deleted_hash(lpk, tmp.next_hash);
-                    }
-                }
+                uint32_t deletedHashIndex = lpk_delete_hash(lpk, hashIndex);
+                lpk_link_deleted_hash(lpk, deletedHashIndex);
             }
         } else if(!(hash->flags & LPK_FLAG_USED)) {
             // seek
@@ -556,7 +552,7 @@ int lpk_apply_patch(lpk_file* lpk, lpk_file* patch) {
                     deletedHash->offset += blockCount * blockSize;
                     deletedHash->packed_size = deletedHash->file_size = (deletedBlockCount - blockCount) * blockSize;
                 } else {
-                    lpk_release_deleted_hash(lpk, deletedHash);
+                    lpk_release_deleted_hash(lpk, deletedHashIndex);
                 }
                 
                 // copy
@@ -610,7 +606,7 @@ int lpk_apply_patch(lpk_file* lpk, lpk_file* patch) {
                     deletedHash->offset += blockCount * blockSize;
                     deletedHash->packed_size = deletedHash->file_size = (deletedBlockCount - blockCount) * blockSize;
                 } else {
-                    lpk_release_deleted_hash(lpk, deletedHash);
+                    lpk_release_deleted_hash(lpk, deletedHashIndex);
                 }
                 
                 // copy
@@ -632,13 +628,13 @@ int lpk_apply_patch(lpk_file* lpk, lpk_file* patch) {
                 return LPK_ERROR_READ;
             }
             
+            int blockCount = (patchHash->packed_size + blockSize - 1) / blockSize;
             uint32_t matchedHashIndex = lpk_get_file_hash_table_index_by_hash(lpk, patchHash->hash_i, patchHash->hash_a, patchHash->hash_b, patchHash->locale, patchHash->platform);
             if(matchedHashIndex == LPK_INDEX_INVALID) {
                 // next free hash index
                 freeHashIndex = lpk_next_free_hash_index(lpk, freeHashIndex);
                 
                 // copy patch hash, reused deleted blocks or add new file to archive end
-                int blockCount = (patchHash->packed_size + blockSize - 1) / blockSize;
                 uint32_t deletedHashIndex = lpk_find_deleted_hash(lpk, blockCount);
                 if(deletedHashIndex == LPK_INDEX_INVALID) {
                     lpk_copy_hash(lpk, freeHashIndex, patchHash, fileData, newHashTableOffset);
@@ -653,7 +649,7 @@ int lpk_apply_patch(lpk_file* lpk, lpk_file* patch) {
                         deletedHash->offset += blockCount * blockSize;
                         deletedHash->packed_size = deletedHash->file_size = (deletedBlockCount - blockCount) * blockSize;
                     } else {
-                        lpk_release_deleted_hash(lpk, deletedHash);
+                        lpk_release_deleted_hash(lpk, deletedHashIndex);
                     }
                     
                     // copy
@@ -666,7 +662,23 @@ int lpk_apply_patch(lpk_file* lpk, lpk_file* patch) {
                 lpk->het[hash->next_hash].prev_hash = freeHashIndex;
                 hash->next_hash = freeHashIndex;
             } else {
-                
+                hash = lpk->het + matchedHashIndex;
+                int oldBlockCount = (hash->packed_size + blockSize - 1) / blockSize;
+                if(oldBlockCount == blockCount) {
+                    uint32_t savedNextHash = hash->next_hash;
+                    uint32_t savedPrevHash = hash->prev_hash;
+                    lpk_copy_hash(lpk, matchedHashIndex, patchHash, fileData, hash->offset);
+                    hash->next_hash = savedNextHash;
+                    hash->prev_hash = savedPrevHash;
+                } else if(oldBlockCount < blockCount) {
+                    // block count is not enough, recycle this hash
+                    uint32_t deletedHashIndex = lpk_delete_hash(lpk, matchedHashIndex);
+                    lpk_link_deleted_hash(lpk, deletedHashIndex);
+                    
+                    
+                } else {
+                    
+                }
             }
             
             // free
@@ -714,7 +726,7 @@ int lpk_apply_patch(lpk_file* lpk, lpk_file* patch) {
                     deletedHash->offset += blockCount * blockSize;
                     deletedHash->packed_size = deletedHash->file_size = (deletedBlockCount - blockCount) * blockSize;
                 } else {
-                    lpk_release_deleted_hash(lpk, deletedHash);
+                    lpk_release_deleted_hash(lpk, deletedHashIndex);
                 }
                 
                 // copy
