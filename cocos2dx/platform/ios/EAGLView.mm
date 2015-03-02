@@ -220,9 +220,9 @@ static EAGLView *view = 0;
     CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
     
     eaglLayer.opaque = YES;
-    eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    [NSNumber numberWithBool:preserveBackbuffer_], kEAGLDrawablePropertyRetainedBacking,
-                                    pixelformat_, kEAGLDrawablePropertyColorFormat, nil];
+    eaglLayer.drawableProperties = @{ kEAGLDrawablePropertyRetainedBacking : [NSNumber numberWithBool:preserveBackbuffer_],
+                                      kEAGLDrawablePropertyColorFormat : pixelformat_
+                                    };
     
     
     renderer_ = [[CCES2Renderer alloc] initWithDepthFormat:depthFormat_
