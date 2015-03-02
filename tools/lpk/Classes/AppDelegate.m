@@ -18,6 +18,15 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     initConsts();
+    
+    lpk_file lpk;
+    lpk_open_file(&lpk, "/Users/maruojie/Documents/Test.lpk");
+    lpk_file patch;
+    lpk_open_file(&patch, "/Users/maruojie/Documents/Untitled.lpk");
+    lpk_apply_patch(&lpk, &patch);
+    
+    lpk_close_file(&lpk);
+    lpk_close_file(&patch);
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

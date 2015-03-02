@@ -620,11 +620,57 @@ int lpk_apply_patch(lpk_file* lpk, lpk_file* patch) {
             // free
             free(fileData);
         } else if(hash->prev_hash == LPK_INDEX_INVALID) {
-            hashIndex = lpk_get_file_hash_table_index_by_hash(lpk, patchHash->hash_i, patchHash->hash_a, patchHash->hash_b, patchHash->locale, patchHash->platform);
-            if(hashIndex == LPK_INDEX_INVALID) {
+            // seek
+            if(fseeko(patch->fp, patchHash->offset, SEEK_SET) > 0) {
+                return LPK_ERROR_SEEK;
+            }
+            
+            // read out new file data
+            uint8_t* fileData = (uint8_t*)malloc(sizeof(uint8_t) * patchHash->packed_size);
+            if(fread(fileData, patchHash->packed_size, 1, patch->fp) != 1) {
+                free(fileData);
+                return LPK_ERROR_READ;
+            }
+            
+            uint32_t matchedHashIndex = lpk_get_file_hash_table_index_by_hash(lpk, patchHash->hash_i, patchHash->hash_a, patchHash->hash_b, patchHash->locale, patchHash->platform);
+            if(matchedHashIndex == LPK_INDEX_INVALID) {
+                // next free hash index
+                freeHashIndex = lpk_next_free_hash_index(lpk, freeHashIndex);
+                
+                // copy patch hash, reused deleted blocks or add new file to archive end
+                int blockCount = (patchHash->packed_size + blockSize - 1) / blockSize;
+                uint32_t deletedHashIndex = lpk_find_deleted_hash(lpk, blockCount);
+                if(deletedHashIndex == LPK_INDEX_INVALID) {
+                    lpk_copy_hash(lpk, freeHashIndex, patchHash, fileData, newHashTableOffset);
+                    newHashTableOffset += blockCount * blockSize;
+                } else {
+                    // if deleted hash block is larger, need save extra blocks
+                    // if just same, remove deleted hash
+                    lpk_hash* deletedHash = lpk->het + deletedHashIndex;
+                    uint32_t fileOffset = deletedHash->offset + sizeof(lpk_header);
+                    int deletedBlockCount = (deletedHash->packed_size + blockSize - 1) / blockSize;
+                    if(deletedBlockCount > blockCount) {
+                        deletedHash->offset += blockCount * blockSize;
+                        deletedHash->packed_size = deletedHash->file_size = (deletedBlockCount - blockCount) * blockSize;
+                    } else {
+                        lpk_release_deleted_hash(lpk, deletedHash);
+                    }
+                    
+                    // copy
+                    lpk_copy_hash(lpk, freeHashIndex, patchHash, fileData, fileOffset);
+                }
+                
+                // link
+                lpk->het[freeHashIndex].next_hash = hash->next_hash;
+                lpk->het[freeHashIndex].prev_hash = hashIndex;
+                lpk->het[hash->next_hash].prev_hash = freeHashIndex;
+                hash->next_hash = freeHashIndex;
             } else {
                 
             }
+            
+            // free
+            free(fileData);
         } else {
             // seek
             if(fseeko(patch->fp, patchHash->offset, SEEK_SET) > 0) {
