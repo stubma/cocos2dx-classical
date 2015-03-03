@@ -17,7 +17,7 @@ cc.PLATFORM_WINRT             = 12
 cc.PLATFORM_WP8               = 13
 
 -- cc.log
-cc.log = function(...)
+function cc.log(...)
     print(string.format(...))
 end
 
