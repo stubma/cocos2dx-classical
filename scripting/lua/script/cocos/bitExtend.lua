@@ -92,18 +92,16 @@ end
 
 function bit._lshift(a, n)
     local op1 = bit._d2b(a)
-    local r = bit._d2b(0)
+    n = n <= 32 and n or 32
+    n = n >= 0 and n or 0
     
-    if n < 32 and n > 0 then
-        for i = 1, n do
-            for i = 1, 31 do
-                op1[i] = op1[i + 1]
-            end
-            op1[32] = 0
-        end
-        r = op1
+    for i = 1, 32 - n do
+        op1[i] = op1[i + n]
     end
-    return bit._b2d(r)
+    for i = 32 - n + 1, 32 do
+        op1[i] = 0
+    end
+    return bit._b2d(op1)
 end
 
 bit.band = bit.band or bit._and
