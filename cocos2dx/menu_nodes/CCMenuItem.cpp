@@ -675,23 +675,23 @@ void CCMenuItemSprite::updateImagesVisibility()
     if (m_focusImage)
         m_focusImage->setVisible(false);
     
-    if(m_focusImage) {
+    if(!m_bEnabled) {
+        if (m_pDisabledImage) {
+            m_pDisabledImage->setVisible(true);
+        } else {
+            if (m_pNormalImage) {
+                m_pNormalImage->setVisible(true);
+            }
+        }
+    } else if(m_focus && m_focusImage) {
         if(m_focusIsAttachment) {
             m_focusImage->setVisible(m_focus || isSelected());
         } else {
             m_focusImage->setVisible(m_focus);
         }
-    }
-    
-    if (m_bEnabled) {
-        if (m_pNormalImage)
-            m_pNormalImage->setVisible(true);
     } else {
-        if (m_pDisabledImage) {
-            m_pDisabledImage->setVisible(true);
-        } else {
-            if (m_pNormalImage)
-                m_pNormalImage->setVisible(true);
+        if (m_pNormalImage) {
+            m_pNormalImage->setVisible(true);
         }
     }
 }
