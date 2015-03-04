@@ -1059,7 +1059,7 @@ int CCUtils::utf8_to_utf16(int utf8) {
     if(len < 4) {
         p++;
     }
-    ::utf8_to_utf16(p, len, &u16);
+    ::utf8_to_utf16_no_null_terminator(p, len, &u16);
     return u16;
 }
 
