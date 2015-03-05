@@ -667,6 +667,8 @@ int lpk_apply_patch(lpk_file* lpk, lpk_file* patch) {
                         // increase matched hash offset
                         int blockCount = (patchHash->packed_size + blockSize - 1) / blockSize;
                         hash->offset += blockCount * blockSize;
+                        hash->packed_size -= blockCount * blockSize;
+                        hash->file_size = hash->packed_size;
                         
                         // move matched hash to deleted link
                         uint32_t deletedHashIndex = lpk_delete_hash(lpk, matchedHashIndex);
