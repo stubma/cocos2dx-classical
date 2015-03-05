@@ -244,15 +244,19 @@ public class ExcelToJson {
 			} else if(type.equalsIgnoreCase("StringArray")) {
 				hfile.append("\tCC_SYNTHESIZE_PASS_BY_REF(CCArray, m_" + firstLowercase(field) + ", " + firstCapital(field) + ");\n");
 				hfile.append("\tstring get" + firstCapital(field) + "At(int index);\n");
+				hfile.append("\tint get" + firstCapital(field) + "Count();\n");
 			} else if(type.equalsIgnoreCase("IntArray")) {
 				hfile.append("\tCC_SYNTHESIZE_PASS_BY_REF(CCArray, m_" + firstLowercase(field) + ", " + firstCapital(field) + ");\n");
 				hfile.append("\tint get" + firstCapital(field) + "At(int index);\n");
+				hfile.append("\tint get" + firstCapital(field) + "Count();\n");
 			} else if(type.equalsIgnoreCase("FloatArray")) {
 				hfile.append("\tCC_SYNTHESIZE_PASS_BY_REF(CCArray, m_" + firstLowercase(field) + ", " + firstCapital(field) + ");\n");
 				hfile.append("\tfloat get" + firstCapital(field) + "At(int index);\n");
+				hfile.append("\tint get" + firstCapital(field) + "Count();\n");
 			} else if(type.equalsIgnoreCase("BoolArray")) {
 				hfile.append("\tCC_SYNTHESIZE_PASS_BY_REF(CCArray, m_" + firstLowercase(field) + ", " + firstCapital(field) + ");\n");
 				hfile.append("\tbool get" + firstCapital(field) + "At(int index);\n");
+				hfile.append("\tint get" + firstCapital(field) + "Count();\n");
 			}
 		}
 		
@@ -491,6 +495,9 @@ public class ExcelToJson {
 					.append("\t\treturn \"\";\n")
 					.append("\tCCString* cc = (CCString*)m_" + firstLowercase(field) + ".objectAtIndex(index);\n")
 					.append("\treturn cc->getCString();\n")
+					.append("}\n")
+					.append("\nint " + className + "::get" + firstCapital(field) + "Count() {\n")
+					.append("\treturn get" + firstCapital(field) + "().count();\n")
 					.append("}\n");
 			} else if(dataType.equalsIgnoreCase("IntArray")) {
 				cfile.append("\nint " + className + "::get" + firstCapital(field) + "At(int index) {\n")
@@ -498,6 +505,9 @@ public class ExcelToJson {
 					.append("\t\treturn 0;\n")
 					.append("\tCCInteger* cc = (CCInteger*)m_" + firstLowercase(field) + ".objectAtIndex(index);\n")
 					.append("\treturn cc->getValue();\n")
+					.append("}\n")
+					.append("\nint " + className + "::get" + firstCapital(field) + "Count() {\n")
+					.append("\treturn get" + firstCapital(field) + "().count();\n")
 					.append("}\n");
 			} else if(dataType.equalsIgnoreCase("FloatArray")) {
 				cfile.append("\nfloat " + className + "::get" + firstCapital(field) + "At(int index) {\n")
@@ -505,6 +515,9 @@ public class ExcelToJson {
 					.append("\t\treturn 0;\n")
 					.append("\tCCFloat* cc = (CCFloat*)m_" + firstLowercase(field) + ".objectAtIndex(index);\n")
 					.append("\treturn cc->getValue();\n")
+					.append("}\n")
+					.append("\nint " + className + "::get" + firstCapital(field) + "Count() {\n")
+					.append("\treturn get" + firstCapital(field) + "().count();\n")
 					.append("}\n");
 			} else if(dataType.equalsIgnoreCase("BoolArray")) {
 				cfile.append("\nbool " + className + "::get" + firstCapital(field) + "At(int index) {\n")
@@ -512,6 +525,9 @@ public class ExcelToJson {
 					.append("\t\treturn false;\n")
 					.append("\tCCBool* cc = (CCBool*)m_" + firstLowercase(field) + ".objectAtIndex(index);\n")
 					.append("\treturn cc->getValue();\n")
+					.append("}\n")
+					.append("\nint " + className + "::get" + firstCapital(field) + "Count() {\n")
+					.append("\treturn get" + firstCapital(field) + "().count();\n")
 					.append("}\n");
 			}
 		}
