@@ -16,6 +16,9 @@
 extern "C" {
 #endif
     
+// to debug output
+#define DEBUG_LPK
+    
 /**
  * define generic lpk archive information. 
  * lpk archive header ('LPK\x1A')
@@ -114,6 +117,10 @@ typedef struct {
      * no previous if it is LPK_INDEX_INVALID
      */
     uint32_t prev_hash;
+    
+#ifdef DEBUG_LPK
+    char filename[128];
+#endif
 } lpk_hash;
     
 typedef struct {
@@ -130,6 +137,7 @@ extern uint32_t lpk_get_file_size(lpk_file* lpk, const char* filepath, uint16_t 
 extern uint8_t* lpk_extract_file(lpk_file* lpk, const char* filepath, uint32_t* size, const char* key, const uint32_t keyLen, uint16_t locale, LPKPlatform platform);
 extern int lpk_apply_patch(lpk_file* lpk, lpk_file* patch);
 extern int lpk_get_used_hash_count(lpk_file* lpk);
+extern void lpk_debug_output(lpk_file* lpk);
     
 #ifdef __cplusplus
 }

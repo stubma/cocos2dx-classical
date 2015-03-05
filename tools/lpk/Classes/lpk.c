@@ -816,6 +816,81 @@ int lpk_apply_patch(lpk_file* lpk, lpk_file* patch) {
     
     return LPK_SUCCESS;
 }
+    
+void lpk_debug_output(lpk_file* lpk) {
+#ifdef DEBUG_LPK
+    // output head
+    printf("hs: %u, as: %u, v: %u, bs: %u, h_off: %u, hc: %u, dh_h: %x\n\n",
+           lpk->h.header_size,
+           lpk->h.archive_size,
+           lpk->h.version,
+           512 << lpk->h.block_size,
+           lpk->h.hash_table_offset,
+           lpk->h.hash_table_count,
+           lpk->h.deleted_hash);
+    
+    // output used hash
+    lpk_hash* hash = lpk->het;
+    for(int i = 0; i < lpk->h.hash_table_count; i++, hash++) {
+        if((hash->flags & LPK_FLAG_USED) && !(hash->flags & LPK_FLAG_DELETED) && hash->prev_hash == LPK_INDEX_INVALID) {
+            uint32_t hashIndex = i;
+            int level = 0;
+            while(hashIndex != LPK_INDEX_INVALID) {
+                // indent arrow
+                lpk_hash* link = lpk->het + hashIndex;
+                for(int i = 0; i < level; i++) {
+                    printf("--");
+                }
+                if(level > 0) {
+                    printf(">");
+                }
+                
+                // hash info
+                printf("n: %s, s: %u, ps: %u, off: %lx, l: %x, p: %u\n",
+                       hash->filename,
+                       hash->file_size,
+                       hash->packed_size,
+                       hash->offset + sizeof(lpk_header),
+                       hash->locale,
+                       hash->platform);
+                
+                // increase level
+                level++;
+                hashIndex = link->next_hash;
+            }
+        }
+    }
+    printf("\n");
+    
+    // output free space
+    {
+        uint32_t blockSize = 512 << lpk->h.block_size;
+        uint32_t hashIndex = lpk->h.deleted_hash;
+        int level = 0;
+        while(hashIndex != LPK_INDEX_INVALID) {
+            // indent arrow
+            lpk_hash* link = lpk->het + hashIndex;
+            for(int i = 0; i < level; i++) {
+                printf("--");
+            }
+            if(level > 0) {
+                printf(">");
+            }
+            
+            // hash info
+            printf("free block: %u, off: %lx\n",
+                   (link->packed_size + blockSize - 1) / blockSize,
+                   link->offset + sizeof(lpk_header));
+            
+            // increase level
+            level++;
+            hashIndex = link->next_hash;
+        }
+    }
+#else
+    printf("you need compile lpk with macro DEBUG_LPK to make this method work");
+#endif
+}
 
 #ifdef __cplusplus
 }

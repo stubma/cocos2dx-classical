@@ -285,6 +285,9 @@
     lpk_hash* hash = lpk->het + hashIndex;
     
     // fill hash
+#ifdef DEBUG_LPK
+    sprintf(hash->filename, "%s", key);
+#endif
     hash->hash_i = hashlittle(key, len, LPK_HASH_TAG_TABLE_INDEX);
     hash->hash_a = hashlittle(key, len, LPK_HASH_TAG_NAME_A);
     hash->hash_b = hashlittle(key, len, LPK_HASH_TAG_NAME_B);
@@ -684,70 +687,16 @@
         return;
     }
     
-    // output header
-    NSLog(@"\nlpk file header:\n\tarchive size: %u\n\tblock size: %u\n\thash count: %u\n\thash offset: %u",
-          lpk.h.archive_size,
-          512 << lpk.h.block_size,
-          lpk.h.hash_table_count,
-          lpk.h.hash_table_offset);
+    // debug output
+    lpk_debug_output(&lpk);
     
     // extract a file
-    uint32_t size;
-    uint8_t* buf = lpk_extract_file(&lpk, "/Resources/res-iphone/manual/战场攻略_封印.jpg", &size, "战场攻略_封印.jpg", strlen("战场攻略_封印.jpg"), 0, LPKP_DEFAULT);
-    if(buf) {
-        NSData* data = [NSData dataWithBytes:buf length:size];
-        [data writeToFile:@"/Users/maruojie/Desktop/a.jpg" atomically:YES];
-        free(buf);
-    }
-    
-    // output deleted link
-    if(lpk.h.deleted_hash != LPK_INDEX_INVALID) {
-        NSLog(@"+++ deleted hash link start +++");
-        uint32_t hashIndex = lpk.h.deleted_hash;
-        while (hashIndex != LPK_INDEX_INVALID) {
-            // get hash
-            lpk_hash* hash = lpk.het + hashIndex;
-            
-            // print info
-            NSLog(@"\thash index: %u, offset: %u, size: %u", hashIndex, hash->offset, hash->packed_size);
-            
-            // next hash index
-            hashIndex = hash->next_hash;
-        }
-        NSLog(@"--- deleted hash link end ---");
-    }
-    
-    // output every file info
-//    NSMutableArray* allFileEntries = [NSMutableArray array];
-//    [self.root collectFiles:allFileEntries];
-//    for(LpkEntry* e in allFileEntries) {
-//        // get file path as the key
-//        const char* filepath = [e.key cStringUsingEncoding:NSUTF8StringEncoding];
-//        
-//        // get hash table index
-//        uint32_t hashIndex = lpk_get_file_hash_table_index(&lpk, filepath, 0, LPKP_DEFAULT);
-//        
-//        // if invalid, print error
-//        if(hashIndex == LPK_INDEX_INVALID) {
-//            NSLog(@"\n%s\n\tERROR: can't find this file!!", filepath);
-//            continue;
-//        }
-//        
-//        // get hash
-//        lpk_hash* hash = lpk.het + hashIndex;
-//        
-//        // print file info
-//        NSString* locale = LOCALE_IDS[0];
-//        if(hash->locale > 0) {
-//            locale = [NSLocale localeIdentifierFromWindowsLocaleCode:hash->locale];
-//        }
-//        NSLog(@"\n%s\n\tfile size: %u\n\tpacked size: %u\n\toffset: %u\n\tlocale: %@\n\tplatform: %@\n\t",
-//              filepath,
-//              hash->file_size,
-//              hash->packed_size,
-//              hash->offset,
-//              locale,
-//              PLATFORM_NAMES[hash->platform]);
+//    uint32_t size;
+//    uint8_t* buf = lpk_extract_file(&lpk, "/Resources/res-iphone/manual/战场攻略_封印.jpg", &size, "战场攻略_封印.jpg", strlen("战场攻略_封印.jpg"), 0, LPKP_DEFAULT);
+//    if(buf) {
+//        NSData* data = [NSData dataWithBytes:buf length:size];
+//        [data writeToFile:@"/Users/maruojie/Desktop/a.jpg" atomically:YES];
+//        free(buf);
 //    }
     
     // close file
