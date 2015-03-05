@@ -289,6 +289,82 @@ static uint32_t lpk_next_free_hash_index(lpk_file* lpk, uint32_t from) {
     }
     return LPK_INDEX_INVALID;
 }
+
+static void lpk_rebuild_hash(lpk_file* lpk, uint32_t newCount) {
+    // save new count
+    uint32_t oldCount = lpk->h.hash_table_count;
+    lpk->h.hash_table_count = newCount;
+    
+    // allocate memory for new hash table
+    lpk_hash* het = (lpk_hash*)calloc(newCount, sizeof(lpk_hash));
+    
+    // first iterator heads of link
+    lpk_hash* oldHash = lpk->het;
+    for(int i = 0; i < oldCount; i++, oldHash++) {
+        if((oldHash->flags & LPK_FLAG_USED) && !(oldHash->flags & LPK_FLAG_DELETED) && oldHash->prev_hash == LPK_INDEX_INVALID) {
+            uint32_t hashIndex = oldHash->hash_i & (newCount - 1);
+            lpk_hash* newHash = het + hashIndex;
+            memcpy(newHash, oldHash, sizeof(lpk_hash));
+            newHash->prev_hash = LPK_INDEX_INVALID;
+            newHash->next_hash = LPK_INDEX_INVALID;
+        }
+    }
+    
+    // then iterate non-head of link
+    uint32_t freeHashIndex = 0;
+    oldHash = lpk->het;
+    for(int i = 0; i < oldCount; i++, oldHash++) {
+        if((oldHash->flags & LPK_FLAG_USED) && !(oldHash->flags & LPK_FLAG_DELETED) && oldHash->prev_hash == LPK_INDEX_INVALID) {
+            uint32_t prevHashIndex = oldHash->hash_i & (newCount - 1);
+            lpk_hash* newPrev = het + prevHashIndex;
+            lpk_hash* oldPrev = oldHash;
+            while(oldPrev->next_hash != LPK_INDEX_INVALID) {
+                oldPrev = lpk->het + oldPrev->next_hash;
+                freeHashIndex = lpk_next_free_hash_index(lpk, freeHashIndex);
+                memcpy(het + freeHashIndex, oldPrev, sizeof(lpk_hash));
+                newPrev->next_hash = freeHashIndex;
+                newPrev = het + freeHashIndex;
+                newPrev->prev_hash = prevHashIndex;
+                newPrev->next_hash = LPK_INDEX_INVALID;
+                prevHashIndex = freeHashIndex;
+            }
+        }
+    }
+    
+    // iterate deleted hash
+    oldHash = lpk->het;
+    for(int i = 0; i < oldCount; i++, oldHash++) {
+        if((oldHash->flags & LPK_FLAG_USED) && (oldHash->flags & LPK_FLAG_DELETED) && oldHash->prev_hash == LPK_INDEX_INVALID) {
+            // copy head
+            freeHashIndex = lpk_next_free_hash_index(lpk, freeHashIndex);
+            memcpy(het + freeHashIndex, oldHash, sizeof(lpk_hash));
+            oldHash->next_hash = LPK_INDEX_INVALID;
+            oldHash->prev_hash = LPK_INDEX_INVALID;
+            lpk->h.deleted_hash = freeHashIndex;
+            
+            // copy link
+            uint32_t prevHashIndex = freeHashIndex;
+            lpk_hash* newPrev = het + prevHashIndex;
+            lpk_hash* oldPrev = oldHash;
+            while(oldPrev->next_hash != LPK_INDEX_INVALID) {
+                oldPrev = lpk->het + oldPrev->next_hash;
+                freeHashIndex = lpk_next_free_hash_index(lpk, freeHashIndex);
+                memcpy(het + freeHashIndex, oldPrev, sizeof(lpk_hash));
+                newPrev->next_hash = freeHashIndex;
+                newPrev = het + freeHashIndex;
+                newPrev->prev_hash = prevHashIndex;
+                newPrev->next_hash = LPK_INDEX_INVALID;
+                prevHashIndex = freeHashIndex;
+            }
+            
+            break;
+        }
+    }
+    
+    // set new hash table
+    free(lpk->het);
+    lpk->het = het;
+}
     
 static const uint8_t* lpk_get_file_packed_data(lpk_file* lpk, lpk_hash* hash) {
     // seek
@@ -546,12 +622,9 @@ int lpk_apply_patch(lpk_file* lpk, lpk_file* patch) {
     // this is not very accurate but it is ok enough
     int approximateHashCount = srcHashCount + patchHashCount;
     if(approximateHashCount > lpk->h.hash_table_count) {
-        // calculate new hash table count
-//        uint32_t newCount = next_pot(approximateHashCount);
-//        lpk->h.hash_table_count = newCount;
-
-        // TODO rebuild hash table
-        
+        // rebuild hash table
+        uint32_t newCount = next_pot(approximateHashCount);
+        lpk_rebuild_hash(lpk, newCount);
     }
     
     // new file start offset
