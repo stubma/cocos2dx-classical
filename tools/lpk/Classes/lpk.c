@@ -847,17 +847,18 @@ void lpk_debug_output(lpk_file* lpk) {
                 
                 // hash info
                 printf("n: %s, s: %u, ps: %u, off: %lx, l: %x, p: %u\n",
-                       hash->filename,
-                       hash->file_size,
-                       hash->packed_size,
-                       hash->offset + sizeof(lpk_header),
-                       hash->locale,
-                       hash->platform);
+                       link->filename,
+                       link->file_size,
+                       link->packed_size,
+                       link->offset + sizeof(lpk_header),
+                       link->locale,
+                       link->platform);
                 
                 // increase level
                 level++;
                 hashIndex = link->next_hash;
             }
+            printf("\n");
         }
     }
     printf("\n");

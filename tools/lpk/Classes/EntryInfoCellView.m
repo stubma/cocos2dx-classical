@@ -49,7 +49,7 @@
     [self.encryptCombo setDataSource:self];
     
     // init UI
-    ViewController* vc = (ViewController*)self.window.contentViewController;
+    ViewController* vc = (ViewController*)[NSApp mainWindow].contentViewController;
     LpkBranchEntry* b = (LpkBranchEntry*)objectValue;
     if([b.realPath isAbsolutePath]) {
         self.pathLabel.stringValue = b.realPath;

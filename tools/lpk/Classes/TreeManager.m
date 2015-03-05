@@ -465,6 +465,8 @@
             size_t len = [eKey lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
             uint32_t hashIndex = hashlittle(key, len, LPK_HASH_TAG_TABLE_INDEX) & (lpk.h.hash_table_count - 1);
             lpk_hash* hash = lpk.het + hashIndex;
+            uint32_t hashIndexBak = hashIndex;
+            lpk_hash* hashbak = hash;
             
             // progress hint
             [pvc.progressIndicator incrementBy:1];
@@ -477,6 +479,8 @@
                 
                 // block count of this file
                 int blockCount = 0;
+                hash = hashbak;
+                hashIndex = hashIndexBak;
                 
                 // if branch is marked as deleted, save it in a free hash and add to deleted link
                 // if it is free hash, just write it
@@ -541,8 +545,8 @@
                 } else if(hash->prev_hash == LPK_INDEX_INVALID) {
                     // find tail
                     while(hash->next_hash != LPK_INDEX_INVALID) {
-                        hash = lpk.het + hash->next_hash;
                         hashIndex = hash->next_hash;
+                        hash = lpk.het + hash->next_hash;
                     }
                     
                     // find free entry
