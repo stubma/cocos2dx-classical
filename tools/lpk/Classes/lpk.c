@@ -806,6 +806,11 @@ int lpk_apply_patch(lpk_file* lpk, lpk_file* patch) {
         return LPK_ERROR_WRITE;
     }
     
+    // write delted hash
+    if(fwrite(&lpk->h.deleted_hash, sizeof(uint32_t), 1, lpk->fp) != 1) {
+        return LPK_ERROR_WRITE;
+    }
+    
     // seek to start of hash table
     if(fseeko(lpk->fp, lpk->h.hash_table_offset, SEEK_SET) < 0) {
         return LPK_ERROR_SEEK;
