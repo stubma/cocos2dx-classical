@@ -42,6 +42,9 @@
 		928C0CE11A9F48D9009080BC /* ImageViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928C0CE01A9F48D9009080BC /* ImageViewerViewController.m */; };
 		92B090B31A9465DA003A1298 /* LpkBranchEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B090B21A9465DA003A1298 /* LpkBranchEntry.m */; };
 		92B090B61A9472EB003A1298 /* EntryInfoCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B090B51A9472EB003A1298 /* EntryInfoCellView.m */; };
+		92C31EB01AA9DC8500F7C640 /* new.png in Resources */ = {isa = PBXBuildFile; fileRef = 92C31EAF1AA9DC8500F7C640 /* new.png */; };
+		92C31EB21AA9DCC100F7C640 /* patch.png in Resources */ = {isa = PBXBuildFile; fileRef = 92C31EB11AA9DCC100F7C640 /* patch.png */; };
+		92C31EB41AA9DD6900F7C640 /* inspect.png in Resources */ = {isa = PBXBuildFile; fileRef = 92C31EB31AA9DD6900F7C640 /* inspect.png */; };
 		92C3829F1A9EB61D00BF8699 /* GeneralSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C3829E1A9EB61D00BF8699 /* GeneralSettingViewController.m */; };
 		92C382A21A9EB9E000BF8699 /* EncryptionSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C382A11A9EB9E000BF8699 /* EncryptionSettingViewController.m */; };
 		92C382A71A9EBC6100BF8699 /* tea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92C382A31A9EBC6100BF8699 /* tea.cpp */; };
@@ -122,6 +125,9 @@
 		92B090B21A9465DA003A1298 /* LpkBranchEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LpkBranchEntry.m; sourceTree = "<group>"; };
 		92B090B41A9472EB003A1298 /* EntryInfoCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryInfoCellView.h; sourceTree = "<group>"; };
 		92B090B51A9472EB003A1298 /* EntryInfoCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryInfoCellView.m; sourceTree = "<group>"; };
+		92C31EAF1AA9DC8500F7C640 /* new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = new.png; sourceTree = "<group>"; };
+		92C31EB11AA9DCC100F7C640 /* patch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = patch.png; sourceTree = "<group>"; };
+		92C31EB31AA9DD6900F7C640 /* inspect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inspect.png; sourceTree = "<group>"; };
 		92C3829D1A9EB61D00BF8699 /* GeneralSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralSettingViewController.h; sourceTree = "<group>"; };
 		92C3829E1A9EB61D00BF8699 /* GeneralSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralSettingViewController.m; sourceTree = "<group>"; };
 		92C382A01A9EB9E000BF8699 /* EncryptionSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EncryptionSettingViewController.h; sourceTree = "<group>"; };
@@ -166,6 +172,9 @@
 		9247AF601A90CD67006BB0C4 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				92C31EB31AA9DD6900F7C640 /* inspect.png */,
+				92C31EB11AA9DCC100F7C640 /* patch.png */,
+				92C31EAF1AA9DC8500F7C640 /* new.png */,
 				92403F2F1A9DFD510055D1C5 /* general.png */,
 				928B55611A9DB0E000781D3D /* compress.png */,
 				928B55621A9DB0E000781D3D /* encrypt.png */,
@@ -373,8 +382,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92C31EB41AA9DD6900F7C640 /* inspect.png in Resources */,
+				92C31EB01AA9DC8500F7C640 /* new.png in Resources */,
 				92403F301A9DFD510055D1C5 /* general.png in Resources */,
 				92E850FC1A90C6E9005A1465 /* Main.storyboard in Resources */,
+				92C31EB21AA9DCC100F7C640 /* patch.png in Resources */,
 				92E850FD1A90C6E9005A1465 /* Images.xcassets in Resources */,
 				9247AF7E1A90D626006BB0C4 /* save.png in Resources */,
 				9247AF7F1A90D626006BB0C4 /* setting.png in Resources */,

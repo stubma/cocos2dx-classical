@@ -1516,8 +1516,24 @@ DQ
                                         <action selector="onToolbarOpen:" target="B8D-0N-5wS" id="JEf-Vr-yfA"/>
                                     </connections>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="992C1077-E087-4B1C-9EC2-9991167E5CA2" label="New Project" paletteLabel="New Project" tag="-1" image="new" id="gpC-g1-oqu">
+                                    <connections>
+                                        <action selector="onToolbarNewProject:" target="B8D-0N-5wS" id="Fsl-pJ-37Y"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="7E184DAD-4B43-4E09-9AB7-095BB0593FDB" label="Patch LPK" paletteLabel="Patch LPK" tag="-1" image="patch" id="aWk-RO-E6U">
+                                    <connections>
+                                        <action selector="onToolbarPatchLPK:" target="B8D-0N-5wS" id="MQI-mk-7ZB"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="E79E8B8E-51A0-45D9-BA1F-A1674648B7D2" label="Inspect LPK" paletteLabel="Inspect LPK" tag="-1" image="inspect" id="ZMG-XJ-PUt">
+                                    <connections>
+                                        <action selector="onToolbarInspectLPK:" target="B8D-0N-5wS" id="EyP-T2-UeE"/>
+                                    </connections>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
+                                <toolbarItem reference="gpC-g1-oqu"/>
                                 <toolbarItem reference="T73-wk-Don"/>
                                 <toolbarItem reference="VCH-XH-0oW"/>
                                 <toolbarItem reference="L0Z-aS-6Zr"/>
@@ -1526,6 +1542,8 @@ DQ
                                 <toolbarItem reference="O3S-x6-zRO"/>
                                 <toolbarItem reference="4hm-M4-0TY"/>
                                 <toolbarItem reference="xpr-Po-DJd"/>
+                                <toolbarItem reference="aWk-RO-E6U"/>
+                                <toolbarItem reference="ZMG-XJ-PUt"/>
                                 <toolbarItem reference="VnN-z3-V92"/>
                             </defaultToolbarItems>
                         </toolbar>
@@ -1970,8 +1988,11 @@ DQ
         <image name="encrypt" width="30" height="30"/>
         <image name="export" width="30" height="30"/>
         <image name="general" width="30" height="30"/>
+        <image name="inspect" width="30" height="30"/>
+        <image name="new" width="29" height="30"/>
         <image name="new_folder" width="30" height="30"/>
         <image name="open" width="30" height="30"/>
+        <image name="patch" width="30" height="30"/>
         <image name="save" width="30" height="30"/>
         <image name="setting" width="30" height="30"/>
     </resources>

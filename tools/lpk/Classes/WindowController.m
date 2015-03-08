@@ -15,12 +15,18 @@
 
 @interface WindowController () <NSTextFieldDelegate>
 
+@property (nonatomic, assign) BOOL patchAfterExport;
+
 - (IBAction)onToolbarOpen:(id)sender;
 - (IBAction)onToolbarSave:(id)sender;
 - (IBAction)onToolbarExport:(id)sender;
 - (IBAction)onToolbarNewFolder:(id)sender;
 - (IBAction)onToolbarDelete:(id)sender;
+- (IBAction)onToolbarPatchLPK:(id)sender;
+- (IBAction)onToolbarInspectLPK:(id)sender;
+- (IBAction)onToolbarNewProject:(id)sender;
 - (void)startExport;
+- (void)startPatch;
 
 @property (weak) IBOutlet NSSearchField *searchText;
 
@@ -100,6 +106,7 @@
             NSArray* urls = [openDlg URLs];
             NSString* filePath = [[urls objectAtIndex:0] path];
             self.tree.projectPath = filePath;
+            self.tree.exportPath = @"";
             [self.tree loadProject];
             [self.window setTitleWithRepresentedFilename:self.tree.projectPath];
             ViewController* vc = (ViewController*)self.window.contentViewController;
@@ -126,6 +133,11 @@
 }
 
 - (IBAction)onToolbarExport:(id)sender {
+    self.patchAfterExport = NO;
+    [self startExport];
+}
+
+- (void)startExport {
     NSSavePanel* saveDlg = [NSSavePanel savePanel];
     [saveDlg setCanCreateDirectories:YES];
     [saveDlg setShowsHiddenFiles:NO];
@@ -143,21 +155,67 @@
             NSString* filePath = [[saveDlg URL] path];
             self.tree.exportPath = filePath;
             
-            // export
-            [self performSelector:@selector(startExport) withObject:nil afterDelay:0.7f];
+            // start a progress
+            NSStoryboard* sb = [NSStoryboard storyboardWithName:@"Main" bundle:nil];
+            NSWindowController* progress = [sb instantiateControllerWithIdentifier:@"progress"];
+            ProgressViewController* vc = (ProgressViewController*)progress.contentViewController;
+            [self.window beginSheet:vc.view.window completionHandler:nil];
+            
+            // start export
+            [self.tree performSelectorInBackground:@selector(exportLPK:) withObject:vc];
+            
+            // patch
+            if(self.patchAfterExport) {
+                [self startPatch];
+            }
         }
     }];
 }
 
-- (void)startExport {
-    // start a progress
-    NSStoryboard* sb = [NSStoryboard storyboardWithName:@"Main" bundle:nil];
-    NSWindowController* progress = [sb instantiateControllerWithIdentifier:@"progress"];
-    ProgressViewController* vc = (ProgressViewController*)progress.contentViewController;
-    [self.window beginSheet:vc.view.window completionHandler:nil];
-    
-    // start export
-    [self.tree performSelectorInBackground:@selector(exportLPK:) withObject:vc];
+- (void)startPatch {
+    NSOpenPanel* openDlg = [NSOpenPanel openPanel];
+    [openDlg setTitle:@"Patch this LPK to selected LPK"];
+    [openDlg setCanChooseFiles:YES];
+    [openDlg setAllowsMultipleSelection:NO];
+    [openDlg setAllowedFileTypes:@[@"lpk"]];
+    [openDlg beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
+        if (result == NSModalResponseOK) {
+            // get source path
+            NSArray* urls = [openDlg URLs];
+            NSString* filePath = [[urls objectAtIndex:0] path];
+            
+            // backup
+            NSFileManager* fm = [NSFileManager defaultManager];
+            NSString* bakPath = [[filePath stringByDeletingPathExtension] stringByAppendingString:@"_bak.lpk"];
+            [fm copyItemAtPath:filePath toPath:bakPath error:nil];
+            
+            // open source lpk to be patched
+            lpk_file lpk;
+            int result = lpk_open_file(&lpk, [filePath cStringUsingEncoding:NSUTF8StringEncoding]);
+            if(result != 0) {
+                NSLog(@"lpk_open_file, open source error: %d", result);
+                return;
+            }
+            
+            // open patch lpk
+            lpk_file patch;
+            result = lpk_open_file(&patch, [self.tree.exportPath cStringUsingEncoding:NSUTF8StringEncoding]);
+            if(result != 0) {
+                NSLog(@"lpk_open_file, open patch error: %d", result);
+                return;
+            }
+            
+            // patch
+            lpk_apply_patch(&lpk, &patch);
+
+            // debug output
+            lpk_debug_output(&lpk);
+            
+            // close file
+            lpk_close_file(&lpk);
+            lpk_close_file(&patch);
+        }
+    }];
 }
 
 - (IBAction)onToolbarNewFolder:(id)sender {
@@ -186,6 +244,83 @@
 - (IBAction)onToolbarDelete:(id)sender {
     ViewController* vc = (ViewController*)self.window.contentViewController;
     [vc onDelete:sender];
+}
+
+- (IBAction)onToolbarPatchLPK:(id)sender {
+    self.patchAfterExport = YES;
+    NSFileManager* fm = [NSFileManager defaultManager];
+    if([@"" isEqualToString:self.tree.exportPath] || ![fm fileExistsAtPath:self.tree.exportPath]) {
+        [self startExport];
+    } else {
+        [self startPatch];
+    }
+}
+
+- (IBAction)onToolbarInspectLPK:(id)sender {
+    NSOpenPanel* openDlg = [NSOpenPanel openPanel];
+    [openDlg setCanChooseFiles:YES];
+    [openDlg setAllowsMultipleSelection:NO];
+    [openDlg setAllowedFileTypes:@[@"lpk"]];
+    [openDlg beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
+        if (result == NSModalResponseOK) {
+            // Get an array containing the full filenames of all
+            // files and directories selected.
+            NSArray* urls = [openDlg URLs];
+            NSString* filePath = [[urls objectAtIndex:0] path];
+            lpk_file lpk;
+            int result = lpk_open_file(&lpk, [filePath cStringUsingEncoding:NSUTF8StringEncoding]);
+            if(result != 0) {
+                NSLog(@"lpk_open_file, error: %d", result);
+                return;
+            }
+            
+            // debug output
+            lpk_debug_output(&lpk);
+            
+            // close file
+            lpk_close_file(&lpk);
+        }
+    }];
+}
+
+- (IBAction)onToolbarNewProject:(id)sender {
+    // save current one if dirty
+    if(self.tree.dirty) {
+        NSAlert* alert = [[NSAlert alloc] init];
+        [alert setMessageText:@"Do you want to save current project?"];
+        [alert addButtonWithTitle:@"Save"];
+        [alert addButtonWithTitle:@"Discard"];
+        [alert addButtonWithTitle:@"Cancel"];
+        switch([alert runModal]) {
+            case NSAlertFirstButtonReturn:
+            {
+                ViewController* vc = (ViewController*)[self.window contentViewController];
+                NSSavePanel* saveDlg = [NSSavePanel savePanel];
+                [saveDlg setCanCreateDirectories:YES];
+                [saveDlg setShowsHiddenFiles:NO];
+                [saveDlg setExtensionHidden:NO];
+                [saveDlg setAllowedFileTypes:@[@"lpkproj"]];
+                [saveDlg setNameFieldStringValue:[vc.tree.projectPath lastPathComponent]];
+                if([saveDlg runModal] == NSModalResponseOK) {
+                    NSString* filePath = [[saveDlg URL] path];
+                    vc.tree.projectPath = filePath;
+                    [vc.tree saveProject];
+                    [self.window setTitleWithRepresentedFilename:self.tree.projectPath];
+                }
+                break;
+            }
+            case NSAlertThirdButtonReturn:
+                return;
+            default:
+                break;
+        }
+    }
+    
+    // re-create tree
+    ViewController* vc = (ViewController*)self.window.contentViewController;
+    vc.tree = [[TreeManager alloc] init];
+    [vc reloadFileOutline];
+    [self.window setTitleWithRepresentedFilename:vc.tree.projectPath];
 }
 
 @end
