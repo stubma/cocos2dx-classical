@@ -12,6 +12,7 @@
 #import "ProgressViewController.h"
 #import "SettingsViewController.h"
 #import "SettingsWindowController.h"
+#include "ExtractViewController.h"
 
 @interface WindowController () <NSTextFieldDelegate>
 
@@ -25,6 +26,7 @@
 - (IBAction)onToolbarPatchLPK:(id)sender;
 - (IBAction)onToolbarInspectLPK:(id)sender;
 - (IBAction)onToolbarNewProject:(id)sender;
+- (IBAction)onToolbarExtractFile:(id)sender;
 - (void)startExport;
 - (void)startPatch;
 
@@ -321,6 +323,16 @@
     vc.tree = [[TreeManager alloc] init];
     [vc reloadFileOutline];
     [self.window setTitleWithRepresentedFilename:vc.tree.projectPath];
+}
+
+- (IBAction)onToolbarExtractFile:(id)sender {
+    NSStoryboard* sb = [NSStoryboard storyboardWithName:@"Main" bundle:nil];
+    NSWindowController* input = [sb instantiateControllerWithIdentifier:@"extract"];
+    ExtractViewController* vc = (ExtractViewController*)input.contentViewController;
+    [self.window beginSheet:input.window completionHandler:^(NSModalResponse returnCode) {
+        if(returnCode == NSModalResponseOK) {
+        }
+    }];
 }
 
 @end

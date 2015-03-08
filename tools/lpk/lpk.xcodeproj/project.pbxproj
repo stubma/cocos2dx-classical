@@ -40,6 +40,8 @@
 		928C0CDB1A9F327A009080BC /* ViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928C0CDA1A9F327A009080BC /* ViewerViewController.m */; };
 		928C0CDE1A9F328E009080BC /* DefaultViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928C0CDD1A9F328E009080BC /* DefaultViewerViewController.m */; };
 		928C0CE11A9F48D9009080BC /* ImageViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928C0CE01A9F48D9009080BC /* ImageViewerViewController.m */; };
+		92AABA441AAC02B200282227 /* extract.png in Resources */ = {isa = PBXBuildFile; fileRef = 92AABA431AAC02B200282227 /* extract.png */; };
+		92AABA471AAC04C700282227 /* ExtractViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AABA461AAC04C700282227 /* ExtractViewController.m */; };
 		92B090B31A9465DA003A1298 /* LpkBranchEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B090B21A9465DA003A1298 /* LpkBranchEntry.m */; };
 		92B090B61A9472EB003A1298 /* EntryInfoCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B090B51A9472EB003A1298 /* EntryInfoCellView.m */; };
 		92C31EB01AA9DC8500F7C640 /* new.png in Resources */ = {isa = PBXBuildFile; fileRef = 92C31EAF1AA9DC8500F7C640 /* new.png */; };
@@ -121,6 +123,9 @@
 		928C0CDD1A9F328E009080BC /* DefaultViewerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultViewerViewController.m; sourceTree = "<group>"; };
 		928C0CDF1A9F48D9009080BC /* ImageViewerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewerViewController.h; sourceTree = "<group>"; };
 		928C0CE01A9F48D9009080BC /* ImageViewerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewerViewController.m; sourceTree = "<group>"; };
+		92AABA431AAC02B200282227 /* extract.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = extract.png; sourceTree = "<group>"; };
+		92AABA451AAC04C700282227 /* ExtractViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtractViewController.h; sourceTree = "<group>"; };
+		92AABA461AAC04C700282227 /* ExtractViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtractViewController.m; sourceTree = "<group>"; };
 		92B090B11A9465DA003A1298 /* LpkBranchEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LpkBranchEntry.h; sourceTree = "<group>"; };
 		92B090B21A9465DA003A1298 /* LpkBranchEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LpkBranchEntry.m; sourceTree = "<group>"; };
 		92B090B41A9472EB003A1298 /* EntryInfoCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryInfoCellView.h; sourceTree = "<group>"; };
@@ -173,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				92C31EB31AA9DD6900F7C640 /* inspect.png */,
+				92AABA431AAC02B200282227 /* extract.png */,
 				92C31EB11AA9DCC100F7C640 /* patch.png */,
 				92C31EAF1AA9DC8500F7C640 /* new.png */,
 				92403F2F1A9DFD510055D1C5 /* general.png */,
@@ -271,6 +277,8 @@
 				928B55691A9DB5C700781D3D /* SettingsWindowController.m */,
 				9211D9EB1A92475E0015712A /* InputViewController.h */,
 				9211D9EC1A92475E0015712A /* InputViewController.m */,
+				92AABA451AAC04C700282227 /* ExtractViewController.h */,
+				92AABA461AAC04C700282227 /* ExtractViewController.m */,
 				926F19EA1A95C9D500BD0CE0 /* AddBranchViewController.h */,
 				926F19EB1A95C9D500BD0CE0 /* AddBranchViewController.m */,
 				922E43511A9ACBB700A75392 /* ProgressViewController.h */,
@@ -384,6 +392,7 @@
 			files = (
 				92C31EB41AA9DD6900F7C640 /* inspect.png in Resources */,
 				92C31EB01AA9DC8500F7C640 /* new.png in Resources */,
+				92AABA441AAC02B200282227 /* extract.png in Resources */,
 				92403F301A9DFD510055D1C5 /* general.png in Resources */,
 				92E850FC1A90C6E9005A1465 /* Main.storyboard in Resources */,
 				92C31EB21AA9DCC100F7C640 /* patch.png in Resources */,
@@ -420,6 +429,7 @@
 				92F1AF331A9B72B9002635DD /* NSData+Generator.m in Sources */,
 				9247AF7B1A90D127006BB0C4 /* NSView+CNSplitViewToolbar.m in Sources */,
 				92C382A81A9EBC6100BF8699 /* xxtea.cpp in Sources */,
+				92AABA471AAC04C700282227 /* ExtractViewController.m in Sources */,
 				9247AF791A90D127006BB0C4 /* CNSplitViewToolbarButton.m in Sources */,
 				928B555D1A9DA48100781D3D /* NSData+Compression.m in Sources */,
 				92CF2B4E1A961BC60094D6E4 /* Consts.m in Sources */,

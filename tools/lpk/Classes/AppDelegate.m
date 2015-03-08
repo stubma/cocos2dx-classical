@@ -11,6 +11,7 @@
 
 @interface AppDelegate ()
 
+- (void)onWindowWillClose:(NSNotification*)n;
 
 @end
 
@@ -18,10 +19,25 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     initConsts();
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onWindowWillClose:)
+                                                 name:NSWindowWillCloseNotification
+                                               object:nil];
+}
+
+- (void)onWindowWillClose:(NSNotification*)n {
+    // WORKAROUND: NSOpen/SavePanel grows a little every time
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"NSNavPanelExpandedSizeForOpenMode"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"NSNavPanelExpandedSizeForSaveMode"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:NSWindowWillCloseNotification
+                                                  object:nil];
 }
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
