@@ -271,7 +271,7 @@ static int lpk_copy_hash(lpk_file* lpk, uint32_t dstHashIndex, lpk_hash* srcHash
     // adjust info
     hash->next_hash = LPK_INDEX_INVALID;
     hash->prev_hash = LPK_INDEX_INVALID;
-    hash->offset = offset;
+    hash->offset = offset - sizeof(lpk_header);
     
     return LPK_SUCCESS;
 }
