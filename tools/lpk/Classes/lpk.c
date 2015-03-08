@@ -368,7 +368,7 @@ static void lpk_rebuild_hash(lpk_file* lpk, uint32_t newCount) {
     
 static const uint8_t* lpk_get_file_packed_data(lpk_file* lpk, lpk_hash* hash) {
     // seek
-    if(fseeko(lpk->fp, hash->offset, SEEK_SET) > 0) {
+    if(fseeko(lpk->fp, hash->offset + sizeof(lpk_header), SEEK_SET) > 0) {
         return NULL;
     }
     
@@ -426,7 +426,7 @@ int lpk_open_file(lpk_file* lpk, const char* filepath) {
     // to avoid goto with do-while wrapper
     do {
         // try to open file
-        if ((lpk->fp = fopen(filepath, "rb")) == NULL) {
+        if ((lpk->fp = fopen(filepath, "rb+")) == NULL) {
             result = LPK_ERROR_OPEN;
             break;
         }
@@ -694,7 +694,9 @@ int lpk_apply_patch(lpk_file* lpk, lpk_file* patch) {
                 // link
                 lpk->het[freeHashIndex].next_hash = hash->next_hash;
                 lpk->het[freeHashIndex].prev_hash = hashIndex;
-                lpk->het[hash->next_hash].prev_hash = freeHashIndex;
+                if(hash->next_hash != LPK_INDEX_INVALID) {
+                    lpk->het[hash->next_hash].prev_hash = freeHashIndex;
+                }
                 hash->next_hash = freeHashIndex;
             } else {
                 hash = lpk->het + matchedHashIndex;
