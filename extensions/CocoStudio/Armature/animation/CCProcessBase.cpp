@@ -94,10 +94,10 @@ void CCProcessBase::update(float dt)
     }
 
     /*
-     *  Fileter the m_iDuration <=0 and dt >1
+     *  Filter the m_iDuration <0 and dt >1
      *  If dt>1, generally speaking  the reason is the device is stuck.
      */
-    if(m_iRawDuration <= 0 || dt > 1)
+    if(m_iRawDuration < 0 || dt > 1)
     {
         return;
     }
