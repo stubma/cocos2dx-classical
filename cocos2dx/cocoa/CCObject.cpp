@@ -51,6 +51,11 @@ CCObject::CCObject(void)
     m_uID = ++uObjectCount;
 }
 
+CCObject* CCObject::create() {
+    CCObject* o = new CCObject();
+    return o->autorelease();
+}
+
 CCObject::~CCObject(void)
 {
     // for memory debugging

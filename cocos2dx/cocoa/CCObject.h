@@ -74,6 +74,8 @@ protected:
     unsigned int        m_uAutoReleaseCount;
 public:
     CCObject(void);
+    static CCObject* create();
+    
     /**
      *  @lua NA
      */
