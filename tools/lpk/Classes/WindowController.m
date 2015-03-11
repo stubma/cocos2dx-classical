@@ -189,6 +189,9 @@
             // backup
             NSFileManager* fm = [NSFileManager defaultManager];
             NSString* bakPath = [[filePath stringByDeletingPathExtension] stringByAppendingString:@"_bak.lpk"];
+            if([fm fileExistsAtPath:bakPath]) {
+                [fm removeItemAtPath:bakPath error:nil];
+            }
             [fm copyItemAtPath:filePath toPath:bakPath error:nil];
             
             // open source lpk to be patched
