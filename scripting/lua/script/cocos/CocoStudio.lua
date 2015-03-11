@@ -17,6 +17,10 @@ cc.LAYOUT_PARAMETER_NONE = 0
 cc.LAYOUT_PARAMETER_LINEAR = 1
 cc.LAYOUT_PARAMETER_RELATIVE = 2
 
+-- texture type
+cc.UI_TEX_TYPE_LOCAL = 0
+cc.UI_TEX_TYPE_PLIST = 1
+
 overload.createArm {
     "class",
     "string",
