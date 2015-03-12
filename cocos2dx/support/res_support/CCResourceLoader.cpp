@@ -32,6 +32,7 @@ USING_NS_CC_EXT;
 
 NS_CC_BEGIN
 
+bool CCResourceLoader::s_resolveExternal = true;
 static CCArray sActiveLoaders;
 
 void ZwoptexAnimLoadTask2::load() {
@@ -214,6 +215,14 @@ CCResourceLoader::~CCResourceLoader() {
     }
 }
 
+const char* CCResourceLoader::_resolve(const char* path) {
+    if(s_resolveExternal) {
+        return CCUtils::getExternalOrFullPath(path).c_str();
+    } else {
+        return path;
+    }
+}
+
 void CCResourceLoader::abortAll() {
     CCArray tmp;
     tmp.addObjectsFromArray(&sActiveLoaders);
@@ -225,14 +234,14 @@ void CCResourceLoader::abortAll() {
 }
 
 void CCResourceLoader::unloadImage(const string& tex) {
-    CCTextureCache::sharedTextureCache()->removeTextureForKey(tex.c_str());
+    CCTextureCache::sharedTextureCache()->removeTextureForKey(_resolve(tex.c_str()));
 }
 
 void CCResourceLoader::unloadImage(const string& texPattern, int start, int end) {
     char buf[512];
     for(int i = start; i <= end; i++) {
         sprintf(buf, texPattern.c_str(), i);
-        CCTextureCache::sharedTextureCache()->removeTextureForKey(buf);
+        CCTextureCache::sharedTextureCache()->removeTextureForKey(_resolve(buf));
     }
 }
 
@@ -240,20 +249,20 @@ void CCResourceLoader::unloadAtlas(const string& plistPattern, const string& tex
     char buf[512];
     for(int i = start; i <= end; i++) {
         sprintf(buf, plistPattern.c_str(), i);
-        CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile(buf);
+        CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile(_resolve(buf));
         sprintf(buf, texPattern.c_str(), i);
-        CCTextureCache::sharedTextureCache()->removeTextureForKey(buf);
+        CCTextureCache::sharedTextureCache()->removeTextureForKey(_resolve(buf));
     }
 }
 
 void CCResourceLoader::unloadArmature(const string& plistPattern, const string& texPattern, int start, int end, const string& config) {
-    CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo(config.c_str());
+    CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo(_resolve(config.c_str()));
     char buf[512];
     for(int i = start; i <= end; i++) {
         sprintf(buf, plistPattern.c_str(), i);
-        CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile(buf);
+        CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile(_resolve(buf));
         sprintf(buf, texPattern.c_str(), i);
-        CCTextureCache::sharedTextureCache()->removeTextureForKey(buf);
+        CCTextureCache::sharedTextureCache()->removeTextureForKey(_resolve(buf));
     }
 }
 
@@ -294,7 +303,7 @@ string CCResourceLoader::loadString(const string& name) {
 char* CCResourceLoader::loadCString(const string& name) {
     // load encryptd data
 	unsigned long len;
-	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(name.c_str(), "rb", &len);
+	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(_resolve(name.c_str()), "rb", &len);
 
 	// create texture
 	int decLen;
@@ -323,7 +332,7 @@ char* CCResourceLoader::loadCString(const string& name) {
 void CCResourceLoader::loadImage(const string& name) {
 	// load encryptd data
 	unsigned long len;
-	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(name.c_str(), "rb", &len);
+	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(_resolve(name.c_str()), "rb", &len);
 	
 	// create texture
 	int decLen;
@@ -346,7 +355,7 @@ void CCResourceLoader::loadImage(const string& name) {
 }
 
 void CCResourceLoader::loadArmature(const string& plistName, const string& texName, const string& config) {
-    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(config.c_str());
+    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(_resolve(config.c_str()));
     loadZwoptex(plistName, texName);
 }
 
@@ -363,7 +372,7 @@ void CCResourceLoader::loadArmature(const string& plistPattern, const string& te
 void CCResourceLoader::loadZwoptex(const string& plistName, const string& texName) {
 	// load encryptd data
 	unsigned long len;
-	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(texName.c_str(), "rb", &len);
+	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(_resolve(texName.c_str()), "rb", &len);
 	
 	// create texture
 	int decLen;
@@ -377,7 +386,7 @@ void CCResourceLoader::loadZwoptex(const string& plistName, const string& texNam
     CCImage* image = new CCImage();
 	image->initWithImageData((void*)dec, decLen);
 	CC_SAFE_AUTORELEASE(image);
-	CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addUIImage(image, texName.c_str());
+	CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addUIImage(image, _resolve(texName.c_str()));
 	
 	// free
     if(dec != data)
@@ -385,7 +394,7 @@ void CCResourceLoader::loadZwoptex(const string& plistName, const string& texNam
 	free(data);
 	
 	// add zwoptex
-	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plistName.c_str(), tex);
+	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(_resolve(plistName.c_str()), tex);
 }
 
 void CCResourceLoader::run() {
@@ -428,26 +437,26 @@ void CCResourceLoader::abort() {
 void CCResourceLoader::addAndroidStringTask(const string& lan, const string& path, bool merge) {
     AndroidStringLoadTask* t = new AndroidStringLoadTask();
     t->lan = lan;
-    t->path = path;
+    t->path = _resolve(path.c_str());
     t->merge = merge;
     addLoadTask(t);
 }
 
 void CCResourceLoader::addImageTask(const string& name) {
 	ImageLoadTask* t = new ImageLoadTask();
-    t->name = name;
+    t->name = _resolve(name.c_str());
     addLoadTask(t);
 }
 
 void CCResourceLoader::addBMFontTask(const string& fntFile) {
     BMFontLoadTask* t = new BMFontLoadTask();
-    t->name = fntFile;
+    t->name = _resolve(fntFile.c_str());
     addLoadTask(t);
 }
 
 void CCResourceLoader::addAtlasTaskByPlist(const string& name) {
     ZwoptexLoadTask* t = new ZwoptexLoadTask();
-    t->name = name;
+    t->name = _resolve(name.c_str());
     t->texName = "";
     addLoadTask(t);
 }
@@ -456,14 +465,14 @@ void CCResourceLoader::addAtlasTaskByPlistPattern(const string& pattern, int sta
 	char buf[512];
 	for(int i = start; i <= end; i++) {
 		sprintf(buf, pattern.c_str(), i);
-		addAtlasTaskByPlist(buf);
+		addAtlasTaskByPlist(_resolve(buf));
 	}
 }
 
 void CCResourceLoader::addAtlasTaskByPlistAndImage(const string& plistName, const string& texName) {
 	ZwoptexLoadTask* t = new ZwoptexLoadTask();
-	t->name = plistName;
-	t->texName = texName;
+	t->name = _resolve(plistName.c_str());
+	t->texName = _resolve(texName.c_str());
 	addLoadTask(t);
 }
 
@@ -578,13 +587,13 @@ void CCResourceLoader::addAtlasAnimByFramePatternAndVariableIndexDelay(const str
 
 void CCResourceLoader::addCDEffectTask(const string& name) {
 	CDEffectTask* t = new CDEffectTask();
-	t->name = name;
+	t->name = _resolve(name.c_str());
 	addLoadTask(t);
 }
 
 void CCResourceLoader::addCDMusicTask(const string& name) {
 	CDMusicTask* t = new CDMusicTask();
-	t->name = name;
+	t->name = _resolve(name.c_str());
 	addLoadTask(t);
 }
 
@@ -597,7 +606,7 @@ void CCResourceLoader::addCustomTask(CCCallFunc* func) {
 
 void CCResourceLoader::addArmatureTask(string config) {
     ArmatureTask* t = new ArmatureTask();
-    t->configFilePath = config;
+    t->configFilePath = _resolve(config.c_str());
     addLoadTask(t);
 }
 

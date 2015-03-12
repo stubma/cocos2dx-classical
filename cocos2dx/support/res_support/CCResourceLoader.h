@@ -249,6 +249,10 @@ private:
 private:
 	/// perform loading
 	void doLoad(float delta);
+    
+    /// resolve path
+    static const char* _resolve(const char* path);
+    static bool s_resolveExternal;
 
 public:
     CCResourceLoader(CCResourceLoaderListener* listener);
