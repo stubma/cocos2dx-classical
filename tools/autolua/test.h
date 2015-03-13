@@ -2,17 +2,19 @@
 #define __SIMPLE_CLASS_H__
 
 #include <string>
+#include "cocos2d.h"
+
+USING_NS_CC;
+using namespace std;
 
 namespace cocos2d {
-typedef struct {
-	int i;
-} CCPoint;
-}
 
 class SimpleNativeClass
 {
 public:
-	static void processInt(cocos2d::CCPoint f);
+    CCArray& method1(const string& s, const char c);
 };
+
+}
 
 #endif

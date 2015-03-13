@@ -408,6 +408,8 @@ class NativeType(object):
         # if arg is an enum, use int for it
         from_native_dict = generator.tpl_opt['conversions']['from_native']
         if self.is_class:
+            if self.is_ref:
+                keys.append(self.name + "&")
             if not dict_has_key_re(from_native_dict, keys):
                 return False
         return True
@@ -423,6 +425,8 @@ class NativeType(object):
         # if arg is an enum, use int for it
         to_native_dict = generator.tpl_opt['conversions']['to_native']
         if self.is_class:
+            if self.is_ref:
+                keys.append(self.name + "&")
             if not dict_has_key_re(to_native_dict, keys):
                 return False
         return True
