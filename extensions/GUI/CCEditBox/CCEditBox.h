@@ -213,7 +213,7 @@ public:
      * This handler will be removed automatically after onExit() called.
      * @code
      * -- lua sample
-     * local function editboxEventHandler(eventType)
+     * function editboxEventHandler(editbox, eventType)
      *     if eventType == cc.EditBoxEditingDidBegin then
      *         -- triggered when an edit box gains focus after keyboard is shown
      *     elseif eventType == cc.EditBoxEditingDidEnd then
