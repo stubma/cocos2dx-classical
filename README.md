@@ -53,18 +53,19 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 * CocoStudio的调整
 	* 去掉了CocoStudio类的UI前缀兼容设置, 去掉了一些文件的UI前缀
 	* 修正对CocoStudio Mac 1.0.0.0 beta的支持问题, 具体修改为:
-		* UILabel构造函数中_fontSize缺省改为20, 因为mac版cocostudio默认字体大小为20, 当为20时, 不会序列化到json中
+		* Label构造函数中_fontSize缺省改为20, 因为mac版cocostudio默认字体大小为20, 当为20时, 不会序列化到json中
 		* 对类名称"Node"的节点, 一律创建Layout
 		* WidgetPropertiesReader0300::createWidget中, 检查文件版本, 如果为1.0.0.0, 认为其为mac版
 		* WidgetPropertiesReader0300::widgetFromJsonDictionary中添加page item的代码注释掉, 因为PageView重新实现后采用动态方式创建page item
 		* Layout的缺省背景色类型改成NONE
-		* UIPageView重新实现:
+		* PageView重新实现:
 			* 支持动态创建页, 解决了page比较多时的性能问题
 			* 使用了cocos2dx-better的VelocityTracker跟踪滑动速度, 解决了页间滑动很别扭的问题
 			* 注: 不再支持从CocoStudio中直接添加page item, 必须使用PageViewDataSource接口
-	* 修正UILabelBMFont::setFntFile方法中的内存泄露
+	* 修正LabelBMFont::setFntFile方法中的内存泄露
 	* ListView的pushBackDefaultItem返回新item
 	* 修正CCArmature有时候帧事件触发两次的问题
+	* 修正CCArmature单帧动画不触发完成事件的问题
 	* 由于CocoStudio Mac 1.0.0.0 beta没有骨骼动画功能, 需要使用骨骼动画时, 可以使用CocoStudio Windows版1.4.0.1, 1.4.0.1以上版本我没有测试过.
 	* Widget添加addScriptTouchEventListener以支持在lua处理Widget的触摸事件
 	* CCArmatureAnimation添加hasFrameEvent用于检测是否存在某个帧事件 
@@ -117,9 +118,10 @@ Things Improved
 			* use data source to create page item dynamically, and reuseable
 			* use VelocityTracker (from cocos2dx-better) to improve page slide experience
 			* Note: don't support add page item in CocoStudio
-	* fix memory leak in UILabelBMFont::setFntFile
+	* fix memory leak in LabelBMFont::setFntFile
 	* return created item in Listview::pushBackDefaultItem
 	* fix bug: CCArmature frame event may be triggered more than once
+	* fix bug: CCArmature single frame animation doesn't trigger complete event
 	* Note: if you want to use skeleton animation, please still use CocoStudio Windows version, 1.4.0.1 is recommended.
 	* Widget adds addScriptTouchEventListener to support process widget touch event in lua side
 	* CCArmatureAnimation adds hasFrameEvent to detect existence of a frame event
