@@ -106,7 +106,7 @@ struct ImageLoadTask : public CCResourceLoadTask {
     virtual void load();
 };
 
-/// zwoptex load parameter
+/// atlas load parameter
 struct ZwoptexLoadTask : public CCResourceLoadTask {
     /// plist name
     string name;
@@ -119,8 +119,8 @@ struct ZwoptexLoadTask : public CCResourceLoadTask {
     virtual void load();
 };
 
-/// zwoptex animation load parameter
-struct ZwoptexAnimLoadTask : public CCResourceLoadTask {
+/// animation load parameter
+struct AnimLoadTask : public CCResourceLoadTask {
     /// frame list
     typedef vector<string> StringList;
     StringList frames;
@@ -134,19 +134,44 @@ struct ZwoptexAnimLoadTask : public CCResourceLoadTask {
     /// restore original frame when animate is done
     bool restoreOriginalFrame;
     
-    ZwoptexAnimLoadTask() :
-				unitDelay(0),
-				restoreOriginalFrame(false) {
-                }
+    AnimLoadTask() :
+    unitDelay(0),
+    restoreOriginalFrame(false) {
+    }
     
-    virtual ~ZwoptexAnimLoadTask() {}
+    virtual ~AnimLoadTask() {}
     
     virtual void load();
 };
 
-/// zwoptex animation load parameter
+/// atlas animation load parameter
+struct AtlasAnimLoadTask : public CCResourceLoadTask {
+    /// frame list
+    typedef vector<string> StringList;
+    StringList frames;
+    
+    /// animation name
+    string name;
+    
+    /// animation unit delay
+    float unitDelay;
+    
+    /// restore original frame when animate is done
+    bool restoreOriginalFrame;
+    
+    AtlasAnimLoadTask() :
+    unitDelay(0),
+    restoreOriginalFrame(false) {
+    }
+    
+    virtual ~AtlasAnimLoadTask() {}
+    
+    virtual void load();
+};
+
+/// atlas animation load parameter
 /// it can specify duration for every single frame
-struct ZwoptexAnimLoadTask2 : public CCResourceLoadTask {
+struct AtlasAnimLoadTask2 : public CCResourceLoadTask {
     /// frame list
     typedef vector<string> StringList;
     StringList frames;
@@ -161,11 +186,11 @@ struct ZwoptexAnimLoadTask2 : public CCResourceLoadTask {
     /// animation name
     string name;
     
-    ZwoptexAnimLoadTask2() :
+    AtlasAnimLoadTask2() :
     restoreOriginalFrame(false) {
     }
     
-    virtual ~ZwoptexAnimLoadTask2() {}
+    virtual ~AtlasAnimLoadTask2() {}
     
     virtual void load();
 };
@@ -370,14 +395,14 @@ public:
 	 */
 	void addImageTask(const string& name);
 	
-	/// add a zwoptex image loading task
+	/// add a atlas image loading task
 	void addAtlasTaskByPlist(const string& name);
 	
-	/// add a multipack zwoptex image loading task
+	/// add a multipack atlas image loading task
 	void addAtlasTaskByPlistPattern(const string& pattern, int start, int end);
     
     /**
-     * add a zwoptex task, but the texture is encrypted. So a decrypt function must be provided.
+     * add a atlas task, but the texture is encrypted. So a decrypt function must be provided.
      *
      * @param plistName name of plist file, it should not be encrypted
      * @param texName name of image file, it should be encrypted
@@ -385,7 +410,7 @@ public:
     void addAtlasTaskByPlistAndImage(const string& plistName, const string& texName);
 	
     /**
-     * add a multipack zwoptex task, but the texture is encrypted. So a decrypt function must be provided.
+     * add a multipack atlas task, but the texture is encrypted. So a decrypt function must be provided.
      *
      * @param plistPattern pattern of plist file, it should not be encrypted
      * @param texPattern name pattern of image file, it should be encrypted
@@ -400,7 +425,16 @@ public:
 	/// add a cocosdenshion music task
 	void addCDMusicTask(const string& name);
 	
-	/// add a zwoptex animation loading task
+    /// add a atlas animation loading task
+    /// the endIndex is inclusive
+    void addAnimByFramePattern(const string& name,
+                               float unitDelay,
+                               const string& pattern,
+                               int startIndex,
+                               int endIndex,
+                               bool restoreOriginalFrame = false);
+    
+	/// add a atlas animation loading task
 	/// the endIndex is inclusive
     void addAtlasAnimByFramePattern(const string& name,
                                     float unitDelay,
@@ -410,7 +444,7 @@ public:
                                     bool restoreOriginalFrame = false);
     
     /**
-     * add a zwoptex animation loading task, you can specify delay for every frame
+     * add a atlas animation loading task, you can specify delay for every frame
      *
      * @param name animation name
      * @param pattern sprite frame pattern, something likes frame_%d.png, the parameter
@@ -428,7 +462,7 @@ public:
                                                     bool restoreOriginalFrame = false);
 
     /**
-     * add a zwoptex animation loading task, you can specify delay for every frame
+     * add a atlas animation loading task, you can specify delay for every frame
      *
      * @param name animation name
      * @param pattern sprite frame pattern, something likes frame_%d.png, the parameter
@@ -444,7 +478,7 @@ public:
                                                     bool restoreOriginalFrame = false);
     
     /**
-     * add a zwoptex animation loading task, you can specify delay for every frame
+     * add a atlas animation loading task, you can specify delay for every frame
      *
      * @param name animation name
      * @param pattern sprite frame pattern, something likes frame_%d.png, the parameter

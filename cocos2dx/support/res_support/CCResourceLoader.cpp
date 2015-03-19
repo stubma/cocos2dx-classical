@@ -35,7 +35,23 @@ NS_CC_BEGIN
 bool CCResourceLoader::s_resolveExternal = true;
 static CCArray sActiveLoaders;
 
-void ZwoptexAnimLoadTask2::load() {
+void AnimLoadTask::load() {
+    if(!CCAnimationCache::sharedAnimationCache()->animationByName(name.c_str())) {
+        CCTextureCache* tc = CCTextureCache::sharedTextureCache();
+        CCArray* array = CCArray::create();
+        int size = frames.size();
+        for(int i = 0; i < size; i++) {
+            CCTexture2D* tex = tc->addImage(frames.at(i).c_str());
+            CCSpriteFrame* f = CCSpriteFrame::createWithTexture(tex, CCRectMake(0, 0, tex->getContentSizeInPixels().width, tex->getContentSizeInPixels().height));
+            array->addObject(f);
+        }
+        CCAnimation* anim = CCAnimation::createWithSpriteFrames(array, unitDelay);
+        anim->setRestoreOriginalFrame(restoreOriginalFrame);
+        CCAnimationCache::sharedAnimationCache()->addAnimation(anim, name.c_str());
+    }
+}
+
+void AtlasAnimLoadTask2::load() {
     if(!CCAnimationCache::sharedAnimationCache()->animationByName(name.c_str())) {
         CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
         CCArray* array = CCArray::create();
@@ -54,7 +70,7 @@ void ZwoptexAnimLoadTask2::load() {
     }
 }
 
-void ZwoptexAnimLoadTask::load() {
+void AtlasAnimLoadTask::load() {
     if(!CCAnimationCache::sharedAnimationCache()->animationByName(name.c_str())) {
         CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
         CCArray* array = CCArray::create();
@@ -485,13 +501,31 @@ void CCResourceLoader::addAtlasTaskByPlistAndImagePattern(const string& plistPat
 	}
 }
 
+void CCResourceLoader::addAnimByFramePattern(const string& name,
+                           float unitDelay,
+                           const string& pattern,
+                           int startIndex,
+                           int endIndex,
+                           bool restoreOriginalFrame) {
+    AnimLoadTask* t = new AnimLoadTask();
+    t->name = name;
+    t->unitDelay = unitDelay;
+    t->restoreOriginalFrame = restoreOriginalFrame;
+    char buf[256];
+    for(int i = startIndex; i <= endIndex; i++) {
+        sprintf(buf, pattern.c_str(), i);
+        t->frames.push_back(_resolve(buf));
+    }
+    addLoadTask(t);
+}
+
 void CCResourceLoader::addAtlasAnimByFramePattern(const string& name,
                                                   float unitDelay,
                                                   const string& pattern,
                                                   int startIndex,
                                                   int endIndex,
                                                   bool restoreOriginalFrame) {
-	ZwoptexAnimLoadTask* t = new ZwoptexAnimLoadTask();
+	AtlasAnimLoadTask* t = new AtlasAnimLoadTask();
 	t->name = name;
 	t->unitDelay = unitDelay;
 	t->restoreOriginalFrame = restoreOriginalFrame;
@@ -509,7 +543,7 @@ void CCResourceLoader::addAtlasAnimByFramePatternAndVariableDelay(const string& 
                                                                   int endIndex,
                                                                   const string& delayString,
                                                                   bool restoreOriginalFrame) {
-    ZwoptexAnimLoadTask2* t = new ZwoptexAnimLoadTask2();
+    AtlasAnimLoadTask2* t = new AtlasAnimLoadTask2();
     t->name = name;
     t->restoreOriginalFrame = restoreOriginalFrame;
     
@@ -535,7 +569,7 @@ void CCResourceLoader::addAtlasAnimByFramePatternAndVariableIndex(const string& 
                                                                   float delay,
                                                                   bool restoreOriginalFrame) {
     // task
-    ZwoptexAnimLoadTask2* t = new ZwoptexAnimLoadTask2();
+    AtlasAnimLoadTask2* t = new AtlasAnimLoadTask2();
     t->name = name;
     t->restoreOriginalFrame = restoreOriginalFrame;
     
@@ -562,7 +596,7 @@ void CCResourceLoader::addAtlasAnimByFramePatternAndVariableIndexDelay(const str
                                                                        const string& delayString,
                                                                        bool restoreOriginalFrame) {
     // task
-    ZwoptexAnimLoadTask2* t = new ZwoptexAnimLoadTask2();
+    AtlasAnimLoadTask2* t = new AtlasAnimLoadTask2();
     t->name = name;
     t->restoreOriginalFrame = restoreOriginalFrame;
     
