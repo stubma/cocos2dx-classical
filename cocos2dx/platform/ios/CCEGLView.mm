@@ -56,7 +56,7 @@ bool CCEGLView::setContentScaleFactor(float contentScaleFactor)
 	return true;
 }
 
-void CCEGLView::end()
+void CCEGLView::terminate()
 {
     [CCDirectorCaller destroy];
     

@@ -268,7 +268,7 @@ public:
     /** Ends the execution, releases the running scene.
      It doesn't remove the OpenGL view from its parent. You have to do it manually.
      */
-    void end(void);
+    void terminate(void);
 
     /** Pauses the running scene.
      The running scene will be _drawed_ but all scheduled timers will be paused

@@ -42,7 +42,7 @@ public:
     virtual bool    setContentScaleFactor(float contentScaleFactor);
     
     // keep compatible
-    virtual void    end();
+    virtual void    terminate();
     virtual void    swapBuffers();
     
     virtual void setIMEKeyboardState(bool bOpen);

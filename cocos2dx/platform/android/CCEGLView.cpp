@@ -72,7 +72,7 @@ bool CCEGLView::isOpenGLReady()
     return (m_obScreenSize.width != 0 && m_obScreenSize.height != 0);
 }
 
-void CCEGLView::end()
+void CCEGLView::terminate()
 {
     terminateProcessJNI();
 }

@@ -40,7 +40,7 @@ public:
     bool    isOpenGLReady();
 
     // keep compatible
-    void    end();
+    void    terminate();
     void    swapBuffers();
     void    setIMEKeyboardState(bool bOpen);
     

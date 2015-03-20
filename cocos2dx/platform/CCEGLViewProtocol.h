@@ -56,7 +56,7 @@ public:
     /** Force destroying EGL view, subclass must implement this method. 
      * @lua NA
      */
-    virtual void    end() = 0;
+    virtual void    terminate() = 0;
 
     /** Get whether opengl render system is ready, subclass must implement this method. 
      * @lua NA

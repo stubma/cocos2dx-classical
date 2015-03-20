@@ -657,7 +657,7 @@ void CCDirector::popScene(void)
 
     if (c == 0)
     {
-        end();
+        terminate();
     }
     else
     {
@@ -679,7 +679,7 @@ void CCDirector::popToSceneStackLevel(int level)
     // level 0? -> end
     if (level == 0)
     {
-        end();
+        terminate();
         return;
     }
 
@@ -707,7 +707,7 @@ void CCDirector::popToSceneStackLevel(int level)
 	m_bSendCleanupToScene = false;
 }
 
-void CCDirector::end()
+void CCDirector::terminate()
 {
     m_bPurgeDirecotorInNextLoop = true;
 }
@@ -763,7 +763,7 @@ void CCDirector::purgeDirector()
     CHECK_GL_ERROR_DEBUG();
     
     // OpenGL view
-    m_pobOpenGLView->end();
+    m_pobOpenGLView->terminate();
     m_pobOpenGLView = NULL;
 
     // delete CCDirector
