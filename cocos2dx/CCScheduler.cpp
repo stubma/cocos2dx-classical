@@ -685,6 +685,16 @@ void CCScheduler::resumeTarget(CCObject *pTarget)
         CCAssert(pElementUpdate->entry != NULL, "");
         pElementUpdate->entry->paused = false;
     }
+    
+    // Iterate over all the script callbacks
+    if (m_pScriptHandlerEntries) {
+        for (int i = 0; i < m_pScriptHandlerEntries->count(); i++) {
+            CCSchedulerScriptHandlerEntry* pEntry = static_cast<CCSchedulerScriptHandlerEntry*>(m_pScriptHandlerEntries->objectAtIndex(i));
+            if(pEntry->getHandler().target == pTarget) {
+                pEntry->setPaused(false);
+            }
+        }
+    }
 }
 
 void CCScheduler::pauseTarget(CCObject *pTarget)
@@ -706,6 +716,16 @@ void CCScheduler::pauseTarget(CCObject *pTarget)
     {
         CCAssert(pElementUpdate->entry != NULL, "");
         pElementUpdate->entry->paused = true;
+    }
+    
+    // Iterate over all the script callbacks
+    if (m_pScriptHandlerEntries) {
+        for (int i = 0; i < m_pScriptHandlerEntries->count(); i++) {
+            CCSchedulerScriptHandlerEntry* pEntry = static_cast<CCSchedulerScriptHandlerEntry*>(m_pScriptHandlerEntries->objectAtIndex(i));
+            if(pEntry->getHandler().target == pTarget) {
+                pEntry->setPaused(true);
+            }
+        }
     }
 }
 

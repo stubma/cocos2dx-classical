@@ -117,6 +117,10 @@ public:
         return m_bPaused;
     }
     
+    void setPaused(bool flag) {
+        m_bPaused = flag;
+    }
+    
     void markedForDeletion(void) {
         m_bMarkedForDeletion = true;
     }
