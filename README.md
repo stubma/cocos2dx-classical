@@ -16,7 +16,7 @@ It is a customized cocos2dx, based on latest code of cocos2dx v2 branch. The pur
 
 To get a bette v2, I created a cocos2dx-better project to overcome limitations of v2. Now I start this project to merge cocos2dx-better code to v2 branch, and more.
 
-I only care iOS/Android platform, so other platform code will be deleted. Are you same with me? If so, take a look at this project.
+I only care about iOS/Android platform so other platform implementation will be deleted. Are you same with me? If so, take a look at this project.
 
 目标
 ===
@@ -28,9 +28,9 @@ I only care iOS/Android platform, so other platform code will be deleted. Are yo
 Purpose
 ===
 
-1. base on cocos2dx v2 **(Done)**
+1. based on cocos2dx v2 **(Done)**
 2. merge my cocos2dx-better **(Done)**
-3. provide fully lua support, in quick-cocos2dx 3.x way **(Done)**
+3. provide full lua support, in quick-cocos2dx 3.x style **(Done)**
 4. fix v2 bugs **(Always in progress)**	
 
 何时结束
