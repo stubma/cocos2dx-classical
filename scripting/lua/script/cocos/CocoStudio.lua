@@ -21,6 +21,11 @@ cc.LAYOUT_PARAMETER_RELATIVE = 2
 cc.UI_TEX_TYPE_LOCAL = 0
 cc.UI_TEX_TYPE_PLIST = 1
 
+-- widget bright style
+cc.BRIGHT_NONE = -1
+cc.BRIGHT_NORMAL = 0
+cc.BRIGHT_HIGHLIGHT = 1
+
 overload.createArm {
     "class",
     "string",
