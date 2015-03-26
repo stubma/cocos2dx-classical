@@ -628,9 +628,9 @@ void CCScheduler::unscheduleAllForTarget(CCObject *pTarget)
     unscheduleUpdateForTarget(pTarget);
 }
 
-unsigned int CCScheduler::scheduleScriptFunc(ccScriptFunction nHandler, float fInterval, unsigned int repeat, float delay, bool bPaused)
+unsigned int CCScheduler::scheduleScriptFunc(ccScriptFunction func, float fInterval, unsigned int repeat, float delay, bool bPaused)
 {
-    CCSchedulerScriptHandlerEntry* pEntry = CCSchedulerScriptHandlerEntry::create(nHandler, fInterval, repeat, delay, bPaused);
+    CCSchedulerScriptHandlerEntry* pEntry = CCSchedulerScriptHandlerEntry::create(func, fInterval, repeat, delay, bPaused);
     if (!m_pScriptHandlerEntries)
     {
         m_pScriptHandlerEntries = CCArray::createWithCapacity(20);
@@ -652,12 +652,13 @@ void CCScheduler::unscheduleAllScriptEntryForTarget(CCObject* target) {
     }
 }
 
-void CCScheduler::unscheduleScriptEntry(unsigned int uScheduleScriptEntryID)
+void CCScheduler::unscheduleScriptFunc(const ccScriptFunction& scriptFunc)
 {
     for (int i = m_pScriptHandlerEntries->count() - 1; i >= 0; i--)
     {
         CCSchedulerScriptHandlerEntry* pEntry = static_cast<CCSchedulerScriptHandlerEntry*>(m_pScriptHandlerEntries->objectAtIndex(i));
-        if (pEntry->getEntryId() == (int)uScheduleScriptEntryID)
+        ccScriptFunction& func = pEntry->getHandler();
+        if (func.target == scriptFunc.target && func.handler == scriptFunc.handler)
         {
             pEntry->markedForDeletion();
             break;

@@ -233,12 +233,12 @@ public:
      return schedule script entry ID, used for unscheduleScriptFunc().
      @js NA
      */
-    unsigned int scheduleScriptFunc(ccScriptFunction nHandler, float fInterval, unsigned int repeat, float delay, bool bPaused);
+    unsigned int scheduleScriptFunc(ccScriptFunction func, float fInterval, unsigned int repeat, float delay, bool bPaused);
     
     /** Unschedule a script entry. 
      *  @js NA
      */
-    void unscheduleScriptEntry(unsigned int uScheduleScriptEntryID);
+    void unscheduleScriptFunc(const ccScriptFunction& scriptFunc);
     
     /** Unschedule all script entry of an target
      * @js NA

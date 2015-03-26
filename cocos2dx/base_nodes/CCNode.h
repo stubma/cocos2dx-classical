@@ -1209,6 +1209,11 @@ public:
      * Unschedule all scheduled script functions
      */
     void unscheduleAllScriptFuncs();
+    
+    /**
+     * Unschedule one script func
+     */
+    void unscheduleScriptFunc(unsigned int handler);
 
     /** 
      * Resumes all scheduled selectors and actions.
