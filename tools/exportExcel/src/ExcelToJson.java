@@ -61,10 +61,12 @@ public class ExcelToJson {
 	}
 	
 	private String firstCapital(String s) {
+		s = s.trim();
 		return s.substring(0, 1).toUpperCase() + s.substring(1);
 	}
 	
 	private String firstLowercase(String s) {
+		s = s.trim();
 		return s.substring(0, 1).toLowerCase() + s.substring(1);
 	}
 
