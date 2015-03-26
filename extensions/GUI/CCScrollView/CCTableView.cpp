@@ -599,6 +599,11 @@ void CCTableView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
         
 		if (bb.containsPoint(pTouch->getLocation()))
         {
+            // save touch point
+            CCPoint loc = convertTouchToNodeSpace(pTouch);
+            m_tTouchPoint = loc;
+            
+            // event
             onTableCellUnhighlight();
             onTableCellTouched();
         }
