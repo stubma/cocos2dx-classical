@@ -231,9 +231,9 @@ CCResourceLoader::~CCResourceLoader() {
     }
 }
 
-const char* CCResourceLoader::_resolve(const char* path) {
+string CCResourceLoader::_resolve(const string& path) {
     if(s_resolveExternal) {
-        return CCUtils::getExternalOrFullPath(path).c_str();
+        return CCUtils::getExternalOrFullPath(path);
     } else {
         return path;
     }
@@ -250,14 +250,14 @@ void CCResourceLoader::abortAll() {
 }
 
 void CCResourceLoader::unloadImage(const string& tex) {
-    CCTextureCache::sharedTextureCache()->removeTextureForKey(_resolve(tex.c_str()));
+    CCTextureCache::sharedTextureCache()->removeTextureForKey(_resolve(tex).c_str());
 }
 
 void CCResourceLoader::unloadImage(const string& texPattern, int start, int end) {
     char buf[512];
     for(int i = start; i <= end; i++) {
         sprintf(buf, texPattern.c_str(), i);
-        CCTextureCache::sharedTextureCache()->removeTextureForKey(_resolve(buf));
+        CCTextureCache::sharedTextureCache()->removeTextureForKey(_resolve(buf).c_str());
     }
 }
 
@@ -265,20 +265,20 @@ void CCResourceLoader::unloadAtlas(const string& plistPattern, const string& tex
     char buf[512];
     for(int i = start; i <= end; i++) {
         sprintf(buf, plistPattern.c_str(), i);
-        CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile(_resolve(buf));
+        CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile(_resolve(buf).c_str());
         sprintf(buf, texPattern.c_str(), i);
-        CCTextureCache::sharedTextureCache()->removeTextureForKey(_resolve(buf));
+        CCTextureCache::sharedTextureCache()->removeTextureForKey(_resolve(buf).c_str());
     }
 }
 
 void CCResourceLoader::unloadArmature(const string& plistPattern, const string& texPattern, int start, int end, const string& config) {
-    CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo(_resolve(config.c_str()));
+    CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo(_resolve(config).c_str());
     char buf[512];
     for(int i = start; i <= end; i++) {
         sprintf(buf, plistPattern.c_str(), i);
-        CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile(_resolve(buf));
+        CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile(_resolve(buf).c_str());
         sprintf(buf, texPattern.c_str(), i);
-        CCTextureCache::sharedTextureCache()->removeTextureForKey(_resolve(buf));
+        CCTextureCache::sharedTextureCache()->removeTextureForKey(_resolve(buf).c_str());
     }
 }
 
@@ -319,7 +319,7 @@ string CCResourceLoader::loadString(const string& name) {
 char* CCResourceLoader::loadCString(const string& name) {
     // load encryptd data
 	unsigned long len;
-	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(_resolve(name.c_str()), "rb", &len);
+	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(_resolve(name).c_str(), "rb", &len);
 
 	// create texture
 	int decLen;
@@ -348,7 +348,7 @@ char* CCResourceLoader::loadCString(const string& name) {
 void CCResourceLoader::loadImage(const string& name) {
 	// load encryptd data
 	unsigned long len;
-	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(_resolve(name.c_str()), "rb", &len);
+	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(_resolve(name).c_str(), "rb", &len);
 	
 	// create texture
 	int decLen;
@@ -371,7 +371,7 @@ void CCResourceLoader::loadImage(const string& name) {
 }
 
 void CCResourceLoader::loadArmature(const string& plistName, const string& texName, const string& config) {
-    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(_resolve(config.c_str()));
+    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(_resolve(config).c_str());
     loadZwoptex(plistName, texName);
 }
 
@@ -388,7 +388,7 @@ void CCResourceLoader::loadArmature(const string& plistPattern, const string& te
 void CCResourceLoader::loadZwoptex(const string& plistName, const string& texName) {
 	// load encryptd data
 	unsigned long len;
-	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(_resolve(texName.c_str()), "rb", &len);
+	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(_resolve(texName).c_str(), "rb", &len);
 	
 	// create texture
 	int decLen;
@@ -402,7 +402,7 @@ void CCResourceLoader::loadZwoptex(const string& plistName, const string& texNam
     CCImage* image = new CCImage();
 	image->initWithImageData((void*)dec, decLen);
 	CC_SAFE_AUTORELEASE(image);
-	CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addUIImage(image, _resolve(texName.c_str()));
+	CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addUIImage(image, _resolve(texName).c_str());
 	
 	// free
     if(dec != data)
@@ -410,7 +410,7 @@ void CCResourceLoader::loadZwoptex(const string& plistName, const string& texNam
 	free(data);
 	
 	// add zwoptex
-	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(_resolve(plistName.c_str()), tex);
+	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(_resolve(plistName).c_str(), tex);
 }
 
 void CCResourceLoader::run() {

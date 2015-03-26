@@ -276,7 +276,7 @@ private:
 	void doLoad(float delta);
     
     /// resolve path
-    static const char* _resolve(const char* path);
+    static string _resolve(const string& path);
     static bool s_resolveExternal;
 
 public:
