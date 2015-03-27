@@ -24,13 +24,11 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
     $(LOCAL_PATH)/CocoStudio/Armature/utils
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static \
 	cocosdenshion_static \
-	cocos_curl_static \
 	box2d_static \
 	chipmunk_static \
 	cocos_lua_static
 include $(BUILD_STATIC_LIBRARY)
 $(call import-module,cocos2dx)
-$(call import-module,cocos2dx/platform/third_party/android/prebuilt/libcurl)
 $(call import-module,external/Box2D)
 $(call import-module,external/chipmunk)
 $(call import-module,scripting/lua)

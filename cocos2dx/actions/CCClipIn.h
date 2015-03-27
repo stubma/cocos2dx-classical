@@ -25,7 +25,7 @@
 #define __CCClipIn__
 
 #include "actions/CCActionInterval.h"
-#include "support/CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 
 NS_CC_BEGIN
 

@@ -26,7 +26,7 @@
 #include "CCTMXLayerInfo.h"
 #include "CCTMXTileSetInfo.h"
 #include "sprite_nodes/CCSpriteBatchNode.h"
-#include "support/CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 #include "shaders/CCShaderCache.h"
 
 NS_CC_BEGIN

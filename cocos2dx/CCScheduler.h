@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 #include "script_support/CCScriptSupport.h"
 #include "cocoa/CCObject.h"
-#include "support/data_support/uthash.h"
+#include "cocoa/uthash.h"
 
 NS_CC_BEGIN
 

@@ -30,7 +30,7 @@
  */
 
 #include "CCControlSaturationBrightnessPicker.h"
-#include "support/CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 
 NS_CC_EXT_BEGIN
 

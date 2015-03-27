@@ -26,12 +26,12 @@ THE SOFTWARE.
 #include "CCTileMapAtlas.h"
 #include "platform/CCFileUtils.h"
 #include "textures/CCTextureAtlas.h"
-#include "support/image_support/TGAlib.h"
+#include "support/image/TGAlib.h"
 #include "ccConfig.h"
 #include "cocoa/CCDictionary.h"
 #include "cocoa/CCInteger.h"
 #include "CCDirector.h"
-#include "support/CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 
 NS_CC_BEGIN
 

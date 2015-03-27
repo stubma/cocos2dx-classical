@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "support/utils/CCUtils.h"
 #include "CCStdC.h"
 #include "platform/CCFileUtils.h"
-#include "support/zip_support/ZipUtils.h"
+#include "support/zip/ZipUtils.h"
 #include "shaders/ccGLStateCache.h"
 #include <ctype.h>
 #include <cctype>

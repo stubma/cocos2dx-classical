@@ -27,7 +27,7 @@
 #include <errno.h>
 #include "CCFileUtils.h"
 #include "ccMacros.h"
-#include "CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 
 NS_CC_BEGIN
 

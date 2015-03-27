@@ -35,7 +35,7 @@ THE SOFTWARE.
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CCGLProgram.h"
 #include "support/utils/TransformUtils.h"
-#include "support/CCNotificationCenter.h"
+#include "CCNotificationCenter.h"
 #include "CCEventType.h"
 
 // extern

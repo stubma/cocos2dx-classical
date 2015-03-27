@@ -8,12 +8,12 @@
 
 #include "lpk.h"
 #include <stdlib.h>
-#include "hash_bob_jenkins_v2.h"
+#include "support/codec/hash_bob_jenkins_v2.h"
 #include <string.h>
 #include <zlib.h>
 #include <stdbool.h>
-#include "tea.h"
-#include "xxtea.h"
+#include "support/codec/tea.h"
+#include "support/codec/xxtea.h"
 
 #ifdef __cplusplus
 extern "C" {

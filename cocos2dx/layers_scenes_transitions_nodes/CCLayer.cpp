@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "keypad_dispatcher/CCKeypadDispatcher.h"
 #include "CCAccelerometer.h"
 #include "CCDirector.h"
-#include "support/CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 #include "script_support/CCScriptSupport.h"
 #include "shaders/CCShaderCache.h"
 #include "shaders/CCGLProgram.h"

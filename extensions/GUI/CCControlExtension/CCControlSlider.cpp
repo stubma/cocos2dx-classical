@@ -28,7 +28,7 @@
  */
 
 #include "CCControlSlider.h"
-#include "support/CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 #include "touch_dispatcher/CCTouch.h"
 #include "CCDirector.h"
 

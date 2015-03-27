@@ -38,7 +38,7 @@
 #include <errno.h>
 #endif
 
-#include "support/zip_support/unzip.h"
+#include "support/zip/unzip.h"
 
 using namespace cocos2d;
 using namespace std;

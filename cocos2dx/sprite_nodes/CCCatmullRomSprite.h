@@ -25,7 +25,7 @@
 #define __CCCatmullRomSprite_h__
 
 #include "ccTypes.h"
-#include "support/data_support/CCPointList.h"
+#include "cocoa/CCPointList.h"
 #include "base_nodes/CCNode.h"
 #include "sprite_nodes/CCSprite.h"
 #include "actions/CCActionCatmullRom.h"

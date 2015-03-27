@@ -31,7 +31,7 @@
 #include "shaders/CCShaderCache.h"
 #include "sprite_nodes/CCSpriteBatchNode.h"
 #include "draw_nodes/CCDrawingPrimitives.h"
-#include "support/CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 
 NS_CC_BEGIN
 

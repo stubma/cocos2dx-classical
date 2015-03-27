@@ -27,7 +27,7 @@
 
 #include <platform/CCPlatformConfig.h>
 #include <platform/ios/CCPlatformDefine.h>
-#include <support/CCPointExtension.h>
+#include <cocoa/CCPointExtension.h>
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 

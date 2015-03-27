@@ -67,11 +67,11 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
     $(LOCAL_PATH)/support/aosp \
     $(LOCAL_PATH)/support/entities \
     $(LOCAL_PATH)/support/utils \
-    $(LOCAL_PATH)/support/tinyxml2 \
+    $(LOCAL_PATH)/support/xml \
     $(LOCAL_PATH)/support/yajl/include \
     $(LOCAL_PATH)/support/jsoncpp \
-    $(LOCAL_PATH)/support/zip_support \
-    $(LOCAL_PATH)/support/ui_support
+    $(LOCAL_PATH)/support/zip \
+    $(LOCAL_PATH)/support/ui
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_C_INCLUDES)
 LOCAL_LDLIBS := -lGLESv2 -llog -lz -latomic
 LOCAL_EXPORT_LDLIBS := $(LOCAL_LDLIBS)
@@ -81,10 +81,11 @@ LOCAL_WHOLE_STATIC_LIBRARIES := cocos_libpng_static \
 	cocos_libtiff_static \
 	cocos_libwebp_static \
 	cocos_sqlite3_static \
+	cocos_curl_static \
 	cocosdenshion_static \
 	cocos_extension_static
 
-# define the macro to compile through support/zip_support/ioapi.c
+# define the macro to compile through support/zip/ioapi.c
 LOCAL_CFLAGS := -DUSE_FILE32API -Qunused-arguments
 LOCAL_EXPORT_CFLAGS := $(LOCAL_CFLAGS)
 
@@ -97,3 +98,4 @@ $(call import-module,libpng)
 $(call import-module,libtiff)
 $(call import-module,libwebp)
 $(call import-module,sqlite3)
+$(call import-module,libcurl)

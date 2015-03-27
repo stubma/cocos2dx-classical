@@ -26,9 +26,9 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "cocoa/CCDictionary.h"
 #include "cocoa/CCString.h"
-#include "support/CCSAXParser.h"
-#include "support/tinyxml2/tinyxml2.h"
-#include "support/zip_support/unzip.h"
+#include "support/xml/CCSAXParser.h"
+#include "support/xml/tinyxml2.h"
+#include "support/zip/unzip.h"
 #include <stack>
 #include <algorithm>
 

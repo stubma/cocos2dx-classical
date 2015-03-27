@@ -25,7 +25,7 @@
 #define __CCTMXObject_h__
 
 #include "base_nodes/CCNode.h"
-#include "support/data_support/CCPointList.h"
+#include "cocoa/CCPointList.h"
 #include "ccMacros.h"
 #include "cocoa/CCDictionary.h"
 

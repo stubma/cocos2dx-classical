@@ -30,7 +30,7 @@
  */
 
 #include "CCControlColourPicker.h"
-#include "support/CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 #include "sprite_nodes/CCSpriteFrameCache.h"
 #include "sprite_nodes/CCSpriteBatchNode.h"
 

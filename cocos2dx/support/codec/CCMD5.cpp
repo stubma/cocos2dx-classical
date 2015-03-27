@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "CCMD5.h"
+#include "support/codec/CCMD5.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdio.h>

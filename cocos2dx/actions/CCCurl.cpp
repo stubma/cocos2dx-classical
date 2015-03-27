@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "CCCurl.h"
-#include "support/CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 #include "cocoa/CCZone.h"
 
 NS_CC_BEGIN

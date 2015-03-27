@@ -29,7 +29,7 @@
 #include "CCTMXTileSetInfo.h"
 #include "CCTMXObjectDebugRenderer.h"
 #include "textures/CCTextureCache.h"
-#include "support/CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 
 NS_CC_BEGIN
 

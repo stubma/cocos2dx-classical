@@ -28,8 +28,8 @@
 #include "CCTMXObjectGroup.h"
 #include "CCTMXLayerInfo.h"
 #include "CCUtils.h"
-#include "CCBase64.h"
-#include "support/zip_support/ZipUtils.h"
+#include "support/codec/CCBase64.h"
+#include "support/zip/ZipUtils.h"
 #include "platform/CCFileUtils.h"
 #include "CCDirector.h"
 

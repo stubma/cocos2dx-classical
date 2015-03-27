@@ -24,7 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 #include "ccMacros.h" // FLT_EPSILON
 #include <stdio.h>
 

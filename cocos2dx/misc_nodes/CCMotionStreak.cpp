@@ -28,9 +28,8 @@ THE SOFTWARE.
 #include "shaders/CCGLProgram.h"
 #include "shaders/CCShaderCache.h"
 #include "ccMacros.h"
-
-#include "support/CCVertex.h"
-#include "support/CCPointExtension.h"
+#include "cocoa/CCVertex.h"
+#include "cocoa/CCPointExtension.h"
 
 NS_CC_BEGIN
 

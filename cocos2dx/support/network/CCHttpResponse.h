@@ -26,7 +26,7 @@
 
 #include "ccTypes.h"
 #include "CCHttpRequest.h"
-#include "support/data_support/CCData.h"
+#include "cocoa/CCData.h"
 #include "support/utils/CCUtils.h"
 #include "cocoa/CCDictionary.h"
 

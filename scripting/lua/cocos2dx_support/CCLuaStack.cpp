@@ -36,7 +36,7 @@ extern "C" {
 #include "lua_cocos2dx_auto.h"
 #include "Cocos2dxLuaLoader.h"
 #include "LuaBasicConversions.h"
-#include "support/crypto/xxtea.h"
+#include "support/codec/xxtea.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "platform/ios/CCLuaObjcBridge.h"

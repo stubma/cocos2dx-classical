@@ -25,7 +25,7 @@
 #include "draw_nodes/CCDrawingPrimitives.h"
 #include "CCDirector.h"
 #include "layers_scenes_transitions_nodes/CCScene.h"
-#include "CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 
 NS_CC_BEGIN
 

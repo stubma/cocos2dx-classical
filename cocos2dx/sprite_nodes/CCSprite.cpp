@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CCGLProgram.h"
 #include "CCDirector.h"
-#include "support/CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 #include "cocoa/CCGeometry.h"
 #include "textures/CCTexture2D.h"
 #include "cocoa/CCAffineTransform.h"

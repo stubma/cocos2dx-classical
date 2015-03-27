@@ -35,7 +35,7 @@ THE SOFTWARE.
 #include "textures/CCTextureCache.h"
 #include "platform/CCFileUtils.h"
 #include "CCGL.h"
-#include "support/CCNotificationCenter.h"
+#include "CCNotificationCenter.h"
 #include "CCEventType.h"
 #include "effects/CCGrid.h"
 // extern

@@ -25,7 +25,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCMenuItem.h"
-#include "support/CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 #include "actions/CCActionInterval.h"
 #include "sprite_nodes/CCSprite.h"
 #include "label_nodes/CCLabelAtlas.h"

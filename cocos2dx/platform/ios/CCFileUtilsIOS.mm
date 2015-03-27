@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "CCSAXParser.h"
 #include "CCDictionary.h"
-#include "support/zip_support/unzip.h"
+#include "support/zip/unzip.h"
 
 #include "CCFileUtilsIOS.h"
 

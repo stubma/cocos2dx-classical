@@ -26,9 +26,8 @@ THE SOFTWARE.
 #ifndef __CCTILE_MAP_ATLAS__
 #define __CCTILE_MAP_ATLAS__
 
-
 #include "base_nodes/CCAtlasNode.h"
-#include "support/image_support/TGAlib.h"
+#include "support/image/TGAlib.h"
 
 NS_CC_BEGIN
 

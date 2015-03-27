@@ -24,7 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "CCActionPageTurn3D.h"
 #include "cocoa/CCZone.h"
-#include "support/CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 
 NS_CC_BEGIN
 

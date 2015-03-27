@@ -7,8 +7,6 @@
 //
 
 #import "NSData+Encryption.h"
-#include "tea.h"
-#include "xxtea.h"
 
 @implementation NSData (Encryption)
 

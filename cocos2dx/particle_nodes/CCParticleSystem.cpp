@@ -46,14 +46,14 @@ THE SOFTWARE.
 #include "ccTypes.h"
 #include "textures/CCTextureCache.h"
 #include "textures/CCTextureAtlas.h"
-#include "support/CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCImage.h"
 #include "platform/platform.h"
-#include "support/zip_support/ZipUtils.h"
+#include "support/zip/ZipUtils.h"
 #include "CCDirector.h"
 #include "support/profile/CCProfiling.h"
-#include "support/CCBase64.h"
+#include "support/codec/CCBase64.h"
 // opengl
 #include "CCGL.h"
 

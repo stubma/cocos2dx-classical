@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "support/CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 #include "CCTouch.h"
 #include "CCDirector.h"
 

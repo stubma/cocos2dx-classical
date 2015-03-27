@@ -24,7 +24,7 @@ THE SOFTWARE.
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #include "CCFileUtilsAndroid.h"
-#include "support/zip_support/ZipUtils.h"
+#include "support/zip/ZipUtils.h"
 #include "platform/CCCommon.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "jni/JniHelper.h"

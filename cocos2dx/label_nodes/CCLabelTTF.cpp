@@ -32,7 +32,7 @@
 #include "textures/CCTextureCache.h"
 #include "menu_nodes/CCMenu.h"
 #include "actions/CCActionInstant.h"
-#include "CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 
 NS_CC_BEGIN
 

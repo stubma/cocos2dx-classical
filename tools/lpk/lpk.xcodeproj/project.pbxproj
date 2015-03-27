@@ -10,7 +10,6 @@
 		9211D9CF1A91A15D0015712A /* LpkEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 9211D9CE1A91A15D0015712A /* LpkEntry.m */; };
 		9211D9D21A91A2580015712A /* TreeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9211D9D11A91A2580015712A /* TreeManager.m */; };
 		9211D9D41A91A9060015712A /* export.png in Resources */ = {isa = PBXBuildFile; fileRef = 9211D9D31A91A9060015712A /* export.png */; };
-		9211D9DA1A91C5160015712A /* hash_bob_jenkins_v2.c in Sources */ = {isa = PBXBuildFile; fileRef = 9211D9D81A91C5160015712A /* hash_bob_jenkins_v2.c */; };
 		9211D9DD1A91CE900015712A /* NSArray+Transform.m in Sources */ = {isa = PBXBuildFile; fileRef = 9211D9DC1A91CE900015712A /* NSArray+Transform.m */; };
 		9211D9DF1A91F1150015712A /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 9211D9DE1A91F1150015712A /* delete.png */; };
 		9211D9E11A91F1F50015712A /* new_folder.png in Resources */ = {isa = PBXBuildFile; fileRef = 9211D9E01A91F1F50015712A /* new_folder.png */; };
@@ -28,7 +27,6 @@
 		9247AF7B1A90D127006BB0C4 /* NSView+CNSplitViewToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9247AF751A90D127006BB0C4 /* NSView+CNSplitViewToolbar.m */; };
 		9247AF7E1A90D626006BB0C4 /* save.png in Resources */ = {isa = PBXBuildFile; fileRef = 9247AF7C1A90D626006BB0C4 /* save.png */; };
 		9247AF7F1A90D626006BB0C4 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 9247AF7D1A90D626006BB0C4 /* setting.png */; };
-		9247AF831A90DEE6006BB0C4 /* lpk.c in Sources */ = {isa = PBXBuildFile; fileRef = 9247AF811A90DEE6006BB0C4 /* lpk.c */; };
 		926F19EC1A95C9D500BD0CE0 /* AddBranchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 926F19EB1A95C9D500BD0CE0 /* AddBranchViewController.m */; };
 		928B55571A9D991400781D3D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 928B55561A9D991400781D3D /* libz.dylib */; };
 		928B555D1A9DA48100781D3D /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 928B555C1A9DA48100781D3D /* NSData+Compression.m */; };
@@ -40,6 +38,10 @@
 		928C0CDB1A9F327A009080BC /* ViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928C0CDA1A9F327A009080BC /* ViewerViewController.m */; };
 		928C0CDE1A9F328E009080BC /* DefaultViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928C0CDD1A9F328E009080BC /* DefaultViewerViewController.m */; };
 		928C0CE11A9F48D9009080BC /* ImageViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928C0CE01A9F48D9009080BC /* ImageViewerViewController.m */; };
+		92AA140D1AC5123F0066041C /* lpk.c in Sources */ = {isa = PBXBuildFile; fileRef = 92AA140B1AC5123F0066041C /* lpk.c */; };
+		92AA14141AC512550066041C /* hash_bob_jenkins_v2.c in Sources */ = {isa = PBXBuildFile; fileRef = 92AA140E1AC512550066041C /* hash_bob_jenkins_v2.c */; };
+		92AA14151AC512550066041C /* tea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92AA14101AC512550066041C /* tea.cpp */; };
+		92AA14161AC512550066041C /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92AA14121AC512550066041C /* xxtea.cpp */; };
 		92AABA441AAC02B200282227 /* extract.png in Resources */ = {isa = PBXBuildFile; fileRef = 92AABA431AAC02B200282227 /* extract.png */; };
 		92AABA471AAC04C700282227 /* ExtractViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AABA461AAC04C700282227 /* ExtractViewController.m */; };
 		92B090B31A9465DA003A1298 /* LpkBranchEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B090B21A9465DA003A1298 /* LpkBranchEntry.m */; };
@@ -49,8 +51,6 @@
 		92C31EB41AA9DD6900F7C640 /* inspect.png in Resources */ = {isa = PBXBuildFile; fileRef = 92C31EB31AA9DD6900F7C640 /* inspect.png */; };
 		92C3829F1A9EB61D00BF8699 /* GeneralSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C3829E1A9EB61D00BF8699 /* GeneralSettingViewController.m */; };
 		92C382A21A9EB9E000BF8699 /* EncryptionSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C382A11A9EB9E000BF8699 /* EncryptionSettingViewController.m */; };
-		92C382A71A9EBC6100BF8699 /* tea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92C382A31A9EBC6100BF8699 /* tea.cpp */; };
-		92C382A81A9EBC6100BF8699 /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92C382A51A9EBC6100BF8699 /* xxtea.cpp */; };
 		92C382AB1A9ECF0900BF8699 /* NSData+Encryption.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C382AA1A9ECF0900BF8699 /* NSData+Encryption.m */; };
 		92CF2B4E1A961BC60094D6E4 /* Consts.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CF2B4D1A961BC60094D6E4 /* Consts.m */; };
 		92E850FC1A90C6E9005A1465 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92E850F91A90C6E9005A1465 /* Main.storyboard */; };
@@ -69,8 +69,6 @@
 		9211D9D01A91A2580015712A /* TreeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeManager.h; sourceTree = "<group>"; };
 		9211D9D11A91A2580015712A /* TreeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeManager.m; sourceTree = "<group>"; };
 		9211D9D31A91A9060015712A /* export.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = export.png; sourceTree = "<group>"; };
-		9211D9D81A91C5160015712A /* hash_bob_jenkins_v2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hash_bob_jenkins_v2.c; path = ../../../cocos2dx/support/data_support/hash_bob_jenkins_v2.c; sourceTree = "<group>"; };
-		9211D9D91A91C5160015712A /* hash_bob_jenkins_v2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hash_bob_jenkins_v2.h; path = ../../../cocos2dx/support/data_support/hash_bob_jenkins_v2.h; sourceTree = "<group>"; };
 		9211D9DB1A91CE900015712A /* NSArray+Transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Transform.h"; sourceTree = "<group>"; };
 		9211D9DC1A91CE900015712A /* NSArray+Transform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Transform.m"; sourceTree = "<group>"; };
 		9211D9DE1A91F1150015712A /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
@@ -102,8 +100,6 @@
 		9247AF7C1A90D626006BB0C4 /* save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save.png; sourceTree = "<group>"; };
 		9247AF7D1A90D626006BB0C4 /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting.png; sourceTree = "<group>"; };
 		9247AF801A90D81A006BB0C4 /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = SOURCE_ROOT; };
-		9247AF811A90DEE6006BB0C4 /* lpk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpk.c; sourceTree = "<group>"; };
-		9247AF821A90DEE6006BB0C4 /* lpk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lpk.h; sourceTree = "<group>"; };
 		926F19EA1A95C9D500BD0CE0 /* AddBranchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddBranchViewController.h; sourceTree = "<group>"; };
 		926F19EB1A95C9D500BD0CE0 /* AddBranchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddBranchViewController.m; sourceTree = "<group>"; };
 		928B55561A9D991400781D3D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -123,6 +119,14 @@
 		928C0CDD1A9F328E009080BC /* DefaultViewerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultViewerViewController.m; sourceTree = "<group>"; };
 		928C0CDF1A9F48D9009080BC /* ImageViewerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewerViewController.h; sourceTree = "<group>"; };
 		928C0CE01A9F48D9009080BC /* ImageViewerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewerViewController.m; sourceTree = "<group>"; };
+		92AA140B1AC5123F0066041C /* lpk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lpk.c; path = ../../../cocos2dx/support/res/lpk.c; sourceTree = "<group>"; };
+		92AA140C1AC5123F0066041C /* lpk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lpk.h; path = ../../../cocos2dx/support/res/lpk.h; sourceTree = "<group>"; };
+		92AA140E1AC512550066041C /* hash_bob_jenkins_v2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hash_bob_jenkins_v2.c; path = ../../../cocos2dx/support/codec/hash_bob_jenkins_v2.c; sourceTree = "<group>"; };
+		92AA140F1AC512550066041C /* hash_bob_jenkins_v2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hash_bob_jenkins_v2.h; path = ../../../cocos2dx/support/codec/hash_bob_jenkins_v2.h; sourceTree = "<group>"; };
+		92AA14101AC512550066041C /* tea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tea.cpp; path = ../../../cocos2dx/support/codec/tea.cpp; sourceTree = "<group>"; };
+		92AA14111AC512550066041C /* tea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tea.h; path = ../../../cocos2dx/support/codec/tea.h; sourceTree = "<group>"; };
+		92AA14121AC512550066041C /* xxtea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xxtea.cpp; path = ../../../cocos2dx/support/codec/xxtea.cpp; sourceTree = "<group>"; };
+		92AA14131AC512550066041C /* xxtea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xxtea.h; path = ../../../cocos2dx/support/codec/xxtea.h; sourceTree = "<group>"; };
 		92AABA431AAC02B200282227 /* extract.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = extract.png; sourceTree = "<group>"; };
 		92AABA451AAC04C700282227 /* ExtractViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtractViewController.h; sourceTree = "<group>"; };
 		92AABA461AAC04C700282227 /* ExtractViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtractViewController.m; sourceTree = "<group>"; };
@@ -137,10 +141,6 @@
 		92C3829E1A9EB61D00BF8699 /* GeneralSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralSettingViewController.m; sourceTree = "<group>"; };
 		92C382A01A9EB9E000BF8699 /* EncryptionSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EncryptionSettingViewController.h; sourceTree = "<group>"; };
 		92C382A11A9EB9E000BF8699 /* EncryptionSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EncryptionSettingViewController.m; sourceTree = "<group>"; };
-		92C382A31A9EBC6100BF8699 /* tea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tea.cpp; path = ../../../cocos2dx/support/crypto/tea.cpp; sourceTree = "<group>"; };
-		92C382A41A9EBC6100BF8699 /* tea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tea.h; path = ../../../cocos2dx/support/crypto/tea.h; sourceTree = "<group>"; };
-		92C382A51A9EBC6100BF8699 /* xxtea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xxtea.cpp; path = ../../../cocos2dx/support/crypto/xxtea.cpp; sourceTree = "<group>"; };
-		92C382A61A9EBC6100BF8699 /* xxtea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xxtea.h; path = ../../../cocos2dx/support/crypto/xxtea.h; sourceTree = "<group>"; };
 		92C382A91A9ECF0900BF8699 /* NSData+Encryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Encryption.h"; sourceTree = "<group>"; };
 		92C382AA1A9ECF0900BF8699 /* NSData+Encryption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Encryption.m"; sourceTree = "<group>"; };
 		92CF2B4C1A961BC60094D6E4 /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Consts.h; sourceTree = "<group>"; };
@@ -321,14 +321,14 @@
 				9211D9CE1A91A15D0015712A /* LpkEntry.m */,
 				92B090B11A9465DA003A1298 /* LpkBranchEntry.h */,
 				92B090B21A9465DA003A1298 /* LpkBranchEntry.m */,
-				9211D9D81A91C5160015712A /* hash_bob_jenkins_v2.c */,
-				9211D9D91A91C5160015712A /* hash_bob_jenkins_v2.h */,
-				92C382A31A9EBC6100BF8699 /* tea.cpp */,
-				92C382A41A9EBC6100BF8699 /* tea.h */,
-				92C382A51A9EBC6100BF8699 /* xxtea.cpp */,
-				92C382A61A9EBC6100BF8699 /* xxtea.h */,
-				9247AF811A90DEE6006BB0C4 /* lpk.c */,
-				9247AF821A90DEE6006BB0C4 /* lpk.h */,
+				92AA140E1AC512550066041C /* hash_bob_jenkins_v2.c */,
+				92AA140F1AC512550066041C /* hash_bob_jenkins_v2.h */,
+				92AA14101AC512550066041C /* tea.cpp */,
+				92AA14111AC512550066041C /* tea.h */,
+				92AA14121AC512550066041C /* xxtea.cpp */,
+				92AA14131AC512550066041C /* xxtea.h */,
+				92AA140B1AC5123F0066041C /* lpk.c */,
+				92AA140C1AC5123F0066041C /* lpk.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -415,9 +415,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9247AF831A90DEE6006BB0C4 /* lpk.c in Sources */,
 				92E851041A90C712005A1465 /* AppDelegate.m in Sources */,
-				9211D9DA1A91C5160015712A /* hash_bob_jenkins_v2.c in Sources */,
 				928B55601A9DAEF500781D3D /* SettingsViewController.m in Sources */,
 				928C0CDB1A9F327A009080BC /* ViewerViewController.m in Sources */,
 				9211D9D21A91A2580015712A /* TreeManager.m in Sources */,
@@ -426,9 +424,11 @@
 				922E43531A9ACBB700A75392 /* ProgressViewController.m in Sources */,
 				9247AF661A90D073006BB0C4 /* WindowController.m in Sources */,
 				92E851081A90C742005A1465 /* main.m in Sources */,
+				92AA140D1AC5123F0066041C /* lpk.c in Sources */,
 				92F1AF331A9B72B9002635DD /* NSData+Generator.m in Sources */,
 				9247AF7B1A90D127006BB0C4 /* NSView+CNSplitViewToolbar.m in Sources */,
-				92C382A81A9EBC6100BF8699 /* xxtea.cpp in Sources */,
+				92AA14161AC512550066041C /* xxtea.cpp in Sources */,
+				92AA14151AC512550066041C /* tea.cpp in Sources */,
 				92AABA471AAC04C700282227 /* ExtractViewController.m in Sources */,
 				9247AF791A90D127006BB0C4 /* CNSplitViewToolbarButton.m in Sources */,
 				928B555D1A9DA48100781D3D /* NSData+Compression.m in Sources */,
@@ -437,7 +437,7 @@
 				922E43591A9AD93600A75392 /* NSMutableData+ReadWrite.m in Sources */,
 				92C3829F1A9EB61D00BF8699 /* GeneralSettingViewController.m in Sources */,
 				92E9BD011A9339B200A9D898 /* NSString+Paths.m in Sources */,
-				92C382A71A9EBC6100BF8699 /* tea.cpp in Sources */,
+				92AA14141AC512550066041C /* hash_bob_jenkins_v2.c in Sources */,
 				92E9BD041A9379BB00A9D898 /* NSOutlineView+State.m in Sources */,
 				9211D9DD1A91CE900015712A /* NSArray+Transform.m in Sources */,
 				926F19EC1A95C9D500BD0CE0 /* AddBranchViewController.m in Sources */,
@@ -552,6 +552,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/../../cocos2dx",
+				);
 				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -565,6 +570,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/../../cocos2dx",
+				);
 				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

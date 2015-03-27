@@ -23,7 +23,7 @@
  ****************************************************************************/
 #include "CCGradientSprite.h"
 #include "CCSpriteFrameCache.h"
-#include "CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 
 NS_CC_BEGIN
 

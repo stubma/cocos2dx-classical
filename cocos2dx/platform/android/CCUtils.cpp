@@ -27,7 +27,7 @@
 #include <jni.h>
 #include "JniHelper.h"
 #include "CCLocale.h"
-#include "CCMD5.h"
+#include "support/codec/CCMD5.h"
 #include "ccTypes.h"
 #include "ccMacros.h"
 #include "CCUtilsAndroid.h"

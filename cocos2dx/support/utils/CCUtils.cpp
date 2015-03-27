@@ -29,7 +29,7 @@
 #include "CCPinyinUtils.h"
 #include "cocos-ext.h"
 #include "Unicode.h"
-#include "support/data_support/hash_bob_jenkins_v2.h"
+#include "support/codec/hash_bob_jenkins_v2.h"
 
 USING_NS_CC_EXT;
 using namespace cocos2d::ui;

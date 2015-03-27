@@ -25,7 +25,7 @@
 #define __CCTMXLoader__
 
 #include "base_nodes/CCNode.h"
-#include "support/CCSAXParser.h"
+#include "support/xml/CCSAXParser.h"
 
 using namespace std;
 

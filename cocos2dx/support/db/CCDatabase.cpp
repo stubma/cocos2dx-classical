@@ -29,7 +29,7 @@
 #include "support/utils/CCUtils.h"
 #include "CCResultSet.h"
 #include "CCStatement.h"
-#include "support/res_support/CCResourceLoader.h"
+#include "support/res/CCResourceLoader.h"
 
 NS_CC_BEGIN
 

@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCKeypadDispatcher.h"
-#include "support/data_support/ccCArray.h"
+#include "cocoa/ccCArray.h"
 
 NS_CC_BEGIN
 

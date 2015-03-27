@@ -23,7 +23,7 @@
  ****************************************************************************/
 #include "CCMenuItemColor.h"
 #include "CCMenuItemColorStateListener.h"
-#include "CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 #include "shaders/CCShaderCache.h"
 
 NS_CC_BEGIN

@@ -24,7 +24,7 @@
 #include "CCMemoryInputStream.h"
 #include <stdio.h>
 #include "ccMacros.h"
-#include "CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 
 NS_CC_BEGIN
 

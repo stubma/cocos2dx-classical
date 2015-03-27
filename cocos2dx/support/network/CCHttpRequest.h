@@ -25,7 +25,7 @@
 #define __CCHttpRequest__
 
 #include "ccTypes.h"
-#include "support/data_support/CCData.h"
+#include "cocoa/CCData.h"
 #include "support/utils/CCUtils.h"
 
 using namespace std;

@@ -23,7 +23,7 @@
  ****************************************************************************/
 #include "CCFileDownloader.h"
 #include "support/utils/CCUtils.h"
-#include "support/CCNotificationCenter.h"
+#include "CCNotificationCenter.h"
 
 NS_CC_BEGIN
 

@@ -10,10 +10,12 @@
 #import <Cocoa/Cocoa.h>
 #import "Consts.h"
 #import "CNSplitView.h"
-#include "lpk.h"
+#include "support/res/lpk.h"
 #import "LpkEntry.h"
 #import "LpkBranchEntry.h"
 #import "TreeManager.h"
-#include "hash_bob_jenkins_v2.h"
+#include "support/codec/tea.h"
+#include "support/codec/xxtea.h"
+#include "support/codec/hash_bob_jenkins_v2.h"
 
 #endif

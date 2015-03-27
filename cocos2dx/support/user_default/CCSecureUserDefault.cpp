@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "CCSecureUserDefault.h"
-#include "CCBase64.h"
+#include "support/codec/CCBase64.h"
 #include "CCDirector.h"
 
 NS_CC_BEGIN

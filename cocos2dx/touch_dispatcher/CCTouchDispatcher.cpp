@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "cocoa/CCSet.h"
 #include "CCTouch.h"
 #include "textures/CCTexture2D.h"
-#include "support/data_support/ccCArray.h"
+#include "cocoa/ccCArray.h"
 #include "ccMacros.h"
 #include <algorithm>
 

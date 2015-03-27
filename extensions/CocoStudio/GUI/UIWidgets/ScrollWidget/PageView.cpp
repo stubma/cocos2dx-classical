@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "PageView.h"
-#include "support/ui_support/CCVelocityTracker.h"
+#include "support/ui/CCVelocityTracker.h"
 #include "LuaBasicConversions.h"
 #include "CCLuaEngine.h"
 

@@ -25,7 +25,7 @@
 #include "CCTMXTiledMap.h"
 #include "CCTMXObjectGroup.h"
 #include "CCTMXObject.h"
-#include "support/CCPointExtension.h"
+#include "cocoa/CCPointExtension.h"
 #include "draw_nodes/CCDrawingPrimitives.h"
 
 NS_CC_BEGIN
