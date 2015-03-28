@@ -379,7 +379,7 @@ protected:
  * \note
  * Sometimes I find defect in cocos2d-x and want to create a new class to workaround it,
  * so I will choose CB prefix instead of CC. I use Ex suffix before but I don't like it anymore.
- * CB stands cocos2dx-better.
+ * CB stands cocos2dx-classical.
  */
 class CC_DLL CCLayerMultiplex : public CCLayer {
 protected:

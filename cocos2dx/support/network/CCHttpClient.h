@@ -1,7 +1,7 @@
 /****************************************************************************
  Author: Luma (stubma@gmail.com)
  
- https://github.com/stubma/cocos2dx-better
+ https://github.com/stubma/cocos2dx-classical
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -54,7 +54,7 @@ NS_CC_BEGIN
  * instance or not doesn't matter.
  *
  * \note
- * Using CB prefix to avoid name conflict, CB stands for cocos2dx-better. When you see a class starts with CB,
+ * Using CB prefix to avoid name conflict, CB stands for cocos2dx-classical. When you see a class starts with CB,
  * you should know it is a rewriten class which is better than the original.
  */
 class CC_DLL CCHttpClient : public CCObject {

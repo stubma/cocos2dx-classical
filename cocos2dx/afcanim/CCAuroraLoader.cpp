@@ -1,7 +1,7 @@
 /****************************************************************************
  Author: Luma (stubma@gmail.com)
  
- https://github.com/stubma/cocos2dx-better
+ https://github.com/stubma/cocos2dx-classical
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -78,7 +78,7 @@ CCAuroraFileData* CCAuroraLoader::load(const char* data, size_t length, float re
 
 	// currently we only support version 3
 	if(afd->m_version != BS_VERSION_3) {
-		CCLOGWARN("CCAuroraLoader::load: currently cocos2dx-better only support version 3 BSprite file");
+		CCLOGWARN("CCAuroraLoader::load: currently cocos2dx-classical only support version 3 BSprite file");
 		return afd;
 	}
 

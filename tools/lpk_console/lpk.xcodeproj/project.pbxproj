@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		92220AD51AC6920D00C74D26 /* LpkBranchEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 92220AD21AC6920D00C74D26 /* LpkBranchEntry.m */; };
+		92220AD61AC6920D00C74D26 /* LpkEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 92220AD41AC6920D00C74D26 /* LpkEntry.m */; };
+		92220ADB1AC6924200C74D26 /* NSArray+Transform.m in Sources */ = {isa = PBXBuildFile; fileRef = 92220AD81AC6924200C74D26 /* NSArray+Transform.m */; };
+		92220ADC1AC6924200C74D26 /* NSString+Paths.m in Sources */ = {isa = PBXBuildFile; fileRef = 92220ADA1AC6924200C74D26 /* NSString+Paths.m */; };
 		92AA142E1AC531000066041C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AA142D1AC531000066041C /* main.m */; };
 		92AA14351AC531120066041C /* hash_bob_jenkins_v2.c in Sources */ = {isa = PBXBuildFile; fileRef = 92AA142F1AC531120066041C /* hash_bob_jenkins_v2.c */; };
 		92AA14361AC531120066041C /* tea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92AA14311AC531120066041C /* tea.cpp */; };
@@ -28,6 +32,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		92220AD11AC6920D00C74D26 /* LpkBranchEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LpkBranchEntry.h; sourceTree = "<group>"; };
+		92220AD21AC6920D00C74D26 /* LpkBranchEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LpkBranchEntry.m; sourceTree = "<group>"; };
+		92220AD31AC6920D00C74D26 /* LpkEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LpkEntry.h; sourceTree = "<group>"; };
+		92220AD41AC6920D00C74D26 /* LpkEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LpkEntry.m; sourceTree = "<group>"; };
+		92220AD71AC6924200C74D26 /* NSArray+Transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Transform.h"; sourceTree = "<group>"; };
+		92220AD81AC6924200C74D26 /* NSArray+Transform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Transform.m"; sourceTree = "<group>"; };
+		92220AD91AC6924200C74D26 /* NSString+Paths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Paths.h"; sourceTree = "<group>"; };
+		92220ADA1AC6924200C74D26 /* NSString+Paths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Paths.m"; sourceTree = "<group>"; };
 		92AA14221AC530DE0066041C /* lpk */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = lpk; sourceTree = BUILT_PRODUCTS_DIR; };
 		92AA142D1AC531000066041C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		92AA142F1AC531120066041C /* hash_bob_jenkins_v2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hash_bob_jenkins_v2.c; path = ../../../cocos2dx/support/codec/hash_bob_jenkins_v2.c; sourceTree = "<group>"; };
@@ -74,6 +86,14 @@
 			isa = PBXGroup;
 			children = (
 				92AA142D1AC531000066041C /* main.m */,
+				92220AD11AC6920D00C74D26 /* LpkBranchEntry.h */,
+				92220AD21AC6920D00C74D26 /* LpkBranchEntry.m */,
+				92220AD31AC6920D00C74D26 /* LpkEntry.h */,
+				92220AD41AC6920D00C74D26 /* LpkEntry.m */,
+				92220AD71AC6924200C74D26 /* NSArray+Transform.h */,
+				92220AD81AC6924200C74D26 /* NSArray+Transform.m */,
+				92220AD91AC6924200C74D26 /* NSString+Paths.h */,
+				92220ADA1AC6924200C74D26 /* NSString+Paths.m */,
 				92AA142F1AC531120066041C /* hash_bob_jenkins_v2.c */,
 				92AA14301AC531120066041C /* hash_bob_jenkins_v2.h */,
 				92AA14311AC531120066041C /* tea.cpp */,
@@ -150,10 +170,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92220ADC1AC6924200C74D26 /* NSString+Paths.m in Sources */,
 				92AA14371AC531120066041C /* xxtea.cpp in Sources */,
 				92AA14361AC531120066041C /* tea.cpp in Sources */,
 				92AA14351AC531120066041C /* hash_bob_jenkins_v2.c in Sources */,
 				92AA142E1AC531000066041C /* main.m in Sources */,
+				92220AD51AC6920D00C74D26 /* LpkBranchEntry.m in Sources */,
+				92220ADB1AC6924200C74D26 /* NSArray+Transform.m in Sources */,
+				92220AD61AC6920D00C74D26 /* LpkEntry.m in Sources */,
 				92AA143A1AC5311F0066041C /* lpk.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

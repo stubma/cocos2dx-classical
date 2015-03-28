@@ -1,7 +1,7 @@
 /****************************************************************************
  Author: Luma (stubma@gmail.com)
  
- https://github.com/stubma/cocos2dx-better
+ https://github.com/stubma/cocos2dx-classical
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ class CCTexture2D;
 /**
  * @typedef CCAFCClipMappingRuleType
  *
- * Definition of all clip mapping rule supported by cocos2dx-better AFC feature
+ * Definition of all clip mapping rule supported by cocos2dx-classical AFC feature
  */
 typedef enum {
 	/**

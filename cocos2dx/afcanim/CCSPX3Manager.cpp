@@ -1,7 +1,7 @@
 /****************************************************************************
  Author: Luma (stubma@gmail.com)
  
- https://github.com/stubma/cocos2dx-better
+ https://github.com/stubma/cocos2dx-classical
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -308,7 +308,7 @@ CCAFCAnimation* CCSPX3Manager::getAnimationData(CCSPX3FileData* spx, int animInd
 					case SPX_POLYGON:
 					case SPX_ARC:
 					case SPX_PIE:
-						// cocos2dx-better currently doesn't support such shapes
+						// cocos2dx-classical currently doesn't support such shapes
 						break;
 				}
 			}

@@ -1,13 +1,31 @@
-//
-//  main.m
-//  lpk
-//
-//  Created by maruojie on 15/3/27.
-//  Copyright (c) 2015年 luma. All rights reserved.
-//
-
+/****************************************************************************
+ Author: Luma (stubma@gmail.com)
+ 
+ https://github.com/stubma/cocos2dx-classical
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 #import <Foundation/Foundation.h>
 #import <getopt.h>
+#import "support/res/lpk.h"
+#import "LpkEntry.h"
+#import "LpkBranchEntry.h"
 
 static void usage() {
     NSLog(@"\nlpk command line tool usage:\n"
@@ -27,7 +45,11 @@ static void usage() {
           "\t--out [path]: path to save extracted file, if not set, will be saved at current directory\n"
           "\t[lpk]: lpk archive path\n"
           "* patch: patch a lpk archive with a patch lpk\n"
-          "* dump: dump info of a lpk archive, such as file list, avaiable space\n");
+          "\t--to [path]: destination lpk archive to be patched\n"
+          "\t--from [path]: patch lpk file\n"
+          "\t--nobak: if set, destination lpk archive will not be backuped\n"
+          "* dump: dump info of a lpk archive, such as file list, avaiable space\n"
+          "\t[lpk]: specify lpk archive you want to dump\n");
 }
 
 static void make(NSString* root, NSString* dst, NSString* cmp, NSString* enc, NSString* staticKey, BOOL dynamicKey) {
@@ -46,14 +68,68 @@ static void make(NSString* root, NSString* dst, NSString* cmp, NSString* enc, NS
     }
     
     // normalize path
-    root = [root stringByExpandingTildeInPath];
-    dst = [dst stringByExpandingTildeInPath];
+    root = [[root stringByExpandingTildeInPath] stringByStandardizingPath];
+    dst = [[dst stringByExpandingTildeInPath] stringByStandardizingPath];
     
     
 }
 
 static void extract(NSString* archive, NSString* key, NSString* dst) {
-    NSLog(@"extract, %@, %@, %@", archive, key, dst);
+    // validate
+    if(!key) {
+        NSLog(@"please specify file path you want to extract");
+        return;
+    }
+    if(!dst) {
+        dst = [NSString stringWithFormat:@"./%@", [key lastPathComponent]];
+    }
+    
+    // normalize path
+    dst = [[dst stringByExpandingTildeInPath] stringByStandardizingPath];
+    archive = [[archive stringByExpandingTildeInPath] stringByStandardizingPath];
+    
+    // validate archive existence
+    NSFileManager* fm = [NSFileManager defaultManager];
+    if(![fm fileExistsAtPath:archive]) {
+        NSLog(@"lpk archive doesn't not exist");
+        return;
+    }
+    
+    
+}
+
+static void patch(NSString* to, NSString* from, BOOL noBackup) {
+    NSLog(@"patch %@, %@, %d", to, from, noBackup);
+}
+
+static void dump(NSString* archive) {
+    // normalize path
+    archive = [[archive stringByExpandingTildeInPath] stringByStandardizingPath];
+    
+    // check existence
+    NSFileManager* fm = [NSFileManager defaultManager];
+    if(![fm fileExistsAtPath:archive]) {
+        NSLog(@"lpk archive doesn't exist");
+        return;
+    }
+    
+    // open
+    lpk_file lpk;
+    int result = lpk_open_file(&lpk, [archive cStringUsingEncoding:NSUTF8StringEncoding]);
+    if(result != 0) {
+        NSLog(@"lpk_open_file, error: %d", result);
+        return;
+    }
+    
+    // debug output
+    lpk_debug_output(&lpk);
+    
+    // close file
+    result = lpk_close_file(&lpk);
+    if(result != 0) {
+        NSLog(@"lpk_close_file, error: %d", result);
+        return;
+    }
 }
 
 int main(int argc, const char * argv[]) {
@@ -124,7 +200,7 @@ int main(int argc, const char * argv[]) {
                 const char* short_opts = "p:o:";
                 static struct option long_options[] = {
                     { "path", required_argument, NULL, 'p' },
-                    { "out", required_argument, NULL, 'o' },
+                    { "out", required_argument, NULL, 'o' }
                 };
                 while((opt = getopt_long(argc, argv, short_opts, long_options, NULL)) != -1) {
                     switch (opt) {
@@ -150,7 +226,43 @@ int main(int argc, const char * argv[]) {
                     break;
                 }
             } else if([@"patch" isEqualToString:cmd]) {
+                NSString* to = nil;
+                NSString* from = nil;
+                BOOL noBackup = NO;
+                int opt;
+                const char* short_opts = "t:f:n";
+                static struct option long_options[] = {
+                    { "to", required_argument, NULL, 't' },
+                    { "from", required_argument, NULL, 'f' },
+                    { "nobak", no_argument, NULL, 'n' }
+                };
+                while((opt = getopt_long(argc, argv, short_opts, long_options, NULL)) != -1) {
+                    switch (opt) {
+                        case 't':
+                            to = [NSString stringWithUTF8String:optarg];
+                            break;
+                        case 'f':
+                            from = [NSString stringWithUTF8String:optarg];
+                            break;
+                        case 'n':
+                            noBackup = YES;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                
+                patch(to, from, noBackup);
             } else if([@"dump" isEqualToString:cmd]) {
+                NSString* archive = nil;
+                if(argc > 2) {
+                    archive = [NSString stringWithUTF8String:argv[2]];
+                    dump(archive);
+                } else {
+                    NSLog(@"you should specify lpk archive path");
+                    ret = 1;
+                    break;
+                }
             } else {
                 NSLog(@"unrecognized command %@", cmd);
                 ret = 1;

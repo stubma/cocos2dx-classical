@@ -1,7 +1,7 @@
 /****************************************************************************
  Author: Luma (stubma@gmail.com)
  
- https://github.com/stubma/cocos2dx-better
+ https://github.com/stubma/cocos2dx-classical
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ NS_CC_BEGIN
  *
  * \note
  * This is a re-implementation for TMX map. Cocos2d-x TMX support is defective, so I write my own.
- * To avoid name conflict, I use CB prefix which stands for cocos2dx-better
+ * To avoid name conflict, I use CB prefix which stands for cocos2dx-classical
  */
 class CC_DLL CCTMXTileSetInfo : public CCObject {
 protected:
