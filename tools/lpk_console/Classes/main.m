@@ -26,6 +26,7 @@
 #import "support/res/lpk.h"
 #import "LpkEntry.h"
 #import "LpkBranchEntry.h"
+#import "NSArray+Transform.h"
 
 static void usage() {
     NSLog(@"\nlpk command line tool usage:\n"
@@ -52,6 +53,26 @@ static void usage() {
           "\t[lpk]: specify lpk archive you want to dump\n");
 }
 
+static void addFiles(NSArray* paths, LpkEntry* dir) {
+    for(NSString* path in paths) {
+        LpkEntry* e = [[LpkEntry alloc] initWithPath:path];
+        if(e) {
+            // add to dir
+            [dir addChild:e];
+            
+            // if it is dir also, add recursively
+            if(e.isDir) {
+                NSFileManager* fm = [NSFileManager defaultManager];
+                NSArray* tmp = [fm contentsOfDirectoryAtPath:path error:nil];
+                NSArray* subpaths = [tmp arrayByApplyingBlock:^id(id s) {
+                    return [path stringByAppendingPathComponent:s];
+                }];
+                addFiles(subpaths, e);
+            }
+        }
+    }
+}
+
 static void make(NSString* root, NSString* dst, NSString* cmp, NSString* enc, NSString* staticKey, BOOL dynamicKey) {
     // validate arguments
     if(dst == nil) {
@@ -71,7 +92,21 @@ static void make(NSString* root, NSString* dst, NSString* cmp, NSString* enc, NS
     root = [[root stringByExpandingTildeInPath] stringByStandardizingPath];
     dst = [[dst stringByExpandingTildeInPath] stringByStandardizingPath];
     
+    // new root
+    LpkEntry* rootEntry = [[LpkEntry alloc] init];
     
+    // subpaths under root
+    NSFileManager* fm = [NSFileManager defaultManager];
+    NSArray* tmp = [fm contentsOfDirectoryAtPath:root error:nil];
+    NSArray* subpaths = [tmp arrayByApplyingBlock:^id(id s) {
+        return [root stringByAppendingPathComponent:s];
+    }];
+    
+    // add to root
+    addFiles(subpaths, rootEntry);
+    
+    // sort
+    [rootEntry sortChildrenRecursively];
 }
 
 static void extract(NSString* archive, NSString* key, NSString* dst) {
