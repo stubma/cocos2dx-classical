@@ -424,7 +424,7 @@ static void make(NSString* root, NSString* dst, int blockSize, NSString* cmp, NS
                 }
                 
                 // add total size
-                totalSize += blockCount * blockSize;
+                totalSize += blockCount * (512 << blockSize);
             }
         }
         
@@ -551,7 +551,7 @@ int main(int argc, const char * argv[]) {
                 NSString* cmp = @"zip";
                 NSString* enc = @"none";
                 NSString* staticKey = nil;
-                int blockSize = 512;
+                int blockSize = 0;
                 BOOL dynamicKey = NO;
                 int opt;
                 const char* short_opts = "r:o:c:e:s:d";
@@ -573,7 +573,7 @@ int main(int argc, const char * argv[]) {
                             dst = [NSString stringWithUTF8String:optarg];
                             break;
                         case 'b':
-                            blockSize = 512 << atoi(optarg);
+                            blockSize = atoi(optarg);
                             break;
                         case 'c':
                             cmp = [NSString stringWithUTF8String:optarg];
