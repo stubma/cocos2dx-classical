@@ -11,6 +11,10 @@
 		92220AD61AC6920D00C74D26 /* LpkEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 92220AD41AC6920D00C74D26 /* LpkEntry.m */; };
 		92220ADB1AC6924200C74D26 /* NSArray+Transform.m in Sources */ = {isa = PBXBuildFile; fileRef = 92220AD81AC6924200C74D26 /* NSArray+Transform.m */; };
 		92220ADC1AC6924200C74D26 /* NSString+Paths.m in Sources */ = {isa = PBXBuildFile; fileRef = 92220ADA1AC6924200C74D26 /* NSString+Paths.m */; };
+		9274216D1AC8E7580019B18F /* NSMutableData+ReadWrite.m in Sources */ = {isa = PBXBuildFile; fileRef = 9274216C1AC8E7580019B18F /* NSMutableData+ReadWrite.m */; };
+		927421721AC8EB1F0019B18F /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 9274216F1AC8EB1F0019B18F /* NSData+Compression.m */; };
+		927421731AC8EB1F0019B18F /* NSData+Encryption.m in Sources */ = {isa = PBXBuildFile; fileRef = 927421711AC8EB1F0019B18F /* NSData+Encryption.m */; };
+		927421761AC919690019B18F /* NSData+Generator.m in Sources */ = {isa = PBXBuildFile; fileRef = 927421751AC919690019B18F /* NSData+Generator.m */; };
 		92AA142E1AC531000066041C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AA142D1AC531000066041C /* main.m */; };
 		92AA14351AC531120066041C /* hash_bob_jenkins_v2.c in Sources */ = {isa = PBXBuildFile; fileRef = 92AA142F1AC531120066041C /* hash_bob_jenkins_v2.c */; };
 		92AA14361AC531120066041C /* tea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92AA14311AC531120066041C /* tea.cpp */; };
@@ -40,6 +44,14 @@
 		92220AD81AC6924200C74D26 /* NSArray+Transform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Transform.m"; sourceTree = "<group>"; };
 		92220AD91AC6924200C74D26 /* NSString+Paths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Paths.h"; sourceTree = "<group>"; };
 		92220ADA1AC6924200C74D26 /* NSString+Paths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Paths.m"; sourceTree = "<group>"; };
+		9274216B1AC8E7580019B18F /* NSMutableData+ReadWrite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableData+ReadWrite.h"; sourceTree = "<group>"; };
+		9274216C1AC8E7580019B18F /* NSMutableData+ReadWrite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableData+ReadWrite.m"; sourceTree = "<group>"; };
+		9274216E1AC8EB1F0019B18F /* NSData+Compression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Compression.h"; sourceTree = "<group>"; };
+		9274216F1AC8EB1F0019B18F /* NSData+Compression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Compression.m"; sourceTree = "<group>"; };
+		927421701AC8EB1F0019B18F /* NSData+Encryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Encryption.h"; sourceTree = "<group>"; };
+		927421711AC8EB1F0019B18F /* NSData+Encryption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Encryption.m"; sourceTree = "<group>"; };
+		927421741AC919690019B18F /* NSData+Generator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Generator.h"; sourceTree = "<group>"; };
+		927421751AC919690019B18F /* NSData+Generator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Generator.m"; sourceTree = "<group>"; };
 		92AA14221AC530DE0066041C /* lpk */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = lpk; sourceTree = BUILT_PRODUCTS_DIR; };
 		92AA142D1AC531000066041C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		92AA142F1AC531120066041C /* hash_bob_jenkins_v2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hash_bob_jenkins_v2.c; path = ../../../cocos2dx/support/codec/hash_bob_jenkins_v2.c; sourceTree = "<group>"; };
@@ -92,6 +104,14 @@
 				92220AD41AC6920D00C74D26 /* LpkEntry.m */,
 				92220AD71AC6924200C74D26 /* NSArray+Transform.h */,
 				92220AD81AC6924200C74D26 /* NSArray+Transform.m */,
+				9274216E1AC8EB1F0019B18F /* NSData+Compression.h */,
+				9274216F1AC8EB1F0019B18F /* NSData+Compression.m */,
+				927421701AC8EB1F0019B18F /* NSData+Encryption.h */,
+				927421711AC8EB1F0019B18F /* NSData+Encryption.m */,
+				927421741AC919690019B18F /* NSData+Generator.h */,
+				927421751AC919690019B18F /* NSData+Generator.m */,
+				9274216B1AC8E7580019B18F /* NSMutableData+ReadWrite.h */,
+				9274216C1AC8E7580019B18F /* NSMutableData+ReadWrite.m */,
 				92220AD91AC6924200C74D26 /* NSString+Paths.h */,
 				92220ADA1AC6924200C74D26 /* NSString+Paths.m */,
 				92AA142F1AC531120066041C /* hash_bob_jenkins_v2.c */,
@@ -172,11 +192,15 @@
 			files = (
 				92220ADC1AC6924200C74D26 /* NSString+Paths.m in Sources */,
 				92AA14371AC531120066041C /* xxtea.cpp in Sources */,
+				927421761AC919690019B18F /* NSData+Generator.m in Sources */,
+				927421721AC8EB1F0019B18F /* NSData+Compression.m in Sources */,
 				92AA14361AC531120066041C /* tea.cpp in Sources */,
 				92AA14351AC531120066041C /* hash_bob_jenkins_v2.c in Sources */,
 				92AA142E1AC531000066041C /* main.m in Sources */,
 				92220AD51AC6920D00C74D26 /* LpkBranchEntry.m in Sources */,
+				927421731AC8EB1F0019B18F /* NSData+Encryption.m in Sources */,
 				92220ADB1AC6924200C74D26 /* NSArray+Transform.m in Sources */,
+				9274216D1AC8E7580019B18F /* NSMutableData+ReadWrite.m in Sources */,
 				92220AD61AC6920D00C74D26 /* LpkEntry.m in Sources */,
 				92AA143A1AC5311F0066041C /* lpk.c in Sources */,
 			);

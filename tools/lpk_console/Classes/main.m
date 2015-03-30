@@ -27,6 +27,40 @@
 #import "LpkEntry.h"
 #import "LpkBranchEntry.h"
 #import "NSArray+Transform.h"
+#import "NSMutableData+ReadWrite.h"
+#import "NSData+Compression.h"
+#import "NSData+Encryption.h"
+#import "NSData+Generator.h"
+#import "hash_bob_jenkins_v2.h"
+#import "tea.h"
+#import "xxtea.h"
+
+static NSString* s_root = NULL;
+static NSString* s_staticKey = NULL;
+static BOOL s_dynamicKey = NO;
+
+static uint32_t nextPOT(uint32_t x) {
+    x = x - 1;
+    x = x | (x >> 1);
+    x = x | (x >> 2);
+    x = x | (x >> 4);
+    x = x | (x >> 8);
+    x = x | (x >>16);
+    return x + 1;
+}
+
+static uint32_t nextFreeHashIndex(lpk_file* f, uint32_t from) {
+    for(int i = from; i < f->h.hash_table_count; i++) {
+        if(!(f->het[i].flags & LPK_FLAG_USED)) {
+            return i;
+        }
+    }
+    return LPK_INDEX_INVALID;
+}
+
+static NSString* dynamicKeyFor(LpkEntry* e, LpkBranchEntry* b) {
+    return e.name;
+}
 
 static void usage() {
     NSLog(@"\nlpk command line tool usage:\n"
@@ -37,6 +71,7 @@ static void usage() {
           "\t--root [path]: specify root folder of files to be packed\n"
           "\t--out [path]: the path of generated lpk archive, if not set, it will be generated at current\n"
           "\t\tdirectory with a default name\n"
+          "\t--block [num]: set block size, the block size equals 512 << [num]\n"
           "\t--compress [none|zip]: set default compress algorithm for archive files, by default it is zip\n"
           "\t--encrypt [none|tea|xxtea|xor]: set default encrypt algorithm for files, by default it is none\n"
           "\t--static [key]: set static key for encryption\n"
@@ -73,7 +108,136 @@ static void addFiles(NSArray* paths, LpkEntry* dir) {
     }
 }
 
-static void make(NSString* root, NSString* dst, NSString* cmp, NSString* enc, NSString* staticKey, BOOL dynamicKey) {
+static int writeOneFile(LpkEntry* e, LpkBranchEntry* b, uint32_t hashIndex, lpk_file* lpk, NSFileHandle* fh, uint32_t offset) {
+    // default
+    LPKCompressAlgorithm defaultCompressAlgorithm = LPKC_ZLIB;
+    LPKEncryptAlgorithm defaultEncryptAlgorithm = LPKE_NONE;
+    BOOL autoSkipCompression = YES;
+    
+    // get key
+    NSString* eKey = e.key;
+    const void* key = (const void*)[eKey cStringUsingEncoding:NSUTF8StringEncoding];
+    size_t len = [eKey lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+    
+    // get hash
+    lpk_hash* hash = lpk->het + hashIndex;
+    
+    // fill hash
+#ifdef DEBUG_LPK
+    sprintf(hash->filename, "%s", key);
+#endif
+    hash->hash_i = hashlittle(key, len, LPK_HASH_TAG_TABLE_INDEX);
+    hash->hash_a = hashlittle(key, len, LPK_HASH_TAG_NAME_A);
+    hash->hash_b = hashlittle(key, len, LPK_HASH_TAG_NAME_B);
+    hash->locale = b.locale;
+    hash->platform = b.platform;
+    hash->next_hash = LPK_INDEX_INVALID;
+    hash->prev_hash = LPK_INDEX_INVALID;
+    
+    // other info of file
+    uint32_t blockCount = 0;
+    uint32_t fileSize = 0;
+    uint32_t encSize = 0;
+    LPKCompressAlgorithm cmpAlg = LPKC_NONE;
+    LPKEncryptAlgorithm encAlg = LPKE_NONE;
+    
+    // if entry is not deleted, write file
+    if(!b.markAsDeleted) {
+        // resolve path
+        NSString* path = b.realPath;
+        if(![path isAbsolutePath]) {
+            path = [[[s_root stringByDeletingLastPathComponent] stringByAppendingPathComponent:path] stringByStandardizingPath];
+        }
+        
+        // resolve compress and encrypt
+        cmpAlg = b.compressAlgorithm == LPKC_DEFAULT ? defaultCompressAlgorithm : b.compressAlgorithm;
+        encAlg = b.encryptAlgorithm == LPKE_DEFAULT ? defaultEncryptAlgorithm : b.encryptAlgorithm;
+        
+        // get file data and compress it as needed
+        uint32_t blockSize = 512 << lpk->h.block_size;
+        NSData* data = [NSData dataWithContentsOfFile:path];
+        NSData* cmpData = data;
+        switch (cmpAlg) {
+            case LPKC_ZLIB:
+                cmpData = [data zlibDeflate];
+                break;
+            default:
+                break;
+        }
+        fileSize = (uint32_t)[data length];
+        uint32_t compressSize = (uint32_t)[cmpData length];
+        
+        // if auto skip compression is set, cancel compression if compressed size is even larger than original size
+        if(autoSkipCompression) {
+            if(compressSize >= fileSize) {
+                cmpData = data;
+                compressSize = fileSize;
+                cmpAlg = LPKC_NONE;
+            }
+        }
+        
+        // encrypt
+        NSData* encData = cmpData;
+        switch (encAlg) {
+            case LPKE_XOR:
+                if(s_dynamicKey) {
+                    encData = [cmpData xorData:dynamicKeyFor(e, b)];
+                } else {
+                    encData = [cmpData xorData:s_staticKey];
+                }
+                break;
+            case LPKE_TEA:
+                if(s_dynamicKey) {
+                    encData = [cmpData teaData:dynamicKeyFor(e, b)];
+                } else {
+                    encData = [cmpData teaData:s_staticKey];
+                }
+                break;
+            case LPKE_XXTEA:
+                if(s_dynamicKey) {
+                    encData = [cmpData xxteaData:dynamicKeyFor(e, b)];
+                } else {
+                    encData = [cmpData xxteaData:s_staticKey];
+                }
+                break;
+            default:
+                break;
+        }
+        encSize = (uint32_t)[encData length];
+        
+        // write file and get block count
+        [fh writeData:encData];
+        blockCount = (encSize + blockSize - 1) / blockSize;
+        
+        // fill junk to make it align with block size
+        uint32_t junk = (blockSize - (encSize % blockSize)) % blockSize;
+        if(junk > 0) {
+            [fh writeData:[NSData dataWithByte:0 repeated:junk]];
+        }
+    }
+    
+    // fill other hash info
+    hash->file_size = fileSize;
+    hash->packed_size = encSize;
+    hash->offset = offset;
+    hash->flags = LPK_FLAG_USED;
+    if(b.markAsDeleted) {
+        hash->flags |= LPK_FLAG_DELETED;
+    }
+    if(cmpAlg > LPKC_NONE) {
+        hash->flags |= LPK_FLAG_COMPRESSED;
+        hash->flags |= (cmpAlg << LPK_SHIFT_COMPRESSED);
+    }
+    if(encAlg > LPKE_NONE) {
+        hash->flags |= LPK_FLAG_ENCRYPTED;
+        hash->flags |= (encAlg << LPK_SHIFT_ENCRYPTED);
+    }
+    
+    // return block count
+    return blockCount;
+}
+
+static void make(NSString* root, NSString* dst, int blockSize, NSString* cmp, NSString* enc, NSString* staticKey, BOOL dynamicKey) {
     // validate arguments
     if(dst == nil) {
         dst = @"./out.lpk";
@@ -91,6 +255,7 @@ static void make(NSString* root, NSString* dst, NSString* cmp, NSString* enc, NS
     // normalize path
     root = [[root stringByExpandingTildeInPath] stringByStandardizingPath];
     dst = [[dst stringByExpandingTildeInPath] stringByStandardizingPath];
+    s_root = root;
     
     // new root
     LpkEntry* rootEntry = [[LpkEntry alloc] init];
@@ -107,6 +272,203 @@ static void make(NSString* root, NSString* dst, NSString* cmp, NSString* enc, NS
     
     // sort
     [rootEntry sortChildrenRecursively];
+    
+    // ensure dest file is here
+    if(![fm fileExistsAtPath:dst]) {
+        [fm createFileAtPath:dst contents:[NSData data] attributes:nil];
+    } else {
+        [fm removeItemAtPath:dst error:nil];
+        [fm createFileAtPath:dst contents:[NSData data] attributes:nil];
+    }
+    NSFileHandle* fh = [NSFileHandle fileHandleForWritingAtPath:dst];
+    NSMutableData* buf = [NSMutableData data];
+    
+    // get a list of all entries
+    NSMutableArray* allFileEntries = [NSMutableArray array];
+    [rootEntry collectFiles:allFileEntries];
+    
+    // progress hint
+    NSLog(@"Prepare for exporting...");
+    
+    // init part of file struct
+    lpk_file lpk = { 0 };
+    lpk.h.lpk_magic = LPK_MAGIC;
+    lpk.h.header_size = sizeof(lpk_header);
+    lpk.h.block_size = blockSize;
+    lpk.h.deleted_hash = LPK_INDEX_INVALID;
+    lpk.files = [rootEntry getFileCountIncludeBranch];
+    lpk.h.hash_table_count = nextPOT(lpk.files);
+    lpk.het = (lpk_hash*)calloc(lpk.h.hash_table_count, sizeof(lpk_hash));
+    for(int i = 0; i < lpk.h.hash_table_count; i++) {
+        lpk.het[i].next_hash = LPK_INDEX_INVALID;
+        lpk.het[i].prev_hash = LPK_INDEX_INVALID;
+    }
+    
+    // progress hint
+    NSLog(@"Writting header...");
+    
+    do {
+        // write header
+        [buf writeUInt32:lpk.h.lpk_magic];
+        [buf writeUInt32:lpk.h.header_size];
+        [buf writeUInt32:lpk.h.archive_size];
+        [buf writeUInt16:lpk.h.version];
+        [buf writeUInt16:lpk.h.block_size];
+        [buf writeUInt32:lpk.h.hash_table_offset];
+        [buf writeUInt32:lpk.h.hash_table_count];
+        [buf writeUInt32:lpk.h.deleted_hash];
+        [fh writeData:buf];
+        [buf setLength:0];
+        
+        // start to write every file, but not include branch at first
+        uint32_t totalSize = 0;
+        uint32_t freeHashIndex = 0;
+        for(LpkEntry* e in allFileEntries) {
+            // get hash table index for this entry
+            NSString* eKey = e.key;
+            const void* key = (const void*)[eKey cStringUsingEncoding:NSUTF8StringEncoding];
+            size_t len = [eKey lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+            uint32_t hashIndex = hashlittle(key, len, LPK_HASH_TAG_TABLE_INDEX) & (lpk.h.hash_table_count - 1);
+            lpk_hash* hash = lpk.het + hashIndex;
+            uint32_t hashIndexBak = hashIndex;
+            lpk_hash* hashbak = hash;
+            
+            // progress hint
+            NSLog(@"Writting %@...", e.name);
+            
+            for(LpkBranchEntry* b in e.branches) {
+                // block count of this file
+                int blockCount = 0;
+                hash = hashbak;
+                hashIndex = hashIndexBak;
+                
+                // if branch is marked as deleted, save it in a free hash and add to deleted link
+                // if it is free hash, just write it
+                // if it is not free, but it is head of hash chain, just append it to link end in next free hash entry
+                // if it is not free and not head of link, move current hash to next free index and put it here
+                // if it is not free and it is a deleted hash, move it
+                if(b.markAsDeleted) {
+                    // find free entry
+                    freeHashIndex = nextFreeHashIndex(&lpk, freeHashIndex);
+                    
+                    // write file
+                    blockCount = writeOneFile(e, b, freeHashIndex, &lpk, fh, totalSize);
+                    
+                    // link
+                    if(lpk.h.deleted_hash == LPK_INDEX_INVALID) {
+                        lpk.h.deleted_hash = freeHashIndex;
+                    } else {
+                        hash = lpk.het + freeHashIndex;
+                        lpk_hash* deleted_head = lpk.het + lpk.h.deleted_hash;
+                        hash->next_hash = lpk.h.deleted_hash;
+                        deleted_head->prev_hash = freeHashIndex;
+                        lpk.h.deleted_hash = freeHashIndex;
+                    }
+                } else if(!(hash->flags & LPK_FLAG_USED)) {
+                    blockCount = writeOneFile(e, b, hashIndex, &lpk, fh, totalSize);
+                } else if(hash->flags & LPK_FLAG_DELETED) {
+                    // find free entry
+                    freeHashIndex = nextFreeHashIndex(&lpk, freeHashIndex);
+                    
+                    // copy
+                    memcpy(lpk.het + freeHashIndex, hash, sizeof(lpk_hash));
+                    
+                    // fix link
+                    if(hash->prev_hash == LPK_INDEX_INVALID) {
+                        lpk.h.deleted_hash = freeHashIndex;
+                    } else {
+                        lpk_hash* prev = lpk.het + hash->prev_hash;
+                        prev->next_hash = freeHashIndex;
+                    }
+                    if(hash->next_hash != LPK_INDEX_INVALID) {
+                        lpk_hash* next = lpk.het + hash->next_hash;
+                        next->prev_hash = freeHashIndex;
+                    }
+                    
+                    // write file
+                    blockCount = writeOneFile(e, b, hashIndex, &lpk, fh, totalSize);
+                } else if(hash->prev_hash == LPK_INDEX_INVALID) {
+                    // find tail
+                    while(hash->next_hash != LPK_INDEX_INVALID) {
+                        hashIndex = hash->next_hash;
+                        hash = lpk.het + hash->next_hash;
+                    }
+                    
+                    // find free entry
+                    freeHashIndex = nextFreeHashIndex(&lpk, freeHashIndex);
+                    
+                    // write file
+                    blockCount = writeOneFile(e, b, freeHashIndex, &lpk, fh, totalSize);
+                    
+                    // link
+                    lpk_hash* chainHash = lpk.het + freeHashIndex;
+                    chainHash->prev_hash = hashIndex;
+                    hash->next_hash = freeHashIndex;
+                } else {
+                    // find free entry
+                    freeHashIndex = nextFreeHashIndex(&lpk, freeHashIndex);
+                    
+                    // copy
+                    memcpy(lpk.het + freeHashIndex, hash, sizeof(lpk_hash));
+                    
+                    // fix link
+                    lpk_hash* prev = lpk.het + hash->prev_hash;
+                    prev->next_hash = freeHashIndex;
+                    if(hash->next_hash != LPK_INDEX_INVALID) {
+                        lpk_hash* next = lpk.het + hash->next_hash;
+                        next->prev_hash = freeHashIndex;
+                    }
+                    
+                    // write file
+                    blockCount = writeOneFile(e, b, hashIndex, &lpk, fh, totalSize);
+                }
+                
+                // add total size
+                totalSize += blockCount * blockSize;
+            }
+        }
+        
+        // progress hint
+        NSLog(@"Finalizing...");
+        
+        // write archive size
+        lpk.h.archive_size = totalSize;
+        [fh seekToFileOffset:sizeof(uint32_t) * 2];
+        [buf writeUInt32:lpk.h.archive_size];
+        [fh writeData:buf];
+        [buf setLength:0];
+        
+        // write hash table offset
+        lpk.h.hash_table_offset = lpk.h.archive_size + sizeof(lpk_header);
+        [fh seekToFileOffset:sizeof(uint32_t) * 4];
+        [buf writeUInt32:lpk.h.hash_table_offset];
+        [fh writeData:buf];
+        [buf setLength:0];
+        
+        // write hash entry table
+        [fh seekToEndOfFile];
+        [buf appendBytes:lpk.het length:sizeof(lpk_hash) * lpk.h.hash_table_count];
+        [fh writeData:buf];
+        [buf setLength:0];
+        
+        // write deleted hash head
+        [fh seekToFileOffset:sizeof(uint32_t) * 6];
+        [buf writeUInt32:lpk.h.deleted_hash];
+        [fh writeData:buf];
+        [buf setLength:0];
+        
+        // sync file
+        [fh synchronizeFile];
+        
+        // progress hint
+        NSLog(@"done");
+    } while(false);
+    
+    // close file
+    [fh closeFile];
+    
+    // release memory
+    free(lpk.het);
 }
 
 static void extract(NSString* archive, NSString* key, NSString* dst) {
@@ -189,12 +551,14 @@ int main(int argc, const char * argv[]) {
                 NSString* cmp = @"zip";
                 NSString* enc = @"none";
                 NSString* staticKey = nil;
+                int blockSize = 512;
                 BOOL dynamicKey = NO;
                 int opt;
                 const char* short_opts = "r:o:c:e:s:d";
                 static struct option long_options[] = {
                     { "root", required_argument, NULL, 'r' },
                     { "out", required_argument, NULL, 'o' },
+                    { "block", required_argument, NULL, 'b' },
                     { "compress", required_argument, NULL, 'c' },
                     { "encrypt", required_argument, NULL, 'e' },
                     { "static", required_argument, NULL, 's' },
@@ -207,6 +571,9 @@ int main(int argc, const char * argv[]) {
                             break;
                         case 'o':
                             dst = [NSString stringWithUTF8String:optarg];
+                            break;
+                        case 'b':
+                            blockSize = 512 << atoi(optarg);
                             break;
                         case 'c':
                             cmp = [NSString stringWithUTF8String:optarg];
@@ -226,7 +593,10 @@ int main(int argc, const char * argv[]) {
                 }
                 
                 // do make
-                make(root, dst, cmp, enc, staticKey, dynamicKey);
+                s_root = root;
+                s_staticKey = staticKey;
+                s_dynamicKey = dynamicKey;
+                make(root, dst, blockSize, cmp, enc, staticKey, dynamicKey);
             } else if([@"extract" isEqualToString:cmd]) {
                 NSString* archive = nil;
                 NSString* dst = nil;
