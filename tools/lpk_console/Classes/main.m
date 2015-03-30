@@ -79,6 +79,10 @@ static void usage() {
           "* extract: extract folder or file from lpk archive\n"
           "\t--path [path]: file path relative to archive root, such as /folder/a.txt\n"
           "\t--out [path]: path to save extracted file, if not set, will be saved at current directory\n"
+          "\t--locale [locale identifier]: locale identifier in ISO 639-1, if not set, default will be used\n"
+          "\t--platform [iOS|Android]: platform, if not set, default will be used\n"
+          "\t--static [key]: set static key for decryption\n"
+          "\t--dynamic: set use dynamic key for decryption, currently the key is file name\n"
           "\t[lpk]: lpk archive path\n"
           "* patch: patch a lpk archive with a patch lpk\n"
           "\t--to [path]: destination lpk archive to be patched\n"
@@ -237,7 +241,7 @@ static int writeOneFile(LpkEntry* e, LpkBranchEntry* b, uint32_t hashIndex, lpk_
     return blockCount;
 }
 
-static void make(NSString* root, NSString* dst, int blockSize, NSString* cmp, NSString* enc, NSString* staticKey, BOOL dynamicKey) {
+static void make(NSString* root, NSString* dst, int blockSize, NSString* cmp, NSString* enc) {
     // validate arguments
     if(dst == nil) {
         dst = @"./out.lpk";
@@ -245,7 +249,7 @@ static void make(NSString* root, NSString* dst, int blockSize, NSString* cmp, NS
     if(![@"none" isEqualToString:enc] && ![@"tea" isEqualToString:enc] && ![@"xxtea" isEqualToString:enc] && ![@"xor" isEqualToString:cmp]) {
         enc = @"none";
     }
-    if(![enc isEqualToString:@"none"] && !dynamicKey && !staticKey) {
+    if(![enc isEqualToString:@"none"] && !s_dynamicKey && !s_staticKey) {
         enc = @"none";
     }
     if(![@"none" isEqualToString:cmp] && ![@"zip" isEqualToString:cmp]) {
@@ -471,18 +475,18 @@ static void make(NSString* root, NSString* dst, int blockSize, NSString* cmp, NS
     free(lpk.het);
 }
 
-static void extract(NSString* archive, NSString* key, NSString* dst) {
+static void extract(NSString* archive, NSString* key, NSString* dstDir, uint32_t lcid, LPKPlatform platform) {
     // validate
     if(!key) {
         NSLog(@"please specify file path you want to extract");
         return;
     }
-    if(!dst) {
-        dst = [NSString stringWithFormat:@"./%@", [key lastPathComponent]];
+    if(!dstDir) {
+        dstDir = @".";
     }
     
     // normalize path
-    dst = [[dst stringByExpandingTildeInPath] stringByStandardizingPath];
+    dstDir = [[dstDir stringByExpandingTildeInPath] stringByStandardizingPath];
     archive = [[archive stringByExpandingTildeInPath] stringByStandardizingPath];
     
     // validate archive existence
@@ -492,7 +496,34 @@ static void extract(NSString* archive, NSString* key, NSString* dst) {
         return;
     }
     
+    // open archive
+    lpk_file lpk;
+    int result = lpk_open_file(&lpk, [archive cStringUsingEncoding:NSUTF8StringEncoding]);
+    if(result != 0) {
+        NSLog(@"lpk_open_file, open source error: %d", result);
+        return;
+    }
     
+    // extract
+    uint32_t size;
+    uint8_t* buf = lpk_extract_file(&lpk,
+                                    [key cStringUsingEncoding:NSUTF8StringEncoding],
+                                    &size,
+                                    [s_staticKey cStringUsingEncoding:NSUTF8StringEncoding],
+                                    (uint32_t)[s_staticKey lengthOfBytesUsingEncoding:NSUTF8StringEncoding],
+                                    lcid,
+                                    platform);
+    if(buf) {
+        NSData* data = [NSData dataWithBytes:buf length:size];
+        [data writeToFile:[dstDir stringByAppendingPathComponent:[key lastPathComponent]] atomically:YES];
+        free(buf);
+        NSLog(@"extract done");
+    } else {
+        NSLog(@"extract failed");
+    }
+    
+    // close lpk
+    lpk_close_file(&lpk);
 }
 
 static void patch(NSString* to, NSString* from, BOOL noBackup) {
@@ -596,16 +627,24 @@ int main(int argc, const char * argv[]) {
                 s_root = root;
                 s_staticKey = staticKey;
                 s_dynamicKey = dynamicKey;
-                make(root, dst, blockSize, cmp, enc, staticKey, dynamicKey);
+                make(root, dst, blockSize, cmp, enc);
             } else if([@"extract" isEqualToString:cmd]) {
                 NSString* archive = nil;
                 NSString* dst = nil;
                 NSString* path = nil;
+                NSString* staticKey = @"";
+                uint32_t lcid = 0;
+                LPKPlatform platform = LPKP_DEFAULT;
+                BOOL dynamicKey = NO;
                 int opt;
                 const char* short_opts = "p:o:";
                 static struct option long_options[] = {
                     { "path", required_argument, NULL, 'p' },
-                    { "out", required_argument, NULL, 'o' }
+                    { "out", required_argument, NULL, 'o' },
+                    { "locale", required_argument, NULL, 'l' },
+                    { "platform", required_argument, NULL, 't' },
+                    { "static", required_argument, NULL, 's' },
+                    { "dynamic", no_argument, NULL, 'd' }
                 };
                 while((opt = getopt_long(argc, argv, short_opts, long_options, NULL)) != -1) {
                     switch (opt) {
@@ -614,6 +653,25 @@ int main(int argc, const char * argv[]) {
                             break;
                         case 'o':
                             dst = [NSString stringWithUTF8String:optarg];
+                            break;
+                        case 'l':
+                            lcid = [NSLocale windowsLocaleCodeFromLocaleIdentifier:[NSString stringWithUTF8String:optarg]];
+                            break;
+                        case 't':
+                        {
+                            NSString* pft = [NSString stringWithUTF8String:optarg];
+                            if([@"iOS" compare:pft options:NSCaseInsensitiveSearch] == NSOrderedSame) {
+                                platform = LPKP_IOS;
+                            } else if([@"Android" compare:pft options:NSCaseInsensitiveSearch] == NSOrderedSame) {
+                                platform = LPKP_ANDROID;
+                            }
+                            break;
+                        }
+                        case 's':
+                            staticKey = [NSString stringWithUTF8String:optarg];
+                            break;
+                        case 'd':
+                            dynamicKey = YES;
                             break;
                         default:
                             break;
@@ -624,7 +682,9 @@ int main(int argc, const char * argv[]) {
                 optind++;
                 if(argc > optind) {
                     archive = [NSString stringWithUTF8String:argv[optind]];
-                    extract(archive, path, dst);
+                    s_staticKey = staticKey;
+                    s_dynamicKey = dynamicKey;
+                    extract(archive, path, dst, lcid, platform);
                 } else {
                     NSLog(@"you should specify lpk archive path");
                     ret = 1;
