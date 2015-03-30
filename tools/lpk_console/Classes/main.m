@@ -527,7 +527,44 @@ static void extract(NSString* archive, NSString* key, NSString* dstDir, uint32_t
 }
 
 static void patch(NSString* to, NSString* from, BOOL noBackup) {
-    NSLog(@"patch %@, %@, %d", to, from, noBackup);
+    // backup
+    if(!noBackup) {
+        NSFileManager* fm = [NSFileManager defaultManager];
+        NSString* bakPath = [[to stringByDeletingPathExtension] stringByAppendingString:@"_bak.lpk"];
+        if([fm fileExistsAtPath:bakPath]) {
+            [fm removeItemAtPath:bakPath error:nil];
+        }
+        [fm copyItemAtPath:to toPath:bakPath error:nil];
+    }
+    
+    // open source lpk to be patched
+    lpk_file lpk;
+    int result = lpk_open_file(&lpk, [to cStringUsingEncoding:NSUTF8StringEncoding]);
+    if(result != 0) {
+        NSLog(@"lpk_open_file, open source error: %d", result);
+        return;
+    }
+    
+    // open patch lpk
+    lpk_file patch;
+    result = lpk_open_file(&patch, [from cStringUsingEncoding:NSUTF8StringEncoding]);
+    if(result != 0) {
+        NSLog(@"lpk_open_file, open patch error: %d", result);
+        return;
+    }
+    
+    // patch
+    lpk_apply_patch(&lpk, &patch);
+    
+    // debug output
+    lpk_debug_output(&lpk);
+    
+    // close file
+    lpk_close_file(&lpk);
+    lpk_close_file(&patch);
+    
+    // hint
+    NSLog(@"patch done");
 }
 
 static void dump(NSString* archive) {
