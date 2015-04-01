@@ -86,7 +86,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 * CCRepeatForever覆盖stop方法, 停掉内部动作
 * copy()返回的对象不再需要release
 * setShaderProgram可以设置参数, 从而支持多个节点使用同一个shader但参数不同
-* CCNode添加了nodeToAncestorTransform和ancestorToNodeTransform方法
+* CCNode添加了nodeToAncestorTransform, ancestorToNodeTransform, convertToParentSpace, convertToParentSpaceAR方法
 * Lua相关修改
 	* quick 3.x的binding generator工具移植完成, 名叫autolua, 引擎的lua绑定已经全部生成
 	* HelloLua工程修改调试通过
@@ -144,7 +144,7 @@ Things Improved
 * fix CCScrollView isNodeVisible method
 * CCRepeatForever override stop method
 * setShaderProgram can specify uniform values so that one shader can be shared by many nodes
-* CCNode adds nodeToAncestorTransform and ancestorToNodeTransform 
+* CCNode adds nodeToAncestorTransform, ancestorToNodeTransform, convertToParentSpace, convertToParentSpaceAR
 * Lua related
 	* quick 3.x binding generator is migrated, renamed as autolua
 	* engine lua binding is generated

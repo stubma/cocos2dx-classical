@@ -1320,6 +1320,17 @@ public:
      * treating the returned/received node point as anchor relative.
      */
     CCPoint convertToWorldSpaceAR(const CCPoint& nodePoint);
+    
+    /**
+     * Converts a Point to parent space coordinates. The result is in Points.
+     */
+    CCPoint convertToParentSpace(const CCPoint& nodePoint);
+    
+    /**
+     * Converts a local Point to parent space coordinates.The result is in Points.
+     * treating the returned/received node point as anchor relative.
+     */
+    CCPoint convertToParentSpaceAR(const CCPoint& nodePoint);
 
     /** 
      * convenience methods which take a CCTouch instead of CCPoint

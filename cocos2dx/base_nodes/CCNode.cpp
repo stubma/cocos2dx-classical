@@ -1292,6 +1292,16 @@ CCPoint CCNode::convertToNodeSpace(const CCPoint& worldPoint)
     return ret;
 }
 
+CCPoint CCNode::convertToParentSpace(const CCPoint& nodePoint) {
+    CCPoint ret = CCPointApplyAffineTransform(nodePoint, nodeToParentTransform());
+    return ret;
+}
+
+CCPoint CCNode::convertToParentSpaceAR(const CCPoint& nodePoint) {
+    CCPoint p = convertToParentSpace(nodePoint);
+    return ccpSub(p, m_obAnchorPointInPoints);
+}
+
 CCPoint CCNode::convertToWorldSpace(const CCPoint& nodePoint)
 {
     CCPoint ret = CCPointApplyAffineTransform(nodePoint, nodeToWorldTransform());
