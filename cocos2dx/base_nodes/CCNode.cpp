@@ -1257,6 +1257,20 @@ CCAffineTransform CCNode::parentToNodeTransform(void)
     return m_sInverse;
 }
 
+CCAffineTransform CCNode::nodeToAncestorTransform(CCNode* ancestor) {
+    CCAffineTransform t = nodeToParentTransform();
+    
+    for (CCNode *p = m_pParent; p != ancestor; p = p->getParent()) {
+        t = CCAffineTransformConcat(t, p->nodeToParentTransform());
+    }
+    
+    return t;
+}
+
+CCAffineTransform CCNode::ancestorToNodeTransform(CCNode* ancestor) {
+    return CCAffineTransformInvert(nodeToAncestorTransform(ancestor));
+}
+
 CCAffineTransform CCNode::nodeToWorldTransform()
 {
     CCAffineTransform t = this->nodeToParentTransform();

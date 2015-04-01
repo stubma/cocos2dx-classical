@@ -147,7 +147,10 @@ bool CCScrollView::isNodeVisible(CCNode* node)
     
     viewRect = CCRectMake(-offset.x/scale, -offset.y/scale, size.width/scale, size.height/scale); 
     
-    return viewRect.intersectsRect(node->boundingBox());
+    CCRect nodeBound = CCRectMake(0, 0, node->getContentSize().width, node->getContentSize().height);
+    CCAffineTransform t = node->nodeToAncestorTransform(getContainer());
+    nodeBound = CCRectApplyAffineTransform(nodeBound, t);
+    return viewRect.intersectsRect(nodeBound);
 }
 
 void CCScrollView::pause(CCObject* sender)

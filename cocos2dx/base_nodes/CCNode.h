@@ -1270,6 +1270,18 @@ public:
      * The matrix is in Pixels.
      */
     virtual CCAffineTransform parentToNodeTransform(void);
+    
+    /**
+     * Returns the matrix that transform the node's (local) space coordinates into one ancestor's space coordinates.
+     * The matrix is in Pixels.
+     */
+    virtual CCAffineTransform nodeToAncestorTransform(CCNode* ancestor);
+    
+    /**
+     * Returns the matrix that transform one ancestor's space coordinates to the node's (local) space coordinates.
+     * The matrix is in Pixels.
+     */
+    virtual CCAffineTransform ancestorToNodeTransform(CCNode* ancestor);
 
     /** 
      * Returns the world affine transform matrix. The matrix is in Pixels.

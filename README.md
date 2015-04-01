@@ -82,9 +82,11 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 * CCLayer增加is/setSwallowTouch, 从而可以控制CCScrollView是否吞掉touch
 * CCSpriteBatchNode的insertQuadFromSprite, updateQuadFromSprite, addSpriteWithoutQuad改为public
 * CCScrollView增加getTouchPoint方法获得最后一次点击位置
+* 修正CCScrollView的isNodeVisible方法
 * CCRepeatForever覆盖stop方法, 停掉内部动作
 * copy()返回的对象不再需要release
 * setShaderProgram可以设置参数, 从而支持多个节点使用同一个shader但参数不同
+* CCNode添加了nodeToAncestorTransform和ancestorToNodeTransform方法
 * Lua相关修改
 	* quick 3.x的binding generator工具移植完成, 名叫autolua, 引擎的lua绑定已经全部生成
 	* HelloLua工程修改调试通过
@@ -139,8 +141,10 @@ Things Improved
 * CCLayer adds is/setSwallowTouch to control swallowing touch or not
 * CCSpriteBatchNode insertQuadFromSprite, updateQuadFromSprite, addSpriteWithoutQuad are changed to public
 * CCScrollView adds getTouchPoint to get last touch position
+* fix CCScrollView isNodeVisible method
 * CCRepeatForever override stop method
 * setShaderProgram can specify uniform values so that one shader can be shared by many nodes
+* CCNode adds nodeToAncestorTransform and ancestorToNodeTransform 
 * Lua related
 	* quick 3.x binding generator is migrated, renamed as autolua
 	* engine lua binding is generated
