@@ -106,3 +106,24 @@ function len(t)
         return #t
     end
 end
+
+function const(const_table)
+    local function const_meta(const_table)
+        local mt = {
+            __index = function (t, k)
+                if type(const_table[k]) == "table" then
+                    const_table[k] = const(const_table[k])
+                end
+                return const_table[k]
+            end,
+            __newindex = function (t,k,v)
+                print("can't update " .. tostring(const_table) .. "[" .. tostring(k) .. "] = " .. tostring(v))
+            end
+        }
+        return mt
+    end
+    
+    local t = {}
+    setmetatable(t, const_meta(const_table))
+    return t
+end
