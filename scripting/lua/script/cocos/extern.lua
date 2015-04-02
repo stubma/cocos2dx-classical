@@ -106,3 +106,22 @@ function len(t)
         return #t
     end
 end
+
+function const(value)
+    -- set table member recursively
+    table.foreach(value, function(i, v)
+                  if type(v) == "table" then
+                    const(v)
+                  end
+              end)
+
+    -- make table readonly
+    local t = {}
+    local mt = {
+        __index = value,
+        __newindex = function (t,k,v)
+            print("can't update " .. tostring(t) .. "[" .. tostring(k) .. "] = " .. tostring(v))
+        end
+    }
+    return setmetatable(t, mt)
+end
