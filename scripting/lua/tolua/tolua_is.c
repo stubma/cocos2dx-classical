@@ -318,6 +318,26 @@ TOLUA_API int tolua_isusertype (lua_State* L, int lo, const char* type, int def,
         return 1;
     if (lua_isnil(L,lo) || lua_isusertype(L,lo,type))
         return 1;
+    
+    // try to check __cname, which is set in cocos2d extern.lua
+    if(lua_isuserdata(L, lo)) {
+        lua_pushstring(L, "class");
+        lua_gettable(L, -2);
+        if(lua_istable(L, -1)) {
+            lua_pushstring(L, "__cname");
+            lua_gettable(L, -2);
+            if(lua_isstring(L, -1)) {
+                const char* cname = lua_tostring(L, -1);
+                if(!strcmp(cname, type)) {
+                    lua_pop(L, 2);
+                    return 1;
+                }
+            }
+            lua_pop(L, 1);
+        }
+        lua_pop(L, 1);
+    }
+    
     err->index = lo;
     err->array = 0;
     err->type = type;
