@@ -1,31 +1,30 @@
 require("script/cocos/Cocos2d")
-require("script/cocos/extern")
 
 cc = cc or {}
 
 -- color constants
-cc.ccRED = const(cc.c3b(255, 0, 0))
-cc.ccWHITE = const(cc.c3b(255, 255, 255))
-cc.ccGREEN = const(cc.c3b(0, 255, 0))
-cc.ccBLUE = const(cc.c3b(0, 0, 255))
-cc.ccBLACK = const(cc.c3b(0, 0, 0))
-cc.ccYELLOW = const(cc.c3b(255, 255, 0))
-cc.cc4RED = const(cc.c4b(255, 0, 0, 255))
-cc.cc4GREEN = const(cc.c4b(0, 255, 0, 255))
-cc.cc4BLUE = const(cc.c4b(0, 0, 255, 255))
-cc.cc4BLACK = const(cc.c4b(0, 0, 0, 255))
-cc.cc4WHITE = const(cc.c4b(255, 255, 255, 255))
-cc.cc4TRANSPARENT = const(cc.c4b(0, 0, 0, 0))
-cc.cc4DIM = const(cc.c4b(0, 0, 0, 127))
-cc.cc4YELLOW = const(cc.c4b(255, 255, 0, 255))
-cc.cc4fRED = const(cc.c4f(1, 0, 0, 1))
-cc.cc4fGREEN = const(cc.c4f(0, 1, 0, 1))
-cc.cc4fBLUE = const(cc.c4f(0, 0, 1, 1))
-cc.cc4fBLACK = const(cc.c4f(0, 0, 0, 1))
-cc.cc4fWHITE = const(cc.c4f(1, 1, 1, 1))
-cc.cc4fTRANSPARENT = const(cc.c4f(0, 0, 0, 0))
-cc.cc4fDIM = const(cc.c4f(0, 0, 0, 0.5))
-cc.cc4fYELLOW = const(cc.c4f(1, 1, 0, 1))
+cc.ccRED = cc.c3b(255, 0, 0)
+cc.ccWHITE = cc.c3b(255, 255, 255)
+cc.ccGREEN = cc.c3b(0, 255, 0)
+cc.ccBLUE = cc.c3b(0, 0, 255)
+cc.ccBLACK = cc.c3b(0, 0, 0)
+cc.ccYELLOW = cc.c3b(255, 255, 0)
+cc.cc4RED = cc.c4b(255, 0, 0, 255)
+cc.cc4GREEN = cc.c4b(0, 255, 0, 255)
+cc.cc4BLUE = cc.c4b(0, 0, 255, 255)
+cc.cc4BLACK = cc.c4b(0, 0, 0, 255)
+cc.cc4WHITE = cc.c4b(255, 255, 255, 255)
+cc.cc4TRANSPARENT = cc.c4b(0, 0, 0, 0)
+cc.cc4DIM = cc.c4b(0, 0, 0, 127)
+cc.cc4YELLOW = cc.c4b(255, 255, 0, 255)
+cc.cc4fRED = cc.c4f(1, 0, 0, 1)
+cc.cc4fGREEN = cc.c4f(0, 1, 0, 1)
+cc.cc4fBLUE = cc.c4f(0, 0, 1, 1)
+cc.cc4fBLACK = cc.c4f(0, 0, 0, 1)
+cc.cc4fWHITE = cc.c4f(1, 1, 1, 1)
+cc.cc4fTRANSPARENT = cc.c4f(0, 0, 0, 0)
+cc.cc4fDIM = cc.c4f(0, 0, 0, 0.5)
+cc.cc4fYELLOW = cc.c4f(1, 1, 0, 1)
 
 -- node event type
 cc.NodeOnEnter = "enter"
@@ -118,15 +117,15 @@ cc.AssetsManagerProgress = "progress"
 cc.AssetsManagerDone = "done"
 
 -- point constants
-cc.CENTER = const(cc.p(0.5, 0.5))
-cc.RIGHT_TOP = const(cc.p(1, 1))
-cc.RIGHT_BOTTOM = const(cc.p(1, 0))
-cc.LEFT_BOTTOM = const(cc.p(0, 0))
-cc.LEFT_TOP = const(cc.p(0, 1))
-cc.RIGHT_MIDDLE = const(cc.p(1, 0.5))
-cc.LEFT_MIDDLE = const(cc.p(0, 0.5))
-cc.BOTTOM_MIDDLE = const(cc.p(0.5, 0))
-cc.TOP_MIDDLE = const(cc.p(0.5, 1))
+cc.CENTER = cc.p(0.5, 0.5)
+cc.RIGHT_TOP = cc.p(1, 1)
+cc.RIGHT_BOTTOM = cc.p(1, 0)
+cc.LEFT_BOTTOM = cc.p(0, 0)
+cc.LEFT_TOP = cc.p(0, 1)
+cc.RIGHT_MIDDLE = cc.p(1, 0.5)
+cc.LEFT_MIDDLE = cc.p(0, 0.5)
+cc.BOTTOM_MIDDLE = cc.p(0.5, 0)
+cc.TOP_MIDDLE = cc.p(0.5, 1)
 cc.NORTH = cc.TOP_MIDDLE
 cc.SOUTH = cc.BOTTOM_MIDDLE
 cc.EAST = cc.RIGHT_MIDDLE
@@ -137,10 +136,10 @@ cc.SOUTH_EAST = cc.RIGHT_BOTTOM
 cc.SOUTH_WEST = cc.LEFT_BOTTOM
 
 -- geometry constant
-cc.RectZero = const(cc.rect(0, 0, 0, 0))
-cc.SizeZero = const(cc.size(0, 0))
-cc.PointZero = const(cc.p(0, 0))
-cc.InsetsZero = const(cc.insets(0, 0, 0, 0))
+cc.RectZero = cc.rect(0, 0, 0, 0)
+cc.SizeZero = cc.size(0, 0)
+cc.PointZero = cc.p(0, 0)
+cc.InsetsZero = cc.insets(0, 0, 0, 0)
 
 -- progress bar type
 cc.ProgressTimerTypeRadial = 0
@@ -183,7 +182,7 @@ cc.Shader_shine = 15
 cc.Shader_MAX = 16
 
 -- predefined custom uniform values
-cc.MatrixUniformValue_gray = const({
+cc.MatrixUniformValue_gray = {
     ["type"] = cc.Shader_matrix,
     mat4 = {
         0.299, 0.299, 0.299, 0,
@@ -191,8 +190,8 @@ cc.MatrixUniformValue_gray = const({
         0.114, 0.114, 0.114, 0,
         0, 0, 0, 1
     }
-})
-cc.LightingUniformValue_pressed = const({
+}
+cc.LightingUniformValue_pressed = {
     ["type"] = cc.Shader_lighting,
     mul = {
         r = 255 * 0.5,
@@ -205,7 +204,7 @@ cc.LightingUniformValue_pressed = const({
         g = 0,
         b = 0
     }
-})
-cc.CustomUniformValue_empty = const({
+}
+cc.CustomUniformValue_empty = {
     ["type"] = cc.Shader_none
-})
+}
