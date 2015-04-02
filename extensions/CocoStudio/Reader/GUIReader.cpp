@@ -135,7 +135,7 @@ int GUIReader::getVersionInteger(const char *str)
     int is = atoi(s.c_str());
     
     int iVersion = it*1000+ih*100+ite*10+is;
-    CCLOG("iversion %d",iVersion);
+    CCLOGINFO("iversion %d",iVersion);
     return iVersion;
     /************************/
 }
@@ -1179,7 +1179,7 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::V
     /* *********temp********* */
     //    ActionManager::shareManager()->releaseActions();
     /* ********************** */
-    CCLOG("file name == [%s]",fileName);
+    CCLOGINFO("file name == [%s]",fileName);
 	CCObject* rootWidget = (CCObject*) widget;
     ActionManager::shareManager()->initWithDictionary(fileName,actions,rootWidget);
     return widget;
