@@ -59,10 +59,10 @@ function class(classname, super)
         if super then
             cls = clone(super)
             cls.super = super
-        else
-            cls = { ctor = function() end, dtor = function() end }
         end
 
+        cls.ctor = function() end
+        cls.dtor = function() end
         cls.__cname = classname
         cls.__ctype = CC_INHERITED_FROM_LUA
         cls.__index = cls
