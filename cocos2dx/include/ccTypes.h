@@ -526,16 +526,6 @@ typedef struct _ccT2F_Quad
     ccTex2F    tr;
 } ccT2F_Quad;
 
-// struct that holds the size in pixels, texture coordinates and delays for animated CCParticleSystemQuad
-typedef struct
-{
-    ccT2F_Quad texCoords;
-    float delay;
-    CCSize size; 
-} ccAnimationFrameData;
-
-
-
 /**
  types used for defining fonts properties (i.e. font name, size, stroke or shadow)
  */
