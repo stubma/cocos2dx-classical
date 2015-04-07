@@ -336,6 +336,29 @@ TOLUA_API int tolua_isusertype (lua_State* L, int lo, const char* type, int def,
             lua_pop(L, 1);
         }
         lua_pop(L, 1);
+        
+        // try to check ancestors
+        int pc = 1;
+        lua_pushstring(L, "super");
+        lua_gettable(L, -2);
+        while(!lua_isnil(L, -1) && lua_istable(L, -1)) {
+            lua_pushstring(L, "__cname");
+            lua_gettable(L, -2);
+            if(lua_isstring(L, -1)) {
+                const char* cname = lua_tostring(L, -1);
+                if(!strcmp(cname, type)) {
+                    lua_pop(L, 2);
+                    return 1;
+                }
+            }
+            lua_pop(L, 1);
+            
+            // look up super's super
+            pc++;
+            lua_pushstring(L, "super");
+            lua_gettable(L, -2);
+        }
+        lua_pop(L, pc);
     }
     
     err->index = lo;
