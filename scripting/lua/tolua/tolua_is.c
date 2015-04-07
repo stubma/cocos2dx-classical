@@ -347,7 +347,7 @@ TOLUA_API int tolua_isusertype (lua_State* L, int lo, const char* type, int def,
             if(lua_isstring(L, -1)) {
                 const char* cname = lua_tostring(L, -1);
                 if(!strcmp(cname, type)) {
-                    lua_pop(L, 2);
+                    lua_pop(L, 1 + pc);
                     return 1;
                 }
             }
