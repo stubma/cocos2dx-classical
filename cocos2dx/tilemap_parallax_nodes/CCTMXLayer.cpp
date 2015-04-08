@@ -572,11 +572,11 @@ CCSprite* CCTMXLayer::reusedTile(CCRect rect, CCSpriteBatchNode* bn) {
 		// then the Sprite'squad will be reset
         m_reusedTile->setBatchNode(NULL);
         
+        // restore the batch node
+        m_reusedTile->setBatchNode(bn);
+        
 		// Re-init the sprite
         m_reusedTile->setTextureRect(rect, false, rect.size);
-        
-		// restore the batch node
-        m_reusedTile->setBatchNode(bn);
     }
 	
     return m_reusedTile;
