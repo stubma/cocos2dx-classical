@@ -683,7 +683,7 @@ void CCResourceLoader::doLoad(float delta) {
         if(m_listener)
             m_listener->onResourceLoadingDone();
         if(m_func.handler) {
-            CCArray* pArrayArgs = CCArray::createWithCapacity(3);
+            CCArray* pArrayArgs = CCArray::createWithCapacity(1);
             pArrayArgs->addObject(CCString::create("done"));
             CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_func, pArrayArgs);
         }
