@@ -19,5 +19,4 @@
     using namespace cocos2d::ui;
 
     #include "jsoncpp.h"
-    #include "support/ui_support/CCScrollBar.h"
 #endif
