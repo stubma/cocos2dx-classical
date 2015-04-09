@@ -58,4 +58,8 @@ string CCTMXLayerInfo::getProperty(const string& key) {
 		return "";
 }
 
+int CCTMXLayerInfo::getTileAt(int index) {
+    return m_tiles[index];
+}
+
 NS_CC_END

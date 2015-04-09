@@ -62,6 +62,9 @@ public:
 	 * @param value value string
 	 */
 	void addProperty(const string& key, const string& value);
+    
+    // for lua
+    int getTileAt(int index);
 	
 	/// layer name
 	CC_SYNTHESIZE(string, m_name, Name);
