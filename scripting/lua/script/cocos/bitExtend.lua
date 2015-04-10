@@ -90,6 +90,21 @@ function bit._or(a, b)
     return bit._b2d(r)
 end
 
+function bit._xor(a, b)
+    local op1 = bit._d2b(a)
+    local op2 = bit._d2b(b)
+    local r = {}
+    
+    for i = 1, 32 do
+        if op1[i] == op2[i] then
+            r[i] = 0
+        else
+            r[i] = 1
+        end
+    end
+    return bit._b2d(r)
+end
+
 function bit._lshift(a, n)
     local op1 = bit._d2b(a)
     n = n <= 32 and n or 32
@@ -109,3 +124,4 @@ bit.lshift = bit.lshift or bit._lshift
 bit.rshift = bit.rshift or bit._rshift
 bit.bnot = bit.bnot or bit._not
 bit.bor = bit.bor or bit._or
+bit.bxor = bit.bxor or bit._xor
