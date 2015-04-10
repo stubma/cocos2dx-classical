@@ -71,6 +71,9 @@ public:
      */
     virtual void removeScriptObjectByCCObject(CCObject* pObj);
     
+    /** Remove script side user data */
+    virtual void removeScriptUserData(int nRefId);
+    
     /**
      @brief Remove Lua function reference
      */

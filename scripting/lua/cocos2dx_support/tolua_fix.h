@@ -11,6 +11,7 @@ extern "C" {
 #define TOLUA_REFID_PTR_MAPPING "toluafix_refid_ptr_mapping"
 #define TOLUA_REFID_TYPE_MAPPING "toluafix_refid_type_mapping"
 #define TOLUA_REFID_FUNCTION_MAPPING "toluafix_refid_function_mapping"
+#define TOLUA_REFID_TABLE_MAPPING "toluafix_refid_table_mapping"
     
 TOLUA_API void toluafix_open(lua_State* L);
 TOLUA_API int toluafix_pushusertype_ccobject(lua_State *L,
@@ -27,7 +28,10 @@ TOLUA_API int toluafix_totable(lua_State* L, int lo, int def);
 TOLUA_API int toluafix_istable(lua_State* L, int lo, const char* type, int def, tolua_Error* err);
 TOLUA_API void toluafix_stack_dump(lua_State* L, const char* label);
 TOLUA_API void toluafix_add_type_mapping(unsigned int type, const char* clsName);
-
+TOLUA_API int toluafix_ref_table(lua_State* L, int lo, int def);
+TOLUA_API void toluafix_get_table_by_refid(lua_State* L, int refid);
+TOLUA_API void toluafix_remove_table_by_refid(lua_State* L, int refid);
+    
 #ifdef __cplusplus
 } // extern "C"
 #endif

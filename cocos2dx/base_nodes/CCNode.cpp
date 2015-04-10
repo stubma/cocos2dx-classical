@@ -77,6 +77,7 @@ CCNode::CCNode(void)
 // userData is always inited as nil
 , m_pUserData(NULL)
 , m_pUserObject(NULL)
+, m_nScriptUserDataId(0)
 , m_pShaderProgram(NULL)
 , m_eGLServerState(ccGLServerState(0))
 , m_uOrderOfArrival(0)
@@ -111,6 +112,12 @@ CCNode::~CCNode(void)
     if (m_nUpdateScriptHandler.handler)
     {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nUpdateScriptHandler.handler);
+    }
+    
+    // script side user data
+    if(m_nScriptUserDataId) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptUserData(m_nScriptUserDataId);
+        m_nScriptUserDataId = 0;
     }
 
     CC_SAFE_RELEASE(m_pActionManager);
@@ -477,6 +484,14 @@ void * CCNode::getUserData()
 void CCNode::setUserData(void *var)
 {
     m_pUserData = var;
+}
+
+void CCNode::_setScriptUserData(int dataId) {
+    m_nScriptUserDataId = dataId;
+}
+
+int CCNode::_getScriptUserData() {
+    return m_nScriptUserDataId;
 }
 
 unsigned int CCNode::getOrderOfArrival()

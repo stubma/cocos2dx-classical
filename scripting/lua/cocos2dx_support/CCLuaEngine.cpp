@@ -66,6 +66,10 @@ void CCLuaEngine::addLuaLoader(lua_CFunction func)
     m_stack->addLuaLoader(func);
 }
 
+void CCLuaEngine::removeScriptUserData(int nRefId) {
+    m_stack->removeScriptUserData(nRefId);
+}
+
 void CCLuaEngine::removeScriptObjectByCCObject(CCObject* pObj)
 {
     m_stack->removeScriptObjectByCCObject(pObj);

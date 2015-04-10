@@ -35,6 +35,7 @@ extern "C" {
 }
 
 #include "lua_cocos2dx_auto.h"
+#include "lua_cocos2dx_manual.h"
 #include "Cocos2dxLuaLoader.h"
 #include "LuaBasicConversions.h"
 #include "support/codec/xxtea.h"
@@ -114,6 +115,7 @@ bool CCLuaStack::init(void)
     m_state = lua_open();
     luaL_openlibs(m_state);
     register_all_cocos2dx(m_state);
+    register_all_cocos2dx_manual(m_state);
     toluafix_open(m_state);
     luaopen_lfs(m_state);
     luaopen_bit(m_state);
@@ -178,6 +180,10 @@ void CCLuaStack::addLuaLoader(lua_CFunction func)
 void CCLuaStack::removeScriptObjectByCCObject(CCObject* pObj)
 {
     toluafix_remove_ccobject_by_refid(m_state, pObj->m_nLuaID);
+}
+
+void CCLuaStack::removeScriptUserData(int nRefId) {
+    toluafix_remove_table_by_refid(m_state, nRefId);
 }
 
 void CCLuaStack::removeScriptHandler(int nHandler)

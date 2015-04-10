@@ -299,6 +299,8 @@
 		9266DDB11A5675AE00600A41 /* CCAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266DDB01A5675AE00600A41 /* CCAccelerometer.h */; };
 		9268AB451AD781B5004EF3E5 /* bit.c in Sources */ = {isa = PBXBuildFile; fileRef = 9268AB431AD781B5004EF3E5 /* bit.c */; };
 		9268AB461AD781B5004EF3E5 /* bit.h in Headers */ = {isa = PBXBuildFile; fileRef = 9268AB441AD781B5004EF3E5 /* bit.h */; };
+		9268AB4E1AD7BC17004EF3E5 /* lua_cocos2dx_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9268AB4C1AD7BC17004EF3E5 /* lua_cocos2dx_manual.cpp */; };
+		9268AB4F1AD7BC17004EF3E5 /* lua_cocos2dx_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 9268AB4D1AD7BC17004EF3E5 /* lua_cocos2dx_manual.h */; };
 		927FE4FF1A45708A0065F052 /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 927FE4311A4570890065F052 /* CCActionEaseEx.cpp */; };
 		927FE5001A45708A0065F052 /* CCActionEaseEx.h in Headers */ = {isa = PBXBuildFile; fileRef = 927FE4321A4570890065F052 /* CCActionEaseEx.h */; };
 		927FE5011A45708A0065F052 /* CCActionFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 927FE4331A4570890065F052 /* CCActionFrame.cpp */; };
@@ -1205,6 +1207,8 @@
 		9266DDB01A5675AE00600A41 /* CCAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAccelerometer.h; sourceTree = "<group>"; };
 		9268AB431AD781B5004EF3E5 /* bit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bit.c; sourceTree = "<group>"; };
 		9268AB441AD781B5004EF3E5 /* bit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bit.h; sourceTree = "<group>"; };
+		9268AB4C1AD7BC17004EF3E5 /* lua_cocos2dx_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_manual.cpp; sourceTree = "<group>"; };
+		9268AB4D1AD7BC17004EF3E5 /* lua_cocos2dx_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_manual.h; sourceTree = "<group>"; };
 		927FE4311A4570890065F052 /* CCActionEaseEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEaseEx.cpp; sourceTree = "<group>"; };
 		927FE4321A4570890065F052 /* CCActionEaseEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEaseEx.h; sourceTree = "<group>"; };
 		927FE4331A4570890065F052 /* CCActionFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionFrame.cpp; sourceTree = "<group>"; };
@@ -3822,6 +3826,8 @@
 				92CF92E51A523D6000441150 /* Cocos2dxLuaLoader.h */,
 				92E3CE1F1A54E5CB008520DB /* LuaBasicConversions.cpp */,
 				92E3CE201A54E5CB008520DB /* LuaBasicConversions.h */,
+				9268AB4C1AD7BC17004EF3E5 /* lua_cocos2dx_manual.cpp */,
+				9268AB4D1AD7BC17004EF3E5 /* lua_cocos2dx_manual.h */,
 				92E3CE241A54E69A008520DB /* lua_cocos2dx_auto.cpp */,
 				92E3CE251A54E69A008520DB /* lua_cocos2dx_auto.h */,
 				92CF92E81A523D6000441150 /* platform */,
@@ -3872,6 +3878,7 @@
 				9211122F1A2B4D89003FE653 /* CCControlSaturationBrightnessPicker.h in Headers */,
 				929213931A59775F00F7FCE7 /* value.h in Headers */,
 				1551A62B158F2ADE00E66CFE /* CCActionCamera.h in Headers */,
+				9268AB4F1AD7BC17004EF3E5 /* lua_cocos2dx_manual.h in Headers */,
 				1551A62D158F2ADE00E66CFE /* CCActionCatmullRom.h in Headers */,
 				1551A62F158F2ADE00E66CFE /* CCActionEase.h in Headers */,
 				92AA139C1AC4FE9A0066041C /* CCSAXParser.h in Headers */,
@@ -4435,6 +4442,7 @@
 				1551A62A158F2ADE00E66CFE /* CCActionCamera.cpp in Sources */,
 				92B915391A3D443900622FDA /* CCTrailMoveTo.cpp in Sources */,
 				924308501A2F5FEC00BE2476 /* CCAssetOutputStream_ios.mm in Sources */,
+				9268AB4E1AD7BC17004EF3E5 /* lua_cocos2dx_manual.cpp in Sources */,
 				92AA13151AC4F7BC0066041C /* CCMD5.cpp in Sources */,
 				1551A62C158F2ADE00E66CFE /* CCActionCatmullRom.cpp in Sources */,
 				92A7AF621A3C4038001C830B /* CCArcticSprite.cpp in Sources */,

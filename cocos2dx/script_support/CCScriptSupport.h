@@ -182,6 +182,9 @@ public:
     /** Remove script object. */
     virtual void removeScriptObjectByCCObject(CCObject* pObj) = 0;
     
+    /** Remove script side user data */
+    virtual void removeScriptUserData(int nRefId) = 0;
+    
     /** Remove script function handler, only CCLuaEngine class need to implement this function. */
     virtual void removeScriptHandler(int nHandler) {};
     
