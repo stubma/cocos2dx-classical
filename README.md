@@ -93,12 +93,14 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 	* 使用ccScriptFunction代表一个脚本方法, 替代了原来使用int的方式. 引擎中注册脚本方法相关的代码都改成使用ccScriptFunction, 相应的牵涉到CCLuaEngine, CCLuaStack等都有不少修改, 脚本回调方法可以获得self参数, 解决了脚本回调方法中获取self不方便的问题
 	* 逐渐完善一些公用库, 都放在scripting/lua/script下, 提供一些基本的封装
 	* 加入了lfs方便载入脚本, 修正了Cocos2dxLuaLoader和lfs冲突的问题
+	* 加入了位操作库
 	* luajit和lua都已经预编译成静态库, 由于luajit并不支持64位, 所以目前并未启用, 还是采用包含lua代码编译的方式. 需要使用luajit的可以直接使用
 	* 修正了一些tolua_fix的bug
 	* 添加了tolua.isa方法
 	* script端的CCNotification监听方法现在可以收到额外参数
 	* 修改了extern.lua, 添加了dtor方法, 会在C++对象析构时调用
 	* CCDirector/CCEGLView的end方法改名为terminate, 避免和lua的关键字冲突
+	* CCNode添加了set/getScriptUserData, 支持在lua端设置为CCNode关联一个lua table
 
 cocos2dx-better新加的其它功能我就不列举了, 目前cocos2dx-better的代码已经合并完成, 有一部分代码我感觉写的用处不大就没有合并了, 不过只是一小部分, 95%的cocos2dx-better代码已经合并.
 
@@ -153,12 +155,14 @@ Things Improved
 	* make it easy to pass self parameter to script callback
 	* adding more shared library, in scripting/lua/script
 	* add lfs to easily load lua files under a folder, fix conflict between Cocos2dxLuaLoader and lfs
+	* add bit operation library
 	* fix some bugs of tolua_fix
 	* add tolua.isa method
 	* luajit is precompiled but not enabled because it doesn't support 64 bit, but you can directly use it if you want
 	* CCNotification script observer can get extra parameters now
 	* lua class add a dtor method to receive CCObject destruction event
 	* rename CCDirector/CCEGLView end method to terminate, to avoid name conflict with lua keyword
+	* add set/getScriptUserData for CCNode so that we can associate a lua table to CCNode
 
 How to use CCImagePicker
 ==========================
