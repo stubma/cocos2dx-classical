@@ -297,6 +297,8 @@
 		924308501A2F5FEC00BE2476 /* CCAssetOutputStream_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9243084C1A2F5FEC00BE2476 /* CCAssetOutputStream_ios.mm */; };
 		9266DDAF1A5674BB00600A41 /* CCApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266DDAE1A5674BB00600A41 /* CCApplication.h */; };
 		9266DDB11A5675AE00600A41 /* CCAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9266DDB01A5675AE00600A41 /* CCAccelerometer.h */; };
+		9268AB451AD781B5004EF3E5 /* bit.c in Sources */ = {isa = PBXBuildFile; fileRef = 9268AB431AD781B5004EF3E5 /* bit.c */; };
+		9268AB461AD781B5004EF3E5 /* bit.h in Headers */ = {isa = PBXBuildFile; fileRef = 9268AB441AD781B5004EF3E5 /* bit.h */; };
 		927FE4FF1A45708A0065F052 /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 927FE4311A4570890065F052 /* CCActionEaseEx.cpp */; };
 		927FE5001A45708A0065F052 /* CCActionEaseEx.h in Headers */ = {isa = PBXBuildFile; fileRef = 927FE4321A4570890065F052 /* CCActionEaseEx.h */; };
 		927FE5011A45708A0065F052 /* CCActionFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 927FE4331A4570890065F052 /* CCActionFrame.cpp */; };
@@ -1201,6 +1203,8 @@
 		9243084C1A2F5FEC00BE2476 /* CCAssetOutputStream_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCAssetOutputStream_ios.mm; sourceTree = "<group>"; };
 		9266DDAE1A5674BB00600A41 /* CCApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
 		9266DDB01A5675AE00600A41 /* CCAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAccelerometer.h; sourceTree = "<group>"; };
+		9268AB431AD781B5004EF3E5 /* bit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bit.c; sourceTree = "<group>"; };
+		9268AB441AD781B5004EF3E5 /* bit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bit.h; sourceTree = "<group>"; };
 		927FE4311A4570890065F052 /* CCActionEaseEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEaseEx.cpp; sourceTree = "<group>"; };
 		927FE4321A4570890065F052 /* CCActionEaseEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEaseEx.h; sourceTree = "<group>"; };
 		927FE4331A4570890065F052 /* CCActionFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionFrame.cpp; sourceTree = "<group>"; };
@@ -3823,6 +3827,8 @@
 				92CF92E81A523D6000441150 /* platform */,
 				92CF92EC1A523D6000441150 /* tolua_fix.cpp */,
 				92CF92ED1A523D6000441150 /* tolua_fix.h */,
+				9268AB431AD781B5004EF3E5 /* bit.c */,
+				9268AB441AD781B5004EF3E5 /* bit.h */,
 				922DAB2E1A68E43A00333050 /* lfs.c */,
 				922DAB2F1A68E43A00333050 /* lfs.h */,
 			);
@@ -4036,6 +4042,7 @@
 				1551A6EA158F2ADE00E66CFE /* CCMenuItem.h in Headers */,
 				928F64441A33E59F00178235 /* CCImagePicker.h in Headers */,
 				92AA13141AC4F7BC0066041C /* CCBase64.h in Headers */,
+				9268AB461AD781B5004EF3E5 /* bit.h in Headers */,
 				929D536B1A27582F00560A2E /* VectorImpl.h in Headers */,
 				92AA13951AC4FD510066041C /* ZipUtils.h in Headers */,
 				929D53631A27582F00560A2E /* String8.h in Headers */,
@@ -4492,6 +4499,7 @@
 				92A7AF671A3C4038001C830B /* CCAuroraLoader.cpp in Sources */,
 				1551A64E158F2ADE00E66CFE /* CCScheduler.cpp in Sources */,
 				924308401A2F5FBE00BE2476 /* CCAssetInputStream.cpp in Sources */,
+				9268AB451AD781B5004EF3E5 /* bit.c in Sources */,
 				927FE5831A45708A0065F052 /* SceneReader.cpp in Sources */,
 				92A7AFD11A3C456F001C830B /* CCShaderCache.cpp in Sources */,
 				927FE55A1A45708A0065F052 /* ImageView.cpp in Sources */,
