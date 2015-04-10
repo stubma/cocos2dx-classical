@@ -91,6 +91,18 @@ public:
      */
     void postNotification(const char *name, CCObject *object);
     
+    /** @brief Posts one notification event by name. Mainly for script side
+     *  @param name The name of this notification.
+     *  @param array The extra parameter which is a CCArray.
+     */
+    void postNotificationWithArray(const char *name, CCArray* array);
+    
+    /** @brief Posts one notification event by name. Mainly for script side
+     *  @param name The name of this notification.
+     *  @param dict The extra parameter which is a CCDictionary.
+     */
+    void postNotificationWithDict(const char *name, CCDictionary* dict);
+    
     /** @brief Gets observer script handler.
      *  @param name The name of this notification.
      *  @return The observer script handle.

@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "CCNotificationCenter.h"
 #include "cocoa/CCArray.h"
+#include "cocoa/CCDictionary.h"
 #include "cocoa/CCString.h"
 #include "script_support/CCScriptSupport.h"
 #include <string>
@@ -162,6 +163,14 @@ void CCNotificationCenter::unregisterScriptObserver(CCObject *target,const char*
             m_observers->removeObject(observer);
         }
     }
+}
+
+void CCNotificationCenter::postNotificationWithArray(const char *name, CCArray* array) {
+    postNotification(name, array);
+}
+
+void CCNotificationCenter::postNotificationWithDict(const char *name, CCDictionary* dict) {
+    postNotification(name, dict);
 }
 
 void CCNotificationCenter::postNotification(const char *name, CCObject *object)
