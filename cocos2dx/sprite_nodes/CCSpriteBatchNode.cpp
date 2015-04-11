@@ -413,7 +413,7 @@ void CCSpriteBatchNode::increaseAtlasCapacity(void)
     // this is likely computationally expensive
     unsigned int quantity = (m_pobTextureAtlas->getCapacity() + 1) * 4 / 3;
 
-    CCLOG("cocos2d: CCSpriteBatchNode: resizing TextureAtlas capacity from [%lu] to [%lu].",
+    CCLOGINFO("cocos2d: CCSpriteBatchNode: resizing TextureAtlas capacity from [%lu] to [%lu].",
         (long)m_pobTextureAtlas->getCapacity(),
         (long)quantity);
 
