@@ -497,9 +497,9 @@ CCMenuItemSprite* CCMenuItemSprite::create(CCNode* sprite, CCObject* target, SEL
     return pRet;
 }
 
-CCMenuItemSprite * CCMenuItemSprite::create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite)
+CCMenuItemSprite * CCMenuItemSprite::create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite, CCNode* focusSprite)
 {
-    return CCMenuItemSprite::create(normalSprite, selectedSprite, disabledSprite, NULL, NULL);
+    return CCMenuItemSprite::create(normalSprite, selectedSprite, disabledSprite, focusSprite, NULL, NULL);
 }
 
 CCMenuItemSprite * CCMenuItemSprite::create(CCNode* normalSprite, CCNode* selectedSprite, CCObject* target, SEL_MenuHandler selector)

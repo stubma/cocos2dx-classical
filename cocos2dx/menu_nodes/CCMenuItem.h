@@ -327,7 +327,7 @@ public:
     static CCMenuItemSprite* create(CCNode* sprite, CCObject* target, SEL_MenuHandler selector);
 
     /** creates a menu item with a normal, selected and disabled image*/
-    static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite = NULL);
+    static CCMenuItemSprite * create(CCNode* normalSprite, CCNode* selectedSprite, CCNode* disabledSprite = NULL, CCNode* focusSprite = NULL);
     /** creates a menu item with a normal and selected image with target/selector 
      * @lua NA
      */

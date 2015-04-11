@@ -2,6 +2,7 @@ cc = cc or {}
 
 -- constant
 cc.MAX_INT = 2147483647
+cc.MAX_FLOAT = 3.4028235E38
 
 function cc.d2r(d)
     return d * 0.01745329252
