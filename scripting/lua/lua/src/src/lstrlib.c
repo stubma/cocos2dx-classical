@@ -67,7 +67,21 @@ static int str_reverse (lua_State *L) {
 static int str_split(lua_State* L) {
     int pos = 0;
     const char * src = lua_tostring(L, 1);
-    size_t len = strlen(src);
+
+    // trim leading space
+    while(isspace(*src))
+        src++;
+    
+    // Trim trailing space
+    const char * end = src + strlen(src) - 1;
+    while(end > src && isspace(*end))
+        end--;
+    end++;
+    
+    // trimmed length
+    int len = (int)(end - src);
+    
+    // separator
     char c = lua_tostring(L, 2)[0];
 
     int index = 1;
