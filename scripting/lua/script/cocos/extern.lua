@@ -125,34 +125,3 @@ function const(value)
     }
     return setmetatable(t, mt)
 end
-
-table = table or {}
-
--- join table
-function table.join(t, sep)
-    local s = ""
-    for _,item in ipairs(t) do
-        if string.len(s) > 0 then
-            s = s .. sep
-        end
-        s = s .. tostring(item)
-    end
-    return s
-end
-
-string = string or {}
-
--- safe convert a string to number, never return nil
-function string.tonumber(s)
-    local n = tonumber(s)
-    if n == nil then
-        return 0
-    else
-        return n
-    end
-end
-
--- safe convert a string to integer, never return nil
-function string.toint(s)
-    return math.floor(string.tonumber(s))
-end
