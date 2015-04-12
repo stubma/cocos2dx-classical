@@ -122,8 +122,7 @@ public class LuaExporter extends BaseExporter {
 			if (dataType.equalsIgnoreCase("Byte") || dataType.equalsIgnoreCase("int") || dataType.equalsIgnoreCase("Float")) {
 				lfile.append("\tself.m_" + firstLowercase(field) + " = string.tonumber(item[\"" + firstCapital(field) + "\"])\n");
 			} else if (dataType.equalsIgnoreCase("bool")) {
-				lfile.append("\tlocal tmp = string.lower(tostring(item[\"" + firstCapital(field) + "\"]))\n");
-				lfile.append("\tself.m_" + firstLowercase(field) + " = tmp == \"y\" or tmp == \"true\" or string.tonumber(tmp) > 0\n");
+				lfile.append("\tself.m_" + firstLowercase(field) + " = string.tobool(item[\"" + firstCapital(field) + "\"])\n");
 			} else if (dataType.equalsIgnoreCase("String")) {
 				lfile.append("\tself.m_" + firstLowercase(field) + " = tostring(item[\"" + firstCapital(field) + "\"])\n");
 			} else if(dataType.equalsIgnoreCase("luafunc")) {
@@ -142,9 +141,7 @@ public class LuaExporter extends BaseExporter {
 				lfile.append("\tlocal tmp = string.split(tostring(item[\"" + firstCapital(field) + "\"]), \",\")\n")
 					.append("\tself.m_" + firstLowercase(field) + " = {}\n")
 					.append("\tfor _,x in ipairs(tmp) do\n")
-					.append("\t\tlocal lx = string.lower(x)\n")
-					.append("\t\tlocal flag = lx == \"y\" or lx == \"true\" or string.tonumber(lx) > 0\n")
-					.append("\t\ttable.insert(self.m_" + firstLowercase(field) + ", flag)\n")
+					.append("\t\ttable.insert(self.m_" + firstLowercase(field) + ", string.tobool(x))\n")
 					.append("\tend\n");
 			}
 		}
@@ -277,8 +274,7 @@ public class LuaExporter extends BaseExporter {
 					.append("\treturn self.m_" + firstLowercase(field) + "\n")
 					.append("end\n")
 					.append("\nfunction " + className + ":set" + firstCapital(field) + "(v)\n")
-					.append("\tlocal tmp = string.lower(tostring(v))\n")
-					.append("\tself.m_" + firstLowercase(field) + " = tmp == \"y\" or tmp == \"true\" or string.tonumber(tmp) > 0\n")
+					.append("\tself.m_" + firstLowercase(field) + " = string.tobool(v)\n")
 					.append("end\n");
 			} else {
 				lfile.append("\nfunction " + className + ":get" + firstCapital(field) + "()\n")
