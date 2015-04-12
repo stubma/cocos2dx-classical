@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -45,7 +46,7 @@ public class Main {
 			"Excel to Json/C++",
 			"Excel to Json/Lua"
 		};
-		final JComboBox cmb = new JComboBox(s);
+		final JComboBox<String> cmb = new JComboBox<String>(s);
 		cmb.setBorder(BorderFactory.createTitledBorder("Export Type"));
 		bottom.add(cmb);
 
@@ -66,27 +67,42 @@ public class Main {
 		btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
-				switch (cmb.getSelectedIndex()) {
-					case 0:
-					{
-						ExcelToJson export = new ExcelToJson();
-						JFileChooser fileChooser = new JFileChooser(System.getProperty("user.home"));
-						FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel Files", "xls", "xlsx");
-						fileChooser.setMultiSelectionEnabled(true);
-						fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-						fileChooser.setFileFilter(filter);
-						int returnVal = fileChooser.showOpenDialog(fileChooser);
-						if (returnVal == JFileChooser.APPROVE_OPTION) {
-							File files[] = fileChooser.getSelectedFiles();
-							export.start(files);
-						}
-						break;
-					}
-					case 1:
-					{
-						
-						break;
-					}
+				JFileChooser fileChooser = new JFileChooser(System.getProperty("user.home"));
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel Files", "xls", "xlsx");
+				fileChooser.setMultiSelectionEnabled(true);
+				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				fileChooser.setFileFilter(filter);
+				int returnVal = fileChooser.showOpenDialog(fileChooser);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					// create exporter
+					JsonExporter je = new JsonExporter();
+					BaseExporter we = null;
+					switch (cmb.getSelectedIndex()) {
+						case 0:
+							we = new CppExporter();
+							break;
+						case 1:
+							we = new LuaExporter();
+							break;
+					}	
+					
+					// export every file
+					File files[] = fileChooser.getSelectedFiles();
+					try {
+				        int len = files.length;
+				        for (int i = 0; i < len; i++) {
+				        	String fileName = files[i].getName();
+				        	System.out.println("exporting:" + fileName + "---" + (i + 1) + "/" + len);
+				        	
+				        	// export json
+				        	je.export(files[i]);
+				        	
+				        	// export wrapper
+				        	we.export(files[i]);
+				        }
+			        } catch (IOException e) {
+			        }
+					System.out.println("done");
 				}
 			}
 		});
