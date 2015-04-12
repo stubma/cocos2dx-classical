@@ -64,6 +64,30 @@ static int str_reverse (lua_State *L) {
   return 1;
 }
 
+static int str_split(lua_State* L) {
+    int pos = 0;
+    const char * src = lua_tostring(L, 1);
+    size_t len = strlen(src);
+    char c = lua_tostring(L, 2)[0];
+
+    int index = 1;
+    lua_newtable(L);
+    for(int i=0; i<len; ++i){
+        if(src[i] == c){
+            lua_pushnumber(L, index);
+            lua_pushlstring(L, src+pos, i-pos);
+            lua_rawset(L, -3);
+            ++index;
+            pos = i+1;
+        }
+    }
+    if(len > 0 && pos <= len) {
+        lua_pushnumber(L, index);
+        lua_pushlstring(L, src+pos, len-pos);
+        lua_rawset(L, -3);
+    }
+    return 1;
+}
 
 static int str_lower (lua_State *L) {
   size_t l;
@@ -838,6 +862,7 @@ static const luaL_Reg strlib[] = {
   {"match", str_match},
   {"rep", str_rep},
   {"reverse", str_reverse},
+  {"split", str_split },
   {"sub", str_sub},
   {"upper", str_upper},
   {NULL, NULL}
