@@ -84,7 +84,6 @@
 
                     "package.loaded",
                     "package.seeall",
-                    "string",
                     "string.byte",
                     "string.char",
                     "string.dump",
@@ -98,6 +97,9 @@
                     "string.rep",
                     "string.split",
                     "string.sub",
+                    "string.tobool",
+                    "string.toint",
+                    "string.tonumber",
                     "string.upper",
                     "string.reverse",
 
