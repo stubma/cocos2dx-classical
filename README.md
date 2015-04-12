@@ -101,6 +101,9 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 	* 修改了extern.lua, 添加了dtor方法, 会在C++对象析构时调用
 	* CCDirector/CCEGLView的end方法改名为terminate, 避免和lua的关键字冲突
 	* CCNode添加了set/getScriptUserData, 支持在lua端设置为CCNode关联一个lua table
+	* string包增加了split, tonumber, toint, tobool方法
+	* table包增加了join, print方法
+	* tools下有xcode_lua_support工具, 可以为Xcode添加lua语法高亮
 
 cocos2dx-better新加的其它功能我就不列举了, 目前cocos2dx-better的代码已经合并完成, 有一部分代码我感觉写的用处不大就没有合并了, 不过只是一小部分, 95%的cocos2dx-better代码已经合并.
 
@@ -163,7 +166,10 @@ Things Improved
 	* lua class add a dtor method to receive CCObject destruction event
 	* rename CCDirector/CCEGLView end method to terminate, to avoid name conflict with lua keyword
 	* add set/getScriptUserData for CCNode so that we can associate a lua table to CCNode
-
+	* string package adds split, tonumber, toint, tobool methods
+	* table package adds join, print methods
+	* xcode_lua_support tool, can add lua syntax highlight for Xcode
+	
 How to use CCImagePicker
 ==========================
 There is a CCImagePicker merged from cocos2dx-better, it can take image from camera or album and return it in any size. It is very handy, but you need more setup before using it. In iOS, just use it. In Android, don't forget to config something:
