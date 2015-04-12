@@ -110,6 +110,7 @@
                     "table.insert",
                     "table.maxn",
                     "table.join",
+                    "table.print",
                     "table.remove",
                     "table.sort",
                     "table.setn",
