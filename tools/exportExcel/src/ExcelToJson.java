@@ -229,8 +229,8 @@ public class ExcelToJson {
 			if (sheet.getRow(2).getCell(i) == null || sheet.getRow(2).getCell(i).getStringCellValue().equals(""))
 				continue;
 			String field = sheet.getRow(2).getCell(i).getStringCellValue();
-			if (sheet.getRow(0).getCell(i).getCellComment() != null
-			        && !sheet.getRow(0).getCell(i).getCellComment().getString().equals("")) {
+			Cell cell0 = sheet.getRow(0).getCell(i);
+			if (cell0 != null && cell0.getCellComment() != null && !cell0.getCellComment().getString().equals("")) {
 				hfile.append("\t/*" + sheet.getRow(0).getCell(i).getCellComment().getString() + "*/\n");
 			}
 			
@@ -540,37 +540,5 @@ public class ExcelToJson {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public boolean getFileList(Vector<String> outFileLists, String filePath, boolean subFolderFlag) {
-		if (outFileLists == null) {
-			outFileLists = new Vector<String>();
-		}
-		File file = new File(filePath);
-		if (file.exists()) {
-			File files[] = file.listFiles();
-			if (subFolderFlag) {
-				for (int i = 0; i < files.length; i++) {
-					if (files[i].isFile()) {
-						String fileName = files[i].getName();
-						if (fileName.indexOf(".xls") > -1 || fileName.indexOf("xlsx") > -1) {
-							outFileLists.add(fileName);
-						}
-					} else if (files[i].isDirectory()) {
-						getFileList(outFileLists, filePath + "//" + files[i].getName(), subFolderFlag);
-					}
-				}
-			} else {
-				for (int i = 0; i < files.length; i++) {
-					String fileName = files[i].getName();
-					if (files[i].isFile() && (fileName.indexOf(".xls") > -1 || fileName.indexOf("xlsx") > -1)) {
-						outFileLists.add(fileName);
-					}
-				}
-			}
-		} else {
-			return false;
-		}
-		return true;
 	}
 }

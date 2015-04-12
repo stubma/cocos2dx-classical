@@ -41,7 +41,10 @@ public class Main {
 		container.add(bottom);
 
 		// add combo
-		String[] s = { "Excel to Json/C++" };
+		String[] s = { 
+			"Excel to Json/C++",
+			"Excel to Json/Lua"
+		};
 		final JComboBox cmb = new JComboBox(s);
 		cmb.setBorder(BorderFactory.createTitledBorder("Export Type"));
 		bottom.add(cmb);
@@ -77,6 +80,11 @@ public class Main {
 							File files[] = fileChooser.getSelectedFiles();
 							export.start(files);
 						}
+						break;
+					}
+					case 1:
+					{
+						
 						break;
 					}
 				}
