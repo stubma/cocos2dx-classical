@@ -11,3 +11,19 @@ function table.join(t, sep)
     end
     return s
 end
+
+function table.print(value, ...)
+    local indent = ...
+    if indent == nil then
+        indent = ""
+    end
+    table.foreach(value,
+                  function(i, v)
+                    if type(v) == "table" and v ~= value then
+                        print(indent .. i)
+                        table.print(v, indent .. "\t")
+                    else
+                        print(indent .. i .. " = " .. tostring(v))
+                    end
+                  end)
+end
