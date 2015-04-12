@@ -102,12 +102,15 @@
                     "string.reverse",
 
                     "table.concat",
+                    "table.foreach",
+                    "table.foreachi",
+                    "table.getn",
                     "table.insert",
                     "table.maxn",
+                    "table.join",
                     "table.remove",
                     "table.sort",
-                    "table.copy",
-                    "table.indexOf",
+                    "table.setn",
 
                     "tolua.type",
                     "tolua.takeownership",
