@@ -1,6 +1,6 @@
 table = table or {}
 
--- join table
+-- connect table elements to a string, separated by given separator
 function table.join(t, sep)
     local s = ""
     for _,item in ipairs(t) do
@@ -12,6 +12,7 @@ function table.join(t, sep)
     return s
 end
 
+-- print all table elements including nested table
 function table.print(value, ...)
     local indent = ...
     if indent == nil then
