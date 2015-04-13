@@ -1,3 +1,4 @@
+-- clone a lua object, whatever the type it is
 function clone(object)
     local lookup_table = {}
     local function _copy(object)
@@ -16,6 +17,8 @@ function clone(object)
     return _copy(object)
 end
 
+-- declare a class, the super can be a function which returns a user type or
+-- a table. it will return class itself, which actually is a table too
 local CC_INHERITED_FROM_NATIVE_CLASS = 1
 local CC_INHERITED_FROM_LUA = 2
 function class(classname, super)
@@ -78,6 +81,7 @@ function class(classname, super)
     return cls
 end
 
+-- reverse iterate a table
 function ripairs(t)
     local max = 1
     while t[max] ~= nil do
@@ -88,13 +92,14 @@ function ripairs(t)
         local v = t[i]
         if v ~= nil then
             return i,v
-            else
+        else
             return nil
         end
     end
     return ripairs_it, t, max
 end
 
+-- get real size of a table or other type
 function len(t)
     if type(t) == "table" then
         local c = 0
@@ -107,6 +112,7 @@ function len(t)
     end
 end
 
+-- change a table to readonly
 function const(value)
     -- set table member recursively
     table.foreach(value, function(i, v)
