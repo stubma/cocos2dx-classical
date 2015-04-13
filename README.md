@@ -101,7 +101,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 	* 修改了extern.lua, 添加了dtor方法, 会在C++对象析构时调用
 	* CCDirector/CCEGLView的end方法改名为terminate, 避免和lua的关键字冲突
 	* CCNode添加了set/getScriptUserData, 支持在lua端设置为CCNode关联一个lua table
-	* string包增加了split, tonumber, toint, tobool方法
+	* string包增加了split, tonumber, toint, tobool, empty方法
 	* table包增加了join, print方法
 	* tools下有xcode_lua_support工具, 可以为Xcode添加lua语法高亮
 
@@ -166,7 +166,7 @@ Things Improved
 	* lua class add a dtor method to receive CCObject destruction event
 	* rename CCDirector/CCEGLView end method to terminate, to avoid name conflict with lua keyword
 	* add set/getScriptUserData for CCNode so that we can associate a lua table to CCNode
-	* string package adds split, tonumber, toint, tobool methods
+	* string package adds split, tonumber, toint, tobool, empty methods
 	* table package adds join, print methods
 	* xcode_lua_support tool, can add lua syntax highlight for Xcode
 	
