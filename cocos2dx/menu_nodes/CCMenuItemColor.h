@@ -38,18 +38,6 @@ class CCMenuItemColorStateListener;
  */
 class CC_DLL CCMenuItemColor : public CCMenuItem, public CCBlendProtocol {
 private:
-    /// normal color
-    ccColor4B m_normalColor;
-    
-    /// selected color
-    ccColor4B m_selectedColor;
-    
-    /// disable color
-    ccColor4B m_disabledColor;
-    
-    /// focus color
-    ccColor4B m_focusColor;
-    
     /// vertices
     ccVertex2F m_pSquareVertices[4];
     
@@ -98,6 +86,18 @@ public:
 	
 	/// state listener
 	CC_SYNTHESIZE(CCMenuItemColorStateListener*, m_stateListener, StateListener);
+    
+    /// normal color
+    CC_SYNTHESIZE(ccColor4B, m_normalColor, NormalColor);
+    
+    /// selected color
+    CC_SYNTHESIZE(ccColor4B, m_selectedColor, SelectedColor);
+    
+    /// disable color
+    CC_SYNTHESIZE(ccColor4B, m_disabledColor, disabledColor);
+    
+    /// focus color
+    CC_SYNTHESIZE(ccColor4B, m_focusColor, FocusColor);
 };
 
 NS_CC_END
