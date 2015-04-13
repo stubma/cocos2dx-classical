@@ -115,6 +115,7 @@
                     "string.byte",
                     "string.char",
                     "string.dump",
+                    "string.empty",
                     "string.find",
                     "string.format",
                     "string.gmatch",
