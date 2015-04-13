@@ -18,7 +18,7 @@ end
 -- convert a string to bool
 function string.tobool(s)
     local x = string.lower(tostring(s))
-    return x == "y" or x == "true" or string.tonumber(x) > 0
+    return x == "y" or x == "yes" or x == "true" or string.tonumber(x) > 0
 end
 
 -- check string empty, empty means it is nil or zero length string
