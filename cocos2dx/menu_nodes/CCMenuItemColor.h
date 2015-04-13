@@ -88,16 +88,16 @@ public:
 	CC_SYNTHESIZE(CCMenuItemColorStateListener*, m_stateListener, StateListener);
     
     /// normal color
-    CC_SYNTHESIZE(ccColor4B, m_normalColor, NormalColor);
+    CC_SYNTHESIZE_SETTER(ccColor4B, m_normalColor, NormalColor);
     
     /// selected color
-    CC_SYNTHESIZE(ccColor4B, m_selectedColor, SelectedColor);
+    CC_SYNTHESIZE_SETTER(ccColor4B, m_selectedColor, SelectedColor);
     
     /// disable color
-    CC_SYNTHESIZE(ccColor4B, m_disabledColor, disabledColor);
+    CC_SYNTHESIZE_SETTER(ccColor4B, m_disabledColor, DisabledColor);
     
     /// focus color
-    CC_SYNTHESIZE(ccColor4B, m_focusColor, FocusColor);
+    CC_SYNTHESIZE_SETTER(ccColor4B, m_focusColor, FocusColor);
 };
 
 NS_CC_END

@@ -279,4 +279,24 @@ void CCMenuItemColor::draw() {
     CC_INCREMENT_GL_DRAWS(1);
 }
 
+void CCMenuItemColor::setNormalColor(ccColor4B var) {
+    m_normalColor = var;
+    updateColor();
+}
+
+void CCMenuItemColor::setSelectedColor(ccColor4B var) {
+    m_selectedColor = var;
+    updateColor();
+}
+
+void CCMenuItemColor::setDisabledColor(ccColor4B var) {
+    m_disabledColor = var;
+    updateColor();
+}
+
+void CCMenuItemColor::setFocusColor(ccColor4B var) {
+    m_focusColor = var;
+    updateColor();
+}
+
 NS_CC_END
