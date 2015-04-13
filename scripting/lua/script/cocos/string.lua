@@ -1,18 +1,18 @@
 string = string or {}
 
 -- safe convert a string to number, never return nil
-function string.tonumber(s)
+function string.tonumber(s, def)
     local n = tonumber(s)
     if n == nil then
-        return 0
-        else
+        return def == nil and 0 or def
+    else
         return n
     end
 end
 
 -- safe convert a string to integer, never return nil
-function string.toint(s)
-    return math.floor(string.tonumber(s))
+function string.toint(s, def)
+    return math.floor(string.tonumber(s, def))
 end
 
 -- convert a string to bool
