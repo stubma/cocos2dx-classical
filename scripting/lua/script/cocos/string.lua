@@ -20,3 +20,8 @@ function string.tobool(s)
     local x = string.lower(tostring(s))
     return x == "y" or x == "true" or string.tonumber(x) > 0
 end
+
+-- check string empty, empty means it is nil or zero length string
+function string.empty(s)
+    return s == nil or string.len(s) <= 0
+end
