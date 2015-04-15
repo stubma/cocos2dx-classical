@@ -487,6 +487,10 @@ void CCNode::setUserData(void *var)
 }
 
 void CCNode::_setScriptUserData(int dataId) {
+    if(m_nScriptUserDataId) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptUserData(m_nScriptUserDataId);
+        m_nScriptUserDataId = 0;
+    }
     m_nScriptUserDataId = dataId;
 }
 
