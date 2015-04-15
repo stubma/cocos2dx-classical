@@ -101,6 +101,7 @@ extern bool luaval_to_customuniformvalue(lua_State* L, int lo, cocos2d::ccCustom
 bool luaval_to_vector_string(lua_State* L, int lo, std::vector<std::string>* ret, const char* funcName = "");
 bool luaval_to_vector_int(lua_State* L, int lo, std::vector<int>* ret, const char* funcName = "");
 bool luaval_to_vector_bool(lua_State* L, int lo, std::vector<bool>* ret, const char* funcName = "");
+bool luaval_to_map_int_int(lua_State* L, int lo, std::map<int, int>* ret, const char* funcName = "");
 
 template <class T>
 bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret)

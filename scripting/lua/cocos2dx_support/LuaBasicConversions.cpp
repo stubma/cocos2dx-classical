@@ -2014,6 +2014,11 @@ bool luaval_to_dictionaryref(lua_State* L, int lo, CCDictionary* outValue, const
         return false;
     bool ok = true;
     
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
+    
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err)) {
 #if COCOS2D_DEBUG >=1
@@ -2488,6 +2493,54 @@ bool luaval_to_vector_point(lua_State* L, int lo, std::vector<cocos2d::CCPoint>*
                 CCAssert(false, "table is needed");
             }
             
+            lua_pop(L, 1);
+        }
+    }
+    
+    return ok;
+}
+
+bool luaval_to_map_int_int(lua_State* L, int lo, std::map<int, int>* ret, const char* funcName) {
+    // null checking
+    if (NULL == L || NULL == ret || lua_gettop(L) < lo)
+        return false;
+    
+    // convert negative index to positive
+    if(lo < 0) {
+        lo = lua_gettop(L) + lo + 1;
+    }
+    
+    // top should be a table
+    tolua_Error tolua_err;
+    bool ok = true;
+    if (!tolua_istable(L, lo, 0, &tolua_err)) {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L, "#ferror:", &tolua_err, funcName);
+#endif
+        ok = false;
+    }
+    
+    if(ok) {
+        lua_pushnil(L);                                             /* L: lotable ..... nil */
+        while (0 != lua_next(L, lo)) {
+            // if key is not number, ignore
+            if (!lua_isnumber(L, -2)) {
+                lua_pop(L, 1);
+                continue;
+            }
+            
+            // if value is not number, ignore
+            if(!lua_isnumber(L, -1)) {
+                lua_pop(L, 1);
+                continue;
+            }
+            
+            // save
+            int key = (int)lua_tointeger(L, -2);
+            int value = (int)lua_tointeger(L, -1);
+            (*ret)[key] = value;
+            
+            // pop value, keeps key to perform next
             lua_pop(L, 1);
         }
     }
