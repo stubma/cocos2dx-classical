@@ -490,6 +490,12 @@ void CCMenuItemSprite::setDisabledImage(CCNode* pImage)
 //CCMenuItemSprite
 //
 
+CCMenuItemSprite::~CCMenuItemSprite()
+{
+    removeScriptSelectedEvent();
+    removeScriptUnselectedEvent();
+}
+
 CCMenuItemSprite* CCMenuItemSprite::create(CCNode* sprite, CCObject* target, SEL_MenuHandler selector) {
     CCMenuItemSprite* pRet = new CCMenuItemSprite();
     pRet->initWithNormalSprite(sprite, NULL, NULL, target, selector);
@@ -547,9 +553,33 @@ void CCMenuItemSprite::setSelectedEvent(CCObject* target, SEL_MenuHandler select
     m_selectedEventSelector = selector;
 }
 
+void CCMenuItemSprite::setScriptSelectedEvent(ccScriptFunction func) {
+    removeScriptSelectedEvent();
+    m_selectedEventScriptFunc = func;
+}
+
+void CCMenuItemSprite::removeScriptSelectedEvent() {
+    if(m_selectedEventScriptFunc.handler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_selectedEventScriptFunc.handler);
+        m_selectedEventScriptFunc.handler = 0;
+    }
+}
+
 void CCMenuItemSprite::setUnselectedEvent(CCObject* target, SEL_MenuHandler selector) {
     m_unselectedEventTarget = target;
     m_unselectedEventSelector = selector;
+}
+
+void CCMenuItemSprite::setScriptUnselectedEvent(ccScriptFunction func) {
+    removeScriptUnselectedEvent();
+    m_unselectedEventScriptFunc = func;
+}
+
+void CCMenuItemSprite::removeScriptUnselectedEvent() {
+    if(m_unselectedEventScriptFunc.handler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_unselectedEventScriptFunc.handler);
+        m_unselectedEventScriptFunc.handler = 0;
+    }
 }
 
 void CCMenuItemSprite::centerAlignImages() {
@@ -636,6 +666,11 @@ void CCMenuItemSprite::selected()
     if (m_selectedEventTarget && m_selectedEventSelector) {
         (m_selectedEventTarget->*m_selectedEventSelector)(this);
     }
+    if(m_selectedEventScriptFunc.handler) {
+        CCArray* pArrayArgs = CCArray::createWithCapacity(1);
+        pArrayArgs->addObject(this);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_selectedEventScriptFunc, pArrayArgs);
+    }
 }
 
 void CCMenuItemSprite::unselected()
@@ -651,6 +686,11 @@ void CCMenuItemSprite::unselected()
     // event
     if (m_unselectedEventTarget && m_unselectedEventSelector) {
         (m_unselectedEventTarget->*m_unselectedEventSelector)(this);
+    }
+    if(m_unselectedEventScriptFunc.handler) {
+        CCArray* pArrayArgs = CCArray::createWithCapacity(1);
+        pArrayArgs->addObject(this);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_unselectedEventScriptFunc, pArrayArgs);
     }
 }
 

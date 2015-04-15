@@ -297,6 +297,12 @@ private:
     CCObject* m_unselectedEventTarget;
     SEL_MenuHandler m_unselectedEventSelector;
     
+    /// script function for selected event
+    ccScriptFunction m_selectedEventScriptFunc;
+    
+    /// script function for unselected event
+    ccScriptFunction m_unselectedEventScriptFunc;
+    
     /// true means focus image can be displayed with normal, selected and disable image
     CC_SYNTHESIZE_BOOL(m_focusIsAttachment, FocusIsAttachment);
     
@@ -315,7 +321,12 @@ public:
     ,m_selectedEventSelector(NULL)
     ,m_unselectedEventTarget(NULL)
     ,m_unselectedEventSelector(NULL)
-    {}
+    {
+        memset(&m_selectedEventScriptFunc, 0, sizeof(ccScriptFunction));
+        memset(&m_unselectedEventScriptFunc, 0, sizeof(ccScriptFunction));
+    }
+    
+    virtual ~CCMenuItemSprite();
     
     /**
      * create a menu item
@@ -378,8 +389,20 @@ public:
     /// set target selector of selected event
     void setSelectedEvent(CCObject* target, SEL_MenuHandler selector);
     
+    /// set script function for selected event
+    void setScriptSelectedEvent(ccScriptFunction func);
+    
+    /// clear script function of selected event
+    void removeScriptSelectedEvent();
+    
     /// set target selector of unselected event
     void setUnselectedEvent(CCObject* target, SEL_MenuHandler selector);
+    
+    /// set script function for unselected event
+    void setScriptUnselectedEvent(ccScriptFunction func);
+    
+    /// clear script function of unselected event
+    void removeScriptUnselectedEvent();
     
 protected:
     virtual void updateImagesVisibility();
