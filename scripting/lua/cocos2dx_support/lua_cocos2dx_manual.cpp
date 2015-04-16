@@ -112,7 +112,11 @@ int lua_cocos2dx_manual_CCNode_getScriptUserData(lua_State* tolua_S) {
     if (argc == 0) {
         // call function
         int refId = cobj->_getScriptUserData();
-        toluafix_get_table_by_refid(tolua_S, refId);
+        if(refId) {
+            toluafix_get_table_by_refid(tolua_S, refId);
+        } else {
+            lua_pushnil(tolua_S);
+        }
         return 1;
     }
     
