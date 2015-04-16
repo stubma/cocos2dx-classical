@@ -642,7 +642,7 @@ CCCallFuncO* CCCallFuncO::create(ccScriptFunction func, CCObject* pObject) {
     return pRet;
 }
 
-CCCallFuncO * CCCallFuncO::createWithString(ccScriptFunction func, const string& s) {
+CCCallFuncO * CCCallFuncO::createWithString(ccScriptFunction func, const std::string& s) {
     return CCCallFuncO::create(func, CCString::create(s));
 }
 

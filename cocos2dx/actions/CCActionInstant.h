@@ -498,7 +498,7 @@ public:
      * for lua side, because CCString binding is not generated so it is hard to pass a CCString from lua
      * side. This method acts as a shortcut to create method
      */
-    static CCCallFuncO * createWithString(ccScriptFunction func, const string& s);
+    static CCCallFuncO * createWithString(ccScriptFunction func, const std::string& s);
 
     /** initializes the action with the callback 
 
