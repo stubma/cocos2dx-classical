@@ -642,6 +642,10 @@ CCCallFuncO* CCCallFuncO::create(ccScriptFunction func, CCObject* pObject) {
     return pRet;
 }
 
+CCCallFuncO * CCCallFuncO::createWithString(ccScriptFunction func, const string& s) {
+    return CCCallFuncO::create(func, CCString::create(s));
+}
+
 bool CCCallFuncO::initWithScriptTarget(ccScriptFunction& func, CCObject* pObject) {
     if (CCCallFunc::initWithScriptTarget(func)) {
         m_pObject = pObject;

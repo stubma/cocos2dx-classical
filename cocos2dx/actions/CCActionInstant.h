@@ -493,6 +493,12 @@ public:
      local func = CCCallFuncO:create({ target = xxx, handler = XXX.method1 }, obj)
      */
     static CCCallFuncO * create(ccScriptFunction func, CCObject* pObject);
+    
+    /**
+     * for lua side, because CCString binding is not generated so it is hard to pass a CCString from lua
+     * side. This method acts as a shortcut to create method
+     */
+    static CCCallFuncO * createWithString(ccScriptFunction func, const string& s);
 
     /** initializes the action with the callback 
 
