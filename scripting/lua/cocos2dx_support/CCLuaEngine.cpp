@@ -153,7 +153,8 @@ int CCLuaEngine::executeLayerTouchEvent(CCLayer* pLayer, const char* pEventName,
     const CCPoint pt = CCDirector::sharedDirector()->convertToGL(pTouch->getLocationInView());
     m_stack->pushFloat(pt.x);
     m_stack->pushFloat(pt.y);
-    int ret = m_stack->executeFunctionByHandler(func.handler, func.target ? 4 : 3);
+    m_stack->pushInt(pTouch->getID());
+    int ret = m_stack->executeFunctionByHandler(func.handler, func.target ? 5 : 4);
     m_stack->clean();
     return ret;
 }
