@@ -111,6 +111,8 @@ public:
     bool isUseColorInfo;    //! Whether or not this frame have the color changed Info
     int a, r, g, b;
 
+    float getX() { return x; }
+    float getY() { return y; }
 };
 
 
