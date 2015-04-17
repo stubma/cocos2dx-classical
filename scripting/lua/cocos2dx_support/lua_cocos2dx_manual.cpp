@@ -62,6 +62,8 @@ static int lua_cocos2dx_manual_CCNode_setScriptUserData(lua_State* tolua_S) {
             if(refId == 0) {
                 ok = false;
             }
+        } else if(lua_isnil(tolua_S, 2)) {
+            refId = 0;
         } else {
             ok = false;
         }
