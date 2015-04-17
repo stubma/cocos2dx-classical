@@ -28,6 +28,10 @@
 #include "base_nodes/CCNode.h"
 #include "sprite_nodes/CCSprite.h"
 #include "cocoa/CCZone.h"
+#include "cocoa/CCBool.h"
+#include "cocoa/CCInteger.h"
+#include "cocoa/CCFloat.h"
+#include "cocoa/CCDouble.h"
 
 NS_CC_BEGIN
 //
@@ -644,6 +648,22 @@ CCCallFuncO* CCCallFuncO::create(ccScriptFunction func, CCObject* pObject) {
 
 CCCallFuncO * CCCallFuncO::createWithString(ccScriptFunction func, const std::string& s) {
     return CCCallFuncO::create(func, CCString::create(s));
+}
+
+CCCallFuncO * CCCallFuncO::createWithBool(ccScriptFunction func, bool flag) {
+    return CCCallFuncO::create(func, CCBool::create(flag));
+}
+
+CCCallFuncO * CCCallFuncO::createWithInt(ccScriptFunction func, int flag) {
+    return CCCallFuncO::create(func, CCInteger::create(flag));
+}
+
+CCCallFuncO * CCCallFuncO::createWithFloat(ccScriptFunction func, float flag) {
+    return CCCallFuncO::create(func, CCFloat::create(flag));
+}
+
+CCCallFuncO * CCCallFuncO::createWithDouble(ccScriptFunction func, double flag) {
+    return CCCallFuncO::create(func, CCDouble::create(flag));
 }
 
 bool CCCallFuncO::initWithScriptTarget(ccScriptFunction& func, CCObject* pObject) {

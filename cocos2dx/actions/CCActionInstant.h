@@ -499,7 +499,11 @@ public:
      * side. This method acts as a shortcut to create method
      */
     static CCCallFuncO * createWithString(ccScriptFunction func, const std::string& s);
-
+    static CCCallFuncO * createWithBool(ccScriptFunction func, bool flag);
+    static CCCallFuncO * createWithInt(ccScriptFunction func, int flag);
+    static CCCallFuncO * createWithFloat(ccScriptFunction func, float flag);
+    static CCCallFuncO * createWithDouble(ccScriptFunction func, double flag);
+    
     /** initializes the action with the callback 
 
     typedef void (CCObject::*SEL_CallFuncO)(CCObject*);
