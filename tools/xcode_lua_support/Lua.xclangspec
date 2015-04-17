@@ -125,6 +125,7 @@
                     "string.match",
                     "string.rep",
                     "string.split",
+                    "string.startswith",
                     "string.sub",
                     "string.tobool",
                     "string.toint",

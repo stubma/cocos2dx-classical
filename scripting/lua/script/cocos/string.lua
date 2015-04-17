@@ -25,3 +25,8 @@ end
 function string.empty(s)
     return s == nil or string.len(s) <= 0
 end
+
+-- check a string starts with a pattern
+function string.startswith(s, pattern)
+    return s ~= nil and string.find(s, pattern) == 1
+end
