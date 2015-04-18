@@ -43,10 +43,18 @@ end
 
 local all = {}
 
-local function register(env, desc, name)
+local function register(desc, name)
     local func = desc[#desc]
     assert(type(func)=="function")
-    desc[#desc] = nil
+    table.remove(desc)
+    
+    -- decide package name, if not specified, put it in cc
+    local env = desc[#desc]
+    if type(env) ~= "table" then
+        env = cc
+    else
+        table.remove(desc)
+    end
     
     local func_table
     if all[env] then
@@ -83,7 +91,7 @@ end
 overload = setmetatable({}, {
                         __index = function (t,k)
                             local function reg(desc)
-                                register(cc, desc, k)
+                                register(desc, k)
                             end
                             t[k] = reg
                             return reg
