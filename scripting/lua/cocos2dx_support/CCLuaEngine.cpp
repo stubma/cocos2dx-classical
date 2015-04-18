@@ -117,7 +117,39 @@ int CCLuaEngine::executeCallFuncActionEvent(CCCallFunc* pAction, CCObject* pTarg
         m_stack->pushCCObject(func.target, getLuaTypeNameByTypeId(typeid(*func.target).name()));
     }
     if (pTarget) {
-        m_stack->pushCCObject(pTarget, getLuaTypeNameByTypeId(typeid(*pTarget).name()));
+        do {
+            CCInteger* i = dynamic_cast<CCInteger*>(pTarget);
+            if(i) {
+                m_stack->pushInt(i->getValue());
+                break;
+            }
+            
+            CCBool* b = dynamic_cast<CCBool*>(pTarget);
+            if(b) {
+                m_stack->pushBoolean(b->getValue());
+                break;
+            }
+            
+            CCString* s = dynamic_cast<CCString*>(pTarget);
+            if(s) {
+                m_stack->pushString(s->getCString());
+                break;
+            }
+            
+            CCFloat* f = dynamic_cast<CCFloat*>(pTarget);
+            if(f) {
+                m_stack->pushFloat(f->getValue());
+                break;
+            }
+            
+            CCDouble* d = dynamic_cast<CCDouble*>(pTarget);
+            if(d) {
+                m_stack->pushFloat(d->getValue());
+                break;
+            }
+            
+            m_stack->pushCCObject(pTarget, getLuaTypeNameByTypeId(typeid(*pTarget).name()));
+        } while(false);
     }
     int ret = m_stack->executeFunctionByHandler(func.handler, (pTarget ? 1 : 0) + (func.target ? 1 : 0));
     m_stack->clean();
