@@ -150,7 +150,7 @@ int CCLuaEngine::executeLayerTouchEvent(CCLayer* pLayer, const char* pEventName,
     }
     m_stack->pushString(pEventName);
     
-    const CCPoint pt = CCDirector::sharedDirector()->convertToGL(pTouch->getLocationInView());
+    const CCPoint pt = pTouch->getLocation();
     m_stack->pushFloat(pt.x);
     m_stack->pushFloat(pt.y);
     m_stack->pushInt(pTouch->getID());
