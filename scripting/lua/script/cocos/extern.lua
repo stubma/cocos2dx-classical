@@ -131,3 +131,22 @@ function const(value)
     }
     return setmetatable(t, mt)
 end
+
+-- print program execution line, used by debug.sethook(trace, "l")
+function trace(event, line)
+    local t = debug.getinfo(2, "Sn")
+    local file = nil
+    if t.source then
+        local s,e,_ = string.find(t.source, "/[_%w%.]+$")
+        if s ~= nil then
+            file = string.sub(t.source, s + 1, e)
+        end
+    end
+    if file then
+        if t.name then
+            print(file .. ":" .. t.name .. ", line " .. line)
+        else
+            print(file .. ", line " .. line)
+        end
+    end
+end
