@@ -51,7 +51,7 @@ function table.hasstring(t, s)
 end
 
 --[[
- fill a table with values, old elements in table will be cleared
+ fill a table with values, old elements in table after len will be kept
  if v is a table, first len items will be copied. or, if v length is shorter
  than len, 0 will be filled
  if v is a value, it will be copied len times
@@ -59,13 +59,12 @@ end
 --]]
 function table.fill(t, v, len)
     if t then
-        t = {}
         if type(v) == "table" then
             local m = math.min(len, #v)
-            for i = 1, m then
+            for i = 1, m do
                 t[i] = v[i]
             end
-            for i = m + 1, len then
+            for i = m + 1, len do
                 t[i] = 0
             end
         else
