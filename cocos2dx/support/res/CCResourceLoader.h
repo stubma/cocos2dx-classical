@@ -295,6 +295,10 @@ public:
      */
     CCResourceLoader(ccScriptFunction func);
     
+    // create
+    static CCResourceLoader* create(ccScriptFunction func);
+    static CCResourceLoader* create();
+    
     /// abort all active resource loading
     static void abortAll();
 	

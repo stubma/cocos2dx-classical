@@ -231,6 +231,16 @@ CCResourceLoader::~CCResourceLoader() {
     }
 }
 
+CCResourceLoader* CCResourceLoader::create(ccScriptFunction func) {
+    CCResourceLoader* rl = new CCResourceLoader(func);
+    CC_SAFE_AUTORELEASE_RETURN(rl, CCResourceLoader*);
+}
+
+CCResourceLoader* CCResourceLoader::create() {
+    ccScriptFunction func = { 0 };
+    return CCResourceLoader::create(func);
+}
+
 string CCResourceLoader::_resolve(const string& path) {
     if(s_resolveExternal) {
         return CCUtils::getExternalOrFullPath(path);
@@ -418,6 +428,7 @@ void CCResourceLoader::run() {
         return;
     m_loading = true;
     
+    CC_SAFE_RETAIN(this);
 	CCScheduler* scheduler = CCDirector::sharedDirector()->getScheduler();
 	scheduler->scheduleSelector(schedule_selector(CCResourceLoader::doLoad), this, 0, kCCRepeatForever, m_delay, false);
 }
