@@ -119,7 +119,9 @@ public class LuaExporter extends BaseExporter {
 			String dataType = sheet.getRow(3).getCell(i).getStringCellValue();
 			if (field == null || field.equals(""))
 				continue;
-			if (dataType.equalsIgnoreCase("Byte") || dataType.equalsIgnoreCase("int") || dataType.equalsIgnoreCase("Float")) {
+			if (dataType.equalsIgnoreCase("Byte") || dataType.equalsIgnoreCase("int")) {
+				lfile.append("\tself.m_" + firstLowercase(field) + " = string.toint(item[\"" + firstCapital(field) + "\"])\n");
+			} else if (dataType.equalsIgnoreCase("Float")) {
 				lfile.append("\tself.m_" + firstLowercase(field) + " = string.tonumber(item[\"" + firstCapital(field) + "\"])\n");
 			} else if (dataType.equalsIgnoreCase("bool")) {
 				lfile.append("\tself.m_" + firstLowercase(field) + " = string.tobool(item[\"" + firstCapital(field) + "\"])\n");
@@ -131,7 +133,13 @@ public class LuaExporter extends BaseExporter {
 				lfile.append("\tself.m_" + firstLowercase(field) + " = string.gsub(self.m_" + firstLowercase(field) + ", \"\\\\r\", \"\\r\")\n");
 			} else if(dataType.equalsIgnoreCase("StringArray")) {
 				lfile.append("\tself.m_" + firstLowercase(field) + " = string.split(tostring(item[\"" + firstCapital(field) + "\"]), \",\")\n");
-			} else if(dataType.equalsIgnoreCase("IntArray") || dataType.equalsIgnoreCase("FloatArray")) {
+			} else if(dataType.equalsIgnoreCase("IntArray")) {
+				lfile.append("\tlocal tmp = string.split(tostring(item[\"" + firstCapital(field) + "\"]), \",\")\n")
+					.append("\tself.m_" + firstLowercase(field) + " = {}\n")
+					.append("\tfor _,x in ipairs(tmp) do\n")
+					.append("\t\ttable.insert(self.m_" + firstLowercase(field) + ", string.toint(x))\n")
+					.append("\tend\n");
+			} else if(dataType.equalsIgnoreCase("FloatArray")) {
 				lfile.append("\tlocal tmp = string.split(tostring(item[\"" + firstCapital(field) + "\"]), \",\")\n")
 					.append("\tself.m_" + firstLowercase(field) + " = {}\n")
 					.append("\tfor _,x in ipairs(tmp) do\n")
@@ -198,7 +206,7 @@ public class LuaExporter extends BaseExporter {
 					dataType.equalsIgnoreCase("IntArray") ||
 					dataType.equalsIgnoreCase("FloatArray") ||
 					dataType.equalsIgnoreCase("BoolArray")) {
-				lfile.append("\tv[\"" + firstCapital(field) + "\"] = table.join(self.m_" + firstLowercase(field) + ", \",\")\n");	
+				lfile.append("\tv[\"" + firstCapital(field) + "\"] = table.concat(self.m_" + firstLowercase(field) + ", \",\")\n");	
 			} else {
 				lfile.append("\tv[\"" + firstCapital(field) + "\"] = self.m_" + firstLowercase(field) + "\n");	
 			}
@@ -276,12 +284,19 @@ public class LuaExporter extends BaseExporter {
 					.append("\nfunction " + className + ":set" + firstCapital(field) + "(v)\n")
 					.append("\tself.m_" + firstLowercase(field) + " = string.tobool(v)\n")
 					.append("end\n");
-			} else {
+			} else if(dataType.equalsIgnoreCase("float")) {
 				lfile.append("\nfunction " + className + ":get" + firstCapital(field) + "()\n")
 					.append("\treturn self.m_" + firstLowercase(field) + "\n")
 					.append("end\n")
 					.append("\nfunction " + className + ":set" + firstCapital(field) + "(v)\n")
 					.append("\tself.m_" + firstLowercase(field) + " = string.tonumber(v)\n")
+					.append("end\n");
+			} else {
+				lfile.append("\nfunction " + className + ":get" + firstCapital(field) + "()\n")
+					.append("\treturn self.m_" + firstLowercase(field) + "\n")
+					.append("end\n")
+					.append("\nfunction " + className + ":set" + firstCapital(field) + "(v)\n")
+					.append("\tself.m_" + firstLowercase(field) + " = string.toint(v)\n")
 					.append("end\n");
 			}
 		}
