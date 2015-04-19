@@ -135,6 +135,7 @@
 
                     "table.concat",
                     "table.fill",
+                    "table.fillnew",
                     "table.foreach",
                     "table.foreachi",
                     "table.getn",

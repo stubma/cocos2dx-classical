@@ -58,3 +58,12 @@ function table.fill(t, v, len)
         end
     end
 end
+
+-- return a filled table
+function table.fillnew(v, len)
+    local t = {}
+    for i = 1, len do
+        t[i] = v
+    end
+    return t
+end
