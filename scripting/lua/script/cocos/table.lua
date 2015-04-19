@@ -1,17 +1,5 @@
 table = table or {}
 
--- connect table elements to a string, separated by given separator
-function table.join(t, sep)
-    local s = ""
-    for _,item in ipairs(t) do
-        if string.len(s) > 0 then
-            s = s .. sep
-        end
-        s = s .. tostring(item)
-    end
-    return s
-end
-
 -- print all table elements including nested table
 function table.print(value, ...)
     local indent = ...
@@ -60,4 +48,13 @@ function table.hasstring(t, s)
         end
     end
     return false
+end
+
+-- fill a table with dummy values, elements after length will be kept
+function table.fill(t, v, len)
+    if t then
+        for i = 1, len do
+            t[i] = v
+        end
+    end
 end

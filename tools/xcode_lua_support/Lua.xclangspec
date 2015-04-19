@@ -134,6 +134,7 @@
                     "string.reverse",
 
                     "table.concat",
+                    "table.fill",
                     "table.foreach",
                     "table.foreachi",
                     "table.getn",
@@ -142,7 +143,6 @@
                     "table.hasstring",
                     "table.insert",
                     "table.maxn",
-                    "table.join",
                     "table.print",
                     "table.remove",
                     "table.sort",
