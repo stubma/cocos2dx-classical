@@ -53,10 +53,13 @@ public:
     CCAffineTransform nodeToWorldTransform();
     CCAffineTransform nodeToWorldTransformAR();
 
-    CC_PROPERTY_PASS_BY_REF(CCBaseData, m_sSkinData, SkinData);
+    void setSkinData(CCBaseData* var);
+    CCBaseData* getSkinData();
+    
     CC_PROPERTY(CCBone *, m_pBone, Bone);
 
 protected:
+    CCBaseData m_sSkinData;
     CCArmature *m_pArmature;
     CCAffineTransform m_tSkinTransform;
     CC_SYNTHESIZE_READONLY(std::string, m_strDisplayName, DisplayName)

@@ -114,9 +114,9 @@ bool CCSkin::initWithFile(const char *pszFilename)
     return ret;
 }
 
-void CCSkin::setSkinData(const CCBaseData &var)
+void CCSkin::setSkinData(CCBaseData* var)
 {
-    m_sSkinData = var;
+    m_sSkinData.copy(var);
 
     setScaleX(m_sSkinData.scaleX);
     setScaleY(m_sSkinData.scaleY);
@@ -128,9 +128,9 @@ void CCSkin::setSkinData(const CCBaseData &var)
     updateArmatureTransform();
 }
 
-const CCBaseData &CCSkin::getSkinData()
+CCBaseData* CCSkin::getSkinData()
 {
-    return m_sSkinData;
+    return &m_sSkinData;
 }
 
 void CCSkin::updateArmatureTransform()

@@ -171,11 +171,11 @@ void CCDisplayFactory::createSpriteDisplay(CCBone *bone, CCDecorativeDisplay *de
     {
         if (armature->getArmatureData()->dataVersion >= VERSION_COMBINED)
         {
-            skin->setSkinData(displayData->skinData);
+            skin->setSkinData(&displayData->skinData);
         }
         else
         {
-            skin->setSkinData(*bone->getBoneData());
+            skin->setSkinData(bone->getBoneData());
         }
     }
 }

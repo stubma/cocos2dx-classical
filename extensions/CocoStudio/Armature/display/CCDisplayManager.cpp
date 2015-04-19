@@ -135,7 +135,7 @@ void CCDisplayManager::addDisplay(CCNode *display, int index)
 
         if (CCSpriteDisplayData *spriteDisplayData = (CCSpriteDisplayData *)decoDisplay->getDisplayData())
         {
-            skin->setSkinData(spriteDisplayData->skinData);
+            skin->setSkinData(&spriteDisplayData->skinData);
             ((CCSpriteDisplayData *)displayData)->skinData = spriteDisplayData->skinData;
         }
         else
@@ -148,7 +148,7 @@ void CCDisplayManager::addDisplay(CCNode *display, int index)
                 if (sdd)
                 {
                     find = true;
-                    skin->setSkinData(sdd->skinData);
+                    skin->setSkinData(&sdd->skinData);
                     (static_cast<CCSpriteDisplayData *>(displayData))->skinData = sdd->skinData;
                     break;
                 }
@@ -157,7 +157,7 @@ void CCDisplayManager::addDisplay(CCNode *display, int index)
             if (!find)
             {
                 CCBaseData baseData;
-                skin->setSkinData(baseData);
+                skin->setSkinData(&baseData);
             }
         }
     }
