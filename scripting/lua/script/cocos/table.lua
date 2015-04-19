@@ -50,20 +50,36 @@ function table.hasstring(t, s)
     return false
 end
 
--- fill a table with dummy values, elements after length will be kept
+--[[
+ fill a table with values, old elements in table will be cleared
+ if v is a table, first len items will be copied. or, if v length is shorter
+ than len, 0 will be filled
+ if v is a value, it will be copied len times
+ it returns table itself
+--]]
 function table.fill(t, v, len)
     if t then
-        for i = 1, len do
-            t[i] = v
+        t = {}
+        if type(v) == "table" then
+            local m = math.min(len, #v)
+            for i = 1, m then
+                t[i] = v[i]
+            end
+            for i = m + 1, len then
+                t[i] = 0
+            end
+        else
+            for i = 1, len do
+                t[i] = v
+            end
         end
     end
+    return t
 end
 
--- return a filled table
+-- return a filled table, the logic is same as table.fill but it will return a new table
 function table.fillnew(v, len)
     local t = {}
-    for i = 1, len do
-        t[i] = v
-    end
+    table.fill(t, v, len)
     return t
 end
