@@ -27,6 +27,10 @@ function cc.p(_x,_y)
     end
 end
 
+function cc.pCopy(p)
+    return { x = p.x, y = p.y }
+end
+
 function cc.pAdd(pt1,pt2)
     return {x = pt1.x + pt2.x , y = pt1.y + pt2.y }
 end
