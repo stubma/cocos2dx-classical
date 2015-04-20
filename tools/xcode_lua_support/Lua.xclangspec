@@ -90,6 +90,7 @@
                     "package.preload",
                     "package.seeall",
 
+                    "debug.addtrace",
                     "debug.debug",
                     "debug.getfenv",
                     "debug.gethook",
@@ -98,6 +99,7 @@
                     "debug.getmetatable",
                     "debug.getregistry",
                     "debug.getupvalue",
+                    "debug.removetrace",
                     "debug.setfenv",
                     "debug.sethook",
                     "debug.setlocal",
@@ -139,7 +141,6 @@
                     "table.foreach",
                     "table.foreachi",
                     "table.getn",
-                    "table.has",
                     "table.hasnumber",
                     "table.hasstring",
                     "table.insert",
