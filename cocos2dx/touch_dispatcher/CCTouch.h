@@ -45,6 +45,8 @@ public:
         : m_nId(0),
         m_startPointCaptured(false)
     {}
+    
+    static CCTouch* create();
 
     /** returns the current touch location in OpenGL coordinates */
     CCPoint getLocation() const;

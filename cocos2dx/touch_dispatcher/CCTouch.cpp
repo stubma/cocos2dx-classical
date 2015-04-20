@@ -28,6 +28,11 @@
 
 NS_CC_BEGIN
 
+CCTouch* CCTouch::create() {
+    CCTouch* t = new CCTouch();
+    CC_SAFE_AUTORELEASE_RETURN(t, CCTouch*);
+}
+
 // returns the current touch location in screen coordinates
 CCPoint CCTouch::getLocationInView() const 
 { 
