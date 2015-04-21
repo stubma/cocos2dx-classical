@@ -35,7 +35,7 @@ private:
     static CCCalendar* s_instance;
     
     /// time, in seconds
-    float m_time;
+    double m_time;
     
 protected:
     CCCalendar();
@@ -45,10 +45,10 @@ public:
     static CCCalendar* sharedCalendar();
     
     /// get time, since 1970-1-1
-    float getTime() { return m_time; }
+    double getTime() { return m_time; }
     
     /// set time
-    void setTime(float time) { m_time = time; }
+    void setTime(double time) { m_time = time; }
     
     /// set time of now
     void setNow();
