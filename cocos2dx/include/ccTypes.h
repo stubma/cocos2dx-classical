@@ -37,7 +37,7 @@ NS_CC_BEGIN
 // general function type
 typedef const char* (*CC_DECRYPT_FUNC)(const char* enc, int encLen, int* plainLen);
 typedef const char* (*CC_ENCRYPT_FUNC)(const char* plain, int plainLen, int* encLen);
-typedef const char* (*CC_FILE_DECRYPT_FUNC)(const char* filepath, int* plainLen);
+typedef const char* (*CC_FILE_DECRYPT_FUNC)(const char* filepath, size_t* plainLen);
 
 /** RGB color composed of bytes 3 bytes
 @since v0.8

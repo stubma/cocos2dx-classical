@@ -68,8 +68,14 @@ extern "C"
         }
         
         // load lua file
-        unsigned long codeBufferSize = 0;
-        unsigned char* codeBuffer = CCFileUtils::sharedFileUtils()->getFileData(filepath.c_str(), "rb", &codeBufferSize);
+        size_t codeBufferSize = 0;
+        CC_FILE_DECRYPT_FUNC decFunc = CCScriptEngineManager::sharedManager()->getScriptDecryptFunc();
+        unsigned char* codeBuffer = NULL;
+        if(decFunc) {
+            codeBuffer = (unsigned char*)(*decFunc)(filepath.c_str(), &codeBufferSize);
+        } else {
+            codeBuffer = CCFileUtils::sharedFileUtils()->getFileData(filepath.c_str(), "rb", &codeBufferSize);
+        }
         if (codeBuffer) {
             if (luaL_loadbuffer(L, (char*)codeBuffer, codeBufferSize, filepath.c_str()) != 0) {
                 luaL_error(L, "error loading module %s from file %s :\n\t%s",
