@@ -50,10 +50,6 @@ typedef uint32_t DWORD;
 typedef float Real;
 #endif // #if !defined(__GNUC__)
 
-#define kCCSocketMaxPacketSize (16 * 1024)
-#define kCCSocketDefaultTimeout 30
-#define kCCSocketInputBufferDefaultSize (64 * 1024)
-#define kCCSocketOutputBufferDefaultSize (8 * 1024)
 #define kCCSocketError -1
 #define kCCSocketInvalid -1
 

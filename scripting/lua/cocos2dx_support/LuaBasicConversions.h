@@ -89,7 +89,6 @@ extern bool luaval_to_insets(lua_State* L, int lo, cocos2d::ccInsets* outValue, 
 extern bool luaval_to_margin(lua_State* L, int lo, cocos2d::ui::Margin* outValue, const char* funcName = "");
 extern bool luaval_to_luafunc(lua_State* L, int lo, cocos2d::ccScriptFunction* outValue, const char* funcName = "");
 extern bool luaval_to_aabb(lua_State* L, int lo, cocos2d::ccAABB* outValue, const char* funcName = "");
-extern bool luaval_to_packetheader(lua_State* L, int lo, cocos2d::ccPacketHeader* outValue, const char* funcName = "");
 extern bool luaval_to_tex2f(lua_State* L, int lo, cocos2d::ccTex2F* outValue, const char* funcName = "");
 extern bool luaval_to_v2fc4bt2f(lua_State* L, int lo, cocos2d::ccV2F_C4B_T2F* outValue, const char* funcName = "");
 extern bool luaval_to_v3fc4bt2f(lua_State* L, int lo, cocos2d::ccV3F_C4B_T2F* outValue, const char* funcName = "");
@@ -152,7 +151,6 @@ extern void crect_to_luaval(lua_State* L, const cocos2d::ccRect& r);
 extern void insets_to_luaval(lua_State* L, const cocos2d::ccInsets& i);
 extern void margin_to_luaval(lua_State* L, const cocos2d::ui::Margin& m);
 extern void aabb_to_luaval(lua_State* L, const cocos2d::ccAABB& r);
-extern void packetheader_to_luaval(lua_State* L, const cocos2d::ccPacketHeader& r);
 extern void tex2f_to_luaval(lua_State* L, const cocos2d::ccTex2F& t);
 extern void v2fc4bt2f_to_luaval(lua_State* L, const cocos2d::ccV2F_C4B_T2F& t);
 extern void v3fc4bt2f_to_luaval(lua_State* L, const cocos2d::ccV3F_C4B_T2F& t);

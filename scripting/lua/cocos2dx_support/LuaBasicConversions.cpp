@@ -525,65 +525,6 @@ bool luaval_to_vertex3f(lua_State* L, int lo, cocos2d::ccVertex3F* outValue, con
     return ok;
 }
 
-bool luaval_to_packetheader(lua_State* L, int lo, cocos2d::ccPacketHeader* outValue, const char* funcName) {
-    // null checking
-    if (NULL == L || NULL == outValue)
-        return false;
-    bool ok = true;
-    
-    // convert negative index to positive
-    if(lo < 0) {
-        lo = lua_gettop(L) + lo + 1;
-    }
-    
-    // top should be table
-    tolua_Error tolua_err;
-    if (!tolua_istable(L, lo, 0, &tolua_err)) {
-#if COCOS2D_DEBUG >=1
-        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
-#endif
-        ok = false;
-    }
-    
-    if (ok) {
-        lua_pushstring(L, "magic");
-        lua_gettable(L, lo);
-        if(!lua_isnil(L, -1)) {
-            int magic;
-            luaval_to_int32(L, -1, &magic);
-            magic = htobe32(magic);
-            memcpy(outValue->magic, &magic, 4);
-        }
-        lua_pop(L, 1);
-        
-        lua_pushstring(L, "protocolVersion");
-        lua_gettable(L, lo);
-        outValue->protocolVersion = lua_isnil(L, -1) ? 0 : (int)lua_tointeger(L, -1);
-        lua_pop(L, 1);
-        
-        lua_pushstring(L, "serverVersion");
-        lua_gettable(L, lo);
-        outValue->serverVersion = lua_isnil(L, -1) ? 0 : (int)lua_tointeger(L, -1);
-        lua_pop(L, 1);
-        
-        lua_pushstring(L, "command");
-        lua_gettable(L, lo);
-        outValue->command = lua_isnil(L, -1) ? 0 : (int)lua_tointeger(L, -1);
-        lua_pop(L, 1);
-        
-        lua_pushstring(L, "encryptAlgorithm");
-        lua_gettable(L, lo);
-        outValue->encryptAlgorithm = lua_isnil(L, -1) ? 0 : (int)lua_tointeger(L, -1);
-        lua_pop(L, 1);
-        
-        lua_pushstring(L, "length");
-        lua_gettable(L, lo);
-        outValue->length = lua_isnil(L, -1) ? 0 : (int)lua_tointeger(L, -1);
-        lua_pop(L, 1);
-    }
-    return ok;
-}
-
 bool luaval_to_bezierconfig(lua_State* L, int lo, cocos2d::ccBezierConfig* outValue, const char* funcName) {
     // null checking
     if (NULL == L || NULL == outValue)
@@ -2570,30 +2511,6 @@ void aabb_to_luaval(lua_State* L, const cocos2d::ccAABB& r) {
     lua_rawset(L, -3);
     lua_pushstring(L, "max");
     point_to_luaval(L, r.max);
-    lua_rawset(L, -3);
-}
-
-void packetheader_to_luaval(lua_State* L, const cocos2d::ccPacketHeader& r) {
-    if (NULL == L)
-        return;
-    lua_newtable(L);
-    lua_pushstring(L, "magic");
-    lua_pushinteger(L, (lua_Integer)*(int*)r.magic);
-    lua_rawset(L, -3);
-    lua_pushstring(L, "protocolVersion");
-    lua_pushinteger(L, (lua_Integer)r.protocolVersion);
-    lua_rawset(L, -3);
-    lua_pushstring(L, "serverVersion");
-    lua_pushinteger(L, (lua_Integer)r.serverVersion);
-    lua_rawset(L, -3);
-    lua_pushstring(L, "command");
-    lua_pushinteger(L, (lua_Integer)r.command);
-    lua_rawset(L, -3);
-    lua_pushstring(L, "encryptAlgorithm");
-    lua_pushinteger(L, (lua_Integer)r.encryptAlgorithm);
-    lua_rawset(L, -3);
-    lua_pushstring(L, "length");
-    lua_pushinteger(L, (lua_Integer)r.length);
     lua_rawset(L, -3);
 }
 
