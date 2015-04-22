@@ -281,7 +281,7 @@ public class LuaExporter extends BaseExporter {
 					.append("\tself.m_" + firstLowercase(field) + " = tostring(v)\n")
 					.append("end\n");
 			} else if(dataType.equalsIgnoreCase("bool")) {
-				lfile.append("\nfunction " + className + ":get" + firstCapital(field) + "()\n")
+				lfile.append("\nfunction " + className + ":is" + firstCapital(field) + "()\n")
 					.append("\treturn self.m_" + firstLowercase(field) + "\n")
 					.append("end\n")
 					.append("\nfunction " + className + ":set" + firstCapital(field) + "(v)\n")
