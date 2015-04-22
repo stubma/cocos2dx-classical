@@ -32,6 +32,7 @@
 #include <map>
 #include <string>
 #include <list>
+#include "ccTypes.h"
 
 typedef struct lua_State lua_State;
 
@@ -277,13 +278,25 @@ public:
     static CCScriptEngineManager* sharedManager(void);
     static void purgeSharedManager(void);
     
+    /** set a decrypt function to decrypt script file,
+     * or NULL to clear it
+     */
+    void setScriptDecryptFunc(CC_FILE_DECRYPT_FUNC decFunc);
+    
+    /// get script file decrypt function
+    CC_FILE_DECRYPT_FUNC getScriptDecryptFunc();
+    
 private:
     CCScriptEngineManager(void)
     : m_pScriptEngine(NULL)
+    , m_decFunc(NULL)
     {
     }
     
     CCScriptEngineProtocol *m_pScriptEngine;
+    
+    /// decrypt function
+    CC_FILE_DECRYPT_FUNC m_decFunc;
 };
 
 // end of script_support group

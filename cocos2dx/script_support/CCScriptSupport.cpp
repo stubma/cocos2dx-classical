@@ -162,4 +162,12 @@ void CCScriptEngineManager::purgeSharedManager(void)
     }
 }
 
+void CCScriptEngineManager::setScriptDecryptFunc(CC_FILE_DECRYPT_FUNC decFunc) {
+    m_decFunc = decFunc;
+}
+
+CC_FILE_DECRYPT_FUNC CCScriptEngineManager::getScriptDecryptFunc() {
+    return m_decFunc;
+}
+
 NS_CC_END
