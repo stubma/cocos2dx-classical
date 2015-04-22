@@ -81,7 +81,10 @@ public class JsonExporter extends BaseExporter {
 						rowJson.put(colName, cell.getStringCellValue());
 					}
 				} else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-					rowJson.put(colName, cell.getNumericCellValue());
+					if(type.equalsIgnoreCase("int") || type.equalsIgnoreCase("Byte")) 
+						rowJson.put(colName, (int)cell.getNumericCellValue());
+					else
+						rowJson.put(colName, cell.getNumericCellValue());
 				} else if(cell.getCellType() == Cell.CELL_TYPE_BOOLEAN) {
 					rowJson.put(colName, cell.getBooleanCellValue() ? "true" : "false");
 				} else { // 公式
