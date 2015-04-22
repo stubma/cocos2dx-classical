@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -11,6 +13,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 public abstract class BaseExporter {
+	private Map<String, String> mOptions = new HashMap<String, String>();
+	
 	protected Workbook getWorkbook(File f) {
 		Workbook book = null;
 		try {
@@ -67,4 +71,12 @@ public abstract class BaseExporter {
 	}
 	
 	public abstract void doExport(Workbook book, Sheet sheet, File file) throws IOException;
+
+	public void addOption(String key, String value) {
+		mOptions.put(key, value);
+	}
+	
+	public String getOption(String key) {
+		return mOptions.get(key);
+	}
 }

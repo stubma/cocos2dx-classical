@@ -14,6 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Main {
@@ -49,6 +50,11 @@ public class Main {
 		final JComboBox<String> cmb = new JComboBox<String>(s);
 		cmb.setBorder(BorderFactory.createTitledBorder("Export Type"));
 		bottom.add(cmb);
+		
+		// json path editbox
+		final JTextField pathField = new JTextField();
+		pathField.setBorder(BorderFactory.createTitledBorder("Json File Folder"));
+		bottom.add(pathField);
 
 		// add button
 		JButton btn = new JButton("Select Excel Files");
@@ -85,6 +91,9 @@ public class Main {
 							we = new LuaExporter();
 							break;
 					}	
+					
+					// set option
+					we.addOption("jsonDir", pathField.getText());
 					
 					// export every file
 					File files[] = fileChooser.getSelectedFiles();
