@@ -32,6 +32,7 @@ extern "C" {
 #include "tolua_fix.h"
 #include "lfs.h"
 #include "bit.h"
+#include "cjson/lua_cjson.h"
 }
 
 #include "lua_cocos2dx_auto.h"
@@ -114,6 +115,7 @@ bool CCLuaStack::init(void)
     toluafix_open(m_state);
     luaopen_lfs(m_state);
     luaopen_bit(m_state);
+    luaopen_cjson(m_state);
 
     // Register our version of the global "print" function
     const luaL_reg global_functions [] = {
