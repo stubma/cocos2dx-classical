@@ -4,7 +4,7 @@ string = string or {}
 function string.tonumber(s, def)
     local n = tonumber(s)
     if n == nil then
-        return def == nil and 0 or def
+        return def ~= nil and def or 0
     else
         return n
     end
