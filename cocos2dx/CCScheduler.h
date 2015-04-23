@@ -76,10 +76,10 @@ public:
     /** Initializes a timer with a target, a selector and an interval in seconds, repeat in number of times to repeat, delay in seconds. 
      *  @lua NA
      */
-    bool initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds, unsigned int nRepeat, float fDelay);
+    bool initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds, int nRepeat, float fDelay);
     
     /** Initializes a timer with a script callback function and an interval in seconds. */
-    bool initWithScriptHandler(ccScriptFunction nHandler, float fSeconds, unsigned int nRepeat, float fDelay);
+    bool initWithScriptHandler(ccScriptFunction nHandler, float fSeconds, int nRepeat, float fDelay);
     
     /** triggers the timer */
     void update(float dt);
@@ -96,7 +96,7 @@ public:
     static CCTimer* timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds);
     
     /** Allocates a timer with a script callback function and an interval in seconds. */
-    static CCTimer* timerWithScriptHandler(ccScriptFunction nHandler, float fSeconds, unsigned int repeat, float delay);
+    static CCTimer* timerWithScriptHandler(ccScriptFunction nHandler, float fSeconds, int repeat, float delay);
     /**
      *  @lua NA
      */
@@ -108,7 +108,7 @@ protected:
     bool m_bRunForever;
     bool m_bUseDelay;
     unsigned int m_uTimesExecuted;
-    unsigned int m_uRepeat; //0 = once, 1 is 2 x executed
+    int m_uRepeat; //0 = once, 1 is 2 x executed
     float m_fDelay;
     float m_fInterval;
     SEL_SCHEDULE m_pfnSelector;
@@ -174,7 +174,7 @@ public:
      @js  NA
      @lua NA
      */
-    void scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, unsigned int repeat, float delay, bool bPaused);
+    void scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, int repeat, float delay, bool bPaused);
 
     /** calls scheduleSelector with kCCRepeatForever and a 0 delay 
      *  @js NA
@@ -233,7 +233,7 @@ public:
      return schedule script entry ID, used for unscheduleScriptFunc().
      @js NA
      */
-    unsigned int scheduleScriptFunc(ccScriptFunction func, float fInterval, unsigned int repeat, float delay, bool bPaused);
+    unsigned int scheduleScriptFunc(ccScriptFunction func, float fInterval, int repeat, float delay, bool bPaused);
     
     /** Unschedule a script entry. 
      *  @js NA

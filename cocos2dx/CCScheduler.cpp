@@ -103,7 +103,7 @@ CCTimer* CCTimer::timerWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, f
     return pTimer;
 }
 
-CCTimer* CCTimer::timerWithScriptHandler(ccScriptFunction func, float fSeconds, unsigned int repeat, float delay)
+CCTimer* CCTimer::timerWithScriptHandler(ccScriptFunction func, float fSeconds, int repeat, float delay)
 {
     CCTimer *pTimer = new CCTimer();
 
@@ -113,7 +113,7 @@ CCTimer* CCTimer::timerWithScriptHandler(ccScriptFunction func, float fSeconds, 
     return pTimer;
 }
 
-bool CCTimer::initWithScriptHandler(ccScriptFunction nHandler, float fSeconds, unsigned int nRepeat, float fDelay)
+bool CCTimer::initWithScriptHandler(ccScriptFunction nHandler, float fSeconds, int nRepeat, float fDelay)
 {
     m_nScriptHandler = nHandler;
     m_fElapsed = -1;
@@ -131,7 +131,7 @@ bool CCTimer::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector)
     return initWithTarget(pTarget, pfnSelector, 0, kCCRepeatForever, 0.0f);
 }
 
-bool CCTimer::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds, unsigned int nRepeat, float fDelay)
+bool CCTimer::initWithTarget(CCObject *pTarget, SEL_SCHEDULE pfnSelector, float fSeconds, int nRepeat, float fDelay)
 {
     m_pTarget = pTarget;
     m_pfnSelector = pfnSelector;
@@ -214,7 +214,13 @@ void CCTimer::update(float dt)
 
             if (!m_bRunForever && m_uTimesExecuted > m_uRepeat)
             {    //unschedule timer
-                CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(m_pfnSelector, m_pTarget);
+                if(m_pTarget && m_pfnSelector) {
+                    CCDirector::sharedDirector()->getScheduler()->unscheduleSelector(m_pfnSelector, m_pTarget);
+                }
+                
+                if(m_nScriptHandler.handler) {
+                    CCDirector::sharedDirector()->getScheduler()->unscheduleScriptFunc(m_nScriptHandler);
+                }
             }
         }
     }
@@ -279,7 +285,7 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, 
     this->scheduleSelector(pfnSelector, pTarget, fInterval, kCCRepeatForever, 0.0f, bPaused);
 }
 
-void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, unsigned int repeat, float delay, bool bPaused)
+void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, int repeat, float delay, bool bPaused)
 {
     CCAssert(pfnSelector, "Argument selector must be non-NULL");
     CCAssert(pTarget, "Argument target must be non-NULL");
@@ -628,7 +634,7 @@ void CCScheduler::unscheduleAllForTarget(CCObject *pTarget)
     unscheduleUpdateForTarget(pTarget);
 }
 
-unsigned int CCScheduler::scheduleScriptFunc(ccScriptFunction func, float fInterval, unsigned int repeat, float delay, bool bPaused)
+unsigned int CCScheduler::scheduleScriptFunc(ccScriptFunction func, float fInterval, int repeat, float delay, bool bPaused)
 {
     CCSchedulerScriptHandlerEntry* pEntry = CCSchedulerScriptHandlerEntry::create(func, fInterval, repeat, delay, bPaused);
     if (!m_pScriptHandlerEntries)

@@ -1166,12 +1166,12 @@ public:
      * @param delay     The amount of time that the first tick will wait before execution.
      * @lua NA
      */
-    void schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, float delay);
+    void schedule(SEL_SCHEDULE selector, float interval, int repeat, float delay);
     
     /**
      * schedule a script function, function target must be self
      */
-    void schedule(ccScriptFunction func, float interval, unsigned int repeat, float delay);
+    void schedule(ccScriptFunction func, float interval, int repeat, float delay);
     
     /**
      * Schedules a custom selector with an interval time in seconds.

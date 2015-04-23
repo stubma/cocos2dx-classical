@@ -107,7 +107,7 @@ class CCSchedulerScriptHandlerEntry : public CCScriptHandlerEntry
 {
 public:
     // nHandler return by tolua_ref_function(), called from LuaCocos2d.cpp
-    static CCSchedulerScriptHandlerEntry* create(ccScriptFunction nHandler, float fInterval, unsigned int repeat, float delay, bool bPaused);
+    static CCSchedulerScriptHandlerEntry* create(ccScriptFunction nHandler, float fInterval, int repeat, float delay, bool bPaused);
     ~CCSchedulerScriptHandlerEntry(void);
     
     cocos2d::CCTimer* getTimer(void) {
@@ -138,7 +138,7 @@ private:
     , m_bMarkedForDeletion(false)
     {
     }
-    bool init(float fInterval, unsigned int repeat, float delay, bool bPaused);
+    bool init(float fInterval, int repeat, float delay, bool bPaused);
     
     cocos2d::CCTimer*   m_pTimer;
     bool                m_bPaused;

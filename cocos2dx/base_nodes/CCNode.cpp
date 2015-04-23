@@ -1113,12 +1113,12 @@ void CCNode::schedule(SEL_SCHEDULE selector, float interval)
     this->schedule(selector, interval, kCCRepeatForever, 0.0f);
 }
 
-void CCNode::schedule(ccScriptFunction func, float interval, unsigned int repeat, float delay) {
+void CCNode::schedule(ccScriptFunction func, float interval, int repeat, float delay) {
     CCAssert(func.target, "function target must be non-nil");
     m_pScheduler->scheduleScriptFunc(func, interval, repeat, delay, !m_bRunning);
 }
 
-void CCNode::schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, float delay)
+void CCNode::schedule(SEL_SCHEDULE selector, float interval, int repeat, float delay)
 {
     CCAssert( selector, "Argument must be non-nil");
     CCAssert( interval >=0, "Argument must be positive");
