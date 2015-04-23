@@ -51,7 +51,7 @@ public class LuaExporter extends BaseExporter {
 			.append("\n")
 			.append("function " + className + ".createWithIndex(index)\n")
 			.append("\t" + className + ".ensureLoaded()\n")
-			.append("\tif index < 0 or index >= " + className + ".count() then\n")
+			.append("\tif index < 1 or index > " + className + ".count() then\n")
 			.append("\t\treturn nil\n")
 			.append("\telse\n")
 			.append("\t\tlocal instance = " + className + ".new()\n")
