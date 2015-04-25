@@ -73,7 +73,8 @@ extern "C"
         unsigned char* codeBuffer = NULL;
         if(decFunc) {
             codeBuffer = (unsigned char*)(*decFunc)(filepath.c_str(), &codeBufferSize);
-        } else {
+        }
+        if(!codeBuffer) {
             codeBuffer = CCFileUtils::sharedFileUtils()->getFileData(filepath.c_str(), "rb", &codeBufferSize);
         }
         if (codeBuffer) {
