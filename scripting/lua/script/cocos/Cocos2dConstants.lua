@@ -27,6 +27,14 @@ cc.cc4fTRANSPARENT = const(cc.c4f(0, 0, 0, 0))
 cc.cc4fDIM = const(cc.c4f(0, 0, 0, 0.5))
 cc.cc4fYELLOW = const(cc.c4f(1, 1, 0, 1))
 
+-- ResolutionPolicy
+cc.ResolutionExactFit = 0
+cc.ResolutionNoBorder = 1
+cc.ResolutionShowAll = 2
+cc.ResolutionFixedHeight = 3
+cc.ResolutionFixedWidth = 4
+cc.ResolutionUnKnown = 5
+
 -- node event type
 cc.NodeOnEnter = "enter"
 cc.NodeOnExit = "exit"
