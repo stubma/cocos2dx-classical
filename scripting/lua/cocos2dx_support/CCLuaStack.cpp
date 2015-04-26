@@ -33,6 +33,7 @@ extern "C" {
 #include "lfs.h"
 #include "bit.h"
 #include "cjson/lua_cjson.h"
+#include "luasocket/luasocket.h"
 }
 
 #include "lua_cocos2dx_auto.h"
@@ -116,6 +117,7 @@ bool CCLuaStack::init(void)
     luaopen_lfs(m_state);
     luaopen_bit(m_state);
     luaopen_cjson(m_state);
+    luaopen_socket_core(m_state);
 
     // Register our version of the global "print" function
     const luaL_reg global_functions [] = {
