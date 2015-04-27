@@ -78,11 +78,9 @@ int ${signature}(lua_State* tolua_S) {
 
         #set $arg_list = ", ".join($arg_array)
         #if $is_constructor
-        // create object, if object is a CCObject subclass, autorelease it
-        // if not, register gc in lua
+        // create object, if object is not a CCObject subclass, register gc in lua
         cobj = new ${qualified_name}($arg_list);
             #if $is_ccobject
-        CC_SAFE_AUTORELEASE(cobj);
         int ID = (int)cobj->m_uID ;
         int* luaID = &cobj->m_nLuaID ;
         toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj, "${lua_type}");
