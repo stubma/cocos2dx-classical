@@ -217,11 +217,11 @@ namespace cocos2d
         *
         * @since v2.0.5
         */
-        unsigned char *getFileData(const std::string &fileName, unsigned long *pSize);
+        unsigned char *getFileData(const std::string &fileName, size_t* pSize);
 
     private:
         bool setFilter(const std::string &filer, ZipFilePrivate *data);
-        unsigned char *getFileData(const std::string &fileName, unsigned long *pSize, ZipFilePrivate *data);
+        unsigned char *getFileData(const std::string &fileName, size_t* pSize, ZipFilePrivate *data);
         
         /** Internal data like zip file pointer / file list array and so on */
         ZipFilePrivate *_data;

@@ -220,9 +220,9 @@ CCArcticFileData* CCArcticLoader::load(const char* data, size_t length, float re
 }
 
 CCArcticFileData* CCArcticLoader::load(const char* asPath) {
-	unsigned long len;
+	size_t len;
 	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(asPath, "rb", &len);
-	CCArcticFileData* as = load(data, (size_t)len, 1 / CC_CONTENT_SCALE_FACTOR());
+	CCArcticFileData* as = load(data, len, 1 / CC_CONTENT_SCALE_FACTOR());
 	as->m_path = asPath;
 	free(data);
 	return as;

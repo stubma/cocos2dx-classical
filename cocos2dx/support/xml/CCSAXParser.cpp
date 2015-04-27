@@ -115,7 +115,7 @@ bool CCSAXParser::parse(const char* pXMLData, unsigned int uDataLength)
 bool CCSAXParser::parse(const char *pszFile)
 {
     bool bRet = false;
-    unsigned long size = 0;
+    size_t size = 0;
     char* pBuffer = (char*)CCFileUtils::sharedFileUtils()->getFileData(pszFile, "rt", &size);
     if (pBuffer != NULL && size > 0)
     {

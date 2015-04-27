@@ -614,7 +614,7 @@ bool CCTexturePVR::createGLTexture()
 bool CCTexturePVR::initWithContentsOfFile(const char* path)
 {
     unsigned char* pvrdata = NULL;
-    int pvrlen = 0;
+    size_t pvrlen = 0;
     
     std::string lowerCase(path);
     for (unsigned int i = 0; i < lowerCase.length(); ++i)
@@ -632,10 +632,10 @@ bool CCTexturePVR::initWithContentsOfFile(const char* path)
     }
     else
     {
-        pvrdata = CCFileUtils::sharedFileUtils()->getFileData(path, "rb", (unsigned long *)(&pvrlen));
+        pvrdata = CCFileUtils::sharedFileUtils()->getFileData(path, "rb", &pvrlen);
     }
     
-    if (pvrlen < 0)
+    if (pvrlen <= 0)
     {
         CC_SAFE_RELEASE(this);
         return false;

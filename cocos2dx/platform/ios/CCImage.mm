@@ -1079,7 +1079,7 @@ static bool _initWithString(const char * pText, CCImage::ETextAlign eAlign, cons
                                     if(!fc->spriteFrameByName(span.imageName)) {
                                         if(gResDecrypt) {
                                             // load encryptd data
-                                            unsigned long len;
+                                            size_t len;
                                             char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(span.atlas, "rb", &len);
                                             
                                             // create texture
@@ -1936,7 +1936,7 @@ CCImage::~CCImage()
 bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
 {
 	bool bRet = false;
-    unsigned long nSize = 0;
+    size_t nSize = 0;
     unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(
 				CCFileUtils::sharedFileUtils()->fullPathForFilename(strPath).c_str(),
 				"rb",
@@ -1956,7 +1956,7 @@ bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat ima
      * CCFileUtils::fullPathFromRelativePath() is not thread-safe, it use autorelease().
      */
     bool bRet = false;
-    unsigned long nSize = 0;
+    size_t nSize = 0;
     unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullpath, "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
     {

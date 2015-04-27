@@ -218,7 +218,7 @@ static std::queue<DataInfo *>   *s_pDataQueue = NULL;
 static void addData(AsyncStruct *pAsyncStruct)
 {
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pAsyncStruct->filename.c_str());
-    unsigned long size;
+    size_t size;
     pthread_mutex_lock(&s_GetFileDataMutex);
 	std::string readmode = "r";
 	bool isbinary = pAsyncStruct->configType == CocoStudio_Binary;
@@ -373,7 +373,7 @@ void CCDataReaderHelper::addDataFromFile(const char *filePath)
     size_t startPos = filePathStr.find_last_of(".");
     std::string str = &filePathStr[startPos];
 
-    unsigned long size;
+    size_t size;
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filePath);
     unsigned char *pBytes = NULL;
     if ( 0 == str.compare(".csb"))

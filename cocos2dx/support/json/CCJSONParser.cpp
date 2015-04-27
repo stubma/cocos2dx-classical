@@ -262,9 +262,9 @@ CCObject* CCJSONParser::load(const char* json, size_t length) {
 }
 
 CCObject* CCJSONParser::load(const string& path) {
-	unsigned long len;
+	size_t len;
 	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", &len);
-	CCObject* ret = load(data, (size_t)len);
+	CCObject* ret = load(data, len);
 	free(data);
 	return ret;
 }

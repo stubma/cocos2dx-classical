@@ -225,7 +225,7 @@ bool CCComAttribute::serialize(void* r)
 bool CCComAttribute::parse(const std::string &jsonPath)
 {
     bool bRet = false;
-    unsigned long size = 0;
+    size_t size = 0;
     unsigned char *pBytes = NULL;
     do {
           pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(jsonPath.c_str(), "r", &size);

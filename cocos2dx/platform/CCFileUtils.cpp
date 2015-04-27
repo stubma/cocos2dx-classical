@@ -485,7 +485,7 @@ void CCFileUtils::purgeCachedEntries()
     m_fullPathCache.clear();
 }
 
-unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
+unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, size_t* pSize)
 {
     unsigned char * pBuffer = NULL;
     CCAssert(pszFileName != NULL && pSize != NULL && pszMode != NULL, "Invalid parameters.");
@@ -515,7 +515,7 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     return pBuffer;
 }
 
-unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize)
+unsigned char* CCFileUtils::getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, size_t* pSize)
 {
     unsigned char * pBuffer = NULL;
     unzFile pFile = NULL;

@@ -192,7 +192,7 @@ CCString* CCString::createWithFormat(const char* format, ...)
 
 CCString* CCString::createWithContentsOfFile(const char* pszFileName)
 {
-    unsigned long size = 0;
+    size_t size = 0;
     unsigned char* pData = 0;
     CCString* pRet = NULL;
     pData = CCFileUtils::sharedFileUtils()->getFileData(pszFileName, "rb", &size);

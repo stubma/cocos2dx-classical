@@ -55,7 +55,7 @@ const char* SceneReader::sceneReaderVersion()
 bool SceneReader::readJson(const char *pszFileName, rapidjson::Document &doc)
 {
 	bool bRet = false;
-	unsigned long size = 0;
+	size_t size = 0;
 	unsigned char *pBytes = NULL;
 	do {
 		CC_BREAK_IF(pszFileName == NULL);

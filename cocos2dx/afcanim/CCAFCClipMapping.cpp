@@ -110,9 +110,9 @@ CCAFCClipMapping* CCAFCClipMapping::createWithAuroraGT(int tag, const char* data
 }
 
 CCAFCClipMapping* CCAFCClipMapping::createWithAuroraGT(int tag, const char* ammPath) {
-	unsigned long len;
+	size_t len;
 	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(ammPath, "rb", &len);
-	CCAFCClipMapping* m = createWithAuroraGT(tag, data, (size_t)len);
+	CCAFCClipMapping* m = createWithAuroraGT(tag, data, len);
 	free(data);
 	return m;
 }

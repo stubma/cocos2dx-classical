@@ -124,7 +124,7 @@ JNIEXPORT void JNICALL Java_org_cocos2dx_lib_CCImage_1richlabel_nativeGetSpriteF
 		// need to be decrypted or not
 		if(gResDecrypt) {
 			// load encryptd data
-			unsigned long len;
+			size_t len;
 			char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(atlasPath.c_str(), "rb", &len);
 
 			// create texture

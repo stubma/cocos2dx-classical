@@ -89,7 +89,7 @@ void ZwoptexLoadTask::load() {
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name.c_str());
     } else {
         // load encryptd data
-        unsigned long len;
+        size_t len;
         char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(texName.c_str(), "rb", &len);
         
         // create texture
@@ -126,7 +126,7 @@ void CustomTask::load() {
 void ImageLoadTask::load() {
     if(gResDecrypt) {
         // load encryptd data
-        unsigned long len;
+        size_t len;
         char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(name.c_str(), "rb", &len);
         
         // create texture
@@ -157,7 +157,7 @@ void BMFontLoadTask::load() {
         CCBMFontConfiguration* conf = FNTConfigLoadFile(name.c_str());
         
         // load encryptd data
-        unsigned long len;
+        size_t len;
         char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(conf->getAtlasName(), "rb", &len);
         
         // create texture
@@ -294,7 +294,7 @@ void CCResourceLoader::unloadArmature(const string& plistPattern, const string& 
 
 unsigned char* CCResourceLoader::loadRaw(const string& name, unsigned long* size) {
     // load encryptd data
-	unsigned long len;
+	size_t len;
 	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(name.c_str(), "rb", &len);
     
     // create texture
@@ -328,7 +328,7 @@ string CCResourceLoader::loadString(const string& name) {
 
 char* CCResourceLoader::loadCString(const string& name) {
     // load encryptd data
-	unsigned long len;
+	size_t len;
 	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(_resolve(name).c_str(), "rb", &len);
 
 	// create texture
@@ -357,7 +357,7 @@ char* CCResourceLoader::loadCString(const string& name) {
 
 void CCResourceLoader::loadImage(const string& name) {
 	// load encryptd data
-	unsigned long len;
+	size_t len;
 	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(_resolve(name).c_str(), "rb", &len);
 	
 	// create texture
@@ -397,7 +397,7 @@ void CCResourceLoader::loadArmature(const string& plistPattern, const string& te
 
 void CCResourceLoader::loadZwoptex(const string& plistName, const string& texName) {
 	// load encryptd data
-	unsigned long len;
+	size_t len;
 	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(_resolve(texName).c_str(), "rb", &len);
 	
 	// create texture

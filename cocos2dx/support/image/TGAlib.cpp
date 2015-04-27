@@ -198,7 +198,7 @@ tImageTGA * tgaLoad(const char *pszFilename)
     int mode,total;
     tImageTGA *info = NULL;
     
-    unsigned long nSize = 0;
+    size_t nSize = 0;
     unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pszFilename, "rb", &nSize);
 
     do

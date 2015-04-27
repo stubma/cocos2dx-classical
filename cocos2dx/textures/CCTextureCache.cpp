@@ -895,7 +895,7 @@ void VolatileTexture::reloadAllTextures()
                 else 
                 {
                     CCImage* pImage = new CCImage();
-                    unsigned long nSize = 0;
+                    size_t nSize = 0;
                     unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(vt->m_strFileName.c_str(), "rb", &nSize);
 
                     if (pImage && pImage->initWithImageData((void*)pBuffer, nSize, vt->m_FmtImage))

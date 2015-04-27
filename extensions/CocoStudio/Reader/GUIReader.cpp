@@ -188,7 +188,7 @@ cocos2d::ui::Widget* GUIReader::widgetFromBinaryFile(const char *fileName)
     jsonpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
     size_t pos = jsonpath.find_last_of('/');
     m_strFilePath = jsonpath.substr(0,pos+1);
-    unsigned long nSize = 0;
+    size_t nSize = 0;
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
     unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str(), "rb", &nSize);
     
@@ -257,7 +257,7 @@ cocos2d::ui::Widget* GUIReader::widgetFromJsonFile(const char *fileName)
     jsonpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
     int pos = jsonpath.find_last_of('/');
 	m_strFilePath = jsonpath.substr(0,pos+1);
-    unsigned long size = 0;
+    size_t size = 0;
     pBytes = CCFileUtils::sharedFileUtils()->getFileData(jsonpath.c_str(),"r" , &size);
 	if(NULL == pBytes || strcmp((const char*)pBytes, "") == 0)
 	{

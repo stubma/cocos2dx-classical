@@ -270,9 +270,9 @@ CCAuroraFileData* CCAuroraLoader::load(const char* data, size_t length, float re
 }
 
 CCAuroraFileData* CCAuroraLoader::load(const char* asPath) {
-	unsigned long len;
+	size_t len;
 	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(asPath, "rb", &len);
-	CCAuroraFileData* as = load(data, (size_t)len, 1 / CC_CONTENT_SCALE_FACTOR());
+	CCAuroraFileData* as = load(data, len, 1 / CC_CONTENT_SCALE_FACTOR());
 	as->m_path = asPath;
 	free(data);
 	return as;

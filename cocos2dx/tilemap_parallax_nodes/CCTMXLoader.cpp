@@ -152,7 +152,7 @@ CCTMXMapInfo* CCTMXLoader::load(const string& tmxFile) {
 	m_tmxDir = CCUtils::deleteLastPathComponent(tmxFile);
 	
 	// start
-	unsigned long size;
+	size_t size;
 	unsigned char* data = CCFileUtils::sharedFileUtils()->getFileData(tmxFile.c_str(), "rb", &size);
 	bool success = load((const char*)data, (int)size);
 	free(data);
@@ -266,7 +266,7 @@ void CCTMXLoader::startElement(void* ctx, const char* name, const char** atts) {
 				}
 			} else {
 				string externalFilePath = CCUtils::appendPathComponent(m_tmxDir, externalFile);
-				unsigned long size;
+				size_t size;
 				unsigned char* data = CCFileUtils::sharedFileUtils()->getFileData(externalFilePath.c_str(), "rb", &size);
 				bool success = load((const char*)data, (int)size);
 				free(data);

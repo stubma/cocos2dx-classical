@@ -208,7 +208,7 @@ bool CCComRender::serialize(void* r)
 				}
 				else if (file_extension == ".CSB")
 				{
-					unsigned long size = 0;
+					size_t size = 0;
 					unsigned char *pBytes = NULL;
 					std::string binaryFilePath = CCFileUtils::sharedFileUtils()->fullPathForFilename(strFilePath.c_str());
 					pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(binaryFilePath.c_str(), "rb", &size);
@@ -377,7 +377,7 @@ CCComRender* CCComRender::create(void)
 bool CCComRender::readJson(const char *pszFileName, rapidjson::Document &doc)
 {
     bool bRet = false;
-    unsigned long size = 0;
+    size_t size = 0;
     unsigned char *pBytes = NULL;
     do {
         CC_BREAK_IF(pszFileName == NULL);

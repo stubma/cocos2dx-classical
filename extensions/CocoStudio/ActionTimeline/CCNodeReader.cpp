@@ -250,7 +250,7 @@ cocos2d::CCNode* NodeReader::loadNodeWithFile(const std::string& fileName)
 {
     // Read content from file
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName.c_str());
-    unsigned long size;
+    size_t size;
     const char* data = (const char*)CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
     std::string contentStr(data, size);
 

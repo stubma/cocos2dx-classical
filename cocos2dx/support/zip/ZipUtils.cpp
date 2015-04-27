@@ -307,7 +307,7 @@ int ZipUtils::ccInflateCCZFile(const char *path, unsigned char **out)
     // load file into memory
     unsigned char* compressed = NULL;
     
-    unsigned long fileLen = 0;
+    size_t fileLen = 0;
     compressed = CCFileUtils::sharedFileUtils()->getFileData(path, "rb", &fileLen);
     
     if(NULL == compressed || 0 == fileLen)
@@ -543,12 +543,12 @@ bool ZipFile::fileExists(const std::string &fileName) const
     return ret;
 }
 
-unsigned char *ZipFile::getFileData(const std::string &fileName, unsigned long *pSize)
+unsigned char *ZipFile::getFileData(const std::string &fileName, size_t *pSize)
 {
     return getFileData(fileName, pSize, _data);
 }
 
-unsigned char *ZipFile::getFileData(const std::string &fileName, unsigned long *pSize, ZipFilePrivate *data)
+unsigned char *ZipFile::getFileData(const std::string &fileName, size_t* pSize, ZipFilePrivate *data)
 {
     unsigned char * pBuffer = NULL;
     if (pSize)

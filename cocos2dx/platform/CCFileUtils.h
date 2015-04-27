@@ -96,7 +96,7 @@ public:
      *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
      *  @js NA
      */
-    virtual unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize);
+    virtual unsigned char* getFileData(const char* pszFileName, const char* pszMode, size_t* pSize);
 
     /**
      *  Gets resource file data from a zip file.
@@ -107,7 +107,7 @@ public:
      *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
      *  @js NA
      */
-    virtual unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, unsigned long * pSize);
+    virtual unsigned char* getFileDataFromZip(const char* pszZipFilePath, const char* pszFileName, size_t* pSize);
 
     
     /** Returns the fullpath for a given filename.
