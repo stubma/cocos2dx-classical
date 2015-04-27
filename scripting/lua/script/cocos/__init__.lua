@@ -24,9 +24,27 @@ end
 -- for CCLuaEngine traceback
 function __G__TRACKBACK__(msg)
     cc.log("----------------------------------------")
-    cc.log("LUA ERROR: " .. tostring(msg) .. "\n")
+    cc.log("LUA ERROR: " .. tostring(msg))
     cc.log(debug.traceback())
     cc.log("----------------------------------------")
+    
+    -- show a layer to error message and stack, make it easy for developer to fix it
+    if Version:isDebug() then
+        local scene = display.getRunningScene()
+        if scene then
+            local layer = CCLayerColor:create(cc.cc4WHITE)
+            scene:addChild(layer, Z_UI)
+            local errLabel = CCLabelTTF:create(tostring(msg) .. "\n" .. debug.traceback(),
+                                               FONT_SIMHEI,
+                                               20,
+                                               cc.size(display.visibleSize.width * 0.95, 0),
+                                               cc.TextAlignmentLeft)
+            errLabel:setPosition(CCUtils:getLocalPoint(layer, 0.5, 0.95))
+            errLabel:setAnchorPoint(cc.p(0.5, 1))
+            errLabel:setColor(cc.ccBLACK)
+            layer:addChild(errLabel)
+        end
+    end
 end
 
 -- load lua file under a folder, include subfolders
