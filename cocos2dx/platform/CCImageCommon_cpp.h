@@ -134,7 +134,7 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
 
     SDL_FreeSurface(iSurf);
 #else
-    unsigned long nSize = 0;
+    size_t nSize = 0;
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(strPath);
     unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str(), "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
@@ -150,7 +150,7 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
 bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
 {
     bool bRet = false;
-    unsigned long nSize = 0;
+    size_t nSize = 0;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     CCFileUtilsAndroid *fileUitls = (CCFileUtilsAndroid*)CCFileUtils::sharedFileUtils();
     unsigned char *pBuffer = fileUitls->getFileDataForAsync(fullpath, "rb", &nSize);
