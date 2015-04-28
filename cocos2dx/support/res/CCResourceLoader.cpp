@@ -407,12 +407,12 @@ void CCResourceLoader::loadImage(const string& name) {
 }
 
 void CCResourceLoader::loadArmature(const string& plistName, const string& texName, const string& config) {
-    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(_resolve(config).c_str());
+    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(_resolve(config).c_str(), false);
     loadZwoptex(plistName, texName);
 }
 
 void CCResourceLoader::loadArmature(const string& plistPattern, const string& texPattern, int start, int end, const string& config) {
-    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(config.c_str());
+    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(config.c_str(), false);
     char buf1[512], buf2[512];
     for(int i = start; i <= end; i++) {
         sprintf(buf1, plistPattern.c_str(), i);
