@@ -128,7 +128,7 @@ public:
     /**
      *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.
      */
-    void addArmatureFileInfo(const char *configFilePath);
+    void addArmatureFileInfo(const char *configFilePath, bool autoLoadSpriteFile = true);
 
     /**
      *	@brief	Add ArmatureFileInfo, it is managed by CCArmatureDataManager.

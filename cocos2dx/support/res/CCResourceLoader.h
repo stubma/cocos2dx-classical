@@ -197,8 +197,10 @@ struct AtlasAnimLoadTask2 : public CCResourceLoadTask {
 
 struct ArmatureTask : public CCResourceLoadTask {
     string configFilePath;
+    bool autoLoadSpriteFile;
     
-    ArmatureTask() {
+    ArmatureTask() :
+    autoLoadSpriteFile(true) {
     }
     
     virtual ~ArmatureTask() {
@@ -502,7 +504,7 @@ public:
      *
      * @param config path of config file
      */
-    void addArmatureTask(string config);
+    void addArmatureTask(string config, bool autoLoadSpriteFile = true);
     
     /**
      * add an armature config file task, also load related image files  

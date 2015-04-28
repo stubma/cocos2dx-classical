@@ -211,7 +211,7 @@ void CDEffectTask::load() {
 }
 
 void ArmatureTask::load() {
-    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(configFilePath.c_str());
+    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(configFilePath.c_str(), autoLoadSpriteFile);
 }
 
 CCResourceLoader::CCResourceLoader(CCResourceLoaderListener* listener) :
@@ -684,9 +684,10 @@ void CCResourceLoader::addCustomTask(CCCallFunc* func) {
     addLoadTask(t);
 }
 
-void CCResourceLoader::addArmatureTask(string config) {
+void CCResourceLoader::addArmatureTask(string config, bool autoLoadSpriteFile) {
     ArmatureTask* t = new ArmatureTask();
     t->configFilePath = _resolve(config.c_str());
+    t->autoLoadSpriteFile = autoLoadSpriteFile;
     addLoadTask(t);
 }
 
@@ -696,7 +697,7 @@ void CCResourceLoader::addArmatureTask(string plist, string tex, string config) 
     }
     
     if(!config.empty())
-        addArmatureTask(config);
+        addArmatureTask(config, false);
 }
 
 void CCResourceLoader::addArmatureTask(string plistPattern, string texPattern, int start, int end, string config) {
@@ -708,7 +709,7 @@ void CCResourceLoader::addArmatureTask(string plistPattern, string texPattern, i
 	}
     
     if(!config.empty())
-        addArmatureTask(config);
+        addArmatureTask(config, false);
 }
 
 void CCResourceLoader::addLoadTask(CCResourceLoadTask* t) {

@@ -235,11 +235,11 @@ void CCArmatureDataManager::removeTextureData(const char *id)
     }
 }
 
-void CCArmatureDataManager::addArmatureFileInfo(const char *configFilePath)
+void CCArmatureDataManager::addArmatureFileInfo(const char *configFilePath, bool autoLoadSpriteFile)
 {
     addRelativeData(configFilePath);
 
-    m_bAutoLoadSpriteFile = true;
+    m_bAutoLoadSpriteFile = autoLoadSpriteFile;
     CCDataReaderHelper::sharedDataReaderHelper()->addDataFromFile(configFilePath);
 }
 
