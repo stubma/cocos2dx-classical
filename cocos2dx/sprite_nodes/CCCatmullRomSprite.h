@@ -121,7 +121,7 @@ public:
      * 
      * @param pa point list
      */
-    void setControlPoints(CCPointArray& pa);
+    void setControlPoints(CCPointArray* pa);
     
     /// get control point count
     int getControlPointCount() { return m_controlPoints.getCount(); }

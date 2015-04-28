@@ -143,9 +143,9 @@ void CCCatmullRomSprite::addControlPoint(const CCPoint& p) {
     m_dirty = true;
 }
 
-void CCCatmullRomSprite::setControlPoints(CCPointArray& pa) {
+void CCCatmullRomSprite::setControlPoints(CCPointArray* pa) {
     m_controlPoints.clear();
-    const vector<CCPoint*>* plist = pa.getControlPoints();
+    const vector<CCPoint*>* plist = pa->getControlPoints();
     for(vector<CCPoint*>::const_iterator iter = plist->begin(); iter != plist->end(); iter++) {
         m_controlPoints.addPoint((*iter)->x, (*iter)->y);
     }
