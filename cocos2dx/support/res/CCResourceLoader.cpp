@@ -88,28 +88,38 @@ void ZwoptexLoadTask::load() {
     if(texName.empty()) {
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name.c_str());
     } else {
-        // load encryptd data
-        size_t len;
-        char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(texName.c_str(), "rb", &len);
-        
-        // create texture
-        int decLen;
-        const char* dec = NULL;
-        if(gResDecrypt) {
-            dec = (*gResDecrypt)(data, len, &decLen);
-        } else {
-            dec = data;
-            decLen = (int)len;
+        // check pvr, if it is pvr, add it without decryption
+        CCTexture2D* tex = NULL;
+        string lowerCase(texName);
+        for (unsigned int i = 0; i < lowerCase.length(); ++i) {
+            lowerCase[i] = tolower(lowerCase[i]);
         }
-        CCImage* image = new CCImage();
-        image->initWithImageData((void*)dec, decLen);
-        CC_SAFE_AUTORELEASE(image);
-        CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addUIImage(image, texName.c_str());
-        
-        // free
-        if(dec != data)
-        free((void*)dec);
-        free(data);
+        if(lowerCase.find(".pvr") != string::npos) {
+            tex = CCTextureCache::sharedTextureCache()->addPVRImage(texName.c_str());
+        } else {
+            // load encryptd data
+            size_t len;
+            char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(texName.c_str(), "rb", &len);
+            
+            // create texture
+            int decLen;
+            const char* dec = NULL;
+            if(gResDecrypt) {
+                dec = (*gResDecrypt)(data, len, &decLen);
+            } else {
+                dec = data;
+                decLen = (int)len;
+            }
+            CCImage* image = new CCImage();
+            image->initWithImageData((void*)dec, decLen);
+            CC_SAFE_AUTORELEASE(image);
+            tex = CCTextureCache::sharedTextureCache()->addUIImage(image, texName.c_str());
+            
+            // free
+            if(dec != data)
+                free((void*)dec);
+            free(data);
+        }
         
         // add zwoptex
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(name.c_str(), tex);
@@ -125,28 +135,36 @@ void CustomTask::load() {
 
 void ImageLoadTask::load() {
     if(gResDecrypt) {
-        // load encryptd data
-        size_t len;
-        char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(name.c_str(), "rb", &len);
-        
-        // create texture
-        int decLen;
-        const char* dec = NULL;
-        if(gResDecrypt) {
-            dec = (*gResDecrypt)(data, len, &decLen);
-        } else {
-            dec = data;
-            decLen = (int)len;
+        string lowerCase(name);
+        for (unsigned int i = 0; i < lowerCase.length(); ++i) {
+            lowerCase[i] = tolower(lowerCase[i]);
         }
-        CCImage* image = new CCImage();
-        image->initWithImageData((void*)dec, decLen);
-        CC_SAFE_AUTORELEASE(image);
-        CCTextureCache::sharedTextureCache()->addUIImage(image, name.c_str());
-        
-        // free
-        if(dec != data)
-        free((void*)dec);
-        free(data);
+        if(lowerCase.find(".pvr") != string::npos) {
+            CCTextureCache::sharedTextureCache()->addPVRImage(name.c_str());
+        } else {
+            // load encryptd data
+            size_t len;
+            char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(name.c_str(), "rb", &len);
+            
+            // create texture
+            int decLen;
+            const char* dec = NULL;
+            if(gResDecrypt) {
+                dec = (*gResDecrypt)(data, len, &decLen);
+            } else {
+                dec = data;
+                decLen = (int)len;
+            }
+            CCImage* image = new CCImage();
+            image->initWithImageData((void*)dec, decLen);
+            CC_SAFE_AUTORELEASE(image);
+            CCTextureCache::sharedTextureCache()->addUIImage(image, name.c_str());
+            
+            // free
+            if(dec != data)
+                free((void*)dec);
+            free(data);
+        }
     } else {
         CCTextureCache::sharedTextureCache()->addImage(name.c_str());
     }
@@ -356,28 +374,36 @@ char* CCResourceLoader::loadCString(const string& name) {
 }
 
 void CCResourceLoader::loadImage(const string& name) {
-	// load encryptd data
-	size_t len;
-	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(_resolve(name).c_str(), "rb", &len);
-	
-	// create texture
-	int decLen;
-    const char* dec = NULL;
-	if(gResDecrypt) {
-        dec = (*gResDecrypt)(data, len, &decLen);
-    } else {
-        dec = data;
-        decLen = (int)len;
+    string lowerCase(name);
+    for (unsigned int i = 0; i < lowerCase.length(); ++i) {
+        lowerCase[i] = tolower(lowerCase[i]);
     }
-	CCImage* image = new CCImage();
-	image->initWithImageData((void*)dec, decLen);
-	CC_SAFE_AUTORELEASE(image);
-	CCTextureCache::sharedTextureCache()->addUIImage(image, name.c_str());
-	
-	// free
-    if(dec != data)
-        free((void*)dec);
-	free(data);
+    if(lowerCase.find(".pvr") != string::npos) {
+        CCTextureCache::sharedTextureCache()->addPVRImage(name.c_str());
+    } else {
+        // load encryptd data
+        size_t len;
+        char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(_resolve(name).c_str(), "rb", &len);
+        
+        // create texture
+        int decLen;
+        const char* dec = NULL;
+        if(gResDecrypt) {
+            dec = (*gResDecrypt)(data, len, &decLen);
+        } else {
+            dec = data;
+            decLen = (int)len;
+        }
+        CCImage* image = new CCImage();
+        image->initWithImageData((void*)dec, decLen);
+        CC_SAFE_AUTORELEASE(image);
+        CCTextureCache::sharedTextureCache()->addUIImage(image, name.c_str());
+        
+        // free
+        if(dec != data)
+            free((void*)dec);
+        free(data);
+    }
 }
 
 void CCResourceLoader::loadArmature(const string& plistName, const string& texName, const string& config) {
@@ -396,31 +422,40 @@ void CCResourceLoader::loadArmature(const string& plistPattern, const string& te
 }
 
 void CCResourceLoader::loadZwoptex(const string& plistName, const string& texName) {
-	// load encryptd data
-	size_t len;
-	char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(_resolve(texName).c_str(), "rb", &len);
-	
-	// create texture
-	int decLen;
-	const char* dec = NULL;
-	if(gResDecrypt) {
-        dec = (*gResDecrypt)(data, len, &decLen);
-    } else {
-        dec = data;
-        decLen = (int)len;
+    // check pvr, if it is pvr, add it without decryption
+    string lowerCase(texName);
+    for (unsigned int i = 0; i < lowerCase.length(); ++i) {
+        lowerCase[i] = tolower(lowerCase[i]);
     }
-    CCImage* image = new CCImage();
-	image->initWithImageData((void*)dec, decLen);
-	CC_SAFE_AUTORELEASE(image);
-	CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addUIImage(image, _resolve(texName).c_str());
-	
-	// free
-    if(dec != data)
-        free((void*)dec);
-	free(data);
-	
-	// add zwoptex
-	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(_resolve(plistName).c_str(), tex);
+    if(lowerCase.find(".pvr") != string::npos) {
+        CCTextureCache::sharedTextureCache()->addPVRImage(texName.c_str());
+    } else {
+        // load encryptd data
+        size_t len;
+        char* data = (char*)CCFileUtils::sharedFileUtils()->getFileData(_resolve(texName).c_str(), "rb", &len);
+        
+        // create texture
+        int decLen;
+        const char* dec = NULL;
+        if(gResDecrypt) {
+            dec = (*gResDecrypt)(data, len, &decLen);
+        } else {
+            dec = data;
+            decLen = (int)len;
+        }
+        CCImage* image = new CCImage();
+        image->initWithImageData((void*)dec, decLen);
+        CC_SAFE_AUTORELEASE(image);
+        CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addUIImage(image, _resolve(texName).c_str());
+        
+        // free
+        if(dec != data)
+            free((void*)dec);
+        free(data);
+        
+        // add zwoptex
+        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(_resolve(plistName).c_str(), tex);
+    }
 }
 
 void CCResourceLoader::run() {
