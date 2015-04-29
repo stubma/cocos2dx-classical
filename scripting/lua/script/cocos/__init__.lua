@@ -29,7 +29,7 @@ function __G__TRACKBACK__(msg)
     cc.log("----------------------------------------")
     
     -- show a layer to error message and stack, make it easy for developer to fix it
-    if Version:isDebug() then
+    if CCApplication:isDebug() then
         local scene = display.getRunningScene()
         if scene then
             local layer = CCLayerColor:create(cc.cc4WHITE)

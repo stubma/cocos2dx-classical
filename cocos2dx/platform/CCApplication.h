@@ -56,6 +56,15 @@ public:
     */
     static CCApplication* sharedApplication();
     
+    /// is debug macro is turned on?
+    static bool isDebug() {
+#ifdef COCOS2D_DEBUG
+        return true;
+#else
+        return false;
+#endif
+    }
+    
     /**
      @brief    Callback by CCDirector for limit FPS.
      @interval       The time, expressed in seconds, between current frame and next. 
