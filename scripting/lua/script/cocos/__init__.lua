@@ -35,7 +35,7 @@ function __G__TRACKBACK__(msg)
             local layer = CCLayerColor:create(cc.cc4WHITE)
             scene:addChild(layer, Z_UI)
             local errLabel = CCLabelTTF:create(tostring(msg) .. "\n" .. debug.traceback(),
-                                               FONT_SIMHEI,
+                                               "Helvetica",
                                                20,
                                                cc.size(display.visibleSize.width * 0.95, 0),
                                                cc.TextAlignmentLeft)
