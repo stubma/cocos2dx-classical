@@ -15,15 +15,14 @@
 		78947C7014EBB9B100DBD5A6 /* dog.png in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6114EBB9B000DBD5A6 /* dog.png */; };
 		78947C7114EBB9B100DBD5A6 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6214EBB9B000DBD5A6 /* effect1.wav */; };
 		78947C7214EBB9B100DBD5A6 /* farm.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6314EBB9B000DBD5A6 /* farm.jpg */; };
-		78947C7414EBB9B100DBD5A6 /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6614EBB9B000DBD5A6 /* main.lua */; };
 		78947C7714EBB9B100DBD5A6 /* land.png in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6914EBB9B000DBD5A6 /* land.png */; };
 		78947C7814EBB9B100DBD5A6 /* menu1.png in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6A14EBB9B000DBD5A6 /* menu1.png */; };
 		78947C7914EBB9B100DBD5A6 /* menu2.png in Resources */ = {isa = PBXBuildFile; fileRef = 78947C6B14EBB9B000DBD5A6 /* menu2.png */; };
-		922DAB671A68F47F00333050 /* script in Resources */ = {isa = PBXBuildFile; fileRef = 922DAB661A68F47F00333050 /* script */; };
+		928EF5B31AFB49F100EBEC46 /* script in Resources */ = {isa = PBXBuildFile; fileRef = 928EF5B21AFB49F100EBEC46 /* script */; };
+		928EF5B71AFB4A6D00EBEC46 /* cocos in Copy Cocos Scripts */ = {isa = PBXBuildFile; fileRef = 928EF5B41AFB4A3600EBEC46 /* cocos */; };
 		92A0021F1A8F80BE00C9DA33 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92A0021E1A8F80BE00C9DA33 /* Images.xcassets */; };
 		92A4A2DA1A52D81E007D7211 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A4A2D91A52D81E007D7211 /* CoreText.framework */; };
 		92A4A2DC1A52D82A007D7211 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A4A2DB1A52D82A007D7211 /* libsqlite3.dylib */; };
-		BF82F41713A864D700616D55 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF82F41513A864D700616D55 /* AppDelegate.cpp */; };
 		BF82F42113A8652A00616D55 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF82F41F13A8652A00616D55 /* AppController.mm */; };
 		BF82F42213A8652A00616D55 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BF82F42013A8652A00616D55 /* main.m */; };
 		D403B5D9135D1AF1004B518D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D403B5D8135D1AF1004B518D /* libxml2.dylib */; };
@@ -54,6 +53,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		928EF5B61AFB4A5B00EBEC46 /* Copy Cocos Scripts */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = script;
+			dstSubfolderSpec = 7;
+			files = (
+				928EF5B71AFB4A6D00EBEC46 /* cocos in Copy Cocos Scripts */,
+			);
+			name = "Copy Cocos Scripts";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		15A3DB161682FB66002FB0C5 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* HelloLua.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloLua.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,17 +77,15 @@
 		78947C6114EBB9B000DBD5A6 /* dog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog.png; sourceTree = "<group>"; };
 		78947C6214EBB9B000DBD5A6 /* effect1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = effect1.wav; sourceTree = "<group>"; };
 		78947C6314EBB9B000DBD5A6 /* farm.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = farm.jpg; sourceTree = "<group>"; };
-		78947C6614EBB9B000DBD5A6 /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.lua; sourceTree = "<group>"; };
 		78947C6914EBB9B000DBD5A6 /* land.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = land.png; sourceTree = "<group>"; };
 		78947C6A14EBB9B000DBD5A6 /* menu1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu1.png; sourceTree = "<group>"; };
 		78947C6B14EBB9B000DBD5A6 /* menu2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu2.png; sourceTree = "<group>"; };
-		922DAB661A68F47F00333050 /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; name = script; path = ../../../../scripting/lua/script; sourceTree = "<group>"; };
+		928EF5B21AFB49F100EBEC46 /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; path = script; sourceTree = "<group>"; };
+		928EF5B41AFB4A3600EBEC46 /* cocos */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cocos; sourceTree = "<group>"; };
 		92A0021E1A8F80BE00C9DA33 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = HelloLua/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		92A002211A8F826000C9DA33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92A4A2D91A52D81E007D7211 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		92A4A2DB1A52D82A007D7211 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		BF82F41513A864D700616D55 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = SOURCE_ROOT; };
-		BF82F41613A864D700616D55 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		BF82F41E13A8652A00616D55 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		BF82F41F13A8652A00616D55 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		BF82F42013A8652A00616D55 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -135,7 +146,6 @@
 			isa = PBXGroup;
 			children = (
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
-				BF82F41413A864B000616D55 /* Classes */,
 				92A002201A8F818700C9DA33 /* Supporting Files */,
 				78947C5C14EBB9B000DBD5A6 /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -180,14 +190,14 @@
 		78947C5C14EBB9B000DBD5A6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				928EF5B41AFB4A3600EBEC46 /* cocos */,
+				928EF5B21AFB49F100EBEC46 /* script */,
 				92A0021E1A8F80BE00C9DA33 /* Images.xcassets */,
-				922DAB661A68F47F00333050 /* script */,
 				78947C5E14EBB9B000DBD5A6 /* background.mp3 */,
 				78947C5F14EBB9B000DBD5A6 /* crop.png */,
 				78947C6114EBB9B000DBD5A6 /* dog.png */,
 				78947C6214EBB9B000DBD5A6 /* effect1.wav */,
 				78947C6314EBB9B000DBD5A6 /* farm.jpg */,
-				78947C6614EBB9B000DBD5A6 /* main.lua */,
 				78947C6914EBB9B000DBD5A6 /* land.png */,
 				78947C6A14EBB9B000DBD5A6 /* menu1.png */,
 				78947C6B14EBB9B000DBD5A6 /* menu2.png */,
@@ -204,15 +214,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		BF82F41413A864B000616D55 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				BF82F41513A864D700616D55 /* AppDelegate.cpp */,
-				BF82F41613A864D700616D55 /* AppDelegate.h */,
-			);
-			name = Classes;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -220,9 +221,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "HelloLua" */;
 			buildPhases = (
-				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				928EF5B61AFB4A5B00EBEC46 /* Copy Cocos Scripts */,
 			);
 			buildRules = (
 			);
@@ -287,10 +289,9 @@
 				78947C7014EBB9B100DBD5A6 /* dog.png in Resources */,
 				78947C7114EBB9B100DBD5A6 /* effect1.wav in Resources */,
 				78947C7214EBB9B100DBD5A6 /* farm.jpg in Resources */,
-				78947C7414EBB9B100DBD5A6 /* main.lua in Resources */,
+				928EF5B31AFB49F100EBEC46 /* script in Resources */,
 				78947C7714EBB9B100DBD5A6 /* land.png in Resources */,
 				78947C7814EBB9B100DBD5A6 /* menu1.png in Resources */,
-				922DAB671A68F47F00333050 /* script in Resources */,
 				92A0021F1A8F80BE00C9DA33 /* Images.xcassets in Resources */,
 				78947C7914EBB9B100DBD5A6 /* menu2.png in Resources */,
 			);
@@ -303,7 +304,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF82F41713A864D700616D55 /* AppDelegate.cpp in Sources */,
 				BF82F42113A8652A00616D55 /* AppController.mm in Sources */,
 				BF82F42213A8652A00616D55 /* main.m in Sources */,
 				D4CEAD7913B4634300780515 /* RootViewController.mm in Sources */,

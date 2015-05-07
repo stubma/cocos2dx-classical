@@ -1,5 +1,3 @@
-require "script/cocos/__init__"
-
 -- add the moving dog
 local function creatDog()
     local frameWidth = 105
@@ -27,7 +25,7 @@ local function creatDog()
         pos = spriteDog:getPosition()
         if pos.x > display.origin.x + display.visibleSize.width then
             pos.x = display.origin.x
-            else
+        else
             pos.x = pos.x + 1
         end
         
@@ -76,9 +74,11 @@ function FarmLayer:ctor()
     self:registerScriptTouchHandler({ target = self, handler = FarmLayer.onTouch })
     self:setTouchEnabled(true)
     self:setTouchMode(cc.TouchesOneByOne)
+    
+    return self
 end
 
-function FarmLayer:onTouch(eventType, x, y)
+function FarmLayer:onTouch(eventType, x, y, tid)
     if eventType == cc.TOUCH_EVENT_BEGAN then
         return self:onTouchBegan(x, y)
     elseif eventType == cc.TOUCH_EVENT_MOVED then
@@ -110,68 +110,3 @@ function FarmLayer:onTouchEnded(x, y)
     self.touchBeginPoint = nil
     self.spriteDog.isPaused = false
 end
-
-local function main()
-    -- avoid memory leak
-    collectgarbage("setpause", 100)
-    collectgarbage("setstepmul", 5000)
-
-    ---------------
-    local visibleSize = CCDirector:sharedDirector():getVisibleSize()
-    local origin = CCDirector:sharedDirector():getVisibleOrigin()
-
-    -- create menu
-    local function createLayerMenu()
-        local layerMenu = CCLayer:create()
-
-        local menuPopup, menuTools, effectID
-
-        local function menuCallbackClosePopup()
-            -- stop test sound effect
-            SimpleAudioEngine:sharedEngine():stopEffect(effectID)
-            menuPopup:setVisible(false)
-        end
-
-        local function menuCallbackOpenPopup()
-            -- loop test sound effect
-            local effectPath = CCFileUtils:sharedFileUtils():fullPathForFilename("effect1.wav")
-            effectID = SimpleAudioEngine:sharedEngine():playEffect(effectPath)
-            menuPopup:setVisible(true)
-        end
-
-        -- add a popup menu
-        local menuPopupItem = CCMenuItemImage:create("menu2.png", "menu2.png")
-        menuPopupItem:setPosition(0, 0)
-        menuPopupItem:registerScriptTapHandler(menuCallbackClosePopup)
-        menuPopup = CCMenu:createWithItem(menuPopupItem)
-        menuPopup:setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2)
-        menuPopup:setVisible(false)
-        layerMenu:addChild(menuPopup)
-
-        -- add the left-bottom "tools" menu to invoke menuPopup
-        local menuToolsItem = CCMenuItemImage:create("menu1.png", "menu1.png")
-        menuToolsItem:setPosition(0, 0)
-        menuToolsItem:registerScriptTapHandler(menuCallbackOpenPopup)
-        menuTools = CCMenu:createWithItem(menuToolsItem)
-        local itemWidth = menuToolsItem:getContentSize().width
-        local itemHeight = menuToolsItem:getContentSize().height
-        menuTools:setPosition(origin.x + itemWidth/2, origin.y + itemHeight/2)
-        layerMenu:addChild(menuTools)
-
-        return layerMenu
-    end
-
-    -- play background music, preload effect
-	local bgMusicPath = CCFileUtils:sharedFileUtils():fullPathForFilename("background.mp3")
-	AudioEngine.playMusic(bgMusicPath, true)
-    local effectPath = CCFileUtils:sharedFileUtils():fullPathForFilename("effect1.wav")
-    AudioEngine.preloadEffect(effectPath)
-	
-    -- run
-    local sceneGame = CCScene:create()
-    sceneGame:addChild(FarmLayer.new())
-    sceneGame:addChild(createLayerMenu())
-    CCDirector:sharedDirector():runWithScene(sceneGame)
-end
-
-xpcall(main, __G__TRACKBACK__)

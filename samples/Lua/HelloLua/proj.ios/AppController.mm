@@ -25,9 +25,10 @@
 #import "AppController.h"
 #import "cocos2d.h"
 #import "EAGLView.h"
-#import "AppDelegate.h"
-
+#include "CCApplicationLua.h"
 #import "RootViewController.h"
+
+USING_NS_CC;
 
 @implementation AppController
 
@@ -35,7 +36,7 @@
 #pragma mark Application lifecycle
 
 // cocos2d application instance
-static AppDelegate s_sharedApplication;
+static CCApplicationLua s_sharedApplication(CCUtils::getExternalOrFullPath("script/main.lua"));
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
