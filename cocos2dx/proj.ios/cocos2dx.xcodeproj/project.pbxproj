@@ -502,6 +502,8 @@
 		927FE5A11A45708A0065F052 /* WidgetReaderProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 927FE4F51A45708A0065F052 /* WidgetReaderProtocol.h */; };
 		927FE5A21A45708A0065F052 /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 927FE4F71A45708A0065F052 /* ObjectFactory.cpp */; };
 		927FE5A31A45708A0065F052 /* ObjectFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 927FE4F81A45708A0065F052 /* ObjectFactory.h */; };
+		928EF5AD1AFB3C7C00EBEC46 /* CCApplicationLua.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 928EF5AB1AFB3C7C00EBEC46 /* CCApplicationLua.cpp */; };
+		928EF5AE1AFB3C7C00EBEC46 /* CCApplicationLua.h in Headers */ = {isa = PBXBuildFile; fileRef = 928EF5AC1AFB3C7C00EBEC46 /* CCApplicationLua.h */; };
 		928F64441A33E59F00178235 /* CCImagePicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 928F64421A33E59F00178235 /* CCImagePicker.h */; };
 		928F64451A33E59F00178235 /* CCImagePickerCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = 928F64431A33E59F00178235 /* CCImagePickerCallback.h */; };
 		928F64481A33E5CF00178235 /* CCImagePicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 928F64471A33E5CF00178235 /* CCImagePicker.cpp */; };
@@ -1437,6 +1439,8 @@
 		927FE4F51A45708A0065F052 /* WidgetReaderProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetReaderProtocol.h; sourceTree = "<group>"; };
 		927FE4F71A45708A0065F052 /* ObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectFactory.cpp; sourceTree = "<group>"; };
 		927FE4F81A45708A0065F052 /* ObjectFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectFactory.h; sourceTree = "<group>"; };
+		928EF5AB1AFB3C7C00EBEC46 /* CCApplicationLua.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCApplicationLua.cpp; sourceTree = "<group>"; };
+		928EF5AC1AFB3C7C00EBEC46 /* CCApplicationLua.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplicationLua.h; sourceTree = "<group>"; };
 		928F64421A33E59F00178235 /* CCImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCImagePicker.h; sourceTree = "<group>"; };
 		928F64431A33E59F00178235 /* CCImagePickerCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCImagePickerCallback.h; sourceTree = "<group>"; };
 		928F64471A33E5CF00178235 /* CCImagePicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCImagePicker.cpp; sourceTree = "<group>"; };
@@ -3923,6 +3927,8 @@
 				92CF92E51A523D6000441150 /* Cocos2dxLuaLoader.h */,
 				92E3CE1F1A54E5CB008520DB /* LuaBasicConversions.cpp */,
 				92E3CE201A54E5CB008520DB /* LuaBasicConversions.h */,
+				928EF5AB1AFB3C7C00EBEC46 /* CCApplicationLua.cpp */,
+				928EF5AC1AFB3C7C00EBEC46 /* CCApplicationLua.h */,
 				9268AB4C1AD7BC17004EF3E5 /* lua_cocos2dx_manual.cpp */,
 				9268AB4D1AD7BC17004EF3E5 /* lua_cocos2dx_manual.h */,
 				92E3CE241A54E69A008520DB /* lua_cocos2dx_auto.cpp */,
@@ -4301,6 +4307,7 @@
 				92A7AFBB1A3C456F001C830B /* ccShader_flash_vert.h in Headers */,
 				92A7AF8C1A3C4038001C830B /* CCSPXLoader.h in Headers */,
 				1551A835158F2ADF00E66CFE /* CCSpriteBatchNode.h in Headers */,
+				928EF5AE1AFB3C7C00EBEC46 /* CCApplicationLua.h in Headers */,
 				927FE56A1A45708A0065F052 /* Slider.h in Headers */,
 				1551A837158F2ADF00E66CFE /* CCSpriteFrame.h in Headers */,
 				92A7AF721A3C4038001C830B /* CCMWManager.h in Headers */,
@@ -4929,6 +4936,7 @@
 				928F64F81A342D6C00178235 /* CCToast.cpp in Sources */,
 				92A7AF801A3C4038001C830B /* CCSPX3Sprite.cpp in Sources */,
 				927FE5571A45708A0065F052 /* Button.cpp in Sources */,
+				928EF5AD1AFB3C7C00EBEC46 /* CCApplicationLua.cpp in Sources */,
 				920F07C71AED18D0009AAA06 /* options.c in Sources */,
 				92A7AFF41A3C720C001C830B /* CCShine.cpp in Sources */,
 				929D53391A27575400560A2E /* CCPinyinUtils.cpp in Sources */,
