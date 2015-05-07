@@ -75,9 +75,13 @@ local function main()
 end
 
 function applicationDidEnterBackground()
+    CCDirector:sharedDirector():stopAnimation()
+    AudioEngine.pauseMusic()
 end
 
 function applicationWillEnterForeground()
+    CCDirector:sharedDirector():startAnimation()
+    AudioEngine.resumeMusic()
 end
 
 xpcall(main, __G__TRACKBACK__)

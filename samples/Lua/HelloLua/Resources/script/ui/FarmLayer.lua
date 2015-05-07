@@ -42,6 +42,7 @@ FarmLayer = class("FarmLayer", function() return CCLayer:create() end)
 
 -- farm layer constructor
 function FarmLayer:ctor()
+    print("1")
     -- add in farm background
     local bg = CCSprite:create("farm.jpg")
     bg:setPosition(display.CENTER.x + 80, display.CENTER.y)
@@ -74,7 +75,7 @@ function FarmLayer:ctor()
     self:registerScriptTouchHandler({ target = self, handler = FarmLayer.onTouch })
     self:setTouchEnabled(true)
     self:setTouchMode(cc.TouchesOneByOne)
-    
+    print("2")
     return self
 end
 

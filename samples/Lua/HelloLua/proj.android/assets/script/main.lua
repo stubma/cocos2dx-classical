@@ -1,0 +1,1 @@
+../../../Resources/script/main.lua

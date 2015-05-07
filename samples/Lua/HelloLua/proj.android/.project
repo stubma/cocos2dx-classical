@@ -96,19 +96,9 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>assets</name>
-			<type>2</type>
-			<locationURI>RESOURCES</locationURI>
-		</link>
-		<link>
 			<name>cocos2dx</name>
 			<type>2</type>
 			<locationURI>COCOS2DX/cocos2dx/platform/android/java/src</locationURI>
-		</link>
-		<link>
-			<name>jni/Classes</name>
-			<type>2</type>
-			<locationURI>$%7BCOCOS2DX%7D/samples/Lua/HelloLua/Classes</locationURI>
 		</link>
 		<link>
 			<name>jni/CocosDenshion</name>
