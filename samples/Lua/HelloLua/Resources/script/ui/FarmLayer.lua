@@ -1,4 +1,5 @@
 -- add the moving dog
+-- just demo using a local function, normally it should be placed in FarmLayer class
 local function creatDog()
     local frameWidth = 105
     local frameHeight = 95
@@ -42,7 +43,6 @@ FarmLayer = class("FarmLayer", function() return CCLayer:create() end)
 
 -- farm layer constructor
 function FarmLayer:ctor()
-    print("1")
     -- add in farm background
     local bg = CCSprite:create("farm.jpg")
     bg:setPosition(display.CENTER.x + 80, display.CENTER.y)
@@ -75,7 +75,6 @@ function FarmLayer:ctor()
     self:registerScriptTouchHandler({ target = self, handler = FarmLayer.onTouch })
     self:setTouchEnabled(true)
     self:setTouchMode(cc.TouchesOneByOne)
-    print("2")
     return self
 end
 
