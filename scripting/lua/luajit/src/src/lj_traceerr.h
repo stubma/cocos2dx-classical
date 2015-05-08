@@ -1,12 +1,13 @@
 /*
 ** Trace compiler error messages.
-** Copyright (C) 2005-2014 Mike Pall. See Copyright Notice in luajit.h
+** Copyright (C) 2005-2015 Mike Pall. See Copyright Notice in luajit.h
 */
 
 /* This file may be included multiple times with different TREDEF macros. */
 
 /* Recording. */
 TREDEF(RECERR,	"error thrown or hook called during recording")
+TREDEF(TRACEUV,	"trace too short")
 TREDEF(TRACEOV,	"trace too long")
 TREDEF(STACKOV,	"trace too deep")
 TREDEF(SNAPOV,	"too many snapshots")
