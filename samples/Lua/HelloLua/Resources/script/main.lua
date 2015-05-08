@@ -84,4 +84,4 @@ function applicationWillEnterForeground()
     AudioEngine.resumeMusic()
 end
 
-xpcall(main, __G__TRACKBACK__)
+pcall(main)

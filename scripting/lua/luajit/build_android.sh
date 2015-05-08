@@ -38,7 +38,7 @@ NDKABI=14
 DESTDIR=$PREBUILT_DIR/x86
 NDKVER=$NDK/toolchains/x86-4.6
 NDKP=$NDKVER/prebuilt/${host_os}-x86_64/bin/i686-linux-android-
-NDKF="--sysroot $NDK/platforms/android-$NDKABI/arch-x86"
+NDKF="--sysroot $NDK/platforms/android-$NDKABI/arch-x86 -DLUAJIT_NO_LOG2"
 rm "$DESTDIR"/*.a
 make clean
 make HOST_CC="gcc -m32" CROSS=$NDKP TARGET_SYS=Linux TARGET_FLAGS="$NDKF"

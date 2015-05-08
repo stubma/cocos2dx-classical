@@ -381,7 +381,7 @@
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios/Simulation\"",
 					"$(PROJECT_DIR)/../../../../scripting/lua/cocos2dx_support",
-					"$(PROJECT_DIR)/../../../../scripting/lua/lua/src/src",
+					"$(PROJECT_DIR)/../../../../scripting/lua/luajit/src/src",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -428,7 +428,7 @@
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios/Simulation\"",
 					"$(PROJECT_DIR)/../../../../scripting/lua/cocos2dx_support",
-					"$(PROJECT_DIR)/../../../../scripting/lua/lua/src/src",
+					"$(PROJECT_DIR)/../../../../scripting/lua/luajit/src/src",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;

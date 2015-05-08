@@ -1,5 +1,31 @@
 string = string or {}
 
+-- split a string by a separator, and returns a table contains all parts of it
+function string.split(s, sep)
+    local parts = {}
+    local len = string.len(s)
+    local sepByte = string.byte(sep, 1)
+    local start = 0
+    for i = 1, len do
+        if string.byte(s, i) == sepByte then
+            if i <= start + 1 then
+                table.insert(parts, "")
+            else
+                table.insert(parts, string.sub(s, start + 1, i - 1))
+            end
+            start = i
+        end
+    end
+    if len > 0 then
+        if start == len then
+            table.insert(parts, "")
+        elseif start < len then
+            table.insert(parts, string.sub(s, start + 1, len))
+        end
+    end
+    return parts
+end
+
 -- safe convert a string to number, never return nil
 function string.tonumber(s, def)
     local n = tonumber(s)

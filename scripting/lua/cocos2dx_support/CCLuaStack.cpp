@@ -31,7 +31,6 @@ extern "C" {
 #include "lauxlib.h"
 #include "tolua_fix.h"
 #include "lfs.h"
-#include "bit.h"
 #include "cjson/lua_cjson.h"
 #include "luasocket/luasocket.h"
 }
@@ -115,7 +114,6 @@ bool CCLuaStack::init(void)
     register_all_cocos2dx_manual(m_state);
     toluafix_open(m_state);
     luaopen_lfs(m_state);
-    luaopen_bit(m_state);
     luaopen_cjson(m_state);
     luaopen_socket_core(m_state);
 
