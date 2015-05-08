@@ -40,6 +40,7 @@ public class HelloLua extends Cocos2dxActivity {
 	}
 
 	static {
+		System.loadLibrary("c++_shared");
 		System.loadLibrary("hellolua");
 	}
 }
