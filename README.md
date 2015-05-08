@@ -89,12 +89,12 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 * CCNode添加了nodeToAncestorTransform, ancestorToNodeTransform, convertToParentSpace, convertToParentSpaceAR方法
 * Lua相关修改
 	* quick 3.x的binding generator工具移植完成, 名叫autolua, 引擎的lua绑定已经全部生成
+	* lua和luajit的库都已经预编译, 缺省使用luajit库, 如果想切换成lua, 可以编辑scripting/lua/Android.mk(for anroid)或cocos2dx/proj.ios/cocos2dx.xcodeproj(for ios)
 	* HelloLua工程修改调试通过
 	* 使用ccScriptFunction代表一个脚本方法, 替代了原来使用int的方式. 引擎中注册脚本方法相关的代码都改成使用ccScriptFunction, 相应的牵涉到CCLuaEngine, CCLuaStack等都有不少修改, 脚本回调方法可以获得self参数, 解决了脚本回调方法中获取self不方便的问题
 	* 逐渐完善一些公用库, 都放在scripting/lua/script下, 提供一些基本的封装
 	* 加入了lfs方便载入脚本, 修正了Cocos2dxLuaLoader和lfs冲突的问题
 	* 加入了位操作库
-	* luajit和lua都已经预编译成静态库, 由于luajit并不支持64位, 所以目前并未启用, 还是采用包含lua代码编译的方式. 需要使用luajit的可以直接使用
 	* 修正了一些tolua_fix的bug
 	* 添加了tolua.isa方法
 	* script端的CCNotification监听方法现在可以收到额外参数
@@ -155,6 +155,7 @@ Things Improved
 * Lua related
 	* quick 3.x binding generator is migrated, renamed as autolua
 	* engine lua binding is generated
+	* lua and luajit are both precompiled, by default we use luajit. if you want to use lua, you can modify scripting/lua/Android.mk(for android) or cocos2dx/proj.ios/cocos2dx.xcodeproj(for ios)
 	* HelloLua project is debugged and fine
 	* use ccScriptFunction struct to replace int handler, modified all related code
 	* make it easy to pass self parameter to script callback
@@ -163,7 +164,6 @@ Things Improved
 	* add bit operation library
 	* fix some bugs of tolua_fix
 	* add tolua.isa method
-	* luajit is precompiled but not enabled because it doesn't support 64 bit, but you can directly use it if you want
 	* CCNotification script observer can get extra parameters now
 	* lua class add a dtor method to receive CCObject destruction event
 	* rename CCDirector/CCEGLView end method to terminate, to avoid name conflict with lua keyword
