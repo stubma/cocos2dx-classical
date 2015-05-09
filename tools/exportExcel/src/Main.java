@@ -89,6 +89,8 @@ public class Main {
 							break;
 						case 1:
 							we = new LuaExporter();
+							je.setGenerateIndexColumn(true);
+							je.setIndexStartFromZero(false);
 							break;
 					}	
 					

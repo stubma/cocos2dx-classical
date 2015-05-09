@@ -13,7 +13,10 @@ public class LuaExporter extends BaseExporter {
 		
 		// name and type of id column
 		Row fieldRow = sheet.getRow(2);
+		Row typeRow = sheet.getRow(3);
 		String idName = fieldRow.getCell(0).getStringCellValue();
+		String idType = typeRow.getCell(0).getStringCellValue();
+		boolean idIsString = idType.equalsIgnoreCase("string");
 		
 		// json directory prefix
 		String jsonDir = getOption("jsonDir");
@@ -78,32 +81,26 @@ public class LuaExporter extends BaseExporter {
 			.append("function " + className + ".indexOf(x)\n")
 			.append("\tlocal isObj = tolua.isa(x, \"" + className + "\")\n")
 			.append("\tif isObj then\n")
-			.append("\t\tlocal i = 1\n")
 			.append("\t\tfor _,item in pairs(sJSON) do\n")
-			.append("\t\t\tif item[\"" + firstCapital(idName) + "\"] == x:get" + firstCapital(idName) + "() then\n")
-			.append("\t\t\t\treturn i\n")
+			.append("\t\t\tif " + (idIsString ? "tostring(" : "string.toint(") + "item[\"" + firstCapital(idName) + "\"]) == x:get" + firstCapital(idName) + "() then\n")
+			.append("\t\t\t\treturn string.toint(item[\"__index__\"])\n")
 			.append("\t\t\tend\n")
-			.append("\t\t\ti = i + 1\n")
 			.append("\t\tend\n")
 			.append("\telse\n")
-			.append("\t\tlocal i = 1\n")
 			.append("\t\tfor _,item in pairs(sJSON) do\n")
-			.append("\t\t\tif item[\"" + firstCapital(idName) + "\"] == x then\n")
-			.append("\t\t\t\treturn i\n")
+			.append("\t\t\tif " + (idIsString ? "tostring(" : "string.toint(") + "item[\"" + firstCapital(idName) + "\"]) == x then\n")
+			.append("\t\t\t\treturn string.toint(item[\"__index__\"])\n")
 			.append("\t\t\tend\n")
-			.append("\t\t\ti = i + 1\n")
 			.append("\t\tend\n")
 			.append("\tend\n")
 			.append("\treturn -1\n")
 			.append("end\n")
 			.append("\n")
 			.append("function " + className + ":initWithIndex(index)\n")
-			.append("\tlocal i = 1\n")
 			.append("\tfor _,item in pairs(sJSON) do\n")
-			.append("\t\tif i == index then\n")
+			.append("\t\tif string.toint(item[\"__index__\"]) == index then\n")
 			.append("\t\t\treturn self:initWithValue(item)\n")
 			.append("\t\tend\n")
-			.append("\t\ti = i + 1\n")
 			.append("\tend\n")
 			.append("\treturn false\n")
 			.append("end\n")

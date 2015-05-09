@@ -9,6 +9,12 @@ import org.apache.poi.ss.usermodel.Workbook;
 import com.alibaba.fastjson.JSONObject;
 
 public class JsonExporter extends BaseExporter {
+	// whether append a fake column named __index__
+	private boolean mGenerateIndexColumn;
+	
+	// __index__ value start from zero or one
+	private boolean mIndexStartFromZero;
+	
 	@Override
 	public void doExport(Workbook book, Sheet sheet, File file) throws IOException {
 		JSONObject json = new JSONObject();
@@ -19,6 +25,9 @@ public class JsonExporter extends BaseExporter {
 		// field and type row
 		Row fieldRow = sheet.getRow(2);
 		Row typeRow = sheet.getRow(3);
+		
+		// row index
+		int rowIndex = mIndexStartFromZero ? 0 : 1;
 
 		String idColName = fieldRow.getCell(0).getStringCellValue();
 		idColName = firstCapital(idColName);
@@ -38,7 +47,7 @@ public class JsonExporter extends BaseExporter {
 			// put row
 			// if not numeric and value is empty, skip
 			if (row.getCell(0).getCellType() == Cell.CELL_TYPE_NUMERIC) {
-				rowJson.put(idColName + "", row.getCell(0).getNumericCellValue());
+				rowJson.put(idColName, row.getCell(0).getNumericCellValue());
 				json.put("" + rowJson.getIntValue(idColName), rowJson);
 			} else {
 				String sValue = row.getCell(0).getStringCellValue().trim();
@@ -46,6 +55,11 @@ public class JsonExporter extends BaseExporter {
 					continue;
 				rowJson.put(idColName, sValue);
 				json.put(rowJson.getString(idColName), rowJson);
+			}
+			
+			// index column
+			if(mGenerateIndexColumn) {
+				rowJson.put("__index__", rowIndex++);
 			}
 
 			for (int j = 1; j < colNum; j++) {
@@ -97,5 +111,21 @@ public class JsonExporter extends BaseExporter {
 		String className = "X" + firstCapital(sheet.getSheetName());
 		String jsonPath = new File(file.getParentFile(), className + ".json").getAbsolutePath();
 		writeFile(jsonPath, json.toJSONString());
+	}
+
+	public boolean isIndexStartFromZero() {
+		return mIndexStartFromZero;
+	}
+
+	public void setIndexStartFromZero(boolean mIndexStartFromZero) {
+		this.mIndexStartFromZero = mIndexStartFromZero;
+	}
+
+	public boolean isGenerateIndexColumn() {
+		return mGenerateIndexColumn;
+	}
+
+	public void setGenerateIndexColumn(boolean mGenerateIndexColumn) {
+		this.mGenerateIndexColumn = mGenerateIndexColumn;
 	}
 }
