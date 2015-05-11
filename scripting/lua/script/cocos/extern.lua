@@ -99,9 +99,11 @@ function ripairs(t)
     return ripairs_it, t, max
 end
 
--- get real size of a table or other type
+-- get real size of a table or other type, if nil, return 0
 function len(t)
-    if type(t) == "table" then
+    if t == nil then
+        return 0
+    elseif type(t) == "table" then
         local c = 0
         for _,v in pairs(t) do
             c = c + 1
