@@ -29,6 +29,7 @@ import android.os.Bundle;
 
 public class HelloCpp extends Cocos2dxActivity {
 	static {
+		System.loadLibrary("c++_shared");
 		System.loadLibrary("game");
 	}
 

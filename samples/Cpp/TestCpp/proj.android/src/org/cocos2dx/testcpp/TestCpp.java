@@ -43,6 +43,7 @@ public class TestCpp extends Cocos2dxActivity{
     }
 
     static {
+        System.loadLibrary("c++_shared");
         System.loadLibrary("testcpp");
     }     
 }
