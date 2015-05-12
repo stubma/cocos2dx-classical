@@ -101,7 +101,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 	* script端的CCNotification监听方法现在可以收到额外参数
 	* 修改了extern.lua, 添加了dtor方法, 会在C++对象析构时调用
 	* CCDirector/CCEGLView的end方法改名为terminate, 避免和lua的关键字冲突
-	* CCNode添加了set/getScriptUserData, 支持在lua端设置为CCNode关联一个lua table
+	* CCNode添加了set/getScriptUserData, 支持在lua端为CCNode关联一个lua table
 	* string包增加了split, tonumber, toint, tobool, empty方法
 	* table包增加了print, hasnumber, hasstring, fill, fillnew方法
 	* debug包增加了addtrace, removetrace方法
