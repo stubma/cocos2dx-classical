@@ -34,6 +34,10 @@ make clean
 make macosx HOST_CC="gcc -m32 -arch i386"
 mv "$SRCDIR"/src/liblua.a "$DESTDIR"/liblua-i386.a
 
+make clean
+make macosx HOST_CC="gcc -arch x86_64"
+mv "$SRCDIR"/src/liblua.a "$DESTDIR"/liblua-x86_64.a
+
 $LIPO -create "$DESTDIR"/liblua-*.a -output "$DESTDIR"/liblua.a
 $STRIP -S "$DESTDIR"/liblua.a
 $LIPO -info "$DESTDIR"/liblua.a
