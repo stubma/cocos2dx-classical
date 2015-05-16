@@ -127,6 +127,80 @@ inline unsigned int ZipUtils::ccChecksumPvr(const unsigned int *data, int len)
 // Should buffer factor be 1.5 instead of 2 ?
 #define BUFFER_INC_FACTOR (2)
 
+int ZipUtils::ccDeflateMemoryWithHint(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int outLengthHint) {
+    unsigned int outLength = 0;
+    int err = ccDeflateMemoryWithHint(in, inLength, out, &outLength, outLengthHint);
+    
+    if (err != Z_OK || *out == NULL) {
+        if (err == Z_MEM_ERROR)
+        {
+            CCLOG("cocos2d: ZipUtils: Out of memory while compressing map data!");
+        } else
+        if (err == Z_VERSION_ERROR)
+        {
+            CCLOG("cocos2d: ZipUtils: Incompatible zlib version!");
+        } else
+        if (err == Z_DATA_ERROR)
+        {
+            CCLOG("cocos2d: ZipUtils: Incorrect zlib compressed data!");
+        }
+        else
+        {
+            CCLOG("cocos2d: ZipUtils: Unknown error while compressing map data!");
+        }
+        
+        delete[] *out;
+        *out = NULL;
+        outLength = 0;
+    }
+    
+    return outLength;
+}
+
+int ZipUtils::ccDeflateMemoryWithHint(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength, unsigned int outLengthHint) {
+    /* ret value */
+    int err = Z_OK;
+    
+    z_stream strm;
+    strm.zalloc = Z_NULL;
+    strm.zfree = Z_NULL;
+    strm.opaque = Z_NULL;
+    strm.total_out = 0;
+    strm.next_in = in;
+    strm.avail_in = inLength;
+    
+    int bufferSize = outLengthHint;
+    *out = new unsigned char[bufferSize];
+    
+    // Compresssion Levels:
+    //   Z_NO_COMPRESSION
+    //   Z_BEST_SPEED
+    //   Z_BEST_COMPRESSION
+    //   Z_DEFAULT_COMPRESSION
+    
+    if ((err = deflateInit2(&strm, Z_DEFAULT_COMPRESSION, Z_DEFLATED, 15 + 16, 8, Z_DEFAULT_STRATEGY)) != Z_OK) {
+        return err;
+    }
+    
+    do {
+        if (strm.total_out >= outLengthHint) {
+            bufferSize *= BUFFER_INC_FACTOR;
+            *out = (unsigned char*)realloc(*out, bufferSize);
+        }
+        strm.next_out = *out + strm.total_out;
+        strm.avail_out = (unsigned int)(bufferSize - strm.total_out);
+        deflate(&strm, Z_FINISH);
+    } while (strm.avail_out == 0);
+    
+    if(outLength) {
+        *outLength = (unsigned int)strm.total_out;
+    }
+    
+    err = deflateEnd(&strm);
+    
+    return err;
+}
+
 int ZipUtils::ccInflateMemoryWithHint(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength, unsigned int outLenghtHint)
 {
     /* ret value */
@@ -221,6 +295,11 @@ int ZipUtils::ccInflateMemoryWithHint(unsigned char *in, unsigned int inLength, 
     }
     
     return outLength;
+}
+
+int ZipUtils::ccDeflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out) {
+    // 256k for hint
+    return ccDeflateMemoryWithHint(in, inLength, out, 256 * 1024);
 }
 
 int ZipUtils::ccInflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out)
