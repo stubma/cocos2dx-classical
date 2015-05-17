@@ -282,6 +282,14 @@ protected:
     
 public:
     /**
+     * get min container offset to make cell at index visible
+     *
+     * @param index cell index, start from zero
+     * @return container offset
+     */
+    CCPoint containerOffsetFromIndex(unsigned int index);
+    
+    /**
      register a script side table view data source and delegate. the event is a string passed to
      script side and script function should check first argument(if first is not self) to see what
      happened

@@ -395,6 +395,28 @@ CCPoint CCTableView::_offsetFromIndex(unsigned int index) {
     }
 }
 
+CCPoint CCTableView::containerOffsetFromIndex(unsigned int index) {
+    // get col of cell
+    int col;
+    switch (getDirection()) {
+        case kCCScrollViewDirectionHorizontal:
+            col = index / m_viewRows;
+            break;
+        default:
+            col = index % m_colCount;
+            break;
+    }
+    
+    // offset in container, view size, cell width
+    CCPoint offset = _offsetFromIndex(index);
+    CCSize viewSize = getViewSize();
+    float cellWidth = m_hCellsPositions[col + 1] - m_hCellsPositions[col];
+
+    // calculate
+    return ccp(MIN(viewSize.width - offset.x - cellWidth, 0),
+               MIN(viewSize.height - offset.y, 0));
+}
+
 int CCTableView::_indexFromOffset(CCPoint offset, bool excludeMargin) {
     // max index
     const int maxIdx = onNumberOfCellsInTableView() - 1;
