@@ -261,6 +261,7 @@ protected:
     void _setIndexForCell(unsigned int index, CCTableViewCell *cell);
     void _addCellIfNecessary(CCTableViewCell * cell);
     void _updateCellPositions();
+    virtual void _updateContentSize(bool keepOffset = false);
     
     // event dispatch
     void onTableCellTouched();
@@ -280,8 +281,6 @@ protected:
     CCTableViewCell* m_scriptRetCell;
     
 public:
-    virtual void _updateContentSize(bool keepOffset = false);
-    
     /**
      register a script side table view data source and delegate. the event is a string passed to
      script side and script function should check first argument(if first is not self) to see what
