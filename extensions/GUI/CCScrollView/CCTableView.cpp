@@ -117,6 +117,72 @@ void CCTableView::reloadData(bool keepOffset)
     }
 }
 
+bool CCTableView::isCellFullyVisible(unsigned int index) {
+    // view rect
+    const CCPoint contentOffset = this->getContentOffset();
+    const CCSize  viewSize   = this->getViewSize();
+    const float   scale  = this->getZoomScale();
+    CCRect viewRect = CCRectMake(-contentOffset.x / scale,
+                                 -contentOffset.y / scale,
+                                 viewSize.width / scale,
+                                 viewSize.height / scale);
+    
+    // get row and col of cell
+    int col, row;
+    switch (getDirection()) {
+        case kCCScrollViewDirectionHorizontal:
+            col = index / m_viewRows;
+            row = index % m_viewRows;
+            break;
+        default:
+            row = index / m_colCount;
+            col = index % m_colCount;
+            break;
+    }
+    
+    // cell bound in scroll view space
+    CCPoint offset = _offsetFromIndex(index);
+    float cellWidth = m_hCellsPositions[col + 1] - m_hCellsPositions[col];
+    float cellHeight = m_vCellsPositions[row + 1] - m_vCellsPositions[row];
+    CCRect cellBound = CCRectMake(offset.x, offset.y, cellWidth, cellHeight);
+    
+    // check intersect
+    return viewRect.containsRect(cellBound);
+}
+
+bool CCTableView::isCellVisible(unsigned int index) {
+    // view rect
+    const CCPoint contentOffset = this->getContentOffset();
+    const CCSize  viewSize   = this->getViewSize();
+    const float   scale  = this->getZoomScale();
+    CCRect viewRect = CCRectMake(-contentOffset.x / scale,
+                                 -contentOffset.y / scale,
+                                 viewSize.width / scale,
+                                 viewSize.height / scale);
+    
+    // get row and col of cell
+    int col, row;
+    switch (getDirection()) {
+        case kCCScrollViewDirectionHorizontal:
+            col = index / m_viewRows;
+            row = index % m_viewRows;
+            break;
+        default:
+            row = index / m_colCount;
+            col = index % m_colCount;
+            break;
+    }
+    
+    // cell bound in scroll view space
+    CCPoint offset = _offsetFromIndex(index);
+    float cellWidth = m_hCellsPositions[col + 1] - m_hCellsPositions[col];
+    float cellHeight = m_vCellsPositions[row + 1] - m_vCellsPositions[row];
+    CCRect cellBound = CCRectMake(offset.x, offset.y, cellWidth, cellHeight);
+    
+    // check intersect
+    return viewRect.intersectsRect(cellBound);
+}
+
 CCTableViewCell *CCTableView::cellAtIndex(unsigned int idx)
 {
     CCTableViewCell *found = NULL;
@@ -383,14 +449,14 @@ CCPoint CCTableView::_offsetFromIndex(unsigned int index) {
             int row = index % m_viewRows;
             int col = index / m_viewRows;
             return ccp(m_hCellsPositions[col],
-                       contentSize.height - m_vCellsPositions[row + 1] + ((row < m_viewRows - 1) ? m_rowSpacing : 0) + 1);
+                       contentSize.height - m_vCellsPositions[row + 1] + ((row < m_viewRows - 1) ? m_rowSpacing : 0));
         }
         default:
         {
             int row = index / m_colCount;
             int col = index % m_colCount;
             return ccp(m_hCellsPositions[col],
-                       contentSize.height - m_vCellsPositions[row + 1] + ((row < m_vCellsPositions.size() - 2) ? m_rowSpacing : 0) + 1);
+                       contentSize.height - m_vCellsPositions[row + 1] + ((row < m_vCellsPositions.size() - 2) ? m_rowSpacing : 0));
         }
     }
 }

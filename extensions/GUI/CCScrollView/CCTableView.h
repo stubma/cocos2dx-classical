@@ -210,6 +210,15 @@ public:
      */
     CCTableViewCell *cellAtIndex(unsigned int idx);
     
+    /**
+     * determin if a given cell's bound is contained in visible bound
+     */
+    bool isCellFullyVisible(unsigned int index);
+    
+    /**
+     * determin if a given cell's bound is intersected with visible bound
+     */
+    bool isCellVisible(unsigned int index);
     
     virtual void scrollViewDidScroll(CCScrollView* view);
     virtual void scrollViewDidZoom(CCScrollView* view) {}
