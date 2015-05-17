@@ -263,6 +263,13 @@ bool CCRect::containsPoint(const CCPoint& point) const
     return bRet;
 }
 
+bool CCRect::containsRect(const CCRect& rect) const {
+    return (getMaxX() >= rect.getMaxX() &&
+            getMinX() <= rect.getMinX() &&
+            getMaxY() >= rect.getMaxY() &&
+            getMinY() <= rect.getMinY());
+}
+
 bool CCRect::intersectsRect(const CCRect& rect) const
 {
     return !(     getMaxX() < rect.getMinX() ||
