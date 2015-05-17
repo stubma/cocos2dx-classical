@@ -348,6 +348,12 @@ CCArray* CCNode::getChildren()
     return m_pChildren;
 }
 
+CCNode* CCNode::getChildAt(int index) {
+    if(index < 0 || index >= getChildrenCount())
+        return NULL;
+    return (CCNode*)m_pChildren->objectAtIndex(index);
+}
+
 unsigned int CCNode::getChildrenCount(void) const
 {
     return m_pChildren ? m_pChildren->count() : 0;

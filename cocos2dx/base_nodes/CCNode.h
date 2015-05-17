@@ -618,6 +618,11 @@ public:
      */
     virtual CCArray* getChildren();
     
+    /**
+     * get child node at given index, start from zero, or NULL if index is invalid
+     */
+    virtual CCNode* getChildAt(int index);
+    
     /** 
      * Get the amount of children.
      *
