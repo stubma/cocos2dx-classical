@@ -154,6 +154,12 @@ public:
      * @return YES if it is in visible bounds
      */
     bool isNodeVisible(CCNode * node);
+    
+    /**
+     * Determine if a given node's bounding box is contained in visible bounds
+     */
+    bool isNodeFullyVisible(CCNode* node);
+    
     /**
      * Provided to make scroll view compatible with SWLayer's pause method
      */

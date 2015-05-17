@@ -137,6 +137,21 @@ void CCScrollView::registerWithTouchDispatcher()
     CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, CCLayer::getTouchPriority(), m_bSwallowTouch);
 }
 
+bool CCScrollView::isNodeFullyVisible(CCNode* node) {
+    const CCPoint offset = this->getContentOffset();
+    const CCSize  size   = this->getViewSize();
+    const float   scale  = this->getZoomScale();
+    
+    CCRect viewRect;
+    
+    viewRect = CCRectMake(-offset.x/scale, -offset.y/scale, size.width/scale, size.height/scale);
+    
+    CCRect nodeBound = CCRectMake(0, 0, node->getContentSize().width, node->getContentSize().height);
+    CCAffineTransform t = node->nodeToAncestorTransform(getContainer());
+    nodeBound = CCRectApplyAffineTransform(nodeBound, t);
+    return viewRect.containsRect(nodeBound);
+}
+
 bool CCScrollView::isNodeVisible(CCNode* node)
 {
     const CCPoint offset = this->getContentOffset();
@@ -218,7 +233,6 @@ void CCScrollView::setContentOffset(CCPoint offset, bool animated/* = false*/)
 void CCScrollView::setContentOffsetInDuration(CCPoint offset, float dt)
 {
     CCFiniteTimeAction *scroll, *expire;
-    
     scroll = CCMoveTo::create(dt, offset);
     expire = CCCallFuncN::create(this, callfuncN_selector(CCScrollView::stoppedAnimatedScroll));
     m_pContainer->runAction(CCSequence::create(scroll, expire, NULL));
