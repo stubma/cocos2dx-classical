@@ -1150,12 +1150,8 @@ void CCNode::unscheduleAllScriptFuncs() {
     m_pScheduler->unscheduleAllScriptEntryForTarget(this);
 }
 
-void CCNode::unscheduleScriptFunc(unsigned int handler) {
-    ccScriptFunction func = {
-        this,
-        handler
-    };
-    m_pScheduler->unscheduleScriptFunc(func);
+void CCNode::unscheduleScriptFunc(const ccScriptFunction& scriptFunc) {
+    m_pScheduler->unscheduleScriptFunc(scriptFunc);
 }
 
 void CCNode::unscheduleAllSelectors()

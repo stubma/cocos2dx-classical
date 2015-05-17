@@ -1230,7 +1230,7 @@ public:
     /**
      * Unschedule one script func
      */
-    void unscheduleScriptFunc(unsigned int handler);
+    void unscheduleScriptFunc(const ccScriptFunction& scriptFunc);
 
     /** 
      * Resumes all scheduled selectors and actions.
