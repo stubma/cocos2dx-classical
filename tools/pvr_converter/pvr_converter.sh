@@ -23,5 +23,5 @@ do
 	FN_PVR="$FN_NO_EXT.pvr.ccz"
 	FP_PVR=$FILEDIR/$FN_PVR
 	echo "converting $f"
-	$TP "$f" --sheet "$FP_PVR" --texture-format pvr2ccz --opt $OPT --premultiply-alpha --dither-fs-alpha --border-padding 0
+	$TP "$f" --sheet "$FP_PVR" --texture-format pvr2ccz --opt $OPT --premultiply-alpha --dither-fs-alpha --border-padding 0 --disable-rotation
 done
