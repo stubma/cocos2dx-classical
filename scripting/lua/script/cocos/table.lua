@@ -18,7 +18,7 @@ function table.print(value, ...)
 end
 
 -- check whether a number is existent in a table
--- it force type checking, so matched element must have number type
+-- it will convert other type to number before comparing
 function table.hasnumber(t, n)
     n = string.tonumber(n)
     for _,item in ipairs(t) do
@@ -30,7 +30,7 @@ function table.hasnumber(t, n)
 end
 
 -- check whether a string is existent in a table
--- it force type checking, so matched element must have string type
+-- it will convert other string to number before comparing
 function table.hasstring(t, s)
     s = tostring(s)
     for _,item in ipairs(t) do
