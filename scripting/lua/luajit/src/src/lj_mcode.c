@@ -25,7 +25,7 @@
 
 /* Define this if you want to run LuaJIT with Valgrind. */
 #ifdef LUAJIT_USE_VALGRIND
-#include "valgrind/valgrind.h"
+#include <valgrind/valgrind.h>
 #endif
 
 #if LJ_TARGET_IOS

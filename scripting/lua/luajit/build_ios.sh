@@ -27,13 +27,11 @@ make HOST_CC="gcc" TARGET_FLAGS="$ISDKF" TARGET_SYS=iOS
 mv "$SRCDIR"/src/libluajit.a "$DESTDIR"/libluajit-arm64.a
 
 make clean
-ISDKF="-arch i386"
-make CC="gcc -m32" TARGET_FLAGS="$ISDKF" clean all
+make CC="gcc -m32 -arch i386" clean all
 mv "$SRCDIR"/src/libluajit.a "$DESTDIR"/libluajit-i386.a
 
 make clean
-ISDKF="-arch x86_64 -DLUAJIT_USE_VALGRIND -DLUAJIT_USE_SYSMALLOC -DLUAJIT_ENABLE_GC64"
-make CC="gcc" TARGET_FLAGS="$ISDKF" clean all
+make CC="gcc -arch x86_64" clean all
 mv "$SRCDIR"/src/libluajit.a "$DESTDIR"/libluajit-x86_64.a
 
 $LIPO -create "$DESTDIR"/libluajit-*.a -output "$DESTDIR"/libluajit.a
