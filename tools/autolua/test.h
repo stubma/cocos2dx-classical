@@ -12,7 +12,7 @@ namespace cocos2d {
 class SimpleNativeClass
 {
 public:
-    CCArray& method1(const string& s, const char c);
+    static SimpleNativeClass* create(CCNode* normalSprite, CCNode* focusSprite = NULL);
 };
 
 }
