@@ -121,6 +121,8 @@ public class LuaExporter extends BaseExporter {
 		for (int i = 0; i < len; i++) {
 			if (sheet.getRow(3).getCell(i) == null || sheet.getRow(3).getCell(i).getStringCellValue().equals(""))
 				continue;
+			if(sheet.getRow(2).getCell(i) == null || sheet.getRow(3).getCell(i) == null)
+				continue;
 			String field = sheet.getRow(2).getCell(i).getStringCellValue();
 			String dataType = sheet.getRow(3).getCell(i).getStringCellValue();
 			if (field == null || field.equals(""))
@@ -171,6 +173,8 @@ public class LuaExporter extends BaseExporter {
 		for (int i = 0; i < len; i++) {
 			if (sheet.getRow(3).getCell(i) == null || sheet.getRow(3).getCell(i).getStringCellValue().equals(""))
 				continue;
+			if(sheet.getRow(2).getCell(i) == null || sheet.getRow(3).getCell(i) == null)
+				continue;
 			String field = sheet.getRow(2).getCell(i).getStringCellValue();
 			String dataType = sheet.getRow(3).getCell(i).getStringCellValue();
 			if (field == null || field.equals("") || idName.equals(field))
@@ -200,6 +204,8 @@ public class LuaExporter extends BaseExporter {
 		for (int i = 0; i < len; i++) {
 			if (sheet.getRow(3).getCell(i) == null || sheet.getRow(3).getCell(i).getStringCellValue().equals(""))
 				continue;
+			if(sheet.getRow(2).getCell(i) == null || sheet.getRow(3).getCell(i) == null)
+				continue;
 			String field = sheet.getRow(2).getCell(i).getStringCellValue();
 			String dataType = sheet.getRow(3).getCell(i).getStringCellValue();
 			if (field == null || field.equals(""))
@@ -225,6 +231,8 @@ public class LuaExporter extends BaseExporter {
 		// get method for array types
 		for (int i = 0; i < len; i++) {
 			if (sheet.getRow(3).getCell(i) == null || sheet.getRow(3).getCell(i).getStringCellValue().equals(""))
+				continue;
+			if(sheet.getRow(2).getCell(i) == null || sheet.getRow(3).getCell(i) == null)
 				continue;
 			String field = sheet.getRow(2).getCell(i).getStringCellValue();
 			String dataType = sheet.getRow(3).getCell(i).getStringCellValue();
