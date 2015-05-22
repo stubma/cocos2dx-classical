@@ -49,6 +49,7 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 LOCAL_MODULE := cocos2dx_static
 LOCAL_MODULE_FILENAME := libcocos2d
+LOCAL_ARM_MODE := arm
 LOCAL_SRC_FILES := $(call all-c-files-under-except,.,./platform) \
 	$(call all-cpp-files-under-except,.,./platform) \
 	$(call c-files-under,./platform) \
