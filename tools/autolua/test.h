@@ -12,7 +12,7 @@ namespace cocos2d {
 class SimpleNativeClass
 {
 public:
-    static SimpleNativeClass* create(CCNode* normalSprite, CCNode* focusSprite = NULL);
+    static SimpleNativeClass* createTestR10e(CCNode* normalSprite, CCNode* focusSprite = NULL);
 };
 
 }
