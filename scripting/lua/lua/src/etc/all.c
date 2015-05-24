@@ -36,3 +36,4 @@
 #include "ltablib.c"
 
 #include "lua.c"
+#include "bit.c"
