@@ -47,7 +47,7 @@ public class Main {
 			"Excel to Json/C++",
 			"Excel to Json/Lua"
 		};
-		final JComboBox<String> cmb = new JComboBox<String>(s);
+		final JComboBox cmb = new JComboBox(s);
 		cmb.setBorder(BorderFactory.createTitledBorder("Export Type"));
 		bottom.add(cmb);
 		
