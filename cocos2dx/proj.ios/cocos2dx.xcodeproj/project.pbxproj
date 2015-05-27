@@ -224,6 +224,10 @@
 		4EF8999116E207E70040A527 /* CCParallaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF8998516E207E70040A527 /* CCParallaxNode.h */; };
 		4EF8999216E207E70040A527 /* CCTileMapAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EF8998616E207E70040A527 /* CCTileMapAtlas.cpp */; };
 		4EF8999316E207E70040A527 /* CCTileMapAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF8998716E207E70040A527 /* CCTileMapAtlas.h */; };
+		920BE0B01B160D940010892D /* SuperAnimCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 920BE0AC1B160D940010892D /* SuperAnimCommon.h */; };
+		920BE0B11B160D940010892D /* SuperAnimCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 920BE0AD1B160D940010892D /* SuperAnimCore.cpp */; };
+		920BE0B21B160D940010892D /* SuperAnimNodeV2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 920BE0AE1B160D940010892D /* SuperAnimNodeV2.cpp */; };
+		920BE0B31B160D940010892D /* SuperAnimNodeV2.h in Headers */ = {isa = PBXBuildFile; fileRef = 920BE0AF1B160D940010892D /* SuperAnimNodeV2.h */; };
 		920F07B91AED18D0009AAA06 /* auxiliar.c in Sources */ = {isa = PBXBuildFile; fileRef = 920F07981AED18D0009AAA06 /* auxiliar.c */; };
 		920F07BA1AED18D0009AAA06 /* auxiliar.h in Headers */ = {isa = PBXBuildFile; fileRef = 920F07991AED18D0009AAA06 /* auxiliar.h */; };
 		920F07BB1AED18D0009AAA06 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 920F079A1AED18D0009AAA06 /* buffer.c */; };
@@ -1104,6 +1108,10 @@
 		4EF8998516E207E70040A527 /* CCParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParallaxNode.h; sourceTree = "<group>"; };
 		4EF8998616E207E70040A527 /* CCTileMapAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTileMapAtlas.cpp; sourceTree = "<group>"; };
 		4EF8998716E207E70040A527 /* CCTileMapAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTileMapAtlas.h; sourceTree = "<group>"; };
+		920BE0AC1B160D940010892D /* SuperAnimCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperAnimCommon.h; sourceTree = "<group>"; };
+		920BE0AD1B160D940010892D /* SuperAnimCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SuperAnimCore.cpp; sourceTree = "<group>"; };
+		920BE0AE1B160D940010892D /* SuperAnimNodeV2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SuperAnimNodeV2.cpp; sourceTree = "<group>"; };
+		920BE0AF1B160D940010892D /* SuperAnimNodeV2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperAnimNodeV2.h; sourceTree = "<group>"; };
 		920F07981AED18D0009AAA06 /* auxiliar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = auxiliar.c; sourceTree = "<group>"; };
 		920F07991AED18D0009AAA06 /* auxiliar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = auxiliar.h; sourceTree = "<group>"; };
 		920F079A1AED18D0009AAA06 /* buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = buffer.c; sourceTree = "<group>"; };
@@ -2496,6 +2504,17 @@
 			path = user_default;
 			sourceTree = "<group>";
 		};
+		920BE0AB1B160D940010892D /* SuperAnim */ = {
+			isa = PBXGroup;
+			children = (
+				920BE0AC1B160D940010892D /* SuperAnimCommon.h */,
+				920BE0AD1B160D940010892D /* SuperAnimCore.cpp */,
+				920BE0AE1B160D940010892D /* SuperAnimNodeV2.cpp */,
+				920BE0AF1B160D940010892D /* SuperAnimNodeV2.h */,
+			);
+			path = SuperAnim;
+			sourceTree = "<group>";
+		};
 		920F07951AED18D0009AAA06 /* luasocket */ = {
 			isa = PBXGroup;
 			children = (
@@ -2561,6 +2580,7 @@
 				92FAF4D81A81F1B400E2E718 /* AssetsManager */,
 				927FE42F1A4570890065F052 /* CocoStudio */,
 				921111081A2B4D89003FE653 /* GUI */,
+				920BE0AB1B160D940010892D /* SuperAnim */,
 			);
 			name = extensions;
 			path = ../../extensions;
@@ -3961,6 +3981,7 @@
 				92AA13141AC4F7BC0066041C /* CCBase64.h in Headers */,
 				929D536B1A27582F00560A2E /* VectorImpl.h in Headers */,
 				92AA13951AC4FD510066041C /* ZipUtils.h in Headers */,
+				920BE0B01B160D940010892D /* SuperAnimCommon.h in Headers */,
 				929D53631A27582F00560A2E /* String8.h in Headers */,
 				92AA13861AC4FD430066041C /* CCResourceLoaderListener.h in Headers */,
 				1551A6EC158F2ADE00E66CFE /* CCMotionStreak.h in Headers */,
@@ -4047,6 +4068,7 @@
 				92A7AF5B1A3C4038001C830B /* CCArcticConstants.h in Headers */,
 				92A7AFFD1A3C7377001C830B /* CCShake.h in Headers */,
 				1551A737158F2ADE00E66CFE /* CCGL.h in Headers */,
+				920BE0B31B160D940010892D /* SuperAnimNodeV2.h in Headers */,
 				1551A73A158F2ADE00E66CFE /* CCLock.h in Headers */,
 				1551A73B158F2ADE00E66CFE /* CCPlatformDefine.h in Headers */,
 				92AA135C1AC4FA760066041C /* CCGeometry.h in Headers */,
@@ -4543,6 +4565,7 @@
 				927FE51C1A45708A0065F052 /* CCArmature.cpp in Sources */,
 				927FE5991A45708A0065F052 /* ScrollViewReader.cpp in Sources */,
 				927FE5281A45708A0065F052 /* CCDisplayManager.cpp in Sources */,
+				920BE0B21B160D940010892D /* SuperAnimNodeV2.cpp in Sources */,
 				92A7AF7E1A3C4038001C830B /* CCSPX3Manager.cpp in Sources */,
 				1551A6F7158F2ADE00E66CFE /* CCParticleSystemQuad.cpp in Sources */,
 				92AA13171AC4F7BC0066041C /* ccUTF8.cpp in Sources */,
@@ -4650,6 +4673,7 @@
 				1551A85B158F2ADF00E66CFE /* CCTextureAtlas.cpp in Sources */,
 				1551A85D158F2ADF00E66CFE /* CCTextureCache.cpp in Sources */,
 				927FE54E1A45708A0065F052 /* LayoutParameter.cpp in Sources */,
+				920BE0B11B160D940010892D /* SuperAnimCore.cpp in Sources */,
 				92A7AF751A3C4038001C830B /* CCSPX3Action.cpp in Sources */,
 				928F64CF1A33EF7600178235 /* CCJSONObject.cpp in Sources */,
 				927FE5971A45708A0065F052 /* PageViewReader.cpp in Sources */,
