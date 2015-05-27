@@ -1,5 +1,5 @@
 //
-//	SuperAnimNodeV2.cpp
+//	CCSuperAnimV2.cpp
 //
 //  Created by Raymond Lu(Raymondlu1105@qq.com)
 //  
@@ -24,7 +24,7 @@
 //  THE SOFTWARE.
 //
 
-#include "SuperAnimNodeV2.h"
+#include "CCSuperAnim.h"
 
 NS_CC_EXT_BEGIN
 
@@ -322,7 +322,7 @@ enum AnimState
 	kAnimStatePause
 };
 
-SuperAnimNode::SuperAnimNode()
+CCSuperAnim::CCSuperAnim()
 {
 	mId = -1;
 	mListener = NULL;
@@ -332,7 +332,7 @@ SuperAnimNode::SuperAnimNode()
 	mIsFlipX = mIsFlipY = false;
 }
 
-SuperAnimNode::~SuperAnimNode()
+CCSuperAnim::~CCSuperAnim()
 {
 	tryUnloadSpirteSheet();
 	while (mReplacedSpriteMap.size() > 0) {
@@ -342,24 +342,24 @@ SuperAnimNode::~SuperAnimNode()
 	}
 }
 
-SuperAnimNode *SuperAnimNode::create(const std::string& theAbsAnimFile, int theId) {
+CCSuperAnim *CCSuperAnim::create(const std::string& theAbsAnimFile, int theId) {
     return create(theAbsAnimFile, theId, NULL);
 }
 
-SuperAnimNode *SuperAnimNode::create(const std::string& theAbsAnimFile, int theId, SuperAnimNodeListener *theListener)
+CCSuperAnim *CCSuperAnim::create(const std::string& theAbsAnimFile, int theId, CCSuperAnimListener *theListener)
 {
-	SuperAnimNode *aSuperAnimNode = new SuperAnimNode();
-	if (aSuperAnimNode == NULL)
+	CCSuperAnim *aCCSuperAnim = new CCSuperAnim();
+	if (aCCSuperAnim == NULL)
 	{
 		return NULL;
 	}
-	if (aSuperAnimNode->Init(theAbsAnimFile, theId, theListener) == false)
+	if (aCCSuperAnim->Init(theAbsAnimFile, theId, theListener) == false)
 	{
-		delete aSuperAnimNode;
+		delete aCCSuperAnim;
 		return NULL;
 	}
-	aSuperAnimNode->autorelease();
-	return aSuperAnimNode;
+	aCCSuperAnim->autorelease();
+	return aCCSuperAnim;
 }
 
 bool hasFile(std::string theFileFullPath){
@@ -376,7 +376,7 @@ bool hasFile(std::string theFileFullPath){
     return hasFile;
 }
 
-bool SuperAnimNode::Init(const std::string& theAbsAnimFile, int theId, SuperAnimNodeListener *theListener)
+bool CCSuperAnim::Init(const std::string& theAbsAnimFile, int theId, CCSuperAnimListener *theListener)
 {
 	// try to load the sprite sheet file
 	mSpriteSheetFileFullPath = theAbsAnimFile.substr(0, theAbsAnimFile.find_last_of('.') + 1) + "plist";
@@ -409,7 +409,7 @@ bool SuperAnimNode::Init(const std::string& theAbsAnimFile, int theId, SuperAnim
 	return true;
 }
 
-void SuperAnimNode::tryLoadSpriteSheet(){
+void CCSuperAnim::tryLoadSpriteSheet(){
 	if (hasFile(mSpriteSheetFileFullPath)) {
 		CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(mSpriteSheetFileFullPath.c_str());
 		std::string aTexturePath = mSpriteSheetFileFullPath.substr(0, mSpriteSheetFileFullPath.find_last_of('.') + 1) + "png";
@@ -418,25 +418,25 @@ void SuperAnimNode::tryLoadSpriteSheet(){
 	}
 }
 
-void SuperAnimNode::tryUnloadSpirteSheet(){
+void CCSuperAnim::tryUnloadSpirteSheet(){
 	if (hasFile(mSpriteSheetFileFullPath)) {
 		CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile(mSpriteSheetFileFullPath.c_str());
 	}
 }
 
-void SuperAnimNode::setFlipX(bool isFlip){
+void CCSuperAnim::setFlipX(bool isFlip){
 	mIsFlipX = isFlip;
 }
 
-void SuperAnimNode::setFlipY(bool isFlip){
+void CCSuperAnim::setFlipY(bool isFlip){
 	mIsFlipY = isFlip;
 }
 
-bool SuperAnimNode::isFlipX() {
+bool CCSuperAnim::isFlipX() {
     return mIsFlipX;
 }
 
-bool SuperAnimNode::isFlipY() {
+bool CCSuperAnim::isFlipY() {
     return mIsFlipY;
 }
 
@@ -459,7 +459,7 @@ inline ccV3F_C4B_T2F_Quad operator*(const SuperAnimMatrix3 &theMatrix3, const cc
 	return aNewQuad;
 }
 
-void SuperAnimNode::draw()
+void CCSuperAnim::draw()
 {
 	if (mAnimState == kAnimStateInvalid ||
 		mAnimState == kAnimStateInitialized)
@@ -620,7 +620,7 @@ void SuperAnimNode::draw()
 	}
 }
 
-void SuperAnimNode::update(float dt)
+void CCSuperAnim::update(float dt)
 {
 	if (mAnimState != kAnimStatePlaying)
 	{
@@ -664,15 +664,15 @@ void SuperAnimNode::update(float dt)
 	}
 }
 
-bool SuperAnimNode::HasSection(const std::string &theLabelName){
+bool CCSuperAnim::HasSection(const std::string &theLabelName){
     return cocos2d::extension::HasSection(mAnimHandler, theLabelName);
 }
 
-void SuperAnimNode::setSpeedFactor(float theNewSpeedFactor){
+void CCSuperAnim::setSpeedFactor(float theNewSpeedFactor){
 	mSpeedFactor = theNewSpeedFactor;
 }
 
-bool SuperAnimNode::PlaySection(const std::string &theLabel, bool isLoop)
+bool CCSuperAnim::PlaySection(const std::string &theLabel, bool isLoop)
 {
 	if (mAnimState == kAnimStateInvalid)
 	{
@@ -707,37 +707,37 @@ bool SuperAnimNode::PlaySection(const std::string &theLabel, bool isLoop)
 	return false;
 }
 
-void SuperAnimNode::Pause()
+void CCSuperAnim::Pause()
 {
 	mAnimState = kAnimStatePause;
 }
 
-void SuperAnimNode::Resume()
+void CCSuperAnim::Resume()
 {
 	mAnimState = kAnimStatePlaying;
 }
 
-bool SuperAnimNode::IsPause(){
+bool CCSuperAnim::IsPause(){
 	return mAnimState == kAnimStatePause;
 }
 
-bool SuperAnimNode::IsPlaying(){
+bool CCSuperAnim::IsPlaying(){
 	return mAnimState == kAnimStatePlaying;
 }
 
-int SuperAnimNode::GetCurFrame(){
+int CCSuperAnim::GetCurFrame(){
 	return (int)mAnimHandler.mCurFrameNum;
 }
 
-int SuperAnimNode::GetId(){
+int CCSuperAnim::GetId(){
 	return mId;
 }
 
-std::string SuperAnimNode::GetCurSectionName(){
+std::string CCSuperAnim::GetCurSectionName(){
 	return mAnimHandler.mCurLabel;
 }
 
-void SuperAnimNode::replaceSprite(const std::string &theOriginSpriteName, const std::string &theNewSpriteName){
+void CCSuperAnim::replaceSprite(const std::string &theOriginSpriteName, const std::string &theNewSpriteName){
 	SuperAnimSpriteId anOriginSpriteId = InvalidSuperAnimSpriteId;
 	SuperAnimSpriteId aCurSpriteId;
 	SuperAnimSpriteMgr::GetInstance()->BeginIterateSpriteId();
@@ -758,7 +758,7 @@ void SuperAnimNode::replaceSprite(const std::string &theOriginSpriteName, const 
 		CCAssert(false, "Original sprite should exist.");
 	}
 }
-void SuperAnimNode::resumeSprite(const std::string &theOriginSpriteName){
+void CCSuperAnim::resumeSprite(const std::string &theOriginSpriteName){
 	SuperAnimSpriteId anOriginSpriteId = InvalidSuperAnimSpriteId;
 	SuperAnimSpriteId aCurSpriteId;
 	SuperAnimSpriteMgr::GetInstance()->BeginIterateSpriteId();
@@ -781,7 +781,7 @@ void SuperAnimNode::resumeSprite(const std::string &theOriginSpriteName){
 }
 
 // for time event
-void SuperAnimNode::registerTimeEvent(const std::string &theLabel, float theTimeFactor, int theEventId){
+void CCSuperAnim::registerTimeEvent(const std::string &theLabel, float theTimeFactor, int theEventId){
 	if (HasSection(theLabel) == false) {
 		CCAssert(false, "Label not existed.");
 		return;
@@ -792,7 +792,7 @@ void SuperAnimNode::registerTimeEvent(const std::string &theLabel, float theTime
 	TimeEventInfoArray &aTimeEventInfoArray = mLabelNameToTimeEventInfoArrayMap[theLabel];
 	aTimeEventInfoArray.push_back(aTimeEventInfo);
 }
-void SuperAnimNode::removeTimeEvent(const std::string &theLabel, int theEventId){
+void CCSuperAnim::removeTimeEvent(const std::string &theLabel, int theEventId){
 	if (HasSection(theLabel) == false) {
 		CCAssert(false, "Label not existed.");
 		return;

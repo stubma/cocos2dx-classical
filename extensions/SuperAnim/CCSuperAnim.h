@@ -1,5 +1,5 @@
 //
-//	SuperAnimNodeV2.h
+//	CCSuperAnimV2.h
 //
 //  Created by Raymond Lu(Raymondlu1105@qq.com)
 //  
@@ -23,28 +23,28 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //
-#ifndef SuperAnimNode_H
-#define SuperAnimNode_H
+#ifndef CCSuperAnim_H
+#define CCSuperAnim_H
 
 #include "cocos2d.h"
-#include "SuperAnimCommon.h"
+#include "CCSuperAnimCommon.h"
 #include "ExtensionMacros.h"
 
 using namespace cocos2d;
 
 NS_CC_EXT_BEGIN
 
-class SuperAnimNodeListener
+class CCSuperAnimListener
 {
 public:
     virtual void OnAnimSectionEnd(int theId, std::string theLabelName){}
     virtual void OnTimeEvent(int theId, std::string theLabelName, int theEventId){}
 };
-class SuperAnimNode : public CCNode
+class CCSuperAnim : public CCNode
 {
 private:
     int mId;
-    SuperAnimNodeListener *mListener;
+    CCSuperAnimListener *mListener;
     SuperAnimHandler mAnimHandler;
     bool mIsLoop;
     int mAnimState;
@@ -71,12 +71,12 @@ private:
     LabelNameToTimeEventInfoArrayMap mLabelNameToTimeEventInfoArrayMap;
     TimeEventInfoArray mCurTimeEventInfoArray;
 public:
-    SuperAnimNode();
-    virtual ~SuperAnimNode();
-    static SuperAnimNode *create(const std::string& theAbsAnimFile, int theId);
-    static SuperAnimNode *create(const std::string& theAbsAnimFile, int theId, SuperAnimNodeListener *theListener);
+    CCSuperAnim();
+    virtual ~CCSuperAnim();
+    static CCSuperAnim *create(const std::string& theAbsAnimFile, int theId);
+    static CCSuperAnim *create(const std::string& theAbsAnimFile, int theId, CCSuperAnimListener *theListener);
 
-    bool Init(const std::string& theAbsAnimFile, int theId, SuperAnimNodeListener *theListener);
+    bool Init(const std::string& theAbsAnimFile, int theId, CCSuperAnimListener *theListener);
     void draw();
     void update(float dt);
     void setFlipX(bool isFlip);

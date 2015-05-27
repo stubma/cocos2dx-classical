@@ -47,6 +47,6 @@
 
 #include "AssetsManager/AssetsManager.h"
 
-#include "SuperAnim/SuperAnimNodeV2.h"
+#include "SuperAnim/CCSuperAnim.h"
 
 #endif /* __COCOS2D_EXT_H__ */

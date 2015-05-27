@@ -29,7 +29,7 @@
 #include <map>
 #include <algorithm>
 #include "cocos2d.h"
-#include "SuperAnimCommon.h"
+#include "CCSuperAnimCommon.h"
 #include "ExtensionMacros.h"
 
 #define SAM_VERSION 1
