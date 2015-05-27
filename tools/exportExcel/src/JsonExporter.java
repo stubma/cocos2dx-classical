@@ -79,30 +79,15 @@ public class JsonExporter extends BaseExporter {
 				
 				// get cell and check its type
 				Cell cell = row.getCell(j);
-				if (cell == null || cell.getCellType() == Cell.CELL_TYPE_BLANK) {
-					if (type.equalsIgnoreCase("int") || type.equalsIgnoreCase("Byte") || type.equalsIgnoreCase("float") || type.equalsIgnoreCase("bool")) {
+				if(cell == null) {
+					if (type.equalsIgnoreCase("int") || type.equalsIgnoreCase("Byte") ||
+							type.equalsIgnoreCase("float") || type.equalsIgnoreCase("bool")) {
 						rowJson.put(colName, 0);
 					} else {
 						rowJson.put(colName, "");
 					}
-				} else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-					if(type.equalsIgnoreCase("luafunc")) {
-						String lua = cell.getStringCellValue();
-						lua = lua.replace("\n", "\\n");
-						lua = lua.replace("\r", "\\r");
-						rowJson.put(colName, lua);
-					} else {
-						rowJson.put(colName, cell.getStringCellValue());
-					}
-				} else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-					if(type.equalsIgnoreCase("int") || type.equalsIgnoreCase("Byte")) 
-						rowJson.put(colName, (int)cell.getNumericCellValue());
-					else
-						rowJson.put(colName, cell.getNumericCellValue());
-				} else if(cell.getCellType() == Cell.CELL_TYPE_BOOLEAN) {
-					rowJson.put(colName, cell.getBooleanCellValue() ? "true" : "false");
-				} else { // 公式
-					rowJson.put(colName, cell.getStringCellValue());
+				} else {
+					putToRowJson(rowJson, cell, cell.getCellType(), colName, type);
 				}
 			}
 		}
@@ -111,6 +96,38 @@ public class JsonExporter extends BaseExporter {
 		String className = "X" + firstCapital(sheet.getSheetName());
 		String jsonPath = new File(file.getParentFile(), className + ".json").getAbsolutePath();
 		writeFile(jsonPath, json.toJSONString());
+	}
+	
+	private void putToRowJson(JSONObject rowJson, Cell cell, int cellType, String colName, String colType) {
+		if (cellType == Cell.CELL_TYPE_BLANK) {
+			if (colType.equalsIgnoreCase("int") || colType.equalsIgnoreCase("Byte") ||
+					colType.equalsIgnoreCase("float") || colType.equalsIgnoreCase("bool")) {
+				rowJson.put(colName, 0);
+			} else {
+				rowJson.put(colName, "");
+			}
+		} else if (cellType == Cell.CELL_TYPE_STRING) {
+			if(colType.equalsIgnoreCase("luafunc")) {
+				String lua = cell.getStringCellValue();
+				lua = lua.replace("\n", "\\n");
+				lua = lua.replace("\r", "\\r");
+				rowJson.put(colName, lua);
+			} else {
+				rowJson.put(colName, cell.getStringCellValue());
+			}
+		} else if (cellType == Cell.CELL_TYPE_NUMERIC) {
+			if(colType.equalsIgnoreCase("int") || colType.equalsIgnoreCase("Byte")) 
+				rowJson.put(colName, (int)cell.getNumericCellValue());
+			else
+				rowJson.put(colName, cell.getNumericCellValue());
+		} else if(cellType == Cell.CELL_TYPE_BOOLEAN) {
+			rowJson.put(colName, cell.getBooleanCellValue() ? "true" : "false");
+		} else if(cellType == Cell.CELL_TYPE_FORMULA) {
+			int fType = cell.getCachedFormulaResultType();
+			putToRowJson(rowJson, cell, fType, colName, colType);
+		} else { // CELL_TYPE_ERROR
+			rowJson.put(colName, cell.getStringCellValue());
+		}
 	}
 
 	public boolean isIndexStartFromZero() {
