@@ -88,6 +88,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 * setShaderProgram可以设置参数, 从而支持多个节点使用同一个shader但参数不同
 * CCNode添加了nodeToAncestorTransform, ancestorToNodeTransform, convertToParentSpace, convertToParentSpaceAR方法
 * 设计了一个资源打包工具, lpk_ui是它的图形界面, lpk_console是命令行工具, 不过这个工具我只是调试完成, 尚未在实际项目中验证, 而且引擎也需要修改来支持这个工具, 所以目前仅供参考
+* 集成了SuperAnimConverter工具和它的代码, 改名为CCSuperAnim, 为其添加了lua支持, HelloLua工程增加了SuperAnim的演示
 * Lua相关修改
 	* quick 3.x的binding generator工具移植完成, 名叫autolua, 引擎的lua绑定已经全部生成
 	* lua和luajit的库都已经预编译, 缺省使用luajit库, 如果想切换成lua, 可以编辑scripting/lua/Android.mk(for anroid)或cocos2dx/proj.ios/cocos2dx.xcodeproj(for ios)
@@ -154,6 +155,7 @@ Things Improved
 * setShaderProgram can specify uniform values so that one shader can be shared by many nodes
 * CCNode adds nodeToAncestorTransform, ancestorToNodeTransform, convertToParentSpace, convertToParentSpaceAR
 * add a tool for resource pack, lpk_ui is UI tool, lpk_console is command tool. However, it is not tested in a real project. It is only for your reference by so far.
+* Merge SuperAnimConverter.app and its code, rename it as CCSuperAnim and add lua support. There is a sample in HelloLua project
 * Lua related
 	* quick 3.x binding generator is migrated, renamed as autolua
 	* engine lua binding is generated
