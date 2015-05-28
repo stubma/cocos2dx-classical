@@ -125,6 +125,10 @@ cc.ResourceLoaderDone = "done"
 cc.AssetsManagerProgress = "progress"
 cc.AssetsManagerDone = "done"
 
+-- super animation event
+cc.SuperAnimEventTime = "time"
+cc.SuperAnimEventEnd = "end"
+
 -- point constants
 cc.CENTER = const(cc.p(0.5, 0.5))
 cc.RIGHT_TOP = const(cc.p(1, 1))

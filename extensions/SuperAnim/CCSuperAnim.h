@@ -70,10 +70,15 @@ private:
     typedef std::map<std::string, TimeEventInfoArray> LabelNameToTimeEventInfoArrayMap;
     LabelNameToTimeEventInfoArrayMap mLabelNameToTimeEventInfoArrayMap;
     TimeEventInfoArray mCurTimeEventInfoArray;
+    
+    // script handler
+    ccScriptFunction m_scriptHandler;
+    
 public:
     CCSuperAnim();
     virtual ~CCSuperAnim();
     static CCSuperAnim *create(const std::string& theAbsAnimFile, int theId);
+    static CCSuperAnim *create(const std::string& theAbsAnimFile, int theId, ccScriptFunction func);
     static CCSuperAnim *create(const std::string& theAbsAnimFile, int theId, CCSuperAnimListener *theListener);
 
     bool Init(const std::string& theAbsAnimFile, int theId, CCSuperAnimListener *theListener);

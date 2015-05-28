@@ -330,6 +330,7 @@ CCSuperAnim::CCSuperAnim()
 	mUseSpriteSheet = false;
 	mSpriteSheet = NULL;
 	mIsFlipX = mIsFlipY = false;
+    memset(&m_scriptHandler, 0, sizeof(ccScriptFunction));
 }
 
 CCSuperAnim::~CCSuperAnim()
@@ -340,13 +341,22 @@ CCSuperAnim::~CCSuperAnim()
 		SuperAnimSpriteMgr::GetInstance()->UnloadSuperSprite(anIter->second);
 		mReplacedSpriteMap.erase(anIter);
 	}
+    if(m_scriptHandler.handler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_scriptHandler.handler);
+    }
 }
 
-CCSuperAnim *CCSuperAnim::create(const std::string& theAbsAnimFile, int theId) {
+CCSuperAnim* CCSuperAnim::create(const std::string& theAbsAnimFile, int theId) {
     return create(theAbsAnimFile, theId, NULL);
 }
 
-CCSuperAnim *CCSuperAnim::create(const std::string& theAbsAnimFile, int theId, CCSuperAnimListener *theListener)
+CCSuperAnim* CCSuperAnim::create(const std::string& theAbsAnimFile, int theId, ccScriptFunction func) {
+    CCSuperAnim* sa = create(theAbsAnimFile, theId, NULL);
+    sa->m_scriptHandler = func;
+    return sa;
+}
+
+CCSuperAnim* CCSuperAnim::create(const std::string& theAbsAnimFile, int theId, CCSuperAnimListener *theListener)
 {
 	CCSuperAnim *aCCSuperAnim = new CCSuperAnim();
 	if (aCCSuperAnim == NULL)
@@ -641,6 +651,14 @@ void CCSuperAnim::update(float dt)
 			if (mListener) {
 				mListener->OnTimeEvent(mId, anIter->mLabelName, anIter->mEventId);
 			}
+            if(m_scriptHandler.handler) {
+                CCArray* pArrayArgs = CCArray::createWithCapacity(4);
+                pArrayArgs->addObject(CCString::create("time"));
+                pArrayArgs->addObject(CCInteger::create(mId));
+                pArrayArgs->addObject(CCString::create(anIter->mLabelName));
+                pArrayArgs->addObject(CCInteger::create(anIter->mEventId));
+                CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs);
+            }
 			break;
 		}
 	}
@@ -658,9 +676,18 @@ void CCSuperAnim::update(float dt)
 		PlaySection(mAnimHandler.mCurLabel, mIsLoop);
 	}
 	
-	if (isNewLabel && mListener)
+	if (isNewLabel)
 	{
-		mListener->OnAnimSectionEnd(mId, mAnimHandler.mCurLabel);
+        if(mListener) {
+            mListener->OnAnimSectionEnd(mId, mAnimHandler.mCurLabel);
+        }
+        if(m_scriptHandler.handler) {
+            CCArray* pArrayArgs = CCArray::createWithCapacity(3);
+            pArrayArgs->addObject(CCString::create("end"));
+            pArrayArgs->addObject(CCInteger::create(mId));
+            pArrayArgs->addObject(CCString::create(mAnimHandler.mCurLabel));
+            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs);
+        }
 	}
 }
 
