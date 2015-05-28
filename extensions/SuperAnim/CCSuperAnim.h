@@ -40,6 +40,17 @@ public:
     virtual void OnAnimSectionEnd(int theId, std::string theLabelName){}
     virtual void OnTimeEvent(int theId, std::string theLabelName, int theEventId){}
 };
+
+/**
+ * to handle event in lua side, you need add a lua function handler looks like below
+     function XXX:onSuperAnimEvent(sa, e, id, label, ...)
+        if e == cc.SuperAnimEventTime then
+            -- for time event, has event id arg
+            local eventId = ...
+        elseif e == cc.SuperAnimEventEnd then
+        end
+     end
+ */
 class CCSuperAnim : public CCNode
 {
 private:
@@ -115,17 +126,6 @@ private:
     void tryLoadSpriteSheet();
     void tryUnloadSpirteSheet();
 };
-
-// If you want to load super animation file before create super anim node,
-// call this function.
-extern bool LoadAnimFileExt(const std::string &theAbsAnimFile);
-
-// super animation file is loaded automatically when creating super anim node, then stored in a cache.
-// if you want to unload it, call this function.
-// P.S.: the textures used in animation are still in memory after call the function.
-// cocos2d keep a reference to these textures, call removeUnusedTextures by yourself
-// to remove those texture.
-extern void UnloadAnimFileExt(const std::string &theAbsAnimFile);
 
 NS_CC_EXT_END
 

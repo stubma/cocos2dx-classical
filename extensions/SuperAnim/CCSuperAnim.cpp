@@ -372,20 +372,6 @@ CCSuperAnim* CCSuperAnim::create(const std::string& theAbsAnimFile, int theId, C
 	return aCCSuperAnim;
 }
 
-bool hasFile(std::string theFileFullPath){
-	bool hasFile = false;
-	bool shouldPopupNoitify = CCFileUtils::sharedFileUtils()->isPopupNotify();
-	CCFileUtils::sharedFileUtils()->setPopupNotify(false);
-	size_t aSize;
-	unsigned char *aDataBuffer = CCFileUtils::sharedFileUtils()->getFileData(theFileFullPath.c_str(), "rb", &aSize);
-    if (aDataBuffer != NULL) {
-        CC_SAFE_DELETE_ARRAY(aDataBuffer);
-        hasFile = true;
-    }
-	CCFileUtils::sharedFileUtils()->setPopupNotify(shouldPopupNoitify);
-    return hasFile;
-}
-
 bool CCSuperAnim::Init(const std::string& theAbsAnimFile, int theId, CCSuperAnimListener *theListener)
 {
 	// try to load the sprite sheet file
@@ -420,18 +406,37 @@ bool CCSuperAnim::Init(const std::string& theAbsAnimFile, int theId, CCSuperAnim
 }
 
 void CCSuperAnim::tryLoadSpriteSheet(){
-	if (hasFile(mSpriteSheetFileFullPath)) {
-		CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(mSpriteSheetFileFullPath.c_str());
-		std::string aTexturePath = mSpriteSheetFileFullPath.substr(0, mSpriteSheetFileFullPath.find_last_of('.') + 1) + "png";
-		mSpriteSheet = CCTextureCache::sharedTextureCache()->addImage(aTexturePath.c_str());
-		mUseSpriteSheet = true;
-	}
+    // load sprite frame info
+    string fullPath = CCUtils::getExternalOrFullPath(mSpriteSheetFileFullPath);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(fullPath.c_str());
+    
+    // search texture, search pvr first
+    string filenameWithExt = mSpriteSheetFileFullPath.substr(0, mSpriteSheetFileFullPath.find_last_of('.') + 1);
+    string tex = filenameWithExt + "pvr.ccz";
+    string texFullPath = CCUtils::getExternalOrFullPath(tex);
+    if(!CCUtils::isPathExistent(texFullPath)) {
+        tex = filenameWithExt + "pvr";
+        texFullPath = CCUtils::getExternalOrFullPath(tex);
+        if(!CCUtils::isPathExistent(texFullPath)) {
+            tex = filenameWithExt + "png";
+            texFullPath = CCUtils::getExternalOrFullPath(tex);
+            if(!CCUtils::isPathExistent(texFullPath)) {
+                tex = filenameWithExt + "jpg";
+                texFullPath = CCUtils::getExternalOrFullPath(tex);
+                if(!CCUtils::isPathExistent(texFullPath)) {
+                    return;
+                }
+            }
+        }
+    }
+    
+    // create sprite sheet
+    mSpriteSheet = CCTextureCache::sharedTextureCache()->addImage(tex.c_str());
+    mUseSpriteSheet = true;
 }
 
 void CCSuperAnim::tryUnloadSpirteSheet(){
-	if (hasFile(mSpriteSheetFileFullPath)) {
-		CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile(mSpriteSheetFileFullPath.c_str());
-	}
+    CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile(mSpriteSheetFileFullPath.c_str());
 }
 
 void CCSuperAnim::setFlipX(bool isFlip){
@@ -652,7 +657,8 @@ void CCSuperAnim::update(float dt)
 				mListener->OnTimeEvent(mId, anIter->mLabelName, anIter->mEventId);
 			}
             if(m_scriptHandler.handler) {
-                CCArray* pArrayArgs = CCArray::createWithCapacity(4);
+                CCArray* pArrayArgs = CCArray::createWithCapacity(5);
+                pArrayArgs->addObject(this);
                 pArrayArgs->addObject(CCString::create("time"));
                 pArrayArgs->addObject(CCInteger::create(mId));
                 pArrayArgs->addObject(CCString::create(anIter->mLabelName));
@@ -682,7 +688,8 @@ void CCSuperAnim::update(float dt)
             mListener->OnAnimSectionEnd(mId, mAnimHandler.mCurLabel);
         }
         if(m_scriptHandler.handler) {
-            CCArray* pArrayArgs = CCArray::createWithCapacity(3);
+            CCArray* pArrayArgs = CCArray::createWithCapacity(4);
+            pArrayArgs->addObject(this);
             pArrayArgs->addObject(CCString::create("end"));
             pArrayArgs->addObject(CCInteger::create(mId));
             pArrayArgs->addObject(CCString::create(mAnimHandler.mCurLabel));
@@ -843,24 +850,6 @@ void CCSuperAnim::removeTimeEvent(const std::string &theLabel, int theEventId){
 			break;
 		}
 	}
-}
-
-bool LoadAnimFileExt(const std::string &theAbsAnimFile){
-	// try to load the sprite sheet file
-	std::string aSpriteSheetFileFullPath = theAbsAnimFile.substr(0, theAbsAnimFile.find_last_of('.') + 1) + "plist";
-	if (hasFile(aSpriteSheetFileFullPath)) {
-		CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(aSpriteSheetFileFullPath.c_str());
-	}
-	return LoadAnimFile(theAbsAnimFile);
-}
-
-void UnloadAnimFileExt(const std::string &theAbsAnimFile){
-	// try to unload the sprite sheet file
-	std::string aSpriteSheetFileFullPath = theAbsAnimFile.substr(0, theAbsAnimFile.find_last_of('.') + 1) + "plist";
-	if (hasFile(aSpriteSheetFileFullPath)) {
-		CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile(aSpriteSheetFileFullPath.c_str());
-	}
-	return UnloadAnimFile(theAbsAnimFile);
 }
 
 NS_CC_EXT_END
