@@ -11,7 +11,7 @@
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{10,11}}</string>
                 <key>sourceSize</key>
@@ -33,11 +33,11 @@
             <key>fish_12x13.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{57,244},{12,13}}</string>
+                <string>{{55,244},{12,13}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{12,13}}</string>
                 <key>sourceSize</key>
@@ -46,11 +46,11 @@
             <key>fish_12x25.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{30,244},{12,25}}</string>
+                <string>{{0,290},{12,25}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{12,25}}</string>
                 <key>sourceSize</key>
@@ -59,11 +59,11 @@
             <key>fish_12x28.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{0,244},{12,28}}</string>
+                <string>{{242,127},{12,28}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{12,28}}</string>
                 <key>sourceSize</key>
@@ -72,7 +72,7 @@
             <key>fish_13x15.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{108,228},{13,15}}</string>
+                <string>{{242,110},{13,15}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -85,7 +85,7 @@
             <key>fish_14x21.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{193,227},{14,21}}</string>
+                <string>{{242,87},{14,21}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -98,7 +98,7 @@
             <key>fish_15x17.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{209,227},{15,17}}</string>
+                <string>{{38,241},{15,17}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -111,11 +111,11 @@
             <key>fish_16x26.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{218,183},{16,26}}</string>
+                <string>{{145,183},{16,26}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{16,26}}</string>
                 <key>sourceSize</key>
@@ -124,7 +124,7 @@
             <key>fish_17x19.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{173,207},{17,19}}</string>
+                <string>{{239,182},{17,19}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -137,7 +137,7 @@
             <key>fish_17x23.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{173,182},{17,23}}</string>
+                <string>{{239,157},{17,23}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -163,7 +163,7 @@
             <key>fish_20x22.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{171,228},{20,22}}</string>
+                <string>{{38,217},{20,22}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -176,7 +176,7 @@
             <key>fish_20x30.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{149,226},{20,30}}</string>
+                <string>{{62,212},{20,30}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -189,11 +189,11 @@
             <key>fish_20x50.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{198,87},{20,50}}</string>
+                <string>{{62,160},{20,50}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{20,50}}</string>
                 <key>sourceSize</key>
@@ -202,7 +202,7 @@
             <key>fish_21x23.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{192,202},{21,23}}</string>
+                <string>{{62,135},{21,23}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -215,7 +215,7 @@
             <key>fish_25x22.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{81,228},{25,22}}</string>
+                <string>{{165,170},{25,22}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -228,11 +228,11 @@
             <key>fish_30x24.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{123,226},{30,24}}</string>
+                <string>{{165,144},{30,24}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{30,24}}</string>
                 <key>sourceSize</key>
@@ -241,7 +241,7 @@
             <key>fish_30x33.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{218,148},{30,33}}</string>
+                <string>{{165,109},{30,33}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -254,7 +254,7 @@
             <key>fish_32x37.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{218,109},{32,37}}</string>
+                <string>{{38,260},{32,37}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -267,7 +267,7 @@
             <key>fish_36x71.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{154,109},{36,71}}</string>
+                <string>{{0,217},{36,71}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -280,7 +280,7 @@
             <key>fish_40x55.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{81,171},{40,55}}</string>
+                <string>{{197,137},{40,55}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -293,11 +293,11 @@
             <key>fish_42x48.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{123,182},{42,48}}</string>
+                <string>{{198,87},{42,48}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{42,48}}</string>
                 <key>sourceSize</key>
@@ -319,11 +319,11 @@
             <key>fish_59x79.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{0,183},{59,79}}</string>
+                <string>{{84,183},{59,79}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{59,79}}</string>
                 <key>sourceSize</key>
@@ -332,11 +332,11 @@
             <key>fish_60x80.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{72,109},{60,80}}</string>
+                <string>{{0,135},{60,80}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{60,80}}</string>
                 <key>sourceSize</key>
@@ -345,7 +345,7 @@
             <key>fish_70x72.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{0,109},{70,72}}</string>
+                <string>{{93,109},{70,72}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -358,7 +358,7 @@
             <key>fish_7x7.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{72,244},{7,7}}</string>
+                <string>{{245,37},{7,7}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -371,7 +371,7 @@
             <key>fish_7x7_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{72,171},{7,7}}</string>
+                <string>{{245,28},{7,7}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -384,11 +384,11 @@
             <key>fish_91x24.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{192,109},{91,24}}</string>
+                <string>{{0,109},{91,24}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{91,24}}</string>
                 <key>sourceSize</key>
@@ -402,9 +402,9 @@
             <key>realTextureFileName</key>
             <string>fish.pvr.ccz</string>
             <key>size</key>
-            <string>{256,256}</string>
+            <string>{256,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:079c8e0b2e3fde7be2e8cc5ff2b0540e:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:f4d6651b701f330bdb02340b682526cc:1/1$</string>
             <key>textureFileName</key>
             <string>fish.pvr.ccz</string>
         </dict>

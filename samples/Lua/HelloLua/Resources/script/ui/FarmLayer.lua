@@ -71,11 +71,26 @@ function FarmLayer:ctor()
     self.spriteDog = creatDog()
     self:addChild(self.spriteDog)
     
+    -- put a super animation in center, play one time and remove it
+    local fish = CCSuperAnim:create("fish.sam", 0, { target = self, handler = FarmLayer.onSuperAnimEvent })
+    fish:setPosition(CCUtils:getLocalCenter(self))
+    self:addChild(fish)
+    fish:PlaySection("active")
+    
     -- register a touch handler which is a instance method
     self:registerScriptTouchHandler({ target = self, handler = FarmLayer.onTouch })
     self:setTouchEnabled(true)
     self:setTouchMode(cc.TouchesOneByOne)
     return self
+end
+
+function FarmLayer:onSuperAnimEvent(sa, e, id, label, ...)
+    if e == cc.SuperAnimEventTime then
+        -- for time event, has event id arg
+        local eventId = ...
+    elseif e == cc.SuperAnimEventEnd then
+        sa:removeFromParent()
+    end
 end
 
 function FarmLayer:onTouch(eventType, x, y, tid)
