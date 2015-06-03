@@ -41,6 +41,7 @@ cc.NodeOnExit = "exit"
 cc.NodeOnEnterTransitionDidFinish = "enterTransitionFinish"
 cc.NodeOnExitTransitionDidStart = "exitTransitionStart"
 cc.NodeOnCleanup = "cleanup"
+cc.NodeOnChildWillDetach = "child_detach"
 
 -- touch event type
 cc.TOUCH_EVENT_BEGAN = "began"

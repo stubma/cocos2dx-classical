@@ -89,6 +89,7 @@ CCNode::CCNode(void)
 , m_bIgnoreAnchorPointForPosition(false)
 , m_bReorderChildDirty(false)
 , m_pComponentContainer(NULL)
+, m_bInformDetach(false)
 {
     // set default scheduler and actionManager
     CCDirector *director = CCDirector::sharedDirector();
@@ -671,6 +672,12 @@ void CCNode::removeFromParentAndCleanup(bool cleanup)
 {
     if (m_pParent != NULL)
     {
+        // to notify parent if flag is set
+        if(m_bInformDetach) {
+            m_pParent->onChildWillDetach(this);
+        }
+        
+        // remove
         m_pParent->removeChild(this,cleanup);
     } 
 }
@@ -938,9 +945,21 @@ void CCNode::transform()
         if( translate )
             kmGLTranslatef(RENDER_IN_SUBPIXEL(-m_obAnchorPointInPoints.x), RENDER_IN_SUBPIXEL(-m_obAnchorPointInPoints.y), 0 );
     }
-
 }
 
+void CCNode::onChildWillDetach(CCNode* child) {
+    // to notify script side
+    if (m_nScriptHandler.handler) {
+        CCArray* pArrayArgs = CCArray::createWithCapacity(2);
+        pArrayArgs->addObject(CCString::create("child_detach"));
+        pArrayArgs->addObject(child);
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_nScriptHandler, pArrayArgs);
+    }
+}
+
+void CCNode::enableDetachReport() {
+    m_bInformDetach = true;
+}
 
 void CCNode::onEnter()
 {

@@ -987,6 +987,15 @@ public:
      * @lua NA
      */
     virtual void onExitTransitionDidStart();
+    
+    /**
+     * event callback that is called when a child node will call removeFromParent. The child node
+     * must set m_bInformDetach to true otherwise this won't be invoked
+     */
+    virtual void onChildWillDetach(CCNode* child);
+    
+    /// set inform detach flag
+    virtual void enableDetachReport();
 
     /// @} end of event callbacks.
 
@@ -1519,6 +1528,10 @@ protected:
                                           ///< Used by CCLayer and CCScene.
     
     bool m_bReorderChildDirty;          ///< children order dirty flag
+    
+    /// when it is true, child will trigger a event to parent when it about to remove self from parent
+    /// it is only triggered by removeFromParent(), directly calling removeChild won't do anything
+    bool m_bInformDetach;
     
     ccScriptFunction m_nScriptHandler;               ///< script handler for onEnter() & onExit(), used in Javascript binding and Lua binding.
     
