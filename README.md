@@ -108,7 +108,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 	* table包增加了print, hasnumber, hasstring, fill, fillnew方法
 	* debug包增加了addtrace, removetrace方法
 	* tools下有xcode_lua_support工具, 可以为Xcode添加lua语法高亮
-	* 添加CCApplicationLua, 封装通用的初始化逻辑, 因此AppDelegate可以不再需要
+	* 添加CCApplicationLua, 封装通用的初始化逻辑, AppDelegate可以不再需要. applicationDidEnterBackground和applicationWillEnterForeground被导引到lua端.
 
 cocos2dx-better新加的其它功能我就不列举了, 目前cocos2dx-better的代码已经合并完成, 有一部分代码我感觉写的用处不大就没有合并了, 不过只是一小部分, 95%的cocos2dx-better代码已经合并.
 
@@ -178,7 +178,7 @@ Things Improved
 	* table package adds print, hasnumber, hasstring, fill, fillnew methods
 	* debug package adds addtrace, removetrace method
 	* xcode_lua_support tool, can add lua syntax highlight for Xcode
-	* add CCApplicationLua to encapsulate basic logic of lua app, so that AppDelegate can be eliminated
+	* add CCApplicationLua to encapsulate basic logic of lua app, so that AppDelegate can be eliminated. applicationDidEnterBackground and applicationWillEnterForeground are dispatched to lua side.
 	
 How to use CCImagePicker
 ==========================
