@@ -92,6 +92,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 * 集成了SuperAnimConverter工具和它的代码, 改名为CCSuperAnim, 为其添加了lua支持, HelloLua工程增加了SuperAnim的演示
 * Lua相关修改
 	* quick 3.x的binding generator工具移植完成, 名叫autolua, 引擎的lua绑定已经全部生成
+	* Cocos2dxLuaLoader的逻辑被修改, 会优先从~/Library/Cache下载入lua脚本, 如果没有找到则载入app的.
 	* lua和luajit的库都已经预编译, 缺省使用luajit库, 如果想切换成lua, 可以编辑scripting/lua/Android.mk(for anroid)或cocos2dx/proj.ios/cocos2dx.xcodeproj(for ios)
 	* HelloLua工程修改调试通过
 	* 使用ccScriptFunction代表一个脚本方法, 替代了原来使用int的方式. 引擎中注册脚本方法相关的代码都改成使用ccScriptFunction, 相应的牵涉到CCLuaEngine, CCLuaStack等都有不少修改, 脚本回调方法可以获得self参数, 解决了脚本回调方法中获取self不方便的问题
@@ -109,6 +110,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 	* debug包增加了addtrace, removetrace方法
 	* tools下有xcode_lua_support工具, 可以为Xcode添加lua语法高亮
 	* 添加CCApplicationLua, 封装通用的初始化逻辑, AppDelegate可以不再需要. applicationDidEnterBackground和applicationWillEnterForeground被导引到lua端.
+	* 在Cocos2dxLuaLoader.cpp中添加lua脚本解密支持. 可以通过CCScriptEngineManager设置一个外部解密方法.
 
 cocos2dx-better新加的其它功能我就不列举了, 目前cocos2dx-better的代码已经合并完成, 有一部分代码我感觉写的用处不大就没有合并了, 不过只是一小部分, 95%的cocos2dx-better代码已经合并.
 
@@ -163,6 +165,7 @@ Things Improved
 	* engine lua binding is generated
 	* lua and luajit are both precompiled, by default we use luajit. if you want to use lua, you can modify scripting/lua/Android.mk(for android) or cocos2dx/proj.ios/cocos2dx.xcodeproj(for ios)
 	* HelloLua project is debugged and fine
+	* Cocos2dxLuaLoader is modified so that it will try to load lua script from ~/Library/Cache first. If not found, load from app bundle.
 	* use ccScriptFunction struct to replace int handler, modified all related code
 	* make it easy to pass self parameter to script callback
 	* adding more shared library, in scripting/lua/script
@@ -179,6 +182,7 @@ Things Improved
 	* debug package adds addtrace, removetrace method
 	* xcode_lua_support tool, can add lua syntax highlight for Xcode
 	* add CCApplicationLua to encapsulate basic logic of lua app, so that AppDelegate can be eliminated. applicationDidEnterBackground and applicationWillEnterForeground are dispatched to lua side.
+	* add lua decryption support in Cocos2dLuaLoader.cpp, you can set an eternal decrypt function through CCScriptEngineManager
 	
 How to use CCImagePicker
 ==========================
