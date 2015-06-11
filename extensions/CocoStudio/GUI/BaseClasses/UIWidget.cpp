@@ -62,6 +62,8 @@ _color(ccWHITE),
 _opacity(255),
 _flippedX(false),
 _flippedY(false),
+m_acceptOuterTouchIfFullscreen(true),
+m_fullscreen(false),
 _scriptObjectDict(NULL)
 {
     memset(&m_scriptTouchHandler, 0, sizeof(ccScriptFunction));
@@ -520,6 +522,15 @@ void Widget::updateSizeAndPosition(const cocos2d::CCSize &parentSize)
             break;
     }
     setPosition(absPos);
+    
+    // check if it is full screen
+    CCRect bound = CCUtils::getBoundingBoxInWorldSpace(this);
+    CCPoint winSize = CCDirector::sharedDirector()->getWinSize();
+    if(bound.origin.x == 0 && bound.origin.y == 0 && bound.size.equals(winSize)) {
+        m_fullscreen = true;
+    } else {
+        m_fullscreen = false;
+    }
 }
 
 void Widget::setSizeType(SizeType type)
@@ -824,16 +835,28 @@ void Widget::removeScriptTouchEventListener() {
         m_scriptTouchHandler.handler = 0;
     }
 }
-
+    
+void Widget::setAcceptOuterTouchIfFullscreen(bool flag) {
+    m_acceptOuterTouchIfFullscreen = flag;
+}
+    
+bool Widget::isAcceptOuterTouchIfFullscreen() {
+    return m_acceptOuterTouchIfFullscreen;
+}
+    
 bool Widget::hitTest(const CCPoint &pt)
 {
-    CCPoint nsp = convertToNodeSpace(pt);
-    CCRect bb = CCRect(-_size.width * m_obAnchorPoint.x, -_size.height * m_obAnchorPoint.y, _size.width, _size.height);
-    if (nsp.x >= bb.origin.x && nsp.x <= bb.origin.x + bb.size.width && nsp.y >= bb.origin.y && nsp.y <= bb.origin.y + bb.size.height)
-    {
+    if(m_fullscreen && m_acceptOuterTouchIfFullscreen) {
         return true;
+    } else {
+        CCPoint nsp = convertToNodeSpace(pt);
+        CCRect bb = CCRect(-_size.width * m_obAnchorPoint.x, -_size.height * m_obAnchorPoint.y, _size.width, _size.height);
+        if (nsp.x >= bb.origin.x && nsp.x <= bb.origin.x + bb.size.width && nsp.y >= bb.origin.y && nsp.y <= bb.origin.y + bb.size.height)
+        {
+            return true;
+        }
+        return false;
     }
-    return false;
 }
 
 bool Widget::clippingParentAreaContainPoint(const CCPoint &pt)

@@ -173,13 +173,17 @@ bool Layout::isClippingEnabled()
     
 bool Layout::hitTest(const CCPoint &pt)
 {
-    CCPoint nsp = convertToNodeSpace(pt);
-    CCRect bb = CCRect(0.0f, 0.0f, _size.width, _size.height);
-    if (nsp.x >= bb.origin.x && nsp.x <= bb.origin.x + bb.size.width && nsp.y >= bb.origin.y && nsp.y <= bb.origin.y + bb.size.height)
-    {
+    if(m_fullscreen && m_acceptOuterTouchIfFullscreen) {
         return true;
+    } else {
+        CCPoint nsp = convertToNodeSpace(pt);
+        CCRect bb = CCRect(0.0f, 0.0f, _size.width, _size.height);
+        if (nsp.x >= bb.origin.x && nsp.x <= bb.origin.x + bb.size.width && nsp.y >= bb.origin.y && nsp.y <= bb.origin.y + bb.size.height)
+        {
+            return true;
+        }
+        return false;
     }
-    return false;
 }
     
 void Layout::visit()
