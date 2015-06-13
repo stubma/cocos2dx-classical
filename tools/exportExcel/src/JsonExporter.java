@@ -68,6 +68,9 @@ public class JsonExporter extends BaseExporter {
 				
 				// col name and quick reject empty col
 				String colName = fieldRow.getCell(j).getStringCellValue();
+				if(colName != null) {
+					colName = colName.trim();
+				}
 				if (colName == null || "".equals(colName))
 					continue;
 				colName = firstCapital(colName);
