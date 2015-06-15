@@ -1,6 +1,6 @@
 require("script/cocos/Cocos2d")
 
-display = {}
+display = display or {}
 
 local sharedDirector         = CCDirector:sharedDirector()
 local sharedTextureCache     = CCTextureCache:sharedTextureCache()
