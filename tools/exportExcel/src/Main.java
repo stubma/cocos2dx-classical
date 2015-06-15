@@ -43,9 +43,9 @@ public class Main {
 		container.add(bottom);
 
 		// add combo
-		String[] s = { 
-			"Excel to Json/C++",
-			"Excel to Json/Lua"
+		String[] s = {
+			"Excel to Json/Lua",
+			"Excel to Json/C++"
 		};
 		final JComboBox cmb = new JComboBox(s);
 		cmb.setBorder(BorderFactory.createTitledBorder("Export Type"));
@@ -53,6 +53,7 @@ public class Main {
 		
 		// json path editbox
 		final JTextField pathField = new JTextField();
+		pathField.setText("json");
 		pathField.setBorder(BorderFactory.createTitledBorder("Json File Folder"));
 		bottom.add(pathField);
 
@@ -84,10 +85,10 @@ public class Main {
 					JsonExporter je = new JsonExporter();
 					BaseExporter we = null;
 					switch (cmb.getSelectedIndex()) {
-						case 0:
+						case 1:
 							we = new CppExporter();
 							break;
-						case 1:
+						case 0:
 							we = new LuaExporter();
 							je.setGenerateIndexColumn(true);
 							je.setIndexStartFromZero(false);
