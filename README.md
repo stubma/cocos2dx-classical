@@ -91,6 +91,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 * CCNode添加了onChildWillDetach方法, 可以设置一个子节点在删除自身时父节点获得通知, 支持lua端收到通知
 * 设计了一个资源打包工具, lpk_ui是它的图形界面, lpk_console是命令行工具, 不过这个工具我只是调试完成, 尚未在实际项目中验证, 而且引擎也需要修改来支持这个工具, 所以目前仅供参考
 * 集成了SuperAnimConverter工具和它的代码, 改名为CCSuperAnim, 为其添加了lua支持, HelloLua工程增加了SuperAnim的演示
+* CCEGLViewProtocol添加了setMultipleTouchEnabled方法
 * Lua相关修改
 	* quick 3.x的binding generator工具移植完成, 名叫autolua, 引擎的lua绑定已经全部生成
 	* Cocos2dxLuaLoader的逻辑被修改, 会优先从~/Library/Cache下载入lua脚本, 如果没有找到则载入app的.
@@ -162,6 +163,7 @@ Things Improved
 * CCNode add onChildWillDetach, a child can notify parent when it removes self.
 * add a tool for resource pack, lpk_ui is UI tool, lpk_console is command tool. However, it is not tested in a real project. It is only for your reference by so far.
 * Merge SuperAnimConverter.app and its code, rename it as CCSuperAnim and add lua support. There is a sample in HelloLua project
+* CCEGLViewProtocol add setMultipleTouchEnabled method
 * Lua related
 	* quick 3.x binding generator is migrated, renamed as autolua
 	* engine lua binding is generated
