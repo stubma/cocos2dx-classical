@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "touch_dispatcher/CCTouchDispatcher.h"
 #include "jni/IMEJni.h"
+#include "jni/TouchesJni.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "CCGL.h"
 
@@ -90,6 +91,10 @@ CCEGLView* CCEGLView::sharedOpenGLView()
 void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
     setKeyboardStateJNI((int)bOpen);
+}
+
+void CCEGLView::setMultipleTouchEnabled(bool flag) {
+    setMultipleTouchEnabledJNI(flag);
 }
 
 NS_CC_END

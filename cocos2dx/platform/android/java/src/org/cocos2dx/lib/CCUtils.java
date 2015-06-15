@@ -36,6 +36,7 @@ import java.util.regex.MatchResult;
 import org.apache.http.conn.util.InetAddressUtils;
 
 import android.Manifest.permission;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -49,6 +50,8 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 
 public class CCUtils {
 	public static final String BOGOMIPS_PATTERN = "BogoMIPS[\\s]*:[\\s]*(\\d+\\.\\d+)[\\s]*\n";
@@ -238,6 +241,17 @@ public class CCUtils {
 		}
 		
 		return null;
+	}
+	
+	public static void setMultipleTouchEnabled(boolean flag) {
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			Activity act = (Activity)Cocos2dxActivity.getContext();
+			View v = act.getWindow().getDecorView();
+			if(v instanceof ViewGroup) {
+				ViewGroup vg = (ViewGroup)v;
+				vg.setMotionEventSplittingEnabled(!flag);
+			}	
+		}
 	}
 		
 	private static native void nativeExecuteCallFunc(long func);

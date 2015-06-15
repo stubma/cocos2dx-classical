@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#include "TouchesJni.h"
 #include "cocoa/CCSet.h"
 #include "CCDirector.h"
 #include "keypad_dispatcher/CCKeypadDispatcher.h"
@@ -34,6 +35,15 @@ THE SOFTWARE.
 using namespace cocos2d;
 
 extern "C" {
+    void setMultipleTouchEnabledJNI(bool flag) {
+        JniMethodInfo t;
+        jint ret = -1;
+        if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/CCUtils", "setMultipleTouchEnabled", "(Z)V")) {
+            t.env->CallStaticIntMethod(t.classID, t.methodID, flag);
+            t.env->DeleteLocalRef(t.classID);
+        }
+    }
+
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesBegin(JNIEnv * env, jobject thiz, jint id, jfloat x, jfloat y) {
         cocos2d::CCDirector::sharedDirector()->getOpenGLView()->handleTouchesBegin(1, &id, &x, &y);
     }

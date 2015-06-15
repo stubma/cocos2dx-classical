@@ -82,6 +82,10 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
     }
 }
 
+void CCEGLView::setMultipleTouchEnabled(bool flag) {
+    [[EAGLView sharedEGLView] setMultipleTouchEnabled:flag];
+}
+
 CCEGLView* CCEGLView::sharedOpenGLView()
 {
     static CCEGLView instance;

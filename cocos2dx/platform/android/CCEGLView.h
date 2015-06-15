@@ -43,6 +43,7 @@ public:
     void    terminate();
     void    swapBuffers();
     void    setIMEKeyboardState(bool bOpen);
+    virtual void setMultipleTouchEnabled(bool flag);
     
     // static function
     /**
