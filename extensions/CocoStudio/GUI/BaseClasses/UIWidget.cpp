@@ -846,7 +846,9 @@ bool Widget::isAcceptOuterTouchIfFullscreen() {
     
 bool Widget::hitTest(const CCPoint &pt)
 {
-    if(m_fullscreen && m_acceptOuterTouchIfFullscreen) {
+    if(!isVisibleInTree()) {
+        return false;
+    } else if(m_fullscreen && m_acceptOuterTouchIfFullscreen) {
         return true;
     } else {
         CCPoint nsp = convertToNodeSpace(pt);
