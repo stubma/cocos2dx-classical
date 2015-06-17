@@ -445,6 +445,13 @@ public:
      */
     virtual bool isVisible();
 
+    /**
+     * Determines if the node is visible in the ui tree, so if its ancestor is not visible, 
+     * it is invisible
+     *
+     * @return true if the node is visible in ui tree
+     */
+    virtual bool isVisibleInTree();
     
     /** 
      * Sets the rotation (angle) of the node in degrees. 

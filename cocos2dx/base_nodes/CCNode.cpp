@@ -399,6 +399,18 @@ void CCNode::setVisible(bool var)
     m_bVisible = var;
 }
 
+bool CCNode::isVisibleInTree() {
+    CCNode* p = this;
+    while(p != NULL) {
+        if(!p->isVisible()) {
+            return false;
+        } else {
+            p = p->getParent();
+        }
+    }
+    return true;
+}
+
 const CCPoint& CCNode::getAnchorPointInPoints()
 {
     return m_obAnchorPointInPoints;
