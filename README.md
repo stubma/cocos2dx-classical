@@ -69,6 +69,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 	* 由于CocoStudio Mac 1.0.0.0 beta没有骨骼动画功能, 需要使用骨骼动画时, 可以使用CocoStudio Windows版1.4.0.1, 1.4.0.1以上版本我没有测试过.
 	* Widget添加addScriptTouchEventListener以支持在lua处理Widget的触摸事件
 	* CCArmatureAnimation添加hasFrameEvent用于检测是否存在某个帧事件 
+	* 看不见的widget不再响应touch事件
 	* Widget添加了set/isAcceptOuterTouchIfFullscreen方法, 缺省为true. true表示当widget为全屏时, 可以处理落在渲染区域外的点击事件
 * 重新实现TMX地图, 支持一个层有多张贴图的情况(来自cocos2dx-better的CBTMXTileMap)
 * 重新实现CCTableView(来自cocos2dx-better中的CCGridView代码):
@@ -89,6 +90,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 * setShaderProgram可以设置参数, 从而支持多个节点使用同一个shader但参数不同
 * CCNode添加了nodeToAncestorTransform, ancestorToNodeTransform, convertToParentSpace, convertToParentSpaceAR方法
 * CCNode添加了onChildWillDetach方法, 可以设置一个子节点在删除自身时父节点获得通知, 支持lua端收到通知
+* CCNode添加了isVisibleInTree方法, 用来判断节点是否在ui树中可见
 * 设计了一个资源打包工具, lpk_ui是它的图形界面, lpk_console是命令行工具, 不过这个工具我只是调试完成, 尚未在实际项目中验证, 而且引擎也需要修改来支持这个工具, 所以目前仅供参考
 * 集成了SuperAnimConverter工具和它的代码, 改名为CCSuperAnim, 为其添加了lua支持, HelloLua工程增加了SuperAnim的演示
 * CCEGLViewProtocol添加了setMultipleTouchEnabled方法
@@ -142,6 +144,7 @@ Things Improved
 	* Note: if you want to use skeleton animation, please still use CocoStudio Windows version, 1.4.0.1 is recommended.
 	* Widget adds addScriptTouchEventListener to support process widget touch event in lua side
 	* CCArmatureAnimation adds hasFrameEvent to detect existence of a frame event
+	* Invisible widget won't response to touch event
 	* Widget adds set/isAcceptOuterTouchIfFullscreen method, by default it is true. True means widget can handle touch events outside of window area when it is fullscreen
 * reimplement TMX, support multi-tileset for one layer(merge from cocos2dx-better CBTMXTileMap)* 
 * reimplement CCTableView(merge from cocos2dx-better CCGridView):
@@ -161,6 +164,7 @@ Things Improved
 * setShaderProgram can specify uniform values so that one shader can be shared by many nodes
 * CCNode adds nodeToAncestorTransform, ancestorToNodeTransform, convertToParentSpace, convertToParentSpaceAR
 * CCNode add onChildWillDetach, a child can notify parent when it removes self.
+* CCNode add isVisibleInTree method
 * add a tool for resource pack, lpk_ui is UI tool, lpk_console is command tool. However, it is not tested in a real project. It is only for your reference by so far.
 * Merge SuperAnimConverter.app and its code, rename it as CCSuperAnim and add lua support. There is a sample in HelloLua project
 * CCEGLViewProtocol add setMultipleTouchEnabled method
