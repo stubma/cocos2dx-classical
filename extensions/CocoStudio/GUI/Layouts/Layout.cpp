@@ -173,7 +173,9 @@ bool Layout::isClippingEnabled()
     
 bool Layout::hitTest(const CCPoint &pt)
 {
-    if(m_fullscreen && m_acceptOuterTouchIfFullscreen) {
+    if(!isVisibleInTree()) {
+        return false;
+    } else if(m_fullscreen && m_acceptOuterTouchIfFullscreen) {
         return true;
     } else {
         CCPoint nsp = convertToNodeSpace(pt);
