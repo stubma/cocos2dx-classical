@@ -192,6 +192,9 @@ public:
     /** Reallocate script function handler, only CCLuaEngine class need to implement this function. */
     virtual int reallocateScriptHandler(int nHandler) { return -1;}
     
+    /** check if two script function handlers point to same function */
+    virtual bool isScriptFunctionSame(int handler1, int handler2) = 0;
+    
     /**
      @brief Execute script code contained in the given string.
      @param codes holding the valid script code that should be executed.

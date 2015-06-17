@@ -148,6 +148,14 @@ void CCLuaStack::addSearchPath(const char* path)
     lua_pop(m_state, 2);                                                /* L: - */
 }
 
+bool CCLuaStack::isScriptFunctionSame(int handler1, int handler2) {
+    toluafix_get_function_by_refid(m_state, handler1);
+    toluafix_get_function_by_refid(m_state, handler2);
+    bool ret = lua_rawequal(m_state, -1, -2);
+    lua_pop(m_state, 2);
+    return ret;
+}
+
 void CCLuaStack::addLuaLoader(lua_CFunction func)
 {
     if (!func) return;

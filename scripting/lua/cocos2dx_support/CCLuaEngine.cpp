@@ -264,6 +264,10 @@ int CCLuaEngine::reallocateScriptHandler(int nHandler)
     return nRet;
 }
 
+bool CCLuaEngine::isScriptFunctionSame(int handler1, int handler2) {
+    return m_stack->isScriptFunctionSame(handler1, handler2);
+}
+
 int CCLuaEngine::executeEventWithArgs(ccScriptFunction& func, CCArray* pArgs, CCObject* collector, SEL_ScriptReturnedValueCollector sel) {
     int nArgNums = 0;
     

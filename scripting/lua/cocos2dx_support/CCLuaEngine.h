@@ -97,6 +97,11 @@ public:
      */
     virtual int reallocateScriptHandler(int nHandler);
     
+    /** 
+     @brief check if two script function handlers point to same function 
+     */
+    virtual bool isScriptFunctionSame(int handler1, int handler2);
+    
     /**
      @brief Execute script code contained in the given string.
      @param codes holding the valid script code that should be executed.

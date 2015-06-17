@@ -664,7 +664,8 @@ void CCScheduler::unscheduleScriptFunc(const ccScriptFunction& scriptFunc)
     {
         CCSchedulerScriptHandlerEntry* pEntry = static_cast<CCSchedulerScriptHandlerEntry*>(m_pScriptHandlerEntries->objectAtIndex(i));
         ccScriptFunction& func = pEntry->getHandler();
-        if (func.target == scriptFunc.target && func.handler == scriptFunc.handler)
+        CCScriptEngineProtocol* engine = CCScriptEngineManager::sharedManager()->getScriptEngine();
+        if (func.target == scriptFunc.target && engine->isScriptFunctionSame(func.handler, scriptFunc.handler))
         {
             pEntry->markedForDeletion();
             break;
