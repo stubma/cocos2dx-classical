@@ -660,11 +660,11 @@ void CCScheduler::unscheduleAllScriptEntryForTarget(CCObject* target) {
 
 void CCScheduler::unscheduleScriptFunc(const ccScriptFunction& scriptFunc)
 {
+    CCScriptEngineProtocol* engine = CCScriptEngineManager::sharedManager()->getScriptEngine();
     for (int i = m_pScriptHandlerEntries->count() - 1; i >= 0; i--)
     {
         CCSchedulerScriptHandlerEntry* pEntry = static_cast<CCSchedulerScriptHandlerEntry*>(m_pScriptHandlerEntries->objectAtIndex(i));
         ccScriptFunction& func = pEntry->getHandler();
-        CCScriptEngineProtocol* engine = CCScriptEngineManager::sharedManager()->getScriptEngine();
         if (func.target == scriptFunc.target && engine->isScriptFunctionSame(func.handler, scriptFunc.handler))
         {
             pEntry->markedForDeletion();
