@@ -286,12 +286,6 @@ public class LuaExporter extends BaseExporter {
 					.append("\tend\n")
 					.append("\treturn -1\n")
 					.append("end\n")
-					.append("\nfunction " + className + ":get" + firstCapital(field) + "At(index)\n")
-					.append("\tif index < 1 or index > #self.m_" + firstLowercase(field) + " then\n")
-					.append("\t\treturn false\n")
-					.append("\tend\n")
-					.append("\treturn self.m_" + firstLowercase(field) + "[index]\n")
-					.append("end\n")
 					.append("\nfunction " + className + ":get" + firstCapital(field) + "Count()\n")
 					.append("\treturn #self.m_" + firstLowercase(field) + "\n")
 					.append("end\n");
