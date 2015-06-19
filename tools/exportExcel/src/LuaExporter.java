@@ -238,39 +238,9 @@ public class LuaExporter extends BaseExporter {
 			String dataType = sheet.getRow(3).getCell(i).getStringCellValue();
 			if (field == null || field.equals(""))
 				continue;
-			if(dataType.equalsIgnoreCase("StringArray")) {
-				lfile.append("\nfunction " + className + ":get" + firstCapital(field) + "At(index)\n")
-					.append("\tif index < 1 or index > #self.m_" + firstLowercase(field) + " then\n")
-					.append("\t\treturn \"\"\n")
-					.append("\tend\n")
-					.append("\treturn self.m_" + firstLowercase(field) + "[index]\n")
-					.append("end\n")
-					.append("\nfunction " + className + ":get" + firstCapital(field) + "Count()\n")
-					.append("\treturn #self.m_" + firstLowercase(field) + "\n")
-					.append("end\n");
-			} else if(dataType.equalsIgnoreCase("IntArray") || dataType.equalsIgnoreCase("FloatArray")) {
-				lfile.append("\nfunction " + className + ":get" + firstCapital(field) + "At(index)\n")
-					.append("\tif index < 1 or index > #self.m_" + firstLowercase(field) + " then\n")
-					.append("\t\treturn 0\n")
-					.append("\tend\n")
-					.append("\treturn self.m_" + firstLowercase(field) + "[index]\n")
-					.append("end\n")
-					.append("\nfunction " + className + ":get" + firstCapital(field) + "Count()\n")
-					.append("\treturn #self.m_" + firstLowercase(field) + "\n")
-					.append("end\n");
-			} else if(dataType.equalsIgnoreCase("BoolArray")) {
-				lfile.append("\nfunction " + className + ":get" + firstCapital(field) + "At(index)\n")
-					.append("\tif index < 1 or index > #self.m_" + firstLowercase(field) + " then\n")
-					.append("\t\treturn false\n")
-					.append("\tend\n")
-					.append("\treturn self.m_" + firstLowercase(field) + "[index]\n")
-					.append("end\n")
-					.append("\nfunction " + className + ":get" + firstCapital(field) + "Count()\n")
-					.append("\treturn #self.m_" + firstLowercase(field) + "\n")
-					.append("end\n");
-			}
-			
+
 			// getter and setter
+			// for array, we have more method, such as get count, index of
 			if(dataType.equalsIgnoreCase("StringArray") ||
 					dataType.equalsIgnoreCase("IntArray") || 
 					dataType.equalsIgnoreCase("FloatArray") ||
@@ -283,6 +253,23 @@ public class LuaExporter extends BaseExporter {
 					.append("\t\treturn\n")
 					.append("\tend\n")
 					.append("\tself.m_" + firstLowercase(field) + " = v\n")
+					.append("end\n")
+					.append("\nfunction " + className + ":indexOf" + firstCapital(field) + "(v)\n")
+					.append("\tfor i,_v in ipairs(self.m_" + firstLowercase(field) + ") do\n")
+					.append("\t\tif _v == v then\n")
+					.append("\t\t\treturn i\n")
+					.append("\t\tend\n")
+					.append("\tend\n")
+					.append("\treturn -1\n")
+					.append("end\n")
+					.append("\nfunction " + className + ":get" + firstCapital(field) + "At(index)\n")
+					.append("\tif index < 1 or index > #self.m_" + firstLowercase(field) + " then\n")
+					.append("\t\treturn false\n")
+					.append("\tend\n")
+					.append("\treturn self.m_" + firstLowercase(field) + "[index]\n")
+					.append("end\n")
+					.append("\nfunction " + className + ":get" + firstCapital(field) + "Count()\n")
+					.append("\treturn #self.m_" + firstLowercase(field) + "\n")
 					.append("end\n");
 			} else if(dataType.equalsIgnoreCase("string") || dataType.equalsIgnoreCase("luafunc")) {
 				lfile.append("\nfunction " + className + ":get" + firstCapital(field) + "()\n")
