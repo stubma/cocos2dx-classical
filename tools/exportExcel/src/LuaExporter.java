@@ -238,6 +238,30 @@ public class LuaExporter extends BaseExporter {
 			String dataType = sheet.getRow(3).getCell(i).getStringCellValue();
 			if (field == null || field.equals(""))
 				continue;
+			
+			// get xx at
+			if(dataType.equalsIgnoreCase("StringArray")) {
+				lfile.append("\nfunction " + className + ":get" + firstCapital(field) + "At(index)\n")
+					.append("\tif index < 1 or index > #self.m_" + firstLowercase(field) + " then\n")
+					.append("\t\treturn \"\"\n")
+					.append("\tend\n")
+					.append("\treturn self.m_" + firstLowercase(field) + "[index]\n")
+					.append("end\n");
+			} else if(dataType.equalsIgnoreCase("IntArray") || dataType.equalsIgnoreCase("FloatArray")) {
+				lfile.append("\nfunction " + className + ":get" + firstCapital(field) + "At(index)\n")
+					.append("\tif index < 1 or index > #self.m_" + firstLowercase(field) + " then\n")
+					.append("\t\treturn 0\n")
+					.append("\tend\n")
+					.append("\treturn self.m_" + firstLowercase(field) + "[index]\n")
+					.append("end\n");
+			} else if(dataType.equalsIgnoreCase("BoolArray")) {
+				lfile.append("\nfunction " + className + ":get" + firstCapital(field) + "At(index)\n")
+					.append("\tif index < 1 or index > #self.m_" + firstLowercase(field) + " then\n")
+					.append("\t\treturn false\n")
+					.append("\tend\n")
+					.append("\treturn self.m_" + firstLowercase(field) + "[index]\n")
+					.append("end\n");
+			}
 
 			// getter and setter
 			// for array, we have more method, such as get count, index of
