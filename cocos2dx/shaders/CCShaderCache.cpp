@@ -32,66 +32,376 @@ NS_CC_BEGIN
 static CCShaderCache *_sharedShaderCache = 0;
 
 //
-const GLchar * ccPosition_uColor_frag =
-#include "ccShader_Position_uColor_frag.h"
-const GLchar * ccPosition_uColor_vert =
-#include "ccShader_Position_uColor_vert.h"
+const GLchar * ccPosition_uColor_frag
+    = CC_SHADER_STRING(precision lowp float;
+                       varying vec4 v_fragmentColor;
+                       void main() {
+                           gl_FragColor = v_fragmentColor;
+                       });
+const GLchar * ccPosition_uColor_vert
+    = CC_SHADER_STRING(attribute vec4 a_position;
+                       uniform vec4 u_color;
+                       uniform float u_pointSize;
+                       varying lowp vec4 v_fragmentColor;
+                       
+                       void main() {
+                           gl_Position = CC_MVPMatrix * a_position;
+                           gl_PointSize = u_pointSize;
+                           v_fragmentColor = u_color;
+                       });
 
 //
-const GLchar * ccPositionColor_frag =
-#include "ccShader_PositionColor_frag.h"
-const GLchar * ccPositionColor_vert =
-#include "ccShader_PositionColor_vert.h"
+const GLchar * ccPositionColor_frag
+    = CC_SHADER_STRING(precision lowp float;
+                       varying vec4 v_fragmentColor;
+                       
+                       void main() {
+                           gl_FragColor = v_fragmentColor;
+                       });
+const GLchar * ccPositionColor_vert
+    = CC_SHADER_STRING(attribute vec4 a_position;
+                       attribute vec4 a_color;
+                       varying lowp vec4 v_fragmentColor;
+                       
+                       void main() {
+                           gl_Position = CC_MVPMatrix * a_position;
+                           v_fragmentColor = a_color;
+                       });
 
 //
-const GLchar * ccPositionTexture_frag =
-#include "ccShader_PositionTexture_frag.h"
-const GLchar * ccPositionTexture_vert =
-#include "ccShader_PositionTexture_vert.h"
+const GLchar * ccPositionTexture_frag
+    = CC_SHADER_STRING(precision lowp float;
+                       varying vec2 v_texCoord;
+                       uniform sampler2D CC_Texture0;
+                       
+                       void main() {
+                           gl_FragColor =  texture2D(CC_Texture0, v_texCoord);
+                       });
+const GLchar * ccPositionTexture_vert
+    = CC_SHADER_STRING(attribute vec4 a_position;
+                       attribute vec2 a_texCoord;
+                       varying mediump vec2 v_texCoord;
+                       
+                       void main()	{
+                           gl_Position = CC_MVPMatrix * a_position;
+                           v_texCoord = a_texCoord;
+                       });
 
 //
-const GLchar * ccPositionTextureA8Color_frag =
-#include "ccShader_PositionTextureA8Color_frag.h"
-const GLchar * ccPositionTextureA8Color_vert =
-#include "ccShader_PositionTextureA8Color_vert.h"
+const GLchar * ccPositionTextureA8Color_frag
+    = CC_SHADER_STRING(precision lowp float;
+                       varying vec4 v_fragmentColor;
+                       varying vec2 v_texCoord;
+                       uniform sampler2D CC_Texture0;
+                       
+                       void main()	{
+                           // RGB from uniform, A from texture & uniform
+                           gl_FragColor = vec4(v_fragmentColor.rgb,
+                                               v_fragmentColor.a * texture2D(CC_Texture0, v_texCoord).a);
+                       });
+const GLchar * ccPositionTextureA8Color_vert
+    = CC_SHADER_STRING(attribute vec4 a_position;
+                       attribute vec2 a_texCoord;
+                       attribute vec4 a_color;
+                       varying lowp vec4 v_fragmentColor;
+                       varying mediump vec2 v_texCoord;
+                       
+                       void main()	{
+                           gl_Position = CC_MVPMatrix * a_position;
+                           v_fragmentColor = a_color;
+                           v_texCoord = a_texCoord;
+                       });
 
 //
-const GLchar * ccPositionTextureColor_frag =
-#include "ccShader_PositionTextureColor_frag.h"
-const GLchar * ccPositionTextureColor_vert =
-#include "ccShader_PositionTextureColor_vert.h"
+const GLchar * ccPositionTextureColor_frag
+    = CC_SHADER_STRING(precision lowp float;
+                       varying vec4 v_fragmentColor;
+                       varying vec2 v_texCoord;
+                       uniform sampler2D CC_Texture0;
+                       
+                       void main()	{
+                           gl_FragColor = v_fragmentColor * texture2D(CC_Texture0, v_texCoord);
+                       });
+const GLchar * ccPositionTextureColor_vert
+    = CC_SHADER_STRING(attribute vec4 a_position;
+                       attribute vec2 a_texCoord;
+                       attribute vec4 a_color;
+                       varying lowp vec4 v_fragmentColor;
+                       varying mediump vec2 v_texCoord;
+                       
+                       void main() {
+                           gl_Position = CC_MVPMatrix * a_position;
+                           v_fragmentColor = a_color;
+                           v_texCoord = a_texCoord;
+                       });
 
 //
-const GLchar * ccPositionTextureColorAlphaTest_frag =
-#include "ccShader_PositionTextureColorAlphaTest_frag.h"
+const GLchar * ccPositionTextureColorAlphaTest_frag
+    = CC_SHADER_STRING(precision lowp float;
+                       varying vec4 v_fragmentColor;
+                       varying vec2 v_texCoord;
+                       uniform sampler2D CC_Texture0;
+                       uniform float CC_alpha_value;
+                       
+                       void main() {
+                           vec4 texColor = texture2D(CC_Texture0, v_texCoord);
+                           
+                           // mimic: glAlphaFunc(GL_GREATER)
+                           // pass if ( incoming_pixel >= CC_alpha_value ) => fail if incoming_pixel < CC_alpha_value
+                           
+                           if(texColor.a <= CC_alpha_value) {
+                               discard;
+                           }
+                           
+                           gl_FragColor = texColor * v_fragmentColor;
+                       });
 
 //
-const GLchar * ccPositionTexture_uColor_frag =
-#include "ccShader_PositionTexture_uColor_frag.h"
-const GLchar * ccPositionTexture_uColor_vert =
-#include "ccShader_PositionTexture_uColor_vert.h"
+const GLchar * ccPositionTexture_uColor_frag
+    = CC_SHADER_STRING(precision lowp float;
+                       uniform vec4 u_color;
+                       varying vec2 v_texCoord;
+                       uniform sampler2D CC_Texture0;
+                       
+                       void main() {
+                           gl_FragColor =  texture2D(CC_Texture0, v_texCoord) * u_color;
+                       });
+const GLchar * ccPositionTexture_uColor_vert
+    = CC_SHADER_STRING(attribute vec4 a_position;
+                       attribute vec2 a_texCoord;
+                       varying mediump vec2 v_texCoord;
+                       
+                       void main()	{
+                           gl_Position = CC_MVPMatrix * a_position;
+                           v_texCoord = a_texCoord;
+                       });
 
-const GLchar * ccExSwitchMask_frag =
-#include "ccShaderEx_SwitchMask_frag.h"
+const GLchar * ccExSwitchMask_frag
+    = CC_SHADER_STRING(precision lowp float;
+                       varying vec4        v_fragmentColor;
+                       varying vec2        v_texCoord;
+                       uniform sampler2D   u_texture;
+                       uniform sampler2D   u_mask;
+                       
+                       void main() {
+                           vec4 texColor   = texture2D(u_texture, v_texCoord);
+                           vec4 maskColor  = texture2D(u_mask, v_texCoord);
+                           vec4 finalColor = vec4(texColor.r, texColor.g, texColor.b, maskColor.a * texColor.a);
+                           gl_FragColor    = v_fragmentColor * finalColor;
+                       });
 
-const GLchar * ccPositionColorLengthTexture_frag =
-#include "ccShader_PositionColorLengthTexture_frag.h"
-const GLchar * ccPositionColorLengthTexture_vert =
-#include "ccShader_PositionColorLengthTexture_vert.h"
+const GLchar * ccPositionColorLengthTexture_frag
+    = CC_SHADER_STRING(// #extension GL_OES_standard_derivatives : enable
+                       varying mediump vec4 v_color;
+                       varying mediump vec2 v_texcoord;
+                       
+                       void main() {
+                           // #if defined GL_OES_standard_derivatives
+                           // gl_FragColor = v_color*smoothstep(0.0, length(fwidth(v_texcoord)), 1.0 - length(v_texcoord));
+                           // #else
+                           gl_FragColor = v_color*step(0.0, 1.0 - length(v_texcoord));
+                           // #endif
+                       });
+const GLchar * ccPositionColorLengthTexture_vert
+    = CC_SHADER_STRING(attribute mediump vec4 a_position;
+                       attribute mediump vec2 a_texcoord;
+                       attribute mediump vec4 a_color;
+                       varying mediump vec4 v_color;
+                       varying mediump vec2 v_texcoord;
+                       
+                       void main() {
+                           v_color = vec4(a_color.rgb * a_color.a, a_color.a);
+                           v_texcoord = a_texcoord;
+                           gl_Position = CC_MVPMatrix * a_position;
+                       });
 
 // custom shaders
-#include "shaders/ccShader_flash_vert.h"
-#include "shaders/ccShader_flash_frag.h"
-#include "shaders/ccShader_blur_vert.h"
-#include "shaders/ccShader_blur_frag.h"
-#include "shaders/ccShader_laser_vert.h"
-#include "shaders/ccShader_laser_frag.h"
-#include "shaders/ccShader_lighting_frag.h"
-#include "shaders/ccShader_lighting_vert.h"
-#include "shaders/ccShader_matrix_vert.h"
-#include "shaders/ccShader_matrix_frag.h"
-#include "shaders/ccShader_shine_vert.h"
-#include "shaders/ccShader_shine_frag.h"
+
+// flash
+const char* ccShader_flash_vert = ccPositionTextureColor_vert;
+const char* ccShader_flash_frag
+    = CC_SHADER_STRING(precision lowp float;
+                       varying vec4 v_fragmentColor;
+                       varying vec2 v_texCoord;
+                       uniform sampler2D CC_Texture0;
+                       uniform vec3 CC_flashColor;
+                       uniform float CC_flashTime;
+                       
+                       void main() {
+                           gl_FragColor = v_fragmentColor * texture2D(CC_Texture0, v_texCoord);
+                           if(gl_FragColor.a > 0.0) {
+                               vec3 deltaColor = (CC_flashColor - gl_FragColor.xyz) * CC_flashTime * gl_FragColor.a;
+                               gl_FragColor.xyz += deltaColor;
+                           }
+                       });
+
+// blur
+const char* ccShader_blur_vert = ccPositionTextureColor_vert;
+const char* ccShader_blur_frag
+    = CC_SHADER_STRING(precision lowp float;
+                       varying vec4 v_fragmentColor;
+                       varying vec2 v_texCoord;
+                       uniform sampler2D CC_Texture0;
+                       uniform vec2 CC_blurSize;
+                       uniform vec4 CC_blurSubtract;
+                       
+                       void main() {
+                           vec4 sum = vec4(0.0);
+                           sum += texture2D(CC_Texture0, v_texCoord - 4.0 * CC_blurSize) * 0.05;
+                           sum += texture2D(CC_Texture0, v_texCoord - 3.0 * CC_blurSize) * 0.09;
+                           sum += texture2D(CC_Texture0, v_texCoord - 2.0 * CC_blurSize) * 0.12;
+                           sum += texture2D(CC_Texture0, v_texCoord - 1.0 * CC_blurSize) * 0.15;
+                           sum += texture2D(CC_Texture0, v_texCoord) * 0.16;
+                           sum += texture2D(CC_Texture0, v_texCoord + 1.0 * CC_blurSize) * 0.15;
+                           sum += texture2D(CC_Texture0, v_texCoord + 2.0 * CC_blurSize) * 0.12;
+                           sum += texture2D(CC_Texture0, v_texCoord + 3.0 * CC_blurSize) * 0.09;
+                           sum += texture2D(CC_Texture0, v_texCoord + 4.0 * CC_blurSize) * 0.05;
+                           
+                           gl_FragColor = (sum - CC_blurSubtract) * v_fragmentColor;
+                       });
+
+// laser
+const char* ccShader_laser_vert = ccPositionTextureColor_vert;
+const char* ccShader_laser_frag
+    = CC_SHADER_STRING(precision lowp float;
+                       varying vec2 v_texCoord;
+                       varying vec4 v_fragmentColor;
+                       
+                       void main()	{
+                           float fPosX = v_texCoord.x;
+                           float fPosY = v_texCoord.y;
+                           
+                           float fR = 1.0;
+                           float fG = 1.0;
+                           float fB = 1.0;
+                           float fA = 1.0;
+                           
+                           float fTime = abs(sin(CC_Time.y));
+                           if(fTime < 0.3)	{
+                               fTime = 0.3;
+                           }
+                           
+                           fR = fTime / abs(fPosX - 0.5) * 0.6;
+                           fG = fR * 0.3 * fTime;
+                           fB = fR * (1.0 - fPosY) * fTime;
+                           vec3 Color = vec3(fR, fG, fB);
+                           
+                           float fScale = 1.0;
+                           float fPercent = 0.2;
+                           float fDis = fPercent;
+                           if(fPosX < fPercent) {
+                               fDis = fPosX;
+                           }
+                           if(fPosX > 1.0 - fPercent) {
+                               fDis = 1.0 - fPosX;
+                           }
+                           fScale = fDis / fPercent;
+                           fA *= fScale;
+                           
+                           gl_FragColor.rgb = Color;
+                           gl_FragColor.a = fA;
+                       });
+
+// lighting
+const char* ccShader_lighting_vert = ccPositionTextureColor_vert;
+const char* ccShader_lighting_frag
+    = CC_SHADER_STRING(precision lowp float;
+                       varying vec4 v_fragmentColor;
+                       varying vec2 v_texCoord;
+                       uniform sampler2D CC_Texture0;
+                       uniform vec4 CC_lightingMul;
+                       uniform vec3 CC_lightingAdd;
+                       
+                       void main()	{
+                           gl_FragColor = v_fragmentColor * texture2D(CC_Texture0, v_texCoord);
+                           vec3 c = CC_lightingAdd * gl_FragColor.a;
+                           gl_FragColor *= CC_lightingMul; 
+                           gl_FragColor.xyz += c; 
+                       });
+
+// color matrix
+const char* ccShader_matrix_vert = ccPositionTextureColor_vert;
+const char* ccShader_matrix_frag
+    = CC_SHADER_STRING(precision lowp float;
+                       
+                       varying vec4 v_fragmentColor;
+                       varying vec2 v_texCoord;
+                       uniform sampler2D CC_Texture0;
+                       uniform mat4 CC_colorMatrix;
+                       
+                       void main()	{
+                           gl_FragColor = v_fragmentColor * texture2D(CC_Texture0, v_texCoord);
+                           gl_FragColor = CC_colorMatrix * gl_FragColor; 
+                       });
+
+// shine
+const char* ccShader_shine_vert
+    = CC_SHADER_STRING(attribute vec4 a_position;
+                       attribute vec2 a_texCoord;
+                       attribute vec4 a_color;
+                       
+                       varying lowp vec4 v_fragmentColor;
+                       varying mediump vec2 v_texCoord;
+                       varying lowp vec4 v_position;
+                       
+                       void main()	{
+                           gl_Position = CC_MVPMatrix * a_position;
+                           v_position = a_position;
+                           v_fragmentColor = a_color;
+                           v_texCoord = a_texCoord;
+                       });
+const char* ccShader_shine_frag
+    = CC_SHADER_STRING(precision lowp float;
+                       
+                       varying vec4 v_fragmentColor;
+                       varying vec2 v_texCoord;
+                       varying vec4 v_position;
+                       uniform sampler2D CC_Texture0;
+                       uniform float CC_shineWidth;
+                       uniform float CC_shineTime;
+                       uniform vec2 CC_shineXY1;
+                       uniform vec2 CC_shineXY2;
+                       uniform vec4 CC_shineColor1;
+                       uniform vec4 CC_shineColor2;
+                       uniform vec4 CC_shineColor3;
+                       uniform vec3 CC_shinePositions;
+                       
+                       void main() {
+                           gl_FragColor = v_fragmentColor * texture2D(CC_Texture0, v_texCoord);
+                           
+                           // pattern width
+                           float patternWidth = abs(CC_shineXY2.x - CC_shineXY1.x);
+                           
+                           // pattern offset
+                           float patternOffsetX = CC_shineTime * (patternWidth + CC_shineWidth) - patternWidth;
+                           
+                           // get checking area
+                           float minX = min(CC_shineXY1.x, CC_shineXY2.x) + patternOffsetX - patternWidth;
+                           float minY = min(CC_shineXY1.y, CC_shineXY2.y);
+                           float maxX = max(CC_shineXY1.x, CC_shineXY2.x) + patternOffsetX + patternWidth;
+                           float maxY = max(CC_shineXY1.y, CC_shineXY2.y);
+                           
+                           // if pixel is in rect
+                           if(v_position.x >= minX && v_position.x <= maxX && v_position.y >= minY && v_position.y <= maxY) {
+                               // get gradient position
+                               vec2 v = CC_shineXY2 - CC_shineXY1;
+                               vec2 pv = v_position.xy - vec2(CC_shineXY1.x + patternOffsetX, CC_shineXY1.y);
+                               float vLen = length(v);
+                               float gradient = dot(v, pv) / vLen / vLen;
+                               
+                               // calculate color
+                               vec4 color;
+                               if(gradient >= CC_shinePositions.x && gradient <= CC_shinePositions.y) {
+                                   float g = (gradient - CC_shinePositions.x) / (CC_shinePositions.y - CC_shinePositions.x);
+                                   color = CC_shineColor1 * (1.0 - g) + CC_shineColor2 * g;
+                                   gl_FragColor.xyz += gl_FragColor.a * color.a * color.xyz;
+                               } else if(gradient > CC_shinePositions.y && gradient <= CC_shinePositions.z) {
+                                   float g = (gradient - CC_shinePositions.y) / (CC_shinePositions.z - CC_shinePositions.y);
+                                   color = CC_shineColor2 * (1.0 - g) + CC_shineColor3 * g;
+                                   gl_FragColor.xyz += gl_FragColor.a * color.a * color.xyz;
+                               }
+                           }
+                       });
 
 #define LOAD_PROGRAM(name) \
     p->initWithVertexShaderByteArray(ccShader_##name##_vert, ccShader_##name##_frag); \

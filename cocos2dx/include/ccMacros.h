@@ -50,6 +50,11 @@ THE SOFTWARE.
     #endif
 #endif  // CCAssert
 
+// stringize
+#define CC_STRINGIZE(x) #x
+#define CC_STRINGIZE2(x) CC_STRINGIZE(x)
+#define CC_SHADER_STRING(text) CC_STRINGIZE2(text)
+
 // map endian methods
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     #include <sys/stat.h>
