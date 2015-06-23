@@ -87,53 +87,58 @@ public class Main {
 				fileChooser.setFileFilter(filter);
 				int returnVal = fileChooser.showOpenDialog(fileChooser);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					// create exporter
-					JsonExporter je = new JsonExporter();
-					BaseExporter we = null;
-					switch (cmb.getSelectedIndex()) {
-						case 1:
-							we = new CppExporter();
-							break;
-						case 0:
-							we = new LuaExporter();
-							je.setGenerateIndexColumn(true);
-							je.setIndexStartFromZero(false);
-							break;
-					}	
-					
-					// set option
-					we.addOption("jsonDir", pathField.getText());
-					
-					// reset message
-					errorArea.setForeground(Color.BLACK);
-					
-					// export every file
-					File files[] = fileChooser.getSelectedFiles();
-					try {
-				        int len = files.length;				        
-				        for (int i = 0; i < len; i++) {
-				        	String fileName = files[i].getName();
-				        	errorArea.setText("Exporting:" + fileName + "---" + (i + 1) + "/" + len);
-				        	errorArea.paintImmediately(errorArea.getBounds());
-				        	
-				        	// export json
-				        	je.export(files[i]);
-				        	
-				        	// export wrapper
-				        	we.export(files[i]);
-				        }
-					} catch(CellFormatException e) {
-						errorArea.setForeground(Color.RED);
-						errorArea.setText(e.getLocalizedMessage());
-			        } catch (Exception e) {
-						errorArea.setForeground(Color.RED);
-						errorArea.setText(e.getLocalizedMessage());
-			        }
-					
-					// if no error, show Done
-					if(errorArea.getForeground() == Color.BLACK) {
-						errorArea.setText("Done");
-					}
+					final File files[] = fileChooser.getSelectedFiles();
+					Thread t = new Thread(new Runnable() {
+						@Override
+						public void run() {
+							// create exporter
+							JsonExporter je = new JsonExporter();
+							BaseExporter we = null;
+							switch (cmb.getSelectedIndex()) {
+								case 1:
+									we = new CppExporter();
+									break;
+								case 0:
+									we = new LuaExporter();
+									je.setGenerateIndexColumn(true);
+									je.setIndexStartFromZero(false);
+									break;
+							}	
+							
+							// set option
+							we.addOption("jsonDir", pathField.getText());
+							
+							// reset message
+							errorArea.setForeground(Color.BLACK);
+							
+							// export every file
+							try {
+						        int len = files.length;				        
+						        for (int i = 0; i < len; i++) {
+						        	String fileName = files[i].getName();
+						        	errorArea.setText("Exporting:" + fileName + "---" + (i + 1) + "/" + len);
+						        	
+						        	// export json
+						        	je.export(files[i]);
+						        	
+						        	// export wrapper
+						        	we.export(files[i]);
+						        }
+							} catch(CellFormatException e) {
+								errorArea.setForeground(Color.RED);
+								errorArea.append("\n" + e.getLocalizedMessage());
+					        } catch (Exception e) {
+								errorArea.setForeground(Color.RED);
+								errorArea.append("\n" + e.getLocalizedMessage());
+					        }
+							
+							// if no error, show Done
+							if(errorArea.getForeground() == Color.BLACK) {
+								errorArea.setText("Done");
+							}							
+						}
+					});
+					t.start();
 				}
 			}
 		});
