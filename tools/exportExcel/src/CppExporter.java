@@ -8,7 +8,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 
 public class CppExporter extends BaseExporter {
 	@Override
-	public void doExport(Workbook book, Sheet sheet, File file) throws IOException {
+	public void doExport(Workbook book, Sheet sheet, File file) throws CellFormatException, IOException {
 		File outputDir = file.getParentFile();
 		String className = "X" + firstCapital(sheet.getSheetName());
 		

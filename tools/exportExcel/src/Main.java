@@ -6,7 +6,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -22,7 +21,7 @@ public class Main {
 		// window frame
 		JFrame f = new JFrame("Excel Exporter");
 		Container container = f.getContentPane();
-		container.setLayout(new GridLayout(2, 1));
+		container.setLayout(new GridLayout(3, 1));
 		
 		// help area
 		StringBuilder buf = new StringBuilder("1. first row can be human readable column name\n");
@@ -37,10 +36,17 @@ public class Main {
 		t.setBorder(BorderFactory.createTitledBorder("Help"));
 		container.add(t);
 		
-		// bottom layout
+		// center layout
 		Container bottom = new Container();
 		bottom.setLayout(new GridLayout(1, 2));
 		container.add(bottom);
+		
+		// bottom, error label
+		final JTextArea errorArea = new JTextArea("Ready");
+		errorArea.setEditable(false);
+		errorArea.setBackground(f.getBackground());
+		errorArea.setBorder(BorderFactory.createTitledBorder("Message"));
+		container.add(errorArea);
 
 		// add combo
 		String[] s = {
@@ -98,13 +104,17 @@ public class Main {
 					// set option
 					we.addOption("jsonDir", pathField.getText());
 					
+					// reset message
+					errorArea.setForeground(Color.BLACK);
+					
 					// export every file
 					File files[] = fileChooser.getSelectedFiles();
 					try {
-				        int len = files.length;
+				        int len = files.length;				        
 				        for (int i = 0; i < len; i++) {
 				        	String fileName = files[i].getName();
-				        	System.out.println("exporting:" + fileName + "---" + (i + 1) + "/" + len);
+				        	errorArea.setText("Exporting:" + fileName + "---" + (i + 1) + "/" + len);
+				        	errorArea.paintImmediately(errorArea.getBounds());
 				        	
 				        	// export json
 				        	je.export(files[i]);
@@ -112,9 +122,18 @@ public class Main {
 				        	// export wrapper
 				        	we.export(files[i]);
 				        }
-			        } catch (IOException e) {
+					} catch(CellFormatException e) {
+						errorArea.setForeground(Color.RED);
+						errorArea.setText(e.getLocalizedMessage());
+			        } catch (Exception e) {
+						errorArea.setForeground(Color.RED);
+						errorArea.setText(e.getLocalizedMessage());
 			        }
-					System.out.println("done");
+					
+					// if no error, show Done
+					if(errorArea.getForeground() == Color.BLACK) {
+						errorArea.setText("Done");
+					}
 				}
 			}
 		});

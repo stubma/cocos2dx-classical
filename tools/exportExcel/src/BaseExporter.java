@@ -62,7 +62,7 @@ public abstract class BaseExporter {
 		}
 	}
 	
-	public void export(File file) throws IOException {
+	public void export(File file) throws CellFormatException, IOException {
 		Workbook book = getWorkbook(file);
 		for(int s = 0; s < 1; s++) {
 			Sheet sheet = book.getSheetAt(s);
@@ -70,7 +70,7 @@ public abstract class BaseExporter {
 		}
 	}
 	
-	public abstract void doExport(Workbook book, Sheet sheet, File file) throws IOException;
+	public abstract void doExport(Workbook book, Sheet sheet, File file) throws CellFormatException, IOException;
 
 	public void addOption(String key, String value) {
 		mOptions.put(key, value);

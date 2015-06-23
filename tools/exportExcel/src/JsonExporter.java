@@ -16,7 +16,7 @@ public class JsonExporter extends BaseExporter {
 	private boolean mIndexStartFromZero;
 	
 	@Override
-	public void doExport(Workbook book, Sheet sheet, File file) throws IOException {
+	public void doExport(Workbook book, Sheet sheet, File file) throws CellFormatException, IOException {
 		JSONObject json = new JSONObject();
 		
 		// row num
@@ -90,7 +90,7 @@ public class JsonExporter extends BaseExporter {
 						rowJson.put(colName, "");
 					}
 				} else {
-					putToRowJson(rowJson, cell, cell.getCellType(), colName, type);
+					putToRowJson(rowJson, cell, cell.getCellType(), colName, type, i, j);
 				}
 			}
 		}
@@ -101,7 +101,7 @@ public class JsonExporter extends BaseExporter {
 		writeFile(jsonPath, json.toJSONString());
 	}
 	
-	private void putToRowJson(JSONObject rowJson, Cell cell, int cellType, String colName, String colType) {
+	private void putToRowJson(JSONObject rowJson, Cell cell, int cellType, String colName, String colType, int row, int col) throws CellFormatException, IOException {
 		if (cellType == Cell.CELL_TYPE_BLANK) {
 			if (colType.equalsIgnoreCase("int") || colType.equalsIgnoreCase("Byte") ||
 					colType.equalsIgnoreCase("float") || colType.equalsIgnoreCase("bool")) {
@@ -127,9 +127,9 @@ public class JsonExporter extends BaseExporter {
 			rowJson.put(colName, cell.getBooleanCellValue() ? "true" : "false");
 		} else if(cellType == Cell.CELL_TYPE_FORMULA) {
 			int fType = cell.getCachedFormulaResultType();
-			putToRowJson(rowJson, cell, fType, colName, colType);
+			putToRowJson(rowJson, cell, fType, colName, colType, row, col);
 		} else { // CELL_TYPE_ERROR
-			rowJson.put(colName, cell.getStringCellValue());
+			throw new CellFormatException(row, col);
 		}
 	}
 
