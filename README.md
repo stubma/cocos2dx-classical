@@ -110,7 +110,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 	* CCDirector/CCEGLView的end方法改名为terminate, 避免和lua的关键字冲突
 	* CCNode添加了set/getScriptUserData, 支持在lua端为CCNode关联一个lua table
 	* string包增加了split, tonumber, toint, tobool, empty方法
-	* table包增加了print, hasnumber, hasstring, fill, fillnew方法
+	* table包增加了print, hasnumber, hasstring, fill, fillnew, enum方法
 	* debug包增加了addtrace, removetrace方法
 	* tools下有xcode_lua_support工具, 可以为Xcode添加lua语法高亮
 	* 添加CCApplicationLua, 封装通用的初始化逻辑, AppDelegate可以不再需要. applicationDidEnterBackground和applicationWillEnterForeground被导引到lua端.
@@ -186,7 +186,7 @@ Things Improved
 	* rename CCDirector/CCEGLView end method to terminate, to avoid name conflict with lua keyword
 	* add set/getScriptUserData for CCNode so that we can associate a lua table to CCNode
 	* string package adds split, tonumber, toint, tobool, empty methods
-	* table package adds print, hasnumber, hasstring, fill, fillnew methods
+	* table package adds print, hasnumber, hasstring, fill, fillnew, enum methods
 	* debug package adds addtrace, removetrace method
 	* xcode_lua_support tool, can add lua syntax highlight for Xcode
 	* add CCApplicationLua to encapsulate basic logic of lua app, so that AppDelegate can be eliminated. applicationDidEnterBackground and applicationWillEnterForeground are dispatched to lua side.
