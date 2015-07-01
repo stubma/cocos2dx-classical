@@ -136,6 +136,7 @@
                     "string.reverse",
 
                     "table.concat",
+                    "table.enum",
                     "table.fill",
                     "table.fillnew",
                     "table.foreach",

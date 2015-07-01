@@ -73,3 +73,18 @@ function table.fillnew(v, len)
     table.fill(t, v, len)
     return t
 end
+
+-- convert string members in t to a enum value, if startValue is not provided, it will
+-- start from 1
+function table.enum(t, startValue)
+    if type(t) == "table" then
+        local enumtbl = {}
+        local enumindex = (startValue or 1) - 1
+        for i,v in ipairs(t) do
+            enumtbl[v] = enumindex + i
+        end
+        return enumtbl
+    else
+        return {}
+    end
+end
