@@ -6,6 +6,9 @@ overload.createSprite {
     "table",
     function(parent, name, pos)
         local sprite = CCSprite:create(name)
+        if sprite == nil then
+            print("failed to load sprite from file: " .. name)
+        end
         sprite:setPosition(pos)
         if tolua.isa(parent, "Widget") then
             parent:addNode(sprite)
