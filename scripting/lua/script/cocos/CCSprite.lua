@@ -8,12 +8,13 @@ overload.createSprite {
         local sprite = CCSprite:create(name)
         if sprite == nil then
             print("failed to load sprite from file: " .. name)
-        end
-        sprite:setPosition(pos)
-        if tolua.isa(parent, "Widget") then
-            parent:addNode(sprite)
         else
-            parent:addChild(sprite)
+            sprite:setPosition(pos)
+            if tolua.isa(parent, "Widget") then
+                parent:addNode(sprite)
+            else
+                parent:addChild(sprite)
+            end
         end
         return sprite
     end
