@@ -11,8 +11,8 @@
 		506EDB88102F4C4000A389B3 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDB87102F4C4000A389B3 /* libz.dylib */; };
 		506EDBA5102F4C9F00A389B3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */; };
 		9209EF261B16E620003320BF /* fish.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9209EF231B16E620003320BF /* fish.plist */; };
-		9209EF271B16E620003320BF /* fish.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = 9209EF241B16E620003320BF /* fish.pvr.ccz */; };
 		9209EF281B16E620003320BF /* fish.sam in Resources */ = {isa = PBXBuildFile; fileRef = 9209EF251B16E620003320BF /* fish.sam */; };
+		922D37D81B539E0D00CB3989 /* fish.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = 922D37D71B539E0D00CB3989 /* fish.pvr.ccz */; };
 		928EF5B31AFB49F100EBEC46 /* script in Resources */ = {isa = PBXBuildFile; fileRef = 928EF5B21AFB49F100EBEC46 /* script */; };
 		928EF5B91AFB4C0200EBEC46 /* cocos in Resources */ = {isa = PBXBuildFile; fileRef = 928EF5B81AFB4C0200EBEC46 /* cocos */; };
 		928EF5BA1AFB4C1200EBEC46 /* cocos in Copy Cocos Scripts */ = {isa = PBXBuildFile; fileRef = 928EF5B81AFB4C0200EBEC46 /* cocos */; };
@@ -79,8 +79,8 @@
 		506EDB87102F4C4000A389B3 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		9209EF231B16E620003320BF /* fish.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = fish.plist; sourceTree = "<group>"; };
-		9209EF241B16E620003320BF /* fish.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = fish.pvr.ccz; sourceTree = "<group>"; };
 		9209EF251B16E620003320BF /* fish.sam */ = {isa = PBXFileReference; lastKnownFileType = file; path = fish.sam; sourceTree = "<group>"; };
+		922D37D71B539E0D00CB3989 /* fish.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = fish.pvr.ccz; sourceTree = "<group>"; };
 		928EF5B21AFB49F100EBEC46 /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; path = script; sourceTree = "<group>"; };
 		928EF5B81AFB4C0200EBEC46 /* cocos */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocos; path = ../../../../scripting/lua/script/cocos; sourceTree = "<group>"; };
 		928EF5BC1AFB4F1900EBEC46 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
@@ -205,10 +205,19 @@
 				928EF5B21AFB49F100EBEC46 /* script */,
 				92A0021E1A8F80BE00C9DA33 /* Images.xcassets */,
 				928EF5BB1AFB4F1900EBEC46 /* audio */,
+				922D37D61B539E0D00CB3989 /* res_ios */,
 				928EF5C01AFB4F1900EBEC46 /* res */,
 			);
 			name = Resources;
 			path = ../Resources;
+			sourceTree = "<group>";
+		};
+		922D37D61B539E0D00CB3989 /* res_ios */ = {
+			isa = PBXGroup;
+			children = (
+				922D37D71B539E0D00CB3989 /* fish.pvr.ccz */,
+			);
+			path = res_ios;
 			sourceTree = "<group>";
 		};
 		928EF5BB1AFB4F1900EBEC46 /* audio */ = {
@@ -226,7 +235,6 @@
 			isa = PBXGroup;
 			children = (
 				9209EF231B16E620003320BF /* fish.plist */,
-				9209EF241B16E620003320BF /* fish.pvr.ccz */,
 				9209EF251B16E620003320BF /* fish.sam */,
 				928EF5C11AFB4F1900EBEC46 /* crop.png */,
 				928EF5C21AFB4F1900EBEC46 /* dog.png */,
@@ -324,9 +332,9 @@
 				928EF5D01AFB4F1900EBEC46 /* menu2.png in Resources */,
 				928EF5CC1AFB4F1900EBEC46 /* dog.png in Resources */,
 				928EF5CE1AFB4F1900EBEC46 /* land.png in Resources */,
-				9209EF271B16E620003320BF /* fish.pvr.ccz in Resources */,
 				928EF5CF1AFB4F1900EBEC46 /* menu1.png in Resources */,
 				928EF5C91AFB4F1900EBEC46 /* background.wav in Resources */,
+				922D37D81B539E0D00CB3989 /* fish.pvr.ccz in Resources */,
 				928EF5B91AFB4C0200EBEC46 /* cocos in Resources */,
 				9209EF261B16E620003320BF /* fish.plist in Resources */,
 				928EF5B31AFB49F100EBEC46 /* script in Resources */,
