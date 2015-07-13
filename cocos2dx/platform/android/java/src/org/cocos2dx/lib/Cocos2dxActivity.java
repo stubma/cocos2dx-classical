@@ -30,8 +30,8 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
-import android.view.ViewGroup;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
