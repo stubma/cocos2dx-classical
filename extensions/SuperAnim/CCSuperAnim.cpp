@@ -406,10 +406,6 @@ bool CCSuperAnim::Init(const std::string& theAbsAnimFile, int theId, CCSuperAnim
 }
 
 void CCSuperAnim::tryLoadSpriteSheet(){
-    // load sprite frame info
-    string fullPath = CCUtils::getExternalOrFullPath(mSpriteSheetFileFullPath);
-    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(fullPath.c_str());
-    
     // search texture, search pvr first
     string filenameWithExt = mSpriteSheetFileFullPath.substr(0, mSpriteSheetFileFullPath.find_last_of('.') + 1);
     string tex = filenameWithExt + "pvr.ccz";
@@ -430,8 +426,12 @@ void CCSuperAnim::tryLoadSpriteSheet(){
         }
     }
     
+    // load sprite frame info with specified texture path
+    string plistPath = CCUtils::getExternalOrFullPath(mSpriteSheetFileFullPath);
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plistPath.c_str(), texFullPath.c_str());
+    
     // create sprite sheet
-    mSpriteSheet = CCTextureCache::sharedTextureCache()->addImage(tex.c_str());
+    mSpriteSheet = CCTextureCache::sharedTextureCache()->addImage(texFullPath.c_str());
     mUseSpriteSheet = true;
 }
 
