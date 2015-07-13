@@ -50,7 +50,9 @@ bool CCUtils::isPathExistent(const string& path) {
 		return false;
     
     // if relative path, convert to assets path and check
-    if(CCFileUtils::sharedFileUtils()->isAbsolutePath(path)) {
+    // we can't use CCFileUtils::isAbsolutePath because android file utils
+    // treat path starts with assets/ is absolute
+    if(path[0] == '/') {
         return access(path.c_str(), 0) == 0;
     } else {
         return CCFileUtils::sharedFileUtils()->isFileExist(path);
@@ -60,7 +62,11 @@ bool CCUtils::isPathExistent(const string& path) {
 string CCUtils::externalize(const string& path) {
     if(!CCFileUtils::sharedFileUtils()->isAbsolutePath(path)) {
         string internalStorage = getInternalStoragePath();
-        return internalStorage + path;
+        if(internalStorage[internalStorage.length() - 1] != '/') {
+            return internalStorage + "/" + path;
+        } else {
+            return internalStorage + path;
+        }
     } else {
         return path;
     }
