@@ -29,12 +29,16 @@ overload.createSprite {
     "number",
     function(parent, name, pos, anchor, z, tag)
         local sprite = CCSprite:create(name)
-        sprite:setPosition(pos)
-        sprite:setAnchorPoint(cc.p(anchor.x, anchor.y))
-        if tolua.isa(parent, "Widget") then
-            parent:addNode(sprite, z, tag)
+        if sprite == nil then
+            print("failed to load sprite from file: " .. name)
         else
-            parent:addChild(sprite, z, tag)
+            sprite:setPosition(pos)
+            sprite:setAnchorPoint(cc.p(anchor.x, anchor.y))
+            if tolua.isa(parent, "Widget") then
+                parent:addNode(sprite, z, tag)
+            else
+                parent:addChild(sprite, z, tag)
+            end
         end
         return sprite
     end
@@ -44,6 +48,9 @@ overload.createFrameSprite {
     "string",
     function(name)
         local sprite = CCSprite:createWithSpriteFrameName(name)
+        if sprite == nil then
+            print("failed to load sprite from frame: " .. name)
+        end
         return sprite
     end
 }
@@ -54,12 +61,17 @@ overload.createFrameSprite {
     "table",
     function(parent, name, pos)
         local sprite = CCSprite:createWithSpriteFrameName(name)
-        sprite:setPosition(pos)
-        if tolua.isa(parent, "Widget") then
-            parent:addNode(sprite)
+        if sprite == nil then
+            print("failed to load sprite from frame: " .. name)
         else
-            parent:addChild(sprite)
+            sprite:setPosition(pos)
+            if tolua.isa(parent, "Widget") then
+                parent:addNode(sprite)
+            else
+                parent:addChild(sprite)
+            end
         end
+
         return sprite
     end
 }
@@ -73,12 +85,16 @@ overload.createFrameSprite {
     "number",
     function(parent, name, pos, anchor, z, tag)
         local sprite = CCSprite:createWithSpriteFrameName(name)
-        sprite:setPosition(pos)
-        sprite:setAnchorPoint(cc.p(anchor.x, anchor.y))
-        if tolua.isa(parent, "Widget") then
-            parent:addNode(sprite, z, tag)
+        if sprite == nil then
+            print("failed to load sprite from frame: " .. name)
         else
-            parent:addChild(sprite, z, tag)
+            sprite:setPosition(pos)
+            sprite:setAnchorPoint(cc.p(anchor.x, anchor.y))
+            if tolua.isa(parent, "Widget") then
+                parent:addNode(sprite, z, tag)
+            else
+                parent:addChild(sprite, z, tag)
+            end
         end
         return sprite
     end
