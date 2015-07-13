@@ -52,6 +52,9 @@ void CCApplication::setAnimationInterval(double interval)
     {
         methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, interval);
     }
+    
+    // release
+    methodInfo.env->DeleteLocalRef(methodInfo.classID);
 }
 
 //////////////////////////////////////////////////////////////////////////

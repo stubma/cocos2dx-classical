@@ -453,12 +453,18 @@ void CCUserDefault::purgeDefaultForKey(const std::string& key) {
     jstring pn = (jstring)t.env->GetStaticObjectField(clazz, fid);
     jobject pref = t.env->CallObjectMethod(ctx, t.methodID, pn, 0);
     
+    // release
+    t.env->DeleteLocalRef(t.classID);
+    
     // editor
     JniHelper::getMethodInfo(t,
                              "android/content/SharedPreferences",
                              "edit",
                              "()Landroid/content/SharedPreferences$Editor;");
     jobject edit = t.env->CallObjectMethod(pref, t.methodID);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
     
     // remove
     jstring jKey = t.env->NewStringUTF(key.c_str());
@@ -467,6 +473,9 @@ void CCUserDefault::purgeDefaultForKey(const std::string& key) {
                              "remove",
                              "(Ljava/lang/String;)Landroid/content/SharedPreferences$Editor;");
     t.env->CallObjectMethod(edit, t.methodID, jKey);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
     
     // commit
     JniHelper::getMethodInfo(t,
@@ -482,6 +491,7 @@ void CCUserDefault::purgeDefaultForKey(const std::string& key) {
     t.env->DeleteLocalRef(ctx);
     t.env->DeleteLocalRef(pref);
     t.env->DeleteLocalRef(edit);
+    t.env->DeleteLocalRef(t.classID);
 }
 
 NS_CC_END

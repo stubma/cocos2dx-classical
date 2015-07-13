@@ -57,10 +57,19 @@ string CCLocale::getLanguage() {
     JniHelper::getStaticMethodInfo(t, "java/util/Locale", "getDefault", "()Ljava/util/Locale;");
     jobject jLocale = t.env->CallStaticObjectMethod(t.classID, t.methodID);
     
+    // release
+    t.env->DeleteLocalRef(t.classID);
+    
     // get language
     JniHelper::getMethodInfo(t, "java/util/Locale", "getLanguage", "()Ljava/lang/String;");
     jstring jLan = (jstring)t.env->CallObjectMethod(jLocale, t.methodID);
-    return JniHelper::jstring2string(jLan);
+    string ret = JniHelper::jstring2string(jLan);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
+    
+    // return
+    return ret;
 }
 
 string CCLocale::getCountry() {
@@ -69,10 +78,19 @@ string CCLocale::getCountry() {
     JniHelper::getStaticMethodInfo(t, "java/util/Locale", "getDefault", "()Ljava/util/Locale;");
     jobject jLocale = t.env->CallStaticObjectMethod(t.classID, t.methodID);
     
+    // release
+    t.env->DeleteLocalRef(t.classID);
+    
     // get language
     JniHelper::getMethodInfo(t, "java/util/Locale", "getCountry", "()Ljava/lang/String;");
     jstring jCty = (jstring)t.env->CallObjectMethod(jLocale, t.methodID);
-    return JniHelper::jstring2string(jCty);
+    string ret = JniHelper::jstring2string(jCty);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
+    
+    // return
+    return ret;
 }
 
 NS_CC_END

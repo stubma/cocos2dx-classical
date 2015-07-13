@@ -72,6 +72,9 @@ const std::vector<std::string>& CCFileUtilsAndroid::listAssets(const std::string
     JniMethodInfo t;
     JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxHelper", "getAssetManager", "()Landroid/content/res/AssetManager;");
     jobject am = t.env->CallStaticObjectMethod(t.classID, t.methodID);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
 
     // convert arguments to java type
     jstring jSubpath = t.env->NewStringUTF(subpath.c_str());
@@ -92,6 +95,7 @@ const std::vector<std::string>& CCFileUtilsAndroid::listAssets(const std::string
     t.env->DeleteLocalRef(am);
     t.env->DeleteLocalRef(jSubpath);
     t.env->DeleteLocalRef(items);
+    t.env->DeleteLocalRef(t.classID);
 
     // return
     return s_strvec;

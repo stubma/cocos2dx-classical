@@ -45,6 +45,7 @@ string CCUUID::generate(bool noHyphen) {
 
     // release
     t.env->DeleteLocalRef(jUUID);
+    t.env->DeleteLocalRef(t.classID);
 
     // return
     return uuid;

@@ -31,13 +31,25 @@ NS_CC_BEGIN
 bool CCImagePicker::hasCamera() {
 	JniMethodInfo t;
 	JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/CCImagePicker", "hasCamera", "()Z");
-	return t.env->CallStaticBooleanMethod(t.classID, t.methodID);
+	bool ret = t.env->CallStaticBooleanMethod(t.classID, t.methodID);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
+    
+    // return
+    return ret;
 }
 
 bool CCImagePicker::hasFrontCamera() {
 	JniMethodInfo t;
 	JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/CCImagePicker", "hasFrontCamera", "()Z");
-	return t.env->CallStaticBooleanMethod(t.classID, t.methodID);
+	bool ret = t.env->CallStaticBooleanMethod(t.classID, t.methodID);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
+    
+    // return
+    return ret;
 }
 
 void CCImagePicker::pickFromCamera(const string& path, CCImagePickerCallback* callback, int w, int h, bool front, bool keepRatio) {
@@ -45,6 +57,9 @@ void CCImagePicker::pickFromCamera(const string& path, CCImagePickerCallback* ca
 	JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/CCImagePicker", "pickFromCamera", "(Ljava/lang/String;JIIZZ)V");
 	jstring jPath = t.env->NewStringUTF(path.c_str());
 	t.env->CallStaticVoidMethod(t.classID, t.methodID, jPath, (jlong)callback, w, h, front, keepRatio);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
 }
 
 void CCImagePicker::pickFromAlbum(const string& path, CCImagePickerCallback* callback, int w, int h, bool keepRatio) {
@@ -52,6 +67,9 @@ void CCImagePicker::pickFromAlbum(const string& path, CCImagePickerCallback* cal
 	JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/CCImagePicker", "pickFromAlbum", "(Ljava/lang/String;JIIZ)V");
 	jstring jPath = t.env->NewStringUTF(path.c_str());
 	t.env->CallStaticVoidMethod(t.classID, t.methodID, jPath, (jlong)callback, w, h, keepRatio);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
 }
 
 NS_CC_END

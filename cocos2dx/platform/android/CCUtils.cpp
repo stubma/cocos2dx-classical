@@ -80,6 +80,9 @@ string CCUtils::getPackageName() {
     JniMethodInfo t;
     JniHelper::getMethodInfo(t, "android/content/Context", "getPackageManager", "()Landroid/content/pm/PackageManager;");
 	jobject packageManager = t.env->CallObjectMethod(ctx, t.methodID);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
 
 	// get package name
     JniHelper::getMethodInfo(t, "android/content/Context", "getPackageName", "()Ljava/lang/String;");
@@ -91,6 +94,7 @@ string CCUtils::getPackageName() {
 
 	// release
 	t.env->ReleaseStringUTFChars(packageName, cpn);
+    t.env->DeleteLocalRef(t.classID);
 
 	// return
 	return pn;
@@ -105,6 +109,9 @@ string CCUtils::getInternalStoragePath() {
     JniHelper::getMethodInfo(t, "android/content/Context", "getFilesDir", "()Ljava/io/File;");
     jobject file = t.env->CallObjectMethod(ctx, t.methodID);
 
+    // release
+    t.env->DeleteLocalRef(t.classID);
+    
     // get absolute path
     JniHelper::getMethodInfo(t, "java/io/File", "getAbsolutePath", "()Ljava/lang/String;");
     jstring path = (jstring)t.env->CallObjectMethod(file, t.methodID);
@@ -116,6 +123,7 @@ string CCUtils::getInternalStoragePath() {
     t.env->DeleteLocalRef(path);
     t.env->DeleteLocalRef(file);
     t.env->DeleteLocalRef(ctx);
+    t.env->DeleteLocalRef(t.classID);
 
     // return
     return cppPath;
@@ -130,10 +138,19 @@ bool CCUtils::hasExternalStorage() {
     // get mount state
     jfieldID fid = t.env->GetStaticFieldID(t.classID, "MEDIA_MOUNTED", "Ljava/lang/String;");
     jstring jMounted = (jstring)t.env->GetStaticObjectField(t.classID, fid);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
 
     // is same?
     JniHelper::getMethodInfo(t, "java/lang/Object", "equals", "(Ljava/lang/Object;)Z");
-    return t.env->CallBooleanMethod(jMounted, t.methodID, jState);
+    bool ret = t.env->CallBooleanMethod(jMounted, t.methodID, jState);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
+    
+    // return
+    return ret;
 }
 
 int64_t CCUtils::getAvailableStorageSize() {
@@ -146,9 +163,15 @@ int64_t CCUtils::getAvailableStorageSize() {
     jstring jPath = t.env->NewStringUTF(path.c_str());
     jobject statfs = t.env->NewObject(t.classID, t.methodID, jPath);
     
+    // release
+    t.env->DeleteLocalRef(t.classID);
+    
     // get block size
     JniHelper::getMethodInfo(t, "android/os/StatFs", "getBlockSize", "()I");
     jint blockSize = t.env->CallIntMethod(statfs, t.methodID);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
     
     // get available block count
     JniHelper::getMethodInfo(t, "android/os/StatFs", "getAvailableBlocks", "()I");
@@ -156,6 +179,7 @@ int64_t CCUtils::getAvailableStorageSize() {
     
     // release
     t.env->DeleteLocalRef(jPath);
+    t.env->DeleteLocalRef(t.classID);
     
     // return
     return blockSize * blocks;
@@ -170,15 +194,21 @@ static jbyteArray getFirstSignatureBytes() {
     JniHelper::getMethodInfo(t, "android/content/Context", "getPackageManager", "()Landroid/content/pm/PackageManager;");
 	jobject packageManager = t.env->CallObjectMethod(ctx, t.methodID);
 
+    // release
+    t.env->DeleteLocalRef(t.classID);
+    
     // get package name
     JniHelper::getMethodInfo(t, "android/content/Context", "getPackageName", "()Ljava/lang/String;");
 	jstring packageName = (jstring)t.env->CallObjectMethod(ctx, t.methodID);
 
+    // release
+    t.env->DeleteLocalRef(t.classID);
+    
     // get package info
     JniHelper::getMethodInfo(t, "android/content/pm/PackageManager", "getPackageInfo", "(Ljava/lang/String;I)Landroid/content/pm/PackageInfo;");
 	jint flags = t.env->GetStaticIntField(t.classID, t.env->GetStaticFieldID(t.classID, "GET_SIGNATURES", "I"));
 	jobject packageInfo = t.env->CallObjectMethod(packageManager, t.methodID, packageName, flags);
-
+    
     // get first signature java object
 	jclass klazz = t.env->GetObjectClass(packageInfo);
 	jobjectArray signatures = (jobjectArray)t.env->GetObjectField(packageInfo,
@@ -197,6 +227,8 @@ static jbyteArray getFirstSignatureBytes() {
     t.env->DeleteLocalRef(packageInfo);
     t.env->DeleteLocalRef(signatures);
     t.env->DeleteLocalRef(signature);
+    t.env->DeleteLocalRef(klazz);
+    t.env->DeleteLocalRef(t.classID);
 
     // return
     return certificate;
@@ -210,23 +242,38 @@ bool CCUtils::isDebugSignature() {
     JniMethodInfo t;
     JniHelper::getMethodInfo(t, "java/io/ByteArrayInputStream", "<init>", "([B)V");
     jobject bais = t.env->NewObject(t.classID, t.methodID, certificate);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
 
     // cert factory
     JniHelper::getStaticMethodInfo(t, "java/security/cert/CertificateFactory", "getInstance", "(Ljava/lang/String;)Ljava/security/cert/CertificateFactory;");
     jstring protocol = t.env->NewStringUTF("X.509");
     jobject cf = t.env->CallStaticObjectMethod(t.classID, t.methodID, protocol);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
 
     // cert
     JniHelper::getMethodInfo(t, "java/security/cert/CertificateFactory", "generateCertificate", "(Ljava/io/InputStream;)Ljava/security/cert/Certificate;");
     jobject cert = t.env->CallObjectMethod(cf, t.methodID, bais);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
 
     // issuer dn
     JniHelper::getMethodInfo(t, "java/security/cert/X509Certificate", "getIssuerDN", "()Ljava/security/Principal;");
     jobject ip = t.env->CallObjectMethod(cert, t.methodID);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
 
     // issuer dn name
     JniHelper::getMethodInfo(t, "java/security/Principal", "getName", "()Ljava/lang/String;");
     jstring ipn = (jstring)t.env->CallObjectMethod(ip, t.methodID);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
 
     // check issuer dn name
     bool debug = false;
@@ -241,10 +288,16 @@ bool CCUtils::isDebugSignature() {
         // subject dn
         JniHelper::getMethodInfo(t, "java/security/cert/X509Certificate", "getSubjectDN", "()Ljava/security/Principal;");
         jobject sp = t.env->CallObjectMethod(cert, t.methodID);
+        
+        // release
+        t.env->DeleteLocalRef(t.classID);
 
         // subject dn name
         JniHelper::getMethodInfo(t, "java/security/Principal", "getName", "()Ljava/lang/String;");
         jstring spn = (jstring)t.env->CallObjectMethod(sp, t.methodID);
+        
+        // release
+        t.env->DeleteLocalRef(t.classID);
 
         // check
         string cppspn = JniHelper::jstring2string(spn);
@@ -311,7 +364,13 @@ int CCUtils::getCpuHz() {
     // get package manager
     JniMethodInfo t;
     JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/CCUtils", "getCPUFrequencyMax", "()I");
-	return t.env->CallStaticIntMethod(t.classID, t.methodID);
+	int ret = t.env->CallStaticIntMethod(t.classID, t.methodID);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
+    
+    // return
+    return ret;
 }
 
 void CCUtils::openUrl(const string& url) {
@@ -319,12 +378,18 @@ void CCUtils::openUrl(const string& url) {
     JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/CCUtils", "openUrl", "(Ljava/lang/String;)V");
     jstring jUrl = t.env->NewStringUTF(url.c_str());
 	t.env->CallStaticVoidMethod(t.classID, t.methodID, jUrl);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
 }
 
 void CCUtils::openAppInStore(const string& appId) {
     JniMethodInfo t;
     JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/CCUtils", "openAppInStore", "()V");
 	t.env->CallStaticVoidMethod(t.classID, t.methodID);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
 }
 
 void CCUtils::showSystemConfirmDialog(const char* title, const char* msg, const char* positiveButton, const char* negativeButton, CCCallFunc* onOK, CCCallFunc* onCancel) {
@@ -353,6 +418,7 @@ void CCUtils::showSystemConfirmDialog(const char* title, const char* msg, const 
         t.env->DeleteLocalRef(jPositiveButton);
     if(jNegativeButton)
         t.env->DeleteLocalRef(jNegativeButton);
+    t.env->DeleteLocalRef(t.classID);
 }
 
 string CCUtils::getAppVersion() {
@@ -363,6 +429,9 @@ string CCUtils::getAppVersion() {
     JniMethodInfo t;
     JniHelper::getMethodInfo(t, "android/content/Context", "getPackageManager", "()Landroid/content/pm/PackageManager;");
 	jobject packageManager = t.env->CallObjectMethod(ctx, t.methodID);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
     
     // get package info
     JniHelper::getMethodInfo(t, "android/content/pm/PackageManager", "getPackageInfo", "(Ljava/lang/String;I)Landroid/content/pm/PackageInfo;");
@@ -382,6 +451,7 @@ string CCUtils::getAppVersion() {
     t.env->DeleteLocalRef(piClass);
     t.env->DeleteLocalRef(jVer);
     t.env->DeleteLocalRef(jPN);
+    t.env->DeleteLocalRef(t.classID);
     
     return ver;
 }
@@ -392,6 +462,7 @@ string CCUtils::getDeviceType() {
 	jstring jDevice = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
 	string device = JniHelper::jstring2string(jDevice);
 	t.env->DeleteLocalRef(jDevice);
+    t.env->DeleteLocalRef(t.classID);
 	return device;
 }
 
@@ -401,6 +472,7 @@ string CCUtils::getMacAddress() {
 	jstring jMac = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
 	string mac = JniHelper::jstring2string(jMac);
 	t.env->DeleteLocalRef(jMac);
+    t.env->DeleteLocalRef(t.classID);
 	return mac;
 }
 

@@ -28,6 +28,11 @@ jobject CCUtilsAndroid::getContext() {
     JniMethodInfo t;
     JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxActivity", "getContext", "()Landroid/content/Context;");
     jobject ctx = t.env->CallStaticObjectMethod(t.classID, t.methodID);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
+    
+    // return
     return ctx;
 }
 
@@ -57,6 +62,7 @@ jobject CCUtilsAndroid::newIntent(const char* activityName) {
     t.env->DeleteLocalRef(actClass);
     t.env->DeleteLocalRef(context);
     CC_SAFE_FREE(jniName);
+    t.env->DeleteLocalRef(t.classID);
     
     return intent;
 }
@@ -67,6 +73,7 @@ jobject CCUtilsAndroid::newIntentByAction(const char* action) {
     jstring a = t.env->NewStringUTF(action);
     jobject intent = t.env->NewObject(t.classID, t.methodID, a);
     t.env->DeleteLocalRef(a);
+    t.env->DeleteLocalRef(t.classID);
     return intent;
 }
 
@@ -75,10 +82,15 @@ void CCUtilsAndroid::setIntentUri(jobject intent, const char* uri) {
     JniHelper::getStaticMethodInfo(t, "android/net/Uri", "parse", "(Ljava/lang/String;)Landroid/net/Uri;");
     jstring jUriStr = t.env->NewStringUTF(uri);
     jobject jUri = t.env->CallStaticObjectMethod(t.classID, t.methodID, jUriStr);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
+    
     JniHelper::getMethodInfo(t, "android/content/Intent", "setData", "(Landroid/net/Uri;)Landroid/content/Intent;");
     t.env->CallObjectMethod(intent, t.methodID, jUri);
     t.env->DeleteLocalRef(jUri);
     t.env->DeleteLocalRef(jUriStr);
+    t.env->DeleteLocalRef(t.classID);
 }
 
 void CCUtilsAndroid::putBooleanExtra(jobject intent, const char* name, bool value) {
@@ -87,6 +99,7 @@ void CCUtilsAndroid::putBooleanExtra(jobject intent, const char* name, bool valu
     jstring s = t.env->NewStringUTF(name);
     t.env->CallObjectMethod(intent, t.methodID, s, value);
     t.env->DeleteLocalRef(s);
+    t.env->DeleteLocalRef(t.classID);
 }
 
 void CCUtilsAndroid::putByteExtra(jobject intent, const char* name, unsigned char value) {
@@ -95,6 +108,7 @@ void CCUtilsAndroid::putByteExtra(jobject intent, const char* name, unsigned cha
     jstring s = t.env->NewStringUTF(name);
     t.env->CallObjectMethod(intent, t.methodID, s, value);
     t.env->DeleteLocalRef(s);
+    t.env->DeleteLocalRef(t.classID);
 }
 
 void CCUtilsAndroid::putCharExtra(jobject intent, const char* name, unsigned short value) {
@@ -103,6 +117,7 @@ void CCUtilsAndroid::putCharExtra(jobject intent, const char* name, unsigned sho
     jstring s = t.env->NewStringUTF(name);
     t.env->CallObjectMethod(intent, t.methodID, s, value);
     t.env->DeleteLocalRef(s);
+    t.env->DeleteLocalRef(t.classID);
 }
 
 void CCUtilsAndroid::putDoubleExtra(jobject intent, const char* name, double value) {
@@ -111,6 +126,7 @@ void CCUtilsAndroid::putDoubleExtra(jobject intent, const char* name, double val
     jstring s = t.env->NewStringUTF(name);
     t.env->CallObjectMethod(intent, t.methodID, s, value);
     t.env->DeleteLocalRef(s);
+    t.env->DeleteLocalRef(t.classID);
 }
 
 void CCUtilsAndroid::putFloatExtra(jobject intent, const char* name, float value) {
@@ -119,6 +135,7 @@ void CCUtilsAndroid::putFloatExtra(jobject intent, const char* name, float value
     jstring s = t.env->NewStringUTF(name);
     t.env->CallObjectMethod(intent, t.methodID, s, value);
     t.env->DeleteLocalRef(s);
+    t.env->DeleteLocalRef(t.classID);
 }
 
 void CCUtilsAndroid::putIntExtra(jobject intent, const char* name, int value) {
@@ -127,6 +144,7 @@ void CCUtilsAndroid::putIntExtra(jobject intent, const char* name, int value) {
     jstring s = t.env->NewStringUTF(name);
     t.env->CallObjectMethod(intent, t.methodID, s, value);
     t.env->DeleteLocalRef(s);
+    t.env->DeleteLocalRef(t.classID);
 }
 
 void CCUtilsAndroid::putStringExtra(jobject intent, const char* name, const char* value) {
@@ -135,6 +153,7 @@ void CCUtilsAndroid::putStringExtra(jobject intent, const char* name, const char
     jstring s = t.env->NewStringUTF(name);
     t.env->CallObjectMethod(intent, t.methodID, s, value);
     t.env->DeleteLocalRef(s);
+    t.env->DeleteLocalRef(t.classID);
 }
 
 void CCUtilsAndroid::putLongExtra(jobject intent, const char* name, long value) {
@@ -143,6 +162,7 @@ void CCUtilsAndroid::putLongExtra(jobject intent, const char* name, long value) 
     jstring s = t.env->NewStringUTF(name);
     t.env->CallObjectMethod(intent, t.methodID, s, value);
     t.env->DeleteLocalRef(s);
+    t.env->DeleteLocalRef(t.classID);
 }
 
 void CCUtilsAndroid::putShortExtra(jobject intent, const char* name, short value) {
@@ -151,6 +171,7 @@ void CCUtilsAndroid::putShortExtra(jobject intent, const char* name, short value
     jstring s = t.env->NewStringUTF(name);
     t.env->CallObjectMethod(intent, t.methodID, s, value);
     t.env->DeleteLocalRef(s);
+    t.env->DeleteLocalRef(t.classID);
 }
 
 void CCUtilsAndroid::putParcelableExtra(jobject intent, const char* name, jobject value) {
@@ -159,6 +180,7 @@ void CCUtilsAndroid::putParcelableExtra(jobject intent, const char* name, jobjec
     jstring s = t.env->NewStringUTF(name);
     t.env->CallObjectMethod(intent, t.methodID, s, value);
     t.env->DeleteLocalRef(s);
+    t.env->DeleteLocalRef(t.classID);
 }
 
 void CCUtilsAndroid::startActivity(jobject intent) {
@@ -167,6 +189,7 @@ void CCUtilsAndroid::startActivity(jobject intent) {
     JniHelper::getMethodInfo(t, "android/content/Context", "startActivity", "(Landroid/content/Intent;)V");
     t.env->CallVoidMethod(ctx, t.methodID, intent);
     t.env->DeleteLocalRef(ctx);
+    t.env->DeleteLocalRef(t.classID);
 }
 
 void CCUtilsAndroid::sendBroadcast(jobject intent) {
@@ -175,6 +198,7 @@ void CCUtilsAndroid::sendBroadcast(jobject intent) {
     JniHelper::getMethodInfo(t, "android/content/Context", "sendBroadcast", "(Landroid/content/Intent;)V");
     t.env->CallVoidMethod(ctx, t.methodID, intent);
     t.env->DeleteLocalRef(ctx);
+    t.env->DeleteLocalRef(t.classID);
 }
 
 NS_CC_END
