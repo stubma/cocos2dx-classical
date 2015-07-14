@@ -31,6 +31,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.res.AssetManager;
+import android.graphics.Rect;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -97,6 +98,13 @@ public class Cocos2dxHelper {
 	private static native void nativeSetApkPath(final String pApkPath);
 	private native static String nativeFullPathForFilename(String filename);
 	private static native void nativeSetEditTextDialogResult(final byte[] pBytes);
+	private static native void nativeGetViewPortRect(Rect r);
+	
+	public static Rect getViewPortRect() {
+		Rect r = new Rect();
+		nativeGetViewPortRect(r);
+		return r;
+	}
 	
 	public static String getFullPathForFilename(String filename) {
 		return nativeFullPathForFilename(filename);

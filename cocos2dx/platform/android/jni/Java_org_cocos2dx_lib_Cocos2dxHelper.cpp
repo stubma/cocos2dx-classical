@@ -4,6 +4,9 @@
 #include <string>
 #include "JniHelper.h"
 #include "cocoa/CCString.h"
+#include "cocoa/CCGeometry.h"
+#include "support/utils/CCUtils.h"
+#include "CCEGLView.h"
 #include "Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
 
@@ -22,11 +25,11 @@ string g_apkPath;
 
 extern "C" {
 
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetApkPath(JNIEnv*  env, jobject thiz, jstring apkPath) {
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetApkPath(JNIEnv*  env, jclass clazz, jstring apkPath) {
         g_apkPath = JniHelper::jstring2string(apkPath);
     }
 
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetEditTextDialogResult(JNIEnv * env, jobject obj, jbyteArray text) {
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetEditTextDialogResult(JNIEnv * env, jclass clazz, jbyteArray text) {
         jsize  size = env->GetArrayLength(text);
 
         if (size > 0) {
@@ -49,6 +52,27 @@ extern "C" {
         string fn = JniHelper::jstring2string(filename);
         string path = CCUtils::getExternalOrFullPath(fn);
         return env->NewStringUTF(path.c_str());
+    }
+    
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeGetViewPortRect(JNIEnv* env, jclass clazz, jobject r) {
+        // get rect
+        const CCRect& rect = CCEGLView::sharedOpenGLView()->getViewPortRect();
+        
+        // Rect class
+        jclass klass = env->GetObjectClass(r);
+        jfieldID fid_bottom = env->GetFieldID(klass, "bottom", "I");
+        jfieldID fid_left = env->GetFieldID(klass, "left", "I");
+        jfieldID fid_right = env->GetFieldID(klass, "right", "I");
+        jfieldID fid_top = env->GetFieldID(klass, "top", "I");
+        
+        // set it
+        env->SetIntField(r, fid_left, rect.origin.x);
+        env->SetIntField(r, fid_bottom, rect.origin.y);
+        env->SetIntField(r, fid_right, rect.origin.x + rect.size.width);
+        env->SetIntField(r, fid_top, rect.origin.y + rect.size.height);
+        
+        // release
+        env->DeleteLocalRef(klass);
     }
 }
 
