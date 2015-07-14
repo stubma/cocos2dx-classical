@@ -152,6 +152,10 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 		setContentView(mFrameLayout);
 	}
 	
+	public FrameLayout getContentFrame() {
+		return mFrameLayout;
+	}
+	
     public Cocos2dxGLSurfaceView onCreateView() {
     	return new Cocos2dxGLSurfaceView(this);
     }
