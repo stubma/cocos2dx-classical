@@ -567,6 +567,14 @@ public:
      * for iOS 7.0+, you can't get mac address
      */
     static string getMacAddress();
+    
+    /**
+     * fill screen gap for some resolution mode, image will be tiled in gap
+     *
+     * @param vborder vertical border image file name
+     * @param hborder horizontal border image file name
+     */
+    static void fillScreenBorder(const string& vborder, const string& hborder);
 };
 
 NS_CC_END

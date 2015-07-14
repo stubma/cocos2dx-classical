@@ -345,6 +345,73 @@ int CCUtils::getSystemVersionInt() {
     return atoi(buf);
 }
 
+void CCUtils::fillScreenBorder(const string& vborder, const string& hborder) {
+    const CCRect& rect = CCEGLView::sharedOpenGLView()->getViewPortRect();
+    EAGLView* glView = [EAGLView sharedEGLView];
+    float scale = [UIScreen mainScreen].scale;
+    if(rect.origin.y > 0) {
+        // image
+        NSString* imgName = [NSString stringWithCString:deletePathExtension(hborder).c_str() encoding:NSUTF8StringEncoding];
+        UIImage* img = [UIImage imageNamed:imgName];
+        CGSize imgSize = img.size;
+        
+        // init frame for image view
+        CGRect frame = CGRectZero;
+        frame.size.height = rect.origin.y / scale;
+        frame.size.width = imgSize.width * frame.size.height / imgSize.height;
+        
+        // top bar
+        while(frame.origin.x < glView.frame.size.width) {
+            UIImageView* iv = [[[UIImageView alloc] initWithImage:img] autorelease];
+            iv.contentMode = UIViewContentModeScaleAspectFill;
+            iv.frame = frame;
+            [glView addSubview:iv];
+            frame.origin.x += frame.size.width;
+        }
+        
+        // bottom bar
+        frame.origin.x = 0;
+        frame.origin.y = glView.frame.size.height - frame.size.height;
+        while(frame.origin.x < glView.frame.size.width) {
+            UIImageView* iv = [[[UIImageView alloc] initWithImage:img] autorelease];
+            iv.contentMode = UIViewContentModeScaleAspectFill;
+            iv.frame = frame;
+            [glView addSubview:iv];
+            frame.origin.x += frame.size.width;
+        }
+    } else if(rect.origin.x > 0) {
+        // image
+        NSString* imgName = [NSString stringWithCString:deletePathExtension(vborder).c_str() encoding:NSUTF8StringEncoding];
+        UIImage* img = [UIImage imageNamed:imgName];
+        CGSize imgSize = img.size;
+        
+        // init frame for image view
+        CGRect frame = CGRectZero;
+        frame.size.width = rect.origin.x / scale;
+        frame.size.height = imgSize.height * frame.size.width / imgSize.width;
+        
+        // left bar
+        while(frame.origin.y < glView.frame.size.height) {
+            UIImageView* iv = [[[UIImageView alloc] initWithImage:img] autorelease];
+            iv.contentMode = UIViewContentModeScaleAspectFill;
+            iv.frame = frame;
+            [glView addSubview:iv];
+            frame.origin.y += frame.size.height;
+        }
+        
+        // right bar
+        frame.origin.y = 0;
+        frame.origin.x = glView.frame.size.width - frame.size.width;
+        while(frame.origin.y < glView.frame.size.height) {
+            UIImageView* iv = [[[UIImageView alloc] initWithImage:img] autorelease];
+            iv.contentMode = UIViewContentModeScaleAspectFill;
+            iv.frame = frame;
+            [glView addSubview:iv];
+            frame.origin.y += frame.size.height;
+        }
+    }
+}
+
 NS_CC_END
 
 #endif // #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS

@@ -485,6 +485,10 @@ int CCUtils::getSystemVersionInt() {
 	return v;
 }
 
+void CCUtils::fillScreenBorder(const string& vborder, const string& hborder) {
+    
+}
+
 NS_CC_END
 
 #endif // #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
