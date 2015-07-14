@@ -95,8 +95,12 @@ public class Cocos2dxHelper {
 	// ===========================================================
 
 	private static native void nativeSetApkPath(final String pApkPath);
-
+	private native static String nativeFullPathForFilename(String filename);
 	private static native void nativeSetEditTextDialogResult(final byte[] pBytes);
+	
+	public static String getFullPathForFilename(String filename) {
+		return nativeFullPathForFilename(filename);
+	}
 
 	public static String getCocos2dxPackageName() {
 		return Cocos2dxHelper.sPackageName;

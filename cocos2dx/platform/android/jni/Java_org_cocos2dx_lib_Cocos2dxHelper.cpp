@@ -45,6 +45,11 @@ extern "C" {
         }
     }
 
+    JNIEXPORT jstring JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeFullPathForFilename(JNIEnv* env, jclass clazz, jstring filename) {
+        string fn = JniHelper::jstring2string(filename);
+        string path = CCUtils::getExternalOrFullPath(fn);
+        return env->NewStringUTF(path.c_str());
+    }
 }
 
 const char * getApkPath() {

@@ -1266,7 +1266,7 @@ public class CCImage_richlabel {
 				String fullPath = span.atlas;
 				boolean absolute = fullPath.startsWith("/");
 				if(!absolute) {
-					fullPath = nativeFullPathForFilename(fullPath);
+					fullPath = Cocos2dxHelper.getFullPathForFilename(fullPath);
 				}
 				if(fullPath.startsWith("assets/")) {
 					AssetManager am = Cocos2dxHelper.getAssetManager();
@@ -1370,7 +1370,7 @@ public class CCImage_richlabel {
 			String fullPath = span.imageName;
 			boolean absolute = fullPath.startsWith("/");
 			if(!absolute) {
-				fullPath = nativeFullPathForFilename(fullPath);
+				fullPath = Cocos2dxHelper.getFullPathForFilename(fullPath);
 			}
 			if(fullPath.startsWith("assets/")) {
 				AssetManager am = Cocos2dxHelper.getAssetManager();
@@ -1474,7 +1474,6 @@ public class CCImage_richlabel {
 	private native static void nativeResetBitmapDC();
 	private native static void nativeSaveRealLength(int length);
 	private native static void nativeSaveNeedTime(boolean needTime);
-	private native static String nativeFullPathForFilename(String filename);
 	private native static void nativeGetSpriteFrameInfo(String plist, String atlas, String imageName, AtlasFrame frame);
 	private native static byte[] nativeDecryptData(byte[] buf);
 }

@@ -100,12 +100,6 @@ JNIEXPORT void JNICALL Java_org_cocos2dx_lib_CCImage_1richlabel_nativeSaveNeedTi
 	bitmapDC.m_needTime = needTime;
 }
 
-JNIEXPORT jstring JNICALL Java_org_cocos2dx_lib_CCImage_1richlabel_nativeFullPathForFilename(JNIEnv* env, jclass clazz, jstring filename) {
-	string fn = JniHelper::jstring2string(filename);
-	string path = CCUtils::getExternalOrFullPath(fn);
-	return env->NewStringUTF(path.c_str());
-}
-
 JNIEXPORT void JNICALL Java_org_cocos2dx_lib_CCImage_1richlabel_nativeGetSpriteFrameInfo
   (JNIEnv * env, jclass clazz, jstring jPlist, jstring jAtlas, jstring jImageName, jobject jFrame) {
 	// get c string
