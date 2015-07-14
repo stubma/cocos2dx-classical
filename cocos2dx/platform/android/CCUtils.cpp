@@ -94,6 +94,7 @@ string CCUtils::getPackageName() {
 
 	// release
 	t.env->ReleaseStringUTFChars(packageName, cpn);
+    t.env->DeleteLocalRef(ctx);
     t.env->DeleteLocalRef(t.classID);
 
 	// return
@@ -486,7 +487,17 @@ int CCUtils::getSystemVersionInt() {
 }
 
 void CCUtils::fillScreenBorder(const string& vborder, const string& hborder) {
+    // get package manager
+    JniMethodInfo t;
+    JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/CCUtils", "fillScreenBorder", "(Ljava/lang/String;Ljava/lang/String;)V");
+    jstring jVBorder = t.env->NewStringUTF(vborder.c_str());
+    jstring jHBorder = t.env->NewStringUTF(hborder.c_str());
+    t.env->CallStaticVoidMethod(t.classID, t.methodID, jVBorder, jHBorder);
     
+    // release
+    t.env->DeleteLocalRef(jVBorder);
+    t.env->DeleteLocalRef(jHBorder);
+    t.env->DeleteLocalRef(t.classID);
 }
 
 NS_CC_END

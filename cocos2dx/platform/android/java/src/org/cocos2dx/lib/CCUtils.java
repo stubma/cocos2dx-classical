@@ -23,6 +23,7 @@
  ****************************************************************************/
 package org.cocos2dx.lib;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
@@ -44,13 +45,21 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Rect;
+import android.graphics.Shader.TileMode;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 public class CCUtils {
 	public static final String BOGOMIPS_PATTERN = "BogoMIPS[\\s]*:[\\s]*(\\d+\\.\\d+)[\\s]*\n";
@@ -251,6 +260,124 @@ public class CCUtils {
 				vg.setMotionEventSplittingEnabled(!flag);
 			}	
 		}
+	}
+	
+	public static void fillScreenBorder(String vborder, String hborder) {
+		// get top frame layout
+		final Cocos2dxActivity act = (Cocos2dxActivity)Cocos2dxActivity.getContext();
+		final FrameLayout content = act.getContentFrame();
+		
+		// load border images
+		AssetManager am = Cocos2dxHelper.getAssetManager();
+		Bitmap vbImg = null;
+		Bitmap hbImg = null;
+		InputStream is = null;
+        try {
+            String fullPath = vborder;
+            boolean absolute = fullPath.startsWith("/");
+            if(!absolute) {
+            	fullPath = Cocos2dxHelper.getFullPathForFilename(fullPath);
+            }
+            if(fullPath.startsWith("assets/")) {
+            	fullPath = fullPath.substring("assets/".length());
+            	is = am.open(fullPath);
+            } else {
+            	is = new FileInputStream(fullPath);
+            }
+            vbImg = BitmapFactory.decodeStream(is);
+        } catch (Exception e) {
+        	return;
+        } finally {
+			if(is != null) {
+				try {
+					is.close();
+				} catch (IOException e) {
+				}
+			}
+        }
+        
+        // load horizontal border image
+        is = null;
+        try {
+            String fullPath = hborder;
+            boolean absolute = fullPath.startsWith("/");
+            if(!absolute) {
+            	fullPath = Cocos2dxHelper.getFullPathForFilename(fullPath);
+            }
+            if(fullPath.startsWith("assets/")) {
+            	fullPath = fullPath.substring("assets/".length());
+            	is = am.open(fullPath);
+            } else {
+            	is = new FileInputStream(fullPath);
+            }
+            hbImg = BitmapFactory.decodeStream(is);
+        } catch (Exception e) {
+        	return;
+        } finally {
+			if(is != null) {
+				try {
+					is.close();
+				} catch (IOException e) {
+				}
+			}
+        }
+        
+        // get view port and content size
+        final Rect rect = Cocos2dxHelper.getViewPortRect();
+        final int contentWidth = content.getWidth();
+        final int contentHeight = content.getHeight();
+        
+        // add border decorative bar, based on origin
+        if(rect.bottom > 0) {
+        	// tiled drawable
+        	final BitmapDrawable d = new BitmapDrawable(hbImg);
+        	d.setBounds(0, 0, contentWidth, rect.bottom);
+        	d.setTileModeXY(TileMode.REPEAT, TileMode.REPEAT); 
+        	
+        	// create bar at top and bottom
+        	act.runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					// top fill
+		        	View bv = new View(act);
+		        	bv.setBackgroundDrawable(d);
+		        	FrameLayout.LayoutParams flp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, rect.bottom);
+		        	content.addView(bv, flp);
+		        	
+		        	// bottom fill
+		        	bv = new View(act);
+		        	bv.setBackgroundDrawable(d);
+		        	flp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, rect.bottom);
+		        	flp.gravity = Gravity.BOTTOM;
+		        	content.addView(bv, flp);
+				}
+			});
+        } else if(rect.left > 0) {
+        	// tiled drawable
+        	final BitmapDrawable d = new BitmapDrawable(vbImg);
+        	d.setBounds(0, 0, rect.left, contentHeight);
+        	d.setTileModeXY(TileMode.REPEAT, TileMode.REPEAT); 
+        	
+        	// create bar at left and right
+        	act.runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					// left fill
+		        	View bv = new View(act);
+		        	bv.setBackgroundDrawable(d);
+		        	FrameLayout.LayoutParams flp = new FrameLayout.LayoutParams(rect.left, ViewGroup.LayoutParams.FILL_PARENT);
+		        	flp.gravity = Gravity.LEFT;
+		        	content.addView(bv, flp);
+		        	
+		        	// right fill
+		        	bv = new View(act);
+		        	bv.setBackgroundDrawable(d);
+		        	flp = new FrameLayout.LayoutParams(rect.left, ViewGroup.LayoutParams.FILL_PARENT);
+		        	flp.gravity = Gravity.RIGHT;
+		        	content.addView(bv, flp);
+				}
+			});
+        }
 	}
 		
 	private static native void nativeExecuteCallFunc(long func);
