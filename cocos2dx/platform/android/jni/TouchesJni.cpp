@@ -39,7 +39,7 @@ extern "C" {
         JniMethodInfo t;
         jint ret = -1;
         if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/CCUtils", "setMultipleTouchEnabled", "(Z)V")) {
-            t.env->CallStaticIntMethod(t.classID, t.methodID, flag);
+            t.env->CallStaticVoidMethod(t.classID, t.methodID, flag);
             t.env->DeleteLocalRef(t.classID);
         }
     }
