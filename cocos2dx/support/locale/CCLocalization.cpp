@@ -79,10 +79,10 @@ void CCLocalization::addAndroidStrings(const string& lan, const string& path, bo
 string CCLocalization::getString(const string& key) {
     // get strings, may fallback to English if not found
     bool fallback = false;
-    string lan = CCLocale::sharedLocale()->getLanguage();
-    CCDictionary* strings = (CCDictionary*)m_lanMap.objectForKey(lan);
+    string lan = CCLocale::sharedLocale()->getISOLanguage();
+    string country = CCLocale::sharedLocale()->getCountry();
+    CCDictionary* strings = (CCDictionary*)m_lanMap.objectForKey(lan + "_" + country);
     if(!strings) {
-        lan = CCLocale::sharedLocale()->getISOLanguage();
         strings = (CCDictionary*)m_lanMap.objectForKey(lan);
         if(!strings) {
             fallback = true;
