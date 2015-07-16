@@ -555,7 +555,7 @@ static CGPoint convertDesignCoordToScreenCoord(const CCPoint& designCoord, bool 
         screenPos.x = screenPos.x / 2.0f;
         screenPos.y = screenPos.y / 2.0f;
     }
-    CCLOG("[EditBox] pos x = %f, y = %f", screenGLPos.x, screenGLPos.y);
+    CCLOGINFO("[EditBox] pos x = %f, y = %f", screenGLPos.x, screenGLPos.y);
     return screenPos;
 }
 
@@ -573,7 +573,7 @@ void CCEditBoxImplIOS::setVisible(bool visible)
 void CCEditBoxImplIOS::setContentSize(const CCSize& size)
 {
     m_tContentSize = size;
-    CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
+    CCLOGINFO("[Edit text] content size = (%f, %f)", size.width, size.height);
     placeInactiveLabels();
     CCEGLViewProtocol* eglView = CCEGLView::sharedOpenGLView();
     CGSize controlSize = CGSizeMake(size.width * eglView->getScaleX(),size.height * eglView->getScaleY());
@@ -588,7 +588,7 @@ void CCEditBoxImplIOS::setContentSize(const CCSize& size)
 
 void CCEditBoxImplIOS::setAnchorPoint(const CCPoint& anchorPoint)
 {
-    CCLOG("[Edit text] anchor point = (%f, %f)", anchorPoint.x, anchorPoint.y);
+    CCLOGINFO("[Edit text] anchor point = (%f, %f)", anchorPoint.x, anchorPoint.y);
 	m_obAnchorPoint = anchorPoint;
 	setPosition(m_obPosition);
 }
