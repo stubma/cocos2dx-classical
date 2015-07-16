@@ -55,10 +55,6 @@ void CCLocalization::addAndroidStrings(const string& lan, const string& path, bo
         CCLOGWARN("CCLocalization::addAndroidStrings: string file path is empty");
         return;
     }
-    if(lan.length() != 2) {
-        CCLOGWARN("CCLocalization::addAndroidStrings: language code is not in ISO 639-1 format");
-        return;
-    }
     
     // register language dictionary
     CCDictionary* d = (CCDictionary*)m_lanMap.objectForKey(lan);
