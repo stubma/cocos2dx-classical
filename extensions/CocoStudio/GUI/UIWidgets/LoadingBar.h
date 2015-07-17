@@ -93,14 +93,14 @@ public:
      *
      * @param percent    percent value from 1 to 100.
      */
-    void setPercent(int percent);
+    void setPercent(float percent);
     
     /**
      * Gets the progress direction of loadingbar.
      *
      * @return percent    percent value from 1 to 100.
      */
-    int getPercent();
+    float getPercent();
     
     /**
      * Sets if loadingbar is using scale9 renderer.
@@ -150,7 +150,7 @@ protected:
     virtual void copySpecialProperties(Widget* model);
 protected:
     LoadingBarType _barType;
-    int _percent;
+    float _percent;
     float _totalLength;
     CCNode* _barRenderer;
     TextureResType _renderBarTexType;

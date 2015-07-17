@@ -223,10 +223,10 @@ float LoadingBar::getPercentage() {
 }
 
 void LoadingBar::setPercentage(float p) {
-    setPercent((int)p);
+    setPercent(p);
 }
 
-void LoadingBar::setPercent(int percent)
+void LoadingBar::setPercent(float percent)
 {
     if ( percent < 0 || percent > 100)
     {
@@ -251,7 +251,7 @@ void LoadingBar::setPercent(int percent)
     }
 }
 
-int LoadingBar::getPercent()
+float LoadingBar::getPercent()
 {
     return _percent;
 }
