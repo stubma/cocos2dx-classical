@@ -70,9 +70,14 @@ bool CCFileUtilsAndroid::init()
 }
 
 void CCFileUtilsAndroid::enableMainApkExpansion(int versionCode) {
+    // release old apk file
     CC_SAFE_DELETE(s_pZipFile);
+    
+    // open main expansion
     string xapkPath = CCUtilsAndroid::getMainExpansionPath(versionCode);
     s_pZipFile = new ZipFile(xapkPath, "assets/");
+    
+    // set flag
     m_mainApkExpansionEnabled = true;
     
     // init java side
@@ -85,9 +90,14 @@ void CCFileUtilsAndroid::enableMainApkExpansion(int versionCode) {
 }
 
 void CCFileUtilsAndroid::enablePatchApkExpansion(int versionCode) {
+    // ensure old pointer is released
     CC_SAFE_DELETE(s_pPatchZipFile);
+    
+    // open patch expansion
     string xapkPath = CCUtilsAndroid::getPatchExpansionPath(versionCode);
     s_pPatchZipFile = new ZipFile(xapkPath, "assets/");
+    
+    // set flag
     m_patchApkExpansionEnabled = true;
     
     // init java side
