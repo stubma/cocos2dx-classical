@@ -25,6 +25,9 @@ package org.cocos2dx.lib;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 import android.app.Activity;
@@ -171,13 +174,32 @@ public class Cocos2dxHelper {
 	}
 
 	private static String[] listXApk(ZipResourceFile xapk, String path) {
-		ZipResourceFile.ZipEntryRO[] entries = xapk.getEntriesAt(path);
-		String[] ret = new String[entries.length];
-		int i = 0;
-		for(ZipResourceFile.ZipEntryRO e : entries) {
-			ret[i++] = e.getZipFileName();
+		// append assets automatically
+		if(!path.startsWith("assets")) {
+			if(path.startsWith("/")) {
+				path = "assets" + path;
+			} else {
+				path = "assets/" + path;
+			}
 		}
-		return ret;
+
+		// the path must end with / to mean a folder
+		if(!path.endsWith("/")) {
+			path = path + "/";
+		}
+
+		// get entries
+		ZipResourceFile.ZipEntryRO[] entries = xapk.getEntriesAt(path);
+		List<String> ret = new ArrayList<String>();
+		for(ZipResourceFile.ZipEntryRO e : entries) {
+			int lastSlash = e.mFileName.lastIndexOf("/");
+			if(lastSlash == -1) {
+				ret.add(e.mFileName);
+			} else if(lastSlash < e.mFileName.length() - 1) {
+				ret.add(e.mFileName.substring(lastSlash + 1));
+			}
+		}
+		return ret.toArray(new String[ret.size()]);
 	}
 
 	public static void enableAccelerometer() {

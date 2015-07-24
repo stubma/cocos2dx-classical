@@ -120,12 +120,13 @@ const std::vector<std::string>& CCFileUtilsAndroid::listAssets(const std::string
     jobjectArray items = NULL;
     
     // jni string subpath
-    jstring jSubpath = t.env->NewStringUTF(subpath.c_str());
+    jstring jSubpath = NULL;
     
     // try expansion first, then apk file
     if(m_mainApkExpansionEnabled) {
         // get asset manager
         JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxHelper", "listMainXApk", "(Ljava/lang/String;)[Ljava/lang/String;");
+        jSubpath = t.env->NewStringUTF(subpath.c_str());
         items = (jobjectArray)t.env->CallStaticObjectMethod(t.classID, t.methodID, jSubpath);
         
         // release
@@ -140,6 +141,7 @@ const std::vector<std::string>& CCFileUtilsAndroid::listAssets(const std::string
         
         // get list and call it
         JniHelper::getMethodInfo(t, "android/content/res/AssetManager", "list", "(Ljava/lang/String;)[Ljava/lang/String;");
+        jSubpath = t.env->NewStringUTF(subpath.c_str());
         items = (jobjectArray)t.env->CallObjectMethod(am, t.methodID, jSubpath);
         
         // release
@@ -160,7 +162,9 @@ const std::vector<std::string>& CCFileUtilsAndroid::listAssets(const std::string
     if(items) {
         t.env->DeleteLocalRef(items);
     }
-    t.env->DeleteLocalRef(jSubpath);
+    if(jSubpath) {
+        t.env->DeleteLocalRef(jSubpath);
+    }
     
     // return
     return s_strvec;
