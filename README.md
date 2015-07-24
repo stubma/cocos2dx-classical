@@ -94,6 +94,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 * 设计了一个资源打包工具, lpk_ui是它的图形界面, lpk_console是命令行工具, 不过这个工具我只是调试完成, 尚未在实际项目中验证, 而且引擎也需要修改来支持这个工具, 所以目前仅供参考
 * 集成了SuperAnimConverter工具和它的代码, 改名为CCSuperAnim, 为其添加了lua支持, HelloLua工程增加了SuperAnim的演示
 * CCEGLViewProtocol添加了setMultipleTouchEnabled方法
+* CCFileUtils增加enableMain/PatchApkExpansion方法, CocosdxHelper增加若干XApk相关方法, 在Android上支持读取从apk expansion读取资源.
 * Lua相关修改
 	* quick 3.x的binding generator工具移植完成, 名叫autolua, 引擎的lua绑定已经全部生成
 	* Cocos2dxLuaLoader的逻辑被修改, 会优先从~/Library/Cache下载入lua脚本, 如果没有找到则载入app的.
@@ -168,6 +169,7 @@ Things Improved
 * add a tool for resource pack, lpk_ui is UI tool, lpk_console is command tool. However, it is not tested in a real project. It is only for your reference by so far.
 * Merge SuperAnimConverter.app and its code, rename it as CCSuperAnim and add lua support. There is a sample in HelloLua project
 * CCEGLViewProtocol add setMultipleTouchEnabled method
+* Android apk expansion is supported, CCFileUtils add enableMain/PatchApkExpansion method.
 * Lua related
 	* quick 3.x binding generator is migrated, renamed as autolua
 	* engine lua binding is generated
