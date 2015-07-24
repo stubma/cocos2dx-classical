@@ -23,24 +23,27 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.lib;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
+import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
+
+import com.android.vending.expansion.zipfile.ZipResourceFile;
+import com.android.vending.expansion.zipfile.ZipResourceFile.ZipEntryRO;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class Cocos2dxHelper {
 	// ===========================================================
@@ -157,23 +160,32 @@ public class Cocos2dxHelper {
 		}
 	}
 
-	public static String[] listMainXApk(String path) {
-		if(sMainXApk != null) {
-			return listXApk(sMainXApk, path);
-		} else {
-			return new String[0];
+	// XXX: it returns null if xapk is compressed zip, so don't compress expansion zip
+	static AssetFileDescriptor openFdFromXApk(String path) {
+		// append assets automatically
+		if(!path.startsWith("assets")) {
+			if(path.startsWith("/")) {
+				path = "assets" + path;
+			} else {
+				path = "assets/" + path;
+			}
 		}
-	}
 
-	public static String[] listPatchXApk(String path) {
+		// search patch first
+		AssetFileDescriptor fd = null;
 		if(sPatchXApk != null) {
-			return listXApk(sPatchXApk, path);
-		} else {
-			return new String[0];
+			fd = sPatchXApk.getAssetFileDescriptor(path);
 		}
+
+		// if not found, search main
+		if(fd == null && sMainXApk != null) {
+			fd = sMainXApk.getAssetFileDescriptor(path);
+		}
+
+		return fd;
 	}
 
-	private static String[] listXApk(ZipResourceFile xapk, String path) {
+	private static String[] listXApk(String path) {
 		// append assets automatically
 		if(!path.startsWith("assets")) {
 			if(path.startsWith("/")) {
@@ -188,17 +200,36 @@ public class Cocos2dxHelper {
 			path = path + "/";
 		}
 
-		// get entries
-		ZipResourceFile.ZipEntryRO[] entries = xapk.getEntriesAt(path);
+		// entry list found
 		List<String> ret = new ArrayList<String>();
-		for(ZipResourceFile.ZipEntryRO e : entries) {
-			int lastSlash = e.mFileName.lastIndexOf("/");
-			if(lastSlash == -1) {
-				ret.add(e.mFileName);
-			} else if(lastSlash < e.mFileName.length() - 1) {
-				ret.add(e.mFileName.substring(lastSlash + 1));
+
+		// get entries from main apk
+		if(sMainXApk != null) {
+			ZipResourceFile.ZipEntryRO[] entries = sMainXApk.getEntriesAt(path);
+			for(ZipResourceFile.ZipEntryRO e : entries) {
+				int lastSlash = e.mFileName.lastIndexOf("/");
+				if(lastSlash == -1) {
+					ret.add(e.mFileName);
+				} else if(lastSlash < e.mFileName.length() - 1) {
+					ret.add(e.mFileName.substring(lastSlash + 1));
+				}
 			}
 		}
+
+		// get entries from patch apk
+		if(sPatchXApk != null) {
+			ZipResourceFile.ZipEntryRO[] entries = sPatchXApk.getEntriesAt(path);
+			for(ZipResourceFile.ZipEntryRO e : entries) {
+				int lastSlash = e.mFileName.lastIndexOf("/");
+				if(lastSlash == -1) {
+					ret.add(e.mFileName);
+				} else if(lastSlash < e.mFileName.length() - 1) {
+					ret.add(e.mFileName.substring(lastSlash + 1));
+				}
+			}
+		}
+
+		// return as array
 		return ret.toArray(new String[ret.size()]);
 	}
 

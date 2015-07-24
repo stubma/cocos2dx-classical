@@ -26,8 +26,10 @@ package org.cocos2dx.lib;
 import java.io.FileInputStream;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.util.Log;
 
 public class Cocos2dxMusic {
@@ -233,7 +235,11 @@ public class Cocos2dxMusic {
 				mediaPlayer.setDataSource(fis.getFD());
 				fis.close();
 			} else {
-				final AssetFileDescriptor assetFileDescritor = this.mContext.getAssets().openFd(pPath);
+				// search apk expansion first, then apk file
+				AssetFileDescriptor assetFileDescritor = Cocos2dxHelper.openFdFromXApk(pPath);
+				if(assetFileDescritor == null) {
+					assetFileDescritor = this.mContext.getAssets().openFd(pPath);
+				}
 				mediaPlayer.setDataSource(assetFileDescritor.getFileDescriptor(), assetFileDescritor.getStartOffset(), assetFileDescritor.getLength());
 			}
 

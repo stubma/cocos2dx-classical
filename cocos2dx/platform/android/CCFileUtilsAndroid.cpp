@@ -123,9 +123,9 @@ const std::vector<std::string>& CCFileUtilsAndroid::listAssets(const std::string
     jstring jSubpath = NULL;
     
     // try expansion first, then apk file
-    if(m_mainApkExpansionEnabled) {
+    if(m_mainApkExpansionEnabled || m_patchApkExpansionEnabled) {
         // get asset manager
-        JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxHelper", "listMainXApk", "(Ljava/lang/String;)[Ljava/lang/String;");
+        JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxHelper", "listXApk", "(Ljava/lang/String;)[Ljava/lang/String;");
         jSubpath = t.env->NewStringUTF(subpath.c_str());
         items = (jobjectArray)t.env->CallStaticObjectMethod(t.classID, t.methodID, jSubpath);
         
@@ -187,9 +187,10 @@ bool CCFileUtilsAndroid::isFileExist(const std::string& strFilePath)
         {// Didn't find "assets/" at the beginning of the path, adding it.
             strPath.insert(0, m_strDefaultResRootPath);
         }
-
-        if (s_pZipFile->fileExists(strPath))
-        {
+        
+        if(s_pPatchZipFile && s_pPatchZipFile->fileExists(strPath)) {
+            bFound = true;
+        } else if(s_pZipFile->fileExists(strPath)) {
             bFound = true;
         } 
     }
@@ -244,11 +245,21 @@ unsigned char* CCFileUtilsAndroid::doGetFileData(const char* pszFileName, const 
     {
         if (forAsync)
         {
-            pData = s_pZipFile->getFileData(fullPath.c_str(), pSize, s_pZipFile->_dataThread);
+            if(s_pPatchZipFile) {
+                pData = s_pPatchZipFile->getFileData(fullPath.c_str(), pSize, s_pPatchZipFile->_dataThread);
+            }
+            if(!pData) {
+                pData = s_pZipFile->getFileData(fullPath.c_str(), pSize, s_pZipFile->_dataThread);
+            }
         }
         else
         {
-            pData = s_pZipFile->getFileData(fullPath.c_str(), pSize);
+            if(s_pPatchZipFile) {
+                pData = s_pPatchZipFile->getFileData(fullPath.c_str(), pSize);
+            }
+            if(!pData) {
+                pData = s_pZipFile->getFileData(fullPath.c_str(), pSize);
+            }
         }
     }
     else

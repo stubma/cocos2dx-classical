@@ -1,5 +1,5 @@
 
-package org.cocos2dx.lib;
+package com.android.vending.expansion.zipfile;
 
 /*
  * Copyright (C) 2012 The Android Open Source Project
@@ -189,7 +189,12 @@ public class ZipResourceFile {
         addPatchFile(zipFileName);
     }
 
-    ZipEntryRO[] getEntriesAt(String path) {
+    public boolean hasEntry(String path) {
+        ZipEntryRO entry = mHashMap.get(path);
+        return entry != null;
+    }
+
+    public ZipEntryRO[] getEntriesAt(String path) {
         Vector<ZipEntryRO> zev = new Vector<ZipEntryRO>();
         Collection<ZipEntryRO> values = mHashMap.values();
         if (null == path)
