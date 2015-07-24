@@ -79,8 +79,8 @@ extern "C"
         }
         if (codeBuffer) {
             if (luaL_loadbuffer(L, (char*)codeBuffer, codeBufferSize, filepath.c_str()) != 0) {
-                luaL_error(L, "error loading module %s from file %s :\n\t%s",
-                    lua_tostring(L, 1), filepath.c_str(), lua_tostring(L, -1));
+                CCLOG("error loading module %s from file %s :\n\t%s",
+                      lua_tostring(L, 1), filepath.c_str(), lua_tostring(L, -1));
             }
             delete[] codeBuffer;
         } else {

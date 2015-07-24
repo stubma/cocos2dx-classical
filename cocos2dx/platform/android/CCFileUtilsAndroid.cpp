@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "platform/CCCommon.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "jni/JniHelper.h"
+#include "CCUtilsAndroid.h"
 
 using namespace std;
 
@@ -35,6 +36,7 @@ NS_CC_BEGIN
 
 // record the zip on the resource path
 static ZipFile *s_pZipFile = NULL;
+static ZipFile *s_pPatchZipFile = NULL;
 static std::vector<std::string> s_strvec;
 
 CCFileUtils* CCFileUtils::sharedFileUtils()
@@ -43,19 +45,22 @@ CCFileUtils* CCFileUtils::sharedFileUtils()
     {
         s_sharedFileUtils = new CCFileUtilsAndroid();
         s_sharedFileUtils->init();
-        std::string resourcePath = getApkPath();
+        string resourcePath = getApkPath();
         s_pZipFile = new ZipFile(resourcePath, "assets/");
     }
     return s_sharedFileUtils;
 }
 
-CCFileUtilsAndroid::CCFileUtilsAndroid()
+CCFileUtilsAndroid::CCFileUtilsAndroid() :
+m_mainApkExpansionEnabled(false),
+m_patchApkExpansionEnabled(false)
 {
 }
 
 CCFileUtilsAndroid::~CCFileUtilsAndroid()
 {
     CC_SAFE_DELETE(s_pZipFile);
+    CC_SAFE_DELETE(s_pPatchZipFile);
 }
 
 bool CCFileUtilsAndroid::init()
@@ -64,39 +69,89 @@ bool CCFileUtilsAndroid::init()
     return CCFileUtils::init();
 }
 
-const std::vector<std::string>& CCFileUtilsAndroid::listAssets(const std::string& subpath) {
-    // clear
-    s_strvec.clear();
-
-    // get asset manager
+void CCFileUtilsAndroid::enableMainApkExpansion(int versionCode) {
+    CC_SAFE_DELETE(s_pZipFile);
+    string xapkPath = CCUtilsAndroid::getMainExpansionPath(versionCode);
+    s_pZipFile = new ZipFile(xapkPath, "assets/");
+    m_mainApkExpansionEnabled = true;
+    
+    // init java side
     JniMethodInfo t;
-    JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxHelper", "getAssetManager", "()Landroid/content/res/AssetManager;");
-    jobject am = t.env->CallStaticObjectMethod(t.classID, t.methodID);
+    JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxHelper", "initMainApkExpansion", "(I)V");
+    t.env->CallStaticVoidMethod(t.classID, t.methodID, versionCode);
     
     // release
     t.env->DeleteLocalRef(t.classID);
+}
 
-    // convert arguments to java type
-    jstring jSubpath = t.env->NewStringUTF(subpath.c_str());
-
-    // get list and call it
-    JniHelper::getMethodInfo(t, "android/content/res/AssetManager", "list", "(Ljava/lang/String;)[Ljava/lang/String;");
-    jobjectArray items = (jobjectArray)t.env->CallObjectMethod(am, t.methodID, jSubpath);
-
-    // add to vector
-    jsize size = t.env->GetArrayLength(items);
-    for(jsize i = 0; i < size; i++) {
-        jstring item = (jstring)t.env->GetObjectArrayElement(items, i);
-        s_strvec.push_back(JniHelper::jstring2string(item));
-        t.env->DeleteLocalRef(item);
-    }
-
-    // delete ref
-    t.env->DeleteLocalRef(am);
-    t.env->DeleteLocalRef(jSubpath);
-    t.env->DeleteLocalRef(items);
+void CCFileUtilsAndroid::enablePatchApkExpansion(int versionCode) {
+    CC_SAFE_DELETE(s_pPatchZipFile);
+    string xapkPath = CCUtilsAndroid::getPatchExpansionPath(versionCode);
+    s_pPatchZipFile = new ZipFile(xapkPath, "assets/");
+    m_patchApkExpansionEnabled = true;
+    
+    // init java side
+    JniMethodInfo t;
+    JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxHelper", "initPatchApkExpansion", "(I)V");
+    t.env->CallStaticVoidMethod(t.classID, t.methodID, versionCode);
+    
+    // release
     t.env->DeleteLocalRef(t.classID);
+}
 
+const std::vector<std::string>& CCFileUtilsAndroid::listAssets(const std::string& subpath) {
+    // clear
+    s_strvec.clear();
+    
+    // helper struct
+    JniMethodInfo t;
+
+    // entries array
+    jobjectArray items = NULL;
+    
+    // jni string subpath
+    jstring jSubpath = t.env->NewStringUTF(subpath.c_str());
+    
+    // try expansion first, then apk file
+    if(m_mainApkExpansionEnabled) {
+        // get asset manager
+        JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxHelper", "listMainXApk", "(Ljava/lang/String;)[Ljava/lang/String;");
+        items = (jobjectArray)t.env->CallStaticObjectMethod(t.classID, t.methodID, jSubpath);
+        
+        // release
+        t.env->DeleteLocalRef(t.classID);
+    } else {
+        // get asset manager
+        JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxHelper", "getAssetManager", "()Landroid/content/res/AssetManager;");
+        jobject am = t.env->CallStaticObjectMethod(t.classID, t.methodID);
+        
+        // release
+        t.env->DeleteLocalRef(t.classID);
+        
+        // get list and call it
+        JniHelper::getMethodInfo(t, "android/content/res/AssetManager", "list", "(Ljava/lang/String;)[Ljava/lang/String;");
+        items = (jobjectArray)t.env->CallObjectMethod(am, t.methodID, jSubpath);
+        
+        // release
+        t.env->DeleteLocalRef(t.classID);
+    }
+    
+    // add to vector
+    if(items) {
+        jsize size = t.env->GetArrayLength(items);
+        for(jsize i = 0; i < size; i++) {
+            jstring item = (jstring)t.env->GetObjectArrayElement(items, i);
+            s_strvec.push_back(JniHelper::jstring2string(item));
+            t.env->DeleteLocalRef(item);
+        }
+    }
+    
+    // common release
+    if(items) {
+        t.env->DeleteLocalRef(items);
+    }
+    t.env->DeleteLocalRef(jSubpath);
+    
     // return
     return s_strvec;
 }

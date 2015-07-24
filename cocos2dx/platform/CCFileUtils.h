@@ -335,6 +335,10 @@ public:
         std::vector<std::string>* v = new std::vector<std::string>();
         return *v;
     }
+    
+    // for android only, it is just empty method in non-android platform
+    virtual void enableMainApkExpansion(int versionCode) {}
+    virtual void enablePatchApkExpansion(int versionCode) {}
 
 protected:
     /**

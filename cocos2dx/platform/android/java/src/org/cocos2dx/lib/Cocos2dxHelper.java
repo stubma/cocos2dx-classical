@@ -23,6 +23,7 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.lib;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 
@@ -34,6 +35,7 @@ import android.content.res.AssetManager;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -56,6 +58,8 @@ public class Cocos2dxHelper {
 	private static String sFileDirectory;
 	private static Context sContext = null;
 	private static Cocos2dxHelperListener sCocos2dxHelperListener;
+	private static ZipResourceFile sMainXApk;
+	private static ZipResourceFile sPatchXApk;
 
 	// ===========================================================
 	// Constructors
@@ -128,6 +132,52 @@ public class Cocos2dxHelper {
 
 	public static AssetManager getAssetManager() {
 		return Cocos2dxHelper.sAssetManager;
+	}
+
+	public static void initMainApkExpansion(int versionCode) {
+		if(sMainXApk == null) {
+			String xapkPath = CCUtils.getMainExpansionPath(versionCode);
+			try {
+				sMainXApk = new ZipResourceFile(xapkPath);
+			} catch (IOException e) {
+			}
+		}
+	}
+
+	public static void initPatchApkExpansion(int versionCode) {
+		if(sPatchXApk == null) {
+			String xapkPath = CCUtils.getPatchExpansionPath(versionCode);
+			try {
+				sPatchXApk = new ZipResourceFile(xapkPath);
+			} catch (IOException e) {
+			}
+		}
+	}
+
+	public static String[] listMainXApk(String path) {
+		if(sMainXApk != null) {
+			return listXApk(sMainXApk, path);
+		} else {
+			return new String[0];
+		}
+	}
+
+	public static String[] listPatchXApk(String path) {
+		if(sPatchXApk != null) {
+			return listXApk(sPatchXApk, path);
+		} else {
+			return new String[0];
+		}
+	}
+
+	private static String[] listXApk(ZipResourceFile xapk, String path) {
+		ZipResourceFile.ZipEntryRO[] entries = xapk.getEntriesAt(path);
+		String[] ret = new String[entries.length];
+		int i = 0;
+		for(ZipResourceFile.ZipEntryRO e : entries) {
+			ret[i++] = e.getZipFileName();
+		}
+		return ret;
 	}
 
 	public static void enableAccelerometer() {

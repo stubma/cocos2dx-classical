@@ -23,6 +23,7 @@
  ****************************************************************************/
 package org.cocos2dx.lib;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,6 +45,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -55,6 +57,7 @@ import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -76,6 +79,44 @@ public class CCUtils {
         } catch (Exception e) {
         	return 0;
         }
+	}
+
+	public static int getVersionCode() {
+		try {
+			Context c = Cocos2dxActivity.getContext();
+			PackageInfo pi = c.getPackageManager().getPackageInfo(c.getPackageName(), 0);
+			return pi.versionCode;
+		} catch(PackageManager.NameNotFoundException e) {
+			return 1;
+		}
+	}
+
+	public static String getMainExpansionPath(int versionCode) {
+		Context c = Cocos2dxActivity.getContext();
+		File dir = Environment.getExternalStorageDirectory();
+		StringBuilder builder = new StringBuilder();
+		builder.append("Android/obb/")
+				.append(c.getPackageName())
+				.append("/main.")
+				.append(versionCode)
+				.append(".")
+				.append(c.getPackageName())
+				.append(".obb");
+		return new File(dir, builder.toString()).getAbsolutePath();
+	}
+
+	public static String getPatchExpansionPath(int versionCode) {
+		Context c = Cocos2dxActivity.getContext();
+		File dir = Environment.getExternalStorageDirectory();
+		StringBuilder builder = new StringBuilder();
+		builder.append("Android/obb/")
+				.append(c.getPackageName())
+				.append("/patch.")
+				.append(versionCode)
+				.append(".")
+				.append(c.getPackageName())
+				.append(".obb");
+		return new File(dir, builder.toString()).getAbsolutePath();
 	}
 
 	private static int readSystemFileAsInt(final String pSystemFile) throws Exception {

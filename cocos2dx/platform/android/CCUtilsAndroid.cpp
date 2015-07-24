@@ -36,6 +36,49 @@ jobject CCUtilsAndroid::getContext() {
     return ctx;
 }
 
+int CCUtilsAndroid::getVersionCode() {
+    // get package manager
+    JniMethodInfo t;
+    JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/CCUtils", "getVersionCode", "()I");
+    int ret = t.env->CallStaticIntMethod(t.classID, t.methodID);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
+    
+    // return
+    return ret;
+}
+
+string CCUtilsAndroid::getMainExpansionPath(int versionCode) {
+    // call java method
+    JniMethodInfo t;
+    JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/CCUtils", "getMainExpansionPath", "(I)Ljava/lang/String;");
+    jstring jPath = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID, versionCode);
+    string path = JniHelper::jstring2string(jPath);
+    
+    // release
+    t.env->DeleteLocalRef(jPath);
+    t.env->DeleteLocalRef(t.classID);
+    
+    // return
+    return path;
+}
+
+string CCUtilsAndroid::getPatchExpansionPath(int versionCode) {
+    // call java method
+    JniMethodInfo t;
+    JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/CCUtils", "getPatchExpansionPath", "(I)Ljava/lang/String;");
+    jstring jPath = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID, versionCode);
+    string path = JniHelper::jstring2string(jPath);
+    
+    // release
+    t.env->DeleteLocalRef(jPath);
+    t.env->DeleteLocalRef(t.classID);
+    
+    // return
+    return path;
+}
+
 jobject CCUtilsAndroid::newIntent(const char* activityName) {
     // get context
     jobject context = getContext();

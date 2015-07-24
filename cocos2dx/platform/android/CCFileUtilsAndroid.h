@@ -55,7 +55,9 @@ public:
     virtual bool isFileExist(const std::string& strFilePath);
     virtual bool isAbsolutePath(const std::string& strPath);
     virtual const std::vector<std::string>& listAssets(const std::string& subpath);
-
+    virtual void enableMainApkExpansion(int versionCode);
+    virtual void enablePatchApkExpansion(int versionCode);
+    
     /** This function is android specific. It is used for CCTextureCache::addImageAsync(). 
      Don't use it in your codes.
      */
@@ -63,6 +65,10 @@ public:
     
 private:
     unsigned char* doGetFileData(const char* pszFileName, const char* pszMode, size_t* pSize, bool forAsync);
+    
+private:
+    bool m_mainApkExpansionEnabled;
+    bool m_patchApkExpansionEnabled;
 };
 
 // end of platform group

@@ -30,6 +30,13 @@ public:
     static void putParcelableExtra(jobject intent, const char* name, jobject value);
     static void startActivity(jobject intent);
     static void sendBroadcast(jobject intent);
+    
+    // get app version code
+    static int getVersionCode();
+    
+    // get expansion path
+    static string getMainExpansionPath(int versionCode);
+    static string getPatchExpansionPath(int versionCode);
 };
 
 NS_CC_END
