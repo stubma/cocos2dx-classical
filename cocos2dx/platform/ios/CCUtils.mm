@@ -252,10 +252,23 @@ bool CCUtils::createFolder(const string& path) {
 
 string CCUtils::externalize(const string& path) {
     if(!CCFileUtils::sharedFileUtils()->isAbsolutePath(path)) {
+        // try append search path to get the exterinal path
         NSString* nsPath = [NSString stringWithUTF8String:path.c_str()];
-        NSString* nsFullPath = [NSString stringWithFormat:@"~/Library/Caches/%@", nsPath];
-        nsFullPath = [nsFullPath stringByExpandingTildeInPath];
-        return [nsFullPath cStringUsingEncoding:NSUTF8StringEncoding];
+        NSString* dir = [@"~/Library/Caches/" stringByExpandingTildeInPath];
+        NSFileManager* fm = [NSFileManager defaultManager];
+        const vector<string>& searchPaths = CCFileUtils::sharedFileUtils()->getSearchPaths();
+        for(vector<string>::const_iterator iter = searchPaths.begin(); iter != searchPaths.end(); iter++) {
+            const string& p = *iter;
+            NSString* searchPath = [NSString stringWithCString:p.c_str() encoding:NSUTF8StringEncoding];
+            NSString* fullpath = [[dir stringByAppendingPathComponent:searchPath] stringByAppendingPathComponent:nsPath];
+            if([fm fileExistsAtPath:fullpath]) {
+                return [fullpath cStringUsingEncoding:NSUTF8StringEncoding];
+            }
+        }
+        
+        // fallback, without search path
+        NSString* fullpath = [dir stringByAppendingPathComponent:nsPath];
+        return [fullpath cStringUsingEncoding:NSUTF8StringEncoding];
     } else {
         return path;
     }

@@ -61,12 +61,23 @@ bool CCUtils::isPathExistent(const string& path) {
 
 string CCUtils::externalize(const string& path) {
     if(!CCFileUtils::sharedFileUtils()->isAbsolutePath(path)) {
+        // ensure internal dir ends with slash
         string internalStorage = getInternalStoragePath();
         if(internalStorage[internalStorage.length() - 1] != '/') {
-            return internalStorage + "/" + path;
-        } else {
-            return internalStorage + path;
+            internalStorage += "/";
         }
+        
+        // append search path
+        const vector<string>& searchPaths = CCFileUtils::sharedFileUtils()->getSearchPaths();
+        for(vector<string>::const_iterator iter = searchPaths.begin(); iter != searchPaths.end(); iter++) {
+            string fullpath = internalStorage + (*iter) + "/" + path;
+            if(isPathExistent(fullpath)) {
+                return fullpath;
+            }
+        }
+        
+        // fallback, without search path
+        return internalStorage + path;
     } else {
         return path;
     }
