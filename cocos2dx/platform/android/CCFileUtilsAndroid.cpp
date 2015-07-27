@@ -36,7 +36,8 @@ NS_CC_BEGIN
 
 // record the zip on the resource path
 static ZipFile *s_pZipFile = NULL;
-static ZipFile *s_pPatchZipFile = NULL;
+static ZipFile *s_pMainXApkFile = NULL;
+static ZipFile *s_pPatchXApkFile = NULL;
 static std::vector<std::string> s_strvec;
 
 CCFileUtils* CCFileUtils::sharedFileUtils()
@@ -60,7 +61,8 @@ m_patchApkExpansionEnabled(false)
 CCFileUtilsAndroid::~CCFileUtilsAndroid()
 {
     CC_SAFE_DELETE(s_pZipFile);
-    CC_SAFE_DELETE(s_pPatchZipFile);
+    CC_SAFE_DELETE(s_pMainXApkFile);
+    CC_SAFE_DELETE(s_pPatchXApkFile);
 }
 
 bool CCFileUtilsAndroid::init()
@@ -70,12 +72,9 @@ bool CCFileUtilsAndroid::init()
 }
 
 void CCFileUtilsAndroid::enableMainApkExpansion(int versionCode) {
-    // release old apk file
-    CC_SAFE_DELETE(s_pZipFile);
-    
     // open main expansion
     string xapkPath = CCUtilsAndroid::getMainExpansionPath(versionCode);
-    s_pZipFile = new ZipFile(xapkPath, "assets/");
+    s_pMainXApkFile = new ZipFile(xapkPath, "assets/");
     
     // set flag
     m_mainApkExpansionEnabled = true;
@@ -91,11 +90,11 @@ void CCFileUtilsAndroid::enableMainApkExpansion(int versionCode) {
 
 void CCFileUtilsAndroid::enablePatchApkExpansion(int versionCode) {
     // ensure old pointer is released
-    CC_SAFE_DELETE(s_pPatchZipFile);
+    CC_SAFE_DELETE(s_pPatchXApkFile);
     
     // open patch expansion
     string xapkPath = CCUtilsAndroid::getPatchExpansionPath(versionCode);
-    s_pPatchZipFile = new ZipFile(xapkPath, "assets/");
+    s_pPatchXApkFile = new ZipFile(xapkPath, "assets/");
     
     // set flag
     m_patchApkExpansionEnabled = true;
@@ -188,7 +187,9 @@ bool CCFileUtilsAndroid::isFileExist(const std::string& strFilePath)
             strPath.insert(0, m_strDefaultResRootPath);
         }
         
-        if(s_pPatchZipFile && s_pPatchZipFile->fileExists(strPath)) {
+        if(s_pPatchXApkFile && s_pPatchXApkFile->fileExists(strPath)) {
+            bFound = true;
+        } else if(s_pMainXApkFile && s_pMainXApkFile->fileExists(strPath)) {
             bFound = true;
         } else if(s_pZipFile->fileExists(strPath)) {
             bFound = true;
@@ -245,8 +246,11 @@ unsigned char* CCFileUtilsAndroid::doGetFileData(const char* pszFileName, const 
     {
         if (forAsync)
         {
-            if(s_pPatchZipFile) {
-                pData = s_pPatchZipFile->getFileData(fullPath.c_str(), pSize, s_pPatchZipFile->_dataThread);
+            if(s_pPatchXApkFile) {
+                pData = s_pPatchXApkFile->getFileData(fullPath.c_str(), pSize, s_pPatchXApkFile->_dataThread);
+            }
+            if(!pData && s_pMainXApkFile) {
+                pData = s_pMainXApkFile->getFileData(fullPath.c_str(), pSize, s_pMainXApkFile->_dataThread);
             }
             if(!pData) {
                 pData = s_pZipFile->getFileData(fullPath.c_str(), pSize, s_pZipFile->_dataThread);
@@ -254,8 +258,11 @@ unsigned char* CCFileUtilsAndroid::doGetFileData(const char* pszFileName, const 
         }
         else
         {
-            if(s_pPatchZipFile) {
-                pData = s_pPatchZipFile->getFileData(fullPath.c_str(), pSize);
+            if(s_pPatchXApkFile) {
+                pData = s_pPatchXApkFile->getFileData(fullPath.c_str(), pSize);
+            }
+            if(!pData && s_pMainXApkFile) {
+                pData = s_pMainXApkFile->getFileData(fullPath.c_str(), pSize);
             }
             if(!pData) {
                 pData = s_pZipFile->getFileData(fullPath.c_str(), pSize);
