@@ -364,8 +364,9 @@ void CCUtils::fillScreenBorder(const string& vborder, const string& hborder) {
     float scale = [UIScreen mainScreen].scale;
     if(rect.origin.y > 0) {
         // image
-        NSString* imgName = [NSString stringWithCString:deletePathExtension(hborder).c_str() encoding:NSUTF8StringEncoding];
-        UIImage* img = [UIImage imageNamed:imgName];
+        string fullPath = CCUtils::getExternalOrFullPath(vborder);
+        NSString* nsFullPath = [NSString stringWithCString:fullPath.c_str() encoding:NSUTF8StringEncoding];
+        UIImage* img = [UIImage imageWithContentsOfFile:nsFullPath];
         CGSize imgSize = img.size;
         
         // init frame for image view
@@ -394,8 +395,9 @@ void CCUtils::fillScreenBorder(const string& vborder, const string& hborder) {
         }
     } else if(rect.origin.x > 0) {
         // image
-        NSString* imgName = [NSString stringWithCString:deletePathExtension(vborder).c_str() encoding:NSUTF8StringEncoding];
-        UIImage* img = [UIImage imageNamed:imgName];
+        string fullPath = CCUtils::getExternalOrFullPath(hborder);
+        NSString* nsFullPath = [NSString stringWithCString:fullPath.c_str() encoding:NSUTF8StringEncoding];
+        UIImage* img = [UIImage imageWithContentsOfFile:nsFullPath];
         CGSize imgSize = img.size;
         
         // init frame for image view
