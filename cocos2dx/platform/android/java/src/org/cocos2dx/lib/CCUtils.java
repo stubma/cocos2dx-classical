@@ -319,9 +319,14 @@ public class CCUtils {
             if(!absolute) {
             	fullPath = Cocos2dxHelper.getFullPathForFilename(fullPath);
             }
-            if(fullPath.startsWith("assets/")) {
-            	fullPath = fullPath.substring("assets/".length());
-            	is = am.open(fullPath);
+			if(!absolute) {
+				is = Cocos2dxHelper.openStreamFromXApk(fullPath);
+				if(is == null) {
+					if(fullPath.startsWith("assets/")) {
+						fullPath = fullPath.substring("assets/".length());
+					}
+					is = am.open(fullPath);
+				}
             } else {
             	is = new FileInputStream(fullPath);
             }
@@ -345,12 +350,17 @@ public class CCUtils {
             if(!absolute) {
             	fullPath = Cocos2dxHelper.getFullPathForFilename(fullPath);
             }
-            if(fullPath.startsWith("assets/")) {
-            	fullPath = fullPath.substring("assets/".length());
-            	is = am.open(fullPath);
-            } else {
-            	is = new FileInputStream(fullPath);
-            }
+			if(!absolute) {
+				is = Cocos2dxHelper.openStreamFromXApk(fullPath);
+				if(is == null) {
+					if(fullPath.startsWith("assets/")) {
+						fullPath = fullPath.substring("assets/".length());
+					}
+					is = am.open(fullPath);
+				}
+			} else {
+				is = new FileInputStream(fullPath);
+			}
             hbImg = BitmapFactory.decodeStream(is);
         } catch (Exception e) {
         	return;

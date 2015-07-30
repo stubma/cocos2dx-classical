@@ -40,6 +40,7 @@ import com.android.vending.expansion.zipfile.ZipResourceFile;
 import com.android.vending.expansion.zipfile.ZipResourceFile.ZipEntryRO;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -183,6 +184,35 @@ public class Cocos2dxHelper {
 		}
 
 		return fd;
+	}
+
+	static InputStream openStreamFromXApk(String path) {
+		// append assets automatically
+		if(!path.startsWith("assets")) {
+			if(path.startsWith("/")) {
+				path = "assets" + path;
+			} else {
+				path = "assets/" + path;
+			}
+		}
+
+		InputStream is = null;
+		if(sPatchXApk != null) {
+			try {
+				is = sPatchXApk.getInputStream(path);
+			} catch (IOException e) {
+			}
+		}
+
+		// if not found, search main
+		if(is == null && sMainXApk != null) {
+			try {
+				is = sMainXApk.getInputStream(path);
+			} catch (IOException e) {
+			}
+		}
+
+		return is;
 	}
 
 	private static String[] listXApk(String path) {
