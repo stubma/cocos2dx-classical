@@ -142,7 +142,7 @@ const std::vector<std::string>& CCFileUtilsAndroid::listAssets(const std::string
     jsize size = t.env->GetArrayLength(items);
     for(jsize i = 0; i < size; i++) {
         jstring jItem = (jstring)t.env->GetObjectArrayElement(items, i);
-        string item = JniHelper::jstring2string(jItem)
+        string item = JniHelper::jstring2string(jItem);
         entryMap[item] = item;
         t.env->DeleteLocalRef(jItem);
     }
@@ -163,7 +163,7 @@ const std::vector<std::string>& CCFileUtilsAndroid::listAssets(const std::string
         size = t.env->GetArrayLength(items);
         for(jsize i = 0; i < size; i++) {
             jstring jItem = (jstring)t.env->GetObjectArrayElement(items, i);
-            string item = JniHelper::jstring2string(jItem)
+            string item = JniHelper::jstring2string(jItem);
             entryMap[item] = item;
             t.env->DeleteLocalRef(jItem);
         }
