@@ -43,8 +43,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class Cocos2dxHelper {
 	// ===========================================================
@@ -230,18 +232,24 @@ public class Cocos2dxHelper {
 			path = path + "/";
 		}
 
-		// entry list found
-		List<String> ret = new ArrayList<String>();
+		// to make entry unique, so we use a map
+		Map<String, String> map = new HashMap<String, String>();
 
 		// get entries from main apk
 		if(sMainXApk != null) {
 			ZipResourceFile.ZipEntryRO[] entries = sMainXApk.getEntriesAt(path);
 			for(ZipResourceFile.ZipEntryRO e : entries) {
 				int lastSlash = e.mFileName.lastIndexOf("/");
-				if(lastSlash == -1) {
-					ret.add(e.mFileName);
-				} else if(lastSlash < e.mFileName.length() - 1) {
-					ret.add(e.mFileName.substring(lastSlash + 1));
+				String name = null;
+				if (lastSlash == -1) {
+					name = e.mFileName;
+				} else if (lastSlash < e.mFileName.length() - 1) {
+					name = e.mFileName.substring(lastSlash + 1);
+				}
+
+				// add
+				if(name != null) {
+					map.put(name, name);
 				}
 			}
 		}
@@ -251,16 +259,22 @@ public class Cocos2dxHelper {
 			ZipResourceFile.ZipEntryRO[] entries = sPatchXApk.getEntriesAt(path);
 			for(ZipResourceFile.ZipEntryRO e : entries) {
 				int lastSlash = e.mFileName.lastIndexOf("/");
-				if(lastSlash == -1) {
-					ret.add(e.mFileName);
-				} else if(lastSlash < e.mFileName.length() - 1) {
-					ret.add(e.mFileName.substring(lastSlash + 1));
+				String name = null;
+				if (lastSlash == -1) {
+					name = e.mFileName;
+				} else if (lastSlash < e.mFileName.length() - 1) {
+					name = e.mFileName.substring(lastSlash + 1);
+				}
+
+				// put to map, so patch entry will override main entry if same
+				if(name != null) {
+					map.put(name, name);
 				}
 			}
 		}
 
 		// return as array
-		return ret.toArray(new String[ret.size()]);
+		return map.keySet().toArray(new String[map.size()]);
 	}
 
 	public static void enableAccelerometer() {

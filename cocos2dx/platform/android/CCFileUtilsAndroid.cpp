@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "jni/JniHelper.h"
 #include "CCUtilsAndroid.h"
+#include <map>
 
 using namespace std;
 
@@ -112,60 +113,72 @@ const std::vector<std::string>& CCFileUtilsAndroid::listAssets(const std::string
     // clear
     s_strvec.clear();
     
+    // map to keep entry unique
+    map<string, string> entryMap;
+    
     // helper struct
     JniMethodInfo t;
 
-    // entries array
-    jobjectArray items = NULL;
-    
     // jni string subpath
-    jstring jSubpath = NULL;
+    jstring jSubpath = t.env->NewStringUTF(subpath.c_str());
     
-    // try expansion first, then apk file
+    // we need combine result from apk, main xapk and patch xapk
+    // apk is lowest priority so it need to be listed first
+    // get asset manager
+    JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxHelper", "getAssetManager", "()Landroid/content/res/AssetManager;");
+    jobject am = t.env->CallStaticObjectMethod(t.classID, t.methodID);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
+    
+    // get list and call it
+    JniHelper::getMethodInfo(t, "android/content/res/AssetManager", "list", "(Ljava/lang/String;)[Ljava/lang/String;");
+    jobjectArray items = (jobjectArray)t.env->CallObjectMethod(am, t.methodID, jSubpath);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
+    
+    // put entry to map
+    jsize size = t.env->GetArrayLength(items);
+    for(jsize i = 0; i < size; i++) {
+        jstring jItem = (jstring)t.env->GetObjectArrayElement(items, i);
+        string item = JniHelper::jstring2string(jItem)
+        entryMap[item] = item;
+        t.env->DeleteLocalRef(jItem);
+    }
+    
+    // release
+    t.env->DeleteLocalRef(items);
+    
+    // now list xapk
     if(m_mainApkExpansionEnabled || m_patchApkExpansionEnabled) {
         // get asset manager
         JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxHelper", "listXApk", "(Ljava/lang/String;)[Ljava/lang/String;");
-        jSubpath = t.env->NewStringUTF(subpath.c_str());
         items = (jobjectArray)t.env->CallStaticObjectMethod(t.classID, t.methodID, jSubpath);
         
         // release
         t.env->DeleteLocalRef(t.classID);
-    } else {
-        // get asset manager
-        JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxHelper", "getAssetManager", "()Landroid/content/res/AssetManager;");
-        jobject am = t.env->CallStaticObjectMethod(t.classID, t.methodID);
         
-        // release
-        t.env->DeleteLocalRef(t.classID);
-        
-        // get list and call it
-        JniHelper::getMethodInfo(t, "android/content/res/AssetManager", "list", "(Ljava/lang/String;)[Ljava/lang/String;");
-        jSubpath = t.env->NewStringUTF(subpath.c_str());
-        items = (jobjectArray)t.env->CallObjectMethod(am, t.methodID, jSubpath);
-        
-        // release
-        t.env->DeleteLocalRef(t.classID);
-    }
-    
-    // add to vector
-    if(items) {
-        jsize size = t.env->GetArrayLength(items);
+        // put entry to map
+        size = t.env->GetArrayLength(items);
         for(jsize i = 0; i < size; i++) {
-            jstring item = (jstring)t.env->GetObjectArrayElement(items, i);
-            s_strvec.push_back(JniHelper::jstring2string(item));
-            t.env->DeleteLocalRef(item);
+            jstring jItem = (jstring)t.env->GetObjectArrayElement(items, i);
+            string item = JniHelper::jstring2string(jItem)
+            entryMap[item] = item;
+            t.env->DeleteLocalRef(jItem);
         }
-    }
-    
-    // common release
-    if(items) {
+        
+        // release
         t.env->DeleteLocalRef(items);
     }
-    if(jSubpath) {
-        t.env->DeleteLocalRef(jSubpath);
-    }
+    
+    // release
+    t.env->DeleteLocalRef(jSubpath);
     
     // return
+    for(map<string, string>::iterator iter = entryMap.begin(); iter != entryMap.end(); iter++) {
+        s_strvec.push_back(iter->first);
+    }
     return s_strvec;
 }
 
