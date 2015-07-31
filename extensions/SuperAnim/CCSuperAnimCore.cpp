@@ -413,7 +413,7 @@ public:
     uchar					ReadByte() const;
     bool					ReadBoolean() const;
     short					ReadShort() const;
-    long					ReadLong() const;
+    int32_t					ReadInt32() const;
     std::string				ReadString() const;	
 };
 
@@ -497,12 +497,12 @@ short BufferReader::ReadShort() const
     return aShort;	
 }
 
-long BufferReader::ReadLong() const
+int32_t BufferReader::ReadInt32() const
 {
-    long aLong = ReadByte();
-    aLong |= ((long) ReadByte()) << 8;
-    aLong |= ((long) ReadByte()) << 16;
-    aLong |= ((long) ReadByte()) << 24;
+    int32_t aLong = ReadByte();
+    aLong |= ((int32_t) ReadByte()) << 8;
+    aLong |= ((int32_t) ReadByte()) << 16;
+    aLong |= ((int32_t) ReadByte()) << 24;
     
     return aLong;
 }
@@ -580,13 +580,13 @@ bool SuperAnimDefMgr::LoadSuperAnimMainDef(const std::string &theSuperAnimFile)
     // free memory
     delete[] aFileBuffer;
     
-    if (aBuffer.ReadLong() != 0x2E53414D)
+    if (aBuffer.ReadInt32() != 0x2E53414D)
     {
         assert(false && "Bad file format.");
         return false;
     }
     
-    int aVersion = (int)aBuffer.ReadLong();
+    int aVersion = (int)aBuffer.ReadInt32();
     
     if (aVersion != SAM_VERSION)
     {
@@ -596,10 +596,10 @@ bool SuperAnimDefMgr::LoadSuperAnimMainDef(const std::string &theSuperAnimFile)
     
     SuperAnimMainDef &aMainDef = mMainDefCache[theSuperAnimFile]; 
     aMainDef.mAnimRate = aBuffer.ReadByte();
-    aMainDef.mX = aBuffer.ReadLong() / TWIPS_PER_PIXEL;
-    aMainDef.mY = aBuffer.ReadLong() / TWIPS_PER_PIXEL;
-    aMainDef.mWidth = aBuffer.ReadLong() / TWIPS_PER_PIXEL;
-    aMainDef.mHeight = aBuffer.ReadLong() / TWIPS_PER_PIXEL;
+    aMainDef.mX = aBuffer.ReadInt32() / TWIPS_PER_PIXEL;
+    aMainDef.mY = aBuffer.ReadInt32() / TWIPS_PER_PIXEL;
+    aMainDef.mWidth = aBuffer.ReadInt32() / TWIPS_PER_PIXEL;
+    aMainDef.mHeight = aBuffer.ReadInt32() / TWIPS_PER_PIXEL;
     
     SuperAnimLabelArray aSuperAnimLabelArray;
     
@@ -612,10 +612,10 @@ bool SuperAnimDefMgr::LoadSuperAnimMainDef(const std::string &theSuperAnimFile)
         aSuperAnimImage.mWidth = aBuffer.ReadShort();
         aSuperAnimImage.mHeight = aBuffer.ReadShort();
         
-        aSuperAnimImage.mTransform.mMatrix.m00 = aBuffer.ReadLong() / (LONG_TO_FLOAT * TWIPS_PER_PIXEL);
-        aSuperAnimImage.mTransform.mMatrix.m01 = -aBuffer.ReadLong() / (LONG_TO_FLOAT * TWIPS_PER_PIXEL);
-        aSuperAnimImage.mTransform.mMatrix.m10 = -aBuffer.ReadLong() / (LONG_TO_FLOAT * TWIPS_PER_PIXEL);
-        aSuperAnimImage.mTransform.mMatrix.m11 = aBuffer.ReadLong() / (LONG_TO_FLOAT * TWIPS_PER_PIXEL);
+        aSuperAnimImage.mTransform.mMatrix.m00 = aBuffer.ReadInt32() / (LONG_TO_FLOAT * TWIPS_PER_PIXEL);
+        aSuperAnimImage.mTransform.mMatrix.m01 = -aBuffer.ReadInt32() / (LONG_TO_FLOAT * TWIPS_PER_PIXEL);
+        aSuperAnimImage.mTransform.mMatrix.m10 = -aBuffer.ReadInt32() / (LONG_TO_FLOAT * TWIPS_PER_PIXEL);
+        aSuperAnimImage.mTransform.mMatrix.m11 = aBuffer.ReadInt32() / (LONG_TO_FLOAT * TWIPS_PER_PIXEL);
         aSuperAnimImage.mTransform.mMatrix.m02 = aBuffer.ReadShort() / TWIPS_PER_PIXEL;
         aSuperAnimImage.mTransform.mMatrix.m12 = aBuffer.ReadShort() / TWIPS_PER_PIXEL;
         
@@ -683,10 +683,10 @@ bool SuperAnimDefMgr::LoadSuperAnimMainDef(const std::string &theSuperAnimFile)
                 
                 if (aFlagsAndObjectNum & MOVEFLAGS_MATRIX)
                 {
-                    aSuperAnimObject.mTransform.mMatrix.m00 = aBuffer.ReadLong() / LONG_TO_FLOAT;
-                    aSuperAnimObject.mTransform.mMatrix.m01 = -aBuffer.ReadLong() / LONG_TO_FLOAT;
-                    aSuperAnimObject.mTransform.mMatrix.m10 = -aBuffer.ReadLong() / LONG_TO_FLOAT;
-                    aSuperAnimObject.mTransform.mMatrix.m11 = aBuffer.ReadLong() / LONG_TO_FLOAT;
+                    aSuperAnimObject.mTransform.mMatrix.m00 = aBuffer.ReadInt32() / LONG_TO_FLOAT;
+                    aSuperAnimObject.mTransform.mMatrix.m01 = -aBuffer.ReadInt32() / LONG_TO_FLOAT;
+                    aSuperAnimObject.mTransform.mMatrix.m10 = -aBuffer.ReadInt32() / LONG_TO_FLOAT;
+                    aSuperAnimObject.mTransform.mMatrix.m11 = aBuffer.ReadInt32() / LONG_TO_FLOAT;
                 }
                 else if (aFlagsAndObjectNum & MOVEFLAGS_ROTATE)
                 {
@@ -703,8 +703,8 @@ bool SuperAnimDefMgr::LoadSuperAnimMainDef(const std::string &theSuperAnimFile)
                 aMatrix.LoadIdentity();
                 if (aFlagsAndObjectNum & MOVEFLAGS_LONGCOORDS)
                 {
-                    aMatrix.m02 = aBuffer.ReadLong() / TWIPS_PER_PIXEL;
-                    aMatrix.m12 = aBuffer.ReadLong() / TWIPS_PER_PIXEL;
+                    aMatrix.m02 = aBuffer.ReadInt32() / TWIPS_PER_PIXEL;
+                    aMatrix.m12 = aBuffer.ReadInt32() / TWIPS_PER_PIXEL;
                 }
                 else
                 {
