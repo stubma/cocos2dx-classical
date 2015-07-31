@@ -118,9 +118,6 @@ const std::vector<std::string>& CCFileUtilsAndroid::listAssets(const std::string
     
     // helper struct
     JniMethodInfo t;
-
-    // jni string subpath
-    jstring jSubpath = t.env->NewStringUTF(subpath.c_str());
     
     // we need combine result from apk, main xapk and patch xapk
     // apk is lowest priority so it need to be listed first
@@ -131,11 +128,15 @@ const std::vector<std::string>& CCFileUtilsAndroid::listAssets(const std::string
     // release
     t.env->DeleteLocalRef(t.classID);
     
+    // jni string subpath
+    jstring jSubpath = t.env->NewStringUTF(subpath.c_str());
+    
     // get list and call it
     JniHelper::getMethodInfo(t, "android/content/res/AssetManager", "list", "(Ljava/lang/String;)[Ljava/lang/String;");
     jobjectArray items = (jobjectArray)t.env->CallObjectMethod(am, t.methodID, jSubpath);
     
     // release
+    t.env->DeleteLocalRef(am);
     t.env->DeleteLocalRef(t.classID);
     
     // put entry to map
