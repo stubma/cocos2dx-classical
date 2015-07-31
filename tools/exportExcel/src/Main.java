@@ -59,7 +59,6 @@ public class Main {
 		
 		// json path editbox
 		final JTextField pathField = new JTextField();
-		pathField.setText("json");
 		pathField.setBorder(BorderFactory.createTitledBorder("Json File Folder"));
 		bottom.add(pathField);
 
