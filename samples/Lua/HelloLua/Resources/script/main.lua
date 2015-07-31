@@ -11,10 +11,15 @@ local function main()
     -- 2 is cc.ResolutionNoBorder, but this is happened before requireAllScript so we need use number
     -- we can't move requireAllScript ahead because resolution size must be set before loading cocos scripts
     CCEGLView:sharedOpenGLView():setDesignResolutionSize(480, 320, 1)
+    CCDirector:sharedDirector():setContentScaleFactor(1)
 
     -- load cocos scripts
     require("script/cocos/__init__")
     loadLua("ui")
+    
+    -- load configuration
+    CCConfiguration:sharedConfiguration():loadConfigFile(R("config.plist"))
+    d:setDefaultValues()
 
     -- surface size
     local visibleSize = display.visibleSize
@@ -34,7 +39,7 @@ local function main()
 
         local function menuCallbackOpenPopup()
             -- loop test sound effect
-            local effectPath = CCFileUtils:sharedFileUtils():fullPathForFilename("effect1.wav")
+            local effectPath = CCFileUtils:sharedFileUtils():fullPathForFilename("audio/effect1.wav")
             effectID = SimpleAudioEngine:sharedEngine():playEffect(effectPath)
             menuPopup:setVisible(true)
         end
@@ -62,9 +67,9 @@ local function main()
     end
 
     -- play background music, preload effect
-	local bgMusicPath = CCFileUtils:sharedFileUtils():fullPathForFilename("background.mp3")
+	local bgMusicPath = CCFileUtils:sharedFileUtils():fullPathForFilename("audio/background.mp3")
 	AudioEngine.playMusic(bgMusicPath, true)
-    local effectPath = CCFileUtils:sharedFileUtils():fullPathForFilename("effect1.wav")
+    local effectPath = CCFileUtils:sharedFileUtils():fullPathForFilename("audio/effect1.wav")
     AudioEngine.preloadEffect(effectPath)
 	
     -- run

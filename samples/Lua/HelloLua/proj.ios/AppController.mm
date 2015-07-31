@@ -45,7 +45,7 @@ static CCApplicationLua s_sharedApplication(CCUtils::getExternalOrFullPath("scri
     // Add the view controller's view to the window and display.
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
     EAGLView *__glView = [EAGLView viewWithFrame: [window bounds]
-                                     pixelFormat: kEAGLColorFormatRGBA8
+                                     pixelFormat: kEAGLColorFormatRGB565
                                      depthFormat: GL_DEPTH24_STENCIL8_OES
                               preserveBackbuffer: NO
                                       sharegroup: nil
@@ -58,21 +58,22 @@ static CCApplicationLua s_sharedApplication(CCUtils::getExternalOrFullPath("scri
     viewController.view = __glView;
 
     // Set RootViewController to window
-    if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
-    {
+    if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0) {
         // warning: addSubView doesn't work on iOS6
         [window addSubview: viewController.view];
-    }
-    else
-    {
+    } else {
         // use this method on ios6
         [window setRootViewController:viewController];
     }
-    
     [window makeKeyAndVisible];
-
-    [[UIApplication sharedApplication] setStatusBarHidden: YES];
     
+    // set search path
+    vector<string> searchPath;
+    searchPath.push_back("res_ios");
+    searchPath.push_back("res");
+    CCFileUtils::sharedFileUtils()->setSearchPaths(searchPath);
+    
+    // run game
     cocos2d::CCApplication::sharedApplication()->run();
     return YES;
 }

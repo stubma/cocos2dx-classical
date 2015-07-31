@@ -1,0 +1,69 @@
+apply plugin: 'com.android.application'
+
+description = 'HelloLua project'
+
+android {
+    compileSdkVersion 14
+    buildToolsVersion '22.0.1'
+
+    // cocos2dx-classical root
+    ext.c2dxc_root = System.getenv('HOME') + "/Projects/cocos2dx-classical"
+
+    defaultConfig {
+        applicationId "org.cocos2dx.hellolua"
+        minSdkVersion 14
+        targetSdkVersion 14
+        versionCode 1
+        versionName "0.0.1"
+    }
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            jniLibs.srcDir 'libs'
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ["../../Resources", "../../Resources_android", c2dxc_root + "/scripting/lua/script"]
+            jni.srcDirs = [] // disable automatic ndk-build call
+            java.srcDirs = ['src', c2dxc_root + '/cocos2dx/platform/android/java/src']
+        }
+    }
+    signingConfigs {
+        release {
+            // here to supply your keystore infos
+            storeFile file("../../keystore/android/xxx.keystore")
+            storePassword "xxx"
+            keyAlias "xxxx"
+            keyPassword "xxx"
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    // call regular ndk-build(.cmd) script from app directory
+    task ndkBuild(type: Exec) {
+        // Read ndk path from local.properties file
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        def ndkDir = properties.getProperty('ndk.dir')
+        commandLine ndkDir + '/ndk-build', '-j', '2', '-C', file('.').absolutePath, 'NDK_MODULE_PATH=' + c2dxc_root + ':' + c2dxc_root + '/cocos2dx/platform/third_party/android/prebuilt'
+    }
+    tasks.withType(JavaCompile) {
+        compileTask -> compileTask.dependsOn ndkBuild
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:support-v4:22.2.1'
+}

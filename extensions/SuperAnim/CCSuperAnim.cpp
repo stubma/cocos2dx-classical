@@ -494,7 +494,7 @@ void CCSuperAnim::draw()
 	
 	static SuperAnimObjDrawInfo sAnimObjDrawnInfo;
 	//float aPixelToPointScale = 1.0f / CC_CONTENT_SCALE_FACTOR();
-	float anAnimContentHeightInPixel = getContentSize().height * CC_CONTENT_SCALE_FACTOR();
+    float anAnimContentHeightInPixel = getContentSize().height * CC_CONTENT_SCALE_FACTOR();
 	BeginIterateAnimObjDrawInfo();
 	while (IterateAnimObjDrawInfo(mAnimHandler, sAnimObjDrawnInfo)) {
 		if (sAnimObjDrawnInfo.mSpriteId == InvalidSuperAnimSpriteId) {
