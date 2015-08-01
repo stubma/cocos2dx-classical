@@ -99,7 +99,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 	* quick 3.x的binding generator工具移植完成, 名叫autolua, 引擎的lua绑定已经全部生成
 	* Cocos2dxLuaLoader的逻辑被修改, 会优先从~/Library/Cache下载入lua脚本, 如果没有找到则载入app的.
 	* lua和luajit的库都已经预编译, 缺省使用luajit库, 如果想切换成lua, 可以编辑scripting/lua/Android.mk(for anroid)或cocos2dx/proj.ios/cocos2dx.xcodeproj(for ios)
-	* HelloLua工程修改调试通过
+	* HelloLua工程修改调试通过, 在Android上已经采用gradle对HelloLua进行打包, 注意你可能需要修改local.properties上的sdk.dir/ndk.dir配置.
 	* 使用ccScriptFunction代表一个脚本方法, 替代了原来使用int的方式. 引擎中注册脚本方法相关的代码都改成使用ccScriptFunction, 相应的牵涉到CCLuaEngine, CCLuaStack等都有不少修改, 脚本回调方法可以获得self参数, 解决了脚本回调方法中获取self不方便的问题
 	* 逐渐完善一些公用库, 都放在scripting/lua/script下, 提供一些基本的封装
 	* 加入了lfs方便载入脚本, 修正了Cocos2dxLuaLoader和lfs冲突的问题
@@ -174,7 +174,7 @@ Things Improved
 	* quick 3.x binding generator is migrated, renamed as autolua
 	* engine lua binding is generated
 	* lua and luajit are both precompiled, by default we use luajit. if you want to use lua, you can modify scripting/lua/Android.mk(for android) or cocos2dx/proj.ios/cocos2dx.xcodeproj(for ios)
-	* HelloLua project is debugged and fine
+	* HelloLua project is debugged and fine. In Android, I use gradle to package HelloLua, so you may need change sdk.dir/ndk.dir in local.properties
 	* Cocos2dxLuaLoader is modified so that it will try to load lua script from ~/Library/Cache first. If not found, load from app bundle.
 	* use ccScriptFunction struct to replace int handler, modified all related code
 	* make it easy to pass self parameter to script callback
@@ -193,6 +193,8 @@ Things Improved
 	* xcode_lua_support tool, can add lua syntax highlight for Xcode
 	* add CCApplicationLua to encapsulate basic logic of lua app, so that AppDelegate can be eliminated. applicationDidEnterBackground and applicationWillEnterForeground are dispatched to lua side.
 	* add lua decryption support in Cocos2dLuaLoader.cpp, you can set an eternal decrypt function through CCScriptEngineManager
+	
+I don't want list all new classes in cocos2dx-better. To get a overview about cocos2dx-better features, go to it and run its demo.
 	
 How to use CCImagePicker
 ==========================
