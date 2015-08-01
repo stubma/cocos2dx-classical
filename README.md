@@ -98,7 +98,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 * Lua相关修改
 	* quick 3.x的binding generator工具移植完成, 名叫autolua, 引擎的lua绑定已经全部生成
 	* Cocos2dxLuaLoader的逻辑被修改, 会优先从~/Library/Cache下载入lua脚本, 如果没有找到则载入app的.
-	* lua和luajit的库都已经预编译, 缺省使用luajit库, 如果想切换成lua, 可以编辑scripting/lua/Android.mk(for anroid)或cocos2dx/proj.ios/cocos2dx.xcodeproj(for ios)
+	* lua和luajit的库都已经预编译, 缺省使用luajit库, 如果想切换成lua, 可以编辑scripting/lua/Android.mk(for android)或cocos2dx/proj.ios/cocos2dx.xcodeproj(for ios)
 	* HelloLua工程修改调试通过, 在Android上已经采用gradle对HelloLua进行打包, 注意你可能需要修改local.properties上的sdk.dir/ndk.dir配置.
 	* 使用ccScriptFunction代表一个脚本方法, 替代了原来使用int的方式. 引擎中注册脚本方法相关的代码都改成使用ccScriptFunction, 相应的牵涉到CCLuaEngine, CCLuaStack等都有不少修改, 脚本回调方法可以获得self参数, 解决了脚本回调方法中获取self不方便的问题
 	* 逐渐完善一些公用库, 都放在scripting/lua/script下, 提供一些基本的封装
@@ -128,7 +128,7 @@ Things Improved
 	* support attibuted style, such as color, font, size, style, image, link
 * polish CocoStudio
 	* remove UI prefix
-	* fix json parsing bug for CocoStudio Mac 1.0.0.0 beta, how to do:
+	* fix json parsing bug for CocoStudio Mac 1.0.0.0 beta, what I did:
 		* set Label default _fontSize to 20 because CocoStudio Mac use 20 by default
 		* create Layout for node whose name is "Node"
 		* check version in WidgetPropertiesReader0300::createWidget to detect CocoStudio Mac json
@@ -147,7 +147,7 @@ Things Improved
 	* CCArmatureAnimation adds hasFrameEvent to detect existence of a frame event
 	* Invisible widget won't response to touch event
 	* Widget adds set/isAcceptOuterTouchIfFullscreen method, by default it is true. True means widget can handle touch events outside of window area when it is fullscreen
-* reimplement TMX, support multi-tileset for one layer(merge from cocos2dx-better CBTMXTileMap)* 
+* reimplement TMX, support multi-tileset for one layer(merge from cocos2dx-better CBTMXTileMap)
 * reimplement CCTableView(merge from cocos2dx-better CCGridView):
 	* support multi-column
 	* support cell reuse, cell can set name
