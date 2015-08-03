@@ -32,9 +32,6 @@ void LabelBMFontReader::setPropsFromJsonDictionary(ui::Widget *widget, const rap
 {
     WidgetReader::setPropsFromJsonDictionary(widget, options);
     
-    
-    std::string jsonPath = GUIReader::shareReader()->getFilePath();
-    
     ui::LabelBMFont* labelBMFont = (ui::LabelBMFont*)widget;
     
     const rapidjson::Value& cmftDic = DICTOOL->getSubDictionary_json(options, "fileNameData");
@@ -43,22 +40,24 @@ void LabelBMFontReader::setPropsFromJsonDictionary(ui::Widget *widget, const rap
     {
         case 0:
         {
-            std::string tp_c = jsonPath;
             const char* cmfPath = DICTOOL->getStringValue_json(cmftDic, "path");
-            const char* cmf_tp = tp_c.append(cmfPath).c_str();
-            labelBMFont->setFntFile(cmf_tp);
+            string cmf_tp = CCUtils::getExternalOrFullPath(cmfPath);
+            labelBMFont->setFntFile(cmf_tp.c_str());
             break;
         }
         case 1:
-            CCLOG("Wrong res type of LabelAtlas!");
+            CCLOG("Wrong res type of LabelBMFont!");
             break;
         default:
             break;
     }
     
     const char* text = DICTOOL->getStringValue_json(options, "text","Text Label");
-    labelBMFont->setText(text);
-    
+    if(text && strlen(text) > 0 && text[0] == '@') {
+        labelBMFont->setText(CCLC(&text[1]));
+    } else {
+        labelBMFont->setText(text);
+    }
     
     WidgetReader::setColorPropsFromJsonDictionary(widget, options);
 }
@@ -77,50 +76,48 @@ void LabelBMFontReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoad
         
         if (key == "ignoreSize") {
             widget->ignoreContentAdaptWithSize(valueToBool(value));
-        }else if(key == "sizeType"){
+        } else if(key == "sizeType"){
             widget->setSizeType((ui::SizeType)valueToInt(value));
-        }else if(key == "positionType"){
+        } else if(key == "positionType"){
             widget->setPositionType((ui::PositionType)valueToInt(value));
-        }else if(key == "sizePercentX"){
+        } else if(key == "sizePercentX"){
             _sizePercentX = valueToFloat(value);
-        }else if(key == "sizePercentY"){
+        } else if(key == "sizePercentY"){
             _sizePercentY = valueToFloat(value);
-        }else if(key == "positionPercentX"){
+        } else if(key == "positionPercentX"){
             _positionPercentX = valueToFloat(value);
-        }else if(key == "positionPercentY"){
+        } else if(key == "positionPercentY"){
             _positionPercentY = valueToFloat(value);
-        }
-        else if(key == "adaptScreen"){
+        } else if(key == "adaptScreen"){
             _isAdaptScreen = valueToBool(value);
-        }
-        else if (key == "width"){
+        } else if (key == "width"){
             _width = valueToFloat(value);
-        }else if(key == "height"){
+        } else if(key == "height"){
             _height = valueToFloat(value);
-        }else if(key == "tag"){
+        } else if(key == "tag"){
             widget->setTag(valueToInt(value));
-        }else if(key == "actiontag"){
+        } else if(key == "actiontag"){
             widget->setActionTag(valueToInt(value));
-        }else if(key == "touchAble"){
+        } else if(key == "touchAble"){
             widget->setTouchEnabled(valueToBool(value));
-        }else if(key == "name"){
+        } else if(key == "name"){
             std::string widgetName = value.empty() ? "default" : value;
             widget->setName(widgetName.c_str());
-        }else if(key == "x"){
+        } else if(key == "x"){
             _position.x = valueToFloat(value);
-        }else if(key == "y"){
+        } else if(key == "y"){
             _position.y = valueToFloat(value);
-        }else if(key == "scaleX"){
+        } else if(key == "scaleX"){
             widget->setScaleX(valueToFloat(value));
-        }else if(key == "scaleY"){
+        } else if(key == "scaleY"){
             widget->setScaleY(valueToFloat(value));
-        }else if(key == "rotation"){
+        } else if(key == "rotation"){
             widget->setRotation(valueToFloat(value));
-        }else if(key == "visible"){
+        } else if(key == "visible"){
             widget->setVisible(valueToBool(value));
-        }else if(key == "ZOrder"){
+        } else if(key == "ZOrder"){
             widget->setZOrder(valueToInt(value));
-        }else if(key == "layoutParameter"){
+        } else if(key == "layoutParameter"){
             stExpCocoNode *layoutCocosNode = stChildArray[i].GetChildArray(pCocoLoader);
             
             ui::LinearLayoutParameter *linearParameter = ui::LinearLayoutParameter::create();
@@ -134,21 +131,21 @@ void LabelBMFontReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoad
                 
                 if (innerKey == "type") {
                     paramType = valueToInt(innerValue);
-                }else if(innerKey == "gravity"){
+                } else if(innerKey == "gravity"){
                     linearParameter->setGravity((cocos2d::ui::LinearGravity)valueToInt(innerValue));
-                }else if(innerKey == "relativeName"){
+                } else if(innerKey == "relativeName"){
                     relativeParameter->setRelativeName(innerValue.c_str());
-                }else if(innerKey == "relativeToName"){
+                } else if(innerKey == "relativeToName"){
                     relativeParameter->setRelativeToWidgetName(innerValue.c_str());
-                }else if(innerKey == "align"){
+                } else if(innerKey == "align"){
                     relativeParameter->setAlign((cocos2d::ui::RelativeAlign)valueToInt(innerValue));
-                }else if(innerKey == "marginLeft"){
+                } else if(innerKey == "marginLeft"){
                     mg.left = valueToFloat(innerValue);
-                }else if(innerKey == "marginTop"){
+                } else if(innerKey == "marginTop"){
                     mg.top = valueToFloat(innerValue);
-                }else if(innerKey == "marginRight"){
+                } else if(innerKey == "marginRight"){
                     mg.right = valueToFloat(innerValue);
-                }else if(innerKey == "marginDown"){
+                } else if(innerKey == "marginDown"){
                     mg.bottom = valueToFloat(innerValue);
                 }
             }
@@ -165,29 +162,23 @@ void LabelBMFontReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoad
                 default:
                     break;
             }
-        }
-        
-        else if (key == "opacity") {
+        } else if (key == "opacity") {
             _opacity = valueToInt(value);
-        }
-        else if(key == "colorR"){
+        } else if(key == "colorR"){
             _color.r = valueToInt(value);
-        }else if(key == "colorG"){
+        } else if(key == "colorG"){
             _color.g = valueToInt(value);
-        }else if(key == "colorB")
-        {
+        } else if(key == "colorB") {
             _color.b = valueToInt(value);
-        }
-        else if(key == "flipX"){
+        } else if(key == "flipX"){
             widget->setFlipX(valueToBool(value));
-        }else if(key == "flipY"){
+        } else if(key == "flipY"){
             widget->setFlipY(valueToBool(value));
-        }else if(key == "anchorPointX"){
+        } else if(key == "anchorPointX"){
             _originalAnchorPoint.x = valueToFloat(value);
-        }else if(key == "anchorPointY"){
+        } else if(key == "anchorPointY"){
             _originalAnchorPoint.y = valueToFloat(value);
-        }
-        else if(key == "fileNameData"){
+        } else if(key == "fileNameData"){
             stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(pCocoLoader);
             std::string resType = backGroundChildren[2].GetValue(pCocoLoader);;
             
@@ -197,9 +188,12 @@ void LabelBMFontReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoad
             if (imageFileNameType == (ui::TextureResType)0) {
                 labelBMFont->setFntFile(backgroundValue.c_str());
             }
-            
-        }else if(key == "text"){
-            labelBMFont->setText(value.c_str());
+        } else if(key == "text"){
+            if(value.length() > 0 && value[0] == '@') {
+                labelBMFont->setText(CCLC(value.substr(1)));
+            } else {
+                labelBMFont->setText(value.c_str());
+            }
         }
     } //end of for loop
     

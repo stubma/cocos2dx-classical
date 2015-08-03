@@ -32,9 +32,6 @@ void LayoutReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
 {
     WidgetReader::setPropsFromJsonDictionary(widget, options);
     
-    
-    std::string jsonPath = GUIReader::shareReader()->getFilePath();
-    
     ui::Layout* panel = (ui::Layout*)widget;
     
     float w = 0, h = 0;
@@ -138,10 +135,11 @@ void LayoutReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     {
         case 0:
         {
-            std::string tp_b = jsonPath;
             const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
-            const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
-            panel->setBackGroundImage(imageFileName_tp);
+            string imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))
+                ? CCUtils::getExternalOrFullPath(imageFileName)
+                : "";
+            panel->setBackGroundImage(imageFileName_tp.c_str());
             break;
         }
         case 1:

@@ -634,17 +634,19 @@ void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(cocos2d::ui
     bool scale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");
     button->setScale9Enabled(scale9Enable);
     
-    std::string tp_n = m_strFilePath;
-    std::string tp_p = m_strFilePath;
-    std::string tp_d = m_strFilePath;
-    
     const char* normalFileName = DICTOOL->getStringValue_json(options, "normal");
     const char* pressedFileName = DICTOOL->getStringValue_json(options, "pressed");
     const char* disabledFileName = DICTOOL->getStringValue_json(options, "disabled");
     
-    const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():NULL;
-    const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():NULL;
-    const char* disabledFileName_tp =  (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():NULL;
+    string normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))
+        ? CCUtils::getExternalOrFullPath(normalFileName)
+        : "";
+    string pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))
+        ? CCUtils::getExternalOrFullPath(pressedFileName)
+        : "";
+    string disabledFileName_tp =  (disabledFileName && (strcmp(disabledFileName, "") != 0))
+        ? CCUtils::getExternalOrFullPath(disabledFileName)
+        : "";
     bool useMergedTexture = DICTOOL->getBooleanValue_json(options, "useMergedTexture");
     if (scale9Enable)
     {
@@ -659,7 +661,7 @@ void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(cocos2d::ui
         }
         else
         {
-            button->loadTextures(normalFileName_tp, pressedFileName_tp, disabledFileName_tp);
+            button->loadTextures(normalFileName_tp.c_str(), pressedFileName_tp.c_str(), disabledFileName_tp.c_str());
         }
         button->setCapInsets(CCRectMake(cx, cy, cw, ch));
         bool sw = DICTOOL->checkObjectExist_json(options, "scale9Width");
@@ -679,7 +681,7 @@ void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(cocos2d::ui
         }
         else
         {
-            button->loadTextures(normalFileName_tp, pressedFileName_tp, disabledFileName_tp);
+            button->loadTextures(normalFileName_tp.c_str(), pressedFileName_tp.c_str(), disabledFileName_tp.c_str());
         }
     }
     bool tt = DICTOOL->checkObjectExist_json(options, "text");
@@ -688,7 +690,11 @@ void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(cocos2d::ui
         const char* text = DICTOOL->getStringValue_json(options, "text");
         if (text)
         {
-            button->setTitleText(text);
+            if(strlen(text) > 0 && text[0] == '@') {
+                button->setTitleText(CCLC(&text[1]));
+            } else {
+                button->setTitleText(text);
+            }
         }
     }
     bool cr = DICTOOL->checkObjectExist_json(options, "textColorR");
@@ -721,18 +727,21 @@ void WidgetPropertiesReader0250::setPropsForCheckBoxFromJsonDictionary(cocos2d::
     const char* backGroundDisabledFileName = DICTOOL->getStringValue_json(options, "backGroundBoxDisabled");
     const char* frontCrossDisabledFileName = DICTOOL->getStringValue_json(options, "frontCrossDisabled");
     
-    
-    std::string tp_b = m_strFilePath;
-    std::string tp_bs = m_strFilePath;
-    std::string tp_c = m_strFilePath;
-    std::string tp_bd = m_strFilePath;
-    std::string tp_cd = m_strFilePath;
-    
-    const char* backGroundFileName_tp = (backGroundFileName && (strcmp(backGroundFileName, "") != 0))?tp_b.append(backGroundFileName).c_str():NULL;
-    const char* backGroundSelectedFileName_tp = (backGroundSelectedFileName && (strcmp(backGroundSelectedFileName, "") != 0))?tp_bs.append(backGroundSelectedFileName).c_str():NULL;
-    const char* frontCrossFileName_tp = (frontCrossFileName && (strcmp(frontCrossFileName, "") != 0))?tp_c.append(frontCrossFileName).c_str():NULL;
-    const char* backGroundDisabledFileName_tp = (backGroundDisabledFileName && (strcmp(backGroundDisabledFileName, "") != 0))?tp_bd.append(backGroundDisabledFileName).c_str():NULL;
-    const char* frontCrossDisabledFileName_tp = (frontCrossDisabledFileName && (strcmp(frontCrossDisabledFileName, "") != 0))?tp_cd.append(frontCrossDisabledFileName).c_str():NULL;
+    string backGroundFileName_tp = (backGroundFileName && (strcmp(backGroundFileName, "") != 0))
+        ? CCUtils::getExternalOrFullPath(backGroundFileName)
+        : "";
+    string backGroundSelectedFileName_tp = (backGroundSelectedFileName && (strcmp(backGroundSelectedFileName, "") != 0))
+        ? CCUtils::getExternalOrFullPath(backGroundSelectedFileName)
+        : "";
+    string frontCrossFileName_tp = (frontCrossFileName && (strcmp(frontCrossFileName, "") != 0))
+        ? CCUtils::getExternalOrFullPath(frontCrossFileName)
+        : "";
+    string backGroundDisabledFileName_tp = (backGroundDisabledFileName && (strcmp(backGroundDisabledFileName, "") != 0))
+        ? CCUtils::getExternalOrFullPath(backGroundDisabledFileName)
+        : "";
+    string frontCrossDisabledFileName_tp = (frontCrossDisabledFileName && (strcmp(frontCrossDisabledFileName, "") != 0))
+        ? CCUtils::getExternalOrFullPath(frontCrossDisabledFileName)
+        : "";
     bool useMergedTexture = DICTOOL->getBooleanValue_json(options, "useMergedTexture");
     
     if (useMergedTexture)
@@ -741,7 +750,7 @@ void WidgetPropertiesReader0250::setPropsForCheckBoxFromJsonDictionary(cocos2d::
     }
     else
     {
-        checkBox->loadTextures(backGroundFileName_tp, backGroundSelectedFileName_tp, frontCrossFileName_tp,backGroundDisabledFileName_tp,frontCrossDisabledFileName_tp);
+        checkBox->loadTextures(backGroundFileName_tp.c_str(), backGroundSelectedFileName_tp.c_str(), frontCrossFileName_tp.c_str(),backGroundDisabledFileName_tp.c_str(),frontCrossDisabledFileName_tp.c_str());
     }
     
     setColorPropsForWidgetFromJsonDictionary(widget,options);
@@ -761,11 +770,10 @@ void WidgetPropertiesReader0250::setPropsForImageViewFromJsonDictionary(cocos2d:
     }
     imageView->setScale9Enabled(scale9Enable);
     
-    std::string tp_i = m_strFilePath;
-    const char* imageFileName_tp = NULL;
+    string imageFileName_tp;
     if (imageFileName && (strcmp(imageFileName, "") != 0))
     {
-        imageFileName_tp = tp_i.append(imageFileName).c_str();
+        imageFileName_tp = CCUtils::getExternalOrFullPath(imageFileName);
     }
     
     bool useMergedTexture = DICTOOL->getBooleanValue_json(options, "useMergedTexture");
@@ -777,7 +785,7 @@ void WidgetPropertiesReader0250::setPropsForImageViewFromJsonDictionary(cocos2d:
         }
         else
         {
-            imageView->loadTexture(imageFileName_tp);
+            imageView->loadTexture(imageFileName_tp.c_str());
         }
         
         bool sw = DICTOOL->checkObjectExist_json(options, "scale9Width");
@@ -804,7 +812,7 @@ void WidgetPropertiesReader0250::setPropsForImageViewFromJsonDictionary(cocos2d:
         }
         else
         {
-            imageView->loadTexture(imageFileName_tp);
+            imageView->loadTexture(imageFileName_tp.c_str());
         }
     }
     setColorPropsForWidgetFromJsonDictionary(widget,options);
@@ -817,7 +825,11 @@ void WidgetPropertiesReader0250::setPropsForLabelFromJsonDictionary(cocos2d::ui:
     bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
     label->setTouchScaleChangeEnabled(touchScaleChangeAble);
     const char* text = DICTOOL->getStringValue_json(options, "text");
-    label->setText(text);
+    if(text && strlen(text) > 0 && text[0] == '@') {
+        label->setText(CCLC(&text[1]));
+    } else {
+        label->setText(text);
+    }
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
     if (fs)
     {
@@ -859,12 +871,13 @@ void WidgetPropertiesReader0250::setPropsForLabelAtlasFromJsonDictionary(cocos2d
     bool scm = DICTOOL->checkObjectExist_json(options, "startCharMap");
     if (sv && cmf && iw && ih && scm && (strcmp(DICTOOL->getStringValue_json(options, "charMapFile"), "") != 0))
     {
-        std::string tp_c = m_strFilePath;
-        const char* cmf_tp = NULL;
         const char* cmft = DICTOOL->getStringValue_json(options, "charMapFile");
-        cmf_tp = tp_c.append(cmft).c_str();
-        
-        labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),cmf_tp,DICTOOL->getIntValue_json(options, "itemWidth") / CC_CONTENT_SCALE_FACTOR(),DICTOOL->getIntValue_json(options,"itemHeight") / CC_CONTENT_SCALE_FACTOR(), DICTOOL->getStringValue_json(options, "startCharMap"));
+        string cmf_tp = CCUtils::getExternalOrFullPath(cmft);
+        labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),
+                                cmf_tp,
+                                DICTOOL->getIntValue_json(options, "itemWidth") / CC_CONTENT_SCALE_FACTOR(),
+                                DICTOOL->getIntValue_json(options,"itemHeight") / CC_CONTENT_SCALE_FACTOR(),
+                                DICTOOL->getStringValue_json(options, "startCharMap"));
     }
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
@@ -905,9 +918,10 @@ void WidgetPropertiesReader0250::setPropsForLayoutFromJsonDictionary(cocos2d::ui
     panel->setBackGroundColor(ccc3(cr, cg, cb));
     panel->setBackGroundColorOpacity(co);
     
-    std::string tp_b = m_strFilePath;
     const char* imageFileName = DICTOOL->getStringValue_json(options, "backGroundImage");
-    const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
+    string imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))
+        ? CCUtils::getExternalOrFullPath(imageFileName)
+        : "";
     bool useMergedTexture = DICTOOL->getBooleanValue_json(options, "useMergedTexture");
     if (backGroundScale9Enable)
     {
@@ -921,7 +935,7 @@ void WidgetPropertiesReader0250::setPropsForLayoutFromJsonDictionary(cocos2d::ui
         }
         else
         {
-            panel->setBackGroundImage(imageFileName_tp);
+            panel->setBackGroundImage(imageFileName_tp.c_str());
         }
         panel->setBackGroundImageCapInsets(CCRectMake(cx, cy, cw, ch));
     }
@@ -934,7 +948,7 @@ void WidgetPropertiesReader0250::setPropsForLayoutFromJsonDictionary(cocos2d::ui
         }
         else
         {
-            panel->setBackGroundImage(imageFileName_tp);
+            panel->setBackGroundImage(imageFileName_tp.c_str());
         }
     }
     setColorPropsForWidgetFromJsonDictionary(widget,options);
@@ -967,65 +981,71 @@ void WidgetPropertiesReader0250::setPropsForSliderFromJsonDictionary(cocos2d::ui
     {
         if (barTextureScale9Enable)
         {
-            std::string tp_b = m_strFilePath;
             const char* imageFileName = DICTOOL->getStringValue_json(options, "barFileName");
-            const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
+            string imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))
+                ? CCUtils::getExternalOrFullPath(imageFileName)
+                : "";
             if (useMergedTexture)
             {
                 slider->loadBarTexture(imageFileName,UI_TEX_TYPE_PLIST);
             }
             else
             {
-                slider->loadBarTexture(imageFileName_tp);
+                slider->loadBarTexture(imageFileName_tp.c_str());
             }
             slider->setSize(CCSizeMake(barLength, slider->getContentSize().height));
         }
         else
         {
-            std::string tp_b = m_strFilePath;
             const char* imageFileName = DICTOOL->getStringValue_json(options, "barFileName");
-            const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
+            string imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))
+                ? CCUtils::getExternalOrFullPath(imageFileName)
+                : "";
             if (useMergedTexture)
             {
                 slider->loadBarTexture(imageFileName,UI_TEX_TYPE_PLIST);
             }
             else
             {
-                slider->loadBarTexture(imageFileName_tp);
+                slider->loadBarTexture(imageFileName_tp.c_str());
             }
         }
     }
-    std::string tp_n = m_strFilePath;
-    std::string tp_p = m_strFilePath;
-    std::string tp_d = m_strFilePath;
     
     const char* normalFileName = DICTOOL->getStringValue_json(options, "ballNormal");
     const char* pressedFileName = DICTOOL->getStringValue_json(options, "ballPressed");
     const char* disabledFileName = DICTOOL->getStringValue_json(options, "ballDisabled");
     
-    const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():NULL;
-    const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():NULL;
-    const char* disabledFileName_tp =  (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():NULL;
+    string normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))
+        ? CCUtils::getExternalOrFullPath(normalFileName)
+        : "";
+    string pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))
+        ? CCUtils::getExternalOrFullPath(pressedFileName)
+        : "";
+    string disabledFileName_tp =  (disabledFileName && (strcmp(disabledFileName, "") != 0))
+        ? CCUtils::getExternalOrFullPath(disabledFileName)
+        : "";
     if (useMergedTexture)
     {
         slider->loadSlidBallTextures(normalFileName,pressedFileName,disabledFileName,UI_TEX_TYPE_PLIST);
     }
     else
     {
-        slider->loadSlidBallTextures(normalFileName_tp,pressedFileName_tp,disabledFileName_tp);
+        slider->loadSlidBallTextures(normalFileName_tp.c_str(),pressedFileName_tp.c_str(),disabledFileName_tp.c_str());
     }
     slider->setPercent(DICTOOL->getIntValue_json(options, "percent"));
     
-    std::string tp_b = m_strFilePath;
     const char* imageFileName = DICTOOL->getStringValue_json(options, "progressBarFileName");
-    const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
+    string imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))
+        ? CCUtils::getExternalOrFullPath(imageFileName)
+        : "";
     if (useMergedTexture)
     {
         slider->loadProgressBarTexture(imageFileName, UI_TEX_TYPE_PLIST);
     }
     else
     {
-        slider->loadProgressBarTexture(imageFileName_tp);
+        slider->loadProgressBarTexture(imageFileName_tp.c_str());
     }
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
@@ -1039,7 +1059,12 @@ void WidgetPropertiesReader0250::setPropsForTextFieldFromJsonDictionary(cocos2d:
     {
         textField->setPlaceHolder(DICTOOL->getStringValue_json(options, "placeHolder"));
     }
-    textField->setText(DICTOOL->getStringValue_json(options, "text"));
+    const char* text = DICTOOL->getStringValue_json(options, "text");
+    if(text && strlen(text) > 0 && text[0] == '@') {
+        textField->setText(CCL(&text[1]));
+    } else {
+        textField->setText(text);
+    }
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
     if (fs)
     {
@@ -1085,16 +1110,17 @@ void WidgetPropertiesReader0250::setPropsForLoadingBarFromJsonDictionary(cocos2d
     setPropsForWidgetFromJsonDictionary(widget, options);
     cocos2d::ui::LoadingBar* loadingBar = (cocos2d::ui::LoadingBar*)widget;
     bool useMergedTexture = DICTOOL->getBooleanValue_json(options, "useMergedTexture");
-    std::string tp_b = m_strFilePath;
     const char*imageFileName =  DICTOOL->getStringValue_json(options, "texture");
-    const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
+    string imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))
+        ? CCUtils::getExternalOrFullPath(imageFileName)
+        : "";
     if (useMergedTexture)
     {
         loadingBar->loadTexture(imageFileName,UI_TEX_TYPE_PLIST);
     }
     else
     {
-        loadingBar->loadTexture(imageFileName_tp);
+        loadingBar->loadTexture(imageFileName_tp.c_str());
     }
     loadingBar->setDirection(LoadingBarType(DICTOOL->getIntValue_json(options, "direction")));
     loadingBar->setPercent(DICTOOL->getIntValue_json(options, "percent"));
@@ -1107,15 +1133,16 @@ void WidgetPropertiesReader0250::setPropsForLabelBMFontFromJsonDictionary(cocos2
     
     cocos2d::ui::LabelBMFont* labelBMFont = (cocos2d::ui::LabelBMFont*)widget;
     
-    std::string tp_c = m_strFilePath;
-    const char* cmf_tp = NULL;
     const char* cmft = DICTOOL->getStringValue_json(options, "fileName");
-    cmf_tp = tp_c.append(cmft).c_str();
-    
-    labelBMFont->setFntFile(cmf_tp);
+    string cmf_tp = CCUtils::getExternalOrFullPath(cmft);
+    labelBMFont->setFntFile(cmf_tp.c_str());
     
     const char* text = DICTOOL->getStringValue_json(options, "text");
-    labelBMFont->setText(text);
+    if(text && strlen(text) > 0 && text[0] == '@') {
+        labelBMFont->setText(CCLC(&text[1]));
+    } else {
+        labelBMFont->setText(text);
+    }
     
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
@@ -1383,10 +1410,11 @@ void WidgetPropertiesReader0300::setPropsForButtonFromJsonDictionary(cocos2d::ui
     {
         case 0:
         {
-            std::string tp_n = m_strFilePath;
             const char* normalFileName = DICTOOL->getStringValue_json(normalDic, "path");
-            const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():NULL;
-            button->loadTextureNormal(normalFileName_tp);
+            string normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))
+                ? CCUtils::getExternalOrFullPath(normalFileName)
+                : "";
+            button->loadTextureNormal(normalFileName_tp.c_str());
             break;
         }
         case 1:
@@ -1404,10 +1432,11 @@ void WidgetPropertiesReader0300::setPropsForButtonFromJsonDictionary(cocos2d::ui
     {
         case 0:
         {
-            std::string tp_p = m_strFilePath;
             const char* pressedFileName = DICTOOL->getStringValue_json(pressedDic, "path");
-            const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():NULL;
-            button->loadTexturePressed(pressedFileName_tp);
+            string pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))
+                ? CCUtils::getExternalOrFullPath(pressedFileName)
+                : "";
+            button->loadTexturePressed(pressedFileName_tp.c_str());
             break;
         }
         case 1:
@@ -1425,10 +1454,11 @@ void WidgetPropertiesReader0300::setPropsForButtonFromJsonDictionary(cocos2d::ui
     {
         case 0:
         {
-            std::string tp_d = m_strFilePath;
             const char* disabledFileName = DICTOOL->getStringValue_json(disabledDic, "path");
-            const char* disabledFileName_tp = (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():NULL;
-            button->loadTextureDisabled(disabledFileName_tp);
+            string disabledFileName_tp = (disabledFileName && (strcmp(disabledFileName, "") != 0))
+                ? CCUtils::getExternalOrFullPath(disabledFileName)
+                : "";
+            button->loadTextureDisabled(disabledFileName_tp.c_str());
             break;
         }
         case 1:
@@ -1463,7 +1493,11 @@ void WidgetPropertiesReader0300::setPropsForButtonFromJsonDictionary(cocos2d::ui
         const char* text = DICTOOL->getStringValue_json(options, "text");
         if (text)
         {
-            button->setTitleText(text);
+            if(strlen(text) > 0 && text[0] == '@') {
+                button->setTitleText(CCL(&text[1]));
+            } else {
+                button->setTitleText(text);
+            }
         }
     }
     
@@ -1498,10 +1532,11 @@ void WidgetPropertiesReader0300::setPropsForCheckBoxFromJsonDictionary(cocos2d::
     {
         case 0:
         {
-            std::string tp_b = m_strFilePath;
             const char* backGroundFileName = DICTOOL->getStringValue_json(backGroundDic, "path");
-            const char* backGroundFileName_tp = (backGroundFileName && (strcmp(backGroundFileName, "") != 0))?tp_b.append(backGroundFileName).c_str():NULL;
-            checkBox->loadTextureBackGround(backGroundFileName_tp);
+            string backGroundFileName_tp = (backGroundFileName && (strcmp(backGroundFileName, "") != 0))
+                ? CCUtils::getExternalOrFullPath(backGroundFileName)
+                : "";
+            checkBox->loadTextureBackGround(backGroundFileName_tp.c_str());
             break;
         }
         case 1:
@@ -1520,10 +1555,11 @@ void WidgetPropertiesReader0300::setPropsForCheckBoxFromJsonDictionary(cocos2d::
     {
         case 0:
         {
-            std::string tp_bs = m_strFilePath;
             const char* backGroundSelectedFileName = DICTOOL->getStringValue_json(backGroundSelectedDic, "path");
-            const char* backGroundSelectedFileName_tp = (backGroundSelectedFileName && (strcmp(backGroundSelectedFileName, "") != 0))?tp_bs.append(backGroundSelectedFileName).c_str():NULL;
-            checkBox->loadTextureBackGroundSelected(backGroundSelectedFileName_tp);
+            string backGroundSelectedFileName_tp = (backGroundSelectedFileName && (strcmp(backGroundSelectedFileName, "") != 0))
+                ? CCUtils::getExternalOrFullPath(backGroundSelectedFileName)
+                : "";
+            checkBox->loadTextureBackGroundSelected(backGroundSelectedFileName_tp.c_str());
             break;
         }
         case 1:
@@ -1542,10 +1578,11 @@ void WidgetPropertiesReader0300::setPropsForCheckBoxFromJsonDictionary(cocos2d::
     {
         case 0:
         {
-            std::string tp_c = m_strFilePath;
             const char* frontCrossFileName = DICTOOL->getStringValue_json(frontCrossDic, "path");
-            const char* frontCrossFileName_tp = (frontCrossFileName && (strcmp(frontCrossFileName, "") != 0))?tp_c.append(frontCrossFileName).c_str():NULL;
-            checkBox->loadTextureFrontCross(frontCrossFileName_tp);
+            string frontCrossFileName_tp = (frontCrossFileName && (strcmp(frontCrossFileName, "") != 0))
+                ? CCUtils::getExternalOrFullPath(frontCrossFileName)
+                : "";
+            checkBox->loadTextureFrontCross(frontCrossFileName_tp.c_str());
             break;
         }
         case 1:
@@ -1564,10 +1601,11 @@ void WidgetPropertiesReader0300::setPropsForCheckBoxFromJsonDictionary(cocos2d::
     {
         case 0:
         {
-            std::string tp_bd = m_strFilePath;
             const char* backGroundDisabledFileName = DICTOOL->getStringValue_json(backGroundDisabledDic, "path");
-            const char* backGroundDisabledFileName_tp = (backGroundDisabledFileName && (strcmp(backGroundDisabledFileName, "") != 0))?tp_bd.append(backGroundDisabledFileName).c_str():NULL;
-            checkBox->loadTextureBackGroundDisabled(backGroundDisabledFileName_tp);
+            string backGroundDisabledFileName_tp = (backGroundDisabledFileName && (strcmp(backGroundDisabledFileName, "") != 0))
+                ? CCUtils::getExternalOrFullPath(backGroundDisabledFileName)
+                : "";
+            checkBox->loadTextureBackGroundDisabled(backGroundDisabledFileName_tp.c_str());
             break;
         }
         case 1:
@@ -1586,10 +1624,11 @@ void WidgetPropertiesReader0300::setPropsForCheckBoxFromJsonDictionary(cocos2d::
     {
         case 0:
         {
-            std::string tp_cd = m_strFilePath;
             const char* frontCrossDisabledFileName = DICTOOL->getStringValue_json(options, "path");
-            const char* frontCrossDisabledFileName_tp = (frontCrossDisabledFileName && (strcmp(frontCrossDisabledFileName, "") != 0))?tp_cd.append(frontCrossDisabledFileName).c_str():NULL;
-            checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName_tp);
+            string frontCrossDisabledFileName_tp = (frontCrossDisabledFileName && (strcmp(frontCrossDisabledFileName, "") != 0))
+                ? CCUtils::getExternalOrFullPath(frontCrossDisabledFileName)
+                : "";
+            checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName_tp.c_str());
             break;
         }
         case 1:
@@ -1617,13 +1656,12 @@ void WidgetPropertiesReader0300::setPropsForImageViewFromJsonDictionary(cocos2d:
     {
         case 0:
         {
-            std::string tp_i = m_strFilePath;
             const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
-            const char* imageFileName_tp = NULL;
+            string imageFileName_tp;
             if (imageFileName && (strcmp(imageFileName, "") != 0))
             {
-                imageFileName_tp = tp_i.append(imageFileName).c_str();
-                imageView->loadTexture(imageFileName_tp);
+                imageFileName_tp = CCUtils::getExternalOrFullPath(imageFileName);
+                imageView->loadTexture(imageFileName_tp.c_str());
             }
             break;
         }
@@ -1678,7 +1716,11 @@ void WidgetPropertiesReader0300::setPropsForLabelFromJsonDictionary(cocos2d::ui:
     // XXX modified by Luma
     // mac cocostudio will return NULL if text is not set, so need perform null check for mac cocostudio compatibility
     const char* text = DICTOOL->getStringValue_json(options, "text");
-    label->setText(text ? text : "");
+    if(text && strlen(text) > 0 && text[0] == '@') {
+        label->setText(CCL(&text[1]));
+    } else {
+        label->setText(text ? text : "");
+    }
     
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
     if (fs)
@@ -1727,10 +1769,13 @@ void WidgetPropertiesReader0300::setPropsForLabelAtlasFromJsonDictionary(cocos2d
         {
             case 0:
             {
-                std::string tp_c = m_strFilePath;
                 const char* cmfPath = DICTOOL->getStringValue_json(cmftDic, "path");
-                const char* cmf_tp = tp_c.append(cmfPath).c_str();
-                labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),cmf_tp,DICTOOL->getIntValue_json(options, "itemWidth"), DICTOOL->getIntValue_json(options,"itemHeight"), DICTOOL->getStringValue_json(options, "startCharMap"));
+                string cmf_tp = CCUtils::getExternalOrFullPath(cmfPath);
+                labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),
+                                        cmf_tp,
+                                        DICTOOL->getIntValue_json(options, "itemWidth"),
+                                        DICTOOL->getIntValue_json(options,"itemHeight"),
+                                        DICTOOL->getStringValue_json(options, "startCharMap"));
                 break;
             }
             case 1:
@@ -1801,10 +1846,11 @@ void WidgetPropertiesReader0300::setPropsForLayoutFromJsonDictionary(cocos2d::ui
     {
         case 0:
         {
-            std::string tp_b = m_strFilePath;
             const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
-            const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
-            panel->setBackGroundImage(imageFileName_tp);
+            string imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))
+                ? CCUtils::getExternalOrFullPath(imageFileName)
+                : "";
+            panel->setBackGroundImage(imageFileName_tp.c_str());
             break;
         }
         case 1:
@@ -1862,10 +1908,11 @@ void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(cocos2d::ui
             {
                 case 0:
                 {
-                    std::string tp_b = m_strFilePath;
                     const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
-                    const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
-                    slider->loadBarTexture(imageFileName_tp);
+                    string imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))
+                        ? CCUtils::getExternalOrFullPath(imageFileName)
+                        : "";
+                    slider->loadBarTexture(imageFileName_tp.c_str());
                     break;
                 }
                 case 1:
@@ -1888,10 +1935,11 @@ void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(cocos2d::ui
             {
                 case 0:
                 {
-                    std::string tp_b = m_strFilePath;
                     const char*imageFileName =  DICTOOL->getStringValue_json(imageFileNameDic, "path");
-                    const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
-                    slider->loadBarTexture(imageFileName_tp);
+                    string imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))
+                        ? CCUtils::getExternalOrFullPath(imageFileName)
+                        : "";
+                    slider->loadBarTexture(imageFileName_tp.c_str());
                     break;
                 }
                 case 1:
@@ -1912,10 +1960,11 @@ void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(cocos2d::ui
     {
         case 0:
         {
-            std::string tp_n = m_strFilePath;
             const char* normalFileName = DICTOOL->getStringValue_json(normalDic, "path");
-            const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():NULL;
-            slider->loadSlidBallTextureNormal(normalFileName_tp);
+            string normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))
+                ? CCUtils::getExternalOrFullPath(normalFileName)
+                : "";
+            slider->loadSlidBallTextureNormal(normalFileName_tp.c_str());
             break;
         }
         case 1:
@@ -1934,10 +1983,11 @@ void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(cocos2d::ui
     {
         case 0:
         {
-            std::string tp_p = m_strFilePath;
             const char* pressedFileName = DICTOOL->getStringValue_json(pressedDic, "path");
-            const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():NULL;
-            slider->loadSlidBallTexturePressed(pressedFileName_tp);
+            string pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))
+                ? CCUtils::getExternalOrFullPath(pressedFileName)
+                : "";
+            slider->loadSlidBallTexturePressed(pressedFileName_tp.c_str());
             break;
         }
         case 1:
@@ -1956,10 +2006,11 @@ void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(cocos2d::ui
     {
         case 0:
         {
-            std::string tp_d = m_strFilePath;
             const char* disabledFileName = DICTOOL->getStringValue_json(disabledDic, "path");
-            const char* disabledFileName_tp = (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():NULL;
-            slider->loadSlidBallTextureDisabled(disabledFileName_tp);
+            string disabledFileName_tp = (disabledFileName && (strcmp(disabledFileName, "") != 0))
+                ? CCUtils::getExternalOrFullPath(disabledFileName)
+                : "";
+            slider->loadSlidBallTextureDisabled(disabledFileName_tp.c_str());
             break;
         }
         case 1:
@@ -1980,10 +2031,11 @@ void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(cocos2d::ui
     {
         case 0:
         {
-            std::string tp_b = m_strFilePath;
             const char* imageFileName = DICTOOL->getStringValue_json(progressBarDic, "path");
-            const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
-            slider->loadProgressBarTexture(imageFileName_tp);
+            string imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))
+                ? CCUtils::getExternalOrFullPath(imageFileName)
+                : "";
+            slider->loadProgressBarTexture(imageFileName_tp.c_str());
             break;
         }
         case 1:
@@ -2007,7 +2059,12 @@ void WidgetPropertiesReader0300::setPropsForTextFieldFromJsonDictionary(cocos2d:
     {
         textField->setPlaceHolder(DICTOOL->getStringValue_json(options, "placeHolder"));
     }
-    textField->setText(DICTOOL->getStringValue_json(options, "text"));
+    const char* text = DICTOOL->getStringValue_json(options, "text");
+    if(text && strlen(text) > 0 && text[0] == '@') {
+        textField->setText(CCL(&text[1]));
+    } else {
+        textField->setText(text);
+    }
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
     if (fs)
     {
@@ -2059,13 +2116,11 @@ void WidgetPropertiesReader0300::setPropsForLoadingBarFromJsonDictionary(cocos2d
     {
         case 0:
         {
-            std::string tp_i = m_strFilePath;
             const char* imageFileName = DICTOOL->getStringValue_json(imageFileNameDic, "path");
-            const char* imageFileName_tp = NULL;
             if (imageFileName && (strcmp(imageFileName, "") != 0))
             {
-                imageFileName_tp = tp_i.append(imageFileName).c_str();
-                loadingBar->loadTexture(imageFileName_tp);
+                string imageFileName_tp = CCUtils::getExternalOrFullPath(imageFileName);
+                loadingBar->loadTexture(imageFileName_tp.c_str());
             }
             break;
         }
@@ -2115,10 +2170,9 @@ void WidgetPropertiesReader0300::setPropsForLabelBMFontFromJsonDictionary(cocos2
     {
         case 0:
         {
-            std::string tp_c = m_strFilePath;
             const char* cmfPath = DICTOOL->getStringValue_json(cmftDic, "path");
-            const char* cmf_tp = tp_c.append(cmfPath).c_str();
-            labelBMFont->setFntFile(cmf_tp);
+            string cmf_tp = CCUtils::getExternalOrFullPath(cmfPath);
+            labelBMFont->setFntFile(cmf_tp.c_str());
             break;
         }
         case 1:
@@ -2129,7 +2183,11 @@ void WidgetPropertiesReader0300::setPropsForLabelBMFontFromJsonDictionary(cocos2
     }
     
     const char* text = DICTOOL->getStringValue_json(options, "text");
-    labelBMFont->setText(text);
+    if(text && strlen(text) > 0 && text[0] == '@') {
+        labelBMFont->setText(CCLC(&text[1]));
+    } else {
+        labelBMFont->setText(text);
+    }
     
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }

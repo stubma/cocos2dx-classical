@@ -210,18 +210,14 @@ std::string WidgetReader::getResourcePath(CocoLoader *pCocoLoader,
         return "";
     }
     
-    std::string binaryPath = GUIReader::shareReader()->getFilePath();
-    
     std::string imageFileName_tp;
     if (!backgroundValue.empty())
     {
         if (texType == cocos2d::ui::UI_TEX_TYPE_LOCAL) {
-            imageFileName_tp = binaryPath + backgroundValue;
-        }
-        else if(texType == cocos2d::ui::UI_TEX_TYPE_PLIST){
+            imageFileName_tp = CCUtils::getExternalOrFullPath(backgroundValue);
+        } else if(texType == cocos2d::ui::UI_TEX_TYPE_PLIST) {
             imageFileName_tp = backgroundValue;
-        }
-        else{
+        } else {
             CCAssert(0, "invalid TextureResType!!!");
         }
     }

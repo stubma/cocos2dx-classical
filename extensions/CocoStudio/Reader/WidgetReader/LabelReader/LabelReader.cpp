@@ -40,7 +40,11 @@ void LabelReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson
     bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
     label->setTouchScaleChangeEnabled(touchScaleChangeAble);
     const char* text = DICTOOL->getStringValue_json(options, "text");
-    label->setText(text ? text : "");
+    if(text && strlen(text) > 0 && text[0] == '@') {
+        label->setText(CCL(&text[1]));
+    } else {
+        label->setText(text ? text : "");
+    }
    
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
     if (fs)
@@ -206,7 +210,11 @@ void LabelReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pC
         }
         
         else if(key == "text"){
-            label->setText(value);
+            if(value.length() > 0 && value[0] == '@') {
+                label->setText(CCLC(value.substr(1)));
+            } else {
+                label->setText(value);
+            }
         }else if(key == "fontSize"){
             label->setFontSize(valueToInt(value));
         }else if(key == "fontName"){

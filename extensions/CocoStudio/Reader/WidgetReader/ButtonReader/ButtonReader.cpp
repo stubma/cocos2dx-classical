@@ -37,9 +37,6 @@ void ButtonReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
 {
     WidgetReader::setPropsFromJsonDictionary(widget, options);
     
-    
-    std::string jsonPath = GUIReader::shareReader()->getFilePath();
-    
     ui::Button* button = (ui::Button*)widget;
     bool scale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");
     button->setScale9Enabled(scale9Enable);
@@ -50,10 +47,11 @@ void ButtonReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     {
         case 0:
         {
-            std::string tp_n = jsonPath;
             const char* normalFileName = DICTOOL->getStringValue_json(normalDic, "path");
-            const char* normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))?tp_n.append(normalFileName).c_str():NULL;
-            button->loadTextureNormal(normalFileName_tp);
+            string normalFileName_tp = (normalFileName && (strcmp(normalFileName, "") != 0))
+                ? CCUtils::getExternalOrFullPath(normalFileName)
+                : "";
+            button->loadTextureNormal(normalFileName_tp.c_str());
             break;
         }
         case 1:
@@ -71,10 +69,11 @@ void ButtonReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     {
         case 0:
         {
-            std::string tp_p = jsonPath;
             const char* pressedFileName = DICTOOL->getStringValue_json(pressedDic, "path");
-            const char* pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))?tp_p.append(pressedFileName).c_str():NULL;
-            button->loadTexturePressed(pressedFileName_tp);
+            string pressedFileName_tp = (pressedFileName && (strcmp(pressedFileName, "") != 0))
+                ? CCUtils::getExternalOrFullPath(pressedFileName)
+                : "";
+            button->loadTexturePressed(pressedFileName_tp.c_str());
             break;
         }
         case 1:
@@ -92,10 +91,11 @@ void ButtonReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     {
         case 0:
         {
-            std::string tp_d = jsonPath;
             const char* disabledFileName = DICTOOL->getStringValue_json(disabledDic, "path");
-            const char* disabledFileName_tp = (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():NULL;
-            button->loadTextureDisabled(disabledFileName_tp);
+            string disabledFileName_tp = (disabledFileName && (strcmp(disabledFileName, "") != 0))
+                ? CCUtils::getExternalOrFullPath(disabledFileName)
+                : "";
+            button->loadTextureDisabled(disabledFileName_tp.c_str());
             break;
         }
         case 1:
@@ -128,9 +128,12 @@ void ButtonReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     if (tt)
     {
         const char* text = DICTOOL->getStringValue_json(options, "text");
-        if (text)
-        {
-            button->setTitleText(text);
+        if (text) {
+            if(strlen(text) > 0 && text[0] == '@') {
+                button->setTitleText(CCLC(&text[1]));
+            } else {
+                button->setTitleText(text);
+            }
         }
     }
     
@@ -322,7 +325,11 @@ void ButtonReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *p
             button->loadTextureDisabled(backgroundValue.c_str(), imageFileNameType);
             
         }else if (key == "text"){
-            button->setTitleText(value);
+            if(value.length() > 0 && value[0] == '@') {
+                button->setTitleText(CCL(value.substr(1)));
+            } else {
+                button->setTitleText(value);
+            }
         }
         else if(key == "capInsetsX"){
             capsx = valueToFloat(value);

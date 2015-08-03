@@ -31,9 +31,6 @@ LabelAtlasReader* LabelAtlasReader::getInstance()
 void LabelAtlasReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
 {
     WidgetReader::setPropsFromJsonDictionary(widget, options);
-    
-    
-    std::string jsonPath = GUIReader::shareReader()->getFilePath();
 
     ui::LabelAtlas* labelAtlas = (ui::LabelAtlas*)widget;
    
@@ -43,9 +40,8 @@ void LabelAtlasReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapi
     {
         case 0:
         {
-            std::string tp_c = jsonPath;
             const char* cmfPath = DICTOOL->getStringValue_json(cmftDic, "path");
-            const char* cmf_tp = tp_c.append(cmfPath).c_str();
+            string cmf_tp = CCUtils::getExternalOrFullPath(cmfPath);
             labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue","0123456789"),
                                     cmf_tp,
                                     DICTOOL->getIntValue_json(options, "itemWidth",24),

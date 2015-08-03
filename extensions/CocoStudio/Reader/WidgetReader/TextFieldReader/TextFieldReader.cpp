@@ -37,7 +37,12 @@ void TextFieldReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapid
    
     textField->setPlaceHolder(DICTOOL->getStringValue_json(options, "placeHolder","inputs words here"));
     
-    textField->setText(DICTOOL->getStringValue_json(options, "text","Text Field"));
+    const char* text = DICTOOL->getStringValue_json(options, "text","Text Field");
+    if(text && strlen(text) > 0 && text[0] == '@') {
+        textField->setText(CCL(&text[1]));
+    } else {
+        textField->setText(text);
+    }
    
     textField->setFontSize(DICTOOL->getIntValue_json(options, "fontSize",20));
    
@@ -220,7 +225,11 @@ void TextFieldReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader
         else if(key == "placeHolder"){
             textField->setPlaceHolder(value);
         }else if(key == "text"){
-            textField->setText(value);
+            if(value.length() > 0 && value[0] == '@') {
+                textField->setText(CCL(value.substr(1)));
+            } else {
+                textField->setText(value);
+            }
         }else if(key == "fontSize"){
             textField->setFontSize(valueToInt(value));
         }else if(key == "fontName"){
