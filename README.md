@@ -71,6 +71,8 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 	* CCArmatureAnimation添加hasFrameEvent用于检测是否存在某个帧事件 
 	* 看不见的widget不再响应touch事件
 	* Widget添加了set/isAcceptOuterTouchIfFullscreen方法, 缺省为true. true表示当widget为全屏时, 可以处理落在渲染区域外的点击事件
+	* 让查找路径对CocoStudio生效, 不再只从界面文件json所在目录查找图片
+	* 为CocoStudio添加了国际化支持, 如果文本以@开头, 则会认为是一个字符串键值, 将通过CCLocalation获得字符串.
 * 重新实现TMX地图, 支持一个层有多张贴图的情况(来自cocos2dx-better的CBTMXTileMap)
 * 重新实现CCTableView(来自cocos2dx-better中的CCGridView代码):
 	* CCTableView支持多列
@@ -147,6 +149,8 @@ Things Improved
 	* CCArmatureAnimation adds hasFrameEvent to detect existence of a frame event
 	* Invisible widget won't response to touch event
 	* Widget adds set/isAcceptOuterTouchIfFullscreen method, by default it is true. True means widget can handle touch events outside of window area when it is fullscreen
+	* fix CocoStudio image search logic, now search paths works for it
+	* add localization support for CocoStudio, any text starts with @ will be treat as a string key and engine will use CCLocalization to get final string, based on system current locale setting.
 * reimplement TMX, support multi-tileset for one layer(merge from cocos2dx-better CBTMXTileMap)
 * reimplement CCTableView(merge from cocos2dx-better CCGridView):
 	* support multi-column
