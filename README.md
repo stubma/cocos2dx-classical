@@ -72,7 +72,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 	* 看不见的widget不再响应touch事件
 	* Widget添加了set/isAcceptOuterTouchIfFullscreen方法, 缺省为true. true表示当widget为全屏时, 可以处理落在渲染区域外的点击事件
 	* 让查找路径对CocoStudio生效, 不再只从界面文件json所在目录查找图片
-	* 为CocoStudio添加了国际化支持, 如果文本以@开头, 则会认为是一个字符串键值, 将通过CCLocalation获得字符串.
+	* 为CocoStudio添加了国际化支持, 如果文本以@开头, 则会认为是一个字符串键值, 将通过CCLocalization获得字符串.
 * 重新实现TMX地图, 支持一个层有多张贴图的情况(来自cocos2dx-better的CBTMXTileMap)
 * 重新实现CCTableView(来自cocos2dx-better中的CCGridView代码):
 	* CCTableView支持多列
