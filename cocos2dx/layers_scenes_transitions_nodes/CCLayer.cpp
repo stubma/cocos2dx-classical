@@ -50,6 +50,7 @@ CCLayer::CCLayer()
 , m_pScriptKeypadHandlerEntry(NULL)
 , m_pScriptAccelerateHandlerEntry(NULL)
 , m_nTouchPriority(0)
+, m_nKeypadPriority(0)
 , m_bSwallowTouch(true)
 , m_eTouchMode(kCCTouchesAllAtOnce)
 {
@@ -198,6 +199,20 @@ void CCLayer::setTouchPriority(int priority)
     }
 }
 
+void CCLayer::setKeypadPriority(int priority)
+{
+    if (m_nKeypadPriority != priority)
+    {
+        m_nKeypadPriority = priority;
+        
+        if( m_bKeypadEnabled)
+        {
+            setKeypadEnabled(false);
+            setKeypadEnabled(true);
+        }
+    }
+}
+
 int CCLayer::getTouchPriority()
 {
     return m_nTouchPriority;
@@ -308,20 +323,28 @@ void CCLayer::unregisterScriptKeypadHandler(void)
     CC_SAFE_RELEASE_NULL(m_pScriptKeypadHandlerEntry);
 }
 
-void CCLayer::keyBackClicked(void)
+bool CCLayer::keyBackClicked(void)
 {
     if (m_pScriptKeypadHandlerEntry && m_pScriptKeypadHandlerEntry->getHandler().handler)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_pScriptKeypadHandlerEntry->getHandler(), "back");
+        return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_pScriptKeypadHandlerEntry->getHandler(), "back");
     }
+    
+    return false;
 }
 
-void CCLayer::keyMenuClicked(void)
+bool CCLayer::keyMenuClicked(void)
 {
     if (m_pScriptKeypadHandlerEntry && m_pScriptKeypadHandlerEntry->getHandler().handler)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_pScriptKeypadHandlerEntry->getHandler(), "menu");
+        return CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_pScriptKeypadHandlerEntry->getHandler(), "menu");
     }
+    
+    return false;
+}
+
+int CCLayer::getKeypadPriority() {
+    return m_nKeypadPriority;
 }
 
 /// Callbacks

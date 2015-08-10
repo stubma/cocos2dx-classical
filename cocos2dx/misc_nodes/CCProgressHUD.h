@@ -72,7 +72,7 @@ public:
     virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
     virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
-    virtual void keyBackClicked();
+    virtual bool keyBackClicked();
     
     /**
      * create a CCProgressHUD. If currently one instance exists, no

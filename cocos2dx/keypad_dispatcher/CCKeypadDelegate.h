@@ -41,10 +41,13 @@ class CC_DLL CCKeypadDelegate
 {
 public:
     // The back key clicked
-    virtual void keyBackClicked() {}
+    virtual bool keyBackClicked() { return false; }
 
     // The menu key clicked. only available on wophone & android
-    virtual void keyMenuClicked() {};
+    virtual bool keyMenuClicked() { return false; }
+    
+    // return priority of this key pad delegate
+    virtual int getKeypadPriority() { return 0; };
 };
 
 /**
@@ -62,6 +65,9 @@ public:
     /** delegate */
     CCKeypadDelegate* getDelegate();
     void setDelegate(CCKeypadDelegate *pDelegate);
+    
+    // priority
+    int getPriority();
 
     /** initializes a CCKeypadHandler with a delegate */
     virtual bool initWithDelegate(CCKeypadDelegate *pDelegate);
@@ -72,6 +78,7 @@ public:
 
 protected:
     CCKeypadDelegate* m_pDelegate;
+    int m_nPriority;
 };
 
 // end of input group

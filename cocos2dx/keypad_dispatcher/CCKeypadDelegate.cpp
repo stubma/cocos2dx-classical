@@ -37,6 +37,10 @@ CCKeypadDelegate* CCKeypadHandler::getDelegate()
     return m_pDelegate;
 }
 
+int CCKeypadHandler::getPriority() {
+    return m_nPriority;
+}
+
 CCKeypadHandler::~CCKeypadHandler()
 {
     if (m_pDelegate)
@@ -64,6 +68,7 @@ bool CCKeypadHandler::initWithDelegate(CCKeypadDelegate *pDelegate)
     CCAssert(pDelegate != NULL, "It's a wrong delegate!");
 
     m_pDelegate = pDelegate;
+    m_nPriority = pDelegate->getKeypadPriority();
     CC_SAFE_RETAIN(dynamic_cast<CCObject*>(pDelegate));
 
     return true;

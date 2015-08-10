@@ -161,14 +161,16 @@ public:
     */
     virtual bool isKeypadEnabled();
     virtual void setKeypadEnabled(bool value);
-
+    virtual void setKeypadPriority(int priority);
+    
     /** Register keypad events handler */
     void registerScriptKeypadHandler(ccScriptFunction nHandler);
     /** Unregister keypad events handler */
     void unregisterScriptKeypadHandler(void);
 
-    virtual void keyBackClicked(void);
-    virtual void keyMenuClicked(void);
+    virtual bool keyBackClicked(void);
+    virtual bool keyMenuClicked(void);
+    virtual int getKeypadPriority();
     
     inline CCTouchScriptHandlerEntry* getScriptTouchHandlerEntry() { return m_pScriptTouchHandlerEntry; };
     inline CCScriptHandlerEntry* getScriptKeypadHandlerEntry() { return m_pScriptKeypadHandlerEntry; };
@@ -187,6 +189,8 @@ private:
     
     int m_nTouchPriority;
     ccTouchesMode m_eTouchMode;
+    
+    int m_nKeypadPriority;
     
     int  excuteScriptTouchHandler(const char* pEventName, CCTouch *pTouch);
     int  excuteScriptTouchHandler(const char* pEventName, CCSet *pTouches);

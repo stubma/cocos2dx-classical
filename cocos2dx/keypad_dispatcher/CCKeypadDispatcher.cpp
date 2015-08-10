@@ -99,7 +99,22 @@ void CCKeypadDispatcher::forceAddDelegate(CCKeypadDelegate* pDelegate)
 
     if (pHandler)
     {
-        m_pDelegates->addObject(pHandler);
+        unsigned int u = 0;
+        CCObject* obj = NULL;
+        CCARRAY_FOREACH(m_pDelegates, obj) {
+            CCKeypadHandler *h = (CCKeypadHandler*)obj;
+            if (h) {
+                if (h->getPriority() < pHandler->getPriority()) {
+                    ++u;
+                }
+                
+                if (h->getDelegate() == pHandler->getDelegate()) {
+                    CCAssert(0, "");
+                    return;
+                }
+            }
+        }
+        m_pDelegates->insertObject(pHandler, u);
     }
 }
 
@@ -127,6 +142,7 @@ bool CCKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
 
     if (m_pDelegates->count() > 0)
     {
+        bool handled = false;
         CCObject* pObj = NULL;
         CCARRAY_FOREACH(m_pDelegates, pObj)
         {
@@ -138,12 +154,17 @@ bool CCKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
             switch (nMsgType)
             {
             case kTypeBackClicked:
-                pDelegate->keyBackClicked();
+                handled = pDelegate->keyBackClicked();
                 break;
             case kTypeMenuClicked:
-                pDelegate->keyMenuClicked();
+                handled = pDelegate->keyMenuClicked();
                 break;
             default:
+                break;
+            }
+            
+            // if key event is handled by one delegate, break
+            if(handled) {
                 break;
             }
         }

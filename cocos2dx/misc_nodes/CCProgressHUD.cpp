@@ -255,7 +255,7 @@ void CCProgressHUD::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent) {
 void CCProgressHUD::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent) {
 }
 
-void CCProgressHUD::keyBackClicked() {
+bool CCProgressHUD::keyBackClicked() {
     if(m_cancellable) {
         hide();
     }
