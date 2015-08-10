@@ -97,6 +97,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 * 集成了SuperAnimConverter工具和它的代码, 改名为CCSuperAnim, 为其添加了lua支持, HelloLua工程增加了SuperAnim的演示
 * CCEGLViewProtocol添加了setMultipleTouchEnabled方法
 * CCFileUtils增加enableMain/PatchApkExpansion方法, CocosdxHelper增加若干XApk相关方法, 在Android上支持读取从apk expansion读取资源.
+* Keypad事件添加了优先级支持
 * Lua相关修改
 	* quick 3.x的binding generator工具移植完成, 名叫autolua, 引擎的lua绑定已经全部生成
 	* Cocos2dxLuaLoader的逻辑被修改, 会优先从~/Library/Cache下载入lua脚本, 如果没有找到则载入app的.
@@ -174,6 +175,7 @@ Things Improved
 * Merge SuperAnimConverter.app and its code, rename it as CCSuperAnim and add lua support. There is a sample in HelloLua project
 * CCEGLViewProtocol add setMultipleTouchEnabled method
 * Android apk expansion is supported, CCFileUtils add enableMain/PatchApkExpansion method.
+* Support setting priority for keypad event
 * Lua related
 	* quick 3.x binding generator is migrated, renamed as autolua
 	* engine lua binding is generated
