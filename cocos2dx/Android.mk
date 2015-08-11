@@ -67,6 +67,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
     $(LOCAL_PATH)/support \
     $(LOCAL_PATH)/support/aosp \
     $(LOCAL_PATH)/support/entities \
+    $(LOCAL_PATH)/support/network \
     $(LOCAL_PATH)/support/utils \
     $(LOCAL_PATH)/support/xml \
     $(LOCAL_PATH)/support/yajl/include \
