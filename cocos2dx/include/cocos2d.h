@@ -251,6 +251,7 @@ THE SOFTWARE.
 #include "support/res/lpk.h"
 #include "support/network/CCFileDownloader.h"
 #include "support/network/CCByteBuffer.h"
+#include "support/network/CCReachability.h"
 #include "support/codec/tea.h"
 #include "support/codec/xxtea.h"
 #include "support/codec/ccUTF8.h"

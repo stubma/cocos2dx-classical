@@ -3,6 +3,9 @@ require("script/cocos/extern")
 
 cc = cc or {}
 
+-- notification
+cc.NotificationReachabilityChanged = "kCCNotificationReachabilityChanged"
+
 -- color constants
 cc.ccRED = const(cc.c3b(255, 0, 0))
 cc.ccWHITE = const(cc.c3b(255, 255, 255))
@@ -222,3 +225,8 @@ cc.LightingUniformValue_pressed = const({
 cc.CustomUniformValue_empty = const({
     ["type"] = cc.Shader_none
 })
+
+-- reachability
+cc.NotReachable = 0
+cc.ReachableViaWiFi = 1
+cc.ReachableViaWWAN = 2

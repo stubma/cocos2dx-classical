@@ -330,6 +330,10 @@
 		9243084E1A2F5FEC00BE2476 /* CCAssetInputStream_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9243084A1A2F5FEC00BE2476 /* CCAssetInputStream_ios.mm */; };
 		9243084F1A2F5FEC00BE2476 /* CCAssetOutputStream_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 9243084B1A2F5FEC00BE2476 /* CCAssetOutputStream_ios.h */; };
 		924308501A2F5FEC00BE2476 /* CCAssetOutputStream_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9243084C1A2F5FEC00BE2476 /* CCAssetOutputStream_ios.mm */; };
+		9257A08B1B799D9000FDC899 /* CCReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 9257A0891B799D9000FDC899 /* CCReachability.h */; };
+		9257A0901B799F4600FDC899 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 9257A08E1B799F4600FDC899 /* Reachability.h */; };
+		9257A0911B799F4600FDC899 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 9257A08F1B799F4600FDC899 /* Reachability.m */; };
+		9257A0931B799F9100FDC899 /* CCReachability.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9257A0921B799F9100FDC899 /* CCReachability.mm */; };
 		9260A81A1AE7DC7600DBA63E /* fpconv.c in Sources */ = {isa = PBXBuildFile; fileRef = 9260A8111AE7DC7600DBA63E /* fpconv.c */; };
 		9260A81B1AE7DC7600DBA63E /* fpconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 9260A8121AE7DC7600DBA63E /* fpconv.h */; };
 		9260A81D1AE7DC7600DBA63E /* lua_cjson.c in Sources */ = {isa = PBXBuildFile; fileRef = 9260A8141AE7DC7600DBA63E /* lua_cjson.c */; };
@@ -1186,6 +1190,11 @@
 		9243084A1A2F5FEC00BE2476 /* CCAssetInputStream_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCAssetInputStream_ios.mm; sourceTree = "<group>"; };
 		9243084B1A2F5FEC00BE2476 /* CCAssetOutputStream_ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAssetOutputStream_ios.h; sourceTree = "<group>"; };
 		9243084C1A2F5FEC00BE2476 /* CCAssetOutputStream_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCAssetOutputStream_ios.mm; sourceTree = "<group>"; };
+		9257A0891B799D9000FDC899 /* CCReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCReachability.h; sourceTree = "<group>"; };
+		9257A08D1B799EBE00FDC899 /* CCReachability.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCReachability.cpp; sourceTree = "<group>"; };
+		9257A08E1B799F4600FDC899 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		9257A08F1B799F4600FDC899 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		9257A0921B799F9100FDC899 /* CCReachability.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCReachability.mm; sourceTree = "<group>"; };
 		9260A8111AE7DC7600DBA63E /* fpconv.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fpconv.c; sourceTree = "<group>"; };
 		9260A8121AE7DC7600DBA63E /* fpconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fpconv.h; sourceTree = "<group>"; };
 		9260A8141AE7DC7600DBA63E /* lua_cjson.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lua_cjson.c; sourceTree = "<group>"; };
@@ -2206,6 +2215,9 @@
 		1551A47B158F2ADE00E66CFE /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				9257A08E1B799F4600FDC899 /* Reachability.h */,
+				9257A08F1B799F4600FDC899 /* Reachability.m */,
+				9257A0921B799F9100FDC899 /* CCReachability.mm */,
 				928F64491A33E5EA00178235 /* CCImagePicker.mm */,
 				924308491A2F5FEC00BE2476 /* CCAssetInputStream_ios.h */,
 				9243084A1A2F5FEC00BE2476 /* CCAssetInputStream_ios.mm */,
@@ -3080,6 +3092,7 @@
 				928F64A41A33EE6900178235 /* CCHttpRequest.h */,
 				928F64A51A33EE6900178235 /* CCHttpResponse.h */,
 				928F64A61A33EE6900178235 /* CCNetworkCommon.h */,
+				9257A0891B799D9000FDC899 /* CCReachability.h */,
 			);
 			path = network;
 			sourceTree = "<group>";
@@ -3452,6 +3465,7 @@
 		92AA13A31AC503410066041C /* android */ = {
 			isa = PBXGroup;
 			children = (
+				9257A08D1B799EBE00FDC899 /* CCReachability.cpp */,
 				92AA13A41AC503410066041C /* CCAccelerometer.cpp */,
 				92AA13A51AC503410066041C /* CCApplication.cpp */,
 				92AA13A61AC503410066041C /* CCAssetInputStream_android.cpp */,
@@ -3754,7 +3768,9 @@
 				929D53941A27595700560A2E /* yajl_bytestack.h in Headers */,
 				9292138B1A59775F00F7FCE7 /* forwards.h in Headers */,
 				929D535D1A27582F00560A2E /* Input.h in Headers */,
+				9257A08B1B799D9000FDC899 /* CCReachability.h in Headers */,
 				1551A63F158F2ADE00E66CFE /* CCActionTiledGrid.h in Headers */,
+				9257A0901B799F4600FDC899 /* Reachability.h in Headers */,
 				92A7AFE11A3C6DE0001C830B /* CCClipOut.h in Headers */,
 				927FE53E1A45708A0065F052 /* CCComAttribute.h in Headers */,
 				929F3A6D1A26187B00DE78AC /* CCAndroidStringsParser.h in Headers */,
@@ -4371,6 +4387,7 @@
 				927FE56B1A45708A0065F052 /* TextField.cpp in Sources */,
 				1551A6CC158F2ADE00E66CFE /* plane.c in Sources */,
 				1551A6CD158F2ADE00E66CFE /* quaternion.c in Sources */,
+				9257A0931B799F9100FDC899 /* CCReachability.mm in Sources */,
 				92AA13511AC4FA760066041C /* ccCArray.cpp in Sources */,
 				92CF92EE1A523D6000441150 /* CCLuaBridge.cpp in Sources */,
 				928F64D11A33EF7600178235 /* CCJSONParser.cpp in Sources */,
@@ -4455,6 +4472,7 @@
 				927FE5281A45708A0065F052 /* CCDisplayManager.cpp in Sources */,
 				920BE0B21B160D940010892D /* CCSuperAnim.cpp in Sources */,
 				92A7AF7E1A3C4038001C830B /* CCSPX3Manager.cpp in Sources */,
+				9257A0911B799F4600FDC899 /* Reachability.m in Sources */,
 				1551A6F7158F2ADE00E66CFE /* CCParticleSystemQuad.cpp in Sources */,
 				92AA13171AC4F7BC0066041C /* ccUTF8.cpp in Sources */,
 				1551A71C158F2ADE00E66CFE /* CCEGLViewProtocol.cpp in Sources */,
