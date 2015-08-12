@@ -55,12 +55,18 @@ public class Cocos2dxETCLoader {
 				// absolute path
 				inputStream = new FileInputStream(filePath);
 			} else {
-				// remove prefix: "assets/"
-				if (filePath.startsWith(ASSETS_PATH)) {
-					filePath = filePath.substring(ASSETS_PATH.length());
+				// try to load it from xapk first
+				inputStream = Cocos2dxHelper.openStreamFromXApk(filePath);
+
+				// if null, try to load it from apk
+				if(inputStream == null) {
+					// remove prefix: "assets/"
+					if (filePath.startsWith(ASSETS_PATH)) {
+						filePath = filePath.substring(ASSETS_PATH.length());
+					}
+					assetManager = context.getAssets();
+					inputStream = assetManager.open(filePath);
 				}
-				assetManager = context.getAssets();
-				inputStream = assetManager.open(filePath);
 			}
 			
 			texture = ETC1Util.createTexture(inputStream);
@@ -90,7 +96,7 @@ public class Cocos2dxETCLoader {
 			             length);
 			} catch (Exception e)
 			{
-				Log.d("invoke native function error", e.toString());
+				Log.d("cocos2d-x", "invoke native function error: " + e.toString());
 				ret = false;
 			}
 			
