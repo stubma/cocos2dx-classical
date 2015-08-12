@@ -96,6 +96,8 @@ void ZwoptexLoadTask::load() {
         }
         if(lowerCase.find(".pvr") != string::npos) {
             tex = CCTextureCache::sharedTextureCache()->addPVRImage(texName.c_str());
+        } else if(lowerCase.find(".pkm") != string::npos) {
+            CCTextureCache::sharedTextureCache()->addETCImage(texName.c_str());
         } else {
             // load encryptd data
             size_t len;
@@ -141,6 +143,8 @@ void ImageLoadTask::load() {
         }
         if(lowerCase.find(".pvr") != string::npos) {
             CCTextureCache::sharedTextureCache()->addPVRImage(name.c_str());
+        } else if(lowerCase.find(".pkm") != string::npos) {
+            CCTextureCache::sharedTextureCache()->addETCImage(name.c_str());
         } else {
             // load encryptd data
             size_t len;
@@ -380,6 +384,8 @@ void CCResourceLoader::loadImage(const string& name) {
     }
     if(lowerCase.find(".pvr") != string::npos) {
         CCTextureCache::sharedTextureCache()->addPVRImage(_resolve(name).c_str());
+    } else if(lowerCase.find(".pkm") != string::npos) {
+        CCTextureCache::sharedTextureCache()->addETCImage(_resolve(name).c_str());
     } else {
         // load encryptd data
         size_t len;
@@ -430,6 +436,8 @@ void CCResourceLoader::loadZwoptex(const string& plistName, const string& texNam
     }
     if(lowerCase.find(".pvr") != string::npos) {
         tex = CCTextureCache::sharedTextureCache()->addPVRImage(_resolve(texName).c_str());
+    } else if(lowerCase.find(".pkm") != string::npos) {
+        CCTextureCache::sharedTextureCache()->addETCImage(_resolve(texName).c_str());
     } else {
         // load encryptd data
         size_t len;
