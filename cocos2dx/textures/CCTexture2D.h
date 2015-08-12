@@ -284,6 +284,9 @@ private:
 
     /** texture name */
     CC_PROPERTY_READONLY(GLuint, m_uName, Name)
+    
+    /** texture is etc format */
+    CC_SYNTHESIZE_READONLY_BOOL(m_etc, ETC);
 
     /** texture max S */
     CC_PROPERTY(GLfloat, m_fMaxS, MaxS)

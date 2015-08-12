@@ -70,6 +70,7 @@ CCTexture2D::CCTexture2D()
 , m_fMaxT(0.0)
 , m_bHasPremultipliedAlpha(false)
 , m_bHasMipmaps(false)
+, m_etc(false),
 , m_pShaderProgram(NULL)
 , m_shadowStrokePadding(CCPointZero)
 {
@@ -736,6 +737,7 @@ bool CCTexture2D::initWithETCFile(const char* file)
         m_uPixelsHigh = etc->getHeight();
         m_tContentSize = CCSizeMake((float)m_uPixelsWide, (float)m_uPixelsHigh);
         m_bHasPremultipliedAlpha = true;
+        m_etc = true;
         
         CC_SAFE_RELEASE(etc);
     }
