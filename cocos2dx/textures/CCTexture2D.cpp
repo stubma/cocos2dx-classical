@@ -70,7 +70,7 @@ CCTexture2D::CCTexture2D()
 , m_fMaxT(0.0)
 , m_bHasPremultipliedAlpha(false)
 , m_bHasMipmaps(false)
-, m_etc(false),
+, m_etc(false)
 , m_pShaderProgram(NULL)
 , m_shadowStrokePadding(CCPointZero)
 {
