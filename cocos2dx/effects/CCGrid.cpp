@@ -318,7 +318,7 @@ void CCGrid3D::blit(void)
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
     m_pShaderProgram->use();
-    m_pShaderProgram->setUniformsForBuiltins();;
+    m_pShaderProgram->setUniformsForBuiltins();
 
     //
     // Attributes
