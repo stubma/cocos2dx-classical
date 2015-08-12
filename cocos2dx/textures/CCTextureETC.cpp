@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "CCTextureETC.h"
+#include "ccMacros.h"
 #include "platform/CCPlatformConfig.h"
 #include "platform/CCFileUtils.h"
 
@@ -71,8 +72,6 @@ unsigned int CCTextureETC::getHeight() const
 
 // Call back function for java
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#define  LOG_TAG    "CCTextureETC.cpp"
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 static unsigned int sWidth = 0;
 static unsigned int sHeight = 0;
@@ -127,8 +126,8 @@ bool CCTextureETC::loadTexture(const char* file)
             GLenum err = glGetError();
             if (err != GL_NO_ERROR)
             {
-                LOGD("width %d, height %d, lenght %d", _width, _height, sLength);
-                LOGD("cocos2d: TextureETC: Error uploading compressed texture %s glError: 0x%04X", file, err);
+                CCLOG("width %d, height %d, lenght %d", _width, _height, sLength);
+                CCLOG("cocos2d: TextureETC: Error uploading compressed texture %s glError: 0x%04X", file, err);
                 return false;
             }
             
