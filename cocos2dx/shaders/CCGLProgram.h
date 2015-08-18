@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "cocoa/CCObject.h"
 #include "CCGL.h"
 #include "kazmath/mat4.h"
+#include "CCProtocols.h"
 
 NS_CC_BEGIN
 
@@ -86,6 +87,7 @@ enum {
 	kCCUniformRandom01,
 	kCCUniformSampler,
     kCCUniformAlphaTestValue,
+    kCCUniformIsETC,
     
     // custom uniforms starts
     kCCUniform_custom_start = kCCUniformAlphaTestValue,
@@ -120,6 +122,7 @@ static const char* kCCUniformNames[] = {
     "CC_Random01",
     "CC_Texture0",
     "CC_alpha_value",
+    "CC_isETC",
     
     // custom uniforms
     "CC_blurSize",
@@ -356,7 +359,7 @@ public:
     /** will update the builtin uniforms if they are different than the previous call for this same shader program. 
      *  @lua NA
      */
-    void setUniformsForBuiltins();
+    void setUniformsForBuiltins(CCTextureProtocol* p = NULL);
     
     /** will update the custom uniforms saved in node if there is any
      *  @lua NA

@@ -5,7 +5,12 @@ local function creatDog()
     local frameHeight = 95
     
     -- create dog animate
-    local textureDog = CCTextureCache:sharedTextureCache():addImage("dog.png")
+    local textureDog = nil
+    if CCDevice:getPlatform() == cc.PLATFORM_ANDROID then
+        textureDog = CCTextureCache:sharedTextureCache():addImage("dog.pkm")
+    else
+        textureDog = CCTextureCache:sharedTextureCache():addImage("dog.png")
+    end
     local rect = cc.rect(0, 0, frameWidth, frameHeight)
     local frame0 = CCSpriteFrame:createWithTexture(textureDog, rect)
     rect = cc.rect(frameWidth, 0, frameWidth, frameHeight)

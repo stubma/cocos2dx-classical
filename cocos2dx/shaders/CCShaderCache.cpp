@@ -120,7 +120,12 @@ const GLchar * ccPositionTextureColor_frag
                        uniform sampler2D CC_Texture0;
                        
                        void main()	{
-                           gl_FragColor = v_fragmentColor * texture2D(CC_Texture0, v_texCoord);
+                           if(CC_isETC) {
+                               float a = texture2D(CC_Texture0, vec2(v_texCoord.x, v_texCoord.y + 0.5)).r;
+                               gl_FragColor = v_fragmentColor * texture2D(CC_Texture0, v_texCoord) * a;
+                           } else {
+                               gl_FragColor = v_fragmentColor * texture2D(CC_Texture0, v_texCoord);
+                           }
                        });
 const GLchar * ccPositionTextureColor_vert
     = CC_SHADER_STRING(attribute vec4 a_position;

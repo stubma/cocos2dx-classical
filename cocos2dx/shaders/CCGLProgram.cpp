@@ -206,6 +206,7 @@ bool CCGLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* sour
         "uniform vec4 CC_SinTime;\n"
         "uniform vec4 CC_CosTime;\n"
         "uniform vec4 CC_Random01;\n"
+        "uniform bool CC_isETC;\n"
         "//CC INCLUDES END\n\n",
         source,
     };
@@ -268,6 +269,7 @@ void CCGLProgram::updateUniforms()
 	m_uUniforms[kCCUniformRandom01] = glGetUniformLocation(m_uProgram, kCCUniformNames[kCCUniformRandom01]);
 
     m_uUniforms[kCCUniformSampler] = glGetUniformLocation(m_uProgram, kCCUniformNames[kCCUniformSampler]);
+    m_uUniforms[kCCUniformIsETC] = glGetUniformLocation(m_uProgram, kCCUniformNames[kCCUniformIsETC]);
 
     switch (m_key) {
         case kCCShader_blur:
@@ -653,7 +655,7 @@ void CCGLProgram::setCustomUniforms(CCNode* n) {
     }
 }
 
-void CCGLProgram::setUniformsForBuiltins()
+void CCGLProgram::setUniformsForBuiltins(CCTextureProtocol* p)
 {
     kmMat4 matrixP;
 	kmMat4 matrixMV;
@@ -685,6 +687,9 @@ void CCGLProgram::setUniformsForBuiltins()
     {
         setUniformLocationWith4f(m_uUniforms[kCCUniformRandom01], CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
 	}
+    
+    // is etc texture or not?
+    setUniformLocationWith1i(m_uUniforms[kCCUniformIsETC], (p && p->isUsingETC()) ? 1 : 0);
 }
 
 void CCGLProgram::reset()
