@@ -1275,10 +1275,10 @@ public class CCImage_richlabel {
 					is = Cocos2dxHelper.openStreamFromXApk(fullPath);
 					if(is == null) {
 						if(fullPath.startsWith("assets/")) {
-							AssetManager am = Cocos2dxHelper.getAssetManager();
 							fullPath = fullPath.substring("assets/".length());
-							is = am.open(fullPath);
 						}
+						AssetManager am = Cocos2dxHelper.getAssetManager();
+						is = am.open(fullPath);
 					}
 				}
 
@@ -1387,10 +1387,10 @@ public class CCImage_richlabel {
 				is = Cocos2dxHelper.openStreamFromXApk(fullPath);
 				if(is == null) {
 					if(fullPath.startsWith("assets/")) {
-						AssetManager am = Cocos2dxHelper.getAssetManager();
 						fullPath = fullPath.substring("assets/".length());
-						is = am.open(fullPath);
 					}
+					AssetManager am = Cocos2dxHelper.getAssetManager();
+					is = am.open(fullPath);
 				}
 			}
 

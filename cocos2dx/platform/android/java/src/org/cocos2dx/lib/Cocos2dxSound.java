@@ -270,12 +270,21 @@ public class Cocos2dxSound {
 		int soundID = Cocos2dxSound.INVALID_SOUND_ID;
 
 		try {
-			if (pPath.startsWith("/")) {
-				soundID = this.mSoundPool.load(pPath, 0);
+			String fullPath = pPath;
+			boolean absolute = fullPath.startsWith("/");
+			if(!absolute) {
+				fullPath = Cocos2dxHelper.getFullPathForFilename(fullPath);
+				absolute = fullPath.startsWith("/");
+			}
+			if(absolute) {
+				soundID = this.mSoundPool.load(fullPath, 0);
 			} else {
-				AssetFileDescriptor fd = Cocos2dxHelper.openFdFromXApk(pPath);
+				AssetFileDescriptor fd = Cocos2dxHelper.openFdFromXApk(fullPath);
 				if(fd == null) {
-					fd = mContext.getAssets().openFd(pPath);
+					if(fullPath.startsWith("assets/")) {
+						fullPath = fullPath.substring("assets/".length());
+					}
+					fd = mContext.getAssets().openFd(fullPath);
 				}
 				soundID = this.mSoundPool.load(fd, 0);
 			}
