@@ -70,7 +70,7 @@ string CCUtils::externalize(const string& path) {
         // append search path
         const vector<string>& searchPaths = CCFileUtils::sharedFileUtils()->getSearchPaths();
         for(vector<string>::const_iterator iter = searchPaths.begin(); iter != searchPaths.end(); iter++) {
-            string fullpath = internalStorage + (*iter) + "/" + path;
+            string fullpath = internalStorage + (*iter) + path;
             if(isPathExistent(fullpath)) {
                 return fullpath;
             }

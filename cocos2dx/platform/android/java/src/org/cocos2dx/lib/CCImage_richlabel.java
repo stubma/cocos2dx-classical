@@ -1267,34 +1267,42 @@ public class CCImage_richlabel {
 				boolean absolute = fullPath.startsWith("/");
 				if(!absolute) {
 					fullPath = Cocos2dxHelper.getFullPathForFilename(fullPath);
+					absolute = fullPath.startsWith("/");
 				}
-				if(fullPath.startsWith("assets/")) {
-					AssetManager am = Cocos2dxHelper.getAssetManager();
-					fullPath = fullPath.substring("assets/".length());
-					is = am.open(fullPath);
-				} else {
+				if(absolute) {
 					is = new FileInputStream(fullPath);
-				}
-				
-				// decode directly or decrypt first
-				if(encrypted) {
-					// load encrypted data
-					ByteArrayOutputStream baos = new ByteArrayOutputStream();
-					byte[] buf = new byte[32000];
-					for(int i = 0; i != -1; i = is.read(buf)) {
-						baos.write(buf, 0, i);
-					}
-					
-					// get decrypted data
-					buf = baos.toByteArray();
-					buf = nativeDecryptData(buf);
-					
-					// decode
-					atlas = BitmapFactory.decodeByteArray(buf, 0, buf.length);
 				} else {
-					atlas = BitmapFactory.decodeStream(is);
+					is = Cocos2dxHelper.openStreamFromXApk(fullPath);
+					if(is == null) {
+						if(fullPath.startsWith("assets/")) {
+							AssetManager am = Cocos2dxHelper.getAssetManager();
+							fullPath = fullPath.substring("assets/".length());
+							is = am.open(fullPath);
+						}
+					}
 				}
-				
+
+				// decode directly or decrypt first
+				if(is != null) {
+					if(encrypted) {
+						// load encrypted data
+						ByteArrayOutputStream baos = new ByteArrayOutputStream();
+						byte[] buf = new byte[32000];
+						for(int i = 0; i != -1; i = is.read(buf)) {
+							baos.write(buf, 0, i);
+						}
+
+						// get decrypted data
+						buf = baos.toByteArray();
+						buf = nativeDecryptData(buf);
+
+						// decode
+						atlas = BitmapFactory.decodeByteArray(buf, 0, buf.length);
+					} else {
+						atlas = BitmapFactory.decodeStream(is);
+					}
+				}
+
 				// cache last bitmap
 				sLastAtlas = atlas;
 				sLastAtlasName = span.atlas;
@@ -1371,33 +1379,41 @@ public class CCImage_richlabel {
 			boolean absolute = fullPath.startsWith("/");
 			if(!absolute) {
 				fullPath = Cocos2dxHelper.getFullPathForFilename(fullPath);
+				absolute = fullPath.startsWith("/");
 			}
-			if(fullPath.startsWith("assets/")) {
-				AssetManager am = Cocos2dxHelper.getAssetManager();
-				fullPath = fullPath.substring("assets/".length());
-				is = am.open(fullPath);
-			} else {
+			if(absolute) {
 				is = new FileInputStream(fullPath);
+			} else {
+				is = Cocos2dxHelper.openStreamFromXApk(fullPath);
+				if(is == null) {
+					if(fullPath.startsWith("assets/")) {
+						AssetManager am = Cocos2dxHelper.getAssetManager();
+						fullPath = fullPath.substring("assets/".length());
+						is = am.open(fullPath);
+					}
+				}
 			}
-			
+
 			// if encrypted, need call native procedure to get decrypted data
 			// if not, just decode
-			if(encrypted) {
-				// load encrypted data
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				byte[] buf = new byte[2048];
-				for(int i = 0; i != -1; i = is.read(buf)) {
-					baos.write(buf, 0, i);
+			if(is != null) {
+				if(encrypted) {
+					// load encrypted data
+					ByteArrayOutputStream baos = new ByteArrayOutputStream();
+					byte[] buf = new byte[2048];
+					for(int i = 0; i != -1; i = is.read(buf)) {
+						baos.write(buf, 0, i);
+					}
+
+					// get decrypted data
+					buf = baos.toByteArray();
+					buf = nativeDecryptData(buf);
+
+					// decode
+					bitmap = BitmapFactory.decodeByteArray(buf, 0, buf.length);
+				} else {
+					bitmap = BitmapFactory.decodeStream(is);
 				}
-				
-				// get decrypted data
-				buf = baos.toByteArray();
-				buf = nativeDecryptData(buf);
-				
-				// decode
-				bitmap = BitmapFactory.decodeByteArray(buf, 0, buf.length);
-			} else {
-				bitmap = BitmapFactory.decodeStream(is);
 			}
 		} catch (Throwable e) {
 		} finally {

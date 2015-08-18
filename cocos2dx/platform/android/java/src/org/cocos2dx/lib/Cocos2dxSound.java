@@ -31,6 +31,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.Semaphore;
 
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.util.Log;
@@ -272,7 +273,11 @@ public class Cocos2dxSound {
 			if (pPath.startsWith("/")) {
 				soundID = this.mSoundPool.load(pPath, 0);
 			} else {
-				soundID = this.mSoundPool.load(this.mContext.getAssets().openFd(pPath), 0);
+				AssetFileDescriptor fd = Cocos2dxHelper.openFdFromXApk(pPath);
+				if(fd == null) {
+					fd = mContext.getAssets().openFd(pPath);
+				}
+				soundID = this.mSoundPool.load(fd, 0);
 			}
 		} catch (final Exception e) {
 			soundID = Cocos2dxSound.INVALID_SOUND_ID;
