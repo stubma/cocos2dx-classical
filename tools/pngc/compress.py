@@ -43,7 +43,7 @@ def compress(src, out):
     else:
         if os.path.splitext(src)[1] == '.png':
             print 'processing file "%s"...' % src
-            cmd = './pngquant %s "%s" --output "%s"' % (arg_force is True and '--force' or '', src, outPath)
+            cmd = script_dir + 'pngquant %s "%s" --output "%s"' % (arg_force is True and '--force' or '', src, outPath)
             os.system(cmd)
         else:
             if arg_mirror is True and (not os.path.exists(outPath) or arg_force is True):
@@ -60,6 +60,13 @@ opts, args = getopt.getopt(sys.argv[1:], shortOpts, longOpts)
 if len(sys.argv) <= 1:
     help()
     sys.exit()
+
+# dir of script
+script_dir = os.path.dirname(sys.argv[0])
+if script_dir == '':
+	script_dir = './'
+else:
+	script_dir = script_dir + '/'
 
 # parse arguments
 arg_source = None
