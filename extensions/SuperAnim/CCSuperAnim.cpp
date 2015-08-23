@@ -414,13 +414,17 @@ void CCSuperAnim::tryLoadSpriteSheet(){
         tex = filenameWithExt + "pvr";
         texFullPath = CCUtils::getExternalOrFullPath(tex);
         if(!CCUtils::isPathExistent(texFullPath)) {
-            tex = filenameWithExt + "png";
+            tex = filenameWithExt + "pkm";
             texFullPath = CCUtils::getExternalOrFullPath(tex);
             if(!CCUtils::isPathExistent(texFullPath)) {
-                tex = filenameWithExt + "jpg";
+                tex = filenameWithExt + "png";
                 texFullPath = CCUtils::getExternalOrFullPath(tex);
                 if(!CCUtils::isPathExistent(texFullPath)) {
-                    return;
+                    tex = filenameWithExt + "jpg";
+                    texFullPath = CCUtils::getExternalOrFullPath(tex);
+                    if(!CCUtils::isPathExistent(texFullPath)) {
+                        return;
+                    }
                 }
             }
         }
@@ -560,6 +564,12 @@ void CCSuperAnim::draw()
 		{
 			ccGLBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 			ccGLBindTexture2D(aSprite->mTexture->getName());
+            if(aSprite->mTexture->isETC()) {
+                GLint loc = getShaderProgram()->getUniformLocationForName(kCCUniformNames[kCCUniformIsETC]);
+                getShaderProgram()->setUniformLocationWith1f(loc, 1);
+                ccGLBindTexture2DN(1, aSprite->mTexture->getETCAlphaName());
+            }
+            
 			//
 			// Attributes
 			ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
@@ -618,6 +628,12 @@ void CCSuperAnim::draw()
 		
 		ccGLBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 		ccGLBindTexture2D(mSpriteSheet->getName());
+        if(mSpriteSheet->isETC()) {
+            GLint loc = getShaderProgram()->getUniformLocationForName(kCCUniformNames[kCCUniformIsETC]);
+            getShaderProgram()->setUniformLocationWith1f(loc, 1);
+            ccGLBindTexture2DN(1, mSpriteSheet->getETCAlphaName());
+        }
+        
 		//
 		// Attributes
 		ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
