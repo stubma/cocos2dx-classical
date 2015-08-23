@@ -18,6 +18,7 @@
 		92A4A2DA1A52D81E007D7211 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A4A2D91A52D81E007D7211 /* CoreText.framework */; };
 		92A4A2DC1A52D82A007D7211 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A4A2DB1A52D82A007D7211 /* libsqlite3.dylib */; };
 		92EEE0261B6A2E8E00C527AC /* cocos in Copy Cocos Scripts */ = {isa = PBXBuildFile; fileRef = 92EEE0241B6A2E7C00C527AC /* cocos */; };
+		92FA4EE01B89C8440064117C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92FA4EDF1B89C8440064117C /* SystemConfiguration.framework */; };
 		BF82F42113A8652A00616D55 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF82F41F13A8652A00616D55 /* AppController.mm */; };
 		BF82F42213A8652A00616D55 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BF82F42013A8652A00616D55 /* main.m */; };
 		D403B5D9135D1AF1004B518D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D403B5D8135D1AF1004B518D /* libxml2.dylib */; };
@@ -76,6 +77,7 @@
 		92A4A2D91A52D81E007D7211 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		92A4A2DB1A52D82A007D7211 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		92EEE0241B6A2E7C00C527AC /* cocos */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocos; path = ../../../../scripting/lua/script/script/cocos; sourceTree = "<group>"; };
+		92FA4EDF1B89C8440064117C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		BF82F41E13A8652A00616D55 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		BF82F41F13A8652A00616D55 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		BF82F42013A8652A00616D55 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92FA4EE01B89C8440064117C /* SystemConfiguration.framework in Frameworks */,
 				92A4A2DC1A52D82A007D7211 /* libsqlite3.dylib in Frameworks */,
 				92A4A2DA1A52D81E007D7211 /* CoreText.framework in Frameworks */,
 				15A3DBC61682FBA8002FB0C5 /* libcocos2dx.a in Frameworks */,
@@ -169,6 +172,7 @@
 				DCCBF1BC0F6022AE0040855A /* QuartzCore.framework */,
 				DCCBF1BE0F6022AE0040855A /* UIKit.framework */,
 				DC6640040F83B3EA000B3E49 /* OpenAL.framework */,
+				92FA4EDF1B89C8440064117C /* SystemConfiguration.framework */,
 				DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */,
 				506EDB87102F4C4000A389B3 /* libz.dylib */,
 				506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */,
