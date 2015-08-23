@@ -190,6 +190,7 @@
 		923BBB5C1A24D8A400E63041 /* Images.ios in Resources */ = {isa = PBXBuildFile; fileRef = 923BBB5B1A24D8A400E63041 /* Images.ios */; };
 		9242C2581A30790E00E1E944 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9242C2571A30790D00E1E944 /* CoreText.framework */; };
 		9258E8601A28C1F0001DCEEF /* cocosui in Resources */ = {isa = PBXBuildFile; fileRef = 9258E85F1A28C1F0001DCEEF /* cocosui */; };
+		92FA4EE91B89DAD90064117C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92FA4EE81B89DAD90064117C /* SystemConfiguration.framework */; };
 		A01B534F17DE7F7900A3D114 /* PerformanceAllocTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A01B534D17DE7F7900A3D114 /* PerformanceAllocTest.cpp */; };
 		A059B9AD174D9B8E0078F84F /* ConfigurationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A059B9AB174D9B8E0078F84F /* ConfigurationTest.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
@@ -607,6 +608,7 @@
 		923BBB5B1A24D8A400E63041 /* Images.ios */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images.ios; path = ../Resources.ios/Images.ios; sourceTree = "<group>"; };
 		9242C2571A30790D00E1E944 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		9258E85F1A28C1F0001DCEEF /* cocosui */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cocosui; sourceTree = "<group>"; };
+		92FA4EE81B89DAD90064117C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A01B534D17DE7F7900A3D114 /* PerformanceAllocTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PerformanceAllocTest.cpp; path = ../../Classes/PerformanceTest/PerformanceAllocTest.cpp; sourceTree = "<group>"; };
 		A01B534E17DE7F7900A3D114 /* PerformanceAllocTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PerformanceAllocTest.h; path = ../../Classes/PerformanceTest/PerformanceAllocTest.h; sourceTree = "<group>"; };
 		A059B9AB174D9B8E0078F84F /* ConfigurationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigurationTest.cpp; sourceTree = "<group>"; };
@@ -628,6 +630,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92FA4EE91B89DAD90064117C /* SystemConfiguration.framework in Frameworks */,
 				9242C2581A30790E00E1E944 /* CoreText.framework in Frameworks */,
 				15A3DA6A1682F886002FB0C5 /* libcocos2dx.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
@@ -1648,6 +1651,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				92FA4EE81B89DAD90064117C /* SystemConfiguration.framework */,
 				9242C2571A30790D00E1E944 /* CoreText.framework */,
 				15A3D87E1682F7B3002FB0C5 /* cocos2dx.xcodeproj */,
 				9235B5141A21FD0F002D4C37 /* libcurl.a */,
