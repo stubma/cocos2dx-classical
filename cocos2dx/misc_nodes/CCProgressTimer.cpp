@@ -510,7 +510,10 @@ void CCProgressTimer::draw(void)
     ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
 
     ccGLBindTexture2D( m_pSprite->getTexture()->getName() );
-
+    if(m_pSprite->getTexture()->isETC()) {
+        getShaderProgram()->useSeparatedAlphaChannel(m_pSprite->getTexture()->getETCAlphaName());
+    }
+    
 #ifdef EMSCRIPTEN
     setGLBufferData((void*) m_pVertexData, (m_nVertexDataCount * sizeof(ccV2F_C4B_T2F)), 0);
 

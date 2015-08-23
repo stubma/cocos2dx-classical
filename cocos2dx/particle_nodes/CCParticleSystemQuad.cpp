@@ -362,6 +362,9 @@ void CCParticleSystemQuad::draw()
     CC_NODE_DRAW_SETUP(this);
 
     ccGLBindTexture2D( m_pTexture->getName() );
+    if(m_pTexture->isETC()) {
+        getShaderProgram()->useSeparatedAlphaChannel(m_pTexture->getETCAlphaName());
+    }
     ccGLBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 
 #if CC_TEXTURE_ATLAS_USE_VAO

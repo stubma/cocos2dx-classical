@@ -335,7 +335,10 @@ void CCMotionStreak::draw()
     ccGLBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
 
     ccGLBindTexture2D( m_pTexture->getName() );
-
+    if(m_pTexture->isETC()) {
+        getShaderProgram()->useSeparatedAlphaChannel(m_pTexture->getETCAlphaName());
+    }
+    
 #ifdef EMSCRIPTEN
     // Size calculations from ::initWithFade
     setGLBufferData(m_pVertices, (sizeof(ccVertex2F) * m_uMaxPoints * 2), 0);
