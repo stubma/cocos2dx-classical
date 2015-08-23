@@ -98,6 +98,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 * CCEGLViewProtocol添加了setMultipleTouchEnabled方法
 * CCFileUtils增加enableMain/PatchApkExpansion方法, CocosdxHelper增加若干XApk相关方法, 在Android上支持读取从apk expansion读取资源.
 * Keypad事件添加了优先级支持
+* 修正了对ETC1格式贴图的支持, HelloLua演示了ETC1贴图的使用
 * Lua相关修改
 	* quick 3.x的binding generator工具移植完成, 名叫autolua, 引擎的lua绑定已经全部生成
 	* Cocos2dxLuaLoader的逻辑被修改, 会优先从~/Library/Cache下载入lua脚本, 如果没有找到则载入app的.
@@ -176,6 +177,7 @@ Things Improved
 * CCEGLViewProtocol add setMultipleTouchEnabled method
 * Android apk expansion is supported, CCFileUtils add enableMain/PatchApkExpansion method.
 * Support setting priority for keypad event
+* Fix ETC1 texture support, HelloLua demos the usage of ETC1 texture
 * Lua related
 	* quick 3.x binding generator is migrated, renamed as autolua
 	* engine lua binding is generated
