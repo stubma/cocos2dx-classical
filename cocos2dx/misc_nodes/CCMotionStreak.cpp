@@ -336,7 +336,7 @@ void CCMotionStreak::draw()
 
     ccGLBindTexture2D( m_pTexture->getName() );
     if(m_pTexture->isETC()) {
-        getShaderProgram()->useSeparatedAlphaChannel(m_pTexture->getETCAlphaName());
+        getShaderProgram()->useSeparatedAlphaChannel(m_pTexture->getAlphaChannel()->getName());
     }
     
 #ifdef EMSCRIPTEN

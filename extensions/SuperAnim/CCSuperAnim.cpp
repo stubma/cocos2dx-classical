@@ -565,7 +565,7 @@ void CCSuperAnim::draw()
 			ccGLBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 			ccGLBindTexture2D(aSprite->mTexture->getName());
             if(aSprite->mTexture->isETC()) {
-                getShaderProgram()->useSeparatedAlphaChannel(aSprite->mTexture->getETCAlphaName());
+                getShaderProgram()->useSeparatedAlphaChannel(aSprite->mTexture->getAlphaChannel()->getName());
             }
             
 			//
@@ -627,7 +627,7 @@ void CCSuperAnim::draw()
 		ccGLBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 		ccGLBindTexture2D(mSpriteSheet->getName());
         if(mSpriteSheet->isETC()) {
-            getShaderProgram()->useSeparatedAlphaChannel(mSpriteSheet->getETCAlphaName());
+            getShaderProgram()->useSeparatedAlphaChannel(mSpriteSheet->getAlphaChannel()->getName());
         }
         
 		//

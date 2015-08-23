@@ -596,7 +596,7 @@ void CCTextureAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
     }
     ccGLBindTexture2D(m_pTexture->getName());
     if(m_pTexture->isETC()) {
-        ccGLBindTexture2DN(1, m_pTexture->getETCAlphaName());
+        ccGLBindTexture2DN(1, m_pTexture->getAlphaChannel()->getName());
     }
 
 #if CC_TEXTURE_ATLAS_USE_VAO

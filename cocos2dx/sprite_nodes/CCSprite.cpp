@@ -558,7 +558,7 @@ void CCSprite::draw(void)
 
     ccGLBindTexture2D( m_pobTexture->getName() );
     if(m_pobTexture->isETC()) {
-        getShaderProgram()->useSeparatedAlphaChannel(m_pobTexture->getETCAlphaName());
+        getShaderProgram()->useSeparatedAlphaChannel(m_pobTexture->getAlphaChannel()->getName());
     }
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
 

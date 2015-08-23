@@ -546,7 +546,7 @@ CCTexture2D* CCTextureCache::addETCImage(const char* path)
         CCTexture2D* alpha = new CCTexture2D();
         if(alpha && alpha->initWithETCFile(fullpath.c_str())) {
             m_pTextures->setObject(alpha, fullpath.c_str());
-            texture->setETCAlphaName(alpha->getName());
+            texture->setAlphaChannel(alpha);
             CC_SAFE_AUTORELEASE(alpha);
         }
         
@@ -910,21 +910,19 @@ void VolatileTexture::reloadAllTextures()
         case kImageFile:
             {
                 std::string lowerCase(vt->m_strFileName.c_str());
-                for (unsigned int i = 0; i < lowerCase.length(); ++i)
-                {
+                for (unsigned int i = 0; i < lowerCase.length(); ++i) {
                     lowerCase[i] = tolower(lowerCase[i]);
                 }
 
-                if (std::string::npos != lowerCase.find(".pvr")) 
-                {
+                if (std::string::npos != lowerCase.find(".pvr")) {
                     CCTexture2DPixelFormat oldPixelFormat = CCTexture2D::defaultAlphaPixelFormat();
                     CCTexture2D::setDefaultAlphaPixelFormat(vt->m_PixelFormat);
 
                     vt->texture->initWithPVRFile(vt->m_strFileName.c_str());
                     CCTexture2D::setDefaultAlphaPixelFormat(oldPixelFormat);
-                } 
-                else 
-                {
+                } else if(std::string::npos != lowerCase.find(".pkm")) {
+                    vt->texture->initWithETCFile(vt->m_strFileName.c_str());
+                } else {
                     CCImage* pImage = new CCImage();
                     size_t nSize = 0;
                     unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(vt->m_strFileName.c_str(), "rb", &nSize);

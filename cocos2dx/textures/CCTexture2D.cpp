@@ -66,7 +66,7 @@ CCTexture2D::CCTexture2D()
 , m_uPixelsWide(0)
 , m_uPixelsHigh(0)
 , m_uName(0)
-, m_uETCAlphaName(0)
+, m_alphaChannel(NULL)
 , m_fMaxS(0.0)
 , m_fMaxT(0.0)
 , m_bHasPremultipliedAlpha(false)
@@ -90,6 +90,7 @@ CCTexture2D::~CCTexture2D()
     {
         ccGLDeleteTexture(m_uName);
     }
+    CC_SAFE_RELEASE(m_alphaChannel);
 }
 
 CCTexture2DPixelFormat CCTexture2D::getPixelFormat()

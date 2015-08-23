@@ -511,7 +511,7 @@ void CCProgressTimer::draw(void)
 
     ccGLBindTexture2D( m_pSprite->getTexture()->getName() );
     if(m_pSprite->getTexture()->isETC()) {
-        getShaderProgram()->useSeparatedAlphaChannel(m_pSprite->getTexture()->getETCAlphaName());
+        getShaderProgram()->useSeparatedAlphaChannel(m_pSprite->getTexture()->getAlphaChannel()->getName());
     }
     
 #ifdef EMSCRIPTEN

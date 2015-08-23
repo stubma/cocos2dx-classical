@@ -287,7 +287,7 @@ private:
     
     /** texture is etc format */
     CC_SYNTHESIZE_READONLY_BOOL(m_etc, ETC)
-    CC_SYNTHESIZE(GLuint, m_uETCAlphaName, ETCAlphaName)
+    CC_SYNTHESIZE_RETAIN(CCTexture2D*, m_alphaChannel, AlphaChannel);
 
     /** texture max S */
     CC_PROPERTY(GLfloat, m_fMaxS, MaxS)
