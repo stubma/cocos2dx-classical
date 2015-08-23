@@ -86,6 +86,7 @@ enum {
 	kCCUniformCosTime,
 	kCCUniformRandom01,
 	kCCUniformSampler,
+    kCCUniformAlphaSampler,
     kCCUniformAlphaTestValue,
     kCCUniformIsETC,
     
@@ -121,6 +122,7 @@ static const char* kCCUniformNames[] = {
     "CC_CosTime",
     "CC_Random01",
     "CC_Texture0",
+    "CC_Alpha0",
     "CC_alpha_value",
     "CC_isETC",
     

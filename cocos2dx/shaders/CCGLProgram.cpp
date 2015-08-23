@@ -269,6 +269,7 @@ void CCGLProgram::updateUniforms()
 	m_uUniforms[kCCUniformRandom01] = glGetUniformLocation(m_uProgram, kCCUniformNames[kCCUniformRandom01]);
 
     m_uUniforms[kCCUniformSampler] = glGetUniformLocation(m_uProgram, kCCUniformNames[kCCUniformSampler]);
+    m_uUniforms[kCCUniformAlphaSampler] = glGetUniformLocation(m_uProgram, kCCUniformNames[kCCUniformAlphaSampler]);
     m_uUniforms[kCCUniformIsETC] = glGetUniformLocation(m_uProgram, kCCUniformNames[kCCUniformIsETC]);
 
     switch (m_key) {
@@ -305,6 +306,11 @@ void CCGLProgram::updateUniforms()
     
     // Since sample most probably won't change, set it to 0 now.
     this->setUniformLocationWith1i(m_uUniforms[kCCUniformSampler], 0);
+    
+    // and set alpha sampler to 1
+    if(m_uUniforms[kCCUniformAlphaSampler] != -1) {
+        this->setUniformLocationWith1i(m_uUniforms[kCCUniformAlphaSampler], 1);
+    }
 }
 
 bool CCGLProgram::link()

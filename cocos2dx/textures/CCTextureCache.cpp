@@ -517,6 +517,11 @@ CCTexture2D * CCTextureCache::addPVRImage(const char* path)
     return texture;
 }
 
+string CCTextureCache::textureKeyForETCAlpha(const string& key) {
+    string p = CCUtils::deletePathExtension(key);
+    return p + "_alpha.pkm";
+}
+
 CCTexture2D* CCTextureCache::addETCImage(const char* path)
 {
     CCAssert(path != NULL, "TextureCache: fileimage MUST not be nil");
@@ -535,6 +540,17 @@ CCTexture2D* CCTextureCache::addETCImage(const char* path)
     if(texture != NULL && texture->initWithETCFile(fullpath.c_str()))
     {
         m_pTextures->setObject(texture, key.c_str());
+        
+        // add alpha texture
+        fullpath = textureKeyForETCAlpha(key);
+        CCTexture2D* alpha = new CCTexture2D();
+        if(alpha && alpha->initWithETCFile(fullpath.c_str())) {
+            m_pTextures->setObject(alpha, fullpath.c_str());
+            texture->setETCAlphaName(alpha->getName());
+            CC_SAFE_AUTORELEASE(alpha);
+        }
+        
+        // release
         CC_SAFE_AUTORELEASE(texture);
     }
     else
@@ -681,6 +697,17 @@ void CCTextureCache::removeTexture(CCTexture2D* texture)
 
     CCArray* keys = m_pTextures->allKeysForObject(texture);
     m_pTextures->removeObjectsForKeys(keys);
+
+    // remove etc alpha
+    if(texture->isETC()) {
+        CCArray* alphaKeys = CCArray::create();
+        CCObject* obj;
+        CCARRAY_FOREACH(keys, obj) {
+            string k = textureKeyForETCAlpha(((CCString*)obj)->getCString());
+            alphaKeys->addObject(CCString::create(k));
+        }
+        m_pTextures->removeObjectsForKeys(alphaKeys);
+    }
 }
 
 void CCTextureCache::removeTextureForKey(const char *textureKeyName)
@@ -691,6 +718,10 @@ void CCTextureCache::removeTextureForKey(const char *textureKeyName)
     }
 
     string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(textureKeyName);
+    m_pTextures->removeObjectForKey(fullPath);
+    
+    // ensure etc alpha texture is removed
+    fullPath = textureKeyForETCAlpha(textureKeyName);
     m_pTextures->removeObjectForKey(fullPath);
 }
 

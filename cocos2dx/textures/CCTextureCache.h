@@ -58,6 +58,10 @@ protected:
 private:
     /// todo: void addImageWithAsyncObject(CCAsyncObject* async);
     void addImageAsyncCallBack(float dt);
+    
+    // get texture key for etc alpha image, from a etc image key
+    string textureKeyForETCAlpha(const string& key);
+    
 public:
     /**
      *  @js ctor
