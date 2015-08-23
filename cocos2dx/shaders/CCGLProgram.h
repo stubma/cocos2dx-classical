@@ -88,7 +88,7 @@ enum {
 	kCCUniformSampler,
     kCCUniformAlphaSampler,
     kCCUniformAlphaTestValue,
-    kCCUniformIsETC,
+    kCCUniformUseSeparatedAlphaChannel,
     
     // custom uniforms starts
     kCCUniform_custom_start = kCCUniformAlphaTestValue,
@@ -124,7 +124,7 @@ static const char* kCCUniformNames[] = {
     "CC_Texture0",
     "CC_Alpha0",
     "CC_alpha_value",
-    "CC_isETC",
+    "CC_UseSeparatedAlphaChannel",
     
     // custom uniforms
     "CC_blurSize",
@@ -361,7 +361,7 @@ public:
     /** will update the builtin uniforms if they are different than the previous call for this same shader program. 
      *  @lua NA
      */
-    void setUniformsForBuiltins(CCTextureProtocol* p = NULL);
+    void setUniformsForBuiltins();
     
     /** will update the custom uniforms saved in node if there is any
      *  @lua NA
@@ -393,6 +393,9 @@ public:
      * @lua NA
      */
     inline const GLuint getProgram() { return m_uProgram; }
+    
+    // quick setter
+    void useSeparatedAlphaChannel(GLuint texName);
 
 private:
     bool updateUniformLocation(GLint location, GLvoid* data, unsigned int bytes);

@@ -140,7 +140,7 @@ do { \
     CCAssert(getShaderProgram(), "No shader program set for this node"); \
     { \
         getShaderProgram()->use(); \
-        getShaderProgram()->setUniformsForBuiltins(dynamic_cast<CCTextureProtocol*>(n)); \
+        getShaderProgram()->setUniformsForBuiltins(); \
         getShaderProgram()->setCustomUniforms(n); \
     } \
 } while(0)

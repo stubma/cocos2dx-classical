@@ -206,7 +206,7 @@ bool CCGLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* sour
         "uniform vec4 CC_SinTime;\n"
         "uniform vec4 CC_CosTime;\n"
         "uniform vec4 CC_Random01;\n"
-        "uniform bool CC_isETC;\n"
+        "uniform bool CC_UseSeparatedAlphaChannel;\n"
         "//CC INCLUDES END\n\n",
         source,
     };
@@ -270,7 +270,7 @@ void CCGLProgram::updateUniforms()
 
     m_uUniforms[kCCUniformSampler] = glGetUniformLocation(m_uProgram, kCCUniformNames[kCCUniformSampler]);
     m_uUniforms[kCCUniformAlphaSampler] = glGetUniformLocation(m_uProgram, kCCUniformNames[kCCUniformAlphaSampler]);
-    m_uUniforms[kCCUniformIsETC] = glGetUniformLocation(m_uProgram, kCCUniformNames[kCCUniformIsETC]);
+    m_uUniforms[kCCUniformUseSeparatedAlphaChannel] = glGetUniformLocation(m_uProgram, kCCUniformNames[kCCUniformUseSeparatedAlphaChannel]);
 
     switch (m_key) {
         case kCCShader_blur:
@@ -661,7 +661,7 @@ void CCGLProgram::setCustomUniforms(CCNode* n) {
     }
 }
 
-void CCGLProgram::setUniformsForBuiltins(CCTextureProtocol* p)
+void CCGLProgram::setUniformsForBuiltins()
 {
     kmMat4 matrixP;
 	kmMat4 matrixMV;
@@ -694,8 +694,13 @@ void CCGLProgram::setUniformsForBuiltins(CCTextureProtocol* p)
         setUniformLocationWith4f(m_uUniforms[kCCUniformRandom01], CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
 	}
     
-    // is etc texture or not?
-    setUniformLocationWith1i(m_uUniforms[kCCUniformIsETC], (p && p->isUsingETC()) ? 1 : 0);
+    // by default, no separated alpha channel
+    setUniformLocationWith1i(m_uUniforms[kCCUniformUseSeparatedAlphaChannel], 0);
+}
+
+void CCGLProgram::useSeparatedAlphaChannel(GLuint texName) {
+    setUniformLocationWith1i(m_uUniforms[kCCUniformUseSeparatedAlphaChannel], 1);
+    ccGLBindTexture2DN(1, texName);
 }
 
 void CCGLProgram::reset()

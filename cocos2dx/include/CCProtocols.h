@@ -181,14 +181,6 @@ public:
      * @lua NA
      */
     virtual void setTexture(CCTexture2D *texture) = 0;
-    
-    /**
-     * is this node using ETC texture
-     */
-    virtual bool isUsingETC() {
-        CCTexture2D* tex = getTexture();
-        return tex ? tex->isETC() : false;
-    }
 };
 
 /**

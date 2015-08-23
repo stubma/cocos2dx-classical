@@ -76,7 +76,7 @@ const GLchar * ccPositionTexture_frag
                        uniform sampler2D CC_Alpha0;
                        
                        void main() {
-                           if(CC_isETC) {
+                           if(CC_UseSeparatedAlphaChannel) {
                                float a = texture2D(CC_Alpha0, v_texCoord).r;
                                gl_FragColor = texture2D(CC_Texture0, v_texCoord) * a;
                            } else {
@@ -128,7 +128,7 @@ const GLchar * ccPositionTextureColor_frag
                        
                        void main()	{
                            gl_FragColor = v_fragmentColor * texture2D(CC_Texture0, v_texCoord);
-                           if(CC_isETC) {
+                           if(CC_UseSeparatedAlphaChannel) {
                                float a = texture2D(CC_Alpha0, v_texCoord).r;
                                gl_FragColor = gl_FragColor * a;
                            }
@@ -157,7 +157,7 @@ const GLchar * ccPositionTextureColorAlphaTest_frag
                        
                        void main() {
                            vec4 texColor = texture2D(CC_Texture0, v_texCoord);
-                           if(CC_isETC) {
+                           if(CC_UseSeparatedAlphaChannel) {
                                float a = texture2D(CC_Alpha0, v_texCoord).r;
                                texColor = texColor * a;
                            }
@@ -246,7 +246,7 @@ const char* ccShader_flash_frag
                        
                        void main() {
                            gl_FragColor = v_fragmentColor * texture2D(CC_Texture0, v_texCoord);
-                           if(CC_isETC) {
+                           if(CC_UseSeparatedAlphaChannel) {
                                float a = texture2D(CC_Alpha0, v_texCoord).r;
                                gl_FragColor = gl_FragColor * a;
                            }
@@ -281,7 +281,7 @@ const char* ccShader_blur_frag
                            sum += texture2D(CC_Texture0, v_texCoord + 4.0 * CC_blurSize) * 0.05;
                            
                            gl_FragColor = (sum - CC_blurSubtract) * v_fragmentColor;
-                           if(CC_isETC) {
+                           if(CC_UseSeparatedAlphaChannel) {
                                float a = texture2D(CC_Alpha0, v_texCoord).r;
                                gl_FragColor = gl_FragColor * a;
                            }
@@ -342,7 +342,7 @@ const char* ccShader_lighting_frag
                        
                        void main()	{
                            gl_FragColor = v_fragmentColor * texture2D(CC_Texture0, v_texCoord);
-                           if(CC_isETC) {
+                           if(CC_UseSeparatedAlphaChannel) {
                                float a = texture2D(CC_Alpha0, v_texCoord).r;
                                gl_FragColor = gl_FragColor * a;
                            }
@@ -365,7 +365,7 @@ const char* ccShader_matrix_frag
                        
                        void main()	{
                            gl_FragColor = v_fragmentColor * texture2D(CC_Texture0, v_texCoord);
-                           if(CC_isETC) {
+                           if(CC_UseSeparatedAlphaChannel) {
                                float a = texture2D(CC_Alpha0, v_texCoord).r;
                                gl_FragColor = gl_FragColor * a;
                            }
@@ -408,7 +408,7 @@ const char* ccShader_shine_frag
                        
                        void main() {
                            gl_FragColor = v_fragmentColor * texture2D(CC_Texture0, v_texCoord);
-                           if(CC_isETC) {
+                           if(CC_UseSeparatedAlphaChannel) {
                                float a = texture2D(CC_Alpha0, v_texCoord).r;
                                gl_FragColor = gl_FragColor * a;
                            }

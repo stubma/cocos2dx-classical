@@ -557,8 +557,8 @@ void CCSprite::draw(void)
     ccGLBlendFunc( m_sBlendFunc.src, m_sBlendFunc.dst );
 
     ccGLBindTexture2D( m_pobTexture->getName() );
-    if(isUsingETC()) {
-        ccGLBindTexture2DN(1, m_pobTexture->getETCAlphaName());
+    if(m_pobTexture->isETC()) {
+        getShaderProgram()->useSeparatedAlphaChannel(m_pobTexture->getETCAlphaName());
     }
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
 
