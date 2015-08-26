@@ -12,11 +12,11 @@
 What is this
 ===
 
-It is a customized cocos2dx, based on latest code of cocos2dx v2 branch. The purpose of it is creating a classical cocos2dx version. I created it because cocos2dx already gave up v2 but v2 is still valuable to me. v3 doesn't interest me much because it may have more bugs. So I need a better v2, not a creepy v3.
+It is a customized cocos2dx, based on latest code of cocos2dx v2 branch. Its purpose is creating a classical cocos2dx branch. I created it because cocos2dx already gave up v2 but v2 is still valuable to me. v3 doesn't interest me much because it may have more bugs. So I need a better v2, not a creepy v3.
 
-To get a bette v2, I created a cocos2dx-better project to overcome limitations of v2. Now I start this project to merge cocos2dx-better code to v2 branch, and more.
+To get a better v2, I created a cocos2dx-better project to overcome limitations of v2. Now I start this project to merge cocos2dx-better code to v2 branch, and more.
 
-I only care about iOS/Android platform so other platform implementation will be deleted. Are you same with me? If so, take a look at this project.
+I care about iOS/Android only so other platform implementation will be deleted. Are you same with me? If so, take a look at this project.
 
 目标
 ===
@@ -96,12 +96,12 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 * 设计了一个资源打包工具, lpk_ui是它的图形界面, lpk_console是命令行工具, 不过这个工具我只是调试完成, 尚未在实际项目中验证, 而且引擎也需要修改来支持这个工具, 所以目前仅供参考
 * 集成了SuperAnimConverter工具和它的代码, 改名为CCSuperAnim, 为其添加了lua支持, HelloLua工程增加了SuperAnim的演示
 * CCEGLViewProtocol添加了setMultipleTouchEnabled方法
-* CCFileUtils增加enableMain/PatchApkExpansion方法, CocosdxHelper增加若干XApk相关方法, 在Android上支持读取从apk expansion读取资源.
+* CCFileUtils增加enableMain/PatchApkExpansion方法, CocosdxHelper增加若干XApk相关方法, 在Android上支持从apk expansion读取资源.
 * Keypad事件添加了优先级支持
 * 修正了对ETC1格式贴图的支持, HelloLua演示了ETC1贴图的使用
 * Lua相关修改
 	* quick 3.x的binding generator工具移植完成, 名叫autolua, 引擎的lua绑定已经全部生成
-	* Cocos2dxLuaLoader的逻辑被修改, 会优先从~/Library/Cache下载入lua脚本, 如果没有找到则载入app的.
+	* Cocos2dxLuaLoader的逻辑被修改, 会优先从~/Library/Cache载入lua脚本, 如果没有找到则载入app的.
 	* lua和luajit的库都已经预编译, 缺省使用luajit库, 如果想切换成lua, 可以编辑scripting/lua/Android.mk(for android)或cocos2dx/proj.ios/cocos2dx.xcodeproj(for ios)
 	* HelloLua工程修改调试通过, 在Android上已经采用gradle对HelloLua进行打包, 注意你可能需要修改local.properties上的sdk.dir/ndk.dir配置.
 	* 使用ccScriptFunction代表一个脚本方法, 替代了原来使用int的方式. 引擎中注册脚本方法相关的代码都改成使用ccScriptFunction, 相应的牵涉到CCLuaEngine, CCLuaStack等都有不少修改, 脚本回调方法可以获得self参数, 解决了脚本回调方法中获取self不方便的问题
@@ -111,7 +111,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 	* 修正了一些tolua_fix的bug
 	* 添加了tolua.isa方法
 	* script端的CCNotification监听方法现在可以收到额外参数
-	* 修改了extern.lua, 添加了dtor方法, 会在C++对象析构时调用
+	* 修改了extern.lua, 添加了dtor方法, 会在C++对象析构时调用. 对于纯lua对象dtor方法暂时无用.
 	* CCDirector/CCEGLView的end方法改名为terminate, 避免和lua的关键字冲突
 	* CCNode添加了set/getScriptUserData, 支持在lua端为CCNode关联一个lua table
 	* string包增加了split, tonumber, toint, tobool, empty方法
@@ -192,7 +192,7 @@ Things Improved
 	* fix some bugs of tolua_fix
 	* add tolua.isa method
 	* CCNotification script observer can get extra parameters now
-	* lua class add a dtor method to receive CCObject destruction event
+	* lua class add a dtor method to receive CCObject destruction event. For lua object, dtor is never called.
 	* rename CCDirector/CCEGLView end method to terminate, to avoid name conflict with lua keyword
 	* add set/getScriptUserData for CCNode so that we can associate a lua table to CCNode
 	* string package adds split, tonumber, toint, tobool, empty methods
