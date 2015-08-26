@@ -184,8 +184,7 @@ Things Improved
 	* lua and luajit are both precompiled, by default we use luajit. if you want to use lua, you can modify scripting/lua/Android.mk(for android) or cocos2dx/proj.ios/cocos2dx.xcodeproj(for ios)
 	* HelloLua project is debugged and fine. In Android, I use gradle to package HelloLua, so you may need change sdk.dir/ndk.dir in local.properties
 	* Cocos2dxLuaLoader is modified so that it will try to load lua script from ~/Library/Cache first. If not found, load from app bundle.
-	* use ccScriptFunction struct to replace int handler, modified all related code
-	* make it easy to pass self parameter to script callback
+	* use ccScriptFunction struct to replace int handler, modified all related code. So now it is easy to access self in script callback.
 	* adding more shared library, in scripting/lua/script
 	* add lfs to easily load lua files under a folder, fix conflict between Cocos2dxLuaLoader and lfs
 	* add bit operation library
