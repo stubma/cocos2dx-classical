@@ -52,6 +52,12 @@ typedef struct _hashUniformEntry
     UT_hash_handle  hh;          // hash entry
 } tHashUniformEntry;
 
+static CCGLProgram* s_currentProgram = NULL;
+
+CCGLProgram* CCGLProgram::currentProgram() {
+    return s_currentProgram;
+}
+
 CCGLProgram::CCGLProgram()
 : m_uProgram(0)
 , m_uVertShader(0)
@@ -71,6 +77,11 @@ CCGLProgram::~CCGLProgram()
     CCAssert(m_uVertShader == 0, "Vertex Shaders should have been already deleted");
     CCAssert(m_uFragShader == 0, "Fragment Shaders should have been already deleted");
 
+    // clear current
+    if(s_currentProgram == this) {
+        s_currentProgram = NULL;
+    }
+    
     if (m_uProgram) 
     {
         ccGLDeleteProgram(m_uProgram);
@@ -365,6 +376,7 @@ bool CCGLProgram::link()
 void CCGLProgram::use()
 {
     ccGLUseProgram(m_uProgram);
+    s_currentProgram = this;
 }
 
 const char* CCGLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc)

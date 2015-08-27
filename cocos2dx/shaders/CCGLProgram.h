@@ -220,6 +220,9 @@ static ccCustomUniformValue kCCCustomUniformValue_empty = { 0 };
 class CC_DLL CCGLProgram : public CCObject
 {
 public:
+    /// return current program, or NULL if none
+    static CCGLProgram* currentProgram();
+    
     /**
      * @js  ctor
      * @lua NA
