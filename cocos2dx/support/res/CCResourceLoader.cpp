@@ -97,7 +97,7 @@ void ZwoptexLoadTask::load() {
         if(lowerCase.find(".pvr") != string::npos) {
             tex = CCTextureCache::sharedTextureCache()->addPVRImage(texName.c_str());
         } else if(lowerCase.find(".pkm") != string::npos) {
-            CCTextureCache::sharedTextureCache()->addETCImage(texName.c_str());
+            tex = CCTextureCache::sharedTextureCache()->addETCImage(texName.c_str());
         } else {
             // load encryptd data
             size_t len;
@@ -437,7 +437,7 @@ void CCResourceLoader::loadZwoptex(const string& plistName, const string& texNam
     if(lowerCase.find(".pvr") != string::npos) {
         tex = CCTextureCache::sharedTextureCache()->addPVRImage(_resolve(texName).c_str());
     } else if(lowerCase.find(".pkm") != string::npos) {
-        CCTextureCache::sharedTextureCache()->addETCImage(_resolve(texName).c_str());
+        tex = CCTextureCache::sharedTextureCache()->addETCImage(_resolve(texName).c_str());
     } else {
         // load encryptd data
         size_t len;
