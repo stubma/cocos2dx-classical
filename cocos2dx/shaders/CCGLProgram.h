@@ -91,7 +91,7 @@ enum {
     kCCUniformUseSeparatedAlphaChannel,
     
     // custom uniforms starts
-    kCCUniform_custom_start = kCCUniformAlphaTestValue,
+    kCCUniform_custom_start = kCCUniformUseSeparatedAlphaChannel,
     
     // custom uniforms
     kCCUniform_blurSize,
