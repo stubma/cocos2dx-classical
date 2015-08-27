@@ -82,6 +82,22 @@ function FarmLayer:ctor()
     self:addChild(fish)
     fish:PlaySection("active")
     
+    -- load cowboy animation, we use CCResourceLoader because CCArmatureDataManager only checks png
+    local rl = CCResourceLoader:create()
+    if CCDevice:getPlatform() == cc.PLATFORM_ANDROID then
+        rl:addArmatureTask("Cowboy0.plist", "Cowboy0.pkm", "Cowboy.ExportJson")
+    else
+        rl:addArmatureTask("Cowboy0.plist", "Cowboy0.pvr.ccz", "Cowboy.ExportJson")
+    end
+    rl:runInBlockMode()
+    
+    -- create cowboy armature
+    local arm = CCArmature:create("Cowboy")
+    arm:getAnimation():playWithIndex(0)
+    arm:setPosition(CCUtils:getLocalPoint(self, 0.3, 0.5))
+    arm:setScale(0.1)
+    self:addChild(arm)
+    
     -- register a touch handler which is a instance method
     self:registerScriptTouchHandler({ target = self, handler = FarmLayer.onTouch })
     self:setTouchEnabled(true)
