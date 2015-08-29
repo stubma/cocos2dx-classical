@@ -126,11 +126,5 @@ static CCApplicationLua s_sharedApplication(CCUtils::getExternalOrFullPath("scri
      */
 }
 
-
-- (void)dealloc {
-    [super dealloc];
-}
-
-
 @end
 

@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppController.h"
 
 int main(int argc, char *argv[]) {
-    NSAutoreleasePool *pool = [NSAutoreleasePool new];
-    int retVal = UIApplicationMain(argc, argv, nil, @"AppController");
-    [pool release];
-    return retVal;
+    @autoreleasepool {
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass(AppController.class));
+    }
 }
