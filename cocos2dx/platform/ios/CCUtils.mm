@@ -215,7 +215,7 @@ bool CCUtils::hasExternalStorage() {
 }
 
 string CCUtils::getInternalStoragePath() {
-    NSString* docDir = @"~/Library/Caches";
+    NSString* docDir = @"~/Library";
     docDir = [docDir stringByExpandingTildeInPath];
     return [docDir cStringUsingEncoding:NSUTF8StringEncoding];
 }
@@ -254,7 +254,7 @@ string CCUtils::externalize(const string& path) {
     if(!CCFileUtils::sharedFileUtils()->isAbsolutePath(path)) {
         // try append search path to get the exterinal path
         NSString* nsPath = [NSString stringWithUTF8String:path.c_str()];
-        NSString* dir = [@"~/Library/Caches/" stringByExpandingTildeInPath];
+        NSString* dir = [@"~/Library/" stringByExpandingTildeInPath];
         NSFileManager* fm = [NSFileManager defaultManager];
         const vector<string>& searchPaths = CCFileUtils::sharedFileUtils()->getSearchPaths();
         for(vector<string>::const_iterator iter = searchPaths.begin(); iter != searchPaths.end(); iter++) {

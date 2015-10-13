@@ -60,7 +60,7 @@ class CCLabelTTFLinkStateSynchronizer;
  *      If image path starts with a '/', it is an absolute path and no preprocessing.
  *      If image path doesn't start with a '/', it is a relative path and it will be preprocessed by CCUtils::getExternalOrFullPath
  *      Optional attributes: scale, scalex, scaley, w, h, offsety.
- *      In iOS, the absolute path will be redirected to ~/Library/Caches, so "/sdcard/a.png" will be "~/Library/Caches/sdcard/a.png"
+ *      In iOS, the absolute path will be redirected to ~/Library, so "/sdcard/a.png" will be "~/Library/sdcard/a.png"
  *			1. w/h: If w is specified, x scale property will be ignored. If h is specified, y scale property will be ignored.
  *			2. scale/scalex/scaley: image scale, if scale x and y is same, you can just set scale
  *			3. offsety: image vertical offset, following opengl rule. So positive value will move image up.

@@ -37,9 +37,9 @@ class CCDownloadEntry;
 
 /**
  * a file downloader which uses http protocol, it manages a list of file infos and download them
- * one by one. All files are saved to local. In iOS, they are saved under ~/Library/Caches. In Android,
+ * one by one. All files are saved to local. In iOS, they are saved under ~/Library. In Android,
  * they are saved to internal storage. You can specify a base folder, for example, "data", then final
- * destination folder in iOS will be "~/Library/Caches/data"
+ * destination folder in iOS will be "~/Library/data"
  *
  * CCFileDownloader is a singleton
  */

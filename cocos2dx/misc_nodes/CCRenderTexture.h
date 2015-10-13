@@ -122,12 +122,12 @@ public:
      */
     CCImage* newCCImage(bool flipImage = true);
 
-    /** saves the texture into a file using JPEG format. The file will be saved in the Library/Caches folder.
+    /** saves the texture into a file using JPEG format. The file will be saved in the Library folder.
         Returns YES if the operation is successful.
      */
     bool saveToFile(const char *szFilePath);
 
-    /** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Library/Caches folder.
+    /** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Library folder.
         Returns YES if the operation is successful.
      */
     bool saveToFile(const char *name, tCCImageFormat format);

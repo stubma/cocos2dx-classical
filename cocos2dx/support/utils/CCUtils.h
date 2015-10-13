@@ -167,7 +167,7 @@ public:
     
     /**
      * map a relative path to absolute external path, do nothing if path is absolute
-     * in iOS, path will be appended to ~/Library/Caches
+     * in iOS, path will be appended to ~/Library
      * in Android, path will be appended to internal storage folder
      */
     static string externalize(const string& path);
@@ -510,7 +510,7 @@ public:
 	 *
 	 * @param root the start node to be captured, so that you can only capture part of screen. However, final image
 	 *		file is always window size. If root is NULL, whole screen will be captured.
-	 * @param path the relative path of image file, it will be mapped to platform writable path. In iOS, it is ~/Library/Caches,
+	 * @param path the relative path of image file, it will be mapped to platform writable path. In iOS, it is ~/Library,
 	 *		in Android, it is cache dir
 	 * @param needStencil true if you want a stencil attachment, by default it is false
 	 * @return full path of saved image file
