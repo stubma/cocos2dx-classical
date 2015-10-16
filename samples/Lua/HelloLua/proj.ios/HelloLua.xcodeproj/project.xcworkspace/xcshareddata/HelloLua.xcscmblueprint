@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "600D108D2BAF1FFE346969716EEF59EDF2A6AF57",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "630B64DCE3F07C3553C7CB9DCE212A7CE42C2B69" : 0,
+    "600D108D2BAF1FFE346969716EEF59EDF2A6AF57" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "9F4729EA-397B-4DB1-B133-FD2923F8D911",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "630B64DCE3F07C3553C7CB9DCE212A7CE42C2B69" : "cocos2dx-classical\/scripting\/lua\/cocos2dx_support\/luasocket",
+    "600D108D2BAF1FFE346969716EEF59EDF2A6AF57" : "cocos2dx-classical"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "HelloLua",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "samples\/Lua\/HelloLua\/proj.ios\/HelloLua.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:stubma\/cocos2dx-classical.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "600D108D2BAF1FFE346969716EEF59EDF2A6AF57"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/diegonehab\/luasocket",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "630B64DCE3F07C3553C7CB9DCE212A7CE42C2B69"
+    }
+  ]
+}
