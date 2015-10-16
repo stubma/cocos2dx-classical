@@ -342,7 +342,7 @@
 					"$(PROJECT_DIR)/../../../../scripting/lua/luajit/src/src",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"/Users/maruojie/Projects/cocos2dx-classical/cocos2dx/platform/third_party/ios/libraries",
@@ -389,7 +389,7 @@
 					"$(PROJECT_DIR)/../../../../scripting/lua/luajit/src/src",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"/Users/maruojie/Projects/cocos2dx-classical/cocos2dx/platform/third_party/ios/libraries",
