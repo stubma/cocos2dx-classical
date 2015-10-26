@@ -113,6 +113,18 @@ public:
 
     float getX() { return x; }
     float getY() { return y; }
+    void setX(float v) { x = v; }
+    void setY(float v) { y = v; }
+    float getSkewX() { return skewX; }
+    float getSkewY() { return skewY; }
+    void setSkewX(float v) { skewX = v; }
+    void setSkewY(float v) { skewY = v; }
+    float getScaleX() { return scaleX; }
+    float getScaleY() { return scaleY; }
+    void setScaleX(float v) { scaleX = v; }
+    void setScaleY(float v) { scaleY = v; }
+    float getTweenRotate() { return tweenRotate; }
+    void setTweenRotate(float v) { tweenRotate = v; }
 };
 
 
