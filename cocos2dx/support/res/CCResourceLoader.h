@@ -366,6 +366,7 @@ public:
 	
     /// unload armature
     static void unloadArmature(const string& plistPattern, const string& texPattern, int start, int end, const string& config);
+    static void unloadArmature(const string& plist, const string& tex, const string& config);
     
     /// start loading
     void run();

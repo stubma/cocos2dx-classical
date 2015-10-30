@@ -314,6 +314,12 @@ void CCResourceLoader::unloadArmature(const string& plistPattern, const string& 
     }
 }
 
+void CCResourceLoader::unloadArmature(const string& plist, const string& tex, const string& config) {
+    CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo(_resolve(config).c_str());
+    CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile(_resolve(plist).c_str());
+    CCTextureCache::sharedTextureCache()->removeTextureForKey(_resolve(tex).c_str());
+}
+
 unsigned char* CCResourceLoader::loadRaw(const string& name, unsigned long* size) {
     // load encryptd data
 	size_t len;
