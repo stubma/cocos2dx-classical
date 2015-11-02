@@ -861,6 +861,13 @@
 			remoteGlobalIDString = D87CC2E5154FC6C500AAFE11;
 			remoteInfo = CocosDenshion;
 		};
+		923CE8881BE733B500511214 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 921110201A2B4CA0003FE653 /* CocosDenshion.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D87CC2E4154FC6C500AAFE11;
+			remoteInfo = CocosDenshion;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -4204,6 +4211,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				923CE8891BE733B500511214 /* PBXTargetDependency */,
 			);
 			name = cocos2dx;
 			productName = cocos2dx;
@@ -4645,6 +4653,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		923CE8891BE733B500511214 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CocosDenshion;
+			targetProxy = 923CE8881BE733B500511214 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		1551A34A158F2AB200E66CFE /* Debug */ = {
