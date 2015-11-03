@@ -233,6 +233,7 @@ void Widget::removeChild(CCNode *child, bool cleanup)
 {
     CCNode::removeChild(child, cleanup);
     _widgetChildren->removeObject(child);
+    _nodes->removeObject(child);
 }
 
 void Widget::removeChildByTag(int tag, bool cleanup)
