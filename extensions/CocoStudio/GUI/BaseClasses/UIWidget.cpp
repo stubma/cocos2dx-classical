@@ -232,8 +232,10 @@ void Widget::removeChild(CCNode *child)
 void Widget::removeChild(CCNode *child, bool cleanup)
 {
     CCNode::removeChild(child, cleanup);
+    child->retain();
     _widgetChildren->removeObject(child);
     _nodes->removeObject(child);
+    child->release();
 }
 
 void Widget::removeChildByTag(int tag, bool cleanup)
@@ -364,7 +366,9 @@ void Widget::removeAllNodes()
     if(_nodes && _nodes->count() > 0)
     {
         CCObject* renderer;
-        CCARRAY_FOREACH(_nodes, renderer)
+        CCArray* copy = CCArray::create();
+        copy->addObjectsFromArray(_nodes);
+        CCARRAY_FOREACH(copy, renderer)
         {
             CCNode* pNode = (CCNode*) renderer;
             CCNode::removeChild(pNode);
