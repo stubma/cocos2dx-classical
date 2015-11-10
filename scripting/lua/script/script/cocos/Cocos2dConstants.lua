@@ -121,6 +121,11 @@ cc.PageViewEventPageDidRecycled = "recycled"
 cc.LISTVIEW_ONSELECTEDITEM_START = "start"
 cc.LISTVIEW_ONSELECTEDITEM_END = "end"
 
+-- bright style, defined in UIWidget.h
+cc.BRIGHT_NONE = -1
+cc.BRIGHT_NORMAL = 0
+cc.BRIGHT_HIGHLIGHT = 1
+
 -- resource loader event
 cc.ResourceLoaderProgress = "progress"
 cc.ResourceLoaderDone = "done"
