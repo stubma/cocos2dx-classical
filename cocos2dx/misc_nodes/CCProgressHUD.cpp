@@ -259,6 +259,7 @@ bool CCProgressHUD::keyBackClicked() {
     if(m_cancellable) {
         hide();
     }
+    return true;
 }
 
 NS_CC_END
