@@ -83,6 +83,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 * CCProtocols.h增加CCMeasurableProtocol, 让LoadingBar, CCProgressTimer实现CCMeasurableProtocol. 从而让CCProgressTo, CCProgressFromTo支持UILoadingBar
 * CCLabelBMFont添加了setLineKerning, 用于调整行间距
 * CCScrollView添加方法可以设置min/max scale
+* CCScrollView.setContentOffsetInDuration会检测偏移值, 确保不会超过边界
 * 重新实现CCLayerMultiplex以避免某些情况下发生的内存泄露
 * CCLayer增加is/setSwallowTouch, 从而可以控制CCScrollView是否吞掉touch
 * CCSpriteBatchNode的insertQuadFromSprite, updateQuadFromSprite, addSpriteWithoutQuad改为public
@@ -168,6 +169,7 @@ Things Improved
 * CCLayer adds is/setSwallowTouch to control swallowing touch or not
 * CCSpriteBatchNode insertQuadFromSprite, updateQuadFromSprite, addSpriteWithoutQuad are changed to public
 * CCScrollView adds getTouchPoint to get last touch position
+* CCScrollView.setContentOffsetInDuration will ensure offset is in bound
 * fix CCScrollView isNodeVisible method
 * CCRepeatForever override stop method
 * setShaderProgram can specify uniform values so that one shader can be shared by many nodes

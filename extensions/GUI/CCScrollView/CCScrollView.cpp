@@ -232,8 +232,24 @@ void CCScrollView::setContentOffset(CCPoint offset, bool animated/* = false*/)
 
 void CCScrollView::setContentOffsetInDuration(CCPoint offset, float dt)
 {
+    // current offset
+    CCPoint curOffset = getContentOffset();
+    
+    // clamp offset
+    const CCPoint minOffset = minContainerOffset();
+    const CCPoint maxOffset = maxContainerOffset();
+    CCPoint clampOffset = CCPointMake(0, 0);
+    clampOffset.x = MAX(minOffset.x, MIN(maxOffset.x, offset.x));
+    clampOffset.y = MAX(minOffset.y, MIN(maxOffset.y, offset.y));
+    
+    // compare distance, clamp duration
+    float distance = ccpLength(ccpSub(curOffset, offset));
+    float clampDistance = ccpLength(ccpSub(curOffset, clampOffset));
+    float clampDt = dt * clampDistance / distance;
+    
+    // move
     CCFiniteTimeAction *scroll, *expire;
-    scroll = CCMoveTo::create(dt, offset);
+    scroll = CCMoveTo::create(clampDt, clampOffset);
     expire = CCCallFuncN::create(this, callfuncN_selector(CCScrollView::stoppedAnimatedScroll));
     m_pContainer->runAction(CCSequence::create(scroll, expire, NULL));
     this->schedule(schedule_selector(CCScrollView::performedAnimatedScroll));
