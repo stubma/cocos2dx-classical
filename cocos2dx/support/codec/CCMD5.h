@@ -40,7 +40,7 @@ public:
 	 * calculate md5 string for a C string
 	 *
 	 * @param s C string
-	 * @return md5 string, caller should release it
+	 * @return md5 string
 	 */
 	static string md5(const char* s);
 
@@ -49,9 +49,9 @@ public:
 	 *
 	 * @param data binary data
 	 * @param len data length
-	 * @return md5 string, caller should release it
+	 * @return md5 string
 	 */
-	static const char* md5(const void* data, size_t len);
+	static string md5(const void* data, size_t len);
 };
 
 NS_CC_END
