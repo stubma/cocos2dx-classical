@@ -3015,11 +3015,17 @@ void array_to_luaval(lua_State* L,CCArray* inValue)
         }
         else if ((dictVal = dynamic_cast<CCDictionary*>(obj)))
         {
+            lua_pushnumber(L, (lua_Number)indexTable);
             dictionary_to_luaval(L, dictVal);
+            lua_rawset(L, -3);
+            ++indexTable;
         }
         else if ((arrVal = dynamic_cast<CCArray*>(obj)))
         {
+            lua_pushnumber(L, (lua_Number)indexTable);
             array_to_luaval(L, arrVal);
+            lua_rawset(L, -3);
+            ++indexTable;
         }
         else if ((doubleVal = dynamic_cast<CCDouble*>(obj)))
         {
@@ -3103,11 +3109,15 @@ void dictionary_to_luaval(lua_State* L, CCDictionary* dict)
         }
         else if ((dictVal = dynamic_cast<CCDictionary*>(element->getObject())))
         {
+            lua_pushstring(L, element->getStrKey());
             dictionary_to_luaval(L, dictVal);
+            lua_rawset(L, -3);
         }
         else if ((arrVal = dynamic_cast<CCArray*>(element->getObject())))
         {
+            lua_pushstring(L, element->getStrKey());
             array_to_luaval(L, arrVal);
+            lua_rawset(L, -3);
         }
         else if ((doubleVal = dynamic_cast<CCDouble*>(element->getObject())))
         {
