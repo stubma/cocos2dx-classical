@@ -1337,12 +1337,22 @@ public:
      */
     CCPoint convertToNodeSpace(const CCPoint& worldPoint);
     
+    /**
+     * Converts a Rect to node (local) space coordinates. The result is in Points.
+     */
+    CCRect convertRectToNodeSpace(const CCRect& worldRect);
+    
     /** 
      * Converts a Point to world space coordinates. The result is in Points.
      */
     CCPoint convertToWorldSpace(const CCPoint& nodePoint);
     
-    /** 
+    /**
+     * Converts a Rect to world space coordinates. The result is in Points.
+     */
+    CCRect convertRectToWorldSpace(const CCRect& nodeRect);
+    
+    /**
      * Converts a Point to node (local) space coordinates. The result is in Points.
      * treating the returned/received node point as anchor relative.
      */
@@ -1358,6 +1368,11 @@ public:
      * Converts a Point to parent space coordinates. The result is in Points.
      */
     CCPoint convertToParentSpace(const CCPoint& nodePoint);
+    
+    /**
+     * Converts a Rect to parent space coordinates. The result is in Points.
+     */
+    CCRect convertRectToParentSpace(const CCRect& nodeRect);
     
     /**
      * Converts a local Point to parent space coordinates.The result is in Points.
