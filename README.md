@@ -55,7 +55,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 	* 修正对CocoStudio Mac 1.0.0.0 beta的支持问题, 具体修改为:
 		* Label构造函数中_fontSize缺省改为20, 因为mac版cocostudio默认字体大小为20, 当为20时, 不会序列化到json中
 		* 对类名称"Node"的节点, 一律创建Layout
-		* WidgetPropertiesReader0300::createWidget中, 检查文件版本, 如果为1.0.0.0, 认为其为mac版
+		* WidgetPropertiesReader0300::createWidget中, 检查文件版本, 如果为1.0.0.0, 认为其为mac版, 如果为mac版, 根元素读取nodeTree, 而非widgetTree
 		* WidgetPropertiesReader0300::widgetFromJsonDictionary中添加page item的代码注释掉, 因为PageView重新实现后采用动态方式创建page item
 		* Layout的缺省背景色类型改成NONE
 		* PageView重新实现:
@@ -138,7 +138,7 @@ Things Improved
 	* fix json parsing bug for CocoStudio Mac 1.0.0.0 beta, what I did:
 		* set Label default _fontSize to 20 because CocoStudio Mac use 20 by default
 		* create Layout for node whose name is "Node"
-		* check version in WidgetPropertiesReader0300::createWidget to detect CocoStudio Mac json
+		* check version in WidgetPropertiesReader0300::createWidget to detect CocoStudio Mac json. If Mac version, need read nodeTree tag, not widgetTree tag
 		* because PageView is reimplemented, comment out page item code in WidgetPropertiesReader0300::widgetFromJsonDictionary
 		* set Layout default background color style to NONE
 		* reimplement PageView
