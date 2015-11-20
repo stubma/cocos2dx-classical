@@ -152,6 +152,26 @@ bool CCScrollView::isNodeFullyVisible(CCNode* node) {
     return viewRect.containsRect(nodeBound);
 }
 
+CCPoint CCScrollView::getNodeFullyVisibleOffset(CCNode* node) {
+    // get node bound in container
+    CCRect nodeBound = CCRectMake(0, 0, node->getContentSize().width, node->getContentSize().height);
+    CCAffineTransform t = node->nodeToAncestorTransform(getContainer());
+    nodeBound = CCRectApplyAffineTransform(nodeBound, t);
+    
+    // get offset
+    float scale = getZoomScale();
+    CCPoint offset = ccp(-nodeBound.origin.x / scale, -nodeBound.origin.y / scale);
+    
+    // clamp offset
+    const CCPoint minOffset = minContainerOffset();
+    const CCPoint maxOffset = maxContainerOffset();
+    offset.x = MAX(minOffset.x, MIN(maxOffset.x, offset.x));
+    offset.y = MAX(minOffset.y, MIN(maxOffset.y, offset.y));
+    
+    // return
+    return offset;
+}
+
 bool CCScrollView::isNodeVisible(CCNode* node)
 {
     const CCPoint offset = this->getContentOffset();

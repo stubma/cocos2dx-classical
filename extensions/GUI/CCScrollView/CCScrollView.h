@@ -160,6 +160,10 @@ public:
      */
     bool isNodeFullyVisible(CCNode* node);
     
+    /// get offset which can make a node fully visible
+    /// the offset is clamped in scrollview offset range
+    CCPoint getNodeFullyVisibleOffset(CCNode* node);
+    
     /**
      * Provided to make scroll view compatible with SWLayer's pause method
      */
