@@ -24,19 +24,19 @@
 
 #import "SimpleAudioEngine_objc.h"
 
-@implementation SimpleAudioEngine
+@implementation SimpleAudioEngine_objc
 
-static SimpleAudioEngine *sharedEngine = nil;
+static SimpleAudioEngine_objc *sharedEngine = nil;
 static CDSoundEngine* soundEngine = nil;
 static CDAudioManager *am = nil;
 static CDBufferManager *bufferManager = nil;
 
 // Init
-+ (SimpleAudioEngine *) sharedEngine
++ (SimpleAudioEngine_objc *) sharedEngine
 {
     @synchronized(self)     {
         if (!sharedEngine)
-            sharedEngine = [[SimpleAudioEngine alloc] init];
+            sharedEngine = [[SimpleAudioEngine_objc alloc] init];
     }
     return sharedEngine;
 }
@@ -80,7 +80,7 @@ static CDBufferManager *bufferManager = nil;
     sharedEngine = nil;
 }    
 
-#pragma mark SimpleAudioEngine - background music
+#pragma mark SimpleAudioEngine_objc - background music
 
 -(void) preloadBackgroundMusic:(NSString*) filePath {
     [am preloadBackgroundMusic:filePath];
@@ -121,7 +121,7 @@ static CDBufferManager *bufferManager = nil;
     return [am willPlayBackgroundMusic];
 }
 
-#pragma mark SimpleAudioEngine - sound effects
+#pragma mark SimpleAudioEngine_objc - sound effects
 
 -(ALuint) playEffect:(NSString*) filePath loop:(BOOL) loop
 {
@@ -166,13 +166,13 @@ static CDBufferManager *bufferManager = nil;
 {
     int soundId = [bufferManager bufferForFile:filePath create:YES];
     if (soundId == kCDNoBuffer) {
-        CDLOG(@"Denshion::SimpleAudioEngine sound failed to preload %@",filePath);
+        CDLOG(@"Denshion::SimpleAudioEngine_objc sound failed to preload %@",filePath);
     }
 }
 
 -(void) unloadEffect:(NSString*) filePath
 {
-    CDLOGINFO(@"Denshion::SimpleAudioEngine unloadedEffect %@",filePath);
+    CDLOGINFO(@"Denshion::SimpleAudioEngine_objc unloadedEffect %@",filePath);
     [bufferManager releaseBufferForFile:filePath];
 }
 
@@ -204,7 +204,7 @@ static CDBufferManager *bufferManager = nil;
 }
 
 
-#pragma mark SimpleAudioEngine - BackgroundMusicVolume
+#pragma mark SimpleAudioEngine_objc - BackgroundMusicVolume
 -(float) backgroundMusicVolume
 {
     return am.backgroundMusic.volume;
@@ -215,7 +215,7 @@ static CDBufferManager *bufferManager = nil;
     am.backgroundMusic.volume = volume;
 }    
 
-#pragma mark SimpleAudioEngine - EffectsVolume
+#pragma mark SimpleAudioEngine_objc - EffectsVolume
 -(float) effectsVolume
 {
     return am.soundEngine.masterGain;
@@ -230,7 +230,7 @@ static CDBufferManager *bufferManager = nil;
     int soundId = [bufferManager bufferForFile:filePath create:YES];
     if (soundId != kCDNoBuffer) {
         CDSoundSource *result = [soundEngine soundSourceForSound:soundId sourceGroupId:0];
-        CDLOGINFO(@"Denshion::SimpleAudioEngine sound source created for %@",filePath);
+        CDLOGINFO(@"Denshion::SimpleAudioEngine_objc sound source created for %@",filePath);
         return result;
     } else {
         return nil;

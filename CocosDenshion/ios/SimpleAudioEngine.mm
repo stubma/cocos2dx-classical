@@ -31,114 +31,114 @@ USING_NS_CC;
 
 static void static_end()
 {
-    [SimpleAudioEngine  end];
+    [SimpleAudioEngine_objc  end];
 }
 
 static void static_preloadBackgroundMusic(const char* pszFilePath)
 {
-    [[SimpleAudioEngine sharedEngine] preloadBackgroundMusic: [NSString stringWithUTF8String: pszFilePath]];
+    [[SimpleAudioEngine_objc sharedEngine] preloadBackgroundMusic: [NSString stringWithUTF8String: pszFilePath]];
 }
 
 static void static_playBackgroundMusic(const char* pszFilePath, bool bLoop)
 {
-    [[SimpleAudioEngine sharedEngine] playBackgroundMusic: [NSString stringWithUTF8String: pszFilePath] loop: bLoop];
+    [[SimpleAudioEngine_objc sharedEngine] playBackgroundMusic: [NSString stringWithUTF8String: pszFilePath] loop: bLoop];
 }
 
 static void static_stopBackgroundMusic()
 {
-    [[SimpleAudioEngine sharedEngine] stopBackgroundMusic];
+    [[SimpleAudioEngine_objc sharedEngine] stopBackgroundMusic];
 }
 
 static void static_pauseBackgroundMusic()
 {
-     [[SimpleAudioEngine sharedEngine] pauseBackgroundMusic];
+     [[SimpleAudioEngine_objc sharedEngine] pauseBackgroundMusic];
 }
 
 static void static_resumeBackgroundMusic()
 {
-    [[SimpleAudioEngine sharedEngine] resumeBackgroundMusic];
+    [[SimpleAudioEngine_objc sharedEngine] resumeBackgroundMusic];
 } 
 
 static void static_rewindBackgroundMusic()
 {
-    [[SimpleAudioEngine sharedEngine] rewindBackgroundMusic];
+    [[SimpleAudioEngine_objc sharedEngine] rewindBackgroundMusic];
 }
 
 static bool static_willPlayBackgroundMusic()
 {
-    return [[SimpleAudioEngine sharedEngine] willPlayBackgroundMusic];
+    return [[SimpleAudioEngine_objc sharedEngine] willPlayBackgroundMusic];
 }
 
 static bool static_isBackgroundMusicPlaying()
 {
-    return [[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying];
+    return [[SimpleAudioEngine_objc sharedEngine] isBackgroundMusicPlaying];
 }
 
 static float static_getBackgroundMusicVolume()
 {
-    return [[SimpleAudioEngine sharedEngine] backgroundMusicVolume];
+    return [[SimpleAudioEngine_objc sharedEngine] backgroundMusicVolume];
 }
 
 static void static_setBackgroundMusicVolume(float volume)
 {
     volume = MAX( MIN(volume, 1.0), 0 );
-    [SimpleAudioEngine sharedEngine].backgroundMusicVolume = volume;
+    [SimpleAudioEngine_objc sharedEngine].backgroundMusicVolume = volume;
 }
      
 static float static_getEffectsVolume()
 {
-    return [[SimpleAudioEngine sharedEngine] effectsVolume];
+    return [[SimpleAudioEngine_objc sharedEngine] effectsVolume];
 }
      
 static void static_setEffectsVolume(float volume)
 {
     volume = MAX( MIN(volume, 1.0), 0 );
-    [SimpleAudioEngine sharedEngine].effectsVolume = volume;
+    [SimpleAudioEngine_objc sharedEngine].effectsVolume = volume;
 }
      
 static unsigned int static_playEffect(const char* pszFilePath, bool bLoop)
 {
-    return [[SimpleAudioEngine sharedEngine] playEffect:[NSString stringWithUTF8String: pszFilePath] loop:bLoop]; 
+    return [[SimpleAudioEngine_objc sharedEngine] playEffect:[NSString stringWithUTF8String: pszFilePath] loop:bLoop]; 
 }
      
 static void static_stopEffect(int nSoundId)
 {
-    [[SimpleAudioEngine sharedEngine] stopEffect: nSoundId];
+    [[SimpleAudioEngine_objc sharedEngine] stopEffect: nSoundId];
 }
      
 static void static_preloadEffect(const char* pszFilePath)
 {
-    [[SimpleAudioEngine sharedEngine] preloadEffect: [NSString stringWithUTF8String: pszFilePath]];
+    [[SimpleAudioEngine_objc sharedEngine] preloadEffect: [NSString stringWithUTF8String: pszFilePath]];
 }
      
 static void static_unloadEffect(const char* pszFilePath)
 {
-    [[SimpleAudioEngine sharedEngine] unloadEffect: [NSString stringWithUTF8String: pszFilePath]];
+    [[SimpleAudioEngine_objc sharedEngine] unloadEffect: [NSString stringWithUTF8String: pszFilePath]];
 }
 
 static void static_pauseEffect(unsigned int uSoundId)
 {
-    [[SimpleAudioEngine sharedEngine] pauseEffect: uSoundId];
+    [[SimpleAudioEngine_objc sharedEngine] pauseEffect: uSoundId];
 }
 
 static void static_pauseAllEffects()
 {
-    [[SimpleAudioEngine sharedEngine] pauseAllEffects];
+    [[SimpleAudioEngine_objc sharedEngine] pauseAllEffects];
 }
 
 static void static_resumeEffect(unsigned int uSoundId)
 {
-    [[SimpleAudioEngine sharedEngine] resumeEffect: uSoundId];
+    [[SimpleAudioEngine_objc sharedEngine] resumeEffect: uSoundId];
 }
 
 static void static_resumeAllEffects()
 {
-    [[SimpleAudioEngine sharedEngine] resumeAllEffects];
+    [[SimpleAudioEngine_objc sharedEngine] resumeAllEffects];
 }
 
 static void static_stopAllEffects()
 {
-    [[SimpleAudioEngine sharedEngine] stopAllEffects];
+    [[SimpleAudioEngine_objc sharedEngine] stopAllEffects];
 }
 
 namespace CocosDenshion {

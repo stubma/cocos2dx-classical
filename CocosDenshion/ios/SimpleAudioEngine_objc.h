@@ -33,11 +33,11 @@
  
  Requirements:
  - Firmware: OS 2.2 or greater 
- - Files: SimpleAudioEngine.*, CocosDenshion.*
+ - Files: SimpleAudioEngine_objc.*, CocosDenshion.*
  - Frameworks: OpenAL, AudioToolbox, AVFoundation
  @since v0.8
  */
-@interface SimpleAudioEngine : NSObject <CDAudioInterruptProtocol> {
+@interface SimpleAudioEngine_objc : NSObject <CDAudioInterruptProtocol> {
     
     BOOL    mute_;
     BOOL    enabled_;
@@ -50,8 +50,8 @@
 /** If NO it indicates background music will not be played either because no background music is loaded or the audio session does not permit it.*/
 @property (readonly) BOOL willPlayBackgroundMusic;
 
-/** returns the shared instance of the SimpleAudioEngine object */
-+ (SimpleAudioEngine*) sharedEngine;
+/** returns the shared instance of the SimpleAudioEngine_objc object */
++ (SimpleAudioEngine_objc*) sharedEngine;
 
 /** Preloads a music file so it will be ready to play as background music */
 -(void) preloadBackgroundMusic:(NSString*) filePath;
