@@ -30,6 +30,18 @@ function class(classname, super)
         super = nil
     end
 
+    -- call ctor in inheritance sequence
+    function callCtor(instance, super, ...)
+        if super ~= nil then
+            if super.super ~= nil then
+                callCtor(instance, super.super, ...)
+            end
+            if super.ctor ~= nil then
+                super.ctor(instance, ...)
+            end
+        end
+    end
+
     if superType == "function" or (super and super.__ctype == CC_INHERITED_FROM_NATIVE_CLASS) then
         -- inherited from native C++ Object
         cls = {}
@@ -50,13 +62,18 @@ function class(classname, super)
 
         function cls.new(...)
             local instance = cls.__create(...)
+            
             -- copy fields from class to native object
-            for k,v in pairs(cls) do instance[k] = v end
+            for k,v in pairs(cls) do
+                instance[k] = v
+            end
+            
+            -- ctor
             instance.class = cls
+            callCtor(instance, instance.super, ...)
             instance:ctor(...)
             return instance
         end
-
     else
         -- inherited from Lua Object
         if super then
@@ -73,6 +90,9 @@ function class(classname, super)
         function cls.new(...)
             local instance = setmetatable({}, cls)
             instance.class = cls
+            
+            -- ctor
+            callCtor(instance, instance.super, ...)
             instance:ctor(...)
             return instance
         end
