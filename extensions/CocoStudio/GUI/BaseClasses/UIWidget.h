@@ -680,10 +680,6 @@ public:
     void releaseUpEvent();
     void cancelUpEvent();
     
-    // set to true means touch events outside window area will be handled if it is fullscreen widget
-    void setAcceptOuterTouchIfFullscreen(bool flag);
-    bool isAcceptOuterTouchIfFullscreen();
-    
 protected:
     //call back function called when size changed.
     virtual void onSizeChanged();
@@ -728,13 +724,6 @@ protected:
     CCPoint _touchStartPos;    ///< touch began point
     CCPoint _touchMovePos;     ///< touch moved point
     CCPoint _touchEndPos;      ///< touch ended point
-    
-    // if a widget is in fullscreen size and this flag is true, the touch event
-    // outside render area can be delivered to it. By default it is true
-    bool m_acceptOuterTouchIfFullscreen;
-    
-    // is widget in full screen
-    bool m_fullscreen;
     
     CCObject*       _touchEventListener;
     SEL_TouchEvent    _touchEventSelector;

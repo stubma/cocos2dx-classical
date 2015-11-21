@@ -175,8 +175,6 @@ bool Layout::hitTest(const CCPoint &pt)
 {
     if(!isVisibleInTree()) {
         return false;
-    } else if(m_fullscreen && m_acceptOuterTouchIfFullscreen) {
-        return true;
     } else {
         CCPoint nsp = convertToNodeSpace(pt);
         CCRect bb = CCRect(0.0f, 0.0f, _size.width, _size.height);
