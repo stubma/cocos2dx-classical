@@ -82,6 +82,7 @@ function table.enum(t, startValue)
         local enumindex = (startValue or 1) - 1
         for i,v in ipairs(t) do
             enumtbl[v] = enumindex + i
+            enumtbl[enumindex + i] = v
         end
         return enumtbl
     else
