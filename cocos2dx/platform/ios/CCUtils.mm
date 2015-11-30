@@ -284,8 +284,10 @@ bool CCUtils::deleteFile(const string& path) {
 
 string CCUtils::getAppVersion() {
     NSBundle* bundle = [NSBundle mainBundle];
-    NSString* ver = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
-    return [ver cStringUsingEncoding:NSUTF8StringEncoding];
+    NSString* ver = [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    NSString* build = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
+    NSString* finalVersion = [NSString stringWithFormat:@"%@.%@", ver, build];
+    return [finalVersion cStringUsingEncoding:NSUTF8StringEncoding];
 }
 
 string CCUtils::getDeviceType() {
