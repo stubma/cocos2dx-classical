@@ -6,8 +6,14 @@ function string.split(s, sep)
     local len = string.len(s)
     local sepByte = string.byte(sep, 1)
     local start = 0
-    for i = 1, len do
-        if string.byte(s, i) == sepByte then
+    local i = 1
+    while i <= len do
+        -- get char and check utf8
+        local c = string.byte(s, i)
+        local charLen = CCUtils:getUTF8Bytes(c)
+
+        -- if c is separator char
+        if charLen == 1 and c == sepByte then
             if i <= start + 1 then
                 table.insert(parts, "")
             else
@@ -15,6 +21,9 @@ function string.split(s, sep)
             end
             start = i
         end
+        
+        -- increase i
+        i = i + charLen
     end
     if len > 0 then
         if start == len then
