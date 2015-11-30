@@ -122,6 +122,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 	* tools下有xcode_lua_support工具, 可以为Xcode添加lua语法高亮
 	* 添加CCApplicationLua, 封装通用的初始化逻辑, AppDelegate可以不再需要. applicationDidEnterBackground和applicationWillEnterForeground被导引到lua端.
 	* 在Cocos2dxLuaLoader.cpp中添加lua脚本解密支持. 可以通过CCScriptEngineManager设置一个外部解密方法.
+	* CCLuaStack.executeScriptFile方法添加解密支持
 
 cocos2dx-better新加的其它功能我就不列举了, 目前cocos2dx-better的代码已经合并完成, 有一部分代码我感觉写的用处不大就没有合并了, 不过只是一小部分, 95%的cocos2dx-better代码已经合并.
 
@@ -204,6 +205,7 @@ Things Improved
 	* xcode_lua_support tool, can add lua syntax highlight for Xcode
 	* add CCApplicationLua to encapsulate basic logic of lua app, so that AppDelegate can be eliminated. applicationDidEnterBackground and applicationWillEnterForeground are dispatched to lua side.
 	* add lua decryption support in Cocos2dLuaLoader.cpp, you can set an eternal decrypt function through CCScriptEngineManager
+	* CCLuaStack.executeScriptFile supports encrypted lua file
 	
 I don't want list all new classes in cocos2dx-better. To get a overview about cocos2dx-better features, go to it and run its demo.
 	
