@@ -204,27 +204,38 @@ int CCLuaStack::executeString(const char *codes)
 
 int CCLuaStack::executeScriptFile(const char* filename)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    std::string code("require \"");
-    code.append(filename);
-    code.append("\"");
-    return executeString(code.c_str());
-#else
+    // get full path of file
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filename);
+    
+    // load file, if has decrypt function, decrypt it
+    size_t codeBufferSize = 0;
+    CC_FILE_DECRYPT_FUNC decFunc = CCScriptEngineManager::sharedManager()->getScriptDecryptFunc();
+    unsigned char* codeBuffer = NULL;
+    if(decFunc) {
+        codeBuffer = (unsigned char*)(*decFunc)(fullPath.c_str(), &codeBufferSize);
+    }
+    if(!codeBuffer) {
+        codeBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str(), "rb", &codeBufferSize);
+    }
+    
+    // do string
     ++m_callFromLua;
-    int nRet = luaL_dofile(m_state, fullPath.c_str());
+    int nRet = luaL_dostring(m_state, (const char*)codeBuffer);
     --m_callFromLua;
     CC_ASSERT(m_callFromLua >= 0);
-    // lua_gc(m_state, LUA_GCCOLLECT, 0);
     
-    if (nRet != 0)
-    {
+    // release
+    if(codeBuffer) {
+        delete[] codeBuffer;
+    }
+    
+    // check return
+    if (nRet != 0) {
         CCLOG("[LUA ERROR] %s", lua_tostring(m_state, -1));
         lua_pop(m_state, 1);
         return nRet;
     }
     return 0;
-#endif
 }
 
 int CCLuaStack::executeGlobalFunction(const char* functionName)
