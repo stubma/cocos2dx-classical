@@ -218,15 +218,23 @@ int CCLuaStack::executeScriptFile(const char* filename)
         codeBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str(), "rb", &codeBufferSize);
     }
     
+    // copy buffer to ensure zero terminated
+    char* tmp = (char*)malloc(sizeof(char) * (codeBufferSize + 1));
+    memcpy(tmp, codeBuffer, codeBufferSize);
+    tmp[codeBufferSize] = 0;
+    
     // do string
     ++m_callFromLua;
-    int nRet = luaL_dostring(m_state, (const char*)codeBuffer);
+    int nRet = luaL_dostring(m_state, tmp);
     --m_callFromLua;
     CC_ASSERT(m_callFromLua >= 0);
     
     // release
     if(codeBuffer) {
         delete[] codeBuffer;
+    }
+    if(tmp) {
+        free(tmp);
     }
     
     // check return
