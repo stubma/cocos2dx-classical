@@ -33,7 +33,7 @@ import android.os.Environment;
 
 public class CCImagePicker {
 	static boolean sFromAlbum;
-	static long sCallback;
+	static long sPicker;
 	static String sPath;
 	static int sExpectedWidth;
 	static int sExpectedHeight;
@@ -56,9 +56,9 @@ public class CCImagePicker {
 		return false;
 	}
 
-	static void pickFromCamera(String path, long callback, int w, int h, boolean front, boolean keepRatio) {
+	static void pickFromCamera(String path, long picker, int w, int h, boolean front, boolean keepRatio) {
 		sFromAlbum = false;
-		sCallback = callback;
+		sPicker = picker;
 		sPath = path;
 		sExpectedWidth = w;
 		sExpectedHeight = h;
@@ -80,9 +80,9 @@ public class CCImagePicker {
 		ctx.startActivity(intent);
 	}
 
-	static void pickFromAlbum(String path, long callback, int w, int h, boolean keepRatio) {
+	static void pickFromAlbum(String path, long picker, int w, int h, boolean keepRatio) {
 		sFromAlbum = true;
-		sCallback = callback;
+		sPicker = picker;
 		sPath = path;
 		sExpectedWidth = w;
 		sExpectedHeight = h;
@@ -104,27 +104,29 @@ public class CCImagePicker {
 	}
 	
 	static void onImagePicked() {
-		if(sCallback != 0) {
+		if(sPicker != 0) {
 			((Cocos2dxActivity)Cocos2dxActivity.getContext()).runOnGLThread(new Runnable() {
 				@Override
 				public void run() {
-					nativeOnImagePicked(sCallback, sDestFile.getAbsolutePath(), sExpectedWidth, sExpectedHeight);
+                    nativeSetFullPath(sPicker, sDestFile.getAbsolutePath());
+					nativeOnImagePicked(sPicker);
 				}
 			});
 		}
 	}
 	
 	static void onImagePickingCancelled() {
-		if(sCallback != 0) {
+		if(sPicker != 0) {
 			((Cocos2dxActivity)Cocos2dxActivity.getContext()).runOnGLThread(new Runnable() {
 				@Override
 				public void run() {
-					nativeOnImagePickingCancelled(sCallback);
+					nativeOnImagePickingCancelled(sPicker);
 				}
 			});
 		}
 	}
 	
-	private static native void nativeOnImagePicked(long callback, String fullPath, int w, int h);
-	private static native void nativeOnImagePickingCancelled(long callback);
+    private static native void nativeSetFullPath(long picker, String fullPath);
+	private static native void nativeOnImagePicked(long picker);
+	private static native void nativeOnImagePickingCancelled(long picker);
 }

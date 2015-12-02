@@ -26,6 +26,7 @@
 #include <jni.h>
 #include "ccTypes.h"
 #include "platform/android/jni/JniHelper.h"
+#include "CCImagePicker.h"
 #include "CCImagePickerCallback.h"
 #include "CCScheduler.h"
 #include "CCDirector.h"
@@ -42,26 +43,12 @@ using namespace std;
 class DelayCallback : public CCObject {
 private:
 	bool m_cancelled;
-	CCImagePickerCallback* m_callback;
-	string m_fullPath;
-	int m_w;
-	int m_h;
+    CCImagePicker* m_picker;
 
 public:
-	DelayCallback(CCImagePickerCallback* c) :
-		m_cancelled(true),
-		m_callback(c) {
-		// set a very small delay so that it will be called next frame
-		CCScheduler* s = CCDirector::sharedDirector()->getScheduler();
-		s->scheduleSelector(schedule_selector(DelayCallback::delayCallback), this, 0, 0, 0.001f, false);
-	}
-
-	DelayCallback(CCImagePickerCallback* c, string fullPath, int w, int h) :
-		m_cancelled(false),
-		m_callback(c),
-		m_fullPath(fullPath),
-		m_w(w),
-		m_h(h) {
+	DelayCallback(CCImagePicker* picker, bool cancelled = false) :
+		m_cancelled(cancelled),
+		m_picker(picker) {
 		// set a very small delay so that it will be called next frame
 		CCScheduler* s = CCDirector::sharedDirector()->getScheduler();
 		s->scheduleSelector(schedule_selector(DelayCallback::delayCallback), this, 0, 0, 0.001f, false);
@@ -71,9 +58,9 @@ public:
 
 	void delayCallback(float delta) {
 		if(m_cancelled) {
-			m_callback->onImagePickingCancelled();
+            m_picker->notifyImagePickingCancelled();
 		} else {
-			m_callback->onImagePicked(m_fullPath, m_w, m_h);
+            m_picker->notifyImagePickedOK();
 		}
 
 		// release self
@@ -85,19 +72,25 @@ public:
 extern "C" {
 #endif
 
+JNIEXPORT void JNICALL Java_org_cocos2dx_lib_CCImagePicker_nativeSetFullPath
+(JNIEnv * env, jclass clazz, jlong picker, jstring fullPath) {
+    CCImagePicker* ccPicker = (CCImagePicker*)picker;
+    ccPicker->setFullPath(JniHelper::jstring2string(fullPath));
+}
+    
 JNIEXPORT void JNICALL Java_org_cocos2dx_lib_CCImagePicker_nativeOnImagePicked
-  (JNIEnv * env, jclass clazz, jlong callback, jstring fullPath, jint w, jint h) {
-	CCImagePickerCallback* c = (CCImagePickerCallback*)callback;
-	if(c) {
-		new DelayCallback(c, JniHelper::jstring2string(fullPath), w, h);
+  (JNIEnv * env, jclass clazz, jlong picker) {
+	CCImagePicker* ccPicker = (CCImagePicker*)picker;
+	if(ccPicker) {
+		new DelayCallback(ccPicker);
 	}
 }
 
 JNIEXPORT void JNICALL Java_org_cocos2dx_lib_CCImagePicker_nativeOnImagePickingCancelled
-  (JNIEnv * env, jclass clazz, jlong callback) {
-	CCImagePickerCallback* c = (CCImagePickerCallback*)callback;
-	if(c) {
-		new DelayCallback(c);
+  (JNIEnv * env, jclass clazz, jlong picker) {
+	CCImagePicker* ccPicker = (CCImagePicker*)picker;
+	if(ccPicker) {
+		new DelayCallback(ccPicker, true);
 	}
 }
 

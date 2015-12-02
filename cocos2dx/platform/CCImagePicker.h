@@ -26,6 +26,7 @@
 
 #include "ccTypes.h"
 #include "CCImagePickerCallback.h"
+#include "script_support/CCScriptSupport.h"
 
 using namespace std;
 
@@ -34,28 +35,53 @@ NS_CC_BEGIN
 /**
  * Image picker wrapper. Picked image will be saved into a file and caller should provide a callback
  * to get the file path.
- * 
+ *
+ * for lua side callback, it should looks like below:
+     function XXX:onImagePickerEvent(picker, e)
+         if e == cc.ImagePickerEventOK then
+         elseif e == cc.ImagePickerEventCancelled then
+         end
+     end
+ *
  * \note
  * It supports Android 2.3+, but parameter keepRatio is not supported in Android.
  */
-class CC_DLL CCImagePicker {
-	/**
-	 * pick a image from camera and return it as RGBA8888. You can specify an expected
-	 * image size and image will be scaled if not matched. If device doesn't have a desired camera,
-	 * callback onImagePickingCancelled will be invoked	 
-	 *
-	 * @param path the relative path of image file, it will be mapped to platform writable path. In iOS, it is ~/Library,
-	 *		in Android, it is cache dir
-	 * @param callback callback
-	 * @param w expected image width
-	 * @param h expected image height
-	 * @param front true means use front camera
-	 * @param keepRatio True means if the image need to be scaled, it will keep the
-	 *		width height ratio.
-	 */
-	static void pickFromCamera(const string& path, CCImagePickerCallback* callback, int w, int h, bool front, bool keepRatio);
+class CC_DLL CCImagePicker : public CCObject {
+private:
+    /// script side table data source and delegate
+    ccScriptFunction m_scriptHandler;
+    
+    /// c callback
+    CCImagePickerCallback* m_callback;
+    
+    /// expected output image width
+    int m_expectedWidth;
+    
+    /// expected output image height
+    int m_expectedHeight;
+    
+    /// keep ratio or not
+    bool m_keepRatio;
+    
+    /// use front camera if has
+    bool m_useFrontCamera;
+    
+    /// output image path, it will be mapped to platform writable path. In iOS, it is ~/Documents
+    string m_path;
+    
+    /// output image full path, it should be set when image picking done
+    string m_fullPath;
+    
+protected:
+    // unregister handler
+    void unregisterScriptHandler();
 	
 public:
+    CCImagePicker();
+    virtual ~CCImagePicker();
+    
+    static CCImagePicker* create();
+    
 	/**
 	 * does device have camera
 	 *
@@ -70,49 +96,37 @@ public:
 	 */
 	static bool hasFrontCamera();
 	
-	/**
-	 * pick a image from camera and save it to file. You can specify an expected
-	 * image size and image will be scaled if not matched. If device doesn't have a camera,
-	 * callback onImagePickingCancelled will be invoked
-	 *
-	 * @param path the relative path of image file, it will be mapped to platform writable path. In iOS, it is ~/Library,
-	 *		in Android, it is cache dir
-	 * @param callback callback
-	 * @param w expected image width, the final image width may not same as this
-	 * @param h expected image height, the final image height may not same as this
-	 * @param keepRatio by default is true. True means if the image need to be scaled, it will keep the
-	 *		width height ratio.
-	 */
-	static void pickFromCamera(const string& path, CCImagePickerCallback* callback, int w, int h, bool keepRatio = true);
+    /**
+     * pick a image from camera and save it to file
+     */
+    void pickFromCamera();
 	
 	/**
-	 * pick a image from front camera and save it to a file. You can specify an expected
-	 * image size and image will be scaled if not matched. If device doesn't have a front camera,
-	 * callback onImagePickingCancelled will be invoked.
-	 *
-	 * @param path the relative path of image file, it will be mapped to platform writable path. In iOS, it is ~/Library,
-	 *		in Android, it is cache dir
-	 * @param callback callback
-	 * @param w expected image width
-	 * @param h expected image height
-	 * @param keepRatio by default is true. True means if the image need to be scaled, it will keep the
-	 *		width height ratio.
+	 * pick a image from album and save it to a file
 	 */
-	static void pickFromFrontCamera(const string& path, CCImagePickerCallback* callback, int w, int h, bool keepRatio = true);
-	
-	/**
-	 * pick a image from album and save it to a file. You can specify an expected
-	 * image size and image will be scaled if not matched.
-	 *
-	 * @param path the relative path of image file, it will be mapped to platform writable path. In iOS, it is ~/Library,
-	 *		in Android, it is cache dir
-	 * @param callback callback
-	 * @param w expected image width
-	 * @param h expected image height
-	 * @param keepRatio by default is true. True means if the image need to be scaled, it will keep the
-	 *		width height ratio.
-	 */
-	static void pickFromAlbum(const string& path, CCImagePickerCallback* callback, int w, int h, bool keepRatio = true);
+	void pickFromAlbum();
+    
+    // setter and getter
+    void setCallback(CCImagePickerCallback* c) { m_callback = c; }
+    CCImagePickerCallback* getCallback() { return m_callback; }
+    void setExpectedWidth(int w) { m_expectedWidth = w; }
+    int getExpectedWidth() { return m_expectedWidth; }
+    void setExpectedHeight(int h) { m_expectedHeight = h; }
+    int getExpectedHeight() { return m_expectedHeight; }
+    void setKeepRatio(bool v) { m_keepRatio = v; }
+    bool isKeepRatio() { return m_keepRatio; }
+    void setUseFrontCamera(bool v) { m_useFrontCamera = v; }
+    bool isUseFrontCamera() { return m_useFrontCamera; }
+    void setPath(const string& p) { m_path = p; }
+    const string& getPath() { return m_path; }
+    void setFullPath(const string& p) { m_fullPath = p; }
+    const string& getFullPath() { return m_fullPath; }
+    void setScriptHandler(ccScriptFunction handler);
+    ccScriptFunction getScriptHandler() { return m_scriptHandler; }
+    
+    // for internal use only
+    void notifyImagePickedOK();
+    void notifyImagePickingCancelled();
 };
 
 NS_CC_END

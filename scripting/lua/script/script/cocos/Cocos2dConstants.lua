@@ -138,6 +138,10 @@ cc.AssetsManagerDone = "done"
 cc.SuperAnimEventTime = "time"
 cc.SuperAnimEventEnd = "end"
 
+-- image picker event
+cc.ImagePickerEventOK = "pick_ok"
+cc.ImagePickerEventCancelled = "pick_cancelled"
+
 -- point constants
 cc.CENTER = const(cc.p(0.5, 0.5))
 cc.RIGHT_TOP = const(cc.p(1, 1))

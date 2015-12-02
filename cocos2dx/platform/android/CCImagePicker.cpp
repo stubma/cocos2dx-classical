@@ -52,21 +52,34 @@ bool CCImagePicker::hasFrontCamera() {
     return ret;
 }
 
-void CCImagePicker::pickFromCamera(const string& path, CCImagePickerCallback* callback, int w, int h, bool front, bool keepRatio) {
+void CCImagePicker::pickFromCamera() {
 	JniMethodInfo t;
 	JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/CCImagePicker", "pickFromCamera", "(Ljava/lang/String;JIIZZ)V");
-	jstring jPath = t.env->NewStringUTF(path.c_str());
-	t.env->CallStaticVoidMethod(t.classID, t.methodID, jPath, (jlong)callback, w, h, front, keepRatio);
+	jstring jPath = t.env->NewStringUTF(m_path.c_str());
+	t.env->CallStaticVoidMethod(t.classID,
+                                t.methodID,
+                                jPath,
+                                (jlong)this,
+                                m_expectedWidth,
+                                m_expectedHeight,
+                                m_useFrontCamera,
+                                m_keepRatio);
     
     // release
     t.env->DeleteLocalRef(t.classID);
 }
 
-void CCImagePicker::pickFromAlbum(const string& path, CCImagePickerCallback* callback, int w, int h, bool keepRatio) {
+void CCImagePicker::pickFromAlbum() {
 	JniMethodInfo t;
 	JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/CCImagePicker", "pickFromAlbum", "(Ljava/lang/String;JIIZ)V");
-	jstring jPath = t.env->NewStringUTF(path.c_str());
-	t.env->CallStaticVoidMethod(t.classID, t.methodID, jPath, (jlong)callback, w, h, keepRatio);
+	jstring jPath = t.env->NewStringUTF(m_path.c_str());
+	t.env->CallStaticVoidMethod(t.classID,
+                                t.methodID,
+                                jPath,
+                                (jlong)this,
+                                m_expectedWidth,
+                                m_expectedHeight,
+                                m_keepRatio);
     
     // release
     t.env->DeleteLocalRef(t.classID);

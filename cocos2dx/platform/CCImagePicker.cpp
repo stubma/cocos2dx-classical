@@ -22,15 +22,64 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "CCImagePicker.h"
+#include "cocoa/CCArray.h"
+#include "cocoa/CCString.h"
 
 NS_CC_BEGIN
 
-void CCImagePicker::pickFromCamera(const string& path, CCImagePickerCallback* callback, int w, int h, bool keepRatio) {
-	pickFromCamera(path, callback, w, h, false, keepRatio);
+CCImagePicker::CCImagePicker() :
+m_callback(NULL),
+m_expectedWidth(100),
+m_expectedHeight(100),
+m_keepRatio(true),
+m_useFrontCamera(false),
+m_path("output.jpg") {
+    memset(&m_scriptHandler, 0, sizeof(ccScriptFunction));
 }
 
-void CCImagePicker::pickFromFrontCamera(const string& path, CCImagePickerCallback* callback, int w, int h, bool keepRatio) {
-	pickFromCamera(path, callback, w, h, true, keepRatio);
+CCImagePicker::~CCImagePicker() {
+    unregisterScriptHandler();
+}
+
+CCImagePicker* CCImagePicker::create() {
+    CCImagePicker* p = new CCImagePicker();
+    return (CCImagePicker*)p->autorelease();
+}
+
+void CCImagePicker::setScriptHandler(ccScriptFunction handler) {
+    unregisterScriptHandler();
+    m_scriptHandler = handler;
+}
+
+void CCImagePicker::unregisterScriptHandler() {
+    if(m_scriptHandler.handler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_scriptHandler.handler);
+        m_scriptHandler.handler = 0;
+    }
+}
+
+void CCImagePicker::notifyImagePickedOK() {
+    if(m_callback) {
+        m_callback->onImagePicked(this);
+    }
+    if(m_scriptHandler.handler) {
+        CCArray* pArrayArgs = CCArray::createWithCapacity(2);
+        pArrayArgs->addObject(this);
+        pArrayArgs->addObject(CCString::create("pick_ok"));
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs);
+    }
+}
+
+void CCImagePicker::notifyImagePickingCancelled() {
+    if(m_callback) {
+        m_callback->onImagePickingCancelled(this);
+    }
+    if(m_scriptHandler.handler) {
+        CCArray* pArrayArgs = CCArray::createWithCapacity(2);
+        pArrayArgs->addObject(this);
+        pArrayArgs->addObject(CCString::create("pick_cancelled"));
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs);
+    }
 }
 
 NS_CC_END

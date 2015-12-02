@@ -35,12 +35,8 @@ USING_NS_CC;
 
 @interface CCImagePickerDelegate : NSObject <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
-@property (nonatomic, assign) CCImagePickerCallback* callback;
-@property (nonatomic, assign) int expectedWidth;
-@property (nonatomic, assign) int expectedHeight;
+@property (nonatomic, assign) CCImagePicker* ccPicker;
 @property (nonatomic, assign) UIViewController* parent;
-@property (nonatomic, assign) BOOL keepRatio;
-@property (nonatomic, assign) string path;
 
 @end
 
@@ -48,7 +44,7 @@ USING_NS_CC;
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
 	// if no callback set, no need proceed
-	if(!self.callback)
+	if(!self.ccPicker->getCallback())
 		return;
 	
 	// get image after edited
@@ -70,8 +66,8 @@ USING_NS_CC;
 	hasAlpha = YES;
 	
 	// get image original size
-	int bW = CGImageGetWidth(CGImage);
-	int bH = CGImageGetHeight(CGImage);
+	int bW = (int)CGImageGetWidth(CGImage);
+	int bH = (int)CGImageGetHeight(CGImage);
 	
 	// need swap width and height for left/right orientation
 	UIImageOrientation orientation = image.imageOrientation;
@@ -82,15 +78,15 @@ USING_NS_CC;
 	
 	// calculate real context size
 	int w, h;
-	if(self.keepRatio) {
-		float scaleW = self.expectedWidth / (float)(swapWH ? bH : bW);
-		float scaleH = self.expectedHeight / (float)(swapWH ? bW : bH);
+	if(self.ccPicker->isKeepRatio()) {
+		float scaleW = self.ccPicker->getExpectedWidth() / (float)(swapWH ? bH : bW);
+		float scaleH = self.ccPicker->getExpectedHeight() / (float)(swapWH ? bW : bH);
 		float scale = MIN(scaleW, scaleH);
 		w = (swapWH ? bH : bW) * scale;
 		h = (swapWH ? bW : bH) * scale;
 	} else {
-		w = self.expectedWidth;
-		h = self.expectedHeight;
+		w = self.ccPicker->getExpectedWidth();
+		h = self.ccPicker->getExpectedHeight();
 	}
 	
 	// now build transform for orientation
@@ -136,14 +132,14 @@ USING_NS_CC;
 	CGImageRef cropImage = CGBitmapContextCreateImage(context);
 	
 	// check extension
-	string ext = CCUtils::getPathExtension(self.path);
+	string ext = CCUtils::getPathExtension(self.ccPicker->getPath());
 	bool png = ext == ".png";
 	bool jpg = ext == ".jpg" || ext == ".jpeg";
 	if(!png && !jpg)
 		jpg = true;
 	
 	// ensure parent folder is all created
-	string fullPath = CCFileUtils::sharedFileUtils()->getWritablePath() + self.path;
+	string fullPath = CCFileUtils::sharedFileUtils()->getWritablePath() + self.ccPicker->getPath();
 	NSString* nsPath = [NSString stringWithUTF8String:fullPath.c_str()];
 	NSString* parentPath = [nsPath stringByDeletingLastPathComponent];
 	NSFileManager* fm = [NSFileManager defaultManager];
@@ -168,7 +164,7 @@ USING_NS_CC;
 	free(data);
 	
 	// hide picker view
-	[self.parent dismissModalViewControllerAnimated:YES];
+    [self.parent dismissViewControllerAnimated:YES completion:nil];
 	
 	// release self
 #if !__has_feature(objc_arc)
@@ -176,19 +172,16 @@ USING_NS_CC;
 #endif
 	
 	// callback
-	if(self.callback) {
-		self.callback->onImagePicked(fullPath, w, h);
-	}
+    self.ccPicker->setFullPath(fullPath);
+    self.ccPicker->notifyImagePickedOK();
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
 	// hide picker view
-	[self.parent dismissModalViewControllerAnimated:YES];
+    [self.parent dismissViewControllerAnimated:YES completion:nil];
 	
 	// notify callback
-	if(self.callback) {
-		self.callback->onImagePickingCancelled();
-	}
+    self.ccPicker->notifyImagePickingCancelled();
 	
 	// release self
 #if !__has_feature(objc_arc)
@@ -211,15 +204,13 @@ bool CCImagePicker::hasFrontCamera() {
 		return false;
 }
 
-void CCImagePicker::pickFromCamera(const string& path, CCImagePickerCallback* callback, int w, int h, bool front, bool keepRatio) {
-	if(front && !hasFrontCamera()) {
-		if(callback)
-			callback->onImagePickingCancelled();
+void CCImagePicker::pickFromCamera() {
+	if(m_useFrontCamera && !hasFrontCamera()) {
+        notifyImagePickingCancelled();
 		return;
 	}
-	if(!front && !hasCamera()) {
-		if(callback)
-			callback->onImagePickingCancelled();
+	if(!m_useFrontCamera && !hasCamera()) {
+        notifyImagePickingCancelled();
 		return;
 	}
 	
@@ -228,30 +219,25 @@ void CCImagePicker::pickFromCamera(const string& path, CCImagePickerCallback* ca
 	UIViewController* vc = CCUtilsIOS::findViewController(view);
 	if(!vc) {
 		CCLOGWARN("Can't find a view controller, camera picker can't be started");
-		if(callback)
-			callback->onImagePickingCancelled();
+        notifyImagePickingCancelled();
 		return;
 	}
 	
 	// create image picker
 	UIImagePickerController* picker = [[UIImagePickerController alloc] init];
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    if(front)
+    if(m_useFrontCamera)
     	picker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
 	picker.allowsEditing = YES;
 	
 	// set delegate
 	CCImagePickerDelegate* d = [[CCImagePickerDelegate alloc] init];
-	d.path = path;
+    d.ccPicker = this;
 	d.parent = vc;
-	d.callback = callback;
-	d.expectedWidth = w;
-	d.expectedHeight = h;
-	d.keepRatio = keepRatio;
 	picker.delegate = d;
 	
 	// show picker
-	[vc presentModalViewController:picker animated:YES];
+    [vc presentViewController:picker animated:YES completion:nil];
 	
 	// release
 #if !__has_feature(objc_arc)
@@ -259,14 +245,13 @@ void CCImagePicker::pickFromCamera(const string& path, CCImagePickerCallback* ca
 #endif
 }
 
-void CCImagePicker::pickFromAlbum(const string& path, CCImagePickerCallback* callback, int w, int h, bool keepRatio) {
+void CCImagePicker::pickFromAlbum() {
 	// acquire a view controller
 	UIView* view = [EAGLView sharedEGLView];
 	UIViewController* vc = CCUtilsIOS::findViewController(view);
 	if(!vc) {
 		CCLOGWARN("Can't find a view controller, camera picker can't be started");
-		if(callback)
-			callback->onImagePickingCancelled();
+        notifyImagePickingCancelled();
 		return;
 	}
 	
@@ -277,16 +262,12 @@ void CCImagePicker::pickFromAlbum(const string& path, CCImagePickerCallback* cal
 	
 	// set delegate
 	CCImagePickerDelegate* d = [[CCImagePickerDelegate alloc] init];
-	d.path = path;
+    d.ccPicker = this;
 	d.parent = vc;
-	d.callback = callback;
-	d.expectedWidth = w;
-	d.expectedHeight = h;
-	d.keepRatio = keepRatio;
 	picker.delegate = d;
 	
 	// show picker
-	[vc presentModalViewController:picker animated:YES];
+    [vc presentViewController:picker animated:YES completion:nil];
 	
 	// release
 #if !__has_feature(objc_arc)

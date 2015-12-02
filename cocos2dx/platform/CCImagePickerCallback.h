@@ -30,22 +30,24 @@ using namespace std;
 
 NS_CC_BEGIN
 
+class CCImagePicker;
+
 /// interface of CCImagePicker event
 class CC_DLL CCImagePickerCallback {
 public:
 	/**
 	 * Invoked when image is picked
 	 *
-	 * @param fullPath the picked image is saved into an image file, and this is image file absolute path
-	 * @param w image width in pixel
-	 * @param h image height in pixel
+	 * @param picker CCImagePicker instance
 	 */
-	virtual void onImagePicked(const string& fullPath, int w, int h) = 0;
+	virtual void onImagePicked(CCImagePicker* picker) = 0;
 	
 	/**
 	 * invoked when image picking cancelled
+     *
+     * @param picker CCImagePicker instance
 	 */
-	virtual void onImagePickingCancelled() = 0;
+	virtual void onImagePickingCancelled(CCImagePicker* picker) = 0;
 };
 
 NS_CC_END
