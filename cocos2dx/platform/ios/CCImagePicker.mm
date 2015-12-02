@@ -43,10 +43,6 @@ USING_NS_CC;
 @implementation CCImagePickerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-	// if no callback set, no need proceed
-	if(!self.ccPicker->getCallback())
-		return;
-	
 	// get image after edited
 	UIImage* image = [info objectForKey:UIImagePickerControllerEditedImage];
 	
