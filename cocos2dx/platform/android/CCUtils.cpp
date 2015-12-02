@@ -349,8 +349,8 @@ bool CCUtils::verifySignature(void* validSign, size_t len) {
 	jsize cLen = env->GetArrayLength(certificate);
 	jbyte* cData = env->GetByteArrayElements(certificate, JNI_FALSE);
 	if (cLen > 0) {
-		const char* md5 = CCMD5::md5(cData, cLen);
-		size_t md5Len = strlen(md5);
+		string md5 = CCMD5::md5(cData, cLen);
+        size_t md5Len = md5.length();
 		if(md5Len != len) {
 			valid = false;
 		} else {
