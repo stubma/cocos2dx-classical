@@ -205,6 +205,10 @@ function cc.sizeSub(s1, s2)
     return { width = s1.width - s2.width, height = s1.height - s2.height }
 end
 
+function cc.sizeMul(s1, factor)
+    return cc.size(s1.width * factor, s1.height * factor)
+end
+
 -- Rect
 function cc.rect(_x,_y,_width,_height)
     return { x = _x, y = _y, width = _width, height = _height }
