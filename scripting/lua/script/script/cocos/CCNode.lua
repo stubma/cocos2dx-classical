@@ -1,15 +1,28 @@
 cc = cc or {}
 
 function cc.delayActionN(node, time, callback)
-    local sequence = CCSequence:createWithTwoActions(CCDelayTime:create(time),
-                                                     CCCallFuncN:create(callback));
+    local sequence = nil
+    if type(callback) == "function" then
+        sequence = CCSequence:createWithTwoActions(CCDelayTime:create(time),
+                                                         CCCallFuncN:create(callback))
+    else
+        sequence = CCSequence:createWithTwoActions(CCDelayTime:create(time),
+                                                         callback)
+    end
+    
     node:runAction(sequence)
     return sequence
 end
 
 function cc.delayAction(node, time, callback)
-    local sequence = CCSequence:createWithTwoActions(CCDelayTime:create(time),
-                                                     CCCallFunc:create(callback))
+    local sequence = nil
+    if type(callback) == "function" then
+        sequence = CCSequence:createWithTwoActions(CCDelayTime:create(time),
+                                                   CCCallFunc:create(callback))
+    else
+        sequence = CCSequence:createWithTwoActions(CCDelayTime:create(time), callback)
+    end
+    
     node:runAction(sequence)
     return sequence
 end
