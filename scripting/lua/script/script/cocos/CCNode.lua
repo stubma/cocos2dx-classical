@@ -2,12 +2,14 @@ cc = cc or {}
 
 function cc.delayActionN(node, time, callback)
     local sequence = nil
-    if type(callback) == "function" then
+    if type(callback) == "table" then
         sequence = CCSequence:createWithTwoActions(CCDelayTime:create(time),
-                                                         CCCallFuncN:create(callback))
+                                                   CCCallFuncN:create(callback))
+    elseif type(callback) == "function" then
+        sequence = CCSequence:createWithTwoActions(CCDelayTime:create(time),
+                                                   CCCallFuncN:create({ handler = callback }))
     else
-        sequence = CCSequence:createWithTwoActions(CCDelayTime:create(time),
-                                                         callback)
+        sequence = CCSequence:createWithTwoActions(CCDelayTime:create(time), callback)
     end
     
     node:runAction(sequence)
@@ -16,9 +18,12 @@ end
 
 function cc.delayAction(node, time, callback)
     local sequence = nil
-    if type(callback) == "function" then
+    if type(callback) == "table" then
         sequence = CCSequence:createWithTwoActions(CCDelayTime:create(time),
                                                    CCCallFunc:create(callback))
+    elseif type(callback) == "function" then
+        sequence = CCSequence:createWithTwoActions(CCDelayTime:create(time),
+                                                   CCCallFunc:create({ handler = callback }))
     else
         sequence = CCSequence:createWithTwoActions(CCDelayTime:create(time), callback)
     end
