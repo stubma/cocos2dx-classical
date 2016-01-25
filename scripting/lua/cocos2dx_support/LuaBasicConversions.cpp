@@ -158,7 +158,11 @@ bool luaval_to_luafunc(lua_State* L, int lo, cocos2d::ccScriptFunction* outValue
             
             lua_pushstring(L, "target");
             lua_gettable(L, lo);
-            ok &= luaval_to_object<cocos2d::CCObject>(L, -1, "CCObject", &outValue->target);
+            if(lua_isnil(L, -1)) {
+                outValue->target = NULL;
+            } else {
+                ok &= luaval_to_object<cocos2d::CCObject>(L, -1, "CCObject", &outValue->target);
+            }
             lua_pop(L, 1);
         }
     }
