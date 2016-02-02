@@ -1469,11 +1469,12 @@ static bool _initWithString(const char * pText, CCImage::ETextAlign eAlign, cons
             CGContextSetAllowsAntialiasing(context, YES);
             
             // take care of stroke if needed
+            // double size stroke because cocoa draw stroke in center, we need a outer stroke
             if (pInfo->hasStroke) {
                 CGContextSetTextDrawingMode(context, kCGTextFillStroke);
                 CGContextSetLineJoin(context, kCGLineJoinRound);
                 CGContextSetRGBStrokeColor(context, pInfo->strokeColorR, pInfo->strokeColorG, pInfo->strokeColorB, 1);
-                CGContextSetLineWidth(context, pInfo->strokeSize);
+                CGContextSetLineWidth(context, pInfo->strokeSize * 2);
             }
             
             // take care of shadow if needed
@@ -1497,6 +1498,13 @@ static bool _initWithString(const char * pText, CCImage::ETextAlign eAlign, cons
             
             // draw frame
             CTFrameDraw(frame, context);
+            
+            // for stroke, we paint text again to override inner part, so that
+            // finally we get a outer stroke effect
+            if(pInfo->hasStroke) {
+                CGContextSetTextDrawingMode(context, kCGTextFill);
+                CTFrameDraw(frame, context);
+            }
             
             // if has cached images, try render those images
             renderEmbededImages(context, frame, plain, spans, *imageRects);
