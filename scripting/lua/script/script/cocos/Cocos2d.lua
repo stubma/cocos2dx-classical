@@ -298,6 +298,14 @@ function cc.i2c3b(num)
     return cc.c3b(r, g, b)
 end
 
+function cc.i2c4b(num)
+    local a = bit.band(bit.rshift(num, 24), 0xff)
+    local r = bit.band(bit.rshift(num, 16), 0xff)
+    local g = bit.band(bit.rshift(num, 8), 0xff)
+    local b = bit.band(num, 0xff)
+    return cc.c4b(r, g, b, a)
+end
+
 --Color4B
 function cc.c4b( _r,_g,_b,_a )
     return { r = _r, g = _g, b = _b, a = _a }
