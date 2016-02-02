@@ -461,7 +461,7 @@ CCRect CCLabelTTF::getImageBoundInWorldSpace(int index) {
     return r;
 }
 
-void CCLabelTTF::enableShadow(const CCSize &shadowOffset, int shadowColor, float shadowBlur, bool updateTexture)
+void CCLabelTTF::enableShadow(const CCSize &shadowOffset, unsigned int shadowColor, float shadowBlur, bool updateTexture)
 {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
     

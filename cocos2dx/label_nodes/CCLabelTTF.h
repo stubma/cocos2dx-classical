@@ -159,7 +159,7 @@ public:
     
     
     /** enable or disable shadow for the label */
-    void enableShadow(const CCSize &shadowOffset, int shadowColor, float shadowBlur, bool mustUpdateTexture = true);
+    void enableShadow(const CCSize &shadowOffset, unsigned int shadowColor, float shadowBlur, bool mustUpdateTexture = true);
     
     /** disable shadow rendering */
     void disableShadow(bool mustUpdateTexture = true);
@@ -295,7 +295,7 @@ protected:
     CCSize  m_shadowOffset;
     float   m_shadowOpacity;
     float   m_shadowBlur;
-    int     m_shadowColor;
+    unsigned int     m_shadowColor;
     
     // default image scale factor
     float m_globalImageScaleFactor;

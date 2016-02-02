@@ -610,7 +610,7 @@ public:
     ccFontStroke            m_stroke;
     
     // font shadow color
-    int m_shadowColor;
+    unsigned int m_shadowColor;
     
     // line spacing
     float m_lineSpacing;

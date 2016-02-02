@@ -83,7 +83,7 @@ bool CCImage::initWithString(
 }
 
 bool CCImage::initWithStringShadowStroke(const char * pText, int nWidth, int nHeight, ETextAlign eAlignMask, const char * pFontName, int nSize,
-		float textTintR, float textTintG, float textTintB, bool shadow, float shadowOffsetX, float shadowOffsetY, int shadowColor, float shadowBlur,
+		float textTintR, float textTintG, float textTintB, bool shadow, float shadowOffsetX, float shadowOffsetY, unsigned int shadowColor, float shadowBlur,
 		bool stroke, float strokeR, float strokeG, float strokeB, float strokeSize, float lineSpacing, float globalImageScaleFactor, int toCharIndex, float elapsedTime) {
 	bool bRet = false;
 	do {

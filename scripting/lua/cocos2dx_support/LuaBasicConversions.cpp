@@ -1828,7 +1828,7 @@ bool luaval_to_fontdefinition(lua_State* L, int lo, ccFontDefinition* outValue ,
         lua_pushstring(L, "shadowColor");
         lua_gettable(L, lo);
         if (!lua_isnil(L, -1)) {
-            luaval_to_int32(L, -1, &outValue->m_shadowColor);
+            luaval_to_uint32(L, -1, &outValue->m_shadowColor);
         }
         lua_pop(L, 1);
         

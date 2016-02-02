@@ -113,7 +113,7 @@ typedef struct {
     bool         hasShadow;
     CGSize       shadowOffset;
     float        shadowBlur;
-    int          shadowColor;
+    unsigned int shadowColor;
     bool         hasStroke;
     float        strokeColorR;
     float        strokeColorG;
@@ -1471,6 +1471,7 @@ static bool _initWithString(const char * pText, CCImage::ETextAlign eAlign, cons
             // take care of stroke if needed
             if (pInfo->hasStroke) {
                 CGContextSetTextDrawingMode(context, kCGTextFillStroke);
+                CGContextSetLineJoin(context, kCGLineJoinRound);
                 CGContextSetRGBStrokeColor(context, pInfo->strokeColorR, pInfo->strokeColorG, pInfo->strokeColorB, 1);
                 CGContextSetLineWidth(context, pInfo->strokeSize);
             }
@@ -2079,7 +2080,7 @@ bool CCImage::initWithStringShadowStroke(const char * pText,
                                                        bool shadow,
                                                        float shadowOffsetX,
                                                        float shadowOffsetY,
-                                                       int   shadowColor,
+                                                       unsigned int shadowColor,
                                                        float shadowBlur,
                                                        bool  stroke,
                                                        float strokeR,
