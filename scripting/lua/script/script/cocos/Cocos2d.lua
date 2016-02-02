@@ -427,3 +427,26 @@ function cc.safeAutoRelease(obj)
         obj:autorelease()
     end
 end
+
+function cc.simulateClick(n)
+    if tolua.isa(n, "Widget") then
+        n:pushDownEvent()
+        n:releaseUpEvent()
+    elseif tolua.isa(n, "CCMenuItem") then
+        local pos = n:convertToWorldSpace(cc.p(n:getContentSize().width / 2,
+        n:getContentSize().height / 2))
+        local touch = CCTouch:create()
+        touch:setTouchInfo(0, pos.x, display.winSize.height - pos.y)
+        local menu = n:getParent()
+        menu:ccTouchBegan(touch, nil)
+        menu:ccTouchEnded(touch, nil)
+    elseif tolua.isa(n, "CCTableViewCell") then
+        local pos = n:convertToWorldSpace(cc.p(n:getContentSize().width / 2,
+        n:getContentSize().height / 2));
+        local touch = CCTouch:create()
+        touch:setTouchInfo(0, pos.x, display.winSize.height - pos.y)
+        local table = n:getParent():getParent()
+        table:ccTouchBegan(touch, nil)
+        table:ccTouchEnded(touch, nil)
+    end
+end
