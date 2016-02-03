@@ -1414,18 +1414,21 @@ static bool _initWithString(const char * pText, CCImage::ETextAlign eAlign, cons
             topPadding = bottomPadding = ceilf(pInfo->strokeSize);
         }
         
+        // shadow offset is treated as point in cocoa, so we need multiple with native scale
+        float nativeScale = [UIScreen mainScreen].scale;
+        
         // compute padding needed by shadow, choose the max one
         // however, shadow is a one side so we need add stroke for another side
         if (pInfo->hasShadow) {
             if(pInfo->shadowOffset.width > 0) {
-                rightPadding = MAX(rightPadding, pInfo->shadowOffset.width);
+                rightPadding = MAX(rightPadding, pInfo->shadowOffset.width * nativeScale);
             } else {
-                leftPadding = MAX(leftPadding, fabs(pInfo->shadowOffset.width));
+                leftPadding = MAX(leftPadding, fabs(pInfo->shadowOffset.width * nativeScale));
             }
             if(pInfo->shadowOffset.height > 0) {
-                topPadding = MAX(topPadding, pInfo->shadowOffset.height);
+                topPadding = MAX(topPadding, pInfo->shadowOffset.height * nativeScale);
             } else {
-                bottomPadding = MAX(bottomPadding, fabs(pInfo->shadowOffset.height));
+                bottomPadding = MAX(bottomPadding, fabs(pInfo->shadowOffset.height * nativeScale));
             }
         }
         
@@ -1496,13 +1499,7 @@ static bool _initWithString(const char * pText, CCImage::ETextAlign eAlign, cons
                 CGColorRef shadowColor = CGColorCreate(colorSpace, comp);
                 CGContextSetShadowWithColor(context, offset, pInfo->shadowBlur, shadowColor);
                 CGColorRelease(shadowColor);
-                
-                // first draw to paint shadow
-                CTFrameDraw(frame, context);
             }
-            
-            // clear shadow
-            CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
             
             // take care of stroke if needed
             // double size stroke because cocoa draw stroke in center, we need a outer stroke
@@ -1519,6 +1516,7 @@ static bool _initWithString(const char * pText, CCImage::ETextAlign eAlign, cons
             // for stroke, we paint text again to override inner part, so that
             // finally we get a outer stroke effect
             if(pInfo->hasStroke) {
+                CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
                 CGContextSetTextDrawingMode(context, kCGTextFill);
                 CTFrameDraw(frame, context);
             }
@@ -1722,224 +1720,6 @@ static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
 #define ALIGN_TOP    1
 #define ALIGN_CENTER 3
 #define ALIGN_BOTTOM 2
-
-static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo)
-{
-    bool bRet = false;
-    do 
-    {
-        CC_BREAK_IF(! pText || ! pInfo);
-        
-        NSString * str          = [NSString stringWithUTF8String:pText];
-        NSString * fntName      = [NSString stringWithUTF8String:pFontName];
-        
-        CGSize dim, constrainSize;
-        
-        constrainSize.width     = pInfo->width;
-        constrainSize.height    = pInfo->height;
-        
-        // On iOS custom fonts must be listed beforehand in the App info.plist (in order to be usable) and referenced only the by the font family name itself when
-        // calling [UIFont fontWithName]. Therefore even if the developer adds 'SomeFont.ttf' or 'fonts/SomeFont.ttf' to the App .plist, the font must
-        // be referenced as 'SomeFont' when calling [UIFont fontWithName]. Hence we strip out the folder path components and the extension here in order to get just
-        // the font family name itself. This stripping step is required especially for references to user fonts stored in CCB files; CCB files appear to store
-        // the '.ttf' extensions when referring to custom fonts.
-        fntName = [[fntName lastPathComponent] stringByDeletingPathExtension];
-        
-        // create the font   
-        id font = [UIFont fontWithName:fntName size:nSize];
-        
-        if (font)
-        {
-            dim = _calculateStringSize(str, font, &constrainSize);
-        }
-        else
-        {
-            if (!font)
-            {
-                font = [UIFont systemFontOfSize:nSize];
-            }
-                
-            if (font)
-            {
-                dim = _calculateStringSize(str, font, &constrainSize);
-            }
-        }
-
-        CC_BREAK_IF(! font);
-        
-        // compute start point
-        int startH = 0;
-        if (constrainSize.height > dim.height)
-        {
-            // vertical alignment
-            unsigned int vAlignment = (eAlign >> 4) & 0x0F;
-            if (vAlignment == ALIGN_TOP)
-            {
-                startH = 0;
-            }
-            else if (vAlignment == ALIGN_CENTER)
-            {
-                startH = (constrainSize.height - dim.height) / 2;
-            }
-            else 
-            {
-                startH = constrainSize.height - dim.height;
-            }
-        }
-        
-        // adjust text rect
-        if (constrainSize.width > 0 && constrainSize.width > dim.width)
-        {
-            dim.width = constrainSize.width;
-        }
-        if (constrainSize.height > 0 && constrainSize.height > dim.height)
-        {
-            dim.height = constrainSize.height;
-        }
-        
-        
-        // compute the padding needed by shadow and stroke
-        float shadowStrokePaddingX = 0.0f;
-        float shadowStrokePaddingY = 0.0f;
-        
-        if ( pInfo->hasStroke )
-        {
-            shadowStrokePaddingX = ceilf(pInfo->strokeSize);
-            shadowStrokePaddingY = ceilf(pInfo->strokeSize);
-        }
-        
-        if ( pInfo->hasShadow )
-        {
-            shadowStrokePaddingX = std::max(shadowStrokePaddingX, (float)fabs(pInfo->shadowOffset.width));
-            shadowStrokePaddingY = std::max(shadowStrokePaddingY, (float)fabs(pInfo->shadowOffset.height));
-        }
-        
-        // add the padding (this could be 0 if no shadow and no stroke)
-        dim.width  += shadowStrokePaddingX;
-        dim.height += shadowStrokePaddingY;
-        
-        
-        unsigned char* data = new unsigned char[(int)(dim.width * dim.height * 4)];
-        memset(data, 0, (int)(dim.width * dim.height * 4));
-        
-        // draw text
-        CGColorSpaceRef colorSpace  = CGColorSpaceCreateDeviceRGB();
-        CGContextRef context        = CGBitmapContextCreate(data,
-                                                            dim.width,
-                                                            dim.height,
-                                                            8,
-                                                            (int)(dim.width) * 4,
-                                                            colorSpace,
-                                                            kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
-        
-        CGColorSpaceRelease(colorSpace);
-        
-        if (!context)
-        {
-            delete[] data;
-            break;
-        }
-
-        // text color
-        CGContextSetRGBFillColor(context, pInfo->tintColorR, pInfo->tintColorG, pInfo->tintColorB, 1);
-        // move Y rendering to the top of the image
-        CGContextTranslateCTM(context, 0.0f, (dim.height - shadowStrokePaddingY) );
-        CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
-        
-        // store the current context
-        UIGraphicsPushContext(context);
-        
-        // measure text size with specified font and determine the rectangle to draw text in
-        unsigned uHoriFlag = eAlign & 0x0f;
-        UITextAlignment align = (UITextAlignment)((2 == uHoriFlag) ? UITextAlignmentRight
-                                : (3 == uHoriFlag) ? UITextAlignmentCenter
-                                : UITextAlignmentLeft);
-
-        
-        // take care of stroke if needed
-        if ( pInfo->hasStroke )
-        {
-            CGContextSetTextDrawingMode(context, kCGTextFillStroke);
-            CGContextSetRGBStrokeColor(context, pInfo->strokeColorR, pInfo->strokeColorG, pInfo->strokeColorB, 1);
-            CGContextSetLineWidth(context, pInfo->strokeSize);
-        }
-        
-        // take care of shadow if needed
-        if ( pInfo->hasShadow )
-        {
-            CGSize offset;
-            offset.height = pInfo->shadowOffset.height;
-            offset.width  = pInfo->shadowOffset.width;
-            CGContextSetShadow(context, offset, pInfo->shadowBlur);
-        }
-        
-        
-        
-        // normal fonts
-        //if( [font isKindOfClass:[UIFont class] ] )
-        //{
-        //    [str drawInRect:CGRectMake(0, startH, dim.width, dim.height) withFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap alignment:align];
-        //}
-        //else // ZFont class
-        //{
-        //    [FontLabelStringDrawingHelper drawInRect:str rect:CGRectMake(0, startH, dim.width, dim.height) withZFont:font lineBreakMode:(UILineBreakMode)UILineBreakModeWordWrap 
-        ////alignment:align];
-        //}
-    
-        
-        
-        // compute the rect used for rendering the text
-        // based on wether shadows or stroke are enabled
-        
-        float textOriginX  = 0.0;
-        float textOrigingY = 0.0;
-        
-        float textWidth    = dim.width  - shadowStrokePaddingX;
-        float textHeight   = dim.height - shadowStrokePaddingY;
-        
-        
-        if ( pInfo->shadowOffset.width < 0 )
-        {
-            textOriginX = shadowStrokePaddingX;
-        }
-        else
-        {
-            textOriginX = 0.0;
-        }
-        
-        if (pInfo->shadowOffset.height > 0)
-        {
-            textOrigingY = startH;
-        }
-        else
-        {
-            textOrigingY = startH - shadowStrokePaddingY;
-        }
-        
-        
-        // actually draw the text in the context
-		// XXX: ios7 casting
-        [str drawInRect:CGRectMake(textOriginX, textOrigingY, textWidth, textHeight) withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:(NSTextAlignment)align];
-        
-        // pop the context
-        UIGraphicsPopContext();
-        
-        // release the context
-        CGContextRelease(context);
-               
-        // output params
-        pInfo->data                 = data;
-        pInfo->hasAlpha             = true;
-        pInfo->isPremultipliedAlpha = true;
-        pInfo->bitsPerComponent     = 8;
-        pInfo->width                = dim.width;
-        pInfo->height               = dim.height;
-        bRet                        = true;
-        
-    } while (0);
-
-    return bRet;
-}
 
 CCImage::CCImage()
 : m_nWidth(0)
