@@ -394,15 +394,20 @@ void CCLuaStack::executeObjectDestructor(CCObject* obj) {
     // count of obj
     int count = lua_gettop(m_state) - top;
     
-    // call dtor from super to obj
+    // reverse the super order, make obj at the top
+    for(int i = 0; i < count - 1; i++) {
+        lua_insert(m_state, top + 1);
+    }
+    
+    // call dtor from obj to super
     while(count-- > 0) {
-        lua_pushstring(m_state, "dtor"); // obj super[n] "dtor"
-        lua_gettable(m_state, -2); // obj super[n] dtor
+        lua_pushstring(m_state, "dtor"); // super[n] "dtor"
+        lua_gettable(m_state, -2); // super[n] dtor
         if(lua_isnil(m_state, -1) || !lua_isfunction(m_state, -1)) {
-            lua_pop(m_state, 2); // obj super[n-1]
+            lua_pop(m_state, 2); // super[n-1]
         } else {
-            lua_insert(m_state, -2); // obj super[n-1] dtor super
-            executeFunction(1); // after executed, obj super[n-1]
+            lua_insert(m_state, -2); // super[n-1] dtor super
+            executeFunction(1); // after executed, super[n-1]
         }
     }
 }
