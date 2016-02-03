@@ -263,24 +263,6 @@ public class CCImage_richlabel {
 			paint.setTypeface(Typeface.create(pFontName, Typeface.NORMAL));
 		}
 		
-		// shadow
-		// shadowBlur can be zero in android Paint, so set a min value to 1
-		if (shadow) {
-			paint.setShadowLayer(Math.max(shadowBlur, 1), shadowDX, shadowDY, shadowColor);
-		}
-		
-        // compute the padding needed by shadow and stroke
-        float shadowStrokePaddingX = 0.0f;
-        float shadowStrokePaddingY = 0.0f;
-        if (stroke) {
-            shadowStrokePaddingX = (float)Math.ceil(strokeSize);
-            shadowStrokePaddingY = (float)Math.ceil(strokeSize);
-        }
-        if (shadow) {
-            shadowStrokePaddingX = Math.max(shadowStrokePaddingX, (float)Math.abs(shadowDX));
-            shadowStrokePaddingY = Math.max(shadowStrokePaddingY, (float)Math.abs(shadowDY));
-        }
-        
         // stack of color and font
         Span defaultColor = new Span();
         defaultColor.type = SpanType.COLOR;
@@ -300,6 +282,7 @@ public class CCImage_richlabel {
         // build spannable string
         SpannableString rich = new SpannableString(plain);
         Map<String, Bitmap> imageMap = new HashMap<String, Bitmap>();
+        Map<Object, Point> cachedSpans = new HashMap<Object, Point>();
         int colorStart = 0;
         int fontStart = 0;
         int sizeStart = 0;
@@ -313,7 +296,7 @@ public class CCImage_richlabel {
                     	Span top = colorStack.pop();
                         if(span.pos > colorStart) {
                         	// set span
-                        	setColorSpan(top, rich, colorStart, span.pos, elapsedTime);
+                        	setColorSpan(top, rich, colorStart, span.pos, elapsedTime, cachedSpans);
                             
                             // start need to be reset
                             colorStart = span.pos;
@@ -352,10 +335,16 @@ public class CCImage_richlabel {
                     case UNDERLINE:
                     {
                         if(underlineStart > -1) {
-                        	rich.setSpan(new UnderlineSpan(), 
+                            UnderlineSpan u = new UnderlineSpan();
+                        	rich.setSpan(u, 
                         			underlineStart, 
                         			span.pos, 
                         			Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+							// save this span we need it later
+							cachedSpans.put(u, new Point(underlineStart, span.pos));
+
+							// reset to -1
                             underlineStart = -1;
                         }
                         break;
@@ -408,7 +397,7 @@ public class CCImage_richlabel {
                         if(span.pos > colorStart) {
                         	// set color span
                             Span top = colorStack.peek();
-                            setColorSpan(top, rich, colorStart, span.pos, elapsedTime);
+                            setColorSpan(top, rich, colorStart, span.pos, elapsedTime, cachedSpans);
                             
                             // start need to be reset
                             colorStart = span.pos;
@@ -520,7 +509,7 @@ public class CCImage_richlabel {
         // last segment
         if(plain.length() > colorStart) {
             Span top = colorStack.peek();
-            setColorSpan(top, rich, colorStart, plain.length(), elapsedTime);
+            setColorSpan(top, rich, colorStart, plain.length(), elapsedTime, cachedSpans);
         }
         if(plain.length() > sizeStart) {
         	float size = fontSizeStack.peek();
@@ -549,14 +538,10 @@ public class CCImage_richlabel {
 		// size of layout
 		int width = layout.getWidth();
 		int height = layout.getHeight();
-		
-		// add padding of stroke
-		width += shadowStrokePaddingX;
-		height += shadowStrokePaddingY;
-		
+
         // text origin
-        int startY = 0;
         int startX = 0;
+        int startY = 0;
         if (pHeight > height) {
             // vertical alignment
             if (verticalAlignment == VERTICALALIGN_TOP) {
@@ -567,14 +552,36 @@ public class CCImage_richlabel {
                 startY = pHeight - height;
             }
         }
-        if(shadow) {
-        	if(shadowDY < 0) {
-        		startY -= shadowDY; 
-        	}
-        	if(shadowDX < 0) {
-        		startX -= shadowDX;
-        	}
+
+        // compute the padding needed by shadow and stroke
+        float leftPadding = 0;
+        float rightPadding = 0;
+        float topPadding = 0;
+        float bottomPadding = 0;
+        if (stroke) {
+            leftPadding = rightPadding = (float)Math.ceil(strokeSize);
+            topPadding = bottomPadding = (float)Math.ceil(strokeSize);
         }
+        if (shadow) {
+            if(shadowDX > 0) {
+                rightPadding = Math.max(rightPadding, shadowDX);
+            } else {
+                leftPadding = Math.max(leftPadding, (float)Math.abs(shadowDX));
+            }
+            if(shadowDY > 0) {
+                topPadding = Math.max(topPadding, shadowDY);
+            } else {
+                bottomPadding = Math.max(bottomPadding, (float)Math.abs(shadowDY));
+            }
+        }
+		
+		// add padding of stroke
+		width += leftPadding + rightPadding;
+		height += topPadding + bottomPadding;
+		
+        // adjust drawing offset
+        startX += leftPadding;
+        startY += bottomPadding;
 		
 		// adjust layout
 		if(pHeight > 0 && pHeight < height)
@@ -585,7 +592,13 @@ public class CCImage_richlabel {
 		if(!sizeOnly) {
 			// save padding
 			nativeSaveShadowStrokePadding(startX, Math.max(0, height - layout.getHeight() - startY));
-			
+
+			// shadow
+			// shadowBlur can be zero in android Paint, so set a min value to 1
+			if (shadow) {
+				paint.setShadowLayer(Math.max(shadowBlur, 1), shadowDX, shadowDY, shadowColor);
+			}
+
 			// create bitmap and canvas
 			Bitmap bitmap = Bitmap.createBitmap(width, height, Config.ARGB_8888);
 			Canvas c = new Canvas(bitmap);
@@ -593,27 +606,37 @@ public class CCImage_richlabel {
 			// translate for vertical alignment
 			c.translate(startX, startY);
 			
-			// draw text
-            layout.draw(c);
-			
 			// draw again if stroke is enabled
 			if(stroke) {
-				// reset paint to stroke mode
+				// reset paint to stroke mode with double size stroke because we need a outer stroke effect
 				paint.setStyle(Paint.Style.STROKE);
-				paint.setStrokeWidth(strokeSize);
+                paint.setStrokeJoin(Paint.Join.ROUND);
+				paint.setStrokeWidth(strokeSize * 2);
 				paint.setARGB(255, (int)strokeR * 255, (int)strokeG * 255, (int)strokeB * 255);
-				paint.clearShadowLayer();
 				
-				// clear color and underline span
-				for(ForegroundColorSpan span : rich.getSpans(0, rich.length(), ForegroundColorSpan.class)) {
-					rich.removeSpan(span);
-				}
-				for(UnderlineSpan span : rich.getSpans(0, rich.length(), UnderlineSpan.class)) {
-					rich.removeSpan(span);
-				}
+				// clear color and underline span, they will affect stroke painting
+                for(Object span : cachedSpans.keySet()) {
+                    rich.removeSpan(span);
+                }
 				
+                // draw stroke
 				layout.draw(c);
 			}
+
+            // add span back for second drawing
+            for(Object span : cachedSpans.keySet()) {
+                Point range = cachedSpans.get(span);
+                rich.setSpan(span, 
+                        range.x, 
+                        range.y, 
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+
+            // draw text
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(Color.WHITE);
+			paint.clearShadowLayer();
+            layout.draw(c);
 			
 			// render embedded image
 			// Note: I do it here because I want to support image y offset, but y offset may change
@@ -663,7 +686,7 @@ public class CCImage_richlabel {
 		return c;
 	}
 	
-	private static void setColorSpan(Span top, SpannableString rich, int start, int end, float elapsedTime) {
+	private static void setColorSpan(Span top, SpannableString rich, int start, int end, float elapsedTime, Map<Object, Point> cachedSpans) {
     	// dest color
         int color = top.color;
         
@@ -699,10 +722,14 @@ public class CCImage_richlabel {
         }
         
         // set style
-        rich.setSpan(new ForegroundColorSpan(color),
+        ForegroundColorSpan span = new ForegroundColorSpan(color);
+        rich.setSpan(span,
         		start, 
         		end,
         		Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // record this span, we need it later
+        cachedSpans.put(span, new Point(start, end));
 	}
 	
 	private static void coverUndisplayedCharacters(Canvas c, StaticLayout layout, int endIndex, float dx, float dy) {
