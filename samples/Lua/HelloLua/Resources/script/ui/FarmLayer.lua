@@ -76,6 +76,15 @@ function FarmLayer:ctor()
     self.spriteDog = creatDog()
     self:addChild(self.spriteDog)
     
+    -- CCLabelTTF test
+    local testLabel = CCLabelTTF:create("He[size=12][u]llo[/u][/size][color=ff00ff00]Lua[/color] [i]Demo[/i]", "Helvetica", 24)
+    testLabel:setColor(cc.i2c3b(0xffe315))
+    testLabel:enableStroke(cc.i2c3b(0x2a1b0c), 3)
+    testLabel:enableShadow(cc.size(13, 14), 0xffff0000, 1)
+    testLabel:setAnchorPoint(cc.p(0, 1))
+    testLabel:setPosition(cc.p(display.origin.x + 20, display.origin.y + display.visibleSize.height - 20))
+    self:addChild(testLabel)
+    
     -- put a super animation in center, play one time and remove it
     local fish = CCSuperAnim:create("fish.sam", 0, { target = self, handler = FarmLayer.onSuperAnimEvent })
     fish:setPosition(CCUtils:getLocalCenter(self))
