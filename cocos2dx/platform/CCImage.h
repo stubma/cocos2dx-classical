@@ -62,6 +62,8 @@ typedef enum
     kFmtPng,
     kFmtTiff,
     kFmtWebp,
+    kFmtPkm,
+    kFmtPvr,
     kFmtRawData,
     kFmtUnKnown
 }EImageFormat;

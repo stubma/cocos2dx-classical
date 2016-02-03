@@ -503,7 +503,7 @@ CCTexture2D * CCTextureCache::addPVRImage(const char* path)
     {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         // cache the texture file name
-        VolatileTexture::addImageTexture(texture, fullpath.c_str(), kFmtRawData);
+        VolatileTexture::addImageTexture(texture, fullpath.c_str(), kFmtPvr);
 #endif
         m_pTextures->setObject(texture, key.c_str());
         CC_SAFE_AUTORELEASE(texture);
@@ -541,6 +541,11 @@ CCTexture2D* CCTextureCache::addETCImage(const char* path)
     {
         m_pTextures->setObject(texture, key.c_str());
         
+         // cache the texture file name
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+        VolatileTexture::addImageTexture(texture, key.c_str(), kFmtPkm);
+#endif
+        
         // add alpha texture
         fullpath = textureKeyForETCAlpha(key);
         CCTexture2D* alpha = new CCTexture2D();
@@ -548,6 +553,11 @@ CCTexture2D* CCTextureCache::addETCImage(const char* path)
             m_pTextures->setObject(alpha, fullpath.c_str());
             texture->setAlphaChannel(alpha);
             CC_SAFE_AUTORELEASE(alpha);
+            
+            // cache the texture file name
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+            VolatileTexture::addImageTexture(alpha, fullpath.c_str(), kFmtPkm);
+#endif
         }
         
         // release
