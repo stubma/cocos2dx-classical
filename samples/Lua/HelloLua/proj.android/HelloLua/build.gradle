@@ -4,7 +4,7 @@ description = 'HelloLua project'
 
 android {
     compileSdkVersion 14
-    buildToolsVersion '22.0.1'
+    buildToolsVersion '23.0.2'
 
     // cocos2dx-classical root
     ext.c2dxc_root = System.getenv('HOME') + "/Projects/cocos2dx-classical"
