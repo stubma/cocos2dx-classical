@@ -379,7 +379,8 @@ void CCLuaStack::executeObjectDestructor(CCObject* obj) {
     int top = lua_gettop(m_state);
     
     // push object
-    pushCCObject(obj, getLuaTypeNameByTypeId(typeid(*obj).name())); // obj
+    const char* objName = getLuaTypeNameByTypeId(typeid(*obj).name());
+    pushCCObject(obj, objName); // obj
     
     // push super until none
     while(true) {
@@ -399,15 +400,16 @@ void CCLuaStack::executeObjectDestructor(CCObject* obj) {
         lua_insert(m_state, top + 1);
     }
     
-    // call dtor from obj to super
+    // call dtor from obj to super, but the argument should always be obj
     while(count-- > 0) {
         lua_pushstring(m_state, "dtor"); // super[n] "dtor"
         lua_gettable(m_state, -2); // super[n] dtor
         if(lua_isnil(m_state, -1) || !lua_isfunction(m_state, -1)) {
             lua_pop(m_state, 2); // super[n-1]
         } else {
-            lua_insert(m_state, -2); // super[n-1] dtor super
-            executeFunction(1); // after executed, super[n-1]
+            pushCCObject(obj, objName); // super[n] dtor obj
+            executeFunction(1); // after executed, super[n]
+            lua_pop(m_state, 1); // super[n-1]
         }
     }
 }
