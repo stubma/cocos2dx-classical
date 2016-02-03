@@ -1404,32 +1404,43 @@ static bool _initWithString(const char * pText, CCImage::ETextAlign eAlign, cons
             CFRelease(path);
         }
         
-        // compute the padding needed by shadow and stroke
-        float shadowStrokePaddingX = 0.0f;
-        float shadowStrokePaddingY = 0.0f;
+        // compute the padding needed by stroke, shift x because we need outer stroke
+        float leftPadding = 0;
+        float rightPadding = 0;
+        float topPadding = 0;
+        float bottomPadding = 0;
         if (pInfo->hasStroke) {
-            shadowStrokePaddingX = ceilf(pInfo->strokeSize);
-            shadowStrokePaddingY = ceilf(pInfo->strokeSize);
+            leftPadding = rightPadding = ceilf(pInfo->strokeSize);
+            topPadding = bottomPadding = ceilf(pInfo->strokeSize);
         }
+        
+        // compute padding needed by shadow, choose the max one
+        // however, shadow is a one side so we need add stroke for another side
         if (pInfo->hasShadow) {
-            shadowStrokePaddingX = MAX(shadowStrokePaddingX, (float)fabs(pInfo->shadowOffset.width));
-            shadowStrokePaddingY = MAX(shadowStrokePaddingY, (float)fabs(pInfo->shadowOffset.height));
-            if(pInfo->shadowOffset.height < 0) {
-                startY += pInfo->shadowOffset.height;
+            if(pInfo->shadowOffset.width > 0) {
+                rightPadding = MAX(rightPadding, pInfo->shadowOffset.width);
+            } else {
+                leftPadding = MAX(leftPadding, fabs(pInfo->shadowOffset.width));
             }
-            if(pInfo->shadowOffset.width < 0) {
-                startX += pInfo->shadowOffset.width;
+            if(pInfo->shadowOffset.height > 0) {
+                topPadding = MAX(topPadding, pInfo->shadowOffset.height);
+            } else {
+                bottomPadding = MAX(bottomPadding, fabs(pInfo->shadowOffset.height));
             }
         }
         
+        // set drawing offset
+        startX += leftPadding;
+        startY += bottomPadding;
+        
         // add the padding (this could be 0 if no shadow and no stroke)
-        dim.width  += shadowStrokePaddingX;
-        dim.height += shadowStrokePaddingY;
+        dim.width  += leftPadding + rightPadding;
+        dim.height += topPadding + bottomPadding;
         
         // save shadow stroke padding
         if(outShadowStrokePadding) {
-            outShadowStrokePadding->x = -startX;
-            outShadowStrokePadding->y = -startY;
+            outShadowStrokePadding->x = startX;
+            outShadowStrokePadding->y = startY;
         }
         
         // allocate data for bitmap
@@ -1468,14 +1479,8 @@ static bool _initWithString(const char * pText, CCImage::ETextAlign eAlign, cons
             // alow anti-aliasing
             CGContextSetAllowsAntialiasing(context, YES);
             
-            // take care of stroke if needed
-            // double size stroke because cocoa draw stroke in center, we need a outer stroke
-            if (pInfo->hasStroke) {
-                CGContextSetTextDrawingMode(context, kCGTextFillStroke);
-                CGContextSetLineJoin(context, kCGLineJoinRound);
-                CGContextSetRGBStrokeColor(context, pInfo->strokeColorR, pInfo->strokeColorG, pInfo->strokeColorB, 1);
-                CGContextSetLineWidth(context, pInfo->strokeSize * 2);
-            }
+            // vertical alignment
+            CGContextTranslateCTM(context, startX, startY);
             
             // take care of shadow if needed
             if (pInfo->hasShadow) {
@@ -1491,12 +1496,24 @@ static bool _initWithString(const char * pText, CCImage::ETextAlign eAlign, cons
                 CGColorRef shadowColor = CGColorCreate(colorSpace, comp);
                 CGContextSetShadowWithColor(context, offset, pInfo->shadowBlur, shadowColor);
                 CGColorRelease(shadowColor);
+                
+                // first draw to paint shadow
+                CTFrameDraw(frame, context);
             }
             
-            // vertical alignment
-            CGContextTranslateCTM(context, -startX, -startY);
+            // clear shadow
+            CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
             
-            // draw frame
+            // take care of stroke if needed
+            // double size stroke because cocoa draw stroke in center, we need a outer stroke
+            if (pInfo->hasStroke) {
+                CGContextSetTextDrawingMode(context, kCGTextStroke);
+                CGContextSetLineJoin(context, kCGLineJoinRound);
+                CGContextSetRGBStrokeColor(context, pInfo->strokeColorR, pInfo->strokeColorG, pInfo->strokeColorB, 1);
+                CGContextSetLineWidth(context, pInfo->strokeSize * 2);
+            }
+            
+            // draw double sized stroke, if has
             CTFrameDraw(frame, context);
             
             // for stroke, we paint text again to override inner part, so that
@@ -1511,7 +1528,7 @@ static bool _initWithString(const char * pText, CCImage::ETextAlign eAlign, cons
             
             // cover undisplayed characters
             if(pInfo->toCharIndex > 0) {
-                coverUndisplayedCharacters(context, frame, pInfo->toCharIndex, -startX, -startY);
+                coverUndisplayedCharacters(context, frame, pInfo->toCharIndex, startX, startY);
             }
             
             // if has link tag, build link info
