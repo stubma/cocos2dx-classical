@@ -7,6 +7,8 @@
 
 NS_CC_BEGIN
 
+static jobject gContext = NULL;
+
 JNIEnv* CCUtilsAndroid::getJNIEnv() {
     JavaVM* vm = JniHelper::getJavaVM();
     JNIEnv* env = NULL;
@@ -25,15 +27,22 @@ JNIEnv* CCUtilsAndroid::getJNIEnv() {
 }
 
 jobject CCUtilsAndroid::getContext() {
-    JniMethodInfo t;
-    JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxActivity", "getContext", "()Landroid/content/Context;");
-    jobject ctx = t.env->CallStaticObjectMethod(t.classID, t.methodID);
-    
-    // release
-    t.env->DeleteLocalRef(t.classID);
+    // if global context is not saved, try to get one from java side
+    if(gContext == NULL) {
+        JniMethodInfo t;
+        JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxActivity", "getContext", "()Landroid/content/Context;");
+        jobject ctx = t.env->CallStaticObjectMethod(t.classID, t.methodID);
+        
+        // save a global ref
+        gContext = t.env->NewGlobalRef(ctx);
+        
+        // release
+        t.env->DeleteLocalRef(t.classID);
+        t.env->DeleteLocalRef(ctx);
+    }
     
     // return
-    return ctx;
+    return gContext;
 }
 
 int CCUtilsAndroid::getVersionCode() {

@@ -36,6 +36,8 @@
 
 NS_CC_BEGIN
 
+static string gInternalStoragePath = "";
+
 bool CCUtils::deleteFile(const string& path) {
 	return unlink(path.c_str()) == 0;
 }
@@ -113,32 +115,34 @@ string CCUtils::getPackageName() {
 }
 
 string CCUtils::getInternalStoragePath() {
-    // get context
-    jobject ctx = CCUtilsAndroid::getContext();
-
-    // get file dir
-    JniMethodInfo t;
-    JniHelper::getMethodInfo(t, "android/content/Context", "getFilesDir", "()Ljava/io/File;");
-    jobject file = t.env->CallObjectMethod(ctx, t.methodID);
-
-    // release
-    t.env->DeleteLocalRef(t.classID);
-    
-    // get absolute path
-    JniHelper::getMethodInfo(t, "java/io/File", "getAbsolutePath", "()Ljava/lang/String;");
-    jstring path = (jstring)t.env->CallObjectMethod(file, t.methodID);
-
-    // get c++ string
-    string cppPath = path ? JniHelper::jstring2string(path) : "/";
-
-    // release
-    t.env->DeleteLocalRef(path);
-    t.env->DeleteLocalRef(file);
-    t.env->DeleteLocalRef(ctx);
-    t.env->DeleteLocalRef(t.classID);
-
+    if(gInternalStoragePath.empty()) {
+        // get context
+        jobject ctx = CCUtilsAndroid::getContext();
+        
+        // get file dir
+        JniMethodInfo t;
+        JniHelper::getMethodInfo(t, "android/content/Context", "getFilesDir", "()Ljava/io/File;");
+        jobject file = t.env->CallObjectMethod(ctx, t.methodID);
+        
+        // release
+        t.env->DeleteLocalRef(t.classID);
+        
+        // get absolute path
+        JniHelper::getMethodInfo(t, "java/io/File", "getAbsolutePath", "()Ljava/lang/String;");
+        jstring path = (jstring)t.env->CallObjectMethod(file, t.methodID);
+        
+        // get c++ string
+        gInternalStoragePath = path ? JniHelper::jstring2string(path) : "/";
+        
+        // release
+        t.env->DeleteLocalRef(path);
+        t.env->DeleteLocalRef(file);
+        t.env->DeleteLocalRef(ctx);
+        t.env->DeleteLocalRef(t.classID);
+    }
+   
     // return
-    return cppPath;
+    return gInternalStoragePath;
 }
 
 bool CCUtils::hasExternalStorage() {
