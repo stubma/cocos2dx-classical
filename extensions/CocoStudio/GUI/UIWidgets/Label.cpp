@@ -86,6 +86,16 @@ const char* Label::getStringValue()
 {
     return _labelRenderer->getString();
 }
+    
+void Label::enableShadow(const CCSize &shadowOffset, unsigned int shadowColor, float shadowBlur) {
+    _labelRenderer->enableShadow(shadowOffset, shadowColor, shadowBlur);
+    labelScaleChangedWithSize();
+}
+
+void Label::enableStroke(const ccColor3B &strokeColor, float strokeSize) {
+    _labelRenderer->enableStroke(strokeColor, strokeSize);
+    labelScaleChangedWithSize();
+}
 
 int Label::getStringLength()
 {
