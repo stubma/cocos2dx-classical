@@ -1440,6 +1440,10 @@ static bool _initWithString(const char * pText, CCImage::ETextAlign eAlign, cons
         dim.width  += leftPadding + rightPadding;
         dim.height += topPadding + bottomPadding;
         
+        // ensure dimension is integer, if float, CGBitmapContextCreate will fail
+        dim.width = floorf(dim.width);
+        dim.height = floorf(dim.height);
+        
         // save shadow stroke padding
         if(outShadowStrokePadding) {
             outShadowStrokePadding->x = startX;
