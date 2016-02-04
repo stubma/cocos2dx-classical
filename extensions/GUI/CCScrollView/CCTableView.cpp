@@ -347,7 +347,7 @@ void CCTableView::_updateCellPositions() {
                 }
                 first = false;
                 pos += cellSize.height;
-                if(pos >= m_tViewSize.height) {
+                if(pos >= m_tViewSize.height - m_insets.bottom) {
                     m_viewRows = i + 1;
                     break;
                 }
