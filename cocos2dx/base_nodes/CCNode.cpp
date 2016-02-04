@@ -77,6 +77,7 @@ CCNode::CCNode(void)
 // userData is always inited as nil
 , m_pUserData(NULL)
 , m_pUserObject(NULL)
+, m_pUserObjectNR(NULL)
 , m_nScriptUserDataId(0)
 , m_pShaderProgram(NULL)
 , m_eGLServerState(ccGLServerState(0))
@@ -552,6 +553,14 @@ void CCNode::setUserObject(CCObject *pUserObject)
     CC_SAFE_RETAIN(pUserObject);
     CC_SAFE_RELEASE(m_pUserObject);
     m_pUserObject = pUserObject;
+}
+
+void CCNode::setNonRetainedUserObject(CCObject* pUserObject) {
+    m_pUserObjectNR = pUserObject;
+}
+
+CCObject* CCNode::getNonRetainedUserObject() {
+    return m_pUserObjectNR;
 }
 
 void CCNode::setShaderProgram(CCGLProgram *pShaderProgram) {

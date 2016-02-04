@@ -851,6 +851,12 @@ public:
      */
     virtual void setUserObject(CCObject *pUserObject);
     
+    /// set a user object but we don't retain it, caller must ensure the lifecycle of user object
+    virtual void setNonRetainedUserObject(CCObject* pUserObject);
+    
+    // get non retained user object, caller must ensure the object is valid
+    virtual CCObject* getNonRetainedUserObject();
+    
     /// @} end of Tag & User Data
     
     
@@ -1526,6 +1532,7 @@ protected:
     
     void *m_pUserData;                  ///< A user assingned void pointer, Can be point to any cpp object
     CCObject *m_pUserObject;            ///< A user assigned CCObject
+    CCObject* m_pUserObjectNR;  /// a user assigned CCObject which is not retained by this node
     
     int m_nScriptUserDataId;             /// script side user data id
     
