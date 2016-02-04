@@ -353,6 +353,11 @@ void CCTableView::_updateCellPositions() {
                 }
             }
             
+            // to avoid negative value
+            if(m_viewRows == -1) {
+                m_viewRows = 1;
+            }
+            
             // v pos
             pos = m_insets.top;
             first = true;
