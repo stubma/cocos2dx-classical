@@ -58,24 +58,24 @@ local function register(desc, name)
     end
     
     -- find register table by package name, if not existent, create new one
-    local func_table
+    local reg_func_table
     if all[env] then
-        func_table = all[env]
+        reg_func_table = all[env]
     else
-        func_table = {}
-        all[env] = func_table
+        reg_func_table = {}
+        all[env] = reg_func_table
     end
     
     -- save dispatcher and register, so when you call
     -- function by env.name, it actually calls dispatcher
     if env[name] then
-        assert(func_table[name])
+        assert(reg_func_table[name])
     else
-        env[name], func_table[name] = create()
+        env[name], reg_func_table[name] = create()
     end
     
     -- register function by argument chain
-    func_table[name](desc, func)
+    reg_func_table[name](desc, func)
 end
 
 --[[ 
