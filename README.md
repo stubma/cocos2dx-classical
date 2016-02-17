@@ -49,7 +49,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 * 使用c++11编译所有代码
 * 重新实现CCLabelTTF(来自cocos2dx-better的CCRichLabelTTF):
 	* 完全兼容CCLabelTTF的原有功能
-	* 支持字符串中嵌入格式控制, 包括颜色, 字体, 大小, 样式, 图片, 链接等 
+	* 支持字符串中嵌入格式控制, 包括颜色, 字体, 大小, 样式, 图片, 链接, 甚至任意节点也可以(可以参看cocos2dx-better的demo)
 	* 支持渲染外描边(原始的CCLabelTTF只能做内描边,基本没法看)
 * CocoStudio的调整
 	* 去掉了CocoStudio类的UI前缀兼容设置, 去掉了一些文件的UI前缀
@@ -133,7 +133,7 @@ Things Improved
 * fixed project 64bits compiling
 * reimplement CCLabelTTF (merge code from cocos2dx-better CCRichLabelTTF)
 	* fully compatibile with old CCLabelTTF
-	* support attibuted style, such as color, font, size, style, image, link
+	* support attibuted style, such as color, font, size, style, image, link, even CCNode can be inserted(you can view cocos2dx-better demo)
 	* support outer stroke, it is better than original CCLabelTTF which only supports inner stroke
 * polish CocoStudio
 	* remove UI prefix
