@@ -98,6 +98,15 @@ cc.EditBoxInputFlagInitialCapsWord = 2
 cc.EditBoxInputFlagInitialCapsSentence = 3
 cc.EditBoxInputFlagInitialCapsAllCharacters = 4
 
+-- edit box input mode
+cc.EditBoxInputModeAny = 0
+cc.EditBoxInputModeEmailAddr = 1
+cc.EditBoxInputModeNumeric = 2
+cc.EditBoxInputModePhoneNumber = 3
+cc.EditBoxInputModeUrl = 4
+cc.EditBoxInputModeDecimal = 5
+cc.EditBoxInputModeSingleLine = 6
+
 -- scroll view event
 cc.ScrollViewEventScroll = "scroll"
 cc.ScrollViewEventZoom = "zoom"
