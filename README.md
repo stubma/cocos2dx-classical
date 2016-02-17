@@ -50,6 +50,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 * 重新实现CCLabelTTF(来自cocos2dx-better的CCRichLabelTTF):
 	* 完全兼容CCLabelTTF的原有功能
 	* 支持字符串中嵌入格式控制, 包括颜色, 字体, 大小, 样式, 图片, 链接等 
+	* 支持渲染外描边(原始的CCLabelTTF只能做内描边,基本没法看)
 * CocoStudio的调整
 	* 去掉了CocoStudio类的UI前缀兼容设置, 去掉了一些文件的UI前缀
 	* 修正对CocoStudio Mac 1.0.0.0 beta的支持问题, 具体修改为:
@@ -133,6 +134,7 @@ Things Improved
 * reimplement CCLabelTTF (merge code from cocos2dx-better CCRichLabelTTF)
 	* fully compatibile with old CCLabelTTF
 	* support attibuted style, such as color, font, size, style, image, link
+	* support outer stroke, it is better than original CCLabelTTF which only supports inner stroke
 * polish CocoStudio
 	* remove UI prefix
 	* fix json parsing bug for CocoStudio Mac 1.0.0.0 beta, what I did:
