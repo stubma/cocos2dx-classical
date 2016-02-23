@@ -226,7 +226,7 @@ public:
      * end
      *
      * local editbox = CCEditBox:create(CCSize(...), CCScale9Sprite:create(...))
-     * editbox = registerScriptEditBoxHandler(editboxEventHandler)
+     * editbox:registerScriptEditBoxHandler(editboxEventHandler)
      * @endcode
      *
      * @param handler A number that indicates a lua function.
