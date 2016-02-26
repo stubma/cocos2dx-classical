@@ -313,6 +313,16 @@ void CCNode::setPosition(const CCPoint& newPosition)
     m_bTransformDirty = m_bInverseDirty = true;
 }
 
+void CCNode::setPositionByAnchor(const CCPoint& position, const CCPoint& anchor) {
+    CCPoint realAnchor = m_obAnchorPoint;
+    if(isIgnoreAnchorPointForPosition()) {
+        realAnchor = ccp(0, 0);
+    }
+    float dx = m_obContentSize.width * (realAnchor.x - anchor.x);
+    float dy = m_obContentSize.height * (realAnchor.y - anchor.y);
+    setPosition(position.x + dx, position.y + dy);
+}
+
 void CCNode::getPosition(float* x, float* y)
 {
     *x = m_obPosition.x;

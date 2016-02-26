@@ -304,6 +304,10 @@ public:
      * @return The position (x,y) of the node in OpenGL coordinates
      */
     virtual const CCPoint& getPosition();
+    
+    /// set position, just like this node has a different anchor
+    virtual void setPositionByAnchor(const CCPoint& position, const CCPoint& anchor);
+    
     /**
      * Sets position in a more efficient way.
      *
