@@ -42,6 +42,7 @@ CCObject::CCObject(void)
 : m_nLuaID(0)
 , m_uReference(1) // when the object is created, the reference count of it is 1
 , m_uAutoReleaseCount(0)
+, m_nScriptUserDataId(0)
 #if CC_CFLAG_MEMORY_TRACKING
 , m_tracked(false)
 #endif
@@ -70,6 +71,12 @@ CCObject::~CCObject(void)
         CCPoolManager::sharedPoolManager()->removeObject(this);
     }
 
+    // script side user data
+    if(m_nScriptUserDataId) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptUserData(m_nScriptUserDataId);
+        m_nScriptUserDataId = 0;
+    }
+    
     // if the object is referenced by Lua engine, remove it
     if (m_nLuaID)
     {
@@ -156,6 +163,18 @@ bool CCObject::isEqual(const CCObject *pObject)
 void CCObject::acceptVisitor(CCDataVisitor &visitor)
 {
     visitor.visitObject(this);
+}
+
+void CCObject::_setScriptUserData(int dataId) {
+    if(m_nScriptUserDataId) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptUserData(m_nScriptUserDataId);
+        m_nScriptUserDataId = 0;
+    }
+    m_nScriptUserDataId = dataId;
+}
+
+int CCObject::_getScriptUserData() {
+    return m_nScriptUserDataId;
 }
 
 NS_CC_END

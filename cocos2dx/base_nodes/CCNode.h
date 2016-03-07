@@ -822,18 +822,6 @@ public:
      */
     virtual void setUserData(void *pUserData);
     
-    /**
-     * Set a script side user data of this node
-     *
-     * @param dataId a reference id for script user data
-     */
-    void _setScriptUserData(int dataId);
-    
-    /**
-     * get lua reference id of lua table user data
-     */
-    int _getScriptUserData();
-    
     /** 
      * Returns a user assigned CCObject
      * 
@@ -1537,8 +1525,6 @@ protected:
     void *m_pUserData;                  ///< A user assingned void pointer, Can be point to any cpp object
     CCObject *m_pUserObject;            ///< A user assigned CCObject
     CCObject* m_pUserObjectNR;  /// a user assigned CCObject which is not retained by this node
-    
-    int m_nScriptUserDataId;             /// script side user data id
     
     CCGLProgram *m_pShaderProgram;      ///< OpenGL shader
     

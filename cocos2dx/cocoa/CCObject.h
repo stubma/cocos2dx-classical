@@ -72,6 +72,10 @@ protected:
     unsigned int        m_uReference;
     // count of autorelease
     unsigned int        m_uAutoReleaseCount;
+    
+    /// script side user data id
+    int m_nScriptUserDataId;
+    
 public:
     CCObject(void);
     static CCObject* create();
@@ -93,6 +97,18 @@ public:
     virtual void acceptVisitor(CCDataVisitor &visitor);
 
     virtual void update(float dt) {CC_UNUSED_PARAM(dt);};
+    
+    /**
+     * Set a script side user data of this node
+     *
+     * @param dataId a reference id for script user data
+     */
+    void _setScriptUserData(int dataId);
+    
+    /**
+     * get lua reference id of lua table user data
+     */
+    int _getScriptUserData();
     
     friend class CCAutoreleasePool;
 };

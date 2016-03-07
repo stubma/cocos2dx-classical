@@ -25,10 +25,10 @@
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
 
-static int lua_cocos2dx_manual_CCNode_setScriptUserData(lua_State* tolua_S) {
+static int lua_cocos2dx_manual_CCObject_setScriptUserData(lua_State* tolua_S) {
     // variables
     int argc = 0;
-    cocos2d::CCNode* cobj = nullptr;
+    cocos2d::CCObject* cobj = nullptr;
     bool ok = true;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -36,15 +36,15 @@ static int lua_cocos2dx_manual_CCNode_setScriptUserData(lua_State* tolua_S) {
     
     // if not constructor, validate the top is our desired object type
 #if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S, 1, "CCNode", 0, &tolua_err)) {
-        tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_manual_CCNode_setScriptUserData'.", &tolua_err);
+    if (!tolua_isusertype(tolua_S, 1, "CCObject", 0, &tolua_err)) {
+        tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_manual_CCObject_setScriptUserData'.", &tolua_err);
         return 0;
     }
 #endif
-    cobj = (cocos2d::CCNode*)tolua_tousertype(tolua_S, 1, 0);
+    cobj = (cocos2d::CCObject*)tolua_tousertype(tolua_S, 1, 0);
 #if COCOS2D_DEBUG >= 1
     if (!cobj) {
-        tolua_error(tolua_S, "invalid 'cobj' in function 'lua_cocos2dx_manual_CCNode_setScriptUserData'", nullptr);
+        tolua_error(tolua_S, "invalid 'cobj' in function 'lua_cocos2dx_manual_CCObject_setScriptUserData'", nullptr);
         return 0;
     }
 #endif
@@ -70,7 +70,7 @@ static int lua_cocos2dx_manual_CCNode_setScriptUserData(lua_State* tolua_S) {
         
         // if conversion is not ok, print error and return
         if(!ok) {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_manual_CCNode_setScriptUserData'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_manual_CCObject_setScriptUserData'", nullptr);
             return 0;
         }
         
@@ -80,29 +80,29 @@ static int lua_cocos2dx_manual_CCNode_setScriptUserData(lua_State* tolua_S) {
     }
     
     // if to here, means argument count is not correct
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "CCNode:setScriptUserData", argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "CCObject:setScriptUserData", argc, 1);
     return 0;
 }
 
-int lua_cocos2dx_manual_CCNode_getScriptUserData(lua_State* tolua_S) {
+int lua_cocos2dx_manual_CCObject_getScriptUserData(lua_State* tolua_S) {
     // variables
     int argc = 0;
-    cocos2d::CCNode* cobj = nullptr;
+    cocos2d::CCObject* cobj = nullptr;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 #endif
     
     // if not constructor, validate the top is our desired object type
 #if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S, 1, "CCNode", 0, &tolua_err)) {
-        tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_manual_CCNode_getScriptUserData'.", &tolua_err);
+    if (!tolua_isusertype(tolua_S, 1, "CCObject", 0, &tolua_err)) {
+        tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_manual_CCObject_getScriptUserData'.", &tolua_err);
         return 0;
     }
 #endif
-    cobj = (cocos2d::CCNode*)tolua_tousertype(tolua_S, 1, 0);
+    cobj = (cocos2d::CCObject*)tolua_tousertype(tolua_S, 1, 0);
 #if COCOS2D_DEBUG >= 1
     if (!cobj) {
-        tolua_error(tolua_S, "invalid 'cobj' in function 'lua_cocos2dx_manual_CCNode_getScriptUserData'", nullptr);
+        tolua_error(tolua_S, "invalid 'cobj' in function 'lua_cocos2dx_manual_CCObject_getScriptUserData'", nullptr);
         return 0;
     }
 #endif
@@ -123,14 +123,14 @@ int lua_cocos2dx_manual_CCNode_getScriptUserData(lua_State* tolua_S) {
     }
     
     // if to here, means argument count is not correct
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "CCNode:getScriptUserData", argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "CCObject:getScriptUserData", argc, 0);
     return 0;
 }
 
-static int lua_register_cocos2dx_manual_CCNode(lua_State* tolua_S) {
-    tolua_beginmodule(tolua_S, "CCNode");
-        tolua_function(tolua_S, "setScriptUserData", lua_cocos2dx_manual_CCNode_setScriptUserData);
-        tolua_function(tolua_S, "getScriptUserData", lua_cocos2dx_manual_CCNode_getScriptUserData);
+static int lua_register_cocos2dx_manual_CCObject(lua_State* tolua_S) {
+    tolua_beginmodule(tolua_S, "CCObject");
+        tolua_function(tolua_S, "setScriptUserData", lua_cocos2dx_manual_CCObject_setScriptUserData);
+        tolua_function(tolua_S, "getScriptUserData", lua_cocos2dx_manual_CCObject_getScriptUserData);
     tolua_endmodule(tolua_S);
     return 1;
 }
@@ -138,7 +138,7 @@ static int lua_register_cocos2dx_manual_CCNode(lua_State* tolua_S) {
 int register_all_cocos2dx_manual(lua_State* tolua_S) {
     tolua_open(tolua_S);
     tolua_beginmodule(tolua_S, nullptr);
-        lua_register_cocos2dx_manual_CCNode(tolua_S);
+        lua_register_cocos2dx_manual_CCObject(tolua_S);
     tolua_endmodule(tolua_S);
     return 1;
 }
