@@ -116,7 +116,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 	* script端的CCNotification监听方法现在可以收到额外参数
 	* 修改了extern.lua, 添加了dtor方法, 会在C++对象析构时调用. 对于纯lua对象dtor方法暂时无用.
 	* CCDirector/CCEGLView的end方法改名为terminate, 避免和lua的关键字冲突
-	* CCNode添加了set/getScriptUserData, 支持在lua端为CCNode关联一个lua table
+	* CCObject添加了set/getScriptUserData, 支持在lua端为CCObject关联一个lua table
 	* string包增加了split, tonumber, toint, tobool, empty方法
 	* table包增加了print, hasnumber, hasstring, fill, fillnew, enum方法
 	* debug包增加了addtrace, removetrace方法
@@ -200,7 +200,7 @@ Things Improved
 	* CCNotification script observer can get extra parameters now
 	* lua class add a dtor method to receive CCObject destruction event. For lua object, dtor is never called.
 	* rename CCDirector/CCEGLView end method to terminate, to avoid name conflict with lua keyword
-	* add set/getScriptUserData for CCNode so that we can associate a lua table to CCNode
+	* add set/getScriptUserData for CCObject so that we can associate a lua table to CCObject
 	* string package adds split, tonumber, toint, tobool, empty methods
 	* table package adds print, hasnumber, hasstring, fill, fillnew, enum methods
 	* debug package adds addtrace, removetrace method
