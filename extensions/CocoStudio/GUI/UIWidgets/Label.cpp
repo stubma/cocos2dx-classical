@@ -81,10 +81,18 @@ void Label::setText(const std::string& text)
     _labelRenderer->setString(text.c_str());
     labelScaleChangedWithSize();
 }
+    
+void Label::setString(const std::string& text) {
+    setText(text);
+}
 
 const char* Label::getStringValue()
 {
     return _labelRenderer->getString();
+}
+    
+const char* Label::getString() {
+    return getStringValue();
 }
     
 void Label::enableShadow(const CCSize &shadowOffset, unsigned int shadowColor, float shadowBlur) {

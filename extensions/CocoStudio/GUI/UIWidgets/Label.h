@@ -62,12 +62,18 @@ public:
      */
     void setText(const std::string& text);
     
+    // for interface compatibility
+    void setString(const std::string& text);
+    
     /**
      * Gets the string value of label.
      *
      * @return text  string value.
      */
     const char* getStringValue();
+    
+    // for interface compatibility
+    const char* getString();
     
     /**
      * Gets the string length of label.
