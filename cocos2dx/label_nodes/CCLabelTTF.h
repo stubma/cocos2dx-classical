@@ -179,6 +179,10 @@ public:
     virtual void setString(const char *label);
     virtual const char* getString(void);
     
+    /// for interface compatibility
+    void setText(const char *label);
+    const char* getText(void);
+    
     virtual void update(float delta);
     
     CCTextAlignment getHorizontalAlignment();

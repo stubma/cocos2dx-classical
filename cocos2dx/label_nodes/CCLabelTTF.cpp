@@ -223,6 +223,14 @@ const char* CCLabelTTF::getString(void)
     return m_string.c_str();
 }
 
+void CCLabelTTF::setText(const char *label) {
+    setString(label);
+}
+
+const char* CCLabelTTF::getText(void) {
+    return getString();
+}
+
 const char* CCLabelTTF::description()
 {
     return CCString::createWithFormat("<CCLabelTTF | FontName = %s, FontSize = %.1f>", m_pFontName->c_str(), m_fFontSize)->getCString();
