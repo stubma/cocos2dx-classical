@@ -144,6 +144,32 @@ struct AnimLoadTask : public CCResourceLoadTask {
     virtual void load();
 };
 
+/// animation load parameter
+/// it can specify duration for every single frame
+struct AnimLoadTask2 : public CCResourceLoadTask {
+    /// frame list
+    typedef vector<string> StringList;
+    StringList frames;
+    
+    /// duration list
+    typedef vector<float> TimeList;
+    TimeList durations;
+    
+    /// restore original frame when animate is done
+    bool restoreOriginalFrame;
+    
+    /// animation name
+    string name;
+    
+    AnimLoadTask2() :
+    restoreOriginalFrame(false) {
+    }
+    
+    virtual ~AnimLoadTask2() {}
+    
+    virtual void load();
+};
+
 /// atlas animation load parameter
 struct AtlasAnimLoadTask : public CCResourceLoadTask {
     /// frame list
@@ -440,6 +466,56 @@ public:
                                int startIndex,
                                int endIndex,
                                bool restoreOriginalFrame = false);
+    
+    /**
+     * add a animation loading task, you can specify delay for every frame
+     *
+     * @param name animation name
+     * @param pattern sprite frame pattern, something likes frame_%d.png, the parameter
+     *      must be an integer
+     * @param startIndex sprite frame pattern start index
+     * @param endIndex sprite frame pattern end index
+     * @param delayString delay time string in format "[float,float,...]"
+     * @param restoreOriginalFrame restore original frame or not
+     */
+    void addAnimByFramePatternAndVariableDelay(const string& name,
+                                               const string& pattern,
+                                               int startIndex,
+                                               int endIndex,
+                                               const string& delayString,
+                                               bool restoreOriginalFrame);
+    
+    /**
+     * add a animation loading task, you can specify delay for every frame
+     *
+     * @param name animation name
+     * @param pattern sprite frame pattern, something likes frame_%d.png, the parameter
+     *      must be an integer
+     * @param indicesString a string in format "[num,num,...]"
+     * @param delay delay time
+     * @param restoreOriginalFrame restore original frame or not
+     */
+    void addAnimByFramePatternAndVariableIndex(const string& name,
+                                               const string& pattern,
+                                               const string& indicesString,
+                                               float delay,
+                                               bool restoreOriginalFrame = false);
+    
+    /**
+     * add a animation loading task, you can specify delay for every frame
+     *
+     * @param name animation name
+     * @param pattern sprite frame pattern, something likes frame_%d.png, the parameter
+     *      must be an integer
+     * @param indicesString a string in format "[num,num,...]"
+     * @param delayString delay time string in format "[float,float,...]
+     * @param restoreOriginalFrame restore original frame or not
+     */
+    void addAnimByFramePatternAndVariableIndexDelay(const string& name,
+                                                    const string& pattern,
+                                                    const string& indicesString,
+                                                    const string& delayString,
+                                                    bool restoreOriginalFrame = false);
     
 	/// add a atlas animation loading task
 	/// the endIndex is inclusive

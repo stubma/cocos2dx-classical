@@ -39,7 +39,7 @@ void AnimLoadTask::load() {
     if(!CCAnimationCache::sharedAnimationCache()->animationByName(name.c_str())) {
         CCTextureCache* tc = CCTextureCache::sharedTextureCache();
         CCArray* array = CCArray::create();
-        int size = frames.size();
+        int size = (int)frames.size();
         for(int i = 0; i < size; i++) {
             CCTexture2D* tex = tc->addImage(frames.at(i).c_str());
             CCSpriteFrame* f = CCSpriteFrame::createWithTexture(tex, CCRectMake(0, 0, tex->getContentSizeInPixels().width, tex->getContentSizeInPixels().height));
@@ -51,11 +51,31 @@ void AnimLoadTask::load() {
     }
 }
 
+void AnimLoadTask2::load() {
+    if(!CCAnimationCache::sharedAnimationCache()->animationByName(name.c_str())) {
+        CCTextureCache* tc = CCTextureCache::sharedTextureCache();
+        CCArray* array = CCArray::create();
+        int size = (int)frames.size();
+        for(int i = 0; i < size; i++) {
+            CCTexture2D* tex = tc->addImage(frames.at(i).c_str());
+            CCSpriteFrame* f = CCSpriteFrame::createWithTexture(tex, CCRectMake(0, 0, tex->getContentSizeInPixels().width, tex->getContentSizeInPixels().height));
+            float& delay = durations.at(i);
+            CCAnimationFrame* af = new CCAnimationFrame();
+            af->initWithSpriteFrame(f, delay, NULL);
+            CC_SAFE_AUTORELEASE(af);
+            array->addObject(af);
+        }
+        CCAnimation* anim = CCAnimation::create(array, 1);
+        anim->setRestoreOriginalFrame(restoreOriginalFrame);
+        CCAnimationCache::sharedAnimationCache()->addAnimation(anim, name.c_str());
+    }
+}
+
 void AtlasAnimLoadTask2::load() {
     if(!CCAnimationCache::sharedAnimationCache()->animationByName(name.c_str())) {
         CCSpriteFrameCache* cache = CCSpriteFrameCache::sharedSpriteFrameCache();
         CCArray* array = CCArray::create();
-        int size = frames.size();
+        int size = (int)frames.size();
         for(int i = 0; i < size; i++) {
             CCSpriteFrame* sf = cache->spriteFrameByName(frames.at(i).c_str());
             float& delay = durations.at(i);
@@ -596,6 +616,88 @@ void CCResourceLoader::addAtlasAnimByFramePattern(const string& name,
 		t->frames.push_back(buf);
 	}
 	addLoadTask(t);
+}
+
+void CCResourceLoader::addAnimByFramePatternAndVariableDelay(const string& name,
+                                                             const string& pattern,
+                                                             int startIndex,
+                                                             int endIndex,
+                                                             const string& delayString,
+                                                             bool restoreOriginalFrame) {
+    AnimLoadTask2* t = new AnimLoadTask2();
+    t->name = name;
+    t->restoreOriginalFrame = restoreOriginalFrame;
+    
+    char buf[256];
+    for(int i = startIndex; i <= endIndex; i++) {
+        sprintf(buf, pattern.c_str(), i);
+        t->frames.push_back(_resolve(buf));
+    }
+    
+    CCObject* obj;
+    const CCArray& delays = CCUtils::arrayFromString(delayString);
+    CCARRAY_FOREACH(&delays, obj) {
+        CCFloat* f = (CCFloat*)obj;
+        t->durations.push_back(f->getValue());
+    }
+    
+    addLoadTask(t);
+}
+
+void CCResourceLoader::addAnimByFramePatternAndVariableIndex(const string& name,
+                                                             const string& pattern,
+                                                             const string& indicesString,
+                                                             float delay,
+                                                             bool restoreOriginalFrame) {
+    // task
+    AnimLoadTask2* t = new AnimLoadTask2();
+    t->name = name;
+    t->restoreOriginalFrame = restoreOriginalFrame;
+    
+    // frame names
+    char buf[256];
+    const CCArray& indices = CCUtils::arrayFromString(indicesString);
+    CCObject* obj;
+    CCARRAY_FOREACH(&indices, obj) {
+        sprintf(buf, pattern.c_str(), (int)((CCFloat*)obj)->getValue());
+        t->frames.push_back(_resolve(buf));
+    }
+    
+    // delay
+    for(int i = 0; i < indices.count(); i++) {
+        t->durations.push_back(delay);
+    }
+    
+    addLoadTask(t);
+}
+
+void CCResourceLoader::addAnimByFramePatternAndVariableIndexDelay(const string& name,
+                                                                  const string& pattern,
+                                                                  const string& indicesString,
+                                                                  const string& delayString,
+                                                                  bool restoreOriginalFrame) {
+    // task
+    AnimLoadTask2* t = new AnimLoadTask2();
+    t->name = name;
+    t->restoreOriginalFrame = restoreOriginalFrame;
+    
+    // frame names
+    char buf[256];
+    const CCArray& indices = CCUtils::arrayFromString(indicesString);
+    CCObject* obj;
+    CCARRAY_FOREACH(&indices, obj) {
+        sprintf(buf, pattern.c_str(), (int)((CCFloat*)obj)->getValue());
+        t->frames.push_back(_resolve(buf));
+    }
+    
+    // delays
+    const CCArray& delays = CCUtils::arrayFromString(delayString);
+    CCARRAY_FOREACH(&delays, obj) {
+        CCFloat* f = (CCFloat*)obj;
+        t->durations.push_back(f->getValue());
+    }
+    
+    addLoadTask(t);
 }
 
 void CCResourceLoader::addAtlasAnimByFramePatternAndVariableDelay(const string& name,
