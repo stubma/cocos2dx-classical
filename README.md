@@ -103,7 +103,7 @@ At the day when I switch to v3, this project will be stopped. But, I hope its co
 * Keypad事件添加了优先级支持
 * 修正了对ETC1格式贴图的支持, HelloLua演示了ETC1贴图的使用
 * Lua相关修改
-	* quick 3.x的binding generator工具移植完成, 名叫autolua, 引擎的lua绑定已经全部生成
+	* quick 3.x的binding generator工具移植完成, 名叫autolua, 引擎的lua绑定已经全部生成. 如果想要重新生成绑定, 可以到autolua目录下执行```./autolua.py cocos2dx.conf```. 这个目录下还有一个简单的test.conf可以用于测试autolua.
 	* Cocos2dxLuaLoader的逻辑被修改, 会优先从~/Library寻找lua脚本, 如果没有找到则载入app的.
 	* lua和luajit的库都已经预编译, 缺省使用luajit库, 如果想切换成lua, 可以编辑scripting/lua/Android.mk(for android)或cocos2dx/proj.ios/cocos2dx.xcodeproj(for ios)
 	* HelloLua工程修改调试通过, 在Android上已经采用gradle对HelloLua进行打包, 注意你可能需要修改local.properties上的sdk.dir/ndk.dir配置.
@@ -162,7 +162,7 @@ Things Improved
 * reimplement CCTableView(merge from cocos2dx-better CCGridView):
 	* support multi-column
 	* support cell reuse, cell can set name
-	* column or row can be different size
+	* columns or rowr can be different size
 	* support to set row spacing, col spacing and border spacing
 * add CCMeasurableProtocol class to abstract LoadingBar and CCProgressTimer, so that CProgressTo, CCProgressFromTo can be used on LoadingBar
 * CCLabelBMFont adds setLineKerning to adjust line spacing
@@ -186,8 +186,7 @@ Things Improved
 * Support setting priority for keypad event
 * Fix ETC1 texture support, HelloLua demos the usage of ETC1 texture
 * Lua related
-	* quick 3.x binding generator is migrated, renamed as autolua
-	* engine lua binding is generated
+	* quick 3.x binding generator is migrated and renamed to autolua. Engine lua binding is completely generated. If you want to re-generate it, you can execute ```./autolua.py cocos2dx.conf``` in autolua folder
 	* lua and luajit are both precompiled, by default we use luajit. if you want to use lua, you can modify scripting/lua/Android.mk(for android) or cocos2dx/proj.ios/cocos2dx.xcodeproj(for ios)
 	* HelloLua project is debugged and fine. In Android, I use gradle to package HelloLua, so you may need change sdk.dir/ndk.dir in local.properties
 	* Cocos2dxLuaLoader is modified so that it will try to load lua script from ~/Library first. If not found, load from app bundle.
@@ -209,7 +208,7 @@ Things Improved
 	* add lua decryption support in Cocos2dLuaLoader.cpp, you can set an eternal decrypt function through CCScriptEngineManager
 	* CCLuaStack.executeScriptFile supports encrypted lua file
 	
-I don't want list all new classes in cocos2dx-better. To get a overview about cocos2dx-better features, go to it and run its demo.
+I don't want to list all new classes in cocos2dx-better. To get a overview about cocos2dx-better features, go to it and run its demo.
 	
 How to use CCImagePicker
 ==========================
