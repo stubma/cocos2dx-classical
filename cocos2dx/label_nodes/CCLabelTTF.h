@@ -41,7 +41,7 @@ class CCLabelTTFLinkStateSynchronizer;
  * a '[' character, use '\' to escape.
  *
  * \par
- * CCRichLabelTFF won't perform any format validation, so you must ensure the text is
+ * CCLabelTFF won't perform any format validation, so you must ensure the text is
  * correct. If text is wrong, no warning will be shown and final result will be unpredictable.
  *
  * \par
@@ -71,7 +71,7 @@ class CCLabelTTFLinkStateSynchronizer;
  *		tag to add visual style for clickable area.
  *
  * \par
- * CCRichLabelTFF is a subclass of CCGradientSprite, so it also can set a gradient
+ * CCLabelTFF is a subclass of CCGradientSprite, so it also can set a gradient
  * effect.
  *
  * \par
