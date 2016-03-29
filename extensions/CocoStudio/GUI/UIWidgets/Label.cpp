@@ -85,6 +85,11 @@ void Label::setText(const std::string& text)
 void Label::setString(const std::string& text) {
     setText(text);
 }
+    
+void Label::setDimensions(const CCSize &dim) {
+    _labelRenderer->setDimensions(dim);
+    labelScaleChangedWithSize();
+}
 
 const char* Label::getStringValue()
 {

@@ -55,6 +55,9 @@ public:
      */
     static Label* create();
     
+    // set dimension
+    void setDimensions(const CCSize &dim);
+    
     /**
      * Changes the string value of label.
      *
