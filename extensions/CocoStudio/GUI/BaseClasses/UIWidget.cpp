@@ -105,7 +105,6 @@ bool Widget::init()
         CC_SAFE_RETAIN(_nodes);
         initRenderer();
         setBright(true);
-        ignoreContentAdaptWithSize(true);
         setAnchorPoint(CCPoint(0.5f, 0.5f));
         return true;
     }
