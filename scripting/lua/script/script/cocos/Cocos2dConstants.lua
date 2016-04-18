@@ -203,6 +203,11 @@ cc.TextAlignmentLeft = 0
 cc.TextAlignmentCenter = 1
 cc.TextAlignmentRight = 2
 
+-- layout parameter
+cc.LAYOUT_PARAMETER_NONE = 0
+cc.LAYOUT_PARAMETER_LINEAR = 1
+cc.LAYOUT_PARAMETER_RELATIVE = 2
+
 -- scrolview scrolling type
 cc.ScrollViewDirectionNone = -1
 cc.ScrollViewDirectionHorizontal = 0
