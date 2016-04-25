@@ -209,8 +209,48 @@ Things Improved
 	* CCLuaStack.executeScriptFile supports encrypted lua file
 	
 I don't want to list all new classes in cocos2dx-better. To get a overview about cocos2dx-better features, go to it and run its demo.
+
+额外说明: CCImagePicker使用方法
+=============================
+我实现了一个CCImagePicker作为通用的图片选择/拍摄接口, 支持返回任意大小的图片, 具体可以看cocos2dx-better里的demo, 至少我觉得还是相当好用的. 在iOS里不需要什么配置, 直接用就行. 在Android上, 需要配置一下:
+
+* 在AndroidManifest.xml注册activity, 屏幕朝向你可以自己选择, 横竖都支持.
+
+```
+<activity
+    android:name="org.cocos2dx.lib.cropimage.CropImage"
+    android:configChanges="keyboardHidden|orientation"
+    android:screenOrientation="portrait"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+</activity>
+<activity
+    android:name="org.cocos2dx.lib.ImagePickerActivity"
+    android:configChanges="keyboardHidden|orientation"
+    android:screenOrientation="portrait"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+</activity>
+```
+
+* 添加相机的权限
+
+```
+<uses-permission android:name="android.permission.CAMERA" />
+```
+
+* 添加相机的特性需求
+
+```
+<uses-feature
+    android:name="android.hardware.camera"
+    android:required="false" />
+<uses-feature
+    android:name="android.hardware.camera.front"
+    android:required="false" />
+```
+
+OK了. 具体使用参考cocos2dx-better的demo.
 	
-How to use CCImagePicker
+Extra: How to use CCImagePicker
 ==========================
 There is a CCImagePicker merged from cocos2dx-better, it can take image from camera or album and return it in any size. It is very handy, but you need more setup before using it. In iOS, just use it. In Android, don't forget to config something:
 * register activities in AndroidManifest.xml, below is an example, you can change some attribute if you like, such as screenOrientation.
