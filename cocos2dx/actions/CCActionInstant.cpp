@@ -441,6 +441,10 @@ CCCallFunc::~CCCallFunc(void)
     CC_SAFE_RELEASE(m_pSelectorTarget);
 }
 
+void CCCallFunc::releaseLoopRetain(CCObject* srcObj) {
+    // nothing to do because it doesn't hold anything
+}
+
 CCObject * CCCallFunc::copyWithZone(CCZone *pZone) {
     CCZone* pNewZone = NULL;
     CCCallFunc* pRet = NULL;
@@ -605,11 +609,21 @@ void CCCallFuncND::execute() {
 // CCCallFuncO
 //
 CCCallFuncO::CCCallFuncO() :
-        m_pObject(NULL) {
+m_pObject(NULL),
+m_needRelease(true) {
 }
 
 CCCallFuncO::~CCCallFuncO() {
-    CC_SAFE_RELEASE(m_pObject);
+    if(m_needRelease) {
+        CC_SAFE_RELEASE(m_pObject);
+    }
+}
+
+void CCCallFuncO::releaseLoopRetain(CCObject* srcObj) {
+    if(m_needRelease && m_pObject == srcObj) {
+        CC_SAFE_RELEASE(m_pObject);
+        m_needRelease = false;
+    }
 }
 
 void CCCallFuncO::execute() {

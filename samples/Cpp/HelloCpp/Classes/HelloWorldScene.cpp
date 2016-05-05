@@ -56,8 +56,9 @@ bool HelloWorld::init()
     // add a label shows "Hello World"
     // create and initialize a label
     
-    CCLabelTTF* pLabel = CCLabelTTF::create("Hello World", "Arial", TITLE_FONT_SIZE);
+    CCLabelTTF* pLabel = CCLabelTTF::create("Hello [link bg_click=ffff3300][u]World[/u][/link]", "Arial", TITLE_FONT_SIZE);
     pLabel->enableShadow(CCSizeMake(2.5, 2.5), 0xff333333, 1);
+    pLabel->setLinkTargetForAll(CCCallFuncO::create(this, callfuncO_selector(HelloWorld::removeLabel), pLabel));
     
     // position the label on the center of the screen
     pLabel->setPosition(ccp(origin.x + visibleSize.width/2,
@@ -76,6 +77,11 @@ bool HelloWorld::init()
     this->addChild(pSprite, 0);
     
     return true;
+}
+
+void HelloWorld::removeLabel(CCObject* pSender)
+{
+    ((CCNode*)pSender)->removeFromParent();
 }
 
 void HelloWorld::menuCloseCallback(CCObject* pSender)

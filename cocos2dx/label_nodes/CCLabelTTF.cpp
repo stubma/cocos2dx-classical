@@ -728,15 +728,21 @@ ccFontDefinition CCLabelTTF::_prepareTextDefinition(bool adjustForResolution)
 }
 
 void CCLabelTTF::setLinkTarget(int index, CCCallFunc* func) {
-    char buf[64];
-    sprintf(buf, "%d", index);
-    m_linkTargets.setObject(func, buf);
+    if(func) {
+        char buf[64];
+        sprintf(buf, "%d", index);
+        m_linkTargets.setObject(func, buf);
+        func->releaseLoopRetain(this);
+    }
 }
 
 void CCLabelTTF::setLinkTargetForAll(CCCallFunc* func) {
     CC_SAFE_RETAIN(func);
     CC_SAFE_RELEASE(m_defaultTarget);
     m_defaultTarget = func;
+    if(func) {
+        func->releaseLoopRetain(this);
+    }
 }
 
 void CCLabelTTF::onLinkMenuItemClicked(CCObject* sender) {
@@ -765,6 +771,9 @@ void CCLabelTTF::startLoopDisplay(float interval, unsigned int repeat, int delay
     CC_SAFE_RETAIN(loopFunc);
     CC_SAFE_RELEASE(m_loopFunc);
     m_loopFunc = loopFunc;
+    if(loopFunc) {
+        loopFunc->releaseLoopRetain(this);
+    }
     
     // init state, because we can't display one char, so at the beginning we hide it
     setVisible(false);

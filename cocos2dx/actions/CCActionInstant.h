@@ -360,6 +360,12 @@ public:
     }
     
     inline ccScriptFunction& getScriptHandler() { return m_nScriptHandler; }
+    
+    /**
+     * Perform a retain check. If this callfunc had retained an object same as
+     * the srcObj, it will be released to avoid loop reference
+     */
+    virtual void releaseLoopRetain(CCObject* srcObj);
 
 protected:
     /** Target that will be called */
@@ -521,7 +527,8 @@ public:
      */
     virtual CCObject* copyWithZone(CCZone *pZone);
     virtual void execute();
-
+    virtual void releaseLoopRetain(CCObject* srcObj);
+    
     inline CCObject* getObject()
     {
         return m_pObject;
@@ -540,6 +547,9 @@ public:
 protected:
     /** object to be passed as argument */
     CCObject* m_pObject;
+    
+    /** is object need to be released */
+    bool m_needRelease;
 };
 
 // end of actions group

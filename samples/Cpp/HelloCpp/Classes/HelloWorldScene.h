@@ -14,6 +14,7 @@ public:
     
     // a selector callback
     void menuCloseCallback(CCObject* pSender);
+    void removeLabel(CCObject* pSender);
     
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);
