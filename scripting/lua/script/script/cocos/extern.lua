@@ -101,12 +101,12 @@ function class(classname, super)
 end
 
 -- bridge p to c, so that key not found in c will be redirected to p
-function bridge(c, p)
+function bridge(c, proxyKey)
     c.class.__index = function(t, k)
         if t.class[k] ~= nil then
             return t.class[k]
         else
-            return p[k]
+            return t[proxyKey][k]
         end
     end
 end
