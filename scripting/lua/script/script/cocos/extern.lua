@@ -100,6 +100,19 @@ function class(classname, super)
     return cls
 end
 
+-- bridge p to c, so that key not found in c will be redirected to p
+function bridge(c, p)
+    c.class.__index = function(t, k)
+        if t.class[k] ~= nil then
+            return t.class[k]
+        elseif p[k] ~= nil then
+            return p[k]
+        else
+            return nil
+        end
+    end
+end
+
 -- reverse iterate a table
 function ripairs(t)
     local max = 1
