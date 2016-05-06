@@ -105,10 +105,8 @@ function bridge(c, p)
     c.class.__index = function(t, k)
         if t.class[k] ~= nil then
             return t.class[k]
-        elseif p[k] ~= nil then
-            return p[k]
         else
-            return nil
+            return p[k]
         end
     end
 end
