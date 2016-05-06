@@ -23,7 +23,7 @@ local CC_INHERITED_FROM_NATIVE_CLASS = 1
 local CC_INHERITED_FROM_LUA = 2
 function class(classname, super)
     local superType = type(super)
-    local cls
+    local cls = {}
 
     if superType ~= "function" and superType ~= "table" then
         superType = nil
@@ -43,9 +43,6 @@ function class(classname, super)
     end
 
     if superType == "function" or (super and super.__ctype == CC_INHERITED_FROM_NATIVE_CLASS) then
-        -- inherited from native C++ Object
-        cls = {}
-
         if superType == "table" then
             -- copy fields from super
             for k,v in pairs(super) do cls[k] = v end
@@ -79,6 +76,8 @@ function class(classname, super)
         if super then
             cls = clone(super)
             cls.super = super
+        else
+            cls.super = {}
         end
 
         cls.ctor = function() end
