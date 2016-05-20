@@ -407,8 +407,8 @@ CCPoint CCScrollView::maxContainerOffset()
 
 CCPoint CCScrollView::minContainerOffset()
 {
-    return ccp(m_tViewSize.width - m_pContainer->getContentSize().width*m_pContainer->getScaleX(), 
-               m_tViewSize.height - m_pContainer->getContentSize().height*m_pContainer->getScaleY());
+    return ccp(MIN(0, m_tViewSize.width - m_pContainer->getContentSize().width*m_pContainer->getScaleX()),
+               MIN(0, m_tViewSize.height - m_pContainer->getContentSize().height*m_pContainer->getScaleY()));
 }
 
 void CCScrollView::deaccelerateScrolling(float dt)
