@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "LoadingBar.h"
-#include "../../../GUI/CCControlExtension/CCScale9Sprite.h"
+#include "sprite_nodes/CCScale9Sprite.h"
 
 NS_CC_BEGIN
 
@@ -118,7 +118,7 @@ void LoadingBar::loadTexture(const char* texture,TextureResType texType)
         case UI_TEX_TYPE_LOCAL:
             if (_scale9Enabled)
             {
-                extension::CCScale9Sprite* barRendererScale9 = static_cast<extension::CCScale9Sprite*>(_barRenderer);
+                CCScale9Sprite* barRendererScale9 = static_cast<CCScale9Sprite*>(_barRenderer);
                 barRendererScale9->initWithFile(texture);
                 barRendererScale9->setCapInsets(_capInsets);
             }
@@ -130,7 +130,7 @@ void LoadingBar::loadTexture(const char* texture,TextureResType texType)
         case UI_TEX_TYPE_PLIST:
             if (_scale9Enabled)
             {
-                extension::CCScale9Sprite* barRendererScale9 = static_cast<extension::CCScale9Sprite*>(_barRenderer);
+                CCScale9Sprite* barRendererScale9 = static_cast<CCScale9Sprite*>(_barRenderer);
                 barRendererScale9->initWithSpriteFrameName(texture);
                 barRendererScale9->setCapInsets(_capInsets);
             }
@@ -176,7 +176,7 @@ void LoadingBar::setScale9Enabled(bool enabled)
     _barRenderer = NULL;
     if (_scale9Enabled)
     {
-        _barRenderer = extension::CCScale9Sprite::create();
+        _barRenderer = CCScale9Sprite::create();
     }
     else
     {
@@ -210,7 +210,7 @@ void LoadingBar::setCapInsets(const CCRect &capInsets)
     {
         return;
     }
-    static_cast<extension::CCScale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
+    static_cast<CCScale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
 }
     
 const CCRect& LoadingBar::getCapInsets()
@@ -330,7 +330,7 @@ void LoadingBar::barRendererScaleChangedWithSize()
 void LoadingBar::setScale9Scale()
 {
     float width = (float)(_percent) / 100.0f * _totalLength;
-    static_cast<extension::CCScale9Sprite*>(_barRenderer)->setPreferredSize(CCSize(width, _size.height));
+    static_cast<CCScale9Sprite*>(_barRenderer)->setPreferredSize(CCSize(width, _size.height));
 }
 
 void LoadingBar::updateTextureColor()

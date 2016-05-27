@@ -921,6 +921,7 @@ protected:
     int                m_nNextFrame;
     CCSpriteFrame*  m_pOrigFrame;
        unsigned int    m_uExecutedLoops;
+    bool m_isNinePatch;
 };
 
 /** Overrides the target of an action so that it always runs on the target

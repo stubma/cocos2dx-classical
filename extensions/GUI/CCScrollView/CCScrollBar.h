@@ -29,7 +29,7 @@
 #include "ExtensionMacros.h"
 #include "CCScrollView.h"
 #include "CocoStudio/GUI/UIWidgets/ScrollWidget/ScrollView.h"
-#include "GUI/CCControlExtension/CCScale9Sprite.h"
+#include "sprite_nodes/CCScale9Sprite.h"
 
 USING_NS_CC_EXT;
 using namespace cocos2d::ui;

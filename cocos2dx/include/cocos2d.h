@@ -192,6 +192,7 @@ THE SOFTWARE.
 #include "sprite_nodes/CCAnimation.h"
 #include "sprite_nodes/CCAnimationCache.h"
 #include "sprite_nodes/CCSprite.h"
+#include "sprite_nodes/CCScale9Sprite.h"
 #include "sprite_nodes/CCSpriteBatchNode.h"
 #include "sprite_nodes/CCSpriteFrame.h"
 #include "sprite_nodes/CCSpriteFrameCache.h"

@@ -29,9 +29,8 @@ THE SOFTWARE.
 #define __CCScale9Sprite_H__
 
 #include "cocos2d.h"
-#include "../../ExtensionMacros.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
 /**
  * @addtogroup GUI
@@ -95,6 +94,7 @@ protected:
     CCSprite* _bottomLeft;
     CCSprite* _bottom;
     CCSprite* _bottomRight;
+    CCSpriteFrame* m_spriteFrame;
 
     bool _opacityModifyRGB;
     GLubyte _opacity;
@@ -318,6 +318,7 @@ public:
     virtual bool updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, bool rotated, CCRect capInsets);
 
     virtual void setSpriteFrame(CCSpriteFrame * spriteFrame);
+    virtual CCSpriteFrame* getSpriteFrame();
     
     virtual void updateDisplayedOpacity(GLubyte parentOpacity);
     virtual void updateDisplayedColor(const cocos2d::ccColor3B& parentColor);
@@ -327,6 +328,6 @@ public:
 /// @}
 /// @}
 
-NS_CC_EXT_END
+NS_CC_END
 
 #endif // __CCScale9Sprite_H__

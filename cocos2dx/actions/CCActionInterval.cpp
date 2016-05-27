@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include "CCActionInterval.h"
 #include "sprite_nodes/CCSprite.h"
+#include "sprite_nodes/CCScale9Sprite.h"
 #include "base_nodes/CCNode.h"
 #include "cocoa/CCPointExtension.h"
 #include "CCStdC.h"
@@ -2410,6 +2411,7 @@ CCAnimate::CCAnimate()
 : m_pAnimation(NULL)
 , m_pSplitTimes(new std::vector<float>)
 , m_nNextFrame(0)
+, m_isNinePatch(false)
 , m_pOrigFrame(NULL)
 , m_uExecutedLoops(0)
 {
@@ -2426,13 +2428,17 @@ CCAnimate::~CCAnimate()
 void CCAnimate::startWithTarget(CCNode *pTarget)
 {
     CCActionInterval::startWithTarget(pTarget);
-    CCSprite *pSprite = (CCSprite*)(pTarget);
+    m_isNinePatch = dynamic_cast<CCScale9Sprite*>(pTarget);
 
-    CC_SAFE_RELEASE(m_pOrigFrame);
+    CC_SAFE_RELEASE_NULL(m_pOrigFrame);
 
     if (m_pAnimation->getRestoreOriginalFrame())
     {
-        m_pOrigFrame = pSprite->displayFrame();
+        if(!m_isNinePatch) {
+            m_pOrigFrame = ((CCSprite*)pTarget)->displayFrame();
+        } else {
+            m_pOrigFrame = ((CCScale9Sprite*)pTarget)->getSpriteFrame();
+        }
         CC_SAFE_RETAIN(m_pOrigFrame);
     }
     m_nNextFrame = 0;
@@ -2443,7 +2449,14 @@ void CCAnimate::stop(void)
 {
     if (m_pAnimation->getRestoreOriginalFrame() && m_pTarget)
     {
-        ((CCSprite*)(m_pTarget))->setDisplayFrame(m_pOrigFrame);
+        if(!m_isNinePatch) {
+            ((CCSprite*)m_pTarget)->setDisplayFrame(m_pOrigFrame);
+        } else {
+            CCScale9Sprite* np = (CCScale9Sprite*)m_pTarget;
+            CCSize ps = np->getPreferredSize();
+            np->setSpriteFrame(m_pOrigFrame);
+            np->setPreferredSize(ps);
+        }
     }
 
     CCActionInterval::stop();
@@ -2476,7 +2489,14 @@ void CCAnimate::update(float t)
         if( splitTime <= t ) {
             CCAnimationFrame* frame = (CCAnimationFrame*)frames->objectAtIndex(i);
             frameToDisplay = frame->getSpriteFrame();
-            ((CCSprite*)m_pTarget)->setDisplayFrame(frameToDisplay);
+            if(!m_isNinePatch) {
+                ((CCSprite*)m_pTarget)->setDisplayFrame(frameToDisplay);
+            } else {
+                CCScale9Sprite* np = (CCScale9Sprite*)m_pTarget;
+                CCSize ps = np->getPreferredSize();
+                np->setSpriteFrame(frameToDisplay);
+                np->setPreferredSize(ps);
+            }
 
             CCDictionary* dict = frame->getUserInfo();
             if( dict )

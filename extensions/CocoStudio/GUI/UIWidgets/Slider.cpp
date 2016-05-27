@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "Slider.h"
-#include "../../../GUI/CCControlExtension/CCScale9Sprite.h"
+#include "sprite_nodes/CCScale9Sprite.h"
 
 NS_CC_BEGIN
 
@@ -124,7 +124,7 @@ void Slider::loadBarTexture(const char* fileName, TextureResType texType)
         case UI_TEX_TYPE_LOCAL:
             if (_scale9Enabled)
             {
-                static_cast<extension::CCScale9Sprite*>(_barRenderer)->initWithFile(fileName);
+                static_cast<CCScale9Sprite*>(_barRenderer)->initWithFile(fileName);
             }
             else
             {
@@ -134,7 +134,7 @@ void Slider::loadBarTexture(const char* fileName, TextureResType texType)
         case UI_TEX_TYPE_PLIST:
             if (_scale9Enabled)
             {
-                static_cast<extension::CCScale9Sprite*>(_barRenderer)->initWithSpriteFrameName(fileName);
+                static_cast<CCScale9Sprite*>(_barRenderer)->initWithSpriteFrameName(fileName);
             }
             else
             {
@@ -162,7 +162,7 @@ void Slider::loadProgressBarTexture(const char *fileName, TextureResType texType
         case UI_TEX_TYPE_LOCAL:
             if (_scale9Enabled)
             {
-                static_cast<extension::CCScale9Sprite*>(_progressBarRenderer)->initWithFile(fileName);
+                static_cast<CCScale9Sprite*>(_progressBarRenderer)->initWithFile(fileName);
             }
             else
             {
@@ -172,7 +172,7 @@ void Slider::loadProgressBarTexture(const char *fileName, TextureResType texType
         case UI_TEX_TYPE_PLIST:
             if (_scale9Enabled)
             {
-                static_cast<extension::CCScale9Sprite*>(_progressBarRenderer)->initWithSpriteFrameName(fileName);
+                static_cast<CCScale9Sprite*>(_progressBarRenderer)->initWithSpriteFrameName(fileName);
             }
             else
             {
@@ -202,8 +202,8 @@ void Slider::setScale9Enabled(bool able)
     _progressBarRenderer = NULL;
     if (_scale9Enabled)
     {
-        _barRenderer = extension::CCScale9Sprite::create();
-        _progressBarRenderer = extension::CCScale9Sprite::create();
+        _barRenderer = CCScale9Sprite::create();
+        _progressBarRenderer = CCScale9Sprite::create();
     }
     else
     {
@@ -255,7 +255,7 @@ void Slider::setCapInsetsBarRenderer(const CCRect &capInsets)
     {
         return;
     }
-    static_cast<extension::CCScale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
+    static_cast<CCScale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
 }
     
 const CCRect& Slider::getCapInsetBarRenderer()
@@ -270,7 +270,7 @@ void Slider::setCapInsetProgressBarRebderer(const CCRect &capInsets)
     {
         return;
     }
-    static_cast<extension::CCScale9Sprite*>(_progressBarRenderer)->setCapInsets(capInsets);
+    static_cast<CCScale9Sprite*>(_progressBarRenderer)->setCapInsets(capInsets);
 }
     
 const CCRect& Slider::getCapInsetProgressBarRebderer()
@@ -367,7 +367,7 @@ void Slider::setPercent(int percent)
     _slidBallRenderer->setPosition(CCPoint(-_barLength/2.0f + dis, 0.0f));
     if (_scale9Enabled)
     {
-        static_cast<extension::CCScale9Sprite*>(_progressBarRenderer)->setPreferredSize(CCSize(dis,_progressBarTextureSize.height));
+        static_cast<CCScale9Sprite*>(_progressBarRenderer)->setPreferredSize(CCSize(dis,_progressBarTextureSize.height));
     }
     else
     {
@@ -464,7 +464,7 @@ void Slider::barRendererScaleChangedWithSize()
         _barLength = _size.width;
         if (_scale9Enabled)
         {
-            static_cast<extension::CCScale9Sprite*>(_barRenderer)->setPreferredSize(_size);
+            static_cast<CCScale9Sprite*>(_barRenderer)->setPreferredSize(_size);
         }
         else
         {
@@ -500,7 +500,7 @@ void Slider::progressBarRendererScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            static_cast<extension::CCScale9Sprite*>(_progressBarRenderer)->setPreferredSize(_size);
+            static_cast<CCScale9Sprite*>(_progressBarRenderer)->setPreferredSize(_size);
             _progressBarTextureSize = _progressBarRenderer->getContentSize();
         }
         else

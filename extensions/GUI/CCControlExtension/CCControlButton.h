@@ -32,7 +32,7 @@
 
 #include "CCControl.h"
 #include "CCInvocation.h"
-#include "CCScale9Sprite.h"
+#include "sprite_nodes/CCScale9Sprite.h"
 
 NS_CC_EXT_BEGIN
 

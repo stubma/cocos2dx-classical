@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "CCScale9Sprite.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
 enum positions
 {
@@ -51,6 +51,7 @@ CCScale9Sprite::CCScale9Sprite()
 , m_bSpriteFrameRotated(false)
 , m_positionsAreDirty(false)
 , _scale9Image(NULL)
+, m_spriteFrame(NULL)
 , _topLeft(NULL)
 , _top(NULL)
 , _topRight(NULL)
@@ -79,6 +80,7 @@ CCScale9Sprite::~CCScale9Sprite()
     CC_SAFE_RELEASE(_bottom);
     CC_SAFE_RELEASE(_bottomRight);
     CC_SAFE_RELEASE(_scale9Image);
+    CC_SAFE_RELEASE(m_spriteFrame);
 }
 
 bool CCScale9Sprite::init()
@@ -97,6 +99,11 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
     {
         this->updateWithBatchNode(batchnode, rect, rotated, capInsets);
         this->setAnchorPoint(ccp(0.5f, 0.5f));
+        
+        // save sprite frame
+        m_spriteFrame = CCSpriteFrame::createWithTexture(batchnode->getTexture(), rect);
+        m_spriteFrame->setRotated(rotated);
+        CC_SAFE_RETAIN(m_spriteFrame);
     }
     this->m_positionsAreDirty = true;
     
@@ -756,6 +763,15 @@ void CCScale9Sprite::setSpriteFrame(CCSpriteFrame * spriteFrame)
     this->m_insetTop = 0;
     this->m_insetRight = 0;
     this->m_insetBottom = 0;
+    
+    // save sprite frame
+    CC_SAFE_RETAIN(spriteFrame);
+    CC_SAFE_RELEASE(m_spriteFrame);
+    m_spriteFrame = spriteFrame;
+}
+
+CCSpriteFrame* CCScale9Sprite::getSpriteFrame() {
+    return m_spriteFrame;
 }
 
 float CCScale9Sprite::getInsetLeft()
@@ -862,4 +878,4 @@ GLubyte CCScale9Sprite::getOpacity()
 	return _opacity;
 }
 
-NS_CC_EXT_END
+NS_CC_END

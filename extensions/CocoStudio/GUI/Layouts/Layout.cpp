@@ -24,7 +24,7 @@
 
 #include "Layout.h"
 #include "../System/UIHelper.h"
-#include "../../../GUI/CCControlExtension/CCScale9Sprite.h"
+#include "sprite_nodes/CCScale9Sprite.h"
 
 NS_CC_BEGIN
 
@@ -491,7 +491,7 @@ void Layout::onSizeChanged()
         _backGroundImage->setPosition(CCPoint(_size.width/2.0f, _size.height/2.0f));
         if (_backGroundScale9Enabled && _backGroundImage)
         {
-            static_cast<extension::CCScale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
+            static_cast<CCScale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
         }
     }
     if (_colorRender)
@@ -515,7 +515,7 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
     _backGroundScale9Enabled = able;
     if (_backGroundScale9Enabled)
     {
-        _backGroundImage = extension::CCScale9Sprite::create();
+        _backGroundImage = CCScale9Sprite::create();
         CCNode::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
     else
@@ -546,7 +546,7 @@ void Layout::setBackGroundImage(const char* fileName,TextureResType texType)
     _bgImageTexType = texType;
     if (_backGroundScale9Enabled)
     {
-        extension::CCScale9Sprite* bgiScale9 = static_cast<extension::CCScale9Sprite*>(_backGroundImage);
+        CCScale9Sprite* bgiScale9 = static_cast<CCScale9Sprite*>(_backGroundImage);
         switch (_bgImageTexType)
         {
             case UI_TEX_TYPE_LOCAL:
@@ -584,7 +584,7 @@ void Layout::setBackGroundImageCapInsets(const CCRect &capInsets)
     _backGroundImageCapInsets = capInsets;
     if (_backGroundScale9Enabled && _backGroundImage)
     {
-        static_cast<extension::CCScale9Sprite*>(_backGroundImage)->setCapInsets(capInsets);
+        static_cast<CCScale9Sprite*>(_backGroundImage)->setCapInsets(capInsets);
     }
 }
 
@@ -631,9 +631,9 @@ void Layout::addBackGroundImage()
 {
     if (_backGroundScale9Enabled)
     {
-        _backGroundImage = extension::CCScale9Sprite::create();
+        _backGroundImage = CCScale9Sprite::create();
         CCNode::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
-        static_cast<extension::CCScale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
+        static_cast<CCScale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
     }
     else
     {

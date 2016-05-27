@@ -24,7 +24,7 @@
 
 #include "ListView.h"
 #include "../../System/UIHelper.h"
-#include "../../../../GUI/CCControlExtension/CCScale9Sprite.h"
+#include "sprite_nodes/CCScale9Sprite.h"
 
 NS_CC_UI_BEGIN
     
