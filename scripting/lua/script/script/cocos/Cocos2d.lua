@@ -210,7 +210,11 @@ function cc.sizeMul(s1, factor)
 end
 
 function cc.sizeAdd(s1, dw, dh)
-    return cc.size(s1.width + dw, s1.height + dh)
+    if dh == nil and type(dw) == "table" then
+        return cc.size(s1.width + dw.width, s1.height + dw.height)
+    else
+        return cc.size(s1.width + dw, s1.height + dh)
+    end
 end
 
 -- Rect
