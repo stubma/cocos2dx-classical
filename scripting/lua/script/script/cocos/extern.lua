@@ -100,13 +100,22 @@ function class(classname, super)
     return cls
 end
 
--- bridge p to c, so that key not found in c will be redirected to p
-function bridge(c, proxyKey)
-    c.class.__index = function(t, k)
-        if t.class[k] ~= nil then
-            return t.class[k]
-        else
-            return t[proxyKey][k]
+-- bridge accessor invocation to a bean member
+function bridgeAccessor(srcClass, beanClass, beanName, postSet)
+    for k,v in pairs(beanClass) do
+        if type(v) == "function" then
+            if string.startswith(k, "is") or string.startswith(k, "get") then
+                srcClass[k] = function(instance, ...)
+                    return v(instance[beanName], ...)
+                end
+            elseif string.startswith(k, "set") then
+                srcClass[k] = function(instance, ...)
+                    v(instance[beanName], ...)
+                    if postSet ~= nil then
+                        postSet(instance)
+                    end
+                end
+            end
         end
     end
 end
