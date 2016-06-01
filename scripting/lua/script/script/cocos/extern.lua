@@ -104,7 +104,9 @@ end
 function bridgeAccessor(srcClass, beanClass, beanName, postSet)
     for k,v in pairs(beanClass) do
         if type(v) == "function" then
-            if string.startswith(k, "is") or string.startswith(k, "get") then
+            if string.startswith(k, "is") or
+                string.startswith(k, "get") or
+                string.startswith(k, "has") then
                 srcClass[k] = function(instance, ...)
                     return v(instance[beanName], ...)
                 end
