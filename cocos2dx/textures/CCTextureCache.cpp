@@ -706,9 +706,8 @@ void CCTextureCache::removeTexture(CCTexture2D* texture)
     }
 
     CCArray* keys = m_pTextures->allKeysForObject(texture);
-    m_pTextures->removeObjectsForKeys(keys);
 
-    // remove etc alpha
+    // remove alpha texture if it is etc texture
     if(texture->isETC()) {
         CCArray* alphaKeys = CCArray::create();
         CCObject* obj;
@@ -718,6 +717,9 @@ void CCTextureCache::removeTexture(CCTexture2D* texture)
         }
         m_pTextures->removeObjectsForKeys(alphaKeys);
     }
+    
+    // remove texture from cache
+    m_pTextures->removeObjectsForKeys(keys);
 }
 
 void CCTextureCache::removeTextureForKey(const char *textureKeyName)
