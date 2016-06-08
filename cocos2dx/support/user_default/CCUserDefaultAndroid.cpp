@@ -488,7 +488,6 @@ void CCUserDefault::purgeDefaultForKey(const std::string& key) {
     t.env->DeleteLocalRef(clazz);
     t.env->DeleteLocalRef(pn);
     t.env->DeleteLocalRef(jKey);
-    t.env->DeleteLocalRef(ctx);
     t.env->DeleteLocalRef(pref);
     t.env->DeleteLocalRef(edit);
     t.env->DeleteLocalRef(t.classID);

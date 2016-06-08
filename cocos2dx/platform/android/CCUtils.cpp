@@ -107,7 +107,6 @@ string CCUtils::getPackageName() {
 
 	// release
 	t.env->ReleaseStringUTFChars(packageName, cpn);
-    t.env->DeleteLocalRef(ctx);
     t.env->DeleteLocalRef(t.classID);
 
 	// return
@@ -137,7 +136,6 @@ string CCUtils::getInternalStoragePath() {
         // release
         t.env->DeleteLocalRef(path);
         t.env->DeleteLocalRef(file);
-        t.env->DeleteLocalRef(ctx);
         t.env->DeleteLocalRef(t.classID);
     }
    
@@ -237,7 +235,6 @@ static jbyteArray getFirstSignatureBytes() {
 	jbyteArray certificate = (jbyteArray)t.env->CallObjectMethod(signature, t.methodID);
 
     // release
-    t.env->DeleteLocalRef(ctx);
     t.env->DeleteLocalRef(packageManager);
     t.env->DeleteLocalRef(packageName);
     t.env->DeleteLocalRef(packageInfo);
@@ -461,7 +458,6 @@ string CCUtils::getAppVersion() {
     string ver = JniHelper::jstring2string(jVer);
                                            
     // release
-    t.env->DeleteLocalRef(ctx);
     t.env->DeleteLocalRef(packageManager);
     t.env->DeleteLocalRef(packageInfo);
     t.env->DeleteLocalRef(piClass);
