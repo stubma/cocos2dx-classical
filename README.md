@@ -5,9 +5,9 @@
 
 我觉得2.x仍然还有价值, 同时3.x并不让我感到多大兴趣. 实际上cocos2d作为一个2d引擎, 还有很多不完善的地方, 相信无数的人已经在2.x时代踩过了很多的坑, 也不得不自己去填上这些坑, 我也一样, 为了填这些坑, 我创建了cocos2dx-better项目, 把这些坑通过外挂的方式填掉, 但是总有一些坑, 外挂解决不了, 只能改原始代码. 对于我个人而言, 目前更需要一个好用的2.x, 而不是一个有未知新坑的3.x.
 
-另外, 我日常使用mac, 主要做iOS和Android开发, 所以其它的平台我都会删掉. 
+另外, 我日常使用mac, 主要做iOS和Android开发, 所以其它的平台我都会删掉. 我也删掉了很多没用的东西, 比如没用的工具, 没用的模板, 没用的插件, 没用的脚本, 没用的sample, 要创建新项目就复制个HelloLua改改就完啦! cocos2dx最大的优点就是简单, 我就是要把这玩意搞简单点, 当然我一个人也维护不了那么多没用的玩意儿, 也是为了减负.
 
-所以, 如果你正好也是一个Mac/iOS/Android开发者, 也正好还在使用cocos2dx 2.x, 不妨可以看几眼.
+所以, 如果你正好也是一个iOS/Android开发者, 也正好还在使用cocos2dx 2.x, 不妨可以看几眼.
 
 What is this
 ===
@@ -15,6 +15,8 @@ What is this
 It is a customized cocos2dx, based on latest code of cocos2dx v2 branch. Its purpose is creating a classical cocos2dx branch. I created it because cocos2dx already gave up v2 but v2 is still valuable to me. v3 doesn't interest me much because it may have more bugs. So I need a better v2, not a creepy v3.
 
 To get a better v2, I created a cocos2dx-better project to overcome limitations of v2. Now I start this project to merge cocos2dx-better code to v2 branch, and more.
+
+I deleted many useless stuff so you may find the directory structure is very different with original cocos2dx. Yes, I want it simple, and simplicity is the best virtue of cocos2dx. If you want to create a new project, just copy HelloLua! I don't need any script to do that because cocos2dx is so simple. Of coz I don't want to maintain a whole bunch of garbage. I can't do that on my own.
 
 I care about iOS/Android only so other platform implementation will be deleted. Are you same with me? If so, take a look at this project.
 
@@ -35,12 +37,12 @@ Purpose
 
 何时结束
 ===
-等有一天我也开始使用3.x的时候, 这个项目就结束了, 即使到了那一天, 我也希望这个项目留下了一个好用的2.x. 就像名字希望的一样, 这会成为cocos2dx的古典经典版.
+可能某天就结束了吧, 估计我也不会去用cocos2dx 3.x, 从触控的尿性和水平来看, cocos2dx没什么前途, 让我的版本成为经典吧! 有新项目还是玩玩unity吧.
 
 Everything that has a beginning has an end
 ===
 
-At the day when I switch to v3, this project will be stopped. But, I hope its corpse is still valuable to somebody because it is better than v2 corpse.
+Maybe it ends at some day, and I won't touch cocos2dx 3.x because I don't think it has a future. All Hail 2.x! All Hail Classical! Go play Unity.
 
 这些年, 已经填过的坑
 ===
