@@ -416,7 +416,10 @@ CCCallFunc * CCCallFunc::create(ccScriptFunction nHandler)
 
 bool CCCallFunc::initWithTarget(CCObject* pSelectorTarget) {
     CC_SAFE_RETAIN(pSelectorTarget);
-    CC_SAFE_RELEASE(m_pSelectorTarget);
+    if(m_needReleaseTarget) {
+        CC_SAFE_RELEASE(m_pSelectorTarget);
+    }
+    m_needReleaseTarget = true;
     m_pSelectorTarget = pSelectorTarget;
     return true;
 }
@@ -428,6 +431,7 @@ bool CCCallFunc::initWithScriptTarget(ccScriptFunction& func) {
 
 CCCallFunc::CCCallFunc()
 : m_pSelectorTarget(NULL)
+, m_needReleaseTarget(true)
 , m_pCallFunc(NULL)
 {
     memset(&m_nScriptHandler, 0, sizeof(ccScriptFunction));
@@ -438,7 +442,16 @@ CCCallFunc::~CCCallFunc(void)
     if (m_nScriptHandler.handler) {
         cocos2d::CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nScriptHandler.handler);
     }
-    CC_SAFE_RELEASE(m_pSelectorTarget);
+    if(m_needReleaseTarget) {
+        CC_SAFE_RELEASE(m_pSelectorTarget);
+    }
+}
+
+void CCCallFunc::makeWeak() {
+    if(m_needReleaseTarget) {
+        m_needReleaseTarget = false;
+        CC_SAFE_RELEASE(m_pSelectorTarget);
+    }
 }
 
 void CCCallFunc::releaseLoopRetain(CCObject* srcObj) {

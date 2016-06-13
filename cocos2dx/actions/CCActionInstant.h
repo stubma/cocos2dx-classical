@@ -366,10 +366,16 @@ public:
      * the srcObj, it will be released to avoid loop reference
      */
     virtual void releaseLoopRetain(CCObject* srcObj);
+    
+    /// weak retain target
+    virtual void makeWeak();
 
 protected:
     /** Target that will be called */
     CCObject*   m_pSelectorTarget;
+    
+    /// true means we need release target
+    bool m_needReleaseTarget;
 
 	ccScriptFunction m_nScriptHandler;
 

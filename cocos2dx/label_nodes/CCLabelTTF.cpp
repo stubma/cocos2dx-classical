@@ -733,6 +733,7 @@ void CCLabelTTF::setLinkTarget(int index, CCCallFunc* func) {
         sprintf(buf, "%d", index);
         m_linkTargets.setObject(func, buf);
         func->releaseLoopRetain(this);
+        func->makeWeak();
     }
 }
 
@@ -742,6 +743,7 @@ void CCLabelTTF::setLinkTargetForAll(CCCallFunc* func) {
     m_defaultTarget = func;
     if(func) {
         func->releaseLoopRetain(this);
+        func->makeWeak();
     }
 }
 
