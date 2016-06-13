@@ -1,0 +1,22 @@
+//
+// Prefix header for all source files of the 'HelloWorld' target in the 'HelloWorld' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+#endif
+
+#ifdef __cplusplus
+    #include "cocos2d.h"
+    #include "cocos-ext.h"
+    #include "SimpleAudioEngine.h"
+
+    USING_NS_CC;
+    USING_NS_CC_EXT;
+    using namespace std;
+    using namespace CocosDenshion;
+    using namespace cocos2d::ui;
+
+    #include "jsoncpp.h"
+#endif
