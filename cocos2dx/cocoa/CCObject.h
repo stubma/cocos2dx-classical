@@ -110,6 +110,9 @@ public:
      */
     int _getScriptUserData();
     
+    /// get lua id
+    int getLuaID();
+    
     friend class CCAutoreleasePool;
 };
 

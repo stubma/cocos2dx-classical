@@ -177,4 +177,8 @@ int CCObject::_getScriptUserData() {
     return m_nScriptUserDataId;
 }
 
+int CCObject::getLuaID() {
+    return m_nLuaID;
+}
+
 NS_CC_END
