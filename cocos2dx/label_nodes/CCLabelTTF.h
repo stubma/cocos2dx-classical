@@ -254,6 +254,16 @@ public:
      */
     void startLoopDisplay(float interval, unsigned int repeat = 0, int delay = 0, CCCallFunc* loopFunc = NULL);
     
+    /**
+     * show label characters one by one, just like talking or dialog mode.
+     *
+     * @param func script side callback
+     * @param interval the interval of char display speed
+     * @param repeat repeat times, by default it is zero, means no repeat. kCCRepeatForever means repeat forever
+     * @param delay delay time before this animation, by default it is zero
+     */
+    void startLoopDisplayWithScriptHandler(ccScriptFunction& func, float interval, unsigned int repeat = 0, int delay = 0);
+    
     /// stop displaying label char by char, reset to normal state
     void stopLoopDisplay();
     
@@ -317,6 +327,9 @@ protected:
     
     // callfunc of startLoopDisplay
     CCCallFunc* m_loopFunc;
+    
+    // script side loop callback
+    ccScriptFunction m_scriptLoopFunc;
     
     // elapsed time, used for color transition effect
     float m_elapsed;

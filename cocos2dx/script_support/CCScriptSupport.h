@@ -234,7 +234,7 @@ public:
      * @param func script funcation, if target is not null, it will be passed as first argument
      * @param pEventName event name
      */
-    virtual int executeEvent(ccScriptFunction& func, const char* pEventName, CCObject* collector = NULL, SEL_ScriptReturnedValueCollector sel = NULL) = 0;
+    virtual int executeEvent(ccScriptFunction& func, const char* pEventName = NULL, CCObject* collector = NULL, SEL_ScriptReturnedValueCollector sel = NULL) = 0;
     
     /** 
      * function for c++ call back lua funtion 

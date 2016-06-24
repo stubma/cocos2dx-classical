@@ -133,7 +133,7 @@ public:
     virtual int executeAccelerometerEvent(ccScriptFunction& func, CCAcceleration* pAccelerationValue);
     
     /// common event
-    virtual int executeEvent(ccScriptFunction& func, const char* pEventName, CCObject* collector = NULL, SEL_ScriptReturnedValueCollector sel = NULL);
+    virtual int executeEvent(ccScriptFunction& func, const char* pEventName = NULL, CCObject* collector = NULL, SEL_ScriptReturnedValueCollector sel = NULL);
     
     virtual int executeEventWithArgs(ccScriptFunction& func, CCArray* pArgs, CCObject* collector = NULL, SEL_ScriptReturnedValueCollector sel = NULL);
 

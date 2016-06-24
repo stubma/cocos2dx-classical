@@ -70,12 +70,16 @@ m_defaultTarget(NULL),
 m_loopFunc(NULL),
 m_textChanging(true) {
     m_stateListener = new CCLabelTTFLinkStateSynchronizer(this);
+    memset(&m_scriptLoopFunc, 0, sizeof(ccScriptFunction));
 }
 
 CCLabelTTF::~CCLabelTTF() {
     CC_SAFE_DELETE(m_pFontName);
     CC_SAFE_RELEASE(m_loopFunc);
     CC_SAFE_RELEASE(m_defaultTarget);
+    if (m_scriptLoopFunc.handler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_scriptLoopFunc.handler);
+    }
     
     // release callfunc
     CCMenu* menu = (CCMenu*)getChildByTag(TAG_MENU);
@@ -786,6 +790,22 @@ void CCLabelTTF::startLoopDisplay(float interval, unsigned int repeat, int delay
     schedule(schedule_selector(CCLabelTTF::displayNextChar), interval, kCCRepeatForever, delay);
 }
 
+void CCLabelTTF::startLoopDisplayWithScriptHandler(ccScriptFunction& func, float interval, unsigned int repeat, int delay) {
+    // save script handler
+    if (m_scriptLoopFunc.handler) {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_scriptLoopFunc.handler);
+    }
+    m_scriptLoopFunc = func;
+    
+    // init state, because we can't display one char, so at the beginning we hide it
+    setVisible(false);
+    m_toCharIndex = 0;
+    m_repeat = repeat;
+    
+    // schedule update
+    schedule(schedule_selector(CCLabelTTF::displayNextChar), interval, kCCRepeatForever, delay);
+}
+
 void CCLabelTTF::stopLoopDisplay() {
     // unschedule
     unschedule(schedule_selector(CCLabelTTF::displayNextChar));
@@ -815,8 +835,12 @@ void CCLabelTTF::displayNextChar(float delta) {
     // check complete
     if(m_toCharIndex >= m_realLength) {
         // callback
-        if(m_loopFunc)
+        if(m_loopFunc) {
             m_loopFunc->execute();
+        }
+        if(m_scriptLoopFunc.handler) {
+            CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_scriptLoopFunc);
+        }
         
         // if repeat, reset
         // if not, restore state and release callback

@@ -241,11 +241,16 @@ int CCLuaEngine::executeAccelerometerEvent(ccScriptFunction& func, CCAcceleratio
 }
 
 int CCLuaEngine::executeEvent(ccScriptFunction& func, const char* pEventName, CCObject* collector, SEL_ScriptReturnedValueCollector sel) {
+    int argc = 0;
     if(func.target) {
         m_stack->pushCCObject(func.target, getLuaTypeNameByTypeId(typeid(*func.target).name()));
+        argc++;
     }
-    m_stack->pushString(pEventName);
-    int ret = m_stack->executeFunctionByHandler(func.handler, func.target ? 2 : 1, collector, sel);
+    if(pEventName) {
+        m_stack->pushString(pEventName);
+        argc++;
+    }
+    int ret = m_stack->executeFunctionByHandler(func.handler, argc, collector, sel);
     m_stack->clean();
     return ret;
 }
