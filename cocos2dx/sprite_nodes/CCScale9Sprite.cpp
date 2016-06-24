@@ -169,7 +169,7 @@ bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect re
     if ( m_capInsetsInternal.equals(CCRectZero) )
     {
         // CCLog("... cap insets not specified : using default cap insets ...");
-        m_capInsetsInternal = CCRectMake(w/3, h/3, w/3, h/3);
+        m_capInsetsInternal = CCRectMake(w/2, h/2, 1, 1);
     }
 
     float left_w = m_capInsetsInternal.origin.x;
