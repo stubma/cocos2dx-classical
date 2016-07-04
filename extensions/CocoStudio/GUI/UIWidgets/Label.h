@@ -77,6 +77,7 @@ public:
     
     // for interface compatibility
     const char* getString();
+    const char* getText();
     
     /**
      * Gets the string length of label.

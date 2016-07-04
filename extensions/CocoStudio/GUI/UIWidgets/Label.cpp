@@ -100,6 +100,10 @@ const char* Label::getString() {
     return getStringValue();
 }
     
+const char* Label::getText() {
+    return getStringValue();
+}
+    
 void Label::enableShadow(const CCSize &shadowOffset, unsigned int shadowColor, float shadowBlur) {
     _labelRenderer->enableShadow(shadowOffset, shadowColor, shadowBlur);
     labelScaleChangedWithSize();
