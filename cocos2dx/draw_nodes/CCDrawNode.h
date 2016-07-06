@@ -47,7 +47,7 @@ class CC_DLL CCDrawNode : public CCNode
 protected:
     unsigned int    m_uBufferCapacity;
     GLsizei         m_nBufferCount;
-    ccV2F_C4B_T2F   *m_pBuffer;
+    ccV2F_C4F_T2F   *m_pBuffer;
     
     ccBlendFunc     m_sBlendFunc;
     
