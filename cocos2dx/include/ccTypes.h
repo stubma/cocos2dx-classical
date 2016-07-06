@@ -416,6 +416,17 @@ typedef struct _ccV2F_C4F_T2F
     ccTex2F            texCoords;
 } ccV2F_C4F_T2F;
 
+//! A Triangle of ccV2F_C4B_T2F
+typedef struct _ccV2F_C4F_T2F_Triangle
+{
+    //! Point A
+    ccV2F_C4F_T2F a;
+    //! Point B
+    ccV2F_C4F_T2F b;
+    //! Point B
+    ccV2F_C4F_T2F c;
+} ccV2F_C4F_T2F_Triangle;
+
 //! a Point with a vertex point, a tex coord point and a color 4B
 typedef struct _ccV3F_C4B_T2F
 {
