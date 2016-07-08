@@ -4,7 +4,7 @@ string = string or {}
 function string.split(s, sep)
     local parts = {}
     local len = string.len(s)
-    local sepByte = string.byte(sep, 1)
+    local sepByte = string.byte(sep and sep or ",", 1)
     local start = 0
     local i = 1
     while i <= len do
