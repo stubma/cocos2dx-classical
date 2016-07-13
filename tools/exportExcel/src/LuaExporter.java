@@ -173,6 +173,9 @@ public class LuaExporter extends BaseExporter {
 					.append("\tend\n");
 			}
 		}
+
+		// __index__ field
+		lfile.append("\tself.__index__ = string.toint(item[\"__index__\"])\n");
 		
 		// close initWithValue and start initWithId
 		lfile.append("\treturn true\n")
@@ -235,6 +238,9 @@ public class LuaExporter extends BaseExporter {
 				lfile.append("\tv[\"" + firstCapital(field) + "\"] = self.m_" + firstLowercase(field) + "\n");	
 			}
 		}
+
+		// __index__ field
+		lfile.append("\tv[\"__index__\"] = self.__index__\n");	
 		
 		// close toValue
 		lfile.append("\treturn v\n")
@@ -331,6 +337,11 @@ public class LuaExporter extends BaseExporter {
 					.append("end\n");
 			}
 		}
+
+		// __index__ field getter, no setter
+		lfile.append("\nfunction " + className + ":__getIndex__()\n")
+			.append("\treturn self.__index__\n")
+			.append("end\n");
 		
 		try {
 			File dstFile = new File(outputDir, className + ".lua");
