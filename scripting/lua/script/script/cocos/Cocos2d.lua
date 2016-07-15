@@ -436,25 +436,31 @@ function cc.safeAutoRelease(obj)
     end
 end
 
-function cc.simulateClick(n)
-    if tolua.isa(n, "Widget") then
+function cc.simulateClick(referNode, dstNode)
+    if tolua.isa(referNode, "Widget") then
+        local n = dstNode and dstNode or referNode
         n:pushDownEvent()
         n:releaseUpEvent()
-    elseif tolua.isa(n, "CCMenuItem") then
-        local pos = n:convertToWorldSpace(cc.p(n:getContentSize().width / 2,
-        n:getContentSize().height / 2))
+    elseif tolua.isa(referNode, "CCMenuItem") then
+        local pos = referNode:convertToWorldSpace(cc.p(referNode:getContentSize().width / 2, referNode:getContentSize().height / 2))
         local touch = CCTouch:create()
         touch:setTouchInfo(0, pos.x, display.winSize.height - pos.y)
-        local menu = n:getParent()
+        local menu = referNode:getParent()
         menu:ccTouchBegan(touch, nil)
         menu:ccTouchEnded(touch, nil)
-    elseif tolua.isa(n, "CCTableViewCell") then
-        local pos = n:convertToWorldSpace(cc.p(n:getContentSize().width / 2,
-        n:getContentSize().height / 2));
+    elseif tolua.isa(referNode, "CCTableViewCell") then
+        local pos = referNode:convertToWorldSpace(cc.p(referNode:getContentSize().width / 2, referNode:getContentSize().height / 2))
         local touch = CCTouch:create()
         touch:setTouchInfo(0, pos.x, display.winSize.height - pos.y)
-        local table = n:getParent():getParent()
+        local table = referNode:getParent():getParent()
         table:ccTouchBegan(touch, nil)
         table:ccTouchEnded(touch, nil)
+    elseif tolua.isa(referNode, "CCLayer") then
+        local pos = referNode:convertToWorldSpace(cc.p(referNode:getContentSize().width / 2, referNode:getContentSize().height / 2))
+        local touch = CCTouch:create()
+        touch:setTouchInfo(0, pos.x, display.winSize.height - pos.y)
+        local n = dstNode and dstNode or referNode
+        n:ccTouchBegan(touch, nil)
+        n:ccTouchEnded(touch, nil)
     end
 end
