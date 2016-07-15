@@ -1324,6 +1324,9 @@ static bool _initWithString(const char * pText, CCImage::ETextAlign eAlign, cons
                                            kCTFontAttributeName,
                                            font);
         }
+        
+        // shadow offset is treated as point in cocoa, so we need multiple with native scale
+        float nativeScale = [UIScreen mainScreen].scale;
 	       
         // set paragraph style, including line spacing and alignment
         CTTextAlignment alignment = kCTLeftTextAlignment;
@@ -1337,11 +1340,13 @@ static bool _initWithString(const char * pText, CCImage::ETextAlign eAlign, cons
             default:
                 break;
         }
+        CGFloat asc = CTFontGetSize(defaultFont);
+        CGFloat desc = CTFontGetDescent(defaultFont);
+        CGFloat leading = CTFontGetLeading(defaultFont);
+        CGFloat lineMultiple = 1 + pInfo->lineSpacing / nativeScale / (asc + desc + leading);
         CTParagraphStyleSetting paraSettings[] = {
             { kCTParagraphStyleSpecifierAlignment, sizeof(alignment), &alignment},
-            { kCTParagraphStyleSpecifierLineSpacingAdjustment, sizeof(CGFloat), &CCPointZero.x },
-            { kCTParagraphStyleSpecifierMaximumLineSpacing, sizeof(CGFloat), &pInfo->lineSpacing },
-            { kCTParagraphStyleSpecifierMinimumLineSpacing, sizeof(CGFloat), &pInfo->lineSpacing }
+            { kCTParagraphStyleSpecifierLineHeightMultiple, sizeof(CGFloat), &lineMultiple }
         };
         CTParagraphStyleRef paraStyle = CTParagraphStyleCreate(paraSettings,
                                                                sizeof(paraSettings) / sizeof(paraSettings[0]));
@@ -1413,9 +1418,6 @@ static bool _initWithString(const char * pText, CCImage::ETextAlign eAlign, cons
             leftPadding = rightPadding = ceilf(pInfo->strokeSize);
             topPadding = bottomPadding = ceilf(pInfo->strokeSize);
         }
-        
-        // shadow offset is treated as point in cocoa, so we need multiple with native scale
-        float nativeScale = [UIScreen mainScreen].scale;
         
         // compute padding needed by shadow, choose the max one
         // however, shadow is a one side so we need add stroke for another side
