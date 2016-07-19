@@ -1948,9 +1948,15 @@ bool luaval_to_arrayref(lua_State* L,int lo, CCArray* outValue, const char* func
 }
 
 bool luaval_to_array(lua_State* L, int lo, CCArray** outValue, const char* funcName) {
-    CCArray* arr =  CCArray::create();
-    bool ret = luaval_to_arrayref(L, lo, arr, funcName);
-    *outValue = arr;
+    bool ret;
+    if(lua_isnil(L, lo)) {
+        *outValue = NULL;
+        ret = true;
+    } else {
+        CCArray* arr =  CCArray::create();
+        ret = luaval_to_arrayref(L, lo, arr, funcName);
+        *outValue = arr;
+    }
     return ret;
 }
 
@@ -2037,9 +2043,15 @@ bool luaval_to_dictionaryref(lua_State* L, int lo, CCDictionary* outValue, const
 }
 
 bool luaval_to_dictionary(lua_State* L,int lo, CCDictionary** outValue, const char* funcName) {
-    CCDictionary* dict = CCDictionary::create();
-    bool ret = luaval_to_dictionaryref(L, lo, dict, funcName);
-    *outValue = dict;
+    bool ret;
+    if(lua_isnil(L, lo)) {
+        *outValue = NULL;
+        ret = true;
+    } else {
+        CCDictionary* dict = CCDictionary::create();
+        ret = luaval_to_dictionaryref(L, lo, dict, funcName);
+        *outValue = dict;
+    }
     return ret;
 }
 
