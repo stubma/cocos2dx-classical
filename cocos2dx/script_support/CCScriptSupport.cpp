@@ -37,6 +37,9 @@ bool CC_DLL cc_assert_script_compatible(const char *msg)
 
 NS_CC_BEGIN
 
+// a global null handler
+const ccScriptFunction CC_NULL_SCRIPT_HANDLER = { NULL, 0 };
+
  #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 // #pragma mark -
 // #pragma mark CCScriptHandlerEntry

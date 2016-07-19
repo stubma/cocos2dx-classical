@@ -55,6 +55,7 @@ typedef struct {
     CCObject* target;
     unsigned int handler;
 } ccScriptFunction;
+extern const ccScriptFunction CC_NULL_SCRIPT_HANDLER;
 
 // to collect returned value from script function
 typedef void (CCObject::*SEL_ScriptReturnedValueCollector)();
