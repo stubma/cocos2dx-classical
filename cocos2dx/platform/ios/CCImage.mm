@@ -735,81 +735,79 @@ static void coverUndisplayedCharacters(CGContextRef context, CTFrameRef frame, i
 }
 
 static void renderEmbededImages(CGContextRef context, CTFrameRef frame, unichar* plain, SpanList& spans, vector<CCRect>& imageRects) {
-    if([s_imageMap count] > 0) {
-        // get line count and their origin
-        CFArrayRef linesArray = CTFrameGetLines(frame);
-        CFIndex lineCount = CFArrayGetCount(linesArray);
-        CGPoint* origin = (CGPoint*)malloc(sizeof(CGPoint) * lineCount);
-        CTFrameGetLineOrigins(frame, CFRangeMake(0, 0), origin);
+    // get line count and their origin
+    CFArrayRef linesArray = CTFrameGetLines(frame);
+    CFIndex lineCount = CFArrayGetCount(linesArray);
+    CGPoint* origin = (CGPoint*)malloc(sizeof(CGPoint) * lineCount);
+    CTFrameGetLineOrigins(frame, CFRangeMake(0, 0), origin);
+    
+    // iterate every line
+    for (CFIndex i = 0; i < lineCount; i++) {
+        // get line character range
+        CTLineRef line = (CTLineRef)CFArrayGetValueAtIndex(linesArray, i);
+        CFRange range = CTLineGetStringRange(line);
         
-        // iterate every line
-        for (CFIndex i = 0; i < lineCount; i++) {
-            // get line character range
-            CTLineRef line = (CTLineRef)CFArrayGetValueAtIndex(linesArray, i);
-            CFRange range = CTLineGetStringRange(line);
-            
-            // find image placeholder
-            CFIndex end = range.location + range.length;
-            for(CFIndex j = range.location; j < end; j++) {
-                // if placeholder matched, render this image
-                if(plain[j] == 0xfffc) {
-                    // get offset
-                    CGFloat offsetX = CTLineGetOffsetForStringIndex(line, j, NULL);
-                    
-                    // get span, if one image span matched index, draw the image
-                    for(SpanList::iterator iter = spans.begin(); iter != spans.end(); iter++) {
-                        Span& span = *iter;
-                        if(span.type == IMAGE && !span.close && span.pos == j) {
-                            UIImage* image = nil;
-                            if(span.frame) {
-                                image = extractFrameFromAtlas(span.atlas, span.frame);
-                            } else {
-                                NSString* imageName = [NSString stringWithCString:span.imageName
-                                                                         encoding:NSUTF8StringEncoding];
-                                image = [s_imageMap objectForKey:imageName];
-                            }
-                            
-                            // if image is got, render, if not, just save rect
-                            if(image) {
-                                CGRect rect = CGRectMake(offsetX + origin[i].x,
-                                                         origin[i].y + span.offsetY,
-                                                         span.width != 0 ? span.width : (image.size.width * span.scaleX),
-                                                         span.height != 0 ? span.height : (image.size.height * span.scaleY));
-                                
-                                
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-                                CGContextDrawImage(context, rect, image.CGImage);
-#else
-                                CGImageRef cgImage = [image CGImageForProposedRect:NULL
-                                                                           context:[NSGraphicsContext currentContext]
-                                                                             hints:nil];
-                                CGContextDrawImage(context, rect, cgImage);
-                                CGImageRelease(cgImage);
-#endif
-                                
-                                // save rect
-                                imageRects.push_back(CCRectMake(rect.origin.x,
-                                                                rect.origin.y,
-                                                                rect.size.width,
-                                                                rect.size.height));
-                            } else {
-                                // save rect
-                                imageRects.push_back(CCRectMake(offsetX + origin[i].x,
-                                                                origin[i].y + span.offsetY,
-                                                                span.width,
-                                                                span.height));
-                            }
-                            
-                            break;
+        // find image placeholder
+        CFIndex end = range.location + range.length;
+        for(CFIndex j = range.location; j < end; j++) {
+            // if placeholder matched, render this image
+            if(plain[j] == 0xfffc) {
+                // get offset
+                CGFloat offsetX = CTLineGetOffsetForStringIndex(line, j, NULL);
+                
+                // get span, if one image span matched index, draw the image
+                for(SpanList::iterator iter = spans.begin(); iter != spans.end(); iter++) {
+                    Span& span = *iter;
+                    if(span.type == IMAGE && !span.close && span.pos == j) {
+                        UIImage* image = nil;
+                        if(span.frame) {
+                            image = extractFrameFromAtlas(span.atlas, span.frame);
+                        } else {
+                            NSString* imageName = [NSString stringWithCString:span.imageName
+                                                                     encoding:NSUTF8StringEncoding];
+                            image = [s_imageMap objectForKey:imageName];
                         }
+                        
+                        // if image is got, render, if not, just save rect
+                        if(image) {
+                            CGRect rect = CGRectMake(offsetX + origin[i].x,
+                                                     origin[i].y + span.offsetY,
+                                                     span.width != 0 ? span.width : (image.size.width * span.scaleX),
+                                                     span.height != 0 ? span.height : (image.size.height * span.scaleY));
+                            
+                            
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+                            CGContextDrawImage(context, rect, image.CGImage);
+#else
+                            CGImageRef cgImage = [image CGImageForProposedRect:NULL
+                                                                       context:[NSGraphicsContext currentContext]
+                                                                         hints:nil];
+                            CGContextDrawImage(context, rect, cgImage);
+                            CGImageRelease(cgImage);
+#endif
+                            
+                            // save rect
+                            imageRects.push_back(CCRectMake(rect.origin.x,
+                                                            rect.origin.y,
+                                                            rect.size.width,
+                                                            rect.size.height));
+                        } else {
+                            // save rect
+                            imageRects.push_back(CCRectMake(offsetX + origin[i].x,
+                                                            origin[i].y + span.offsetY,
+                                                            span.width,
+                                                            span.height));
+                        }
+                        
+                        break;
                     }
                 }
             }
         }
-        
-        // free origin
-        free(origin);
     }
+    
+    // free origin
+    free(origin);
 }
 
 static void extractLinkMeta(CTFrameRef frame, SpanList& spans, LinkMetaList& linkMetas) {
