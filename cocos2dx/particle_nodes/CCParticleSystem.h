@@ -303,6 +303,8 @@ public:
     virtual bool isActive();
     virtual bool isBlendAdditive();
     virtual void setBlendAdditive(bool value);
+    
+    virtual void forceEndColorSameAsStartColor(bool flag);
 //////////////////////////////////////////////////////////////////////////
     
     /** start size in pixels of each particle */
@@ -358,6 +360,7 @@ public:
     */
 protected:
     bool m_bIsAutoRemoveOnFinish;
+    bool m_bForceEndColorSameAsStartColor;
 public:
     virtual bool isAutoRemoveOnFinish();
     virtual void setAutoRemoveOnFinish(bool var);

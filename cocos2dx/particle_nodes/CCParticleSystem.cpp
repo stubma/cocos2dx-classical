@@ -116,6 +116,7 @@ CCParticleSystem::CCParticleSystem()
 , m_ePositionType(kCCPositionTypeFree)
 , m_bIsAutoRemoveOnFinish(false)
 , m_nEmitterMode(kCCParticleModeGravity)
+, m_bForceEndColorSameAsStartColor(false)
 {
     modeA.gravity = CCPointZero;
     modeA.speed = 0;
@@ -486,10 +487,14 @@ void CCParticleSystem::initParticle(tCCParticle* particle)
     start.a = clampf(m_tStartColor.a + m_tStartColorVar.a * CCRANDOM_MINUS1_1(), 0, 1);
 
     ccColor4F end;
-    end.r = clampf(m_tEndColor.r + m_tEndColorVar.r * CCRANDOM_MINUS1_1(), 0, 1);
-    end.g = clampf(m_tEndColor.g + m_tEndColorVar.g * CCRANDOM_MINUS1_1(), 0, 1);
-    end.b = clampf(m_tEndColor.b + m_tEndColorVar.b * CCRANDOM_MINUS1_1(), 0, 1);
-    end.a = clampf(m_tEndColor.a + m_tEndColorVar.a * CCRANDOM_MINUS1_1(), 0, 1);
+    if(m_bForceEndColorSameAsStartColor) {
+        end = start;
+    } else {
+        end.r = clampf(m_tEndColor.r + m_tEndColorVar.r * CCRANDOM_MINUS1_1(), 0, 1);
+        end.g = clampf(m_tEndColor.g + m_tEndColorVar.g * CCRANDOM_MINUS1_1(), 0, 1);
+        end.b = clampf(m_tEndColor.b + m_tEndColorVar.b * CCRANDOM_MINUS1_1(), 0, 1);
+        end.a = clampf(m_tEndColor.a + m_tEndColorVar.a * CCRANDOM_MINUS1_1(), 0, 1);
+    }
 
     particle->color = start;
     particle->deltaColor.r = (end.r - start.r) / particle->timeToLive;
@@ -1348,6 +1353,9 @@ void CCParticleSystem::setScaleY(float newScaleY)
     CCNode::setScaleY(newScaleY);
 }
 
+void CCParticleSystem::forceEndColorSameAsStartColor(bool flag) {
+    m_bForceEndColorSameAsStartColor = flag;
+}
+
 
 NS_CC_END
-
