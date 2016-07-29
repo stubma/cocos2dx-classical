@@ -324,6 +324,16 @@ function cc.c4f( _r,_g,_b,_a )
     return { r = _r, g = _g, b = _b, a = _a }
 end
 
+-- color conversion from c4b to c4f
+function cc.c4b2c4f(c)
+    return cc.c4f(c.r / 255.0, c.g / 255.0, c.b / 255.0, c.a / 255.0)
+end
+
+-- color conversion from c4f to c4b
+function cc.c4f2c4b(c)
+    return cc.c4b(math.floor(c.r * 255.0), math.floor(c.g * 255.0), math.floor(c.b * 255.0), math.floor(c.a * 255.0))
+end
+
 --Vertex2F
 function cc.v2f(_x,_y)
     return { x = _x, y = _y }
