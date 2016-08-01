@@ -11,3 +11,7 @@ end
 function cc.r2d(r)
     return r * 57.29577951
 end
+
+function cc.clamp(v, min, max)
+    return math.min(math.max(v, min), max)
+end
