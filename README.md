@@ -92,6 +92,7 @@ Maybe it ends at some day, and I won't touch cocos2dx 3.x because I don't think 
 * CCSpriteBatchNode的insertQuadFromSprite, updateQuadFromSprite, addSpriteWithoutQuad改为public
 * CCScrollView增加getTouchPoint方法获得最后一次点击位置
 * 修正CCScrollView的isNodeVisible方法
+* 改进了CCScrollView的bounce效果
 * CCRepeatForever覆盖stop方法, 停掉内部动作
 * copy()返回的对象不再需要release
 * setShaderProgram可以设置参数, 从而支持多个节点使用同一个shader但参数不同
@@ -179,6 +180,7 @@ Things Improved
 * CCScrollView.setContentOffsetInDuration will ensure offset is in bound
 * CCScrollView adds getNodeFullyVisibleOffset method
 * fix CCScrollView isNodeVisible method
+* Improve CCScrollView bounce effect
 * CCRepeatForever override stop method
 * setShaderProgram can specify uniform values so that one shader can be shared by many nodes
 * CCNode adds nodeToAncestorTransform, ancestorToNodeTransform, convertToParentSpace, convertToParentSpaceAR
