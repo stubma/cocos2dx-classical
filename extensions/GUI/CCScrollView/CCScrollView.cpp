@@ -420,40 +420,42 @@ void CCScrollView::deaccelerateScrolling(float dt)
     }
     
     float newX, newY;
-    CCPoint maxInset, minInset;
+    CCPoint maxOffset = maxContainerOffset();
+    CCPoint minOffset = minContainerOffset();
     
-    m_pContainer->setPosition(ccpAdd(m_pContainer->getPosition(), m_tScrollDistance));
-    
-    if (m_bBounceable)
-    {
-        maxInset = m_fMaxInset;
-        minInset = m_fMinInset;
-    }
-    else
-    {
-        maxInset = this->maxContainerOffset();
-        minInset = this->minContainerOffset();
+    // damping fling
+    CCPoint dampedScrollDistance = m_tScrollDistance;
+    if(m_bBounceable) {
+        CCPoint damping = getBounceDamping();
+        dampedScrollDistance.y = dampedScrollDistance.y / damping.y;
+        dampedScrollDistance.x = dampedScrollDistance.x / damping.x;
     }
     
-    //check to see if offset lies within the inset bounds
-    newX     = MIN(m_pContainer->getPosition().x, maxInset.x);
-    newX     = MAX(newX, minInset.x);
-    newY     = MIN(m_pContainer->getPosition().y, maxInset.y);
-    newY     = MAX(newY, minInset.y);
+    // update container position with damped distance
+    m_pContainer->setPosition(ccpAdd(m_pContainer->getPosition(), dampedScrollDistance));
     
+    // current position
     newX = m_pContainer->getPosition().x;
     newY = m_pContainer->getPosition().y;
     
-    m_tScrollDistance     = ccpSub(m_tScrollDistance, ccp(newX - m_pContainer->getPosition().x, newY - m_pContainer->getPosition().y));
-    m_tScrollDistance     = ccpMult(m_tScrollDistance, SCROLL_DEACCEL_RATE);
-    this->setContentOffset(ccp(newX,newY));
+    // damping real distance
+    m_tScrollDistance = ccpMult(m_tScrollDistance, SCROLL_DEACCEL_RATE);
     
-    if ((fabsf(m_tScrollDistance.x) <= SCROLL_DEACCEL_DIST &&
-         fabsf(m_tScrollDistance.y) <= SCROLL_DEACCEL_DIST) ||
-        newY > maxInset.y || newY < minInset.y ||
-        newX > maxInset.x || newX < minInset.x ||
-        newX == maxInset.x || newX == minInset.x ||
-        newY == maxInset.y || newY == minInset.y)
+    // will trigger scroll event
+    setContentOffset(ccp(newX,newY));
+    
+    // if not bounceable, end fling when out of bound
+    if(!m_bBounceable) {
+        if(newY >= maxOffset.y || newY <= minOffset.y) {
+            m_tScrollDistance.y = 0;
+        }
+        if(newX >= maxOffset.x || newX <= minOffset.x) {
+            m_tScrollDistance.x = 0;
+        }
+    }
+    
+    // if fling speed is too slow, end fling
+    if (fabsf(dampedScrollDistance.x) <= SCROLL_DEACCEL_DIST && fabsf(dampedScrollDistance.y) <= SCROLL_DEACCEL_DIST)
     {
         this->unschedule(schedule_selector(CCScrollView::deaccelerateScrolling));
         this->relocateContainer(true);
@@ -516,21 +518,7 @@ void CCScrollView::setContentSize(const CCSize & size)
     if (this->getContainer() != NULL)
     {
         this->getContainer()->setContentSize(size);
-		this->updateInset();
     }
-}
-
-void CCScrollView::updateInset()
-{
-	if (this->getContainer() != NULL)
-	{
-		m_fMaxInset = this->maxContainerOffset();
-		m_fMaxInset = ccp(m_fMaxInset.x + m_tViewSize.width * INSET_RATIO,
-			m_fMaxInset.y + m_tViewSize.height * INSET_RATIO);
-		m_fMinInset = this->minContainerOffset();
-		m_fMinInset = ccp(m_fMinInset.x - m_tViewSize.width * INSET_RATIO,
-			m_fMinInset.y - m_tViewSize.height * INSET_RATIO);
-	}
 }
 
 /**
@@ -717,7 +705,7 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
     {
         if (m_pTouches->count() == 1 && m_bDragging)
         { // scrolling
-            CCPoint moveDistance, newPoint, maxInset, minInset;
+            CCPoint moveDistance, newPoint;
             CCRect  frame;
             float newX, newY;
             
@@ -756,23 +744,27 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
             
             if (frame.containsPoint(this->convertToWorldSpace(newPoint)))
             {
+                CCPoint curOffset = m_pContainer->getPosition();
+                CCPoint damping = getBounceDamping();
+                
                 switch (m_eDirection)
                 {
                     case kCCScrollViewDirectionVertical:
-                        moveDistance = ccp(0.0f, moveDistance.y);
+                    {
+                        moveDistance = ccp(0.0f, moveDistance.y / damping.y);
                         break;
+                    }
                     case kCCScrollViewDirectionHorizontal:
-                        moveDistance = ccp(moveDistance.x, 0.0f);
+                    {
+                        moveDistance = ccp(moveDistance.x / damping.x, 0.0f);
                         break;
+                    }
                     default:
                         break;
                 }
-                
-                maxInset = m_fMaxInset;
-                minInset = m_fMinInset;
 
-                newX     = m_pContainer->getPosition().x + moveDistance.x;
-                newY     = m_pContainer->getPosition().y + moveDistance.y;
+                newX     = curOffset.x + moveDistance.x;
+                newY     = curOffset.y + moveDistance.y;
 
                 m_tScrollDistance = moveDistance;
                 this->setContentOffset(ccp(newX, newY));
@@ -860,6 +852,28 @@ void CCScrollView::unregisterScriptScrollViewEventHandler() {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_scriptHandler.handler);
         m_scriptHandler.handler = 0;
     }
+}
+
+CCPoint CCScrollView::getBounceDamping() {
+    CCPoint damping = ccp(1, 1);
+    CCPoint maxOffset = maxContainerOffset();
+    CCPoint minOffset = minContainerOffset();
+    CCPoint curOffset = m_pContainer->getPosition();
+    float brimY = MAX(curOffset.y - maxOffset.y, minOffset.y - curOffset.y);
+    float brimX = MAX(curOffset.x - maxOffset.x, minOffset.x - curOffset.x);
+    if(brimX > 0) {
+        damping.x = MAX(1, 0.1f * brimX);
+        if(damping.x >= 12) {
+            damping.x = damping.x * damping.x;
+        }
+    }
+    if(brimY > 0) {
+        damping.y = MAX(1, 0.1f * brimY);
+        if(damping.y >= 12) {
+            damping.y = damping.y * damping.y;
+        }
+    }
+    return damping;
 }
 
 NS_CC_EXT_END

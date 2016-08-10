@@ -209,7 +209,6 @@ public:
     virtual void setContentSize(const CCSize & size);
     virtual const CCSize& getContentSize() const;
 
-	void updateInset();
     /**
      * Determines whether it clips its children or not.
      */
@@ -261,6 +260,9 @@ private:
      * Zoom handling
      */
     void handleZoom();
+    
+    /// calculate damping factor for bouncing
+    CCPoint getBounceDamping();
 
 protected:
     CCRect getViewRect();
@@ -305,14 +307,7 @@ protected:
      * Determiens whether user touch is moved after begin phase.
      */
     bool m_bTouchMoved;
-    /**
-     * max inset point to limit scrolling by touch
-     */
-    CCPoint m_fMaxInset;
-    /**
-     * min inset point to limit scrolling by touch
-     */
-    CCPoint m_fMinInset;
+    
     /**
      * Determines whether the scroll view is allowed to bounce or not.
      */
