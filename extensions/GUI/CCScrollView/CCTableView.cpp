@@ -575,6 +575,7 @@ void CCTableView::_setIndexForCell(unsigned int index, CCTableViewCell *cell)
     cell->setAnchorPoint(ccp(0.0f, 0.0f));
     cell->setPosition(_offsetFromIndex(index));
     cell->setIdx(index);
+    cell->setZOrder(index);
 }
 
 void CCTableView::scrollViewDidScroll(CCScrollView* view)
