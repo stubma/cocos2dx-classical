@@ -249,42 +249,25 @@ static int class_newindex_event (lua_State* L)
         lua_getmetatable(L,1);
         while (lua_istable(L,-1))                /* stack: t k v mt */
         {
-            if (lua_isnumber(L,2))                 /* check if key is a numeric value */
+            lua_pushstring(L,".set");
+            lua_rawget(L,-2);                      /* stack: t k v mt tset */
+            if (lua_istable(L,-1))
             {
-                /* try operator[] */
-                lua_pushstring(L,".seti");
-                lua_rawget(L,-2);                      /* stack: obj key mt func */
-                if (lua_isfunction(L,-1))
+                lua_pushvalue(L,2);
+                lua_rawget(L,-2);                     /* stack: t k v mt tset func */
+                if (lua_iscfunction(L,-1))
                 {
                     lua_pushvalue(L,1);
-                    lua_pushvalue(L,2);
                     lua_pushvalue(L,3);
-                    lua_call(L,3,0);
+                    lua_call(L,2,0);
                     return 0;
                 }
+                lua_pop(L,1);                          /* stack: t k v mt tset */
             }
-            else
-            {
-                lua_pushstring(L,".set");
-                lua_rawget(L,-2);                      /* stack: t k v mt tset */
-                if (lua_istable(L,-1))
-                {
-                    lua_pushvalue(L,2);
-                    lua_rawget(L,-2);                     /* stack: t k v mt tset func */
-                    if (lua_iscfunction(L,-1))
-                    {
-                        lua_pushvalue(L,1);
-                        lua_pushvalue(L,3);
-                        lua_call(L,2,0);
-                        return 0;
-                    }
-                    lua_pop(L,1);                          /* stack: t k v mt tset */
-                }
-                lua_pop(L,1);                           /* stack: t k v mt */
-                if (!lua_getmetatable(L,-1))            /* stack: t k v mt mt */
-                    lua_pushnil(L);
-                lua_remove(L,-2);                       /* stack: t k v mt */
-            }
+            lua_pop(L,1);                           /* stack: t k v mt */
+            if (!lua_getmetatable(L,-1))            /* stack: t k v mt mt */
+                lua_pushnil(L);
+            lua_remove(L,-2);                       /* stack: t k v mt */
         }
         lua_settop(L,3);                          /* stack: t k v */
 
