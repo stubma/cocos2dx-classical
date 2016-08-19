@@ -58,12 +58,12 @@ static void storeatubox (lua_State* L, int lo)
 */
 static int module_index_event (lua_State* L)
 {
-    lua_pushstring(L,".get");
-    lua_rawget(L,-3);
+    lua_pushstring(L,".get"); // t k .get
+    lua_rawget(L,-3); // t k tget
     if (lua_istable(L,-1))
     {
-        lua_pushvalue(L,2);  /* key */
-        lua_rawget(L,-2);
+        lua_pushvalue(L,2);  // t k tget k
+        lua_rawget(L,-2); // t k tget vget
         if (lua_iscfunction(L,-1))
         {
             lua_call(L,0,1);
@@ -73,20 +73,21 @@ static int module_index_event (lua_State* L)
             return 1;
     }
     /* call old index meta event */
-    if (lua_getmetatable(L,1))
+    if (lua_getmetatable(L,1)) // t k tget mt
     {
-        lua_pushstring(L,"__index");
-        lua_rawget(L,-2);
-        lua_pushvalue(L,1);
-        lua_pushvalue(L,2);
+        lua_pushstring(L,"__index"); // t k tget mt __index_key
+        lua_rawget(L,-2); // t k tget mt __index
         if (lua_isfunction(L,-1))
         {
-            lua_call(L,2,1);
+            lua_pushvalue(L,1); // t k tget mt __index t
+            lua_pushvalue(L,2); // t k tget mt __index t k
+            lua_call(L,2,1); // t k tget mt v
             return 1;
         }
         else if (lua_istable(L,-1))
         {
-            lua_gettable(L,-3);
+            lua_pushvalue(L,2); // t k tget mt __index k
+            lua_gettable(L,-2); // t k tget mt v
             return 1;
         }
     }
