@@ -179,7 +179,7 @@ static int tolua_bnd_takeownership (lua_State* L)
 static int tolua_bnd_releaseownership (lua_State* L)
 {
     int done = 0;
-    if (lua_isuserdata(L,1))
+    if (lua_isuserdata(L,1)) // ud
     {
         void* u = *((void**)lua_touserdata(L,1));
         /* force garbage collection to avoid releasing a to-be-collected address */
@@ -188,20 +188,20 @@ static int tolua_bnd_releaseownership (lua_State* L)
 #else
         lua_setgcthreshold(L,0);
 #endif
-        lua_pushstring(L,"tolua_gc");
-        lua_rawget(L,LUA_REGISTRYINDEX);
-        lua_pushlightuserdata(L,u);
-        lua_rawget(L,-2);
-        lua_getmetatable(L,1);
+        lua_pushstring(L,"tolua_gc"); // ud tolua_gc_key
+        lua_rawget(L,LUA_REGISTRYINDEX); // ud tolua_gc
+        lua_pushlightuserdata(L,u); // ud tolua_gc ptr
+        lua_rawget(L,-2); // ud tolua_gc mt
+        lua_getmetatable(L,1); // ud tolua_gc mt mt
         if (lua_rawequal(L,-1,-2))  /* check that we are releasing the correct type */
         {
-            lua_pushlightuserdata(L,u);
-            lua_pushnil(L);
-            lua_rawset(L,-5);
+            lua_pushlightuserdata(L,u); // ud tolua_gc mt mt ptr
+            lua_pushnil(L); // ud tolua_gc mt mt ptr nil
+            lua_rawset(L,-5); // ud tolua_gc(ptr->nil) mt mt
             done = 1;
         }
     }
-    lua_pushboolean(L,done!=0);
+    lua_pushboolean(L,done!=0); // ud tolua_gc mt mt done
     return 1;
 }
 
@@ -412,19 +412,19 @@ TOLUA_API int tolua_register_gc (lua_State* L, int lo)
 {
     int success = 1;
     void *value = *(void **)lua_touserdata(L,lo);
-    lua_pushstring(L,"tolua_gc");
-    lua_rawget(L,LUA_REGISTRYINDEX);
-    lua_pushlightuserdata(L,value);
-    lua_rawget(L,-2);
+    lua_pushstring(L,"tolua_gc"); // ud tolua_gc_key
+    lua_rawget(L,LUA_REGISTRYINDEX); // ud tolua_gc
+    lua_pushlightuserdata(L,value); // ud tolua_gc ptr
+    lua_rawget(L,-2); // ud tolua_gc gc
     if (!lua_isnil(L,-1)) /* make sure that object is not already owned */
         success = 0;
     else
     {
-        lua_pushlightuserdata(L,value);
-        lua_getmetatable(L,lo);
-        lua_rawset(L,-4);
+        lua_pushlightuserdata(L,value); // ud tolua_gc nil ptr
+        lua_getmetatable(L,lo); // ud tolua_gc nil ptr mt
+        lua_rawset(L,-4); // ud tolua_gc(ptr->mt) nil
     }
-    lua_pop(L,2);
+    lua_pop(L,2); // ud
     return success;
 }
 
