@@ -472,7 +472,6 @@ TOLUA_API void tolua_endmodule (lua_State* L)
 /* Map module
     * It creates a new module
 */
-#if 1
 TOLUA_API void tolua_module (lua_State* L, const char* name, int hasvar)
 {
     if (name)
@@ -508,35 +507,6 @@ TOLUA_API void tolua_module (lua_State* L, const char* name, int hasvar)
     }
     lua_pop(L,1);               /* pop module */
 }
-#else
-TOLUA_API void tolua_module (lua_State* L, const char* name, int hasvar)
-{
-    if (name)
-    {
-        /* tolua module */
-        lua_pushstring(L,name);
-        lua_newtable(L);
-    }
-    else
-    {
-        /* global table */
-        lua_pushvalue(L,LUA_GLOBALSINDEX);
-    }
-    if (hasvar)
-    {
-        /* create metatable to get/set C/C++ variable */
-        lua_newtable(L);
-        tolua_moduleevents(L);
-        if (lua_getmetatable(L,-2))
-            lua_setmetatable(L,-2);  /* set old metatable as metatable of metatable */
-        lua_setmetatable(L,-2);
-    }
-    if (name)
-        lua_rawset(L,-3);       /* assing module into module */
-    else
-        lua_pop(L,1);           /* pop global table */
-}
-#endif
 
 static void push_collector(lua_State* L, const char* type, lua_CFunction col) {
 
@@ -713,30 +683,30 @@ static int const_array (lua_State* L)
 */
 TOLUA_API void tolua_array (lua_State* L, const char* name, lua_CFunction get, lua_CFunction set)
 {
-    lua_pushstring(L,".get");
-    lua_rawget(L,-2);
+    lua_pushstring(L,".get"); // t .get
+    lua_rawget(L,-2); // t tget
     if (!lua_istable(L,-1))
     {
         /* create .get table, leaving it at the top */
-        lua_pop(L,1);
-        lua_newtable(L);
-        lua_pushstring(L,".get");
-        lua_pushvalue(L,-2);
-        lua_rawset(L,-4);
+        lua_pop(L,1); // t
+        lua_newtable(L); // t tget
+        lua_pushstring(L,".get"); // t tget .get
+        lua_pushvalue(L,-2); // t tget .get tget
+        lua_rawset(L,-4); // t tget
     }
-    lua_pushstring(L,name);
+    lua_pushstring(L,name); // t tget name
 
-    lua_newtable(L);           /* create array metatable */
-    lua_pushvalue(L,-1);
-    lua_setmetatable(L,-2);    /* set the own table as metatable (for modules) */
-    lua_pushstring(L,"__index");
-    lua_pushcfunction(L,get);
-    lua_rawset(L,-3);
-    lua_pushstring(L,"__newindex");
-    lua_pushcfunction(L,set?set:const_array);
-    lua_rawset(L,-3);
+    lua_newtable(L);           // create array metatable, t tget name table
+    lua_pushvalue(L,-1); // t tget name table table
+    lua_setmetatable(L,-2);    // set the own table as metatable (for modules), t tget name table
+    lua_pushstring(L,"__index"); // t tget name table __index
+    lua_pushcfunction(L,get); // t tget name table __index func
+    lua_rawset(L,-3); // t tget name table
+    lua_pushstring(L,"__newindex"); // t tget name table __newindex
+    lua_pushcfunction(L,set?set:const_array); // t tget name table __newindex func
+    lua_rawset(L,-3); // t tget name table
 
-    lua_rawset(L,-3);                  /* store variable */
+    lua_rawset(L,-3);                  // store variable, t tget
     lua_pop(L,1);                      /* pop .get table */
 }
 
