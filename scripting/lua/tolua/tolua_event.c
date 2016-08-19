@@ -16,11 +16,11 @@
 
 #include "tolua++.h"
 
-/* Store at ubox
+/* Store int peer
     * It stores, creating the corresponding table if needed,
-    * the pair key/value in the corresponding ubox table
+    * the pair key/value in the corresponding peer table
 */
-static void storeatubox (lua_State* L, int lo)
+static void store_in_peer (lua_State* L, int lo)
 {
 #ifdef LUA_VERSION_NUM
     lua_getfenv(L, lo);
@@ -168,57 +168,44 @@ static int class_index_event (lua_State* L)
         while (lua_getmetatable(L,-1))
         {   /* stack: obj key obj mt */
             lua_remove(L,-2);                      /* stack: obj key mt */
-            if (lua_isnumber(L,2))                 /* check if key is a numeric value */
+         
+            // try to get it from metatable
+            lua_pushvalue(L,2);                    /* stack: obj key mt key */
+            lua_rawget(L,-2);                      /* stack: obj key mt value */
+            if (!lua_isnil(L,-1))
+                return 1;
+            else
+                lua_pop(L,1);
+            
+            /* try C/C++ variable */
+            lua_pushstring(L,".get");
+            lua_rawget(L,-2);                      /* stack: obj key mt tget */
+            if (lua_istable(L,-1))
             {
-                /* try operator[] */
-                lua_pushstring(L,".geti");
-                lua_rawget(L,-2);                      /* stack: obj key mt func */
-                if (lua_isfunction(L,-1))
+                lua_pushvalue(L,2);
+                lua_rawget(L,-2);                      /* stack: obj key mt vget */
+                if (lua_iscfunction(L,-1))
                 {
                     lua_pushvalue(L,1);
                     lua_pushvalue(L,2);
                     lua_call(L,2,1);
                     return 1;
                 }
-            }
-            else
-            {
-                lua_pushvalue(L,2);                    /* stack: obj key mt key */
-                lua_rawget(L,-2);                      /* stack: obj key mt value */
-                if (!lua_isnil(L,-1))
-                    return 1;
-                else
-                    lua_pop(L,1);
-                /* try C/C++ variable */
-                lua_pushstring(L,".get");
-                lua_rawget(L,-2);                      /* stack: obj key mt tget */
-                if (lua_istable(L,-1))
+                else if (lua_istable(L,-1))
                 {
-                    lua_pushvalue(L,2);
-                    lua_rawget(L,-2);                      /* stack: obj key mt value */
-                    if (lua_iscfunction(L,-1))
-                    {
-                        lua_pushvalue(L,1);
-                        lua_pushvalue(L,2);
-                        lua_call(L,2,1);
-                        return 1;
-                    }
-                    else if (lua_istable(L,-1))
-                    {
-                        /* deal with array: create table to be returned and cache it in ubox */
-                        void* u = *((void**)lua_touserdata(L,1));
-                        lua_newtable(L);                /* stack: obj key mt value table */
-                        lua_pushstring(L,".self");
-                        lua_pushlightuserdata(L,u);
-                        lua_rawset(L,-3);               /* store usertype in ".self" */
-                        lua_insert(L,-2);               /* stack: obj key mt table value */
-                        lua_setmetatable(L,-2);         /* set stored value as metatable */
-                        lua_pushvalue(L,-1);            /* stack: obj key met table table */
-                        lua_pushvalue(L,2);             /* stack: obj key mt table table key */
-                        lua_insert(L,-2);               /*  stack: obj key mt table key table */
-                        storeatubox(L,1);               /* stack: obj key mt table */
-                        return 1;
-                    }
+                    /* deal with array: create table to be returned and cache it in peer table */
+                    void* u = *((void**)lua_touserdata(L,1));
+                    lua_newtable(L);                /* stack: obj key mt vget table */
+                    lua_pushstring(L,".self");      // obj key mt vget table .self
+                    lua_pushlightuserdata(L,u);     // obj key mt vget table .self ud
+                    lua_rawset(L,-3);               /* obj key mt vget table */
+                    lua_insert(L,-2);               /* obj key mt table vget */
+                    lua_setmetatable(L,-2);         /* set stored vget as metatable, obj key mt table */
+                    lua_pushvalue(L,-1);            /* stack: obj key met table table */
+                    lua_pushvalue(L,2);             /* stack: obj key mt table table key */
+                    lua_insert(L,-2);               /*  stack: obj key mt table key table */
+                    store_in_peer(L,1);               /* stack: obj key mt table */
+                    return 1;
                 }
             }
             lua_settop(L,3);
@@ -272,7 +259,7 @@ static int class_newindex_event (lua_State* L)
         lua_settop(L,3);                          /* stack: t k v */
 
         /* then, store as a new field */
-        storeatubox(L,1);
+        store_in_peer(L,1);
     }
     else if (t== LUA_TTABLE)
     {
