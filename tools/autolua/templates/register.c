@@ -6,9 +6,9 @@
 int lua_register_${target_module_fullname}_${class_name}(lua_State* tolua_S) {
     tolua_usertype(tolua_S, "${lua_type}");
 #if len($parents) > 0
-    tolua_cclass(tolua_S, "${class_name}", "${lua_type}", "${generator.to_lua_type($parents[0].qualified_name, $parents[0].qualified_ns)}", nullptr);
+    tolua_class(tolua_S, "${class_name}", "${generator.to_lua_type($parents[0].qualified_name, $parents[0].qualified_ns)}", nullptr);
 #else
-    tolua_cclass(tolua_S, "${class_name}", "${lua_type}", "", nullptr);
+    tolua_class(tolua_S, "${class_name}", "", nullptr);
 #end if
 
     // register module

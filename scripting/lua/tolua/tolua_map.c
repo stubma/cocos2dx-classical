@@ -89,37 +89,33 @@ static void mapsuper (lua_State* L, const char* name, const char* base)
 /* creates a 'tolua_ubox' table for base clases, and
 // expects the metatable and base metatable on the stack */
 static void set_ubox(lua_State* L) {
-
     /* mt basemt */
     if (!lua_isnil(L, -1)) {
-        lua_pushstring(L, "tolua_ubox");
-        lua_rawget(L,-2);
+        lua_pushstring(L, "tolua_ubox"); // mt basemt key
+        lua_rawget(L,-2); // mt basemt baseubox
     } else {
-        lua_pushnil(L);
+        lua_pushnil(L); // mt basemt nil
     };
     /* mt basemt base_ubox */
     if (!lua_isnil(L,-1)) {
-        lua_pushstring(L, "tolua_ubox");
-        lua_insert(L, -2);
-        /* mt basemt key ubox */
-        lua_rawset(L,-4);
-        /* (mt with ubox) basemt */
+        lua_pushstring(L, "tolua_ubox"); // mt basemt baseubox key
+        lua_insert(L, -2); // mt basemt key baseubox
+        lua_rawset(L,-4); // mt(ubox from basemt) basemt
     } else {
         /* mt basemt nil */
-        lua_pop(L, 1);
-        lua_pushstring(L,"tolua_ubox");
-        lua_newtable(L);
+        lua_pop(L, 1); // mt basemt
+        lua_pushstring(L,"tolua_ubox"); // mt basemt key
+        lua_newtable(L); // mt basemt key ubox
         /* make weak value metatable for ubox table to allow userdata to be
         garbage-collected */
         lua_newtable(L);
         lua_pushliteral(L, "__mode");
         lua_pushliteral(L, "v");
-        lua_rawset(L, -3);               /* stack: string ubox mt */
-        lua_setmetatable(L, -2);  /* stack:mt basemt string ubox */
-        lua_rawset(L,-4);
-    };
-
-};
+        lua_rawset(L, -3);               /* stack: mt basemt key ubox mt */
+        lua_setmetatable(L, -2);  /* stack:mt basemt key ubox */
+        lua_rawset(L,-4); // mt(new ubox) basemt
+    }
+}
 
 /* Map inheritance
     * It sets 'name' as derived from 'base' by setting 'base' as metatable of 'name'
@@ -535,7 +531,7 @@ static void push_collector(lua_State* L, const char* type, lua_CFunction col) {
 /* Map C class
     * It maps a C class, setting the appropriate inheritance and super classes.
 */
-TOLUA_API void tolua_cclass (lua_State* L, const char* lname, const char* name, const char* base, lua_CFunction col)
+TOLUA_API void tolua_class (lua_State* L, const char* name, const char* base, lua_CFunction col)
 {
     char cname[128] = "const ";
     char cbase[128] = "const ";
@@ -548,32 +544,18 @@ TOLUA_API void tolua_cclass (lua_State* L, const char* lname, const char* name, 
     mapsuper(L,cname,cbase);
     mapsuper(L,name,base);
 
-    lua_pushstring(L,lname);
-
     push_collector(L, name, col);
-    /*
-    luaL_getmetatable(L,name);
-    lua_pushstring(L,".collector");
-    lua_pushcfunction(L,col);
-
-    lua_rawset(L,-3);
-    */
-
+    push_collector(L, cname, col);
+    
+    const char* dot = strrchr(name, '.');
+    const char* sname = name;
+    if(dot) {
+        sname = dot + 1;
+    }
+    lua_pushstring(L, sname);
+    
     luaL_getmetatable(L,name);
     lua_rawset(L,-3);              /* assign class metatable to module */
-
-    /* now we also need to store the collector table for the const
-       instances of the class */
-    push_collector(L, cname, col);
-    /*
-    luaL_getmetatable(L,cname);
-    lua_pushstring(L,".collector");
-    lua_pushcfunction(L,col);
-    lua_rawset(L,-3);
-    lua_pop(L,1);
-    */
-
-
 }
 
 /* Add base
