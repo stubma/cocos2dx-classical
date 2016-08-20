@@ -23,7 +23,6 @@ TOLUA_API int toluafix_remove_ccobject_by_refid(lua_State* L, int refid);
 TOLUA_API int toluafix_ref_function(lua_State* L, int lo, int def);
 TOLUA_API void toluafix_get_function_by_refid(lua_State* L, int refid);
 TOLUA_API void toluafix_remove_function_by_refid(lua_State* L, int refid);
-TOLUA_API void toluafix_stack_dump(lua_State* L, const char* label);
 TOLUA_API void toluafix_add_type_mapping(unsigned int type, const char* clsName);
 TOLUA_API int toluafix_ref_table(lua_State* L, int lo, int def);
 TOLUA_API void toluafix_get_table_by_refid(lua_State* L, int refid);

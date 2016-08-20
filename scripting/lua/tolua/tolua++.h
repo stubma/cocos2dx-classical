@@ -58,6 +58,7 @@ typedef struct tolua_Error tolua_Error;
 
 #define TOLUA_NOPEER    LUA_REGISTRYINDEX /* for lua 5.1 */
 
+TOLUA_API void tolua_stack_dump(lua_State* L, const char* label);
 TOLUA_API int lua_isusertype (lua_State* L, int lo, const char* type);
 TOLUA_API const char* tolua_typename (lua_State* L, int lo);
 TOLUA_API void tolua_error (lua_State* L, const char* msg, tolua_Error* err);

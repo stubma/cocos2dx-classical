@@ -131,3 +131,29 @@ TOLUA_API int tolua_getfieldboolean (lua_State* L, int lo, int index, int def)
     lua_pop(L,1);
     return v;
 }
+
+TOLUA_API void tolua_stack_dump(lua_State* L, const char* label)
+{
+    int i;
+    int top = lua_gettop(L);
+    printf("Total [%d] in lua stack: %s\n", top, label != 0 ? label : "");
+    for (i = -1; i >= -top; i--)
+    {
+        int t = lua_type(L, i);
+        switch (t)
+        {
+            case LUA_TSTRING:
+                printf("  [%02d] string %s\n", i, lua_tostring(L, i));
+                break;
+            case LUA_TBOOLEAN:
+                printf("  [%02d] boolean %s\n", i, lua_toboolean(L, i) ? "true" : "false");
+                break;
+            case LUA_TNUMBER:
+                printf("  [%02d] number %g\n", i, lua_tonumber(L, i));
+                break;
+            default:
+                printf("  [%02d] %s\n", i, lua_typename(L, t));
+        }
+    }
+    printf("\n");
+}
