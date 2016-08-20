@@ -170,6 +170,8 @@ int lua_isusertype (lua_State* L, int lo, const char* type)
     if (!lua_isuserdata(L,lo)) {
         if (!push_table_instance(L, lo)) {
             return 0;
+        } else {
+            return lua_isusertype(L, lo, type);
         }
     } else {
         /* check if it is of the same type */
