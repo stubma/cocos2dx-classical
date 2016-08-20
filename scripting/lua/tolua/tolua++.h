@@ -62,6 +62,7 @@ TOLUA_API int lua_isusertype (lua_State* L, int lo, const char* type);
 TOLUA_API const char* tolua_typename (lua_State* L, int lo);
 TOLUA_API void tolua_error (lua_State* L, const char* msg, tolua_Error* err);
 TOLUA_API int tolua_isnoobj (lua_State* L, int lo, tolua_Error* err);
+TOLUA_API int tolua_isfunction(lua_State* L, int lo, int def, tolua_Error* err);
 TOLUA_API int tolua_isvalue (lua_State* L, int lo, int def, tolua_Error* err);
 TOLUA_API int tolua_isvaluenil (lua_State* L, int lo, tolua_Error* err);
 TOLUA_API int tolua_isboolean (lua_State* L, int lo, int def, tolua_Error* err);

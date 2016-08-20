@@ -139,7 +139,7 @@ bool luaval_to_luafunc(lua_State* L, int lo, cocos2d::ccScriptFunction* outValue
     }
     
     tolua_Error tolua_err;
-    if(!toluafix_isfunction(L, lo, "LUA_FUNCTION", 0, &tolua_err) && !tolua_istable(L, lo, 0, &tolua_err)) {
+    if(!tolua_isfunction(L, lo, 0, &tolua_err) && !tolua_istable(L, lo, 0, &tolua_err)) {
 #if COCOS2D_DEBUG >=1
         luaval_to_native_err(L, "#ferror:", &tolua_err, funcName);
 #endif
@@ -147,7 +147,7 @@ bool luaval_to_luafunc(lua_State* L, int lo, cocos2d::ccScriptFunction* outValue
     }
     
     if (ok) {
-        if(toluafix_isfunction(L, lo, "LUA_FUNCTION", 0, &tolua_err)) {
+        if(tolua_isfunction(L, lo, 0, &tolua_err)) {
             outValue->handler = (unsigned int)toluafix_ref_function(L, lo, 0);
             outValue->target = NULL;
         } else {

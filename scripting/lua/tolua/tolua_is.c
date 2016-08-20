@@ -278,6 +278,18 @@ TOLUA_API int tolua_isusertable (lua_State* L, int lo, const char* type, int def
     return 0;
 }
 
+// check lua value is funciton
+TOLUA_API int tolua_isfunction(lua_State* L, int lo, int def, tolua_Error* err)
+{
+    if (lua_gettop(L) >= abs(lo) && lua_isfunction(L, lo))
+    {
+        return 1;
+    }
+    err->index = lo;
+    err->array = 0;
+    err->type = "[not function]";
+    return 0;
+}
 
 TOLUA_API int tolua_isuserdata (lua_State* L, int lo, int def, tolua_Error* err)
 {
