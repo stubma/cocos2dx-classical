@@ -47,7 +47,7 @@ void luaval_to_native_err(lua_State* L,const char* msg,tolua_Error* err, const c
         CCLOG(__VA_ARGS__); \
     }
 
-extern bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def);
+extern bool luaval_is_usertype(lua_State* L,int lo,const char* type);
 // to native
 extern bool luaval_to_ulong(lua_State* L,int lo, unsigned long* outValue, const char* funcName="");
 extern bool luaval_to_ushort(lua_State* L, int lo, unsigned short* outValue, const char* funcName = "");
@@ -108,7 +108,7 @@ bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret)
     if(NULL == L || lua_gettop(L) < lo)
         return false;
     
-    if (!luaval_is_usertype(L, lo, type, 0))
+    if (!luaval_is_usertype(L, lo, type))
         return false;
     
     *ret = static_cast<T*>(tolua_tousertype(L, lo, 0));

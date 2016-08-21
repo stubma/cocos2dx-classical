@@ -67,9 +67,9 @@ extern int lua_isusertype (lua_State* L, int lo, const char* type);
 }
 #endif
 
-bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def)
+bool luaval_is_usertype(lua_State* L,int lo,const char* type)
 {
-    if (def && lua_gettop(L)<abs(lo))
+    if (lua_gettop(L)<abs(lo))
         return true;
     
     if (lua_isnil(L,lo) || lua_isusertype(L,lo,type))
