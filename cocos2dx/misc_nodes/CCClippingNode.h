@@ -44,7 +44,6 @@ protected:
     CCNode* m_pStencil;
     GLfloat m_fAlphaThreshold;
     bool    m_bInverted;
-    CCRect  m_fullScreenRect;
     
 public:
     /** Creates and initializes a clipping node without a stencil.

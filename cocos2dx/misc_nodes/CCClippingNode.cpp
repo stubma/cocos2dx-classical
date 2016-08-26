@@ -265,16 +265,15 @@ void CCClippingNode::visit()
     // XXX by luma:
     // when clipping node is scaled, the full screen rect is not equal with win size, we need
     // build a local space full screen rect and then draw a rect on it to clear stencil buffer
-    if(m_fullScreenRect.size.width == 0 || m_fullScreenRect.size.height == 0) {
-        CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-        CCPoint lb = CCPointMake(0, 0);
-        CCPoint rt = CCPointMake(winSize.width, winSize.height);
-        lb = convertToNodeSpace(lb);
-        rt = convertToNodeSpace(rt);
-        m_fullScreenRect.origin = lb;
-        m_fullScreenRect.size = CCSizeMake(rt.x - lb.x, rt.y - lb.y);
-    }
-    ccDrawSolidRect(m_fullScreenRect.origin, ccpFromSize(m_fullScreenRect.size), ccc4f(1, 1, 1, 1));
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    CCPoint lb = CCPointMake(0, 0);
+    CCPoint rt = CCPointMake(winSize.width, winSize.height);
+    lb = convertToNodeSpace(lb);
+    rt = convertToNodeSpace(rt);
+    CCRect r;
+    r.origin = lb;
+    r.size = CCSizeMake(rt.x - lb.x, rt.y - lb.y);
+    ccDrawSolidRect(r.origin, ccpFromSize(r.size), ccc4f(1, 1, 1, 1));
     
     ///////////////////////////////////
     // DRAW CLIPPING STENCIL
