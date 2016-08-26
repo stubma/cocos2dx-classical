@@ -108,6 +108,7 @@ Maybe it ends at some day, and I won't touch cocos2dx 3.x because I don't think 
 * CCScale9Sprite.h/cpp挪到了sprite_nodes目录下, 添加了getSpriteFrame方法
 * CCAnimate支持CCScale9Sprite
 * 修正CCDrawNode的渲染问题
+* 修正CCClippingNode不能移动, 不能缩放的问题
 * Lua相关修改
 	* quick 3.x的binding generator工具移植完成, 名叫autolua, 引擎的lua绑定已经全部生成. 如果想要重新生成绑定, 可以到autolua目录下执行```./autolua.py cocos2dx.conf```. 这个目录下还有一个简单的test.conf可以用于测试autolua.
 	* Cocos2dxLuaLoader的逻辑被修改, 会优先从~/Library寻找lua脚本, 如果没有找到则载入app的.
@@ -195,6 +196,7 @@ Things Improved
 * moved CCScale9Sprite.h/cpp to sprite_nodes folder, add getSpriteFrame method to it
 * CCAnimate supports CCScale9Sprite
 * fix CCDrawNode render bug
+* CCClippingNode supports dynamic position, and scale
 * Lua related
 	* quick 3.x binding generator is migrated and renamed to autolua. Engine lua binding is completely generated. If you want to re-generate it, you can execute ```./autolua.py cocos2dx.conf``` in autolua folder
 	* lua and luajit are both precompiled, by default we use luajit. if you want to use lua, you can modify scripting/lua/Android.mk(for android) or cocos2dx/proj.ios/cocos2dx.xcodeproj(for ios)
