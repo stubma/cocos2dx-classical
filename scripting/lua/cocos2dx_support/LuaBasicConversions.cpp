@@ -3100,7 +3100,7 @@ void dictionary_to_luaval(lua_State* L, CCDictionary* dict)
         if (NULL == element)
             continue;
         
-        std::string typeName = typeid(*element->getObject()).name();
+        std::string typeName = typeid(*(element->getObject())).name();
         
         auto iter = g_luaType.find(typeName);
         if (g_luaType.end() != iter)

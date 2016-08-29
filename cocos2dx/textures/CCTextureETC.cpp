@@ -133,11 +133,9 @@ bool CCTextureETC::loadTexture(const char* file)
             
             return true;
         }
-        else
-        {
-            return false;
-        }
     }
+    
+    return false;
 #else
     return false;
 #endif
