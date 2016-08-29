@@ -33,6 +33,7 @@
 #include "menu_nodes/CCMenu.h"
 #include "actions/CCActionInstant.h"
 #include "cocoa/CCPointExtension.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
@@ -52,7 +53,7 @@ NS_CC_BEGIN
 CCLabelTTF::CCLabelTTF() :
 m_hAlignment(kCCTextAlignmentCenter),
 m_vAlignment(kCCVerticalTextAlignmentTop),
-m_pFontName(NULL),
+m_fontName(""),
 m_fFontSize(0.0),
 m_realLength(0),
 m_lineSpacing(0),
@@ -74,7 +75,6 @@ m_textChanging(true) {
 }
 
 CCLabelTTF::~CCLabelTTF() {
-    CC_SAFE_DELETE(m_pFontName);
     CC_SAFE_RELEASE(m_loopFunc);
     CC_SAFE_RELEASE(m_defaultTarget);
     if (m_scriptLoopFunc.handler) {
@@ -176,7 +176,7 @@ bool CCLabelTTF::initWithString(const char *string, const char *fontName, float 
         m_tDimensions = CCSizeMake(dimensions.width, dimensions.height);
         m_hAlignment  = hAlignment;
         m_vAlignment  = vAlignment;
-        m_pFontName   = new std::string(fontName);
+        setFontName(fontName);
         m_fFontSize   = fontSize;
         
         this->setString(string);
@@ -237,7 +237,7 @@ const char* CCLabelTTF::getText(void) {
 
 const char* CCLabelTTF::description()
 {
-    return CCString::createWithFormat("<CCLabelTTF | FontName = %s, FontSize = %.1f>", m_pFontName->c_str(), m_fFontSize)->getCString();
+    return CCString::createWithFormat("<CCLabelTTF | FontName = %s, FontSize = %.1f>", m_fontName.c_str(), m_fFontSize)->getCString();
 }
 
 CCTextAlignment CCLabelTTF::getHorizontalAlignment()
@@ -316,17 +316,27 @@ void CCLabelTTF::setFontSize(float fontSize)
     }
 }
 
-const char* CCLabelTTF::getFontName()
+string CCLabelTTF::getFontName()
 {
-    return m_pFontName->c_str();
+    return m_fontName;
 }
 
-void CCLabelTTF::setFontName(const char *fontName)
+void CCLabelTTF::setFontName(string fontName)
 {
-    if (m_pFontName->compare(fontName))
+    if (m_fontName != fontName)
     {
-        delete m_pFontName;
-        m_pFontName = new std::string(fontName);
+        m_fontName = fontName;
+        
+        // font name is a ttf file, check ttf folder, if don't have, add ttf folder as prefix
+        string ttf = ".ttf";
+        if(m_fontName.compare(m_fontName.length() - ttf.length(), ttf.length(), ttf) == 0) {
+            string folder = CCFileUtils::sharedFileUtils()->getTTFFolder();
+            if(!folder.empty()) {
+                if(m_fontName.compare(0, folder.length(), folder) != 0) {
+                    m_fontName = folder + "/" + m_fontName;
+                }
+            }
+        }
         
         // Force update
         if (m_string.size() > 0)
@@ -357,7 +367,7 @@ bool CCLabelTTF::updateTexture()
 #else
     
     tex->initWithString( m_string.c_str(),
-                        m_pFontName->c_str(),
+                        m_fontName.c_str(),
                         m_fFontSize * CC_CONTENT_SCALE_FACTOR(),
                         CC_SIZE_POINTS_TO_PIXELS(m_tDimensions),
                         m_hAlignment,
@@ -641,7 +651,7 @@ void CCLabelTTF::_updateWithTextDefinition(ccFontDefinition & textDefinition, bo
     m_hAlignment  = textDefinition.m_alignment;
     m_vAlignment  = textDefinition.m_vertAlignment;
     m_globalImageScaleFactor = textDefinition.m_globalImageScaleFactor;
-    m_pFontName   = new std::string(textDefinition.m_fontName);
+    m_fontName   = textDefinition.m_fontName;
     m_fFontSize   = textDefinition.m_fontSize;
     m_toCharIndex = textDefinition.m_toCharIndex;
     
@@ -676,7 +686,7 @@ ccFontDefinition CCLabelTTF::_prepareTextDefinition(bool adjustForResolution)
     else
         texDef.m_fontSize       =  m_fFontSize;
     
-    texDef.m_fontName       = *m_pFontName;
+    texDef.m_fontName       = m_fontName;
     texDef.m_alignment      =  m_hAlignment;
     texDef.m_vertAlignment  =  m_vAlignment;
     texDef.m_toCharIndex = m_toCharIndex;

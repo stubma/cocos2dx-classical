@@ -686,7 +686,7 @@ void Button::setTitleFontName(const char* fontName)
 
 const char* Button::getTitleFontName() const
 {
-    return _titleRenderer->getFontName();
+    return _titleRenderer->getFontName().c_str();
 }
     
 void Button::updateTextureColor()

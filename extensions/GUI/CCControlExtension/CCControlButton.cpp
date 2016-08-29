@@ -406,7 +406,7 @@ const char * CCControlButton::getTitleTTFForState(CCControlState state)
     CCLabelTTF* labelTTF = dynamic_cast<CCLabelTTF*>(label);
     if(labelTTF != 0)
     {
-        return labelTTF->getFontName();
+        return labelTTF->getFontName().c_str();
     }
     else
     {

@@ -534,7 +534,7 @@ void TextField::setFontName(const std::string& name)
     
 const char* TextField::getFontName()
 {
-    return _textFieldRenderer->getFontName();
+    return _textFieldRenderer->getFontName().c_str();
 }
 
 void TextField::didNotSelectSelf()

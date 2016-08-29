@@ -197,8 +197,8 @@ public:
     float getFontSize();
     void setFontSize(float fontSize);
     
-    const char* getFontName();
-    void setFontName(const char *fontName);
+    string getFontName();
+    void setFontName(string fontName);
     
     virtual void setColor(const ccColor3B& color3);
     
@@ -289,7 +289,7 @@ protected:
     /** The vertical alignment of the label */
     CCVerticalTextAlignment m_vAlignment;
     /** Font name used in the label */
-    std::string * m_pFontName;
+    std::string m_fontName;
     /** Font size of the label */
     float m_fFontSize;
     /** label's string */

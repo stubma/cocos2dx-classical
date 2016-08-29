@@ -465,6 +465,7 @@ void CCFileUtils::purgeFileUtils()
 
 CCFileUtils::CCFileUtils()
 : m_pFilenameLookupDict(NULL)
+, m_ttfFolder("")
 {
 }
 
@@ -483,6 +484,14 @@ bool CCFileUtils::init()
 void CCFileUtils::purgeCachedEntries()
 {
     m_fullPathCache.clear();
+}
+
+void CCFileUtils::setTTFFolder(std::string f) {
+    m_ttfFolder = f;
+}
+
+std::string CCFileUtils::getTTFFolder() {
+    return m_ttfFolder;
 }
 
 unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* pszMode, size_t* pSize)

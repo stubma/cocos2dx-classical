@@ -339,6 +339,10 @@ public:
     // for android only, it is just empty method in non-android platform
     virtual void enableMainApkExpansion(int versionCode) {}
     virtual void enablePatchApkExpansion(int versionCode) {}
+    
+    /// set ttf file folder
+    virtual void setTTFFolder(std::string f);
+    virtual std::string getTTFFolder();
 
 protected:
     /**
@@ -439,6 +443,9 @@ protected:
      *  This variable is used for improving the performance of file search.
      */
     std::map<std::string, std::string> m_fullPathCache;
+    
+    /// the prefix folder of ttf file, like "fonts"
+    std::string m_ttfFolder;
     
     /**
      *  The singleton pointer of CCFileUtils.
