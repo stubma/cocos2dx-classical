@@ -27,17 +27,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.util.Collections;
-import java.util.List;
 import java.util.Scanner;
 import java.util.regex.MatchResult;
 
-import org.apache.http.conn.util.InetAddressUtils;
-
-import android.Manifest.permission;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -54,8 +46,6 @@ import android.graphics.Rect;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
 import android.text.TextUtils;
@@ -227,39 +217,6 @@ public class CCUtils {
 		return device;
 	}
 	
-	public static String getMacAddress() {
-		String mac = "";
-		Context ctx = Cocos2dxActivity.getContext();
-		
-		// first, try to get mac from wifi manager
-		if(ctx.checkCallingPermission(permission.ACCESS_WIFI_STATE) == PackageManager.PERMISSION_GRANTED) {
-			WifiManager wifi = (WifiManager)ctx.getSystemService(Context.WIFI_SERVICE);
-			WifiInfo info = wifi.getConnectionInfo();
-			mac = info.getMacAddress();
-		}
-		
-		// if failed, try from network interface api
-		if(TextUtils.isEmpty(mac)) {
-			if (Build.VERSION.SDK_INT >= 9) {
-				try {
-					NetworkInterface ne = NetworkInterface.getByInetAddress(InetAddress.getByName(getLocalIpAddress()));
-					byte[] b = ne.getHardwareAddress();
-					mac = byte2Hex(b);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		// if failed, use fake
-		if(TextUtils.isEmpty(mac)) {
-			mac = "00:00:00:00:00:00";
-		}
-		
-		// return
-		return mac;
-	}
-	
 	public static String byte2Hex(byte[] b) {
 		StringBuilder hs = new StringBuilder(b.length);
 		String stmp = "";
@@ -272,24 +229,6 @@ public class CCUtils {
 				hs = hs.append(stmp);
 		}
 		return String.valueOf(hs);
-	}
-	
-	public static String getLocalIpAddress() {
-		try {
-			String ipv4;
-			List<NetworkInterface> nilist = Collections.list(NetworkInterface.getNetworkInterfaces());
-			for (NetworkInterface ni : nilist) {
-				List<InetAddress> ialist = Collections.list(ni.getInetAddresses());
-				for (InetAddress address : ialist) {
-					if (!address.isLoopbackAddress() && InetAddressUtils.isIPv4Address(ipv4 = address.getHostAddress())) {
-						return ipv4;
-					}
-				}
-			}
-		} catch (SocketException ex) {
-		}
-		
-		return null;
 	}
 	
 	public static void setMultipleTouchEnabled(boolean flag) {
