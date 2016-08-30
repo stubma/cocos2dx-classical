@@ -733,9 +733,10 @@ public class CCImage_richlabel {
 	}
 	
 	private static void coverUndisplayedCharacters(Canvas c, StaticLayout layout, int endIndex, float dx, float dy) {
-		// get line count
+		// get line count and width
 		int lineCount = layout.getLineCount();
-		
+		int width = layout.getWidth();
+
 		// get line origin
 		PointF[] origin = new PointF[lineCount];
 		for(int i = 0; i < lineCount; i++) {
@@ -760,16 +761,14 @@ public class CCImage_richlabel {
         for (int i = 0; i < lineCount; i++) {
         	if(endIndex >= range[i].x && endIndex < range[i].y) {
             	float startX = layout.getPrimaryHorizontal(endIndex);
-            	float endX = layout.getSecondaryHorizontal((i == lineCount - 1) ? range[i].y : (range[i].y - 1));
             	float bottom = layout.getLineBottom(i) + Math.max(dy, 0);
             	float top = layout.getLineTop(i) + Math.min(dy, 0);
-            	RectF r = new RectF(startX, top, endX, bottom);
+            	RectF r = new RectF(startX, top, width, bottom);
             	c.drawRect(r, p);
             } else if(endIndex < range[i].x) {
-            	float endX = layout.getSecondaryHorizontal((i == lineCount - 1) ? range[i].y : (range[i].y - 1));
             	float bottom = layout.getLineBottom(i) + Math.max(dy, 0);
             	float top = layout.getLineTop(i) + Math.min(dy, 0);
-            	RectF r = new RectF(origin[i].x, top, endX, bottom);
+            	RectF r = new RectF(origin[i].x, top, width, bottom);
             	c.drawRect(r, p);
         	}
         }
