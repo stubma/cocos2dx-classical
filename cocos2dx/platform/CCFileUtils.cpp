@@ -751,6 +751,10 @@ void CCFileUtils::addSearchPath(const char* path_)
     m_searchPathArray.push_back(path);
 }
 
+std::string CCFileUtils::getDefaultResRootPath() {
+    return m_strDefaultResRootPath;
+}
+
 void CCFileUtils::removeSearchPath(const char *path_)
 {
 	std::string strPrefix;

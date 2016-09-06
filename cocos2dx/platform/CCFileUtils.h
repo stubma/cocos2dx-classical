@@ -343,6 +343,9 @@ public:
     /// set ttf file folder
     virtual void setTTFFolder(std::string f);
     virtual std::string getTTFFolder();
+    
+    // get default resource root path
+    std::string getDefaultResRootPath();
 
 protected:
     /**

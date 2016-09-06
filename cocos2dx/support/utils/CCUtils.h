@@ -286,6 +286,9 @@ public:
     /// get a good place to save app internal files
     static string getInternalStoragePath();
     
+    /// get auto update root path by a platform independent way
+    static string getAssetUpdateStoragePath();
+    
     /// get available size of mobile phone storage
     static int64_t getAvailableStorageSize();
     

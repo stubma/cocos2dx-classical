@@ -1165,6 +1165,21 @@ string CCUtils::trim(const string& s) {
 	return s.substr(start, end - start);
 }
 
+string CCUtils::getAssetUpdateStoragePath() {
+    // for different platform, we need consider the default resource root path
+    string root = CCFileUtils::sharedFileUtils()->getDefaultResRootPath();
+    if(!root.empty()) {
+        string internalStorage = getInternalStoragePath();
+        if(internalStorage[internalStorage.length() - 1] != '/') {
+            internalStorage += "/";
+        }
+        internalStorage += root;
+        return internalStorage;
+    } else {
+        return getInternalStoragePath();
+    }
+}
+
 string CCUtils::getExternalOrFullPath(const string& path) {
     if(CCFileUtils::sharedFileUtils()->isAbsolutePath(path)) {
         return path;
