@@ -274,7 +274,7 @@ const char* CCTexture2D::description(void)
 
 // implementation CCTexture2D (Image)
 
-bool CCTexture2D::initWithImage(CCImage *uiImage)
+bool CCTexture2D::initWithImage(CCImage *uiImage, CCTexture2DPixelFormat pf)
 {
     if (uiImage == NULL)
     {
@@ -295,10 +295,13 @@ bool CCTexture2D::initWithImage(CCImage *uiImage)
     }
     
     // always load premultiplied images
-    return initPremultipliedATextureWithImage(uiImage, imageWidth, imageHeight);
+    if(pf == kCCTexture2DPixelFormat_TBD) {
+        pf = g_defaultAlphaPixelFormat;
+    }
+    return initPremultipliedATextureWithImage(uiImage, imageWidth, imageHeight, pf);
 }
 
-bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned int width, unsigned int height)
+bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned int width, unsigned int height, CCTexture2DPixelFormat pf)
 {
     unsigned char*            tempData = image->getData();
     unsigned int*             inPixel32  = NULL;
@@ -312,7 +315,7 @@ bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned in
     // compute pixel format
     if (hasAlpha)
     {
-    	pixelFormat = g_defaultAlphaPixelFormat;
+    	pixelFormat = pf;
     }
     else
     {
@@ -832,47 +835,62 @@ void CCTexture2D::setAntiAliasTexParameters()
 #endif
 }
 
-const char* CCTexture2D::stringForFormat()
+CCTexture2DPixelFormat CCTexture2D::string2format(string s) {
+    CCUtils::toLowercase(s);
+    if(s == "rgba8888") {
+        return kCCTexture2DPixelFormat_RGBA8888;
+    } else if(s == "rgb888") {
+        return kCCTexture2DPixelFormat_RGB888;
+    } else if(s == "rgb565") {
+        return kCCTexture2DPixelFormat_RGB565;
+    } else if(s == "rgba4444") {
+        return kCCTexture2DPixelFormat_RGBA4444;
+    } else if(s == "rgb5a1") {
+        return kCCTexture2DPixelFormat_RGB5A1;
+    } else if(s == "ai88") {
+        return kCCTexture2DPixelFormat_AI88;
+    } else if(s == "a8") {
+        return kCCTexture2DPixelFormat_A8;
+    } else if(s == "i8") {
+        return kCCTexture2DPixelFormat_I8;
+    } else if(s == "pvrtc4") {
+        return kCCTexture2DPixelFormat_PVRTC4;
+    } else if(s == "pvrtc2") {
+        return kCCTexture2DPixelFormat_PVRTC2;
+    } else {
+        return kCCTexture2DPixelFormat_Default;
+    }
+}
+
+string CCTexture2D::format2string(CCTexture2DPixelFormat pf)
 {
-	switch (m_ePixelFormat) 
+	switch (pf)
 	{
 		case kCCTexture2DPixelFormat_RGBA8888:
 			return  "RGBA8888";
-
 		case kCCTexture2DPixelFormat_RGB888:
 			return  "RGB888";
-
 		case kCCTexture2DPixelFormat_RGB565:
 			return  "RGB565";
-
 		case kCCTexture2DPixelFormat_RGBA4444:
 			return  "RGBA4444";
-
 		case kCCTexture2DPixelFormat_RGB5A1:
 			return  "RGB5A1";
-
 		case kCCTexture2DPixelFormat_AI88:
 			return  "AI88";
-
 		case kCCTexture2DPixelFormat_A8:
 			return  "A8";
-
 		case kCCTexture2DPixelFormat_I8:
 			return  "I8";
-
 		case kCCTexture2DPixelFormat_PVRTC4:
 			return  "PVRTC4";
-
 		case kCCTexture2DPixelFormat_PVRTC2:
 			return  "PVRTC2";
-
 		default:
 			CCAssert(false , "unrecognized pixel format");
-			CCLOG("stringForFormat: %ld, cannot give useful result", (long)m_ePixelFormat);
-			break;
-	}
-
-	return  NULL;
+			CCLOG("stringForFormat: %ld, cannot give useful result", (long)pf);
+			return "rgba8888";
+    }
 }
 
 //

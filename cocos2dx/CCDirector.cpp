@@ -234,12 +234,7 @@ void CCDirector::setDefaultValues(void)
 
 	// Default pixel format for PNG images with alpha
 	const char *pixel_format = conf->getCString("cocos2d.x.texture.pixel_format_for_png", "rgba8888");
-	if( strcmp(pixel_format, "rgba8888") == 0 )
-		CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA8888);
-	else if( strcmp(pixel_format, "rgba4444") == 0 )
-		CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGBA4444);
-	else if( strcmp(pixel_format, "rgba5551") == 0 )
-		CCTexture2D::setDefaultAlphaPixelFormat(kCCTexture2DPixelFormat_RGB5A1);
+	CCTexture2D::setDefaultAlphaPixelFormat(CCTexture2D::string2format(pixel_format));
 
 	// PVR v2 has alpha premultiplied ?
 	bool pvr_alpha_premultipled = conf->getBool("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", false);

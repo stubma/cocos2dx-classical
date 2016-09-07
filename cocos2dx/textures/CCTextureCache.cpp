@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "platform/CCImage.h"
 #include "support/utils/CCUtils.h"
 #include "CCScheduler.h"
+#include "CCConfiguration.h"
 #include "cocoa/CCString.h"
 #include <errno.h>
 #include <stack>
@@ -219,6 +220,11 @@ CCTextureCache::CCTextureCache()
     CCAssert(g_sharedTextureCache == NULL, "Attempted to allocate a second instance of a singleton.");
     
     m_pTextures = new CCDictionary();
+    
+    // get high quality texture map from configuaration
+    CCConfiguration *conf = CCConfiguration::sharedConfiguration();
+    m_highQualityTextures = (CCDictionary*)conf->getObject("cocos2d.x.high.quality.textures");
+    CC_SAFE_RETAIN(m_highQualityTextures);
 }
 
 CCTextureCache::~CCTextureCache()
@@ -227,6 +233,7 @@ CCTextureCache::~CCTextureCache()
     need_quit = true;
     pthread_cond_signal(&s_SleepCondition);
     CC_SAFE_RELEASE(m_pTextures);
+    CC_SAFE_RELEASE(m_highQualityTextures);
 }
 
 void CCTextureCache::purgeSharedTextureCache()
@@ -355,14 +362,13 @@ void CCTextureCache::addImageAsyncCallBack(float dt)
         CCObject *target = pAsyncStruct->target;
         SEL_CallFuncO selector = pAsyncStruct->selector;
         const char* filename = pAsyncStruct->filename.c_str();
+        
+        // check if this image need custom pixel format
+        CCTexture2DPixelFormat pf = checkCustomPixelFormat(filename);
 
         // generate texture in render thread
         CCTexture2D *texture = new CCTexture2D();
-#if 0 //TODO: (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        texture->initWithImage(pImage, kCCResolutioniPhone);
-#else
-        texture->initWithImage(pImage);
-#endif
+        texture->initWithImage(pImage, pf);
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
        // cache the texture file name
@@ -458,10 +464,13 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 bool bRet = pImage->initWithImageFile(fullpath.c_str(), eImageFormat);
                 CC_BREAK_IF(!bRet);
 
-                texture = new CCTexture2D();
+                // check if this image need custom pixel format
+                CCTexture2DPixelFormat pf = checkCustomPixelFormat(fullpath);
                 
+                // create texture
+                texture = new CCTexture2D();
                 if( texture &&
-                    texture->initWithImage(pImage) )
+                    texture->initWithImage(pImage, pf) )
                 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
                     // cache the texture file name
@@ -594,10 +603,13 @@ CCTexture2D* CCTextureCache::addUIImage(CCImage *image, const char *key)
         {
             break;
         }
+        
+        // check if this image need custom pixel format
+        CCTexture2DPixelFormat pf = checkCustomPixelFormat(forKey);
 
         // prevents overloading the autorelease pool
         texture = new CCTexture2D();
-        texture->initWithImage(image);
+        texture->initWithImage(image, pf);
 
         if(key && texture)
         {
@@ -642,11 +654,29 @@ bool CCTextureCache::reloadTexture(const char* fileName)
             bool bRet = image->initWithImageFile(fullpath.c_str());
             CC_BREAK_IF(!bRet);
             
-            ret = texture->initWithImage(image);
+            // check if this image need custom pixel format
+            CCTexture2DPixelFormat pf = checkCustomPixelFormat(fullpath);
+            
+            // init
+            ret = texture->initWithImage(image, pf);
         } while (0);
     }
     
     return ret;
+}
+
+CCTexture2DPixelFormat CCTextureCache::checkCustomPixelFormat(string path) {
+    // check if this image need custom pixel format
+    CCTexture2DPixelFormat pf = kCCTexture2DPixelFormat_TBD;
+    if(m_highQualityTextures) {
+        string filename = CCUtils::lastPathComponent(path);
+        CCObject* v = m_highQualityTextures->objectForKey(filename);
+        if(v) {
+            string f = ((CCString*)v)->getCString();
+            pf = CCTexture2D::string2format(f);
+        }
+    }
+    return pf;
 }
 
 // TextureCache - Remove
@@ -941,10 +971,7 @@ void VolatileTexture::reloadAllTextures()
 
                     if (pImage && pImage->initWithImageData((void*)pBuffer, nSize, vt->m_FmtImage))
                     {
-                        CCTexture2DPixelFormat oldPixelFormat = CCTexture2D::defaultAlphaPixelFormat();
-                        CCTexture2D::setDefaultAlphaPixelFormat(vt->m_PixelFormat);
-                        vt->texture->initWithImage(pImage);
-                        CCTexture2D::setDefaultAlphaPixelFormat(oldPixelFormat);
+                        vt->texture->initWithImage(pImage, vt->m_PixelFormat);
                     }
 
                     CC_SAFE_DELETE_ARRAY(pBuffer);
@@ -969,7 +996,7 @@ void VolatileTexture::reloadAllTextures()
             break;
         case kImage:
             {
-                vt->texture->initWithImage(vt->uiImage);
+                vt->texture->initWithImage(vt->uiImage, vt->m_PixelFormat);
             }
             break;
         default:

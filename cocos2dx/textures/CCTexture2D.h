@@ -51,7 +51,8 @@ NS_CC_BEGIN
 Possible texture pixel formats
 */
 typedef enum {
-
+    // special, means pending decide
+    kCCTexture2DPixelFormat_TBD,
     //! 32-bit texture: RGBA8888
     kCCTexture2DPixelFormat_RGBA8888,
     //! 24-bit texture: RGBA888
@@ -73,10 +74,9 @@ typedef enum {
     //! 2-bit PVRTC-compressed texture: PVRTC2
     kCCTexture2DPixelFormat_PVRTC2,
 
-
     //! Default texture format: RGBA8888
     kCCTexture2DPixelFormat_Default = kCCTexture2DPixelFormat_RGBA8888,
-
+    
     // backward compatibility stuff
     kTexture2DPixelFormat_RGBA8888 = kCCTexture2DPixelFormat_RGBA8888,
     kTexture2DPixelFormat_RGB888 = kCCTexture2DPixelFormat_RGB888,
@@ -123,6 +123,15 @@ public:
      * @lua NA
      */
     virtual ~CCTexture2D();
+    
+    // convert string to pixel format
+    static CCTexture2DPixelFormat string2format(string s);
+    
+    /** returns the pixel format.
+     @since v2.0
+     */
+    static string format2string(CCTexture2DPixelFormat pf);
+    
     /**
      *  @js NA
      *  @lua NA
@@ -159,7 +168,7 @@ public:
     */
     /** Initializes a texture from a UIImage object */
 
-    bool initWithImage(CCImage * uiImage);
+    bool initWithImage(CCImage * uiImage, CCTexture2DPixelFormat pf = kCCTexture2DPixelFormat_TBD);
 
     /** Initializes a texture from a string with dimensions, alignment, font name and font size */
     bool initWithString(const char *text,  const char *fontName, float fontSize, const CCSize& dimensions, CCTextAlignment hAlignment, CCVerticalTextAlignment vAlignment);
@@ -214,11 +223,6 @@ public:
     */
     void generateMipmap();
 
-    /** returns the pixel format.
-     @since v2.0
-     */
-    const char* stringForFormat();
-
     /** returns the bits-per-pixel of the in-memory OpenGL texture
     @since v1.0
     */
@@ -270,7 +274,7 @@ public:
     bool hasPremultipliedAlpha();
     bool hasMipmaps();
 private:
-    bool initPremultipliedATextureWithImage(CCImage * image, unsigned int pixelsWide, unsigned int pixelsHigh);
+    bool initPremultipliedATextureWithImage(CCImage * image, unsigned int pixelsWide, unsigned int pixelsHigh, CCTexture2DPixelFormat pf = kCCTexture2DPixelFormat_TBD);
     
     // By default PVR images are treated as if they don't have the alpha channel premultiplied
     bool m_bPVRHaveAlphaPremultiplied;

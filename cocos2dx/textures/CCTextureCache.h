@@ -54,6 +54,10 @@ protected:
     CCDictionary* m_pTextures;
     //pthread_mutex_t                *m_pDictLock;
 
+    // a map, key is file name, value is pixel format string
+    // if a image file is a key in this map, then ignore default
+    // pixel format and use format in this map
+    CCDictionary* m_highQualityTextures;
 
 private:
     /// todo: void addImageWithAsyncObject(CCAsyncObject* async);
@@ -61,6 +65,9 @@ private:
     
     // get texture key for etc alpha image, from a etc image key
     string textureKeyForETCAlpha(const string& key);
+    
+    /// check if a image file need a custom pixel format
+    CCTexture2DPixelFormat checkCustomPixelFormat(string path);
     
 public:
     /**
