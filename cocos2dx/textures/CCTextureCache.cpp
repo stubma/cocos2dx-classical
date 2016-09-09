@@ -223,8 +223,8 @@ CCTextureCache::CCTextureCache()
     
     // get high quality texture map from configuaration
     CCConfiguration *conf = CCConfiguration::sharedConfiguration();
-    m_highQualityTextures = (CCDictionary*)conf->getObject("cocos2d.x.high.quality.textures");
-    CC_SAFE_RETAIN(m_highQualityTextures);
+    m_customPixelFormatTextures = (CCDictionary*)conf->getObject("cocos2d.x.texture.custom_pixel_format");
+    CC_SAFE_RETAIN(m_customPixelFormatTextures);
 }
 
 CCTextureCache::~CCTextureCache()
@@ -233,7 +233,7 @@ CCTextureCache::~CCTextureCache()
     need_quit = true;
     pthread_cond_signal(&s_SleepCondition);
     CC_SAFE_RELEASE(m_pTextures);
-    CC_SAFE_RELEASE(m_highQualityTextures);
+    CC_SAFE_RELEASE(m_customPixelFormatTextures);
 }
 
 void CCTextureCache::purgeSharedTextureCache()
@@ -668,9 +668,9 @@ bool CCTextureCache::reloadTexture(const char* fileName)
 CCTexture2DPixelFormat CCTextureCache::checkCustomPixelFormat(string path) {
     // check if this image need custom pixel format
     CCTexture2DPixelFormat pf = kCCTexture2DPixelFormat_TBD;
-    if(m_highQualityTextures) {
+    if(m_customPixelFormatTextures) {
         string filename = CCUtils::lastPathComponent(path);
-        CCObject* v = m_highQualityTextures->objectForKey(filename);
+        CCObject* v = m_customPixelFormatTextures->objectForKey(filename);
         if(v) {
             string f = ((CCString*)v)->getCString();
             pf = CCTexture2D::string2format(f);

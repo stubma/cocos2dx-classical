@@ -57,7 +57,7 @@ protected:
     // a map, key is file name, value is pixel format string
     // if a image file is a key in this map, then ignore default
     // pixel format and use format in this map
-    CCDictionary* m_highQualityTextures;
+    CCDictionary* m_customPixelFormatTextures;
 
 private:
     /// todo: void addImageWithAsyncObject(CCAsyncObject* async);
