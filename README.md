@@ -109,6 +109,7 @@ Maybe it ends at some day, and I won't touch cocos2dx 3.x because I don't think 
 * CCAnimate支持CCScale9Sprite
 * 修正CCDrawNode的渲染问题
 * 修正CCClippingNode不能移动, 不能缩放的问题
+* 可以在config.plist中添加```cocos2d.x.texture.custom_pixel_format```项目, 值为一个dict. 子项key为文件名, 值为点格式字符串(比如rgba8888). 通过这种方式可以指定为某些图形文件强制使用某种格式, 从而忽略缺省的贴图格式设置.
 * Lua相关修改
 	* quick 3.x的binding generator工具移植完成, 名叫autolua, 引擎的lua绑定已经全部生成. 如果想要重新生成绑定, 可以到autolua目录下执行```./autolua.py cocos2dx.conf```. 这个目录下还有一个简单的test.conf可以用于测试autolua.
 	* Cocos2dxLuaLoader的逻辑被修改, 会优先从~/Library寻找lua脚本, 如果没有找到则载入app的.
@@ -197,6 +198,7 @@ Things Improved
 * CCAnimate supports CCScale9Sprite
 * fix CCDrawNode render bug
 * CCClippingNode supports dynamic position, and scale
+* you can add a ```cocos2d.x.texture.custom_pixel_format``` key in config.plist which value is a dictionary. use image file name as item key and pixel format string as item value so that you can use a different pixel format when loading that image
 * Lua related
 	* quick 3.x binding generator is migrated and renamed to autolua. Engine lua binding is completely generated. If you want to re-generate it, you can execute ```./autolua.py cocos2dx.conf``` in autolua folder
 	* lua and luajit are both precompiled, by default we use luajit. if you want to use lua, you can modify scripting/lua/Android.mk(for android) or cocos2dx/proj.ios/cocos2dx.xcodeproj(for ios)
