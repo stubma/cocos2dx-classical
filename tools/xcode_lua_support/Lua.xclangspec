@@ -668,7 +668,7 @@
         Identifier = "xcode.lang.lua.comment.singleline";
         Syntax = {
             Start = "--";
-            End = "\n";
+            Until = "\n";
             IncludeRules = ( 
                 "xcode.lang.url", 
                 "xcode.lang.url.mail", 
