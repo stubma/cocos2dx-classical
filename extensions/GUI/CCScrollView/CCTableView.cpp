@@ -331,6 +331,13 @@ void CCTableView::_updateCellPositions() {
     m_vCellsPositions.clear();
     m_hCellsPositions.clear();
     
+    // if no cell, can skip
+    if(cellsCount <= 0) {
+        m_vCellsPositions.push_back(0);
+        m_hCellsPositions.push_back(0);
+        return;
+    }
+    
     CCSize cellSize;
     float pos;
     CCScrollViewDirection d = getDirection();
