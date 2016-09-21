@@ -43,7 +43,7 @@ cat >AdditionalLanguages.plist <<EOF
 				<key>prefix</key>
 				<string>--[[</string>
 				<key>suffix</key>
-				<string>]]</string>
+				<string>--]]</string>
 			</dict>
 			<dict>
 				<key>prefix</key>
