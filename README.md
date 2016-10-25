@@ -1,7 +1,7 @@
 这是什么
 ===
 
-这是一个私人定制的cocos2dx版本, 基于cocos2dx v2分支的最新代码, 目标是创造一个cocos2dx的古典经典版. cocos2dx目前已经全面发力于3.x版本, 2.x版本已经被抛弃, 当然, 如果他们不抛弃2.x, 我也不会创建这个项目.
+这是一个私人定制的cocos2dx版本, 基于cocos2dx v2分支的最新代码, 目标是创造一个cocos2dx的古典经典版. cocos2dx已经全面发力于3.x版本, 2.x版本已经被抛弃, 当然, 如果他们不抛弃2.x, 我也不会创建这个项目.
 
 我觉得2.x仍然还有价值, 同时3.x并不让我感到多大兴趣. 实际上cocos2d作为一个2d引擎, 还有很多不完善的地方, 相信无数的人已经在2.x时代踩过了很多的坑, 也不得不自己去填上这些坑, 我也一样, 为了填这些坑, 我创建了cocos2dx-better项目, 把这些坑通过外挂的方式填掉, 但是总有一些坑, 外挂解决不了, 只能改原始代码. 对于我个人而言, 目前更需要一个好用的2.x, 而不是一个有未知新坑的3.x.
 
@@ -139,6 +139,7 @@ Things Improved
 ===
 
 * fixed project 64bits compiling
+*  use c++11 when compiling
 * reimplement CCLabelTTF (merge code from cocos2dx-better CCRichLabelTTF)
 	* fully compatibile with old CCLabelTTF
 	* support attibuted style, such as color, font, size, style, image, link, even CCNode can be inserted(you can view cocos2dx-better demo)
@@ -164,7 +165,7 @@ Things Improved
 	* fix memory leak in Widget.removeChild
 	* CCArmatureAnimation adds hasFrameEvent to detect existence of a frame event
 	* Invisible widget won't response to touch event
-	* fix CocoStudio image search logic, now search paths works for it
+	* fix CocoStudio image search logic, now search paths work for it
 	* add localization support for CocoStudio, any text starts with @ will be treat as a string key and engine will use CCLocalization to get final string, based on system current locale setting.
 * reimplement TMX, support multi-tileset for one layer(merge from cocos2dx-better CBTMXTileMap)
 * reimplement CCTableView(merge from cocos2dx-better CCGridView):
