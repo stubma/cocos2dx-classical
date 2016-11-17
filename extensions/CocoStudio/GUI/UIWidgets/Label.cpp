@@ -171,6 +171,14 @@ void Label::setTextVerticalAlignment(CCVerticalTextAlignment alignment)
     labelScaleChangedWithSize();
 }
     
+void Label::setGlobalImageScaleFactor(float scale, bool mustUpdateTexture) {
+    _labelRenderer->setGlobalImageScaleFactor(scale, mustUpdateTexture);
+}
+    
+float Label::getGlobalImageScaleFactor() {
+    return _labelRenderer->getGlobalImageScaleFactor();
+}
+    
 CCVerticalTextAlignment Label::getTextVerticalAlignment()
 {
     return _labelRenderer->getVerticalAlignment();

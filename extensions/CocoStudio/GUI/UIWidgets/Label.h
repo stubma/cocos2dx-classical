@@ -148,6 +148,10 @@ public:
     void setTextVerticalAlignment(CCVerticalTextAlignment alignment);
     
     CCVerticalTextAlignment getTextVerticalAlignment();
+    
+    void setGlobalImageScaleFactor(float scale, bool mustUpdateTexture = true);
+    float getGlobalImageScaleFactor();
+    
 protected:
     virtual bool init();
     virtual void initRenderer();
