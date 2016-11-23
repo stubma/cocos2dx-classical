@@ -112,7 +112,7 @@ Maybe it ends at some day, and I won't touch cocos2dx 3.x because I don't think 
 * 可以在config.plist中添加```cocos2d.x.texture.custom_pixel_format```项目, 值为一个dict. 子项key为文件名, 值为点格式字符串(比如rgba8888). 通过这种方式可以指定为某些图形文件强制使用某种格式, 从而忽略缺省的贴图格式设置.
 * Lua相关修改
 	* quick 3.x的binding generator工具移植完成, 名叫autolua, 引擎的lua绑定已经全部生成. 如果想要重新生成绑定, 可以到autolua目录下执行```./autolua.py cocos2dx.conf```. 这个目录下还有一个简单的test.conf可以用于测试autolua.
-	* Cocos2dxLuaLoader的逻辑被修改, 会优先从~/Library寻找lua脚本, 如果没有找到则载入app的.
+	* Cocos2dxLuaLoader的逻辑被修改, 会优先从~/Library(for iOS)或内部files目录(for Android)寻找lua脚本, 如果没有找到则载入app的.
 	* lua和luajit的库都已经预编译, 缺省使用luajit库, 如果想切换成lua, 可以编辑scripting/lua/Android.mk(for android)或cocos2dx/proj.ios/cocos2dx.xcodeproj(for ios)
 	* HelloLua工程修改调试通过, 在Android上已经采用gradle对HelloLua进行打包, 注意你可能需要修改local.properties上的sdk.dir/ndk.dir配置.
 	* 使用ccScriptFunction代表一个脚本方法, 替代了原来使用int的方式. 引擎中注册脚本方法相关的代码都改成使用ccScriptFunction, 相应的牵涉到CCLuaEngine, CCLuaStack等都有不少修改, 脚本回调方法可以获得self参数, 解决了脚本回调方法中获取self不方便的问题
@@ -204,7 +204,7 @@ Things Improved
 	* quick 3.x binding generator is migrated and renamed to autolua. Engine lua binding is completely generated. If you want to re-generate it, you can execute ```./autolua.py cocos2dx.conf``` in autolua folder
 	* lua and luajit are both precompiled, by default we use luajit. if you want to use lua, you can modify scripting/lua/Android.mk(for android) or cocos2dx/proj.ios/cocos2dx.xcodeproj(for ios)
 	* HelloLua project is debugged and fine. In Android, I use gradle to package HelloLua, so you may need change sdk.dir/ndk.dir in local.properties
-	* Cocos2dxLuaLoader is modified so that it will try to load lua script from ~/Library first. If not found, load from app bundle.
+	* Cocos2dxLuaLoader is modified so that it will try to load lua script from ~/Library(for iOS) or internal files director(for Android) first. If not found, load from app bundle.
 	* use ccScriptFunction struct to replace int handler, modified all related code. So now it is easy to access self in script callback.
 	* adding more shared library, in scripting/lua/script
 	* add lfs to easily load lua files under a folder, fix conflict between Cocos2dxLuaLoader and lfs
