@@ -266,6 +266,10 @@ function cc.rectGetMinY(rect)
     return rect.y
 end
 
+function cc.rectCenter(r)
+    return cc.p(cc.rectGetMidX(r), cc.rectGetMidY(r))
+end
+
 function cc.rectContainsPoint( rect, point )
     local ret = false
 
