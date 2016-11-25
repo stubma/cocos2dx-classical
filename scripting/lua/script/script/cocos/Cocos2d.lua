@@ -27,6 +27,10 @@ function cc.p(_x,_y)
     end
 end
 
+function cc.pCopy(pt)
+    return { x = pt.x, y = pt.y }
+end
+
 function cc.pAdd(pt1,pt2)
     return {x = pt1.x + pt2.x , y = pt1.y + pt2.y }
 end
@@ -201,6 +205,10 @@ function cc.size( _width,_height )
     return { width = _width, height = _height }
 end
 
+function cc.sizeCopy(s)
+    return { width = s.width, height = s.height }
+end
+
 function cc.sizeSub(s1, s2)
     return { width = s1.width - s2.width, height = s1.height - s2.height }
 end
@@ -220,6 +228,10 @@ end
 -- Rect
 function cc.rect(_x,_y,_width,_height)
     return { x = _x, y = _y, width = _width, height = _height }
+end
+
+function cc.rectCopy(r)
+    return { x = r.x, y = r.y, width = r.width, height = r.height }
 end
 
 function cc.rectEqualToRect(rect1,rect2)
