@@ -143,9 +143,12 @@ void Widget::addChild(CCNode * child, int zOrder)
     
 void Widget::addChild(CCNode* child, int zOrder, int tag)
 {
-    CCAssert(dynamic_cast<Widget*>(child) != NULL, "Widget only supports Widgets as children");
-    CCNode::addChild(child, zOrder, tag);
-    _widgetChildren->addObject(child);
+    if(dynamic_cast<Widget*>(child) == NULL) {
+        addNode(child, zOrder, tag);
+    } else {
+        CCNode::addChild(child, zOrder, tag);
+        _widgetChildren->addObject(child);
+    }
 }
     
 void Widget::sortAllChildren()
@@ -309,9 +312,12 @@ void Widget::addNode(CCNode * node, int zOrder)
     
 void Widget::addNode(CCNode* node, int zOrder, int tag)
 {
-    CCAssert(dynamic_cast<Widget*>(node) == NULL, "Widget only supports Nodes as renderer");
-    CCNode::addChild(node, zOrder, tag);
-    _nodes->addObject(node);
+    if(dynamic_cast<Widget*>(node)) {
+        addChild(node, zOrder, tag);
+    } else {
+        CCNode::addChild(node, zOrder, tag);
+        _nodes->addObject(node);
+    }
 }
     
 CCNode* Widget::getNodeByTag(int tag)
