@@ -147,7 +147,12 @@ bool CCArmature::init(const char *name)
             m_strName = name;
 
             CCAnimationData *animationData = armatureDataManager->getAnimationData(name);
-            CCAssert(animationData, "CCAnimationData not exist! ");
+            if(animationData == NULL) {
+                string err = "CCAnimationData ";
+                err += name;
+                err += " not exist! ";
+                CCAssert(animationData, err.c_str());
+            }
 
             m_pAnimation->setAnimationData(animationData);
 
