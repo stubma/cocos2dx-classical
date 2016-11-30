@@ -98,8 +98,14 @@ public:
     /** enable or disable shadow for the label */
     void enableShadow(const CCSize &shadowOffset, unsigned int shadowColor, float shadowBlur);
     
+    /** disable shadow rendering */
+    void disableShadow();
+    
     /** enable or disable stroke */
     void enableStroke(const ccColor3B &strokeColor, float strokeSize);
+    
+    /** disable stroke */
+    void disableStroke();
     
     /**
      * Sets the font name of label.

@@ -113,7 +113,15 @@ void Label::enableStroke(const ccColor3B &strokeColor, float strokeSize) {
     _labelRenderer->enableStroke(strokeColor, strokeSize);
     labelScaleChangedWithSize();
 }
+    
+void Label::disableShadow() {
+    _labelRenderer->disableShadow();
+}
 
+void Label::disableStroke() {
+    _labelRenderer->disableStroke();
+}
+    
 int Label::getStringLength()
 {
     return (int)std::strlen(_labelRenderer->getString());
