@@ -109,6 +109,9 @@ public:
     //! The animation update speed
     CC_DEPRECATED_ATTRIBUTE virtual void setAnimationInternal(float animationInternal) {};
 
+    /// get movement frames
+    int getMovementFrames(const char *animationName);
+    
     using CCProcessBase::play;
     /**
      * Play animation by animation name.
