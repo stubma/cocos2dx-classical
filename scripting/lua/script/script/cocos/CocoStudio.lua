@@ -71,7 +71,9 @@ overload.getWidgetByName {
     "string",
     function(root, name, type)
         local obj = UIHelper:seekWidgetByName(root, name)
-        tolua.cast(obj, type)
+        if obj ~= nil then
+            tolua.cast(obj, type)
+        end
         return obj
     end
 }
@@ -83,9 +85,11 @@ overload.getWidgetByName {
     "table",
     function(root, name, type, handler)
         local obj = UIHelper:seekWidgetByName(root, name)
-        tolua.cast(obj, type)
-        if handler ~= nil then
-            obj:addScriptTouchEventListener(handler)
+        if obj ~= nil then
+            tolua.cast(obj, type)
+            if handler ~= nil then
+                obj:addScriptTouchEventListener(handler)
+            end
         end
         return obj
     end
