@@ -95,17 +95,14 @@ public:
     
     int getFontSize();
     
-    /** enable or disable shadow for the label */
+    // bridge to CCLabelTTF
     void enableShadow(const CCSize &shadowOffset, unsigned int shadowColor, float shadowBlur);
-    
-    /** disable shadow rendering */
     void disableShadow();
-    
-    /** enable or disable stroke */
     void enableStroke(const ccColor3B &strokeColor, float strokeSize);
-    
-    /** disable stroke */
     void disableStroke();
+    void setLinkTarget(int index, CCCallFunc* func);
+    void setLinkTargetForAll(CCCallFunc* func);
+    void setLinkPriority(int p);
     
     /**
      * Sets the font name of label.

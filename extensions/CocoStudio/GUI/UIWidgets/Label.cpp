@@ -122,6 +122,18 @@ void Label::disableStroke() {
     _labelRenderer->disableStroke();
 }
     
+void Label::setLinkTarget(int index, CCCallFunc* func) {
+    _labelRenderer->setLinkTarget(index, func);
+}
+
+void Label::setLinkTargetForAll(CCCallFunc* func) {
+    _labelRenderer->setLinkTargetForAll(func);
+}
+
+void Label::setLinkPriority(int p) {
+    _labelRenderer->setLinkPriority(p);
+}
+    
 int Label::getStringLength()
 {
     return (int)std::strlen(_labelRenderer->getString());
