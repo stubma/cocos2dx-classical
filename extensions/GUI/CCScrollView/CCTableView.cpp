@@ -432,7 +432,12 @@ void CCTableView::_updateCellPositions() {
 }
 
 void CCTableView::_updateContentSize(bool keepOffset) {
-    CCSize contentSize;
+    // get offset relative to top-left
+    CCSize contentSize = getContentSize();
+    CCPoint offset = getContentOffset();
+    CCPoint tlOffset = ccp(offset.x + contentSize.width, offset.y + contentSize.height);
+    
+    // set new content size
     contentSize.width = MAX(m_hCellsPositions[m_hCellsPositions.size() - 1] + m_insets.right, m_tViewSize.width);
     contentSize.height = MAX(m_vCellsPositions[m_vCellsPositions.size() - 1] + m_insets.bottom, m_tViewSize.height);
     setContentSize(contentSize);
@@ -444,7 +449,8 @@ void CCTableView::_updateContentSize(bool keepOffset) {
 			setContentOffset(ccp(0,minContainerOffset().y));
 		}
     } else {
-        CCPoint offset = getContentOffset();
+        offset.x = tlOffset.x - contentSize.width;
+        offset.y = tlOffset.y - contentSize.height;
         CCPoint min = minContainerOffset();
         CCPoint max = maxContainerOffset();
         offset.x = clampf(offset.x, min.x, max.x);
