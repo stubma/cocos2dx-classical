@@ -17,6 +17,15 @@ function table.print(value, ...)
                   end)
 end
 
+function table.indexOf(t, ele)
+    for i,item in ipairs(t) do
+        if type(item) == type(ele) and item == ele then
+            return i
+        end
+    end
+    return 0
+end
+
 -- check whether a number is existent in a table
 -- it will convert other type to number before comparing
 function table.hasnumber(t, n)
