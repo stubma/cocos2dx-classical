@@ -1363,14 +1363,30 @@ public:
     CCPoint convertToWorldSpaceAR(const CCPoint& nodePoint);
     
     /**
+     * Converts a Point to ancestor space coordinates. The result is in Points.
+     */
+    CCPoint convertToAncestorSpace(CCNode* ancestor, const CCPoint& nodePoint);
+    
+    /**
      * Converts a Point to parent space coordinates. The result is in Points.
      */
     CCPoint convertToParentSpace(const CCPoint& nodePoint);
     
     /**
+     * Converts a Rect to ancestor space coordinates. The result is in Points.
+     */
+    CCRect convertRectToAncestorSpace(CCNode* ancestor, const CCRect& nodeRect);
+    
+    /**
      * Converts a Rect to parent space coordinates. The result is in Points.
      */
     CCRect convertRectToParentSpace(const CCRect& nodeRect);
+    
+    /**
+     * Converts a local Point to ancestor space coordinates.The result is in Points.
+     * treating the returned/received node point as anchor relative.
+     */
+    CCPoint convertToAncestorSpaceAR(CCNode* ancestor, const CCPoint& nodePoint);
     
     /**
      * Converts a local Point to parent space coordinates.The result is in Points.
