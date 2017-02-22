@@ -593,10 +593,16 @@ void CCResourceLoader::addAnimByFramePattern(const string& name,
     t->unitDelay = unitDelay;
     t->restoreOriginalFrame = restoreOriginalFrame;
     char buf[256];
-    int step = endIndex >= startIndex ? 1 : -1;
-    for(int i = startIndex; i <= endIndex; i += step) {
-        sprintf(buf, pattern.c_str(), i);
-        t->frames.push_back(_resolve(buf));
+    if(endIndex >= startIndex) {
+        for(int i = startIndex; i <= endIndex; i++) {
+            sprintf(buf, pattern.c_str(), i);
+            t->frames.push_back(_resolve(buf));
+        }
+    } else {
+        for(int i = startIndex; i >= endIndex; i--) {
+            sprintf(buf, pattern.c_str(), i);
+            t->frames.push_back(_resolve(buf));
+        }
     }
     addLoadTask(t);
 }
@@ -612,11 +618,17 @@ void CCResourceLoader::addAtlasAnimByFramePattern(const string& name,
 	t->unitDelay = unitDelay;
 	t->restoreOriginalFrame = restoreOriginalFrame;
 	char buf[256];
-    int step = endIndex >= startIndex ? 1 : -1;
-	for(int i = startIndex; i <= endIndex; i += step) {
-		sprintf(buf, pattern.c_str(), i);
-		t->frames.push_back(buf);
-	}
+    if(endIndex >= startIndex) {
+        for(int i = startIndex; i <= endIndex; i++) {
+            sprintf(buf, pattern.c_str(), i);
+            t->frames.push_back(buf);
+        }
+    } else {
+        for(int i = startIndex; i >= endIndex; i--) {
+            sprintf(buf, pattern.c_str(), i);
+            t->frames.push_back(buf);
+        }
+    }
 	addLoadTask(t);
 }
 
@@ -631,10 +643,16 @@ void CCResourceLoader::addAnimByFramePatternAndVariableDelay(const string& name,
     t->restoreOriginalFrame = restoreOriginalFrame;
     
     char buf[256];
-    int step = endIndex >= startIndex ? 1 : -1;
-    for(int i = startIndex; i <= endIndex; i += step) {
-        sprintf(buf, pattern.c_str(), i);
-        t->frames.push_back(_resolve(buf));
+    if(endIndex >= startIndex) {
+        for(int i = startIndex; i <= endIndex; i++) {
+            sprintf(buf, pattern.c_str(), i);
+            t->frames.push_back(_resolve(buf));
+        }
+    } else {
+        for(int i = startIndex; i >= endIndex; i--) {
+            sprintf(buf, pattern.c_str(), i);
+            t->frames.push_back(_resolve(buf));
+        }
     }
     
     CCObject* obj;
@@ -714,10 +732,16 @@ void CCResourceLoader::addAtlasAnimByFramePatternAndVariableDelay(const string& 
     t->restoreOriginalFrame = restoreOriginalFrame;
     
     char buf[256];
-    int step = endIndex >= startIndex ? 1 : -1;
-    for(int i = startIndex; i <= endIndex; i += step) {
-        sprintf(buf, pattern.c_str(), i);
-        t->frames.push_back(buf);
+    if(endIndex >= startIndex) {
+        for(int i = startIndex; i <= endIndex; i++) {
+            sprintf(buf, pattern.c_str(), i);
+            t->frames.push_back(buf);
+        }
+    } else {
+        for(int i = startIndex; i >= endIndex; i--) {
+            sprintf(buf, pattern.c_str(), i);
+            t->frames.push_back(buf);
+        }
     }
     
     CCObject* obj;
