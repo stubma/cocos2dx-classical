@@ -593,7 +593,8 @@ void CCResourceLoader::addAnimByFramePattern(const string& name,
     t->unitDelay = unitDelay;
     t->restoreOriginalFrame = restoreOriginalFrame;
     char buf[256];
-    for(int i = startIndex; i <= endIndex; i++) {
+    int step = endIndex >= startIndex ? 1 : -1;
+    for(int i = startIndex; i <= endIndex; i += step) {
         sprintf(buf, pattern.c_str(), i);
         t->frames.push_back(_resolve(buf));
     }
@@ -611,7 +612,8 @@ void CCResourceLoader::addAtlasAnimByFramePattern(const string& name,
 	t->unitDelay = unitDelay;
 	t->restoreOriginalFrame = restoreOriginalFrame;
 	char buf[256];
-	for(int i = startIndex; i <= endIndex; i++) {
+    int step = endIndex >= startIndex ? 1 : -1;
+	for(int i = startIndex; i <= endIndex; i += step) {
 		sprintf(buf, pattern.c_str(), i);
 		t->frames.push_back(buf);
 	}
@@ -629,7 +631,8 @@ void CCResourceLoader::addAnimByFramePatternAndVariableDelay(const string& name,
     t->restoreOriginalFrame = restoreOriginalFrame;
     
     char buf[256];
-    for(int i = startIndex; i <= endIndex; i++) {
+    int step = endIndex >= startIndex ? 1 : -1;
+    for(int i = startIndex; i <= endIndex; i += step) {
         sprintf(buf, pattern.c_str(), i);
         t->frames.push_back(_resolve(buf));
     }
@@ -711,7 +714,8 @@ void CCResourceLoader::addAtlasAnimByFramePatternAndVariableDelay(const string& 
     t->restoreOriginalFrame = restoreOriginalFrame;
     
     char buf[256];
-    for(int i = startIndex; i <= endIndex; i++) {
+    int step = endIndex >= startIndex ? 1 : -1;
+    for(int i = startIndex; i <= endIndex; i += step) {
         sprintf(buf, pattern.c_str(), i);
         t->frames.push_back(buf);
     }
