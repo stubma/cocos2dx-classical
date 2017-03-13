@@ -244,6 +244,16 @@ bool CCUtils::isPathExistent(const string& path) {
 	return [[NSFileManager defaultManager] fileExistsAtPath:nsPath];
 }
 
+size_t CCUtils::getFileSize(const string& path) {
+    // if path is empty, directly return
+    if(!CCUtils::isPathExistent(path))
+        return 0;
+    
+    NSString* nsPath = [NSString stringWithUTF8String:path.c_str()];
+    NSDictionary* attr = [[NSFileManager defaultManager] attributesOfItemAtPath:nsPath error:nil];
+    return [attr[NSFileSize] integerValue];
+}
+
 bool CCUtils::createFolder(const string& path) {
 	NSString* nsPath = [NSString stringWithUTF8String:path.c_str()];
 	NSFileManager* fm = [NSFileManager defaultManager];

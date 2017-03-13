@@ -32,6 +32,7 @@
 #include "ccMacros.h"
 #include "CCUtilsAndroid.h"
 #include <unistd.h>
+#include <sys/stat.h>
 #include "platform/android/CCFileUtilsAndroid.h"
 
 NS_CC_BEGIN
@@ -59,6 +60,18 @@ bool CCUtils::isPathExistent(const string& path) {
     } else {
         return CCFileUtils::sharedFileUtils()->isFileExist(path);
     }
+}
+
+size_t CCUtils::getFileSize(const string& path) {
+    if(!CCUtils::isPathExistent(path)) {
+        return 0;
+    }
+    
+    struct stat st;
+    if(stat(path.c_str(), &st) == 0) {
+        return st.st_size;
+    }
+    return 0;
 }
 
 string CCUtils::externalize(const string& path) {

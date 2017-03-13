@@ -213,6 +213,14 @@ public:
 	 * @return true means path is existent
 	 */
 	static bool isPathExistent(const string& path);
+    
+    /**
+     * get file size
+     *
+     * @param path must ba an absolute path
+     * @return file size
+     */
+    static size_t getFileSize(const string& path);
 	
 	/**
 	 * create a folder at specified absolute path, its parent folder should be existent and this

@@ -146,11 +146,11 @@ USING_NS_CC;
 	if(png) {
 		NSData* pngData = UIImagePNGRepresentation(uiImage);
 		[pngData writeToFile:[NSString stringWithCString:fullPath.c_str() encoding:NSUTF8StringEncoding]
-				  atomically:NO];
+				  atomically:YES];
 	} else {
 		NSData* jpgData = UIImageJPEGRepresentation(uiImage, 1.0);
 		[jpgData writeToFile:[NSString stringWithCString:fullPath.c_str() encoding:NSUTF8StringEncoding]
-				  atomically:NO];
+				  atomically:YES];
 	}
 	
 	// release
