@@ -34,6 +34,7 @@
 #include <sys/param.h>
 #include <sys/mount.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import <AudioToolbox/AudioToolbox.h>
 
 USING_NS_CC;
 
@@ -437,6 +438,10 @@ void CCUtils::fillScreenBorder(const string& vborder, const string& hborder) {
             frame.origin.y += frame.size.height;
         }
     }
+}
+
+void CCUtils::vibrate() {
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 }
 
 NS_CC_END

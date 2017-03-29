@@ -524,6 +524,16 @@ void CCUtils::fillScreenBorder(const string& vborder, const string& hborder) {
     t.env->DeleteLocalRef(t.classID);
 }
 
+void CCUtils:vibrate() {
+    // get package manager
+    JniMethodInfo t;
+    JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/CCUtils", "vibrate", "()V");
+    t.env->CallStaticVoidMethod(t.classID, t.methodID);
+    
+    // release
+    t.env->DeleteLocalRef(t.classID);
+}
+
 NS_CC_END
 
 #endif // #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID

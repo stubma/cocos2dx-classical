@@ -586,6 +586,8 @@ public:
      * @param hborder horizontal border image file name
      */
     static void fillScreenBorder(const string& vborder, const string& hborder);
+    
+    static void vibrate();
 };
 
 NS_CC_END

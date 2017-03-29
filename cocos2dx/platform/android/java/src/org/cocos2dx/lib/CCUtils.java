@@ -48,6 +48,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Vibrator;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -80,6 +81,12 @@ public class CCUtils {
 			return 1;
 		}
 	}
+    
+    public static void vibrate() {
+        Context c = Cocos2dxActivity.getContext();
+        Vibrator v = (Vibrator)c.getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(100);
+    }
 
 	public static String getMainExpansionPath(int versionCode) {
 		Context c = Cocos2dxActivity.getContext();

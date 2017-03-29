@@ -346,6 +346,7 @@
 		9268AB4F1AD7BC17004EF3E5 /* lua_cocos2dx_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 9268AB4D1AD7BC17004EF3E5 /* lua_cocos2dx_manual.h */; };
 		92780D241CF826AE00415F35 /* CCScale9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92780D221CF826AE00415F35 /* CCScale9Sprite.cpp */; };
 		92780D251CF826AE00415F35 /* CCScale9Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 92780D231CF826AE00415F35 /* CCScale9Sprite.h */; };
+		927AEF931E8B9768006186A3 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 927AEF921E8B9768006186A3 /* AudioToolbox.framework */; };
 		927FE4FF1A45708A0065F052 /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 927FE4311A4570890065F052 /* CCActionEaseEx.cpp */; };
 		927FE5001A45708A0065F052 /* CCActionEaseEx.h in Headers */ = {isa = PBXBuildFile; fileRef = 927FE4321A4570890065F052 /* CCActionEaseEx.h */; };
 		927FE5011A45708A0065F052 /* CCActionFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 927FE4331A4570890065F052 /* CCActionFrame.cpp */; };
@@ -1216,6 +1217,7 @@
 		9268AB4D1AD7BC17004EF3E5 /* lua_cocos2dx_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_manual.h; sourceTree = "<group>"; };
 		92780D221CF826AE00415F35 /* CCScale9Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScale9Sprite.cpp; sourceTree = "<group>"; };
 		92780D231CF826AE00415F35 /* CCScale9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScale9Sprite.h; sourceTree = "<group>"; };
+		927AEF921E8B9768006186A3 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		927FE4311A4570890065F052 /* CCActionEaseEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEaseEx.cpp; sourceTree = "<group>"; };
 		927FE4321A4570890065F052 /* CCActionEaseEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEaseEx.h; sourceTree = "<group>"; };
 		927FE4331A4570890065F052 /* CCActionFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionFrame.cpp; sourceTree = "<group>"; };
@@ -1827,6 +1829,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				927AEF931E8B9768006186A3 /* AudioToolbox.framework in Frameworks */,
 				92C613591A41A6DE00550090 /* libcurl.a in Frameworks */,
 				9242C2551A3078FB00E1E944 /* CoreText.framework in Frameworks */,
 				92C613571A41A5CD00550090 /* libwebp.a in Frameworks */,
@@ -1862,6 +1865,7 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				927AEF921E8B9768006186A3 /* AudioToolbox.framework */,
 				92C613581A41A6DE00550090 /* libcurl.a */,
 				92DCDB301AFC96A600C3256F /* libluajit.a */,
 				92C613561A41A5CD00550090 /* libwebp.a */,
