@@ -147,6 +147,11 @@ public:
      * @lua NA
      */
     const char* getViewName();
+    
+    /**
+     * For current touch event, re-dispatch them
+     */
+    void redispatchTouchBegin();
 
     /** Touch events are handled by default; if you want to customize your handlers, please override these functions: 
      * @lua NA
