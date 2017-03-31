@@ -34,6 +34,7 @@ NS_CC_BEGIN
 
 class EGLTouchDelegate;
 class CCSet;
+class CCTouch;
 
 /**
  * @addtogroup platform
@@ -152,6 +153,12 @@ public:
      * For current touch event, re-dispatch them
      */
     void redispatchTouchBegin();
+
+    /**
+     * get current touch in dispatching, if there is multiple touches, it 
+     * returns any one
+     */
+    CCTouch* getDispatchingTouch();
 
     /** Touch events are handled by default; if you want to customize your handlers, please override these functions: 
      * @lua NA

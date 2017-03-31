@@ -194,6 +194,16 @@ const char* CCEGLViewProtocol::getViewName()
     return m_szViewName;
 }
 
+CCTouch* CCEGLViewProtocol::getDispatchingTouch() {
+    for(int i = 0; i < CC_MAX_TOUCHES; i++) {
+        CCTouch* pTouch = s_pTouches[i];
+        if(pTouch) {
+            return pTouch;
+        }
+    }
+    return NULL;
+}
+
 void CCEGLViewProtocol::redispatchTouchBegin() {
     CCSet set;
     for(int i = 0; i < CC_MAX_TOUCHES; i++) {
