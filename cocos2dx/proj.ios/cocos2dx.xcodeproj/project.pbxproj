@@ -511,6 +511,7 @@
 		927FE5A11A45708A0065F052 /* WidgetReaderProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 927FE4F51A45708A0065F052 /* WidgetReaderProtocol.h */; };
 		927FE5A21A45708A0065F052 /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 927FE4F71A45708A0065F052 /* ObjectFactory.cpp */; };
 		927FE5A31A45708A0065F052 /* ObjectFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 927FE4F81A45708A0065F052 /* ObjectFactory.h */; };
+		928AE8DD1E94D46A006A36F9 /* CCStdC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 928AE8DC1E94D46A006A36F9 /* CCStdC.mm */; };
 		928EF5AD1AFB3C7C00EBEC46 /* CCApplicationLua.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 928EF5AB1AFB3C7C00EBEC46 /* CCApplicationLua.cpp */; };
 		928EF5AE1AFB3C7C00EBEC46 /* CCApplicationLua.h in Headers */ = {isa = PBXBuildFile; fileRef = 928EF5AC1AFB3C7C00EBEC46 /* CCApplicationLua.h */; };
 		928F64441A33E59F00178235 /* CCImagePicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 928F64421A33E59F00178235 /* CCImagePicker.h */; };
@@ -846,7 +847,6 @@
 		92D683471A2F697E00CD9F2A /* CCMenuItemColorStateListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D683461A2F697E00CD9F2A /* CCMenuItemColorStateListener.h */; };
 		92D6834A1A2F69E700CD9F2A /* CCLabelTTFLinkStateSynchronizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D683481A2F69E700CD9F2A /* CCLabelTTFLinkStateSynchronizer.cpp */; };
 		92D6834B1A2F69E700CD9F2A /* CCLabelTTFLinkStateSynchronizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D683491A2F69E700CD9F2A /* CCLabelTTFLinkStateSynchronizer.h */; };
-		92DCDB311AFC96A600C3256F /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92DCDB301AFC96A600C3256F /* libluajit.a */; };
 		92E3CE211A54E5CB008520DB /* LuaBasicConversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E3CE1F1A54E5CB008520DB /* LuaBasicConversions.cpp */; };
 		92E3CE221A54E5CB008520DB /* LuaBasicConversions.h in Headers */ = {isa = PBXBuildFile; fileRef = 92E3CE201A54E5CB008520DB /* LuaBasicConversions.h */; };
 		92E3CE261A54E69A008520DB /* lua_cocos2dx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E3CE241A54E69A008520DB /* lua_cocos2dx_auto.cpp */; };
@@ -1382,6 +1382,8 @@
 		927FE4F51A45708A0065F052 /* WidgetReaderProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetReaderProtocol.h; sourceTree = "<group>"; };
 		927FE4F71A45708A0065F052 /* ObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectFactory.cpp; sourceTree = "<group>"; };
 		927FE4F81A45708A0065F052 /* ObjectFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectFactory.h; sourceTree = "<group>"; };
+		928AE8DA1E94CDC5006A36F9 /* liblua.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblua.a; path = ../../scripting/lua/lua/prebuilt/ios/liblua.a; sourceTree = "<group>"; };
+		928AE8DC1E94D46A006A36F9 /* CCStdC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCStdC.mm; sourceTree = "<group>"; };
 		928EF5AB1AFB3C7C00EBEC46 /* CCApplicationLua.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCApplicationLua.cpp; sourceTree = "<group>"; };
 		928EF5AC1AFB3C7C00EBEC46 /* CCApplicationLua.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplicationLua.h; sourceTree = "<group>"; };
 		928F64421A33E59F00178235 /* CCImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCImagePicker.h; sourceTree = "<group>"; };
@@ -1834,7 +1836,6 @@
 				9242C2551A3078FB00E1E944 /* CoreText.framework in Frameworks */,
 				92C613571A41A5CD00550090 /* libwebp.a in Frameworks */,
 				921110261A2B4CA8003FE653 /* libCocosDenshion.a in Frameworks */,
-				92DCDB311AFC96A600C3256F /* libluajit.a in Frameworks */,
 				1551A343158F2AB200E66CFE /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1865,6 +1866,7 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				928AE8DA1E94CDC5006A36F9 /* liblua.a */,
 				927AEF921E8B9768006186A3 /* AudioToolbox.framework */,
 				92C613581A41A6DE00550090 /* libcurl.a */,
 				92DCDB301AFC96A600C3256F /* libluajit.a */,
@@ -2262,6 +2264,7 @@
 				1551A48E158F2ADE00E66CFE /* CCLock.h */,
 				1551A48F158F2ADE00E66CFE /* CCPlatformDefine.h */,
 				1551A490158F2ADE00E66CFE /* CCStdC.h */,
+				928AE8DC1E94D46A006A36F9 /* CCStdC.mm */,
 				1551A491158F2ADE00E66CFE /* CCThread.mm */,
 				929D539E1A275AFE00560A2E /* CCUtils.mm */,
 				929D53A21A275B7900560A2E /* CCUtilsIOS.h */,
@@ -4581,6 +4584,7 @@
 				1551A838158F2ADF00E66CFE /* CCSpriteFrameCache.cpp in Sources */,
 				927FE52F1A45708A0065F052 /* CCArmatureDataManager.cpp in Sources */,
 				92B9155C1A3D7A3400622FDA /* CCTMXTiledMap.cpp in Sources */,
+				928AE8DD1E94D46A006A36F9 /* CCStdC.mm in Sources */,
 				929F3A671A26182E00DE78AC /* TransformUtils.cpp in Sources */,
 				92A7AF571A3C4038001C830B /* CCAFCFrame.cpp in Sources */,
 				92AA13921AC4FD510066041C /* unzip.cpp in Sources */,
@@ -4745,17 +4749,32 @@
 					"\"$(SDKROOT)/usr/include/libxml2\"",
 					"$(PROJECT_DIR)/../../CocosDenshion/include",
 					"$(PROJECT_DIR)/../../extensions",
-					"$(PROJECT_DIR)/../../scripting/lua/luajit/src/src",
 					"$(PROJECT_DIR)/../../scripting/lua/cocos2dx_support",
 					"$(PROJECT_DIR)/../platform/third_party/ios",
+				);
+				"HEADER_SEARCH_PATHS[sdk=iphoneos*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../../scripting/lua/luajit/src/src",
+				);
+				"HEADER_SEARCH_PATHS[sdk=iphonesimulator*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../../scripting/lua/lua/src/src",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../platform/third_party/ios/libraries",
-					"$(PROJECT_DIR)/../../scripting/lua/luajit/prebuilt/ios",
-					"/Users/maruojie/Projects/cocos2dx-classical/scripting/lua/luajit/prebuilt/ios",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../../scripting/lua/luajit/prebuilt/ios",
+				);
+				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../../scripting/lua/lua/prebuilt/ios",
+				);
+				OTHER_LIBTOOLFLAGS = "-ObjC";
+				"OTHER_LIBTOOLFLAGS[sdk=iphoneos*]" = "$(inherited) -lluajit";
+				"OTHER_LIBTOOLFLAGS[sdk=iphonesimulator*]" = "$(inherited) -llua";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -4774,17 +4793,32 @@
 					"\"$(SDKROOT)/usr/include/libxml2\"",
 					"$(PROJECT_DIR)/../../CocosDenshion/include",
 					"$(PROJECT_DIR)/../../extensions",
-					"$(PROJECT_DIR)/../../scripting/lua/luajit/src/src",
 					"$(PROJECT_DIR)/../../scripting/lua/cocos2dx_support",
 					"$(PROJECT_DIR)/../platform/third_party/ios",
+				);
+				"HEADER_SEARCH_PATHS[sdk=iphoneos*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../../scripting/lua/luajit/src/src",
+				);
+				"HEADER_SEARCH_PATHS[sdk=iphonesimulator*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../../scripting/lua/lua/src/src",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../platform/third_party/ios/libraries",
-					"$(PROJECT_DIR)/../../scripting/lua/luajit/prebuilt/ios",
-					"/Users/maruojie/Projects/cocos2dx-classical/scripting/lua/luajit/prebuilt/ios",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../../scripting/lua/luajit/prebuilt/ios",
+				);
+				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../../scripting/lua/lua/prebuilt/ios",
+				);
+				OTHER_LIBTOOLFLAGS = "-ObjC";
+				"OTHER_LIBTOOLFLAGS[sdk=iphoneos*]" = "$(inherited) -lluajit";
+				"OTHER_LIBTOOLFLAGS[sdk=iphonesimulator*]" = "$(inherited) -llua";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};

@@ -44,4 +44,28 @@ THE SOFTWARE.
 #define MAX(x,y) (((x) < (y)) ? (y) : (x))
 #endif  // MAX
 
+#if TARGET_IPHONE_SIMULATOR
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+FILE *fopen$UNIX2003( const char *filename, const char *mode);
+FILE *freopen$UNIX2003(const char *pathname, const char *mode, FILE *stream);
+int fputs$UNIX2003(const char *res1, FILE *res2);
+size_t fwrite$UNIX2003( const void *a, size_t b, size_t c, FILE *d);
+char* strerror$UNIX2003(int errornum);
+double strtod$UNIX2003(const char *nptr, char **endptr);
+size_t strftime$UNIX2003(char *s, size_t max, const char *format, const struct tm *tm);
+FILE *popen$UNIX2003(const char *command, const char *type);
+time_t mktime$UNIX2003(struct tm *timeptr);
+clock_t clock$UNIX2003();
+int system$UNIX2003(const char *command);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // #if TARGET_IPHONE_SIMULATOR
+
 #endif  // __CC_STD_C_H__
