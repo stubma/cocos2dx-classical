@@ -67,9 +67,11 @@ function string.startswith(s, pattern)
 end
 
 function string.endswith(s, pattern)
-    if pattern == nil then
+    if string.empty(pattern) then
         return true
-    elseif s == nil then
+    elseif string.empty(s) then
+        return false
+    elseif string.len(s) < string.len(pattern) then
         return false
     else
         local start = string.len(s) - string.len(pattern) + 1
