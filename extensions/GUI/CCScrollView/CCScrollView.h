@@ -54,6 +54,9 @@ public:
     virtual ~CCScrollViewDelegate() {}
     virtual void scrollViewDidScroll(CCScrollView* view) = 0;
     virtual void scrollViewDidZoom(CCScrollView* view) = 0;
+    virtual void scrollViewDidStartScroll(CCScrollView* view) {}
+    virtual void scrollViewDidEndScroll(CCScrollView* view) {}
+    virtual void scrollViewContentSizeChanged(CCScrollView* view) {}
 };
 
 /**
@@ -175,6 +178,7 @@ public:
 
 
     bool isDragging() {return m_bDragging;}
+    bool isBouncing() { return m_bBouncing; }
     bool isTouchMoved() { return m_bTouchMoved; }
     bool isBounceable() { return m_bBounceable; }
     void setBounceable(bool bBounceable) { m_bBounceable = bBounceable; }
@@ -268,8 +272,11 @@ protected:
     CCRect getViewRect();
     
     // event dispatch
+    void onScrollViewDidStartScroll();
+    void onScrollViewDidEndScroll();
     void onScrollViewDidScroll();
     void onScrollViewDidZoom();
+    void onScrollViewContentSizeChanged();
     
     /**
      * current zoom scale
@@ -293,6 +300,11 @@ protected:
      * If YES, the view is being dragged.
      */
     bool m_bDragging;
+    
+    /**
+     * if YES, the view is being bouncing
+     */
+    bool m_bBouncing;
 
     /**
      * Content offset. Note that left-bottom point is the origin

@@ -47,6 +47,7 @@ CCScrollView::CCScrollView()
 , m_pDelegate(NULL)
 , m_eDirection(kCCScrollViewDirectionBoth)
 , m_bDragging(false)
+, m_bBouncing(false)
 , m_pContainer(NULL)
 , m_bTouchMoved(false)
 , m_bBounceable(false)
@@ -221,7 +222,10 @@ void CCScrollView::setTouchEnabled(bool e)
     CCLayer::setTouchEnabled(e);
     if (!e)
     {
-        m_bDragging = false;
+        if(m_bDragging) {
+            m_bDragging = false;
+            onScrollViewDidEndScroll();
+        }
         m_bTouchMoved = false;
         m_pTouches->removeAllObjects();
     }
@@ -368,6 +372,9 @@ void CCScrollView::setContainer(CCNode * pContainer)
     this->addChild(this->m_pContainer);
 
     this->setViewSize(this->m_tViewSize);
+    
+    // event
+    onScrollViewContentSizeChanged();
 }
 
 void CCScrollView::relocateContainer(bool animated)
@@ -416,6 +423,7 @@ void CCScrollView::deaccelerateScrolling(float dt)
     if (m_bDragging)
     {
         this->unschedule(schedule_selector(CCScrollView::deaccelerateScrolling));
+        m_bBouncing = false;
         return;
     }
     
@@ -459,6 +467,23 @@ void CCScrollView::deaccelerateScrolling(float dt)
     {
         this->unschedule(schedule_selector(CCScrollView::deaccelerateScrolling));
         this->relocateContainer(true);
+        m_bBouncing = false;
+        
+        // event
+        onScrollViewDidEndScroll();
+    }
+}
+
+void CCScrollView::onScrollViewDidStartScroll() {
+    if (m_pDelegate != NULL) {
+        m_pDelegate->scrollViewDidStartScroll(this);
+    }
+    
+    if(m_scriptHandler.handler) {
+        CCArray* pArrayArgs = CCArray::createWithCapacity(2);
+        pArrayArgs->addObject(this);
+        pArrayArgs->addObject(CCString::create("start_scroll"));
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs);
     }
 }
 
@@ -475,6 +500,19 @@ void CCScrollView::onScrollViewDidScroll() {
     }
 }
 
+void CCScrollView::onScrollViewDidEndScroll() {
+    if (m_pDelegate != NULL) {
+        m_pDelegate->scrollViewDidEndScroll(this);
+    }
+    
+    if(m_scriptHandler.handler) {
+        CCArray* pArrayArgs = CCArray::createWithCapacity(2);
+        pArrayArgs->addObject(this);
+        pArrayArgs->addObject(CCString::create("end_scroll"));
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs);
+    }
+}
+
 void CCScrollView::onScrollViewDidZoom() {
     if (m_pDelegate != NULL) {
         m_pDelegate->scrollViewDidZoom(this);
@@ -484,6 +522,19 @@ void CCScrollView::onScrollViewDidZoom() {
         CCArray* pArrayArgs = CCArray::createWithCapacity(2);
         pArrayArgs->addObject(this);
         pArrayArgs->addObject(CCString::create("zoom"));
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs);
+    }
+}
+
+void CCScrollView::onScrollViewContentSizeChanged() {
+    if (m_pDelegate != NULL) {
+        m_pDelegate->scrollViewContentSizeChanged(this);
+    }
+    
+    if(m_scriptHandler.handler) {
+        CCArray* pArrayArgs = CCArray::createWithCapacity(2);
+        pArrayArgs->addObject(this);
+        pArrayArgs->addObject(CCString::create("content_size_changed"));
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEventWithArgs(m_scriptHandler, pArrayArgs);
     }
 }
@@ -518,6 +569,9 @@ void CCScrollView::setContentSize(const CCSize & size)
     if (this->getContainer() != NULL)
     {
         this->getContainer()->setContentSize(size);
+        
+        // event
+        onScrollViewContentSizeChanged();
     }
 }
 
@@ -682,6 +736,13 @@ bool CCScrollView::ccTouchBegan(CCTouch* touch, CCEvent* event)
         m_bDragging     = true; //dragging started
         m_tScrollDistance = ccp(0.0f, 0.0f);
         m_fTouchLength    = 0.0f;
+        
+        // event
+        if(m_bBouncing) {
+            m_bBouncing = false;
+            onScrollViewDidEndScroll();
+        }
+        onScrollViewDidStartScroll();
     }
     else if (m_pTouches->count() == 2)
     {
@@ -689,8 +750,13 @@ bool CCScrollView::ccTouchBegan(CCTouch* touch, CCEvent* event)
                                    this->convertTouchToNodeSpace((CCTouch*)m_pTouches->objectAtIndex(1)));
         m_fTouchLength = ccpDistance(m_pContainer->convertTouchToNodeSpace((CCTouch*)m_pTouches->objectAtIndex(0)),
                                    m_pContainer->convertTouchToNodeSpace((CCTouch*)m_pTouches->objectAtIndex(1)));
-        m_bDragging  = false;
-    } 
+        
+        // event
+        if(m_bDragging) {
+            m_bDragging  = false;
+            onScrollViewDidEndScroll();
+        }
+    }
     return true;
 }
 
@@ -790,13 +856,19 @@ void CCScrollView::ccTouchEnded(CCTouch* touch, CCEvent* event)
         if (m_pTouches->count() == 1 && m_bTouchMoved)
         {
             this->schedule(schedule_selector(CCScrollView::deaccelerateScrolling));
+            m_bBouncing = true;
         }
         m_pTouches->removeObject(touch);
     } 
 
     if (m_pTouches->count() == 0)
     {
-        m_bDragging = false;    
+        if(m_bDragging) {
+            m_bDragging = false;
+            if(!m_bTouchMoved) {
+                onScrollViewDidEndScroll();
+            }
+        }
         m_bTouchMoved = false;
     }
 }
@@ -810,7 +882,10 @@ void CCScrollView::ccTouchCancelled(CCTouch* touch, CCEvent* event)
     m_pTouches->removeObject(touch); 
     if (m_pTouches->count() == 0)
     {
-        m_bDragging = false;    
+        if(m_bDragging) {
+            m_bDragging = false;
+            onScrollViewDidEndScroll();
+        }
         m_bTouchMoved = false;
     }
 }

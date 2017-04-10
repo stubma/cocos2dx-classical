@@ -120,8 +120,11 @@ cc.EditBoxInputModeDecimal = 5
 cc.EditBoxInputModeSingleLine = 6
 
 -- scroll view event
+cc.ScrollViewEventStartScroll = "start_scroll"
+cc.ScrollViewEventEndScroll = "end_scroll"
 cc.ScrollViewEventScroll = "scroll"
 cc.ScrollViewEventZoom = "zoom"
+cc.ScrollViewContentSizeChanged = "content_size_changed"
 
 -- table view event
 cc.TableViewEventCellAtIndex = "cell"
