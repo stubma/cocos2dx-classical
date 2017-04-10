@@ -65,3 +65,14 @@ end
 function string.startswith(s, pattern)
     return s ~= nil and string.find(s, pattern) == 1
 end
+
+function string.endswith(s, pattern)
+    if pattern == nil then
+        return true
+    elseif s == nil then
+        return false
+    else
+        local start = string.len(s) - string.len(pattern) + 1
+        return string.find(s, pattern, start) == start
+    end
+end

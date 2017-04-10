@@ -118,6 +118,7 @@
                     "string.char",
                     "string.dump",
                     "string.empty",
+                    "string.endswith",
                     "string.find",
                     "string.format",
                     "string.gmatch",
