@@ -381,6 +381,7 @@ void CCEditBoxImplIOS::setFont(const char* pFontName, int fontSize)
 
     float retinaFactor = m_bInRetinaMode ? 2.0f : 1.0f;
 	NSString * fntName = [NSString stringWithUTF8String:pFontName];
+    fntName = [[fntName lastPathComponent] stringByDeletingPathExtension];
     float scaleFactor = CCEGLView::sharedOpenGLView()->getScaleX();
     UIFont *textFont = nil;
     if (isValidFontName) {
