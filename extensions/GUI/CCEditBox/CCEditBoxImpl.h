@@ -50,6 +50,7 @@ public:
     virtual int  getMaxLength() = 0;
     virtual void setReturnType(KeyboardReturnType returnType) = 0;
     virtual bool isEditing() = 0;
+    virtual void setAlignment(CCTextAlignment align) = 0;
     
     virtual void setText(const char* pText) = 0;
     virtual const char* getText(void) = 0;

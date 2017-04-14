@@ -282,6 +282,11 @@ public:
      */
     void setFontColor(const ccColor3B& color);
     
+    /**
+     * Set text alignment of the widget's text
+     */
+    void setAlignment(CCTextAlignment align);
+    
 	/**
 	 * Set the placeholder's font.
 	 * @param pFontName The font name.
@@ -422,6 +427,7 @@ protected:
     
     int m_nFontSize;
     int m_nPlaceholderFontSize;
+    CCTextAlignment m_alignment;
     
     ccColor3B m_colText;
     ccColor3B m_colPlaceHolder;

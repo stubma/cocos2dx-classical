@@ -52,6 +52,7 @@ CCEditBoxImplAndroid::CCEditBoxImplAndroid(CCEditBox* pEditText)
 , m_eKeyboardReturnType(kKeyboardReturnTypeDefault)
 , m_colText(ccWHITE)
 , m_colPlaceHolder(ccGRAY)
+, m_alignment(kCCTextAlignmentLeft)
 , m_nMaxLength(-1)
 {
     
@@ -108,6 +109,28 @@ void CCEditBoxImplAndroid::setFontColor(const ccColor3B& color)
 {
     m_colText = color;
     m_pLabel->setColor(color);
+}
+
+void CCEditBoxImplAndroid::setAlignment(CCTextAlignment align) {
+    if(m_alignment != align) {
+        m_alignment = align;
+        if(m_alignment == kCCTextAlignmentLeft) {
+            m_pLabel->setAnchorPoint(ccp(0, 0.5));
+            m_pLabelPlaceHolder->setAnchorPoint(ccp(0, 0.5));
+            m_pLabel->setPosition(ccp(CC_EDIT_BOX_PADDING, m_EditSize.height / 2.0f));
+            m_pLabelPlaceHolder->setPosition(ccp(CC_EDIT_BOX_PADDING, m_EditSize.height / 2.0f));
+        } else if(m_alignment == kCCTextAlignmentCenter) {
+            m_pLabel->setAnchorPoint(ccp(0.5, 0.5));
+            m_pLabelPlaceHolder->setAnchorPoint(ccp(0.5, 0.5));
+            m_pLabel->setPosition(ccp(m_EditSize.width / 2.0, m_EditSize.height / 2.0f));
+            m_pLabelPlaceHolder->setPosition(ccp(m_EditSize.width / 2.0, m_EditSize.height / 2.0f));
+        } else {
+            m_pLabel->setAnchorPoint(ccp(1, 0.5));
+            m_pLabelPlaceHolder->setAnchorPoint(ccp(1, 0.5));
+            m_pLabel->setPosition(ccp(m_EditSize.width - CC_EDIT_BOX_PADDING, m_EditSize.height / 2.0f));
+            m_pLabelPlaceHolder->setPosition(ccp(m_EditSize.width - CC_EDIT_BOX_PADDING, m_EditSize.height / 2.0f));
+        }
+    }
 }
 
 void CCEditBoxImplAndroid::setPlaceholderFont(const char* pFontName, int fontSize)

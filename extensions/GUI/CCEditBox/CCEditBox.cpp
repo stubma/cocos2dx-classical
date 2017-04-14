@@ -61,6 +61,7 @@ CCEditBox::CCEditBox()
 , m_nPlaceholderFontSize(-1)
 , m_colText(ccWHITE)
 , m_colPlaceHolder(ccGRAY)
+, m_alignment(kCCTextAlignmentLeft)
 , m_nMaxLength(0)
 , m_fAdjustHeight(0.0f) {
     memset(&m_nScriptEditBoxHandler, 0, sizeof(ccScriptFunction));
@@ -207,6 +208,13 @@ void CCEditBox::setFontSize(int fontSize)
     if (m_pEditBoxImpl != NULL && m_strFontName.length() > 0)
     {
         m_pEditBoxImpl->setFont(m_strFontName.c_str(), m_nFontSize);
+    }
+}
+
+void CCEditBox::setAlignment(CCTextAlignment align) {
+    m_alignment = align;
+    if (m_pEditBoxImpl != NULL) {
+        m_pEditBoxImpl->setAlignment(align);
     }
 }
 

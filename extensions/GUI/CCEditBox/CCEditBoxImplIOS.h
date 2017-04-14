@@ -88,6 +88,7 @@ public:
     virtual int  getMaxLength();
     virtual void setReturnType(KeyboardReturnType returnType);
     virtual bool isEditing();
+    virtual void setAlignment(CCTextAlignment align);
     
     virtual void setText(const char* pText);
     virtual const char* getText(void);
@@ -119,6 +120,7 @@ private:
     EditBoxImplIOS* m_systemControl;
     int             m_nMaxTextLength;
     bool            m_bInRetinaMode;
+    CCTextAlignment m_alignment;
 };
 
 

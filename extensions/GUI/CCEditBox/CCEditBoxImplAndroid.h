@@ -54,6 +54,7 @@ public:
     virtual int  getMaxLength();
     virtual void setReturnType(KeyboardReturnType returnType);
     virtual bool isEditing();
+    virtual void setAlignment(CCTextAlignment align);
     
     virtual void setText(const char* pText);
     virtual const char* getText(void);
@@ -87,6 +88,7 @@ private:
 
     int   m_nMaxLength;
     CCSize m_EditSize;
+    CCTextAlignment m_alignment;
 };
 
 

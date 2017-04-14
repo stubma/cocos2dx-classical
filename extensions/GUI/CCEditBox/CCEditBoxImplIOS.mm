@@ -283,6 +283,7 @@ CCEditBoxImplIOS::CCEditBoxImplIOS(CCEditBox* pEditText)
 , m_systemControl(NULL)
 , m_obAnchorPoint(ccp(0.5f, 0.5f))
 , m_nMaxTextLength(-1)
+, m_alignment(kCCTextAlignmentLeft)
 {
     m_bInRetinaMode = [[EAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;
 }
@@ -347,8 +348,22 @@ void CCEditBoxImplIOS::initInactiveLabels(const CCSize& size)
 }
 
 void CCEditBoxImplIOS::placeInactiveLabels() {
-    m_pLabel->setPosition(ccp(CC_EDIT_BOX_PADDING, m_tContentSize.height / 2.0f));
-    m_pLabelPlaceHolder->setPosition(ccp(CC_EDIT_BOX_PADDING, m_tContentSize.height / 2.0f));
+    if(m_alignment == kCCTextAlignmentLeft) {
+        m_pLabel->setAnchorPoint(ccp(0, 0.5));
+        m_pLabelPlaceHolder->setAnchorPoint(ccp(0, 0.5));
+        m_pLabel->setPosition(ccp(CC_EDIT_BOX_PADDING, m_tContentSize.height / 2.0f));
+        m_pLabelPlaceHolder->setPosition(ccp(CC_EDIT_BOX_PADDING, m_tContentSize.height / 2.0f));
+    } else if(m_alignment == kCCTextAlignmentCenter) {
+        m_pLabel->setAnchorPoint(ccp(0.5, 0.5));
+        m_pLabelPlaceHolder->setAnchorPoint(ccp(0.5, 0.5));
+        m_pLabel->setPosition(ccp(m_tContentSize.width / 2.0, m_tContentSize.height / 2.0f));
+        m_pLabelPlaceHolder->setPosition(ccp(m_tContentSize.width / 2.0, m_tContentSize.height / 2.0f));
+    } else {
+        m_pLabel->setAnchorPoint(ccp(1, 0.5));
+        m_pLabelPlaceHolder->setAnchorPoint(ccp(1, 0.5));
+        m_pLabel->setPosition(ccp(m_tContentSize.width - CC_EDIT_BOX_PADDING, m_tContentSize.height / 2.0f));
+        m_pLabelPlaceHolder->setPosition(ccp(m_tContentSize.width - CC_EDIT_BOX_PADDING, m_tContentSize.height / 2.0f));
+    }
 }
 
 void CCEditBoxImplIOS::setInactiveText(const char* pText)
@@ -400,6 +415,20 @@ void CCEditBoxImplIOS::setFont(const char* pFontName, int fontSize)
 	m_pLabel->setFontSize(fontSize);
 	m_pLabelPlaceHolder->setFontName(pFontName);
 	m_pLabelPlaceHolder->setFontSize(fontSize);
+}
+
+void CCEditBoxImplIOS::setAlignment(CCTextAlignment align) {
+    if(m_alignment != align) {
+        m_alignment = align;
+        if(align == kCCTextAlignmentLeft) {
+            m_systemControl.textField.textAlignment = NSTextAlignmentLeft;
+        } else if(align == kCCTextAlignmentCenter) {
+            m_systemControl.textField.textAlignment = NSTextAlignmentCenter;
+        } else {
+            m_systemControl.textField.textAlignment = NSTextAlignmentRight;
+        }
+        placeInactiveLabels();
+    }
 }
 
 void CCEditBoxImplIOS::setFontColor(const ccColor3B& color)
