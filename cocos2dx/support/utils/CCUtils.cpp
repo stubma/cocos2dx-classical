@@ -470,8 +470,19 @@ CCPoint CCUtils::getPoint(CCNode* node, float xpercent, float ypercent) {
 
 CCRect CCUtils::getBoundingBoxInWorldSpace(CCNode* node) {
 	CCRect r;
-	r.origin = CCPointZero;
-	r.size = node->getContentSize();
+    if(dynamic_cast<Widget*>(node)) {
+        Widget* w = dynamic_cast<Widget*>(node);
+        if(dynamic_cast<ImageView*>(node) || dynamic_cast<Button*>(node)) {
+            r.size = w->getSize();
+            r.origin = ccp(r.size.width / -2, r.size.height / -2);
+        } else {
+            r.origin = CCPointZero;
+            r.size = w->getSize();
+        }
+    } else {
+        r.origin = CCPointZero;
+        r.size = node->getContentSize();
+    }
 	CCAffineTransform t = node->nodeToWorldTransform();
 	r = CCRectApplyAffineTransform(r, t);
 	return r;
