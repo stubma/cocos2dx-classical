@@ -42,6 +42,12 @@ CCShake* CCShake::create(float duration, float startMaxR, float endMaxR, float s
 	CC_SAFE_AUTORELEASE_RETURN(a, CCShake*);
 }
 
+CCShake* CCShake::createBrownian(float duration, float maxRadius, float minRadius, float speed) {
+    CCShake* a = new CCShake();
+    a->initWithBrownian(duration, maxRadius, minRadius, speed);
+    CC_SAFE_AUTORELEASE_RETURN(a, CCShake*);
+}
+
 bool CCShake::initWithRing(float d, float maxR, float minR, float shakeInterval) {
     m_mode = RING;
 	m_fDuration = d;
@@ -62,6 +68,15 @@ bool CCShake::initWithDynamicRing(float d, float startMaxR, float endMaxR, float
     m_endMinRadius = endMinR;
     m_shakeInterval = shakeInterval;
 	return true;
+}
+
+bool CCShake::initWithBrownian(float d, float maxR, float minR, float speed) {
+    m_mode = BROWNIAN;
+    m_fDuration = d;
+    m_maxRadius = maxR;
+    m_minRadius = minR;
+    m_moveSpeed = speed;
+    return true;
 }
 
 CCObject* CCShake::copyWithZone(CCZone *pZone) {
@@ -123,6 +138,31 @@ void CCShake::update(float t) {
                 }
                 break;
             }
+            case BROWNIAN:
+            {
+                if(m_time >= m_segTime) {
+                    // to seg end
+                    m_time = fmodf(m_time, m_segTime);
+                    getTarget()->setPosition(ccp(m_dstX, m_dstY));
+                    
+                    // next position
+                    m_srcX = m_dstX;
+                    m_srcY = m_dstY;
+                    float radian = CCRANDOM_0_1() * M_PI * 2;
+                    float r = CCRANDOM_0_1() * (m_maxRadius - m_minRadius) + m_minRadius;
+                    m_dstX = m_originalX + cosf(radian) * r;
+                    m_dstY = m_originalY + sinf(radian) * r;
+                    CCPoint dst = ccp(m_dstX - m_srcX, m_dstY - m_srcY);
+                    float distance = ccpLength(dst);
+                    m_segTime = distance / m_moveSpeed;
+                } else {
+                    float p = m_time / m_segTime;
+                    float x = m_srcX + (m_dstX - m_srcX) * p;
+                    float y = m_srcY + (m_dstY - m_srcY) * p;
+                    getTarget()->setPosition(ccp(x, y));
+                }
+                break;
+            }
             default:
                 break;
         }
@@ -135,6 +175,18 @@ void CCShake::startWithTarget(CCNode* pTarget) {
 	m_originalX = pTarget->getPositionX();
 	m_originalY = pTarget->getPositionY();
     m_time = 0;
+    
+    if(m_mode == BROWNIAN) {
+        float radian = CCRANDOM_0_1() * M_PI * 2;
+        float r = CCRANDOM_0_1() * (m_maxRadius - m_minRadius) + m_minRadius;
+        m_srcX = m_originalX;
+        m_srcY = m_originalY;
+        m_dstX = m_originalX + cosf(radian) * r;
+        m_dstY = m_originalY + sinf(radian) * r;
+        CCPoint dst = ccp(m_dstX - m_srcX, m_dstY - m_srcY);
+        float distance = ccpLength(dst);
+        m_segTime = distance / m_moveSpeed;
+    }
 }
 
 NS_CC_END

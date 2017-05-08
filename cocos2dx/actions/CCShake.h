@@ -36,6 +36,7 @@ private:
     typedef enum {
         RING,
         DYNAMIC_RING,
+        BROWNIAN
     } Mode;
 protected:
 	/// min radius of shaking area
@@ -55,6 +56,14 @@ protected:
 
 	/// original y position of node
 	float m_originalY;
+    
+    // for steady move
+    float m_moveSpeed;
+    float m_srcX;
+    float m_srcY;
+    float m_dstX;
+    float m_dstY;
+    float m_segTime = 0;
     
     /// mode
     Mode m_mode;
@@ -76,6 +85,11 @@ public:
 	 */
 	static CCShake* create(float duration, float maxRadius, float minRadius = 0, float shakeInterval = 0);
     
+    /**
+     * create a shake in steady move mode
+     */
+    static CCShake* createBrownian(float duration, float maxRadius, float minRadius, float speed);
+    
 	/**
 	 * create a shake which in dynamic ring mode
 	 *
@@ -93,7 +107,8 @@ public:
 	/** initializes the action */
     bool initWithRing(float d, float maxR, float minR, float shakeInterval);
     bool initWithDynamicRing(float d, float startMaxR, float endMaxR, float startMinR, float endMinR, float shakeInterval);
-	
+    bool initWithBrownian(float d, float maxR, float minR, float speed);
+    
 	/// @see CCObject::copyWithZone
 	virtual CCObject* copyWithZone(CCZone* pZone);
 
