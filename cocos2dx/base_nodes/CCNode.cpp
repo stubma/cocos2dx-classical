@@ -1153,7 +1153,6 @@ void CCNode::schedule(SEL_SCHEDULE selector, float interval)
 }
 
 void CCNode::schedule(ccScriptFunction func, float interval, int repeat, float delay) {
-    CCAssert(func.target, "function target must be non-nil");
     m_pScheduler->scheduleScriptFunc(func, interval, repeat, delay, !m_bRunning);
 }
 
