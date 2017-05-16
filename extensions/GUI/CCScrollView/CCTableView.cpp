@@ -723,35 +723,31 @@ void CCTableView::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 
 bool CCTableView::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (!isVisible()) {
-        return false;
-    }
-    
     bool touchResult = CCScrollView::ccTouchBegan(pTouch, pEvent);
-    
-    if(m_pTouches->count() == 1) {
-        unsigned int        index;
-        CCPoint           point;
-        
-        point = getContainer()->convertTouchToNodeSpace(pTouch);
-        
-        index = _indexFromOffset(point, true);
-		if (index == CC_INVALID_INDEX)
-		{
-			m_pTouchedCell = NULL;
-		}
-        else
-		{
-			m_pTouchedCell  = cellAtIndex(index);
-		}
-        
-        if (m_pTouchedCell) {
-            onTableCellHighlight();
+    if(touchResult) {
+        if(m_pTouches->count() == 1) {
+            unsigned int        index;
+            CCPoint           point;
+            
+            point = getContainer()->convertTouchToNodeSpace(pTouch);
+            
+            index = _indexFromOffset(point, true);
+            if (index == CC_INVALID_INDEX)
+            {
+                m_pTouchedCell = NULL;
+            }
+            else
+            {
+                m_pTouchedCell  = cellAtIndex(index);
+            }
+            
+            if (m_pTouchedCell) {
+                onTableCellHighlight();
+            }
+        } else if(m_pTouchedCell) {
+            onTableCellUnhighlight();
+            m_pTouchedCell = NULL;
         }
-    }
-    else if(m_pTouchedCell) {
-        onTableCellUnhighlight();
-        m_pTouchedCell = NULL;
     }
     
     return touchResult;
