@@ -853,7 +853,7 @@ bool Widget::hitTest(const CCPoint &pt)
 bool Widget::clippingParentAreaContainPoint(const CCPoint &pt)
 {
     _affectByClipping = false;
-    Widget* parent = getWidgetParent();
+    CCNode* parent = getParent();
     Widget* clippingParent = NULL;
     while (parent)
     {
@@ -867,7 +867,7 @@ bool Widget::clippingParentAreaContainPoint(const CCPoint &pt)
                 break;
             }
         }
-        parent = parent->getWidgetParent();
+        parent = parent->getParent();
     }
     
     if (!_affectByClipping)
