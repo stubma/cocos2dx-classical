@@ -287,6 +287,10 @@ void CCTableView::removeCellAtIndex(unsigned int idx)
     }
 }
 
+void CCTableView::enqueueCell(CCTableViewCell* cell) {
+    m_pCellsFreed->addObject(cell);
+}
+
 CCTableViewCell *CCTableView::dequeueCell(const string& name)
 {
     CCTableViewCell *cell = NULL;

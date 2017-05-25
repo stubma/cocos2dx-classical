@@ -203,6 +203,11 @@ public:
     CCTableViewCell *dequeueCell(const string& name = "");
     
     /**
+     * Manually enqueue a cell for later use
+     */
+    void enqueueCell(CCTableViewCell* cell);
+    
+    /**
      * Returns an existing cell at a given index. Returns nil if a cell is nonexistent at the moment of query.
      *
      * @param idx index
