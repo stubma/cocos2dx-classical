@@ -979,7 +979,7 @@ bool luaval_to_customuniformvalue(lua_State* L, int lo, cocos2d::ccCustomUniform
     if(ok) {
         outValue->type = type;
         switch (type) {
-            case cocos2d::kCCShader_blur:
+            case kCCShader_blur:
                 lua_pushstring(L, "nodeSize");
                 lua_gettable(L, lo);
                 luaval_to_csize(L, -1, &outValue->blur.nodeSize);
@@ -995,7 +995,7 @@ bool luaval_to_customuniformvalue(lua_State* L, int lo, cocos2d::ccCustomUniform
                 luaval_to_color4f(L, -1, &outValue->blur.subtract);
                 lua_pop(L, 1);
                 break;
-            case cocos2d::kCCShader_flash:
+            case kCCShader_flash:
                 lua_pushstring(L, "r");
                 lua_gettable(L, lo);
                 outValue->flash.r = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
@@ -1016,7 +1016,7 @@ bool luaval_to_customuniformvalue(lua_State* L, int lo, cocos2d::ccCustomUniform
                 outValue->flash.t = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
                 lua_pop(L, 1);
                 break;
-            case cocos2d::kCCShader_lighting:
+            case kCCShader_lighting:
                 lua_pushstring(L, "mul");
                 lua_gettable(L, lo);
                 luaval_to_color4b(L, -1, &outValue->lighting.mul);
@@ -1027,13 +1027,13 @@ bool luaval_to_customuniformvalue(lua_State* L, int lo, cocos2d::ccCustomUniform
                 luaval_to_color3b(L, -1, &outValue->lighting.add);
                 lua_pop(L, 1);
                 break;
-            case cocos2d::kCCShader_matrix:
+            case kCCShader_matrix:
                 lua_pushstring(L, "mat4");
                 lua_gettable(L, lo);
                 luaval_to_mat4(L, -1, &outValue->matrix.mat4);
                 lua_pop(L, 1);
                 break;
-            case cocos2d::kCCShader_shine:
+            case kCCShader_shine:
                 lua_pushstring(L, "width");
                 lua_gettable(L, lo);
                 outValue->shine.width = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
@@ -1072,6 +1072,27 @@ bool luaval_to_customuniformvalue(lua_State* L, int lo, cocos2d::ccCustomUniform
                 lua_pushstring(L, "gradientPositions");
                 lua_gettable(L, lo);
                 luaval_to_vertex3f(L, -1, &outValue->shine.gradientPositions);
+                lua_pop(L, 1);
+                break;
+            case kCCShader_outline:                
+                lua_pushstring(L, "stepSize");
+                lua_gettable(L, lo);
+                luaval_to_cpoint(L, -1, &outValue->outline.stepSize);
+                lua_pop(L, 1);
+                
+                lua_pushstring(L, "outlineColor");
+                lua_gettable(L, lo);
+                luaval_to_color3b(L, -1, &outValue->outline.outlineColor);
+                lua_pop(L, 1);
+                
+                lua_pushstring(L, "outlineOnly");
+                lua_gettable(L, lo);
+                luaval_to_boolean(L, -1, &outValue->outline.outlineOnly);
+                lua_pop(L, 1);
+                
+                lua_pushstring(L, "glowing");
+                lua_gettable(L, lo);
+                luaval_to_boolean(L, -1, &outValue->outline.glowing);
                 lua_pop(L, 1);
                 break;
             default:
@@ -3394,6 +3415,23 @@ void customuniformvalue_to_luaval(lua_State* L, const ccCustomUniformValue& v) {
             
             lua_pushstring(L, "gradientPositions");
             vertex3f_to_luaval(L, v.shine.gradientPositions);
+            lua_rawset(L, -3);
+            break;
+        case kCCShader_outline:
+            lua_pushstring(L, "stepSize");
+            cpoint_to_luaval(L, v.outline.stepSize);
+            lua_rawset(L, -3);
+            
+            lua_pushstring(L, "outlineColor");
+            color3b_to_luaval(L, v.outline.outlineColor);
+            lua_rawset(L, -3);
+            
+            lua_pushstring(L, "outlineOnly");
+            lua_pushboolean(L, v.outline.outlineOnly);
+            lua_rawset(L, -3);
+            
+            lua_pushstring(L, "glowing");
+            lua_pushboolean(L, v.outline.glowing);
             lua_rawset(L, -3);
             break;
         default:

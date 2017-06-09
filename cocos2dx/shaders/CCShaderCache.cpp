@@ -447,6 +447,83 @@ const char* ccShader_shine_frag
                            }
                        });
 
+// outline
+const char* ccShader_outline_vert
+    = CC_SHADER_STRING(attribute vec4 a_position;
+                       attribute vec2 a_texCoord;
+                       attribute vec4 a_color;
+                       
+                       varying lowp vec4 v_fragmentColor;
+                       varying mediump vec2 v_texCoord;
+                       
+                       void main()	{
+                           gl_Position = CC_MVPMatrix * a_position;
+                           v_texCoord = a_texCoord;
+                           v_fragmentColor = a_color;
+                       });
+const char* ccShader_outline_frag
+    = CC_SHADER_STRING(precision lowp float;
+                       
+                       varying vec2 v_texCoord;
+                       varying vec4 v_fragmentColor;
+                       uniform sampler2D CC_Texture0;
+                       uniform sampler2D CC_Alpha0;
+                       uniform vec2 CC_stepSize;
+                       uniform vec3 CC_outlineColor;
+                       uniform bool CC_outlineOnly;
+                       uniform bool CC_glowing;
+                       const float PI = 3.1415926535897932384626433832795;
+                       const float PI_2 = 1.57079632679489661923;
+                       
+                       void main() {
+                           // laplacian
+                           vec2 shift[8];
+                           shift[0] = vec2(CC_stepSize.x, 0.0);
+                           shift[1] = vec2(-CC_stepSize.x, 0.0);
+                           shift[2] = vec2(0.0, CC_stepSize.y);
+                           shift[3] = vec2(0.0, -CC_stepSize.y);
+                           shift[4] = vec2(CC_stepSize.x, CC_stepSize.y);
+                           shift[5] = vec2(-CC_stepSize.x, CC_stepSize.y);
+                           shift[6] = vec2(CC_stepSize.x, -CC_stepSize.y);
+                           shift[7] = vec2(-CC_stepSize.x, -CC_stepSize.y);
+                           vec4 pixel = texture2D(CC_Texture0, v_texCoord);
+                           float alpha = 8.0 * pixel.a;
+                           for(int i = 0; i < 8; i++) {
+                               vec2 v = v_texCoord + shift[i];
+                               v.x = clamp(v.x, 0.0, 1.0);
+                               v.y = clamp(v.y, 0.0, 1.0);
+                               float a = texture2D(CC_Texture0, v).a;
+                               alpha -= a;
+                           }
+                           
+                           // ignore negative value so that outline is displayed outside
+                           if(alpha >= 0.0) {
+                               alpha = 0.0;
+                           } else {
+                               alpha = max(1.0, abs(alpha));
+                           }
+                           
+                           // show outline only or not
+                           gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
+                           if(!CC_outlineOnly) {
+                               gl_FragColor = v_fragmentColor * pixel;
+                           }
+                           
+                           // if glowing enabled, change alpha with time
+                           if(CC_glowing) {
+                               float t = mod(CC_Time.y, PI) - PI_2;
+                               if(t <= 0.0) {
+                                   t += PI_2;
+                               } else {
+                                   t = PI_2 - t;
+                               }
+                               alpha *= t / PI_2;
+                           }
+                           
+                           // get outline color
+                           gl_FragColor += vec4(CC_outlineColor, 1.0) * alpha;
+                       });
+
 #define LOAD_PROGRAM(name) \
     p->initWithVertexShaderByteArray(ccShader_##name##_vert, ccShader_##name##_frag); \
     p->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position); \
@@ -579,6 +656,12 @@ void CCShaderCache::loadDefaultShaders()
     loadDefaultShader(p, kCCShader_shine);
     addProgram(p, kCCShader_shine);
     CC_SAFE_RELEASE(p);
+    
+    // outline
+    p = new CCGLProgram();
+    loadDefaultShader(p, kCCShader_outline);
+    addProgram(p, kCCShader_outline);
+    CC_SAFE_RELEASE(p);
 }
 
 void CCShaderCache::reloadDefaultShaders()
@@ -654,6 +737,11 @@ void CCShaderCache::reloadDefaultShaders()
     p = programForKey(kCCShader_shine);
     p->reset();
     loadDefaultShader(p, kCCShader_shine);
+    
+    // outline
+    p = programForKey(kCCShader_outline);
+    p->reset();
+    loadDefaultShader(p, kCCShader_outline);
 }
 
 void CCShaderCache::loadDefaultShader(CCGLProgram *p, ccShaderType type)
@@ -744,6 +832,9 @@ void CCShaderCache::loadDefaultShader(CCGLProgram *p, ccShaderType type)
             break;
         case kCCShader_shine:
             LOAD_PROGRAM(shine);
+            break;
+        case kCCShader_outline:
+            LOAD_PROGRAM(outline);
             break;
         default:
             CCLOG("cocos2d: %s:%d, error shader type", __FUNCTION__, __LINE__);

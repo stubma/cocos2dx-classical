@@ -309,6 +309,12 @@ void CCGLProgram::updateUniforms()
             GET_UNIFORM(shinePositions);
             GET_UNIFORM(shineTime);
             break;
+        case kCCShader_outline:
+            GET_UNIFORM(stepSize);
+            GET_UNIFORM(outlineColor);
+            GET_UNIFORM(outlineOnly);
+            GET_UNIFORM(glowing);
+            break;
         default:
             break;
     }
@@ -667,6 +673,17 @@ void CCGLProgram::setCustomUniforms(CCNode* n) {
                                      v.shine.color3.a / 255.0f);
             setUniformLocationWith3f(m_uUniforms[kCCUniform_shinePositions],
                                      v.shine.gradientPositions.x, v.shine.gradientPositions.y, v.shine.gradientPositions.z);
+            break;
+        case kCCShader_outline:
+            setUniformLocationWith2f(m_uUniforms[kCCUniform_stepSize],
+                                     v.outline.stepSize.x,
+                                     v.outline.stepSize.y);
+            setUniformLocationWith3f(m_uUniforms[kCCUniform_outlineColor],
+                                     v.outline.outlineColor.r / 255.0f,
+                                     v.outline.outlineColor.g / 255.0f,
+                                     v.outline.outlineColor.b / 255.0f);
+            setUniformLocationWith1i(m_uUniforms[kCCUniform_outlineOnly], v.outline.outlineOnly);
+            setUniformLocationWith1i(m_uUniforms[kCCUniform_glowing], v.outline.glowing);
             break;
         default:
             break;

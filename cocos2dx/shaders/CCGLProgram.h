@@ -65,6 +65,7 @@ typedef enum {
     kCCShader_lighting,
     kCCShader_matrix,
     kCCShader_shine,
+    kCCShader_outline,
     
     kCCShader_MAX,
 } ccShaderType;
@@ -109,6 +110,10 @@ enum {
     kCCUniform_shineColor3,
     kCCUniform_shinePositions,
     kCCUniform_shineTime,
+    kCCUniform_stepSize,
+    kCCUniform_outlineColor,
+    kCCUniform_outlineOnly,
+    kCCUniform_glowing,
     
 	kCCUniform_MAX,
 };
@@ -142,6 +147,10 @@ static const char* kCCUniformNames[] = {
     "CC_shineColor3",
     "CC_shinePositions",
     "CC_shineTime",
+    "CC_stepSize",
+    "CC_outlineColor",
+    "CC_outlineOnly",
+    "CC_glowing"
 };
 
 // Attribute names
@@ -188,6 +197,13 @@ typedef struct {
             ccVertex3F gradientPositions;
             float time;
         } shine;
+        
+        struct {
+            ccPoint stepSize;
+            ccColor3B outlineColor;
+            bool outlineOnly;
+            bool glowing;
+        } outline;
     };
     
     // only lua need this

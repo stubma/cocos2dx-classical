@@ -234,6 +234,7 @@ cc.Shader_laser = 12
 cc.Shader_lighting = 13
 cc.Shader_matrix = 14
 cc.Shader_shine = 15
+cc.Shader_outline = 16
 cc.Shader_MAX = 16
 
 -- predefined custom uniform values
