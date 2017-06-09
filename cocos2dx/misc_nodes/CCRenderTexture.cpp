@@ -149,9 +149,9 @@ CCSprite * CCRenderTexture::getSprite()
 
 void CCRenderTexture::setSprite(CCSprite* var)
 {
+    CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE(m_pSprite);
     m_pSprite = var;
-    CC_SAFE_RETAIN(m_pSprite);
 }
 
 unsigned int CCRenderTexture::getClearFlags() const
