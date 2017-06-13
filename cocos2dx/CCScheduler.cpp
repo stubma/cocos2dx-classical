@@ -651,11 +651,21 @@ void CCScheduler::unscheduleAllScriptEntryForTarget(CCObject* target) {
         for (int i = m_pScriptHandlerEntries->count() - 1; i >= 0; i--) {
             CCSchedulerScriptHandlerEntry* pEntry = static_cast<CCSchedulerScriptHandlerEntry*>(m_pScriptHandlerEntries->objectAtIndex(i));
             ccScriptFunction& func = pEntry->getHandler();
-            if(func.target == target) {
+            if(func.target == target || target->getID() == pEntry->getObjId()) {
                 pEntry->markedForDeletion();
             }
         }
     }
+}
+
+CCScriptHandlerEntry* CCScheduler::getScriptHandlerEntry(int entryId) {
+    for (int i = m_pScriptHandlerEntries->count() - 1; i >= 0; i--) {
+        CCScriptHandlerEntry* pEntry = static_cast<CCScriptHandlerEntry*>(m_pScriptHandlerEntries->objectAtIndex(i));
+        if(pEntry->getEntryId() == entryId) {
+            return pEntry;
+        }
+    }
+    return NULL;
 }
 
 void CCScheduler::unscheduleScriptFunc(const ccScriptFunction& scriptFunc)
@@ -698,7 +708,7 @@ void CCScheduler::resumeTarget(CCObject *pTarget)
     if (m_pScriptHandlerEntries) {
         for (int i = 0; i < m_pScriptHandlerEntries->count(); i++) {
             CCSchedulerScriptHandlerEntry* pEntry = static_cast<CCSchedulerScriptHandlerEntry*>(m_pScriptHandlerEntries->objectAtIndex(i));
-            if(pEntry->getHandler().target == pTarget) {
+            if(pEntry->getHandler().target == pTarget || pEntry->getObjId() == pTarget->getID()) {
                 pEntry->setPaused(false);
             }
         }
@@ -730,7 +740,7 @@ void CCScheduler::pauseTarget(CCObject *pTarget)
     if (m_pScriptHandlerEntries) {
         for (int i = 0; i < m_pScriptHandlerEntries->count(); i++) {
             CCSchedulerScriptHandlerEntry* pEntry = static_cast<CCSchedulerScriptHandlerEntry*>(m_pScriptHandlerEntries->objectAtIndex(i));
-            if(pEntry->getHandler().target == pTarget) {
+            if(pEntry->getHandler().target == pTarget || pEntry->getObjId() == pTarget->getID()) {
                 pEntry->setPaused(true);
             }
         }

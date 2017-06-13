@@ -1153,7 +1153,13 @@ void CCNode::schedule(SEL_SCHEDULE selector, float interval)
 }
 
 void CCNode::schedule(ccScriptFunction func, float interval, int repeat, float delay) {
-    m_pScheduler->scheduleScriptFunc(func, interval, repeat, delay, !m_bRunning);
+    int entryId = m_pScheduler->scheduleScriptFunc(func, interval, repeat, delay, !m_bRunning);
+    
+    // if no target specified, set id of this node into handler so that we can remove it correctly
+    if(func.target == NULL) {
+        CCScriptHandlerEntry* entry = m_pScheduler->getScriptHandlerEntry(entryId);
+        entry->setObjId(getID());
+    }
 }
 
 void CCNode::schedule(SEL_SCHEDULE selector, float interval, int repeat, float delay)

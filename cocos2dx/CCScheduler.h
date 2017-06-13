@@ -240,6 +240,9 @@ public:
      */
     void unscheduleScriptFunc(const ccScriptFunction& scriptFunc);
     
+    /// get scheduled handler entry by entry id
+    CCScriptHandlerEntry* getScriptHandlerEntry(int entryId);
+    
     /** Unschedule all script entry of an target
      * @js NA
      */

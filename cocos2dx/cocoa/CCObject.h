@@ -113,6 +113,9 @@ public:
     /// get lua id
     int getLuaID();
     
+    /// get obj id
+    int getID();
+    
     friend class CCAutoreleasePool;
 };
 

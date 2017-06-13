@@ -181,4 +181,8 @@ int CCObject::getLuaID() {
     return m_nLuaID;
 }
 
+int CCObject::getID() {
+    return m_uID;
+}
+
 NS_CC_END

@@ -84,9 +84,17 @@ public:
         return m_nEntryId;
     }
     
+    void setObjId(int objId) {
+        m_nObjId = objId;
+    }
+    
+    int getObjId() {
+        return m_nObjId;
+    }
+    
 protected:
     CCScriptHandlerEntry(ccScriptFunction func)
-    : m_func(func)
+    : m_func(func), m_nObjId(0)
     {
         static int newEntryId = 0;
         newEntryId++;
@@ -94,6 +102,7 @@ protected:
     }
     
     ccScriptFunction m_func;
+    int m_nObjId;
     int m_nEntryId;
 };
 
