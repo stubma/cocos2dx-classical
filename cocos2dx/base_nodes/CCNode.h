@@ -1190,7 +1190,7 @@ public:
     /**
      * schedule a script function, function target must be self
      */
-    void schedule(ccScriptFunction func, float interval, int repeat, float delay);
+    int schedule(ccScriptFunction func, float interval, int repeat, float delay);
     
     /**
      * Schedules a custom selector with an interval time in seconds.
@@ -1245,6 +1245,16 @@ public:
      * Unschedule one script func
      */
     void unscheduleScriptFunc(const ccScriptFunction& scriptFunc);
+    
+    /**
+     * Unschedule all script func whose object id matches self
+     */
+    void unscheduleScriptFuncByObjId();
+    
+    /**
+     * Unschedule one script func whose entry id matches given one
+     */
+    void unscheduleScriptFuncByEntryId(int entryId);
 
     /** 
      * Resumes all scheduled selectors and actions.

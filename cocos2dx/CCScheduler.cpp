@@ -668,6 +668,25 @@ CCScriptHandlerEntry* CCScheduler::getScriptHandlerEntry(int entryId) {
     return NULL;
 }
 
+void CCScheduler::unscheduleScriptFuncByObjId(const int objId) {
+    for (int i = m_pScriptHandlerEntries->count() - 1; i >= 0; i--) {
+        CCSchedulerScriptHandlerEntry* pEntry = static_cast<CCSchedulerScriptHandlerEntry*>(m_pScriptHandlerEntries->objectAtIndex(i));
+        if(pEntry->getObjId() == objId) {
+            pEntry->markedForDeletion();
+        }
+    }
+}
+
+void CCScheduler::unscheduleScriptFuncByEntryId(const int entryId) {
+    for (int i = m_pScriptHandlerEntries->count() - 1; i >= 0; i--) {
+        CCSchedulerScriptHandlerEntry* pEntry = static_cast<CCSchedulerScriptHandlerEntry*>(m_pScriptHandlerEntries->objectAtIndex(i));
+        if(pEntry->getEntryId() == entryId) {
+            pEntry->markedForDeletion();
+            break;
+        }
+    }
+}
+
 void CCScheduler::unscheduleScriptFunc(const ccScriptFunction& scriptFunc)
 {
     CCScriptEngineProtocol* engine = CCScriptEngineManager::sharedManager()->getScriptEngine();

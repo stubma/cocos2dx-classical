@@ -1152,7 +1152,7 @@ void CCNode::schedule(SEL_SCHEDULE selector, float interval)
     this->schedule(selector, interval, kCCRepeatForever, 0.0f);
 }
 
-void CCNode::schedule(ccScriptFunction func, float interval, int repeat, float delay) {
+int CCNode::schedule(ccScriptFunction func, float interval, int repeat, float delay) {
     int entryId = m_pScheduler->scheduleScriptFunc(func, interval, repeat, delay, !m_bRunning);
     
     // if no target specified, set id of this node into handler so that we can remove it correctly
@@ -1160,6 +1160,9 @@ void CCNode::schedule(ccScriptFunction func, float interval, int repeat, float d
         CCScriptHandlerEntry* entry = m_pScheduler->getScriptHandlerEntry(entryId);
         entry->setObjId(getID());
     }
+    
+    // return entry id
+    return entryId;
 }
 
 void CCNode::schedule(SEL_SCHEDULE selector, float interval, int repeat, float delay)
@@ -1190,6 +1193,14 @@ void CCNode::unscheduleAllScriptFuncs() {
 
 void CCNode::unscheduleScriptFunc(const ccScriptFunction& scriptFunc) {
     m_pScheduler->unscheduleScriptFunc(scriptFunc);
+}
+
+void CCNode::unscheduleScriptFuncByObjId() {
+    m_pScheduler->unscheduleScriptFuncByObjId(getID());
+}
+
+void CCNode::unscheduleScriptFuncByEntryId(int entryId) {
+    m_pScheduler->unscheduleScriptFuncByEntryId(entryId);
 }
 
 void CCNode::unscheduleAllSelectors()

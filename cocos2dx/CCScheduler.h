@@ -240,6 +240,16 @@ public:
      */
     void unscheduleScriptFunc(const ccScriptFunction& scriptFunc);
     
+    /**
+     * Unschedule all script function whose object id matches given id
+     */
+    void unscheduleScriptFuncByObjId(const int objId);
+    
+    /**
+     * Unschedule one script func whose entry id matches given one
+     */
+    void unscheduleScriptFuncByEntryId(const int entryId);
+    
     /// get scheduled handler entry by entry id
     CCScriptHandlerEntry* getScriptHandlerEntry(int entryId);
     
