@@ -101,6 +101,7 @@ Maybe it ends at some day, and I won't touch cocos2dx 3.x because I don't think 
 * CCNode添加了nodeToAncestorTransform, ancestorToNodeTransform, convertToParentSpace, convertToParentSpaceAR方法
 * CCNode添加了onChildWillDetach方法, 可以设置一个子节点在删除自身时父节点获得通知, 支持lua端收到通知
 * CCNode添加了isVisibleInTree方法, 用来判断节点是否在ui树中可见
+* CCNode:schedule支持调度一个lua闭包, 增加了unscheduleScriptFuncByObjId和unscheduleScriptFuncByEntryId方法
 * 设计了一个资源打包工具, lpk_ui是它的图形界面, lpk_console是命令行工具, 不过这个工具我只是调试完成, 尚未在实际项目中验证, 而且引擎也需要修改来支持这个工具, 所以目前仅供参考
 * 集成了SuperAnimConverter工具和它的代码, 改名为CCSuperAnim, 为其添加了lua支持, HelloLua工程增加了SuperAnim的演示
 * CCEGLViewProtocol添加了setMultipleTouchEnabled方法
@@ -193,6 +194,7 @@ Things Improved
 * CCNode adds nodeToAncestorTransform, ancestorToNodeTransform, convertToParentSpace, convertToParentSpaceAR
 * CCNode add onChildWillDetach, a child can notify parent when it removes self.
 * CCNode add isVisibleInTree method
+* CCNode:schedule supports to schedule a lua closure, and add unscheduleScriptFuncByObjId/EntryId method
 * add a tool for resource pack, lpk_ui is UI tool, lpk_console is command tool. However, it is not tested in a real project. It is only for your reference by so far.
 * Merge SuperAnimConverter.app and its code, rename it as CCSuperAnim and add lua support. There is a sample in HelloLua project
 * CCEGLViewProtocol add setMultipleTouchEnabled method
