@@ -567,6 +567,8 @@
 		929213911A59775F00F7FCE7 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929213851A59775F00F7FCE7 /* json_writer.cpp */; };
 		929213921A59775F00F7FCE7 /* jsoncpp.h in Headers */ = {isa = PBXBuildFile; fileRef = 929213861A59775F00F7FCE7 /* jsoncpp.h */; };
 		929213931A59775F00F7FCE7 /* value.h in Headers */ = {isa = PBXBuildFile; fileRef = 929213871A59775F00F7FCE7 /* value.h */; };
+		929BBB2C1EF9058E00834C41 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 929BBB2A1EF9058E00834C41 /* libcrypto.a */; };
+		929BBB2D1EF9058E00834C41 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 929BBB2B1EF9058E00834C41 /* libssl.a */; };
 		929D53391A27575400560A2E /* CCPinyinUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929D53371A27575400560A2E /* CCPinyinUtils.cpp */; };
 		929D533A1A27575400560A2E /* CCPinyinUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D53381A27575400560A2E /* CCPinyinUtils.h */; };
 		929D533D1A2757A300560A2E /* ccGBKUnicodeTable.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D533B1A2757A300560A2E /* ccGBKUnicodeTable.h */; };
@@ -1442,6 +1444,8 @@
 		929213851A59775F00F7FCE7 /* json_writer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_writer.cpp; sourceTree = "<group>"; };
 		929213861A59775F00F7FCE7 /* jsoncpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsoncpp.h; sourceTree = "<group>"; };
 		929213871A59775F00F7FCE7 /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
+		929BBB2A1EF9058E00834C41 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../platform/third_party/ios/libraries/libcrypto.a; sourceTree = "<group>"; };
+		929BBB2B1EF9058E00834C41 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../platform/third_party/ios/libraries/libssl.a; sourceTree = "<group>"; };
 		929D53371A27575400560A2E /* CCPinyinUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPinyinUtils.cpp; sourceTree = "<group>"; };
 		929D53381A27575400560A2E /* CCPinyinUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPinyinUtils.h; sourceTree = "<group>"; };
 		929D533B1A2757A300560A2E /* ccGBKUnicodeTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccGBKUnicodeTable.h; sourceTree = "<group>"; };
@@ -1831,12 +1835,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				929BBB2D1EF9058E00834C41 /* libssl.a in Frameworks */,
 				927AEF931E8B9768006186A3 /* AudioToolbox.framework in Frameworks */,
 				92C613591A41A6DE00550090 /* libcurl.a in Frameworks */,
 				9242C2551A3078FB00E1E944 /* CoreText.framework in Frameworks */,
 				92C613571A41A5CD00550090 /* libwebp.a in Frameworks */,
 				921110261A2B4CA8003FE653 /* libCocosDenshion.a in Frameworks */,
 				1551A343158F2AB200E66CFE /* Foundation.framework in Frameworks */,
+				929BBB2C1EF9058E00834C41 /* libcrypto.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1866,6 +1872,8 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				929BBB2A1EF9058E00834C41 /* libcrypto.a */,
+				929BBB2B1EF9058E00834C41 /* libssl.a */,
 				928AE8DA1E94CDC5006A36F9 /* liblua.a */,
 				927AEF921E8B9768006186A3 /* AudioToolbox.framework */,
 				92C613581A41A6DE00550090 /* libcurl.a */,
