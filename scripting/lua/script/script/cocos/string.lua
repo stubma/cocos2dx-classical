@@ -78,3 +78,17 @@ function string.endswith(s, pattern)
         return string.find(s, pattern, start) == start
     end
 end
+
+function string.pathjoin(s1, s2)
+    if string.endswith(s1, "/") then
+        if string.startswith(s2, "/") then
+            return string.sub(s1, 1, -2) .. s2
+        else
+            return s1 .. s2
+        end
+    elseif string.startswith(s2, "/") then
+        return s1 .. s2
+    else
+        return s1 .. "/" .. s2
+    end
+end

@@ -126,6 +126,7 @@
                     "string.len",
                     "string.lower",
                     "string.match",
+                    "string.pathjoin",
                     "string.rep",
                     "string.split",
                     "string.startswith",
