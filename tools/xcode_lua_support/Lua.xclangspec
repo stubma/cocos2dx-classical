@@ -137,6 +137,7 @@
                     "string.upper",
                     "string.reverse",
 
+                    "table.append",
                     "table.concat",
                     "table.enum",
                     "table.fill",

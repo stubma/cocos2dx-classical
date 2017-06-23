@@ -98,3 +98,13 @@ function table.enum(t, startValue)
         return {}
     end
 end
+
+function table.append(t1, t2)
+    if type(t2) == "table" then
+        for _,v in ipairs(t2) then
+            table.insert(t1, v)
+        end
+    else
+        table.insert(t1, t2)
+    end
+end
