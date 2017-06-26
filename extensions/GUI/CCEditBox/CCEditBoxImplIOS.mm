@@ -582,8 +582,9 @@ static CGPoint convertDesignCoordToScreenCoord(const CCPoint& designCoord, bool 
     
     if (bInRetinaMode)
     {
-        screenPos.x = screenPos.x / 2.0f;
-        screenPos.y = screenPos.y / 2.0f;
+        float factor = [UIScreen mainScreen].scale;
+        screenPos.x = screenPos.x / factor;
+        screenPos.y = screenPos.y / factor;
     }
     CCLOGINFO("[EditBox] pos x = %f, y = %f", screenGLPos.x, screenGLPos.y);
     return screenPos;
@@ -649,6 +650,7 @@ void CCEditBoxImplIOS::adjustTextFieldPosition()
 
 void CCEditBoxImplIOS::openKeyboard()
 {
+    adjustTextFieldPosition();
 	m_pLabel->setVisible(false);
 	m_pLabelPlaceHolder->setVisible(false);
 
