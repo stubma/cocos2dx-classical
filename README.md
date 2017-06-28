@@ -98,6 +98,7 @@ Maybe it ends at some day, and I won't touch cocos2dx 3.x because I don't think 
 * CCRepeatForever覆盖stop方法, 停掉内部动作
 * copy()返回的对象不再需要release
 * setShaderProgram可以设置参数, 从而支持多个节点使用同一个shader但参数不同
+* 添加了一些内置shader, 包括flash(闪烁节点), blur(模糊节点), matrix(对像素做矩阵转换), lighting(对像素做乘加转换), shine(高亮发光), outline(描绘图片边界), laser(激光条, 好玩用), 有些shader被封装成一个Action便于使用, 比如CCFlash, CCShine, 在cocos2dx-better里有部分demo
 * CCNode添加了nodeToAncestorTransform, ancestorToNodeTransform, convertToParentSpace, convertToParentSpaceAR方法
 * CCNode添加了onChildWillDetach方法, 可以设置一个子节点在删除自身时父节点获得通知, 支持lua端收到通知
 * CCNode添加了isVisibleInTree方法, 用来判断节点是否在ui树中可见
@@ -191,6 +192,7 @@ Things Improved
 * CCEGLViewProtocol adds redispatchTouchBegin and getDispatchingTouch method, mainly for drag and drop implementation
 * CCRepeatForever override stop method
 * setShaderProgram can specify uniform values so that one shader can be shared by many nodes
+* Added some built-in shaders, such as flash(flash node), blur(make node blur), matrix(convert color with a matrix), lighting(convert color with addition/multiply), shine(show a moving shining bar), outline(show a outline for a node, can glow), laser(a laser bar, for fun). Some shaders are wrapped by an Action for easy usage, like CCFlash/CCShine, and you can find some demo in cocos2dx-better
 * CCNode adds nodeToAncestorTransform, ancestorToNodeTransform, convertToParentSpace, convertToParentSpaceAR
 * CCNode add onChildWillDetach, a child can notify parent when it removes self.
 * CCNode add isVisibleInTree method
