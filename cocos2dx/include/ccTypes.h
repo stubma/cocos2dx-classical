@@ -30,7 +30,9 @@ THE SOFTWARE.
 #include <string>
 #include "cocoa/CCGeometry.h"
 #include "CCGL.h"
-#include <malloc.h>
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    #include <malloc.h>
+#endif
 
 NS_CC_BEGIN
 
