@@ -524,7 +524,7 @@ void CCUtils::fillScreenBorder(const string& vborder, const string& hborder) {
     t.env->DeleteLocalRef(t.classID);
 }
 
-void CCUtils:vibrate() {
+void CCUtils::vibrate() {
     // get package manager
     JniMethodInfo t;
     JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/CCUtils", "vibrate", "()V");
