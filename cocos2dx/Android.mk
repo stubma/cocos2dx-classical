@@ -79,7 +79,6 @@ LOCAL_LDLIBS := -lGLESv2 -llog -lz -latomic
 LOCAL_EXPORT_LDLIBS := $(LOCAL_LDLIBS)
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_libpng_static \
 	cocos_jpeg_static \
-	cocos_libxml2_static \
 	cocos_libtiff_static \
 	cocos_libwebp_static \
 	cocos_sqlite3_static \
