@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include <string>
 #include "cocoa/CCGeometry.h"
 #include "CCGL.h"
-
+#include <malloc.h>
 
 NS_CC_BEGIN
 
