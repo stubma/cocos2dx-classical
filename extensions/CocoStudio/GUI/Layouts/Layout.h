@@ -145,6 +145,8 @@ public:
     
     GLubyte getBackGroundColorOpacity();
     
+    virtual void setOpacity(GLubyte opacity);
+    
     /**
      * Sets background color vector for layout, if color type is LAYOUT_COLOR_GRADIENT
      *

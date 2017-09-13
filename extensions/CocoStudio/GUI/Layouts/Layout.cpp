@@ -812,6 +812,11 @@ void Layout::setBackGroundImageOpacity(GLubyte opacity)
     updateBackGroundImageOpacity();
 }
     
+void Layout::setOpacity(GLubyte opacity) {
+    Widget::setOpacity(opacity);
+    setBackGroundImageOpacity(opacity);
+}
+    
 const ccColor3B& Layout::getBackGroundImageColor()
 {
     return _backGroundImageColor;
