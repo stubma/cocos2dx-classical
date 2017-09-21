@@ -69,10 +69,6 @@ clock_t clock$UNIX2003() {
     return clock();
 }
 
-int system$UNIX2003(const char *command) {
-    return system(command);
-}
-
 #ifdef __cplusplus
 }
 #endif
