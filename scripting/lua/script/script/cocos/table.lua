@@ -100,11 +100,13 @@ function table.enum(t, startValue)
 end
 
 function table.append(t1, t2)
-    if type(t2) == "table" then
-        for _,v in ipairs(t2) do
-            table.insert(t1, v)
+    if t2 ~= nil then
+        if type(t2) == "table" then
+            for _,v in ipairs(t2) do
+                table.insert(t1, v)
+            end
+        else
+            table.insert(t1, t2)
         end
-    else
-        table.insert(t1, t2)
     end
 end
