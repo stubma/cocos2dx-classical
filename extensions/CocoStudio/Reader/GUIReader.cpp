@@ -578,26 +578,10 @@ void WidgetPropertiesReader0250::setPropsForWidgetFromJsonDictionary(cocos2d::ui
     float x = DICTOOL->getFloatValue_json(options, "x");
     float y = DICTOOL->getFloatValue_json(options, "y");
     widget->setPosition(ccp(x,y));
-    bool sx = DICTOOL->checkObjectExist_json(options, "scaleX");
-    if (sx)
-    {
-        widget->setScaleX(DICTOOL->getFloatValue_json(options, "scaleX"));
-    }
-    bool sy = DICTOOL->checkObjectExist_json(options, "scaleY");
-    if (sy)
-    {
-        widget->setScaleY(DICTOOL->getFloatValue_json(options, "scaleY"));
-    }
-    bool rt = DICTOOL->checkObjectExist_json(options, "rotation");
-    if (rt)
-    {
-        widget->setRotation(DICTOOL->getFloatValue_json(options, "rotation"));
-    }
-    bool vb = DICTOOL->checkObjectExist_json(options, "visible");
-    if (vb)
-    {
-        widget->setVisible(DICTOOL->getBooleanValue_json(options, "visible"));
-    }
+    widget->setScaleX(DICTOOL->getFloatValue_json(options, "scaleX", 1));
+    widget->setScaleY(DICTOOL->getFloatValue_json(options, "scaleY", 1));
+    widget->setRotation(DICTOOL->getFloatValue_json(options, "rotation"));
+    widget->setVisible(DICTOOL->getBooleanValue_json(options, "visible"));
     int z = DICTOOL->getIntValue_json(options, "ZOrder");
     widget->setZOrder(z);
 }
@@ -1305,26 +1289,10 @@ void WidgetPropertiesReader0300::setPropsForWidgetFromJsonDictionary(cocos2d::ui
     float x = DICTOOL->getFloatValue_json(options, "x");
     float y = DICTOOL->getFloatValue_json(options, "y");
     widget->setPosition(ccp(x,y));
-    bool sx = DICTOOL->checkObjectExist_json(options, "scaleX");
-    if (sx)
-    {
-        widget->setScaleX(DICTOOL->getFloatValue_json(options, "scaleX"));
-    }
-    bool sy = DICTOOL->checkObjectExist_json(options, "scaleY");
-    if (sy)
-    {
-        widget->setScaleY(DICTOOL->getFloatValue_json(options, "scaleY"));
-    }
-    bool rt = DICTOOL->checkObjectExist_json(options, "rotation");
-    if (rt)
-    {
-        widget->setRotation(DICTOOL->getFloatValue_json(options, "rotation"));
-    }
-    bool vb = DICTOOL->checkObjectExist_json(options, "visible");
-    if (vb)
-    {
-        widget->setVisible(DICTOOL->getBooleanValue_json(options, "visible"));
-    }
+    widget->setScaleX(DICTOOL->getFloatValue_json(options, "scaleX", 1));
+    widget->setScaleY(DICTOOL->getFloatValue_json(options, "scaleY", 1));
+    widget->setRotation(DICTOOL->getFloatValue_json(options, "rotation"));
+    widget->setVisible(DICTOOL->getBooleanValue_json(options, "visible"));
     int z = DICTOOL->getIntValue_json(options, "ZOrder");
     widget->setZOrder(z);
     

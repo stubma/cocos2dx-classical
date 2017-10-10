@@ -96,11 +96,8 @@ void WidgetReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     
     widget->setRotation(DICTOOL->getFloatValue_json(options, "rotation",0));
     
-    bool vb = DICTOOL->checkObjectExist_json(options, "visible");
-    if (vb)
-    {
-        widget->setVisible(DICTOOL->getBooleanValue_json(options, "visible"));
-    }
+    widget->setVisible(DICTOOL->getBooleanValue_json(options, "visible"));
+
     int z = DICTOOL->getIntValue_json(options, "ZOrder");
     widget->setZOrder(z);
     
