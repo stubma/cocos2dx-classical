@@ -641,9 +641,9 @@ public class CCImage_richlabel {
 			// render embedded image
 			// Note: I do it here because I want to support image y offset, but y offset may change
 			// line ascent and descent and the arguments passed to ImageSpan.draw is incorrect! so
-			// I have to postpone image renderring. The ImageSpan is replaced by PlaceholderImageSpan
+			// I have to postpone image rendering. The ImageSpan is replaced by PlaceholderImageSpan
 			// to reserve correct room for image
-			renderEmbededImages(c, layout, plain, spans, imageMap, encrypted);
+			renderEmbeddedImages(c, layout, plain, spans, imageMap, encrypted);
 			
 			// cover undisplayed characters
 			if(toCharIndex > 0) {
@@ -774,7 +774,7 @@ public class CCImage_richlabel {
         }
 	}
 	
-	private static void renderEmbededImages(Canvas c, StaticLayout layout, String plain, List<Span> spans, Map<String, Bitmap> imageMap, boolean encrypted) {
+	private static void renderEmbeddedImages(Canvas c, StaticLayout layout, String plain, List<Span> spans, Map<String, Bitmap> imageMap, boolean encrypted) {
 		// quick reject
 		if(imageMap.isEmpty())
 			return;
