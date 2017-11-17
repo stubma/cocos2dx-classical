@@ -90,6 +90,10 @@ CCTableView::~CCTableView()
 
 void CCTableView::reloadData(bool keepOffset)
 {
+    // clear touched cell
+    m_pTouchedCell = NULL;
+    
+    // recycle used cell
     CCObject* pObj = NULL;
     CCARRAY_FOREACH(m_pCellsUsed, pObj)
     {
