@@ -82,6 +82,7 @@ AssetsManager::AssetsManager(const char* packageUrl/* =NULL */, const char* vers
 {
     checkStoragePath();
     _schedule = new Helper();
+    memset(&m_nfun, 0, sizeof(ccScriptFunction));
 }
 
 AssetsManager::~AssetsManager()
