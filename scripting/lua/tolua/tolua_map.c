@@ -212,6 +212,45 @@ static int tolua_bnd_isa(lua_State* L) {
     return tolua_isusertype(L, 1, type, 0, &err);
 }
 
+static int tolua_bnd_alive(lua_State* L) {
+    // top param should be a userdata
+    if(lua_gettop(L) < 1 || lua_isnil(L, -1) || !lua_isuserdata(L, -1)) {
+        lua_pushboolean(L, 0);
+        return 1;
+    }
+    void* ptr = *(void**)lua_touserdata(L, -1);
+    
+    // push metatable, if no, false
+    lua_getmetatable(L, -1); // ud mt
+    if(lua_isnil(L, -1)) {
+        lua_pop(L, 1);
+        lua_pushboolean(L, 0);
+        return 1;
+    }
+    
+    // get ubox
+    lua_pushstring(L,"tolua_ubox");
+    lua_rawget(L, -2); // ud mt ubox
+    if(lua_isnil(L, -1)) {
+        lua_pop(L, 2);
+        lua_pushboolean(L, 0);
+        return 1;
+    }
+    
+    // try to find ptr in ubox, if can't, the native object is not alive
+    lua_pushlightuserdata(L, ptr);
+    lua_rawget(L, -2); // ud mt ubox ptr ubox[ptr]
+    if(lua_isnil(L, -1)) {
+        lua_pop(L, 4);
+        lua_pushboolean(L, 0);
+        return 1;
+    } else {
+        lua_pop(L, 4);
+        lua_pushboolean(L, 1);
+        return 1;
+    }
+}
+
 /* Type casting
 */
 static int tolua_bnd_cast (lua_State* L)
@@ -372,6 +411,7 @@ TOLUA_API void tolua_open (lua_State* L)
         tolua_function(L,"releaseownership",tolua_bnd_releaseownership);
         tolua_function(L,"cast",tolua_bnd_cast);
         tolua_function(L, "isa", tolua_bnd_isa);
+        tolua_function(L, "alive", tolua_bnd_alive);
         tolua_function(L,"isnull",tolua_bnd_isnulluserdata);
         tolua_function(L,"inherit", tolua_bnd_inherit);
 #ifdef LUA_VERSION_NUM /* lua 5.1 */

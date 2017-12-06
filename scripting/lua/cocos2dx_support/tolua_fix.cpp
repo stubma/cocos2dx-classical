@@ -124,7 +124,7 @@ TOLUA_API int toluafix_remove_ccobject_by_refid(lua_State* L, int refid)
     
     type = lua_tostring(L, -1);
     lua_pop(L, 1);                                                  /* stack: refid_type */
-    
+
     // remove type from tolua_refid_type_mapping
     lua_pushinteger(L, refid);                                      /* stack: refid_type refid */
     lua_pushnil(L);                                                 /* stack: refid_type refid nil */

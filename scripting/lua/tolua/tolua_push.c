@@ -30,10 +30,10 @@ void tolua_pushusertype_internal (lua_State* L, void* value, const char* type, i
         }
         lua_pushstring(L,"tolua_ubox");
         lua_rawget(L,-2);                                           /* stack: mt ubox */
-        if (lua_isnil(L, -1)) {
+        if (lua_isnil(L, -1)) { // if not found, get global ubox
             lua_pop(L, 1);
             lua_pushstring(L, "tolua_ubox");
-            lua_rawget(L, LUA_REGISTRYINDEX);
+            lua_rawget(L, LUA_REGISTRYINDEX); /* stack ubox(global) */
         };
         
         lua_pushlightuserdata(L,value);                             /* stack: mt ubox key<value> */
