@@ -125,6 +125,7 @@ Maybe it ends at some day, and I won't touch cocos2dx 3.x because I don't think 
 	* 加入了位操作库
 	* 修正了一些tolua_fix的bug
 	* 添加了tolua.isa方法
+	* 添加了tolua.alive, 用来检查native端对象的有效性
 	* script端的CCNotification监听方法现在可以收到额外参数
 	* 修改了extern.lua, 添加了dtor方法, 会在C++对象析构时调用. 对于纯lua对象dtor方法暂时无用.
 	* CCDirector/CCEGLView的end方法改名为terminate, 避免和lua的关键字冲突
@@ -219,6 +220,7 @@ Things Improved
 	* add bit operation library
 	* fix some bugs of tolua_fix
 	* add tolua.isa method
+	* add tolua.alive to check native object validity
 	* CCNotification script observer can get extra parameters now
 	* lua class add a dtor method to receive CCObject destruction event. For lua object, dtor is never called.
 	* rename CCDirector/CCEGLView end method to terminate, to avoid name conflict with lua keyword
