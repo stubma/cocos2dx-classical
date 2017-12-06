@@ -164,6 +164,7 @@
                     "tolua.inherit",
                     "tolua.setpeer",
                     "tolua.getpeer",
+                    "tolua.alive",
 
                     "bit.tobit",
                     "bit.bnot",
