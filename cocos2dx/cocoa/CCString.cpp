@@ -25,8 +25,7 @@ CCString::CCString(const CCString& str)
 {}
 
 CCString::~CCString()
-{ 
-    m_sString.clear();
+{
 }
 
 CCString& CCString::operator= (const CCString& other)
