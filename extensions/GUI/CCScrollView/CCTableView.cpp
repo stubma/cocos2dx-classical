@@ -584,10 +584,9 @@ void CCTableView::_moveCellOutOfSight(CCTableViewCell *cell)
     m_pCellsFreed->addObject(cell);
     m_pCellsUsed->removeSortedObject(cell);
     m_pIndices->erase(cell->getIdx());
-    // [m_pIndices removeIndex:cell.idx];
     cell->reset();
     if (cell->getParent() == getContainer()) {
-        getContainer()->removeChild(cell, true);;
+        getContainer()->removeChild(cell, true);
     }
 }
 
