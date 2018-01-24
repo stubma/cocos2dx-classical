@@ -178,6 +178,12 @@ public:
      */
     static string getExternalOrFullPath(const string& path);
 	
+	/**
+	 * given a list of name, find them in external storage and delete them
+	 * it won't check search path, the path must be relative to external root
+	 */
+	static void wipeExternal(StringList paths);
+	
 	/// get package name, in iOS, it retuns bundle id
 	static string getPackageName();
     

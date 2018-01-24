@@ -480,7 +480,7 @@ std::string AssetsManager::getMaxVersion()
 
 void AssetsManager::deleteVersion()
 {
-    CCUserDefault::sharedUserDefault()->setStringForKey(KEY_OF_VERSION, "");
+    CCUserDefault::sharedUserDefault()->purgeDefaultForKey(KEY_OF_VERSION);
 }
 
 void AssetsManager::setDelegate(AssetsManagerDelegateProtocol *delegate)

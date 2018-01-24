@@ -86,7 +86,7 @@ string CCUtils::externalize(const string& path) {
         const vector<string>& searchPaths = CCFileUtils::sharedFileUtils()->getSearchPaths();
         for(vector<string>::const_iterator iter = searchPaths.begin(); iter != searchPaths.end(); iter++) {
             string fullpath = internalStorage + (*iter) + path;
-            if(isPathExistent(fullpath)) {
+            if(CCUtils::isPathExistent(fullpath)) {
                 return fullpath;
             }
         }
@@ -96,6 +96,19 @@ string CCUtils::externalize(const string& path) {
     } else {
         return path;
     }
+}
+
+void CCUtils::wipeExternal(StringList paths) {
+	string internalStorage = getInternalStoragePath();
+	if(internalStorage[internalStorage.length() - 1] != '/') {
+		internalStorage += "/";
+	}
+	for(StringList::iterator iter = paths.begin(); iter != paths.end(); iter++) {
+		string fullpath = internalStorage + (*iter);
+		if(isPathExistent(fullpath)) {
+			deleteFile(fullpath);
+		}
+	}
 }
 
 string CCUtils::getPackageName() {

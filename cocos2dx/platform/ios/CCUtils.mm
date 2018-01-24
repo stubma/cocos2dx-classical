@@ -285,6 +285,19 @@ string CCUtils::externalize(const string& path) {
     }
 }
 
+void CCUtils::wipeExternal(StringList paths) {
+	NSString* dir = [@"~/Library/" stringByExpandingTildeInPath];
+	NSFileManager* fm = [NSFileManager defaultManager];
+	NSError* error = nil;
+	for(StringList::iterator iter = paths.begin(); iter != paths.end(); iter++) {
+		NSString* nsPath = [NSString stringWithUTF8String:iter->c_str()];
+		NSString* fullpath = [dir stringByAppendingPathComponent:nsPath];
+		if([fm fileExistsAtPath:fullpath]) {
+			[fm removeItemAtPath:fullpath error:&error];
+		}
+	}
+}
+
 bool CCUtils::deleteFile(const string& path) {
 	NSString* p = [NSString stringWithUTF8String:path.c_str()];
 	NSFileManager* fm = [NSFileManager defaultManager];
