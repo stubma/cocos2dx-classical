@@ -998,8 +998,12 @@ void CCNode::onEnter()
             }            
         }
     }
+	
+	if (m_nScriptHandler.handler) {
+		CCScriptEngineManager::sharedManager()->getScriptEngine()->executeEvent(m_nScriptHandler, "postEnter");
+	}
 
-    this->resumeSchedulerAndActions();   
+    this->resumeSchedulerAndActions();
 }
 
 void CCNode::onEnterTransitionDidFinish()

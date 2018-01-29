@@ -52,6 +52,7 @@ cc.ResolutionUnKnown = 5
 
 -- node event type
 cc.NodeOnEnter = "enter"
+cc.NodeOnPostEnter = "postEnter"
 cc.NodeOnExit = "exit"
 cc.NodeOnEnterTransitionDidFinish = "enterTransitionFinish"
 cc.NodeOnExitTransitionDidStart = "exitTransitionStart"
