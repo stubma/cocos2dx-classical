@@ -78,7 +78,12 @@ public:
      * set multiple touch enable or not
      */
     virtual void setMultipleTouchEnabled(bool flag) = 0;
-    
+	
+	/**
+	 * Get safe area insets, some devices, like iPhoneX has safe area
+	 */
+	virtual ccInsets getSafeAreaInsets() = 0;
+	
     /**
      * Get the frame size of EGL view.
      * In general, it returns the screen size since the EGL view is a fullscreen view.
@@ -99,7 +104,7 @@ public:
      * Get the visible origin point of opengl viewport.
      */
     virtual CCPoint getVisibleOrigin() const;
-
+	
     /**
      * Set the design resolution size.
      * @param width Design resolution width.

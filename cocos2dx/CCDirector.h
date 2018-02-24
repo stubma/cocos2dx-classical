@@ -209,6 +209,16 @@ public:
     /** returns visible origin of the OpenGL view in points.
      */
     CCPoint getVisibleOrigin();
+	
+	/**
+	 * returns safe area insets of device screen
+	 */
+	ccInsets getSafeAreaInsets();
+	
+	/**
+	 * get safe area box
+	 */
+	CCRect getSafeArea();
 
     /** converts a UIKit coordinate to an OpenGL coordinate
      Useful to convert (multi) touch coordinates to the current layout (portrait or landscape)

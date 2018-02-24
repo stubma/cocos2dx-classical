@@ -44,6 +44,7 @@ public:
     void    swapBuffers();
     void    setIMEKeyboardState(bool bOpen);
     virtual void setMultipleTouchEnabled(bool flag);
+	ccInsets getSafeAreaInsets();
     
     // static function
     /**

@@ -11,6 +11,8 @@ display.winSize = sharedDirector:getWinSize()
 display.visibleSize = sharedDirector:getVisibleSize()
 display.origin = sharedDirector:getVisibleOrigin()
 display.factor = sharedDirector:getContentScaleFactor()
+display.safeAreaInsets = sharedDirector:getSafeAreaInsets()
+display.safeArea = sharedDirector:getSafeArea()
 display.CENTER = cc.p(display.origin.x + display.visibleSize.width / 2,
                       display.origin.y + display.visibleSize.height / 2)
 

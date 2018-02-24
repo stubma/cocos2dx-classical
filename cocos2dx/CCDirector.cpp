@@ -609,6 +609,24 @@ CCPoint CCDirector::getVisibleOrigin()
     }
 }
 
+ccInsets CCDirector::getSafeAreaInsets() {
+	if (m_pobOpenGLView) {
+		return m_pobOpenGLView->getSafeAreaInsets();
+	} else {
+		return ccInsetsZero;
+	}
+}
+
+CCRect CCDirector::getSafeArea() {
+	CCPoint origin = getVisibleOrigin();
+	CCSize visibleSize = getVisibleSize();
+	ccInsets insets = getSafeAreaInsets();
+	return CCRectMake(origin.x + insets.left,
+					  origin.y + insets.bottom,
+					  visibleSize.width - insets.left - insets.right,
+					  visibleSize.height - insets.bottom - insets.top);
+}
+
 // scene management
 
 void CCDirector::runWithScene(CCScene *pScene)

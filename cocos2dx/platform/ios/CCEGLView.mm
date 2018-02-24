@@ -56,6 +56,16 @@ bool CCEGLView::setContentScaleFactor(float contentScaleFactor)
 	return true;
 }
 
+ccInsets CCEGLView::getSafeAreaInsets() {
+	if (@available(iOS 11.0, *)) {
+		UIWindow *mainWindow = [[EAGLView sharedEGLView] window];
+		UIEdgeInsets insets = mainWindow.safeAreaInsets;
+		return ccInsetsMake(insets.top, insets.left, insets.right, insets.bottom);
+	} else {
+		return ccInsetsZero;
+	}
+}
+
 void CCEGLView::terminate()
 {
     [CCDirectorCaller destroy];
