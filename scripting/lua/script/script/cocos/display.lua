@@ -2,11 +2,7 @@ require("script/cocos/Cocos2d")
 
 display = display or {}
 
-local sharedDirector         = CCDirector:sharedDirector()
-local sharedTextureCache     = CCTextureCache:sharedTextureCache()
-local sharedSpriteFrameCache = CCSpriteFrameCache:sharedSpriteFrameCache()
-local sharedAnimationCache   = CCAnimationCache:sharedAnimationCache()
-
+local sharedDirector = CCDirector:sharedDirector()
 display.winSize = sharedDirector:getWinSize()
 display.visibleSize = sharedDirector:getVisibleSize()
 display.origin = sharedDirector:getVisibleOrigin()
