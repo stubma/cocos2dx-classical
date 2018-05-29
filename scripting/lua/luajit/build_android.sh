@@ -8,7 +8,7 @@ cd "$SRCDIR"
 
 NDK=$NDK_ROOT
 NDKABI=9
-NDKVER=$NDK/toolchains/arm-linux-androideabi-4.6
+NDKVER=$NDK/toolchains/arm-linux-androideabi-4.9
 NDKP=$NDKVER/prebuilt/${host_os}-x86_64/bin/arm-linux-androideabi-
 NDKF="--sysroot $NDK/platforms/android-$NDKABI/arch-arm"
 
@@ -36,7 +36,7 @@ fi;
 # Android/x86, x86 (i686 SSE3), Android 4.0+ (ICS)
 NDKABI=14
 DESTDIR=$PREBUILT_DIR/x86
-NDKVER=$NDK/toolchains/x86-4.6
+NDKVER=$NDK/toolchains/x86-4.9
 NDKP=$NDKVER/prebuilt/${host_os}-x86_64/bin/i686-linux-android-
 NDKF="--sysroot $NDK/platforms/android-$NDKABI/arch-x86 -DLUAJIT_NO_LOG2"
 rm "$DESTDIR"/*.a
