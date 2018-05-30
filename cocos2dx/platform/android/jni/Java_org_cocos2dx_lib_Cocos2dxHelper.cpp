@@ -23,58 +23,63 @@ using namespace std;
 
 string g_apkPath;
 
+#ifdef __cplusplus
 extern "C" {
+#endif
 
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetApkPath(JNIEnv*  env, jclass clazz, jstring apkPath) {
-        g_apkPath = JniHelper::jstring2string(apkPath);
-    }
-
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetEditTextDialogResult(JNIEnv * env, jclass clazz, jbyteArray text) {
-        jsize  size = env->GetArrayLength(text);
-
-        if (size > 0) {
-            jbyte * data = (jbyte*)env->GetByteArrayElements(text, 0);
-            char* pBuf = (char*)malloc(size+1);
-            if (pBuf != NULL) {
-                memcpy(pBuf, data, size);
-                pBuf[size] = '\0';
-                // pass data to edittext's delegate
-                if (s_pfEditTextCallback) s_pfEditTextCallback(pBuf, s_ctx);
-                free(pBuf);
-            }
-            env->ReleaseByteArrayElements(text, data, 0);
-        } else {
-            if (s_pfEditTextCallback) s_pfEditTextCallback("", s_ctx);
-        }
-    }
-
-    JNIEXPORT jstring JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeFullPathForFilename(JNIEnv* env, jclass clazz, jstring filename) {
-        string fn = JniHelper::jstring2string(filename);
-        string path = CCUtils::getExternalOrFullPath(fn);
-        return env->NewStringUTF(path.c_str());
-    }
-    
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeGetViewPortRect(JNIEnv* env, jclass clazz, jobject r) {
-        // get rect
-        const CCRect& rect = CCEGLView::sharedOpenGLView()->getViewPortRect();
-        
-        // Rect class
-        jclass klass = env->GetObjectClass(r);
-        jfieldID fid_bottom = env->GetFieldID(klass, "bottom", "I");
-        jfieldID fid_left = env->GetFieldID(klass, "left", "I");
-        jfieldID fid_right = env->GetFieldID(klass, "right", "I");
-        jfieldID fid_top = env->GetFieldID(klass, "top", "I");
-        
-        // set it
-        env->SetIntField(r, fid_left, rect.origin.x);
-        env->SetIntField(r, fid_bottom, rect.origin.y);
-        env->SetIntField(r, fid_right, rect.origin.x + rect.size.width);
-        env->SetIntField(r, fid_top, rect.origin.y + rect.size.height);
-        
-        // release
-        env->DeleteLocalRef(klass);
-    }
+JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetApkPath(JNIEnv*  env, jclass clazz, jstring apkPath) {
+	g_apkPath = JniHelper::jstring2string(apkPath);
 }
+
+JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetEditTextDialogResult(JNIEnv * env, jclass clazz, jbyteArray text) {
+	jsize  size = env->GetArrayLength(text);
+
+	if (size > 0) {
+		jbyte * data = (jbyte*)env->GetByteArrayElements(text, 0);
+		char* pBuf = (char*)malloc(size+1);
+		if (pBuf != NULL) {
+			memcpy(pBuf, data, size);
+			pBuf[size] = '\0';
+			// pass data to edittext's delegate
+			if (s_pfEditTextCallback) s_pfEditTextCallback(pBuf, s_ctx);
+			free(pBuf);
+		}
+		env->ReleaseByteArrayElements(text, data, 0);
+	} else {
+		if (s_pfEditTextCallback) s_pfEditTextCallback("", s_ctx);
+	}
+}
+
+JNIEXPORT jstring JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeFullPathForFilename(JNIEnv* env, jclass clazz, jstring filename) {
+	string fn = JniHelper::jstring2string(filename);
+	string path = CCUtils::getExternalOrFullPath(fn);
+	return env->NewStringUTF(path.c_str());
+}
+
+JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeGetViewPortRect(JNIEnv* env, jclass clazz, jobject r) {
+	// get rect
+	const CCRect& rect = CCEGLView::sharedOpenGLView()->getViewPortRect();
+	
+	// Rect class
+	jclass klass = env->GetObjectClass(r);
+	jfieldID fid_bottom = env->GetFieldID(klass, "bottom", "I");
+	jfieldID fid_left = env->GetFieldID(klass, "left", "I");
+	jfieldID fid_right = env->GetFieldID(klass, "right", "I");
+	jfieldID fid_top = env->GetFieldID(klass, "top", "I");
+	
+	// set it
+	env->SetIntField(r, fid_left, rect.origin.x);
+	env->SetIntField(r, fid_bottom, rect.origin.y);
+	env->SetIntField(r, fid_right, rect.origin.x + rect.size.width);
+	env->SetIntField(r, fid_top, rect.origin.y + rect.size.height);
+	
+	// release
+	env->DeleteLocalRef(klass);
+}
+
+#ifdef __cplusplus
+}
+#endif
 
 const char * getApkPath() {
     return g_apkPath.c_str();

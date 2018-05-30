@@ -108,9 +108,9 @@ public class Cocos2dxHelper {
 	// Methods
 	// ===========================================================
 
-	private static native void nativeSetApkPath(final String pApkPath);
+	private static native void nativeSetApkPath(String pApkPath);
 	private native static String nativeFullPathForFilename(String filename);
-	private static native void nativeSetEditTextDialogResult(final byte[] pBytes);
+	private static native void nativeSetEditTextDialogResult(byte[] pBytes);
 	private static native void nativeGetViewPortRect(Rect r);
 	
 	public static Rect getViewPortRect() {
